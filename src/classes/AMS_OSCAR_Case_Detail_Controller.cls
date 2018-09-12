@@ -132,6 +132,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null) editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c);
 
             //FM AMSU-1
+            //AMSU-151 (AMSU-1) - added chech for isVATnumberSpecialCase in order to use the new 
             if(isSingleAccountHierarchy){
                 sCorrectionType_of_change = 'CorrectionSingleAccount';
             }else if(isAllHierarchySelected){
@@ -141,9 +142,31 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             }
             if(oscarObj != null && isAgencyCorrection) editableFields = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(sCorrectionType_of_change);
 
+            Set<String> specialLocations = new Set<String> {'P', 'D'};
+            UtilityCS__c ucsAccLinkAgentCountries = Test.isRunningTest() ? new UtilityCS__c(name ='AMS_COR_LINK_AGENT_COUNTRIES',value__c = 'ID') : UtilityCS__c.getInstance('AMS_COR_LINK_AGENT_COUNTRIES');
+            List<String> lLinkAgentSpecialCaseCountries = ucsAccLinkAgentCountries.Value__c.split(';');
+            Set<String> sLinkAgentSpecialCaseCountries = new Set<String>(lLinkAgentSpecialCaseCountries);
+            Boolean isLinkAgentSpecialCase = specialLocations.contains(oscarObj.Account__r.Location_Class__c) && sLinkAgentSpecialCaseCountries.contains(oscarObj.Account__r.IATA_ISO_Country__r.ISO_Code__c);
+            system.debug('isLinkAgent special case: ' + isLinkAgentSpecialCase);
+            system.debug('type of correction: ' + sCorrectionType_of_change);
+            if((!isAllHierarchySelected || isSingleAccountHierarchy) && isLinkAgentSpecialCase && isAgencyCorrection) {
+                editableFields.add('Link_agent_name__c');
+            }
+            if(!isAllHierarchySelected && isVATnumberSpecialCase && isAgencyCorrection) {
+                editableFields.add('ISSP_AMS_VAT_number__c');
+            }
+            if(!isAllHierarchySelected && isAccNameSpecialCase && isAgencyCorrection) {
+                editableFields.add('Account_Name__c');
+            }
+            if(isAllHierarchySelected && !isSingleAccountHierarchy && isVATnumberSpecialCase && isAgencyCorrection) {
+                editableFields.remove('ISSP_AMS_VAT_number__c');
+            }
+
             //System.debug(loggingLevel.FINEST, '____ [cls AMS_OSCAR_Case_Detail_Controller - getEditableFields] editableFields - ' + editableFields);
-            System.debug('____ [cls AMS_OSCAR_Case_Detail_Controller - getEditableFields] sCorrectionType_of_change - ' + editableFields);
+            System.debug('____ [cls AMS_OSCAR_Case_Detail_Controller - getEditableFields] sCorrectionType_of_change - ' + sCorrectionType_of_change);
             System.debug('____ [cls AMS_OSCAR_Case_Detail_Controller - getEditableFields] isAgencyCorrection - ' + isAgencyCorrection);
+            System.debug('____ [cls AMS_OSCAR_Case_Detail_Controller - getEditableFields] isVATnumberSpecialCase - ' + isVATnumberSpecialCase);
+            System.debug('____ [cls AMS_OSCAR_Case_Detail_Controller - getEditableFields] isAccNameSpecialCase - ' + isAccNameSpecialCase);
 
             System.debug('____ [cls AMS_OSCAR_Case_Detail_Controller - getEditableFields] editableFields - ' + editableFields);
 
@@ -381,7 +404,17 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 return isVATnumberSpecialCase;
             }else{
 
-                if(isAgencyCorrection && (oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Brazil' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'India' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Malaysia' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Thailand' || oscarObj.Account__r.Is_Branch_Abroad__c == 'Yes')){
+                //AMSU-151 (AMSU-1)
+                UtilityCS__c ucsVATnumberSpecialCaseCountries = Test.isRunningTest() ? new UtilityCS__c(name ='AMS_COR_VAT_COUNTRIES',value__c = 'BR;IN;MY;TH') : UtilityCS__c.getInstance('AMS_COR_VAT_COUNTRIES');
+                List<String> lVATnumberSpecialCaseCountries = ucsVATnumberSpecialCaseCountries.Value__c.split(';');
+                Set<String> sVATnumberSpecialCaseCountries = new Set<String>(lVATnumberSpecialCaseCountries);
+
+                System.debug('isVATnumberSpecialCase: ' + isVATnumberSpecialCase);
+                System.debug('isVATnumberSpecialCase - oscarObj.Account__r.IATA_ISO_Country__r.ISO_Code__c: ' + oscarObj.Account__r.IATA_ISO_Country__r.ISO_Code__c);
+                System.debug('isVATnumberSpecialCase - oscarObj.Account__r.Is_Branch_Abroad__c ' + oscarObj.Account__r.Is_Branch_Abroad__c);
+                
+                //if(isAgencyCorrection && (oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Portugal' ||oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Brazil' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'India' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Malaysia' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Thailand' || oscarObj.Account__r.Is_Branch_Abroad__c == 'Yes')){
+                if(isAgencyCorrection && ( sVATnumberSpecialCaseCountries.contains( oscarObj.Account__r.IATA_ISO_Country__r.ISO_Code__c ) || oscarObj.Account__r.Is_Branch_Abroad__c == 'Yes')){
                     isVATnumberSpecialCase = true;
                 } else{
                     isVATnumberSpecialCase = false;
@@ -392,6 +425,34 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         private set;
     }
          
+    //FM AMSU-153
+    public Boolean isAccNameSpecialCase{
+        get{
+            if(isAccNameSpecialCase != null){
+                return isAccNameSpecialCase;
+            }else{
+
+                //AMSU-151 (AMSU-1)
+                UtilityCS__c ucsAccNameSpecialCaseCountries = Test.isRunningTest() ? new UtilityCS__c(name ='AMS_COR_ACC_NAME_COUNTRIES',value__c = 'CN;TW') : UtilityCS__c.getInstance('AMS_COR_ACC_NAME_COUNTRIES');
+                List<String> lAccNameSpecialCaseCountries = ucsAccNameSpecialCaseCountries.Value__c.split(';');
+                Set<String> sAccNameSpecialCaseCountries = new Set<String>(lAccNameSpecialCaseCountries);
+
+                System.debug('isAccNameSpecialCase - oscarObj.Account__r.IATA_ISO_Country__r.ISO_Code__c: ' + oscarObj.Account__r.IATA_ISO_Country__r.ISO_Code__c);
+               
+                //if(isAgencyCorrection && (oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Portugal' ||oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Brazil' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'India' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Malaysia' || oscarObj.Account__r.IATA_ISO_Country__r.Name == 'Thailand' || oscarObj.Account__r.Is_Branch_Abroad__c == 'Yes')){
+                if(isAgencyCorrection && sAccNameSpecialCaseCountries.contains( oscarObj.Account__r.IATA_ISO_Country__r.ISO_Code__c ) ){
+                    isAccNameSpecialCase = true;
+                } else{
+                    isAccNameSpecialCase = false;
+                }     
+
+                System.debug('isAccNameSpecialCase: ' + isAccNameSpecialCase);
+                
+            }
+            return isAccNameSpecialCase;
+        } 
+        private set;
+    } 
 
     //FM AMSU-1
     //Need to get the "isAllHierarchySelected" 1st in order to get the correct value
@@ -623,9 +684,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         createdDate,Date_Time_Closed__c,RecordTypeId,Account__r.IATA_ISO_Country__r.Region__c, Account__r.Sector__c,
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, 
                         ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c,
-                        AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, //FM AMSU-1
-                        STEP6__c, Location_Class__c
-                          from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
+                        AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, STEP6__c, //FM AMSU-1
+                        Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c //AMSU-151
+                        FROM AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;
 

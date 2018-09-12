@@ -74,6 +74,10 @@
                 <field>ANG_Accreditation_Model__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Purge_Flag__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_IsNewGenAgency__c</field>
             </layoutItems>
@@ -696,6 +700,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Change_Code__c</fields>
         <fields>Integration_System__c</fields>
         <fields>Update_Type__c</fields>
         <fields>Status__c</fields>

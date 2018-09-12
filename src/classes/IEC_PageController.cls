@@ -33,6 +33,8 @@ public virtual class IEC_PageController
 		}
 	}
 
+	public IEC_User_Utils userDetails {get;set;}
+
 	public Boolean hasError { get; protected set; }
 	public Boolean hasConfirm { get; protected set; } 
 	public Boolean hasWarning { get; protected set; }
@@ -252,6 +254,8 @@ public virtual class IEC_PageController
 		loggedCustomer = Customer_DTO.getLoggedCustomer();	
 		String url = Site.getBaseUrl();	
 
+		userDetails = IEC_User_Utils.getInstance();
+
 		Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=10');
 	}
 
@@ -373,4 +377,27 @@ public virtual class IEC_PageController
 			return null;
 		}
     }
+
+
+    public PageReference redirectToPage(String initialUrl){
+
+    	//get params from page and include
+    	Map<String,String> mapPageParameters = System.currentPageReference().getParameters();
+        String extraParamsStr = '';
+        if(mapPageParameters != null && mapPageParameters.keySet() != null && !mapPageParameters.keySet().isEmpty()){
+	        for(String pageParam : mapPageParameters.keySet()){
+	            if(pageParam.startsWith(IECConstants.PARAM_UTM)){
+	                extraParamsStr += '&' + pageParam + '=' + mapPageParameters.get(pageParam);
+	            }
+	        }
+	    }
+
+	    String finalURL = initialUrl + EncodingUtil.urlEncode(extraParamsStr, 'UTF-8');
+		PageReference pgRef = new PageReference(finalURL);
+		pgRef.setRedirect(true);
+    	return pgRef;
+
+
+    }
+
 }

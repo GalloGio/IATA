@@ -1,3 +1,7 @@
+/*
+	Class that calls external service to get RHC information updated.
+	Used in RHC service and NewGen APP (mobile)
+*/
 @RestResource(urlMapping='/RME_ALERT_BALANCEUPDATE/*')
 global class ANG_RME_Alert_Service {
 
@@ -142,6 +146,14 @@ global class ANG_RME_Alert_Service {
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] result - ' + result);
 		return new Map<String, RequestResult>{'apiStatus' => result};
 	}
+
+	/*
+		Expose webservice as a RESTfull service for NewGen Mobile APP
+	*/
+	@HttpPost
+  	global static void doPost(String accountId){
+  		ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
+  	}
 
 	private static void saveAlert(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
 		ANG_Risk_Alert__c alert = new ANG_Risk_Alert__c();

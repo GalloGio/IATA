@@ -65,7 +65,7 @@ public class AMS_OSCARTriggerHandler {
     /*** AMSU-113 Start ***/
     public static Set<String> pciCompliantProcesses {
         get {
-            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.PCI_COMPLIANT};
+            return new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_BR_ABROAD, AMS_Utils.PCI_COMPLIANT};
         }
         set;
     }
@@ -160,7 +160,7 @@ public class AMS_OSCARTriggerHandler {
 
     public static void handleAfterInsert() {
         /*** AMSU-134 Start ***/
-        //createSavepoint((List<AMS_OSCAR__c>) Trigger.new);
+        createSavepoint((List<AMS_OSCAR__c>) Trigger.new, null);
         /*** AMSU-134 End ***/
 
         updateCaseKPIFields();
@@ -179,21 +179,29 @@ public class AMS_OSCARTriggerHandler {
         handleChangeOfLocation((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-121 End ***/
         /*** AMSU-134 Start ***/
-        //rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
+        createSavepoint((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+        rollbackChanges((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
         /*** AMSU-134 End ***/
     }
 
     /*** AMSU-134 Start ***/
-    public static void createSavepoint(List<AMS_OSCAR__c> oscars) {
+    public static void createSavepoint(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
         Set<Id> oscarIds = new Set<Id>();
         for(AMS_Oscar__c oscar : oscars) {
-            if(oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
+            AMS_Oscar__c oldOscar = oldMap != null ? oldMap.get(oscar.Id) : null;
+            Boolean isAgencyChange = oscar.Process__c == AMS_Utils.AGENCYCHANGES;
+            Boolean hasTypeOfchange = (String.isNotBlank(oscar.Type_of_change__c) && oldOscar == null) || 
+                (String.isNotBlank(oscar.Type_of_change__c) && oscar.Type_of_change__c <> oldOscar.Type_of_change__c);
+            Boolean sanityCheckNotPassed = oscar.STEP6__c <> AMS_Utils.PASSED;
+            if(isAgencyChange && hasTypeOfchange && sanityCheckNotPassed) {
                 oscarIds.add(oscar.Id);
             }
         }
 
-        if(!system.isBatch() && !system.isFuture()) {
-            AMS_OscarChangesHelper.createSavepoint(oscarIds);
+        if(!system.isBatch() && !system.isFuture() && !oscarIds.isEmpty()) {
+            //AMS_OscarChangesHelper.createSavepoint(oscarIds);
+            AMS_OSCAR_Savepoint oscarSavepoint = new AMS_OSCAR_Savepoint(oscars);
+            System.enqueueJob(oscarSavepoint);
         }
     }
 
@@ -220,7 +228,8 @@ public class AMS_OSCARTriggerHandler {
         }
         
         if(!oscarIds.isEmpty() && !system.isBatch() && !system.isFuture()) {
-            AMS_OscarChangesHelper.rollbackOscarChanges(oscarIds);
+            AMS_OSCAR_Rollback rbk = new AMS_OSCAR_Rollback(oscars);
+            rbk.rollbackOSCAR();
         }
     }
     /*** AMSU-134 End ***/
@@ -384,8 +393,10 @@ public class AMS_OSCARTriggerHandler {
 
         Set<Id> oscarAccountIds = new Set<Id>();
 
-        for (AMS_OSCAR__c oscar : oscarsToInsert)
+        for (AMS_OSCAR__c oscar : oscarsToInsert){
             oscarAccountIds.add(oscar.Account__c);
+            addAccountId(oscar.Account__c);
+        }
 
         AMS_OSCAR_JSONHelper helper = null;
         boolean resultLoad = false;
@@ -691,20 +702,16 @@ public class AMS_OSCARTriggerHandler {
 
         if (oscarsToValidate.size() > 0) {
 
-            List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
-
             List<AMS_OSCAR__c> oscarsToProcess = getAgencyChangeOSCARSToProcess(oscarsToValidate);
 
-            if (validateTypeOfChange(oscarsToValidate, configs) && oscarsToProcess.size() > 0 )
-                processAgencyChanges(oscarsToProcess, configs);
+            if (validateTypeOfChange(oscarsToValidate) && oscarsToProcess.size() > 0 )
+                processAgencyChanges(oscarsToProcess);
         }
     }
 
-    public static boolean validateTypeOfChange(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs) {
+    public static boolean validateTypeOfChange(List<AMS_OSCAR__c> oscars) {
 
         Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
-
-        List<String> oscarStepsApiName = AMS_Utils.getOSCARStepsApiName();
 
         for (AMS_OSCAR__c oscar : oscars) {
 
@@ -717,15 +724,11 @@ public class AMS_OSCARTriggerHandler {
 
 
             if (oscar.Type_of_change__c <> oldMap.get(oscar.Id).Type_of_change__c || oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
-                AMS_Utils.AgChangesConfig config = AMS_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
-                if (config != null && config.config != null) {
-                    List<String> notApplicableSteps = AMS_AgencyChangesConfigHelper.getNotApplicableSteps(config.config);
-                    if (notApplicableSteps != null)
-                        AMS_AgencyChangesConfigHelper.setNotApplicableSteps(notApplicableSteps, oscarStepsApiName, oscar);
+                AMS_AgencyChangesConfigHelper.ChangesConfig oscarConfig = AMS_AgencyChangesConfigHelper.getConfig(oscar);
+                if (oscarConfig != null) {
+                    AMS_AgencyChangesConfigHelper.setNotApplicableSteps(oscarConfig.config, oscar);
                 }
-                else{
-                    return false;
-                }
+                else return false;
             }
     }
 
@@ -753,7 +756,7 @@ public class AMS_OSCARTriggerHandler {
         return changeOscars;
     }
 
-    public static void processAgencyChanges(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs) {
+    public static void processAgencyChanges(List<AMS_OSCAR__c> oscars) {
 
         boolean isSanityCheck = false;
 
@@ -778,15 +781,14 @@ public class AMS_OSCARTriggerHandler {
         //this structure contains all the hierarchy relationships that need to be inserted/updated/deleted
         List<AMS_HierarchyHelper.HierarchyStruct> hierarchyChanges = new List<AMS_HierarchyHelper.HierarchyStruct>();
 
-        Set<Id> accountIds = new Set<Id>();
         Set<Id> oscarIds = new Set<Id>();
         Set<Id> oscarOnlineAccredIds = new Set<Id>();
 
         Map<Id, List<AMS_Process_Detail__c>> processDetailPerOSCAR = new Map<Id, List<AMS_Process_Detail__c>>();
 
         for (AMS_OSCAR__c oscar : oscars) {
-            accountIds.add(oscar.Account__c);
-            accountIds.add(oscar.AMS_Target_Agency__c);
+            addAccountId(oscar.Account__c);
+            addAccountId(oscar.AMS_Target_Agency__c);
             oscarIds.add(oscar.Id);
             oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
         }
@@ -812,8 +814,8 @@ public class AMS_OSCARTriggerHandler {
         for (List<AMS_Agencies_relationhip__c> hierarchyRelations : accountHierarchyRelationships.values()) {
             for (AMS_Agencies_relationhip__c relationship : hierarchyRelations) {
 
-                accountIds.add(relationship.Parent_Account__c);
-                accountIds.add(relationship.Child_Account__c);
+                addAccountId(relationship.Parent_Account__c);
+                addAccountId(relationship.Child_Account__c);
 
                 if(relationship.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED){
                     if(!agencyTerminatedChildAgencies.containsKey(relationship.Parent_Account__c))
@@ -847,22 +849,6 @@ public class AMS_OSCARTriggerHandler {
         }
         system.debug(LoggingLevel.ERROR,'[LF]: FINE CALCOLO SA');
 
-        //get the active changecode for each account
-        List<Agency_Applied_Change_code__c> activeChangeCodes =
-            new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
-
-        //map accountId -> active change code
-        Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
-        for (Id accId : accountIds) {
-            for (Agency_Applied_Change_code__c changeCode : activeChangeCodes)
-                if (changeCode.Account__c == accId)
-                    accountsChangeCode.put(accId, changeCode);
-        }
-
-
-
-        Map<Id, Account> accounts = getAccounts(accountIds);
-
         //<Account Id, Current Location Type>
         // Get the Accounts location type in the beggining before its changed (as in the case of a change of Ownership to non IATA
         // )
@@ -876,11 +862,9 @@ public class AMS_OSCARTriggerHandler {
         //Here we will save the accounts that will suffer ownership changes
         Map<Id, Set<Id>> accountsAffectedPerOnlineAccreditation = new Map<Id, Set<Id>>();
 
-        AMS_Utils.AgChangesConfig config;
-        //configuration used when we need to apply a different change Code on agencies in Process Detail
-        AMS_Utils.AgChangesConfig config2;
-        //configuration used when we need to apply a different change Code for change of location to SAs
-        AMS_Utils.AgChangesConfig config3;
+        AMS_AgencyChangesConfigHelper.ChangesConfig oscarConfig;
+        AMS_AgencyChangesConfigHelper.ChangesConfig cascadingConfig; //configuration used when we need to apply a different change Code on agencies in Process Detail
+        AMS_AgencyChangesConfigHelper.ChangesConfig locationConfig; //configuration used when we need to apply a different change Code for change of location to SAs
 
         system.debug('processAgencyChanges() --> oscars = ' + oscars);
 
@@ -908,18 +892,18 @@ public class AMS_OSCARTriggerHandler {
 
                 //Separate types of changes in 2 groups:
                 //types of changes to be applied on all the hierarchy agencies defined in the Process Detail plus the Agency where the OSCAR was opened
-                String cascadingTOCs = AMS_AgencyChangesConfigHelper.getPropagatableTypesOfChange(oscar.Type_of_change__c);
+                String cascadingTOCs = AMS_AgencyChangesConfigHelper.getPropagatableTypesOfChange(oscar.Type_of_change__c, true);
 
                 //types of changes only to be applied on the Agency where the OSCAR was opened
-                String nonCascadingTOCs =  AMS_AgencyChangesConfigHelper.getNonPropagatableTypesOfChange(oscar.Type_of_change__c);
+                String nonCascadingTOCs =  AMS_AgencyChangesConfigHelper.getPropagatableTypesOfChange(oscar.Type_of_change__c, false);
 
                 System.debug('AGENCY CHANGES: Propagate changes selected: ' + cascadingTOCs);
                 System.debug('AGENCY CHANGES: Non Propagate changes selected: ' + nonCascadingTOCs);
 
-                config = AMS_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
+                oscarConfig = AMS_AgencyChangesConfigHelper.getConfig(oscar);
 
                 if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() > 0)
-                    config2 = AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig(cascadingTOCs, oscar, configs);
+                    cascadingConfig = AMS_AgencyChangesConfigHelper.getConfig(cascadingTOCs, oscar.Business_Process__c);
 
                 List<AMS_Process_Detail__c> pds = processDetailPerOSCAR.get(oscar.Id);
 
@@ -950,7 +934,7 @@ public class AMS_OSCARTriggerHandler {
                 Set<Id> allSAs = new Set<Id>();
 
                 if(changeContainsLocation && agencyToSAs.get(oscar.Account__c)!=null){
-                    config3 = AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig(changeOfLocation, oscar, configs);
+                    locationConfig = AMS_AgencyChangesConfigHelper.getConfig(changeOfLocation, oscar.Business_Process__c);
 
                     for(Id sa : agencyToSAs.get(oscar.Account__c)){
                         boolean found = false;
@@ -1005,9 +989,9 @@ public class AMS_OSCARTriggerHandler {
                         }
 
                         System.debug('Checkpoint 02.5.1');
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, accAffected));
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(accAffected), AMS_Utils.SANITYCHECK));
                         System.debug('Checkpoint 02.5.2');
-                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, accAffected, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(accAffected), oscar.Type_of_change__c, oscarOnlineAccreditation));
                         System.debug('Checkpoint 02.5.3');
                     }
                     // here there are several possible cases:
@@ -1033,29 +1017,29 @@ public class AMS_OSCARTriggerHandler {
                         if(!agenciesWithSingleCode.isEmpty())
                         {
                             // Apply cascade + no cascade changes: change code + data migration
-                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithSingleCode, cascadingTOCs, accounts, oscarOnlineAccreditation));
-                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesWithSingleCode));
+                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(agenciesWithSingleCode), cascadingTOCs, oscarOnlineAccreditation));
+                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, cascadingConfig.config, getAccounts(agenciesWithSingleCode), AMS_Utils.SANITYCHECK));
                         }
                         
                         if(!agenciesWithMultipleCode.isEmpty())
                         {
                             // Apply cascade + no cascade changes: change code + data migration
-                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithMultipleCode, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
-                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesWithMultipleCode));
+                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(agenciesWithMultipleCode), oscar.Type_of_change__c, oscarOnlineAccreditation));
+                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(agenciesWithMultipleCode), AMS_Utils.SANITYCHECK));
                         }
                         
 
                         // Apply change of location to children SAs not explicitly involved in the change
                         if(SAsNotInvolved.size()>0){
                             //change code generated only for the agencies not affected by any other change
-                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, SAsNotInvolved, changeOfLocation, accounts, oscarOnlineAccreditation));
-                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config3, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, SAsNotInvolved));
+                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(SAsNotInvolved), changeOfLocation, oscarOnlineAccreditation));
+                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, locationConfig.config, getAccounts(SAsNotInvolved), AMS_Utils.SANITYCHECK));
                         }
 
                     } else if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() == 0) {
                         system.debug(LoggingLevel.ERROR,'[LF]: AMS_OSCARTriggerHandler() Processing not cascade changes in sanity checks');
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, new Set<Id> {oscar.Account__c}));
-                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(oscar.Account__c), AMS_Utils.SANITYCHECK));
+                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(oscar.Account__c), oscar.Type_of_change__c, oscarOnlineAccreditation));
 
                         // in case of location (for the moment is 100% but only God knows what will happen in the future)
                         // I'll apply the change and generate a CHL also to the SAs
@@ -1063,15 +1047,17 @@ public class AMS_OSCARTriggerHandler {
                                 //We'll apply CHL to all dependent SAs either involved or not involved
                                 allSAs.addAll(SAsInvolved);
                                 allSAs.addAll(SAsNotInvolved);
-                                changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, allSAs));
-                                accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, allSAs, changeOfLocation, accounts, oscarOnlineAccreditation));
+
+                                changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(allSAs), AMS_Utils.SANITYCHECK));
+                                accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(allSAs), changeOfLocation, oscarOnlineAccreditation));
                         }
 
                     } else if (nonCascadingTOCs.length() == 0 && cascadingTOCs.length() > 0) {
                         system.debug(LoggingLevel.ERROR,'[LF]: AMS_OSCARTriggerHandler() Processing cascade changes in sanity checks');
                         agenciesAffected.add(oscar.Account__c);
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesAffected));
-                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesAffected, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(agenciesAffected), AMS_Utils.SANITYCHECK));
+                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(agenciesAffected), oscar.Type_of_change__c, oscarOnlineAccreditation));
                         // change of location is not affecting this scenario
                     }
 
@@ -1084,7 +1070,7 @@ public class AMS_OSCARTriggerHandler {
                     system.debug('AgenciesToMigrateHierarchy: ' + agenciesToMigrate);
                     system.debug('AgenciesToMigrateData: ' + agenciesAffected);
 
-                    AMS_HierarchyHelper.HierarchyStruct hs = processHierarchyChanges(oscar, accounts, accountHierarchyRelationships, agenciesToMigrate);
+                    AMS_HierarchyHelper.HierarchyStruct hs = processHierarchyChanges(oscar, accountHierarchyRelationships, agenciesToMigrate);
 
                     hierarchyChanges.add(hs);
 
@@ -1140,8 +1126,8 @@ public class AMS_OSCARTriggerHandler {
                             accAffected = new Set<Id> {oscar.Account__c, pds.get(0).Account__c};
                         }
 
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, accAffected));
-                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, accAffected, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(accAffected), AMS_Utils.APPROVAL));
+                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(accAffected), oscar.Type_of_change__c, oscarOnlineAccreditation));
                     }
                     //need to apply two different Sets of Change Codes. One for Oscar Account and other for process details
                     // here there are several possible cases:
@@ -1167,29 +1153,29 @@ public class AMS_OSCARTriggerHandler {
                         if(!agenciesWithSingleCode.isEmpty())
                         {
                             // Apply cascade changes: change code + data migration
-                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithSingleCode, cascadingTOCs, accounts, oscarOnlineAccreditation));
-                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesWithSingleCode));
+                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(agenciesWithSingleCode), cascadingTOCs, oscarOnlineAccreditation));
+                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, cascadingConfig.config, getAccounts(agenciesWithSingleCode), AMS_Utils.APPROVAL));
                         }
 
                         if(!agenciesWithMultipleCode.isEmpty())
                         {
                             // Apply cascade + no cascade changes: change code + data migration
-                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithMultipleCode, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
-                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesWithMultipleCode));
+                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(agenciesWithMultipleCode), oscar.Type_of_change__c, oscarOnlineAccreditation));
+                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(agenciesWithMultipleCode), AMS_Utils.APPROVAL));
                         }
 
                         // Apply change of location to children SAs not explicitly involved in the change
-                        if(SAsNotInvolved.size()>0){
+                        if(!SAsNotInvolved.isEmpty()){
                             //change code generated only for the agencies not affected by any other change
-                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, SAsNotInvolved, changeOfLocation, accounts, oscarOnlineAccreditation));
-                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config3, accounts, accountsChangeCode, AMS_Utils.APPROVAL, SAsNotInvolved));
+                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(SAsNotInvolved), changeOfLocation, oscarOnlineAccreditation));
+                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, locationConfig.config, getAccounts(SAsNotInvolved), AMS_Utils.APPROVAL));
                         }
 
 
                     } else if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() == 0) {
                         system.debug(LoggingLevel.ERROR,'[LF]: AMS_OSCARTriggerHandler() Processing not cascade changes on approval');
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, new Set<Id> {oscar.Account__c}));
-                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(oscar.Account__c), AMS_Utils.APPROVAL));
+                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(oscar.Account__c), oscar.Type_of_change__c, oscarOnlineAccreditation));
 
                         // in case of location (for the moment is 100% but only God knows what will happen in the future)
                         // I'll apply the change and generate a CHL also to the SAs
@@ -1197,16 +1183,16 @@ public class AMS_OSCARTriggerHandler {
                             //We'll apply CHL to all dependent SAs either involved or not involved
                             allSAs.addAll(SAsInvolved);
                             allSAs.addAll(SAsNotInvolved);
-                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, allSAs));
-                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, allSAs, changeOfLocation, accounts, oscarOnlineAccreditation));
+                            changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(allSAs), AMS_Utils.APPROVAL));
+                            accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(allSAs), changeOfLocation, oscarOnlineAccreditation));
                         }
 
                     } else if (nonCascadingTOCs.length() == 0 && cascadingTOCs.length() > 0) {
                         system.debug(LoggingLevel.ERROR,'[LF]: AMS_OSCARTriggerHandler() Processing cascade changes on approval');
                         agenciesAffected.add(oscar.Account__c);
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesAffected));
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(agenciesAffected), AMS_Utils.APPROVAL));
 
-                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesAffected, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+                        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, getAccounts(agenciesAffected), oscar.Type_of_change__c, oscarOnlineAccreditation));
                         // change of location is not affecting this scenario
                     }
 
@@ -1257,21 +1243,21 @@ public class AMS_OSCARTriggerHandler {
                             accAffected = new Set<Id> {oscar.Account__c, pds.get(0).Account__c};
                         }
 
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.WITHDRAWAL, accAffected));
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(accAffected), AMS_Utils.WITHDRAWAL));
                     } else if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() > 0) {
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.WITHDRAWAL, agenciesAffected));
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, cascadingConfig.config, getAccounts(agenciesAffected), AMS_Utils.WITHDRAWAL));
 
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.WITHDRAWAL, new Set<Id> {oscar.Account__c}));
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(oscar.Account__c), AMS_Utils.WITHDRAWAL));
                     } else if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() == 0) {
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.WITHDRAWAL, new Set<Id> {oscar.Account__c}));
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(oscar.Account__c), AMS_Utils.WITHDRAWAL));
                     } else if (nonCascadingTOCs.length() == 0 && cascadingTOCs.length() > 0) {
                         agenciesAffected.add(oscar.Account__c);
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.WITHDRAWAL, agenciesAffected));
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, oscarConfig.config, getAccounts(agenciesAffected), AMS_Utils.WITHDRAWAL));
                     }
 
                 }else if (!oldOSCAR.Apply_Penalty_Fee__c && oscar.Apply_Penalty_Fee__c) {
                     System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCARTriggerHandler - processAgencyChanges] oscar.Apply_Penalty_Fee__c - ' + oscar.Apply_Penalty_Fee__c);
-                    Agency_Applied_Change_code__c lastChangeCode = accountsChangeCode.get(oscar.Account__c);
+                    Agency_Applied_Change_code__c lastChangeCode = accounts.get(oscar.Account__c).Agencies_Applied_Change_codes__r[0];
                     AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
                     changeCode.name = 'LNF';
@@ -1307,13 +1293,6 @@ public class AMS_OSCARTriggerHandler {
                     throw new AMSException('Performing this operation will result in hierarchy ownership inconsistency. Please make sure the owners being processed match with the owners of the target agency.');
             }
 
-            set<Account> accountToupdateSet = new set<Account>();
-
-            for(Id acctId : accountsToUpdate.keySet())
-            {
-                accountToupdateSet.add(accounts.get(acctId));
-            }
-
 
             //************Create Change Codes History ****************
             //
@@ -1332,6 +1311,7 @@ public class AMS_OSCARTriggerHandler {
                 //merge everything
                 for (AMS_Utils.Container c : changesContainer) {
 
+                    if(c ==  null) continue;
                 //All lists must have the same size in order to create correctly the change codes
 
                     changeCodes.addAll(c.changeCodes);
@@ -1389,7 +1369,10 @@ public class AMS_OSCARTriggerHandler {
                 accsToUpdateFromCC = AMS_ChangeCodesHelper.createAAChangeCodes(objectChanges,changeCodes, theoscars, accts, false);
             }
 
-            List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, new List<Account>(accountToupdateSet));
+            List<Account> accsToUpdateFromStagingArea = new List<Account>();
+            for(Id a : accountsToUpdate.keySet()) accsToUpdateFromStagingArea.add(accountsToUpdate.get(a).acc);
+
+            List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, accsToUpdateFromStagingArea);
 
             if (!mergedAccountUpdate.isEmpty()) {
                 AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
@@ -1522,7 +1505,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
 
-    public static AMS_HierarchyHelper.HierarchyStruct processHierarchyChanges(AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies, Set<Id> agenciesAffected) {
+    public static AMS_HierarchyHelper.HierarchyStruct processHierarchyChanges(AMS_OSCAR__c oscar, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies, Set<Id> agenciesAffected) {
 
         system.debug( 'DDD2 processHierarchyChanges ');
         keepSALocationTypeFlag = false;
@@ -1538,17 +1521,17 @@ public class AMS_OSCARTriggerHandler {
         Account oscarAccount = accounts.get(oscar.Account__c);
 
         if (tocList.contains(AMS_Utils.LOCATION_TYPE))
-            hierarchyChanges = processChangeOfLocationType(oscar, accounts, hierarchies);
+            hierarchyChanges = processChangeOfLocationType(oscar, hierarchies);
         else if (tocList.contains(AMS_Utils.OWNERSHIP_IATA)) {
             keepSALocationTypeFlag = true;
-            hierarchyChanges = processChangeOfOwnershipToIATA(oscar, hierarchies, agenciesAffected, accounts);
+            hierarchyChanges = processChangeOfOwnershipToIATA(oscar, hierarchies, agenciesAffected);
         } else if (tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) {
             keepSALocationTypeFlag = true;
-            hierarchyChanges = processChangeOfOwnershipToNonIATA(oscar, accounts, hierarchies, agenciesAffected);
+            hierarchyChanges = processChangeOfOwnershipToNonIATA(oscar, hierarchies, agenciesAffected);
             //change of location for SA where the oscar has a target agency defined. this requires the SA to move under the target agency
         } else if ((tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) && oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA) && oscar.AMS_Target_Agency__c != null) {
             keepSALocationTypeFlag = true;
-            hierarchyChanges = processSAChangeOfLocation(oscar, accounts, hierarchies);
+            hierarchyChanges = processSAChangeOfLocation(oscar, hierarchies);
         }
 
         system.debug( 'DDD2 AMS_HierarchyHelper.hierarchyChanges: ' + hierarchyChanges);
@@ -1556,7 +1539,7 @@ public class AMS_OSCARTriggerHandler {
         return hierarchyChanges;
     }
 
-    public static AMS_HierarchyHelper.HierarchyStruct processChangeOfLocationType(AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies) {
+    public static AMS_HierarchyHelper.HierarchyStruct processChangeOfLocationType(AMS_OSCAR__c oscar, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies) {
 
 
         system.debug( 'DDD2 processChangeOfLocationType ');
@@ -1582,7 +1565,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
 
-    public static AMS_HierarchyHelper.HierarchyStruct processChangeOfOwnershipToIATA(AMS_OSCAR__c oscar, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies, Set<Id> agenciesAffected, Map<Id, Account> accounts) {
+    public static AMS_HierarchyHelper.HierarchyStruct processChangeOfOwnershipToIATA(AMS_OSCAR__c oscar, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies, Set<Id> agenciesAffected) {
 
         System.debug('AGENCY CHANGES: Processing change of ownership. Scenario IATA Buys IATA');
 
@@ -1601,7 +1584,7 @@ public class AMS_OSCARTriggerHandler {
 
     }
 
-    public static AMS_HierarchyHelper.HierarchyStruct processChangeOfOwnershipToNonIATA(AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies, Set<Id> agenciesAffected) {
+    public static AMS_HierarchyHelper.HierarchyStruct processChangeOfOwnershipToNonIATA(AMS_OSCAR__c oscar, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies, Set<Id> agenciesAffected) {
         //DEFINE A SET OF LOCATION CLASSES WHERE THE LOGIC SHOULD BE APPLIED
 
         System.debug('AGENCY CHANGES: Processing change of ownership. Scenario Non IATA Buys IATA');
@@ -1618,7 +1601,7 @@ public class AMS_OSCARTriggerHandler {
         return relationshipsToManage;
     }
 
-    public static AMS_HierarchyHelper.HierarchyStruct processSAChangeOfLocation(AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies) {
+    public static AMS_HierarchyHelper.HierarchyStruct processSAChangeOfLocation(AMS_OSCAR__c oscar, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies) {
 
         System.debug('AGENCY CHANGES: Processing change of location. OSCAR opened on SA and has a Target agency defined.');
 
@@ -1752,11 +1735,10 @@ public class AMS_OSCARTriggerHandler {
         if (tocList.contains(AMS_Utils.VFMR) ) {
             System.debug('Agencies Affected: ' + agenciesToMigrate);
             System.debug('Hierarchy Agencies: ' + accountHierarchyRelationships.get(oscar.Account__c));
-            if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts)){
+            if(!AMS_HierarchyHelper.isAllHierarchySelectedExcludeAbroad(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts)){                 
                 oscar.addError('When performing a change of remittance frequency (VMFR) all the active agencies in the hierarchy must be selected. Only branches abroad can be excluded');
                 validationsPassed=false;
             }
-
         }
 
         return validationsPassed;
@@ -2391,13 +2373,12 @@ public class AMS_OSCARTriggerHandler {
 
         if(oscars.isEmpty()) return;
 
-        Set<Id> accountIds = new Set<Id>();
         Set<Id> oscarOnlineAccredIds = new Set<Id>();
         Map<Id, Set<Id>> accountsInvolved = new Map<Id, Set<Id>>();
 
         for (AMS_OSCAR__c oscar : oscars) {
-            accountIds.add(oscar.Account__c);
-            accountIds.add(oscar.AMS_Target_Agency__c);
+            addAccountId(oscar.Account__c);
+            addAccountId(oscar.AMS_Target_Agency__c);
             oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
             accountsInvolved.put(oscar.Id, new Set<Id>{oscar.Account__c});
         }
@@ -2418,20 +2399,10 @@ public class AMS_OSCARTriggerHandler {
         for (List<AMS_Agencies_relationhip__c> hierarchyRelations : relationshipMap.values()) {
             for (AMS_Agencies_relationhip__c relationship : hierarchyRelations) {
 
-                accountIds.add(relationship.Parent_Account__c);
-                accountIds.add(relationship.Child_Account__c);
+                addAccountId(relationship.Parent_Account__c);
+                addAccountId(relationship.Child_Account__c);
             }
         }
-
-        //get account infos
-        Map<Id, Account> accounts = getAccounts(accountIds);
-
-        //map accountId -> active change code
-        Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
-        for (Agency_Applied_Change_code__c changeCode : [SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]){
-            accountsChangeCode.put(changeCode.Account__c, changeCode);
-        }
-
 
         List<AMS_Utils.Container> changesContainer = new List<AMS_Utils.Container>();
         List<AMS_Oscar__c> oscarsToCheckHierarchy = new List<AMS_Oscar__c>();
@@ -2459,7 +2430,7 @@ public class AMS_OSCARTriggerHandler {
                 if(updatedOSCAR.Change_effective_as_of__c > Date.today()) updatedOSCAR.Status__c = 'Accepted_Future Date';
                 else updatedOSCAR.Status__c = 'On Hold_Internal';
 
-                if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH) changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SANITYCHECK, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
+                if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH) changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SANITYCHECK, updatedOSCAR, getAccounts(accountsInvolved.get(updatedOSCAR.Id))));
             }
 
             if (oldOSCAR.STEP30__c != AMS_Utils.PASSED && updatedOSCAR.STEP30__c == AMS_Utils.PASSED) {
@@ -2471,12 +2442,12 @@ public class AMS_OSCARTriggerHandler {
 
                 if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH){
                     updatedOSCAR.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
-                    changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SUSPENSION, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
+                    changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SUSPENSION, updatedOSCAR, getAccounts(accountsInvolved.get(updatedOSCAR.Id))));
                 }
             }
 
             if (oldOSCAR.STEP31__c != AMS_Utils.PASSED && updatedOSCAR.STEP31__c == AMS_Utils.PASSED) {
-                changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.TERMINATION, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
+                changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.TERMINATION, updatedOSCAR, getAccounts(accountsInvolved.get(updatedOSCAR.Id))));
             }
 
             if (oldOSCAR.STEP32__c != AMS_Utils.PASSED && updatedOSCAR.STEP32__c == AMS_Utils.PASSED) {
@@ -2485,7 +2456,7 @@ public class AMS_OSCARTriggerHandler {
                     (updatedOSCAR.Process__c == AMS_UTils.VOLRELINQUISH_CA && updatedOSCAR.STEP31__c != AMS_Utils.PASSED)
                 ) updatedOSCAR.addError('Process can only be withdrawn after the process started');
                 
-                changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
+                changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, updatedOSCAR, getAccounts(accountsInvolved.get(updatedOSCAR.Id))));
             }
         }
 
@@ -2504,9 +2475,10 @@ public class AMS_OSCARTriggerHandler {
 
             //merge everything
             for (AMS_Utils.Container c : changesContainer) {
+                if(c == null) continue;
+
                 changeCodes.addAll(c.changeCodes);
                 accts.addAll(c.accts);
-
                 theoscars.addAll(c.oscars);
             }
 
@@ -2519,13 +2491,32 @@ public class AMS_OSCARTriggerHandler {
     //********** access methods ***********
     //*************************************
 
-    private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
-        return new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c,Parent.IATACode__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
-                BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
-                ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
-                Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-                Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name,
-                ANG_isNewGenAgency__c, Is_PCI_compliant__c FROM Account WHERE Id IN :accountIds]);
+    private static Set<Id> accountIds = new Set<Id>();
+    public static void addAccountId(Id a){
+        if(accountIds.add(a)) accounts = null; //if we are adding a new Id, we need to requery the accounts
+    }
+
+    private static List<Account> getAccounts(Id i){
+        return getAccounts(new Set<Id>{i});
+    }
+    public static List<Account> getAccounts(Set<Id> ids){
+        List<Account> accs = new List<Account>();
+        for(Id i : ids) if(accounts.containsKey(i)) accs.add(accounts.get(i));
+        return accs;
+    }
+    
+    @testVisible private static Map<Id, Account> accounts {
+        get{
+            //we just need to fetch the first time (or anytime we add a new Id)
+            if(accounts == null){
+                accounts = new Map<Id, Account>([SELECT Id, Name, Abbreviated_address__c, Abbreviated_name__c, ANG_FA_Opt_out__c, ANG_isNewGenAgency__c, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, CASS_Number__c, CNS_Agency__c, Company_Type__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, IATA_ISO_Billing_State__c, IATA_ISO_Billing_State__r.Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__r.Name, IATACode__c, In_a_Airport__c, Is_Branch_Abroad__c, Is_PCI_compliant__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, Parent.Location_Type__c, ParentId, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, VAT_Number_2__c, VAT_Number__c, Website,
+                    (SELECT Id, ParentId, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
+                    (SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
+                FROM Account WHERE Id IN :accountIds]);
+            }
+            return accounts;
+        }
+        set;
     }
 
     private static Map<Id, AMS_Pax_Accreditation_Form__c> getAccreditations(Set<Id> oscarOnlineAccredIds){
@@ -2817,21 +2808,30 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
                 }
+
+                /*** AMSU-166 ***/
+                if(oscar.Process__c == AMS_Utils.COR || oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
+                    allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
+                    List<String> errorMessages = AMS_Utils.validateCharacters(allOnlineAccr.get(oscar.AMS_Online_Accreditation__c), AMS_Utils.STAGING_AREA_FIELDS_TO_VALIDATE);
+                    if(!errorMessages.isEmpty()) {
+                        oscar.addError(String.join(errorMessages, '\n'));
+                    }
+                }
                 
                 /*** AMSU-121 Start ***/
-                allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
-                validateShippingAddress(oscar, allOnlineAccr);
+                Boolean isNewAccreditaion = AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c);
+                Boolean isCorrection = oscar.Process__c == AMS_Utils.COR;
+                Boolean isChangeOfLocation = oscar.Process__c == AMS_Utils.AGENCYCHANGES && String.isNotBlank(oscar.Type_of_change__c) && oscar.Type_of_change__c.contains(AMS_Utils.Location);
+                if(isNewAccreditaion || isCorrection || isChangeOfLocation) {
+                	allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
+                	validateShippingAddress(oscar, allOnlineAccr);
+                }
                 /*** AMSU-121 End ***/ 
             }
         }
     }
     /*** AMSU-121 Start ***/
     private static void validateShippingAddress(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations) {
-        Boolean currIsChangeOfLocation = String.isBlank(oscar.Type_of_change__c) ? false : new Set<String>(oscar.Type_of_change__c.split(';')).contains(AMS_Utils.Location);
-        if(!AMS_Utils.oscarNewProcesses.contains(oscar.Process__c)  && !currIsChangeOfLocation) {
-            return;
-        }
-
         AMS_Pax_Accreditation_Form__c accreditation = accreditations.get(oscar.AMS_Online_Accreditation__c);
         System.debug('Shipping validation -> ' + accreditation);
         if(accreditation != null) {
@@ -2851,7 +2851,7 @@ public class AMS_OSCARTriggerHandler {
                 return;
             }
 
-            oscar.addError('Error - Incomplete shipping address.');
+            oscar.addError('Incomplete shipping address.');
         }        
     }
     /*** AMSU-121 End ***/ 
@@ -3307,8 +3307,12 @@ public class AMS_OSCARTriggerHandler {
         ID certRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId(); //FM AMSU-113
         
         if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
+        	//TD2080607: partially refactored below code
+        	boolean bGenerateCC =  false;
+        	String changeCodeId = '';
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
-                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+
 
                 /*** AMSU-31 Start ***/
                 Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD};
@@ -3317,28 +3321,32 @@ public class AMS_OSCARTriggerHandler {
                     oscarsToCreateAuth.add(updatedOscar);
                 }
                 /*** AMSU-31 End ***/
+            	bGenerateCC = true;
+                changeCodeId = 'FIN-' + updatedOscar.Business_Process__c;
+            }else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
+				bGenerateCC = true;
+                changeCodeId = 'DIS-' + updatedOscar.Business_Process__c;
+            }else if (oldOSCAR.STEP4__c != 'Passed' && updatedOscar.STEP4__c == 'Passed') {
+            	bGenerateCC = true;
+                changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
+            }else if (oldOSCAR.STEP5__c != 'Passed' && updatedOscar.STEP5__c == 'Passed') {
+            	bGenerateCC = true;
+                changeCodeId = 'REC-' + updatedOscar.Business_Process__c;
+            }
+            
+            if(bGenerateCC){
+            	AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+            	AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
 
-                changeCode.name = 'FIN';
-                changeCode.reasonCode = '91';
-                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
-                changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
-                changeCode.status  = '9';
+                changeCode.name = n.Change_Code__c;
+                changeCode.reasonCode = n.Reason_Code__c;
+                //TD20180607 - Now passing the change code configuration
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c, changeCodeId, n);
+                changeCode.reasonDesc  = n.Reason_Code_Description__c;
+                changeCode.status  = n.Account_status_change__c;
+                changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 
-                Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
-
-            } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
-
-                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-
-                changeCode.name = 'DIS';
-                changeCode.reasonCode = '12';
-                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
-                changeCode.reasonDesc  = 'APPLICATION DISAPPROVED';
-                changeCode.status  = '1';
-
-                Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, (List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : ' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + ' }]', List<Account>.class), true);
             }
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
@@ -3415,7 +3423,8 @@ public class AMS_OSCARTriggerHandler {
                             Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
                             Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
                             Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-                            Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c   
+                            Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, Scope_of_Change__c, 
+                            Link_agent_name__c, Link_agent_name__r.Name  //AMSU-151
                             FROM AMS_Pax_Accreditation_Form__c
                             WHERE Id IN :oscarOnlineAccredIds]);
 
@@ -3482,13 +3491,66 @@ public class AMS_OSCARTriggerHandler {
                         //Checks if all Hierarchy was Selected
                         Boolean isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, accountHierarchyRelationships.get(updatedOscar.Account__c), accounts);
 
-                        if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){
+                        //AMSU-151 & AMSU-153 (AMSU-1) - Begin
+                        Account accountCheckVAT = [SELECT Id, Is_Branch_Abroad__c, VAT_Number__c, VAT_Number_2__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c, Location_Class__c 
+                                                   FROM Account 
+                                                   WHERE Id = :updatedOscar.Account__c];
+
+                        UtilityCS__c ucsVATnumberSpecialCaseCountries = Test.isRunningTest() ? new UtilityCS__c(name ='AMS_COR_VAT_COUNTRIES',value__c = 'BR;IN;MY;TH') : UtilityCS__c.getInstance('AMS_COR_VAT_COUNTRIES');
+                        UtilityCS__c ucsAccNameSpecialCaseCountries = Test.isRunningTest() ? new UtilityCS__c(name ='AMS_COR_ACC_NAME_COUNTRIES',value__c = 'CN;TW') : UtilityCS__c.getInstance('AMS_COR_ACC_NAME_COUNTRIES'); //AMSU-153
+                        UtilityCS__c ucsAccLinkAgentCountries = Test.isRunningTest() ? new UtilityCS__c(name ='AMS_COR_LINK_AGENT_COUNTRIES',value__c = 'ID') : UtilityCS__c.getInstance('AMS_COR_LINK_AGENT_COUNTRIES');
+                        
+                        List<String> lVATnumberSpecialCaseCountries = ucsVATnumberSpecialCaseCountries.Value__c.split(';');
+                        Set<String> sVATnumberSpecialCaseCountries = new Set<String>(lVATnumberSpecialCaseCountries);
+
+                        //AMSU-153
+                        List<String> lAccNameSpecialCaseCountries = ucsAccNameSpecialCaseCountries.Value__c.split(';');
+                        Set<String> sAccNameSpecialCaseCountries = new Set<String>(lAccNameSpecialCaseCountries);
+
+                        List<String> lLinkAgentSpecialCaseCountries = ucsAccLinkAgentCountries.Value__c.split(';');
+                        Set<String> sLinkAgentSpecialCaseCountries = new Set<String>(lLinkAgentSpecialCaseCountries);
+
+                        Set<String> specialLocationClasses = new Set<String> {'P', 'D'};
+
+                        Boolean isSingleAccountHierarchy = accounts.size() < 2 ? true : false;
+                        Boolean isVATnumberSpecialCase = ( sVATnumberSpecialCaseCountries.contains( accountCheckVAT.IATA_ISO_Country__r.ISO_Code__c) || accountCheckVAT.Is_Branch_Abroad__c == 'Yes');
+                        Boolean isAccNameSpecialCase = sAccNameSpecialCaseCountries.contains( accountCheckVAT.IATA_ISO_Country__r.ISO_Code__c); //AMSU-153
+                        Boolean isLinkAgentSpecialCase = sLinkAgentSpecialCaseCountries.contains(accountCheckVAT.IATA_ISO_Country__r.ISO_Code__c) && specialLocationClasses.contains(accountCheckVAT.Location_Class__c);
+                        
+                        System.debug('updatedOscar: updatedOscar.Account__r.IATA_ISO_Country__r.Name -' + updatedOscar.Account__r.IATA_ISO_Country__r.Name );
+                        System.debug('updatedOscar: updatedOscar.Account__r.IATA_ISO_Country__r.ISO_Code__c -' + updatedOscar.Account__r.IATA_ISO_Country__r.ISO_Code__c );
+                        System.debug('updatedOscar: updatedOscar.Account__r.Is_Branch_Abroad__c -' + updatedOscar.Account__r.Is_Branch_Abroad__c );
+                        System.debug('updatedOscar: isVATnumberSpecialCase -' + isVATnumberSpecialCase );
+                        System.debug('updatedOscar: isAccNameSpecialCase -' + isAccNameSpecialCase );
+                        
+                        if(isSingleAccountHierarchy){
+                            sType_of_change = 'CorrectionSingleAccount';
+                        }else if (isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)) {
                             sType_of_change = 'CorrectionSingleAccount';
                         } else if(isAllHierarchySelected){
                             sType_of_change = 'CorrectionAllHierarchy';
                         }else{
                             sType_of_change = 'CorrectionPerLocation';
                         }
+
+                        if((!isAllHierarchySelected || isSingleAccountHierarchy) && isLinkAgentSpecialCase) {//AMSU-151 Link Agent Name special case
+                            sType_of_change += '-LINKAGENT';
+                        }
+                        if(!isAllHierarchySelected && isVATnumberSpecialCase) {
+                            sType_of_change += '-ADD_VAT';
+                        }
+                        if(!isAllHierarchySelected && isAccNameSpecialCase) {
+                            sType_of_change += '-ACCNAME';
+                        }
+                        if(isAllHierarchySelected && !isSingleAccountHierarchy && isVATnumberSpecialCase) {
+                            sType_of_change += '-REMOVE_VAT';
+                        }
+
+                        System.debug('updatedOscar: isSingleAccountHierarchy -' + isSingleAccountHierarchy );
+                        System.debug('updatedOscar: isAllHierarchySelected -' + isAllHierarchySelected );
+                        System.debug('updatedOscar: isVATnumberSpecialCase -' + isVATnumberSpecialCase );
+                        System.debug('updatedOscar: sType_of_change -' + sType_of_change );
+                        //AMSU-151 & AMSU-153 (AMSU-1) - end
 
                         System.debug('updatedOscar: 1 -' + updatedOscar );
                         Id hierarchyHO = AMS_HierarchyHelper.getHierarchyHO(accountHierarchyRelationships.get(updatedOscar.Account__c));
@@ -3505,16 +3567,21 @@ public class AMS_OSCARTriggerHandler {
 
                         changeCode.status  = null;
     
+                        /*** AMSU-153 avoid duplicates ***/
+                        Set<Account> accs = new Set<Account>();
+    
                         //Check if the current account is the HO, if not we add the account
                         if(updatedOscar.Account__c != hierarchyHO){
-                            accts.add(new Account(Id = updatedOscar.Account__c));
+                            accs.add(new Account(Id = updatedOscar.Account__c));
                         }
 
                         for(Id accId : agenciesAffected){
                             if(accId != hierarchyHO){
-                                accts.add(new Account(Id = accId));
+                                accs.add(new Account(Id = accId));
                             }
                         }
+
+                        accts.addAll(accs);
 
                         // If the picklist is set create a COR change code.
                         if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
@@ -3541,7 +3608,7 @@ public class AMS_OSCARTriggerHandler {
                             System.debug( '[FM] changeCode: '+changeCode );
                             System.debug( '[FM] changeCodeHO: '+changeCodeHO );
                         }
-
+                        changeCode.memoText = 'Minor Changes';
                         List<AMS_OSCAR_JSON.ChangeCode> lChangeCode = new List<AMS_OSCAR_JSON.ChangeCode>();
                         List<AMS_OSCAR__c> lOscars = new List<AMS_OSCAR__c>();
 
@@ -3549,78 +3616,72 @@ public class AMS_OSCARTriggerHandler {
                         System.debug('accts: ' + accts );
                                 
 
-                        //Go throught all account
-                        for(Account forAccount : accts){
+                        System.debug('oscarOnlineAccreditation.Scope_of_Change__c: ' + oscarOnlineAccreditation.Scope_of_Change__c );
 
-                            System.debug('forAccount: ' + forAccount );
-
-                            AMS_OSCAR_JSON.ChangeCode auxChangeCode = changeCode.clone();
-                            Account acct_reason = accounts.get(forAccount.Id);
-                            List<String> lRes = new List<String>();
-                            if(acct_reason.Reason__c != null) lRes = AMS_Utils.splitAccReason(acct_reason.Reason__c);
-                            
-                            System.debug('acct_reason.Reason__c: ' + acct_reason.Reason__c + '|| lRes: ' + lRes);
-                            if(lRes != null && lRes.size() > 0){
-                                auxChangeCode.reasonCode = (lRes.get(0) == null ? '': lRes.get(0));
-                                auxChangeCode.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
-                            }
-                            lChangeCode.add(auxChangeCode);
-                            lOscars.add(updatedOscar);
-
+                        /*** AMSU-153 Start ***/
+                        //if(String.isNotBlank(oscarOnlineAccreditation.Scope_of_Change__c)) {
+                        if(isAllHierarchySelected){
+                            //agenciesAffected.addAll(accounts.keySet());
+                            agenciesAffected.add(hierarchyHO);
                         }
 
-
-                        AMS_ChangeCodesHelper.createAAChangeCodes(lChangeCode, lOscars, accts, true);
-
-                        //Specific for the HO Account, also checking if there's an account to work with
-                        if(acctHO.Id != null){
-
-                            //adding HO account
-                            agenciesAffected.add(acctHO.Id);
-
-                            Account acct_reason = accounts.get(acctHO.Id);
-                            List<String> lRes = AMS_Utils.splitAccReason(acct_reason.Reason__c);
-                            if(lRes != null && lRes.size() > 0){
-                                changeCodeHO.reasonCode = lRes.get(0);
-                                changeCodeHO.reasonDesc = lRes.get(1);
-                            }
-                            AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCodeHO}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acctHO}, true);
-                        }
-                        System.debug('agenciesAffected: 2 -' + agenciesAffected );
-                        System.debug('accounts:' + accounts );
+                        System.debug('agenciesAffected: ' + agenciesAffected );
+                        /*** AMSU-153 End ***/
                         
                         accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyCorrections(updatedOscar, agenciesAffected, sType_of_change, accounts, oscarOnlineAccreditation));
                         
                         System.debug('accountsToUpdate: ' + accountsToUpdate );
 
 
-                        set<Account> accountToupdateSet = new set<Account>();
+                        Set<Account> accountToupdateSet = new Set<Account>();                        
                         for(Id acctId : accountsToUpdate.keySet())
                         {
                             accountToupdateSet.add(accounts.get(acctId));
                         }
 
-                        //Store the accounts that are BR Abroad, for later after the accounts update we place again the initial "VAT Number" field value that cannot be changed for BR Abroad
-                        Map<Id,Account> mAccBranchAbroad = new Map<Id,Account>([Select Id,Is_Branch_Abroad__c,VAT_Number__c,VAT_Number_2__c,IATA_ISO_Country__r.Name from Account 
-                            where id in :accountToupdateSet]);
+                        //Go throught all account
+                        for(Account forAccount : accountToupdateSet){
 
-                        for(Id acctId : accountsToUpdate.keySet())
-                        {
-                            System.debug('accountsToUpdate - mAccBranchAbroad: ' + mAccBranchAbroad );
-                            System.debug('accountsToUpdate - acctId: ' + acctId );
+                            System.debug('forAccount: ' + forAccount );
 
-                            //Checks if the accounts is BR Abroad, or if it belongs to one of these countries:Brazil, India, Malaysia and Thailand - in order to place again the initial "VAT Number" field value that cannot be changed for BR Abroad
-                            if(mAccBranchAbroad.containsKey(acctId)){
-                                Account auxAccount = mAccBranchAbroad.get(acctId);
-                                if(acctId != updatedOscar.Account__c && (auxAccount.IATA_ISO_Country__r.Name == 'Brazil' || auxAccount.IATA_ISO_Country__r.Name == 'India' || auxAccount.IATA_ISO_Country__r.Name == 'Malaysia' || auxAccount.IATA_ISO_Country__r.Name == 'Thailand' || auxAccount.Is_Branch_Abroad__c == 'Yes')){
-                                    accounts.get(acctId).VAT_Number__c = mAccBranchAbroad.get(acctId).VAT_Number__c;
-                                    accounts.get(acctId).VAT_Number_2__c = mAccBranchAbroad.get(acctId).VAT_Number_2__c;
-                        }
+                            AMS_OSCAR_JSON.ChangeCode auxChangeCode = changeCode.clone();
+                            AMS_OSCAR_JSON.ChangeCode auxChangeCodeHO = changeCodeHO.clone();
+                            Account acct_reason = accounts.get(forAccount.Id);
+                            List<String> lRes = new List<String>();
+                            if(acct_reason.Reason__c != null) lRes = AMS_Utils.splitAccReason(acct_reason.Reason__c);
+                            
+                            System.debug('acct_reason.Reason__c: ' + acct_reason.Reason__c + '|| lRes: ' + lRes);
+                            if(lRes != null && lRes.size() > 0){
+
+                                System.debug('AMS_Utils.LocationTypeAllHOTypes: ' + AMS_Utils.LocationTypeAllHOTypes );
+                                System.debug('acct_reason.Location_Type__c: ' + acct_reason.Location_Type__c );
+                                System.debug('AMS_Utils.LocationTypeAllHOTypes.contains(acct_reason.Location_Type__c): ' + AMS_Utils.LocationTypeAllHOTypes.contains(acct_reason.Location_Type__c) );
+
+                                if( AMS_Utils.LocationTypeAllHOTypes.contains(acct_reason.Location_Type__c)){
+                                    auxChangeCodeHO.reasonCode = (lRes.get(0) == null ? '': lRes.get(0));
+                                    auxChangeCodeHO.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
+                                    lChangeCode.add(auxChangeCodeHO);
+                                }else{
+                                auxChangeCode.reasonCode = (lRes.get(0) == null ? '': lRes.get(0));
+                                auxChangeCode.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
+                                    lChangeCode.add(auxChangeCode);
+                            }
                             }
 
+                            System.debug('auxChangeCodeHO: ' + auxChangeCodeHO );
+                            System.debug('auxChangeCode: ' + auxChangeCode );
+
+                            //lChangeCode.add(auxChangeCode);
+                            lOscars.add(updatedOscar);
+
                         }
-                        System.debug('accountToupdateSet: ' + accountToupdateSet );
-                        update new List<Account>(accountToupdateSet);
+
+
+                        List<Account> accountsToUpd = new List<Account>(accountToupdateSet);
+
+                        AMS_ChangeCodesHelper.createAAChangeCodes(lChangeCode, lOscars, accountsToUpd, true);
+
+                        update accountsToUpd ;
 
                     }
                     if(updatedOscar.AMS_Correction_change_code__c == 'LET') {
@@ -3798,8 +3859,8 @@ public class AMS_OSCARTriggerHandler {
         
         for(AMS_OSCAR__c oscar: oscarsToInsertList){
             if(oscarAccountsMap.get(oscar.Id) == null){
-                Set<Id> accountIds = new Set<Id>{oscar.Account__c};
-                oscarAccountsMap.put(oscar.Id,accountIds);
+                Set<Id> accIds = new Set<Id>{oscar.Account__c};
+                oscarAccountsMap.put(oscar.Id,accIds);
             }
         }
 
@@ -3807,9 +3868,9 @@ public class AMS_OSCARTriggerHandler {
 
 
         Set<Id> accountIdsInvolvedSet = new Set<Id>();
-        for(Set<Id> accountIds: oscarAccountsMap.values()){
+        for(Set<Id> accIds : oscarAccountsMap.values()){
 
-            accountIdsInvolvedSet.addAll(accountIds);
+            accountIdsInvolvedSet.addAll(accIds);
         }
 
         ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
@@ -3910,8 +3971,8 @@ public class AMS_OSCARTriggerHandler {
 
         For(AMS_Process_Detail__c pd : [Select Id, Account__c, OSCAR__r.Account__c, OSCAR__c from AMS_Process_Detail__c where OSCAR__c in :oscarIds]){
             if(toReturn.get(pd.OSCAR__c) == null){
-                Set<Id> accountIds = new Set<Id>{pd.Account__c,pd.OSCAR__r.Account__c};
-                toReturn.put(pd.OSCAR__c,accountIds);
+                Set<Id> aIds = new Set<Id>{pd.Account__c,pd.OSCAR__r.Account__c};
+                toReturn.put(pd.OSCAR__c,aIds);
             }
             else{
                 toReturn.get(pd.OSCAR__c).add(pd.Account__c);
@@ -3939,34 +4000,19 @@ public class AMS_OSCARTriggerHandler {
 
         List<Account> accountsToUpdate = new List<Account>();
 
-        Set<Id> accountIds = new Set<Id>();
         Map<Id,AMS_Oscar__c> accountsOscars = new Map<Id,AMS_Oscar__c>();
 
-        For(AMS_Oscar__c oscar: oscarsToProcess){
-            accountIds.add(oscar.account__c);
+        for(AMS_Oscar__c oscar: oscarsToProcess){
+            addAccountId(oscar.account__c);
             accountsOscars.put(oscar.account__c,oscar);
-        }
-
-        Map<Id,Account> accountsFS = new Map<Id,Account>([Select Id, ParentId, ANG_FA_Opt_out__c, Guaranteed_amount__c from Account where Id in:accountIds or ParentId in:accountIds]);
-
-        Map<Id,List<Account>> accountsChildren = new Map<Id,List<Account>>();
-
-        For(Account account: accountsFS.values()){
-
-            if(!accountIds.contains(account.Id)){
-
-                if(accountsChildren.get(account.ParentId) == null)
-                    accountsChildren.put(account.ParentId,new List<Account>{account});
-                else
-                    accountsChildren.get(account.ParentId).add(account);
-            }
         }
 
         for (AMS_OSCAR__c oscar : oscarsToProcess){
 
+            Account acc = accounts.get(oscar.Account__c);
             if(oscar.STEP1__c == AMS_Utils.PASSED){        
                 
-                if(accountsFS.get(oscar.account__c).Guaranteed_amount__c == 0){
+                if(acc.Guaranteed_amount__c == 0){
 
                     oscar.addError('Cannot set Application Finalization step to "Passed" if the total FS provided (Guaranteed amount) by the HE is 0.');
                     continue;
@@ -3974,17 +4020,14 @@ public class AMS_OSCARTriggerHandler {
                 }
                 
                 Boolean valueToAgency = oscar.ANG_FA_Opt_out__c == 'Opt-Out' ? true : false;
-
-                if(accountsFs.get(oscar.Account__c).ANG_FA_Opt_out__c != valueToAgency ){
+                if(acc.ANG_FA_Opt_out__c != valueToAgency ){
                     Account a = new Account(Id = oscar.Account__c);
                     a.ANG_FA_Opt_out__c = valueToAgency;
                     accountsToUpdate.add(a);
 
-                    if(accountsChildren.get(oscar.Account__c) != null){
-                        For(Account acct: accountsChildren.get(oscar.Account__c)){
-                            acct.ANG_FA_Opt_out__c = valueToAgency;
-                            accountsToUpdate.add(acct);
-                        }
+                    for(Account acct: acc.ChildAccounts){
+                        acct.ANG_FA_Opt_out__c = valueToAgency;
+                        accountsToUpdate.add(acct);
                     }
                 }
                 
@@ -4000,20 +4043,7 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
-        List<Agency_Applied_Change_code__c> activeChangeCodes =
-            new List<Agency_Applied_Change_code__c>([SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]);
-
-        //map accountId -> active change code
-        Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
-        for (Id accId : accountIds) {
-            for (Agency_Applied_Change_code__c changeCode : activeChangeCodes)
-                if (changeCode.Account__c == accId)
-                    accountsChangeCode.put(accId, changeCode);
-        }
-
-
-
-        For(Account acct: accountsToUpdate){
+        for(Account acct: accountsToUpdate){
 
             if(accountIds.contains(acct.Id)){
 
@@ -4022,8 +4052,8 @@ public class AMS_OSCARTriggerHandler {
                 changeCode.name = acct.ANG_FA_Opt_out__c ? 'OOT' : 'OIN';
                 changeCode.memoText = acct.ANG_FA_Opt_out__c ? 'Agent has opted out from Annual financial review.' : 'Agent has opted in from Annual financial review.';
                 
-                changeCode.reasonCode = accountsChangeCode.get(acct.Id).Reason_Code__c;
-                changeCode.reasonDesc  = accountsChangeCode.get(acct.Id).Reason_Description__c;
+                changeCode.reasonCode = accounts.get(acct.Id).Agencies_Applied_Change_codes__r[0].Reason_Code__c;
+                changeCode.reasonDesc  = accounts.get(acct.Id).Agencies_Applied_Change_codes__r[0].Reason_Description__c;
 
                 AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {accountsOscars.get(acct.Id)}, new List<Account> {acct}, true);
             }
