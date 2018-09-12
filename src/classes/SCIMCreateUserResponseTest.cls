@@ -21,9 +21,9 @@ public class SCIMCreateUserResponseTest {
 
         userProvUtils.init(up.id);
         
-        String json = '{"id":"some-id","userName":"some-username", "active":"false"}';
+        //String json = '{"id":"some-id","userName":"some-username", "active":"false"}';
         
-        SCIMCreateUserResponse obj = SCIMCreateUserResponse.parse(json); 
-        userProvUtils.addExternalResponse(obj);
+        //SCIMCreateUserResponse obj = SCIMCreateUserResponse.parse(json); 
+        //userProvUtils.addExternalResponse(obj);
     }    
 }

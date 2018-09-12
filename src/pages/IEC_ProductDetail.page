@@ -41,6 +41,122 @@
     <!--<![endif]-->
 
         <head>
+            <!-- Google Tag Manager -->     
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PWSNSM3');
+            </script>
+            <!-- End Google Tag Manager -->
+            <script>
+                function getDevice() {
+                    if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                        return "Tablet";
+                    } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                        return "Mobile";
+                    } else {
+                        return "Desktop";
+                    }
+                }
+
+                window.dataLayer = window.dataLayer||[];
+                dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "language": "{!language}",
+                        "breadcrumb": "{!$Label.Home} > {!selectedCategory.label} > {!selectedTopicLabel} > {!ecomProduct.ProductName}"
+                    },
+                    "ecommerce": {!productWrapper}
+                });
+
+
+                function differenceBetweenCACsPush() {
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Product Details Page",
+                        "eventAction": "Click on Difference between CAC Evaluation & CAC Professional"
+                    });
+                }
+
+                function accessChechACodeEvaluationPush(description) {
+                    if(description === 'Access CheckACode Evaluation'){
+                        dataLayer.push({
+                            "event": "userAction",
+                            "eventCategory": "Product Details Page",
+                            "eventAction": "Click on Access CheckACode Evaluation",
+                            "eventLabel": "{!ecomProduct.ProductName} - {!ecomProduct.ProductId}"
+                        });
+                    }
+                }
+
+                function overviewTabPush() {
+                    dataLayer.push({
+                        "event": "VPV",
+                        "page": {
+                            "requestURI": window.location.pathname + window.location.search + "&ga_step=view-tab-overview"
+                        }
+                    });
+                }
+
+                function featuresTabPush() {
+                    dataLayer.push({
+                        "event": "VPV",
+                        "page": {
+                            "requestURI": window.location.pathname + window.location.search + "&ga_step=view-tab-features"
+                        }
+                    });
+                }
+
+                function pricingTabPush() {
+                    dataLayer.push({
+                        "event": "VPV",
+                        "page": {
+                            "requestURI": window.location.pathname + window.location.search + "&ga_step=view-tab-pricing"
+                        }
+                    });
+                }
+
+                function resourcesTabPush() {
+                    dataLayer.push({
+                        "event": "VPV",
+                        "page": {
+                            "requestURI": window.location.pathname + window.location.search + "&ga_step=view-tab-resources"
+                        }
+                    });
+                }
+
+                function createAnAccountPush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Product Details Page",
+                        "eventAction": "Click on Create an Account",
+                        "eventLabel": "{!ecomProduct.ProductName} - {!ecomProduct.ProductId}"
+                    });
+                }
+
+                function freeProTrialPush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Product Details Page",
+                        "eventAction": "Click on Free Pro Trial",
+                        "eventLabel": "{!ecomProduct.ProductName} - {!ecomProduct.ProductId}"
+                    });
+                }
+
+            </script>
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
@@ -48,7 +164,10 @@
         </head>
 
         <body data-media-size="" data-is-modal-open="false" id="page-top">
-            
+            <!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
             <div id="js-breakpoint-finder">
                 <span class="device-xs screen-xsmall"/>
                 <span class="device-sm screen-small"/>
@@ -95,10 +214,10 @@
                                             <h1 class="page-title">{!ecomProduct.ProductName}</h1>
                                             <div class="page-anchors">
                                                 <ol class="list js-anchors">
-                                                    <li class="active"><a href="#overview" data-scroll="">Overview</a></li>
-                                                    <li><a href="#features" data-scroll="">Features</a></li>
-                                                    <li><a href="#pricing" data-scroll="">Pricing</a></li>
-                                                    <li><a href="#resources" data-scroll="">Resources</a></li>
+                                                    <li class="active"><a onclick="overviewTabPush();" href="#overview" data-scroll="">Overview</a></li>
+                                                    <li><a onclick="featuresTabPush();" href="#features" data-scroll="">Features</a></li>
+                                                    <li><a onclick="pricingTabPush();" href="#pricing" data-scroll="">Pricing</a></li>
+                                                    <li><a onclick="resourcesTabPush();" href="#resources" data-scroll="">Resources</a></li>
                                                 </ol>
                                             </div>
                                         </div>
@@ -178,7 +297,7 @@
                                                 IATA Member Airlines get preferential pricing.<br/>Sign in to view applicable pricing 
                                                 <a href="{!$Site.BaseUrl}/IEC_Login?returl=/IEC_ProductDetail?id={!ecomProduct.productNumber}" class="text-link"></a>
                                                 or&nbsp;
-                                                <apex:commandLink styleClass="text-link" action="{!register}" value="create an account" />
+                                                <apex:commandLink onclick="createAnAccountPush();" styleClass="text-link" action="{!register}" value="create an account" />
                                             </p>
                                         </apex:outputPanel>
 
@@ -225,7 +344,7 @@
                                                         <apex:commandLink styleClass="button"  id="btnQuote" value="Get a quote" action="{!getQuote}" rerender="ratePlanMsgs" rendered="{!(subProd.ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Get a Quote' || subProd.ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(subProd.ratePlanInformation.Is_Triable__c)}">
                                                             <apex:param name="selectedRatePlanInformationId" value="{!subProd.ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
                                                         </apex:commandLink> 
-                                                        <apex:commandLink styleClass="button" id="btnTryMe"  value="Try now" action="{!tryMe}" rerender="ratePlanMsgs" rendered="{!subProd.ratePlanInformation.Is_Triable__c}">
+                                                        <apex:commandLink styleClass="button" id="btnTryMe"  value="Try now" action="{!tryMe}" rerender="ratePlanMsgs" rendered="{!subProd.ratePlanInformation.Is_Triable__c}" onclick="freeProTrialPush();">
                                                             <apex:param name="selectedRatePlanInformationId" value="{!subProd.ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
                                                         </apex:commandLink>                                             
                                                     </div>
@@ -249,14 +368,14 @@
                                         <apex:outputPanel rendered="{!pc.Name=='CACPRO'}">
                                             <li>
                                                 Difference between CAC Evaluation and CAC Professional 
-                                                <a href="javascript:void(window.open('{!$Site.BaseURL}/IECCACCompare','CAC','menubar=no,width=1011,height=784,toolbar=no,location=no,status=no,scrollbars=yes,resizable=no'))"> click here</a>                           
+                                                <a onclick="differenceBetweenCACsPush();" href="javascript:void(window.open('{!$Site.BaseURL}/IECCACCompare','CAC','menubar=no,width=1011,height=784,toolbar=no,location=no,status=no,scrollbars=yes,resizable=no'))"> click here</a>                           
                                            </li>
                                                                        
                                         </apex:outputPanel>
                                     
                                         <apex:variable value="{!$User}" var="u" rendered="{!bResource1Show}">
                                             <li>
-                                                {!sResource1Description} <a href="{!sResource1File}">(click Here)</a>
+                                                {!sResource1Description} <a href="{!sResource1File}" onclick="accessChechACodeEvaluationPush('{!sResource1Description}');">(click Here)</a>
                                             </li>
                                         </apex:variable>
 
@@ -276,11 +395,13 @@
                                 </section>
 
                                 <!-- Interactive Maps -->
-                                <section class="section-container resources" id="interactiveMap">
-                                    <h2 class="section-title">Interactive Statistics</h2>
-                                    <p class="light">IATA agencies on maps and charts</p>
-                                    <a class="button" href="{!$Site.BaseUrl}/IECGADMaps">View now</a>
-                                </section>
+                                <apex:outputPanel rendered="{!bSection7Show}">
+                                    <section class="section-container resources" id="interactiveMap">
+                                        <h2 class="section-title">Interactive Statistics</h2>
+                                        <p class="light">IATA agencies on maps and charts</p>
+                                        <a class="button" href="{!$Site.BaseUrl}/IECGADMaps">View now</a>
+                                    </section>
+                                </apex:outputPanel>
                             </section>
                         </div>
                     </main>
