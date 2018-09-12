@@ -5995,6 +5995,73 @@
         ]
       },
       {
+        "Name": "IEP.MODEL.B.ACCOUNT.SETUP",
+        "Flows": [
+          {
+            "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+            "Steps": [
+              {
+                "Name": "STEP6",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+                  }
+                ],
+                "DisplayFields": [
+                "New_docs_Received__c",
+                "ANG_Share_documentation_with_vendor__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
+            "Steps": [
+              {
+                "Name": "STEP17",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "performAML",
+                    "ActionLabel": "AMS_OSCAR_Action4",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_inProgress"
+                  },
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP17__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
+      },
+      {
         "Name": "IEP.BANK.ACCOUNT.SETUP",
         "Flows": [
           {

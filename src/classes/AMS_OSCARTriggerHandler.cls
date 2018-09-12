@@ -3071,6 +3071,11 @@ public class AMS_OSCARTriggerHandler {
 
         if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
 
+            if(updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP && !updatedOscar.ANG_Share_documentation_with_vendor__c){
+                updatedOscar.addError('Share documentation with vendor must be check in order to pass Sanity check.');
+                return;
+            }
+
             System.debug('Sending the email for the user to anounce approval of the oscar');
 
             //using an already existing method to send email aler to user.

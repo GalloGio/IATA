@@ -347,6 +347,16 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>ANG_Share_documentation_with_vendor__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Share documentation with vendor</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_Type_Of_Change__c</fullName>
         <description>Used for Newgen ISS project</description>
         <externalId>false</externalId>
