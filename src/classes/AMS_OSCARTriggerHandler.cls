@@ -3105,6 +3105,18 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
+        //NEWGEN-3857 - Send Notification to update results to IEP
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP41__c <> updatedOscar.STEP41__c && (updatedOscar.STEP41__c == 'Passed' || updatedOscar.STEP41__c == 'Failed')){
+            System.debug('Finish Setup Processing step for IEP bank account setup OSCAR. Sending notification to Mulesoft');
+            
+            ID configID; 
+            for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getall().values()){
+                if(cm.Change_Code == 'MaddY') configID = cm.id;
+            }
+
+            insert new AMS_Agency_Updates__c(Account__c = updatedOscar.account__c, Update_Type__c = 'Update', Change_Code__c = 'MaddY', configurationID__C = configID, Integration_System__c='Mulesoft');
+        }
+
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
 
             if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE){
