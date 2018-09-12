@@ -55,7 +55,7 @@ public with sharing class IECProductManager {
                     , Long_Description__c, Product_Feature__c
                     , Section_1_Show__c, Section_2_Name__c, Section_2_Show__c, Section_2_Description__c
                     , Section_3_Name__c, Section_3_Show__c, Section_3_Description__c, Section_4_Show__c
-                    , Section_5_Name__c, Section_5_Show__c, Section_5_Description__c, Section_6_Show__c
+                    , Section_5_Name__c, Section_5_Show__c, Section_5_Description__c, Section_6_Show__c, Section_7_show__c
                     , Resource_1_File__c, Resource_1_Description__c
                     , Resource_2_File__c, Resource_2_Description__c
                     , Resource_3_File__c, Resource_3_Description__c
@@ -77,7 +77,7 @@ public with sharing class IECProductManager {
                     , Long_Description__c, Product_Feature__c
                     , Section_1_Show__c, Section_2_Name__c, Section_2_Show__c, Section_2_Description__c
                     , Section_3_Name__c, Section_3_Show__c, Section_3_Description__c, Section_4_Show__c
-                    , Section_5_Name__c, Section_5_Show__c, Section_5_Description__c, Section_6_Show__c
+                    , Section_5_Name__c, Section_5_Show__c, Section_5_Description__c, Section_6_Show__c, Section_7_show__c
                     , Resource_1_File__c, Resource_1_Description__c
                     , Resource_2_File__c, Resource_2_Description__c
                     , Resource_3_File__c, Resource_3_Description__c
