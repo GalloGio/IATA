@@ -286,6 +286,9 @@ public with sharing class AMS_XML_Generator {
     //Type - determinates if it's "MasterData" or "ECC"
     //case -  Brings the OSCAR case Id for getting the ECC data
     public String getAgencyDetail(List<Account> agency, String[] r, String type, String caseId){
+        /*** AMSU-158 ***/
+        Set<Account> agenciesWithInvalidReason = new Set<Account>();
+
         
         Integer inicioCPU = Limits.getCpuTime();
         Integer inicioCPUx = Limits.getLimitCpuTime();
@@ -665,7 +668,7 @@ public with sharing class AMS_XML_Generator {
                     RecordTypeId,RecordType.Name,
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
-                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c FROM Account WHERE Id in :setAccountKeys]; 
+                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c, Reason__c FROM Account WHERE Id in :setAccountKeys]; 
 
         for (Account o : lAccount) {
             //20-06-2017 - Change AMSU-93 - special chars replacement
@@ -1233,48 +1236,18 @@ public with sharing class AMS_XML_Generator {
                         Datetime dtDefault_date = ag.Default_date__c == Null ? Null : Datetime.newInstance(ag.Default_date__c.year(), ag.Default_date__c.month(),ag.Default_date__c.day());
                         getElementNode(agEndorsementNode, 'organization_last_change_date', dtDefault_date == Null ? Null : String.valueOf(dtDefault_date.format('yyyyMMdd')));
 
-                        /* 
-                        //FM 19-04-2017 - removed by enhancement AMSU-18
-                        
-                        Datetime dtOrganization_Last_Change_Date = ag.Organization_Last_Change_Date__c == Null ? Null : Datetime.newInstance(ag.Organization_Last_Change_Date__c.year(), ag.Organization_Last_Change_Date__c.month(),ag.Organization_Last_Change_Date__c.day());
-                        getElementNode(agEndorsementNode, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
-                    
-                        //FM 24-11-2016
-                        //Get Record with "Default" (DEF) change code information
-                        Agency_Applied_Change_code__c auxAgAppChangeCodeDEF = mAg_VS_AgChangeCodeDEF.get(ag.Id);
-                        String sIATANumericStatus = AMS_Utils.getIATANumericStatus(ag.Status__c);
-
-                        //If Terminated need to insert another Endorsement entry with the default information, but only if this exist
-                        // the default status code is set to '5' - "Cash basis/no commission"
-                        if((sIATANumericStatus == '0' || sIATANumericStatus == '6') && auxAgAppChangeCodeDEF != null){
-
-                            Dom.Xmlnode agEndorsementNodeDEF = inspectionNode.addChildElement('endorsement', null, null);
-                            getElementNode(agEndorsementNodeDEF, 'accreditation_endorsement_status_code',  '5' );
-
-                            //Set the "Date_Organisation_Status_attained" value to the created date of the "DEF" change code
-                            Datetime dtOrgStatusAttained = Datetime.newInstance(auxAgAppChangeCodeDEF.Created_Date_To_Show__c.year(), auxAgAppChangeCodeDEF.Created_Date_To_Show__c.month(),auxAgAppChangeCodeDEF.Created_Date_To_Show__c.day());
-                            getElementNode(agEndorsementNodeDEF, 'date_organisation_status_attained', dtOrgStatusAttained == Null ? Null : String.valueOf(dtOrgStatusAttained.format('yyyyMMdd')));
-                            
-                            getElementNode(agEndorsementNodeDEF, 'last_inspection_date', dtLast_Inspection_Date == Null ? Null : String.valueOf(dtLast_Inspection_Date.format('yyyyMMdd')));
-                    
-                            if(ag.Accreditation_date__c != null){
-                                Datetime dtAccreditation_date = Datetime.newInstance(ag.Accreditation_date__c.year(), ag.Accreditation_date__c.month(),ag.Accreditation_date__c.day());
-                                getElementNode(agEndorsementNodeDEF, 'original_approval_date', dtAccreditation_date == Null ? Null : String.valueOf(dtAccreditation_date.format('yyyyMMdd')));
-                            }else if(ag.Original_Approval_DAte__c != null){
-                                Datetime dtOriginal_Approval_DAte = ag.Original_Approval_DAte__c == Null ? Null : Datetime.newInstance(ag.Original_Approval_DAte__c.year(), ag.Original_Approval_DAte__c.month(),ag.Original_Approval_DAte__c.day());
-                                getElementNode(agEndorsementNodeDEF, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
-                            }else if(auxAgAppChangeCodeFIN != null){
-                                Datetime dtOriginal_Approval_DAte = Datetime.newInstance(auxAgAppChangeCodeFIN.Created_Date_To_Show__c.year(), auxAgAppChangeCodeFIN.Created_Date_To_Show__c.month(),auxAgAppChangeCodeFIN.Created_Date_To_Show__c.day());
-                                getElementNode(agEndorsementNodeDEF, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
-                            }else{
-                                //If none of the options above is valid no value is sent!
-                                getElementNode(agEndorsementNodeDEF, 'original_approval_date',  Null);
+                        /*** AMSU-158 Begin ***/
+                        if(String.isNotBlank(ag.Reason__c)) {
+                            List<String> reasonParsed = ag.Reason__c.split('-');
+                            if(reasonParsed[0].length() != 2 || !reasonParsed[0].isNumeric()) {
+                                reasonParsed = new List<String> {'',''};
+                                agenciesWithInvalidReason.add(ag);
                             }
 
-                            getElementNode(agEndorsementNodeDEF, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
-                    
+                            getElementNode(agEndorsementNode, 'accreditation_endorsement_reason_code',  reasonParsed[0]);
+                            getElementNode(agEndorsementNode, 'accreditation_endorsement_reason_description',  reasonParsed[1]);
                         }
-                        */
+                        /*** AMSU-158 End ***/
                     }
                    
                     Boolean bHier = False;
@@ -1344,11 +1317,36 @@ public with sharing class AMS_XML_Generator {
         Integer fimCPU = Limits.getCpuTime();
         Integer fimCPUx = Limits.getLimitCpuTime();
         
+        if(!agenciesWithInvalidReason.isEmpty()) {
+            sendErrorNotification(agenciesWithInvalidReason);
+        }
+        
         return doc.toXmlString();   
     }
 
+    public void sendErrorNotification(List<Account> accounts) {
+        String body = 'Id, Reason\n';
+        for(Account acc : accounts) {
+            body += acc.Id + ',' + (String.isBlank(acc.Reason__c) ? '' : acc.Reason__c).escapeCSV() + '\n';
+        }
 
+        Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
+        Blob csvReport = Blob.valueOf(body);
+        csvAttc.setFileName('XML Generator errors report.csv');
+        csvAttc.setBody(csvReport);
 
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.subject = 'XML Generator errors report';
+        message.setPlainTextBody('XML Generator errors - Check attachment with execution results - ' + DateTime.now());
+        message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
+        Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};        
+        
+        if(!Test.isRunningTest() && !String.isBlank(Label.AMS_XML_GEN_ERROR_RECEIVER)) {
+            List<String> emailAddresses = Label.AMS_XML_GEN_ERROR_RECEIVER.split(';');
+            message.setToaddresses(emailAddresses);
+            Messaging.sendEmail(messages);
+        }
+    }
 
     public void getHeaderNode(Dom.Xmlnode rootNode, Map<String, String> mValues){
         
