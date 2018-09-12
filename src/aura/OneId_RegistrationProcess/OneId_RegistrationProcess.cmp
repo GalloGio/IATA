@@ -1,15 +1,16 @@
 <aura:component extends="c:Base" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="OneId_RegistrationProcessController">
     
     <ltng:require scripts="{!join(',', 
-            $Resource.jquery321minStandard,
-            $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/intlTelInput.js',
-            $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/js/data.js',
-            $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/spec/helpers/helpers.js',
-            $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/utils.js')}"
+            $Resource.jQuery172,
+            $Resource.InternationalPhoneNumberFormat + '/intl-tel-input-master/build/js/intlTelInput.js',
+            $Resource.InternationalPhoneNumberFormat + '/intl-tel-input-master/src/js/data.js',
+            $Resource.InternationalPhoneNumberFormat + '/intl-tel-input-master/src/spec/helpers/helpers.js',
+            $Resource.InternationalPhoneNumberFormat + '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         styles="{!join(',', 
             '../OneIdResources/css/normalize.css',
             '../OneIdResources/css/OneIdStyles.css',
-            '../OneIdResources/css/salesforce-lightning-design-system-ltng.css')}"
+            '../OneIdResources/css/salesforce-lightning-design-system-ltng.css',
+            $Resource.InternationalPhoneNumberFormat + '/intl-tel-input-master/build/css/intlTelInput.css')}"
         afterScriptsLoaded="{!c.jsLoaded}"
     />
 
@@ -25,6 +26,9 @@
     <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
     <aura:attribute name="serviceName" type="String" />
     <aura:attribute name="userCountry" type="String"/>
+    <aura:attribute name="isGuest" type="Boolean" default="true"/>
+    <aura:attribute name="isServiceUser" type="Boolean"/>
+    <aura:attribute name="isServiceEligible" type="Boolean"/>
     
     <!-- URL parameters -->
     <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
@@ -34,6 +38,36 @@
         <div class="slds-grid">
             <div class="slds-p-horizontal--small slds-size--1-of-1">
                 <h1>{!$Label.c.OneId_Create_an_account}</h1>
+
+				<aura:if isTrue="{! and(v.serviceName=='FRED',v.isGuest == false)}">
+                    <br/>
+                    <ul class="has-error uiInputDefaultError uiInput uiInputEmail uiInput--default uiInput--input">
+                    	<li class="form-element__help">
+							<aura:if isTrue="{! v.isServiceUser}">
+	                            <aura:unescapedHTML value="{! $Label.c.OneId_LoggedUserWithServiceAccessRegisteringError}"/>
+                                <br/>
+                                <a href="{!'/' + $Label.c.OneId_Community_Name}">Home</a>
+                                
+                                <aura:set attribute="else">
+                                    <aura:if isTrue="{! v.isServiceEligible}">
+                                        <aura:unescapedHTML value="{! $Label.c.OneId_EligibleLoggedUserRegisteringError}"/>
+		                                <br/>
+		                                <a href="{!'/' + $Label.c.OneId_Community_Name}">Home</a>
+
+                                        <aura:set attribute="else">
+	                                        <aura:unescapedHTML value="{! $Label.c.OneId_UneligibleLoggedUserRegisteringError}"/>
+		                                    <br/>
+		                                    <a href="{! $Label.c.OneId_FRED_Troubleshooting_Link}" target="_blank">{! $Label.c.OneId_FRED_Troubleshooting_Link}</a>
+                                        </aura:set>
+                                    </aura:if>                                
+                                </aura:set>
+                            </aura:if>
+                        </li>
+                    </ul>
+                    <br/>
+                    &nbsp;
+                    <aura:set attribute="else">
+
                 <div class="slds-accordion">
                     <div class="slds-accordion__list-item">
                         <section aura:id="section1" class="slds-accordion__section slds-is-open">
@@ -55,7 +89,7 @@
                                 
                             </div>
                             <div aria-hidden="false" class="slds-accordion__content" id="step1">
-                                <c:OneId_EmailValidation contact="{!v.contact}" />
+                                <c:OneId_EmailValidation contact="{!v.contact}" serviceName="{!v.serviceName}"/>
                             </div>
                         </section>
                     </div>
@@ -76,7 +110,7 @@
                                 
                             </div>
                             <div aria-hidden="true" class="slds-accordion__content" id="step2">
-                                <c:OneId_ContactForm contact="{!v.contact}" userCountry="{!v.userCountry}"/>
+                                <c:OneId_ContactForm contact="{!v.contact}" serviceName="{!v.serviceName}" userCountry="{!v.userCountry}"/>
                             </div>
                         </section>
                     </div>
@@ -96,18 +130,38 @@
                                 </div>
                                 
                             </div>
-                            <div aria-hidden="true" class="slds-accordion__content" id="step3">
+                                <div aria-hidden="true" class="slds-accordion__content" id="step3">
+                                <aura:if isTrue="{!v.serviceName=='FRED'}">
+                                    <!-- New version for FRED account creation -->
+                                    <c:OneId_Fred_AccountSelection contact="{!v.contact}" serviceName="{!v.serviceName}"/>
+                                    <!-- Default account creation -->
+                                    <aura:set attribute="else">
                                 <c:OneId_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}"/>
+                                    </aura:set>
+                                </aura:if>
+
                             </div>
                         </section>
                     </div>
                 </div>
+                    
+                    </aura:set>
+				</aura:if>
+
+
+
+
             </div>
         </div>
     </div>
 
     <div aura:id="registrationComplete" class="slds-text-align_center slds-p-around_large slds-hide">
-        <h1 class="slds-m-bottom_medium">{!$Label.c.OneId_RegistrationComplete}</h1>
-        <h3>{!$Label.c.OneId_CheckEmail}</h3>
+		<aura:if isTrue="{!v.serviceName == 'FRED'}">
+			<h1 class="slds-m-bottom_medium">{!$Label.c.OneId_CheckEmail}</h1>
+			<aura:set attribute="else">
+            	<h1 class="slds-m-bottom_medium">{!$Label.c.OneId_RegistrationComplete}</h1>            
+		        <h3>{!$Label.c.OneId_CheckEmail}</h3>
+			</aura:set> 
+		</aura:if>
     </div>
 </aura:component>
