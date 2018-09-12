@@ -361,7 +361,7 @@ public class CampaignMember_Svc
             System.debug('JJ iecEventSubsAux : ' + iecEventSubsAux);
 
             //If have an subscription that is active, then remove them from renewal notice
-            if(!(iecEventSubsAux != null && iecEventSubsAux.Active__c)){
+            if( iecEventSubsAux == null || !(iecEventSubsAux != null && iecEventSubsAux.Active__c)){
                 System.debug('JJ does not have active subscription');
                 Contact contact = contactsById.get(item.Order.BillToContactId);
                 //If contact is not deleted create CampaignMember

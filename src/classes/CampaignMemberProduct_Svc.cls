@@ -59,7 +59,7 @@ public class CampaignMemberProduct_Svc {
                 System.debug('JJ iecEventSubsAux : ' + iecEventSubsAux);
 
 
-                if(!(iecEventSubsAux != null && iecEventSubsAux.Active__c)){
+                if(iecEventSubsAux == null || !(iecEventSubsAux != null && iecEventSubsAux.Active__c)){
                     List<OrderItem> tmp = (itemsByContactId.containsKey(item.Order.BillToContactId)) 
                         ?   itemsByContactId.get(item.Order.BillToContactId) 
                         :   new List<OrderItem>(); 
