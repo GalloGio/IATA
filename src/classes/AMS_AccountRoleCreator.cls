@@ -192,6 +192,7 @@ public with sharing class AMS_AccountRoleCreator
             if(accreditationContact.Person_AMS__c != null) {
                 bucket.personId = accreditationContact.Person_AMS__c;
                 personsIds.add(accreditationContact.Person_AMS__c);
+                bucket.accreditationContact.Person_AMS__c = null;
             }
 
             accConBucketList.put(bucket.accreditationContact.Id,bucket);
@@ -408,10 +409,12 @@ public with sharing class AMS_AccountRoleCreator
                 if(rolesToUpsert.containsKey(roleId)) {
 
                     rolesToUpsert.get(roleId).Contact__c = rolesToUpsert.get(roleId).Person__r.Contact__c;
+                    rolesToUpsert.get(roleId).Person__c = null;
 
                 } else {
 
                     role.Contact__c = role.Person__r.Contact__c;
+                    role.Person__c = null;
                     rolesToUpsert.put(roleId, role);
 
                 }
