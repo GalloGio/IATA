@@ -120,6 +120,32 @@
         <type>AutoNumber</type>
     </fields>
     <fields>
+        <fullName>First_Call_Letter_required__c</fullName>
+        <description>States if financial securities under this Financial institution require First Call Letter</description>
+        <externalId>false</externalId>
+        <label>First Call Letter required</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Institution_Status_Image__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(Institution_Status__c,&quot;&quot;), &quot;&quot;, IF(ISPICKVAL(Institution_Status__c , &quot;Inactive&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNr&quot;,&quot;Inactive&quot;,30,30), 
