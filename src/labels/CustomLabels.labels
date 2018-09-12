@@ -6769,7 +6769,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Package Travel Professionals 2</shortDescription>
-        <value>&lt;span style="margin:3px;"&gt; Please select your courses here:&lt;/span&gt;</value>
+        <value>&lt;br&gt; Please select your courses here:</value> 
     </labels>
     <labels>
         <fullName>ID_Card_Photo_Disclaimer</fullName>
