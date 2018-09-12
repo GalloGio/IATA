@@ -29461,7 +29461,7 @@ AND(NOT(CONTAINS($Profile.Name , &quot;System Administrator&quot; )),
         <active>true</active>
         <errorConditionFormula>AND(Is_Primary_Account_Contact_Role__c  &gt; 0,   NOT(ISPICKVAL(Status__c, &apos;Active&apos;)))</errorConditionFormula>
         <errorDisplayField>Status__c</errorDisplayField>
-        <errorMessage>This contact is a Primary Contact (Account Contact Role) for this account and so cannot be inactivated. Please designate a new Primary Contact before inactivating this one.</errorMessage>
+        <errorMessage>This contact is a Primary Contact (Account Contact Role) for this account and so cannot be deactivated. Please designate a new Primary Contact before deactivating this one.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Required_Community</fullName>
