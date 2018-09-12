@@ -229,6 +229,11 @@ global class ANG_MasterData_Interface{
                     this.lsDueDiligence.add(new DueDiligence('MaddY', acc.Due_Diligence_Status__c));
                 }
 
+                /* Due Diligence to IEP - NEWGEN-3841  */
+                if(changeCode == 'MAPDF'){
+                    this.lsDueDiligence.add(new DueDiligence('MAPDF', acc.Due_Diligence_Status__c));
+                }
+
 
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r)

@@ -3092,6 +3092,18 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
+        //NEWGEN-3841 - Send Notification to update results to IEP
+        if(updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && (updatedOscar.STEP17__c == 'Passed' || updatedOscar.STEP17__c == 'Failed')){
+            System.debug('Finish Setup Processing step for IEP bank account setup OSCAR. Sending notification to Mulesoft');
+            
+            ID configID; 
+            for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getall().values()){
+                if(cm.Change_Code__c == 'MAPDF') configID = cm.id;
+            }
+
+            insert new AMS_Agency_Updates__c(Account__c = updatedOscar.account__c, Update_Type__c = 'Update', Change_Code__c = 'MAPDF', configurationID__C = configID, Integration_System__c='Mulesoft');
+        }
+
         //NEWGEN-2473 - if due diligence step is failed automatically close the OSCAR/case
         if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Failed'){
             //updatedOscar.Status__c = 'Closed';
@@ -3116,7 +3128,7 @@ public class AMS_OSCARTriggerHandler {
             
             ID configID; 
             for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getall().values()){
-                if(cm.Change_Code == 'MaddY') configID = cm.id;
+                if(cm.Change_Code__c == 'MaddY') configID = cm.id;
             }
 
             insert new AMS_Agency_Updates__c(Account__c = updatedOscar.account__c, Update_Type__c = 'Update', Change_Code__c = 'MaddY', configurationID__C = configID, Integration_System__c='Mulesoft');
