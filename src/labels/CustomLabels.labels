@@ -22357,6 +22357,15 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Apply Now</value>
     </labels>
     <labels>
+        <fullName>ISSP_SIS_Membership_BankMandateDescription</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_BankMandateDescription</shortDescription>
+        <value>Download this document and upload a signed version:
+ &lt;a href=&quot;/servlet/servlet.FileDownload?file=0159E000000K6J9&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SIS_Membership_Description_ISPA</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
@@ -22387,6 +22396,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Features</shortDescription>
         <value>Features</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_FormDescription</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_FormDescription</shortDescription>
+        <value>Download the PDF form and upload a signed version</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Subtitle</fullName>

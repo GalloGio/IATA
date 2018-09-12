@@ -342,7 +342,7 @@
                 <tr><td colspan="4" class="required"><div class="strong-label">Upload Files:</div></td></tr>
                 <apex:outputText ></apex:outputText>
                 <apex:iframe scrolling="false"
-                src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=2&reqRequired=Mandatory&reqName=Bank Mandate Form&reqDescription={!$Label.ISSP_SISMembership_BankMandateDescription}&reqIdentifier=BankMandate1&onlyOne=true"/>
+                src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=2&reqRequired=Mandatory&reqName=Bank Mandate Form&reqDescription=&reqIdentifier=BankMandate1&onlyOne=true"/>
             </apex:outputPanel>
         </apex:outputPanel>
 
@@ -351,7 +351,7 @@
             <apex:outputText ></apex:outputText>
             <tr><td colspan="4" class="required">
                 <apex:iframe scrolling="false"
-                src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=3&reqRequired=Mandatory&reqName=Bank Mandate Form&reqDescription={!$Label.ISSP_SISMembership_BankMandateDescription}&reqIdentifier=BankMandate2&onlyOne=true"/>
+                src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=3&reqRequired=Mandatory&reqName=Bank Mandate Form&reqDescription=&reqIdentifier=BankMandate2&onlyOne=true"/>
             </td></tr>
         </apex:outputPanel>
 
