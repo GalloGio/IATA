@@ -32,12 +32,31 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
     public list<SelectOption> itdiCourses;
     public String[] selectedITDICourses;
     
-    public String geographyinTravelPlanning_Description {get;set;}
-    public String destinationGeography_Description {get;set;}
-    public String servingtheTravelTourismCustomer_Description {get;set;}
-    public String introductiontoBSPLink_Description {get;set;}
-    public String leserviceauclientvoyageur_Description {get;set;}
-    public String sellingInternationalRailTransportation_Description {get;set;}
+    public String geographyinTravelPlanning_Description {get; set;}
+    public String destinationGeography_Description {get; set;}
+    public String servingtheTravelTourismCustomer_Description {get; set;}
+    public String introductiontoBSPLink_Description {get; set;}
+    public String leserviceauclientvoyageur_Description {get; set;}
+    public String sellingInternationalRailTransportation_Description {get; set;}
+    public String introduccionAlBSPlink_Description {get; set;}
+    public String introduccionAlSistemaBSPyLenguajeBSP_Description {get; set;}
+    public String losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description {get; set;}
+    public String socialMediaForTheTravelIndustry_Description {get; set;}
+ 
+    public String fundamentalsJourneyPricing_Description {get; set;}
+    public String repricingExchangeReissue_Description {get; set;}
+    public String travelAgencyFees_Description {get; set;}
+
+    //RN-INC419676
+    public String assisttravelersspecialneeds_Description {get; set;}
+    public String notionsessentlentarifetbillet_Description {get; set;}
+    public String advskillsjourneypriceticket_Description {get; set;}
+    public String servingthetravelcustomer_Description {get; set;}
+    public String socialmediafortravelindustry_Description {get; set;}
+    public String accfinmgmtforagencies_Description {get; set;}
+
+
+    
     
     private ID_Card__c[] idCardTemp;
     //private Contact associatedContact {get; set;}
@@ -68,12 +87,28 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
        detailledFees = new Map<String, decimal>();
        selectedITDICourses = new String[]{}; 
        
-       geographyinTravelPlanning_Description = Label.IDCard_GeographyinTravelPlanning_Description;
-       destinationGeography_Description = Label.IDCard_DestinationGeography_Description;
-       servingtheTravelTourismCustomer_Description = Label.IDCard_ServingtheTravelTourismCustomer_Description;
-       introductiontoBSPLink_Description = Label.IDCard_IntroductiontoBSPLink_Description;
-       leserviceauclientvoyageur_Description = Label.IDCard_Leserviceauclientvoyageur_Description;
-       sellingInternationalRailTransportation_Description = Label.IDCard_SellingInternationalRailTransportation_Description;
+        geographyinTravelPlanning_Description = Label.IDCard_GeographyinTravelPlanning_Description;
+        destinationGeography_Description = Label.IDCard_DestinationGeography_Description;
+        servingtheTravelTourismCustomer_Description = Label.IDCard_ServingtheTravelTourismCustomer_Description;
+        introductiontoBSPLink_Description = Label.IDCard_IntroductiontoBSPLink_Description;
+        leserviceauclientvoyageur_Description = Label.IDCard_Leserviceauclientvoyageur_Description;
+        sellingInternationalRailTransportation_Description = Label.IDCard_SellingInternationalRailTransportation_Description;
+        introduccionAlBSPlink_Description = Label.IDCard_IntroduccionAlBSPlink_Description;
+        introduccionAlSistemaBSPyLenguajeBSP_Description = Label.IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description;
+        losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description = Label.IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description;
+        socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description; 
+
+        fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing_Description;
+        repricingExchangeReissue_Description = Label.IDCard_RepricingExchangeReissue_Description;
+        travelAgencyFees_Description = Label.IDCard_Travel_Agency_Fees_Description;
+
+        //RN-INC419676
+        assisttravelersspecialneeds_Description = Label.Assist_Travelers_Special_Needs_Description; 
+        notionsessentlentarifetbillet_Description = Label.Notions_Essentl_Tarif_Billet_Description;
+        advskillsjourneypriceticket_Description = Label.Adv_Skills_Journey_Price_Ticket_Description;
+        servingthetravelcustomer_Description = Label.Serving_The_Travel_Customer_Description;
+        socialmediafortravelindustry_Description = Label.Social_Media_Travel_Industry_Description;
+        accfinmgmtforagencies_Description = Label.Acc_Fin_Mgmt_Agencies_Description;
        
        // Check the login and get Vernumber of the keycontact
        initialize();         
