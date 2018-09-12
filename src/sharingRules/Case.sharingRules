@@ -65,7 +65,7 @@
         <criteriaItems>
             <field>DPC_Software__c</field>
             <operation>equals</operation>
-            <value>CASSlink,PASSLink</value>
+            <value>CASSlink,PASS</value>
         </criteriaItems>
         <criteriaItems>
             <field>RecordTypeId</field>
