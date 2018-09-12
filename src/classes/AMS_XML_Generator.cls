@@ -1317,6 +1317,7 @@ public with sharing class AMS_XML_Generator {
         Integer fimCPU = Limits.getCpuTime();
         Integer fimCPUx = Limits.getLimitCpuTime();
         
+        /*** AMSU-158 ***/
         if(!agenciesWithInvalidReason.isEmpty()) {
             sendErrorNotification(agenciesWithInvalidReason);
         }
@@ -1324,7 +1325,8 @@ public with sharing class AMS_XML_Generator {
         return doc.toXmlString();   
     }
 
-    public void sendErrorNotification(List<Account> accounts) {
+    /*** AMSU-158 ***/
+    public void sendErrorNotification(Set<Account> accounts) {
         String body = 'Id, Reason\n';
         for(Account acc : accounts) {
             body += acc.Id + ',' + (String.isBlank(acc.Reason__c) ? '' : acc.Reason__c).escapeCSV() + '\n';
