@@ -35,18 +35,17 @@
                         <ui:outputRichText value="{!v.errorMessage}"/>
                     </div>
                 </aura:if>
-            </span>            
-            <aura:if isTrue="{!and(v.sanctionCountry,!empty(v.serviceName))}">                
-                    <div id="sanctionCountry">
-                        <ui:outputRichText value="{!$Label.c.ISSP_Sanctions_Message}"/>
-                    </div>
+            </span>
+            <aura:if isTrue="{!and(v.sanctionCountry,!empty(v.serviceName))}">
+                <div id="sanctionCountry">
+                    <ui:outputRichText value="{!$Label.c.ISSP_Sanctions_Message}"/>
+                </div>
             </aura:if>
             <aura:if isTrue="{!and(v.sanctionCountry,!!empty(v.serviceName))}">                
                     <div id="sanctionCountry">
                         <ui:outputRichText value="{!$Label.c.Generic_Sanctions_Message}"/>
                     </div>
             </aura:if>
-            
             <aura:if isTrue="{!!v.sanctionCountry}">
                 <aura:if isTrue="{!v.show90Days}">
                     <div id="userFrozen">
