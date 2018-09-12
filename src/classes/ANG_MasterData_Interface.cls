@@ -225,8 +225,8 @@ global class ANG_MasterData_Interface{
                 this.lsDueDiligence = new List<DueDiligence>();
 
                 /* Due Diligence to IEP - NEWGEN-3857  */
-                if(changeCode == 'ModADDil'){
-                    this.lsDueDiligence.add(new DueDiligence('ModADDil', acc.Due_Diligence_Status__c));
+                if(changeCode == 'MaddY'){
+                    this.lsDueDiligence.add(new DueDiligence('MaddY', acc.Due_Diligence_Status__c));
                 }
 
 
