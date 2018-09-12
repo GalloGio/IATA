@@ -79,14 +79,14 @@
         <description>Display in registration process (account association) available customer type to look for. List is different depending on service provide</description>
         <externalId>false</externalId>
         <label>Customer Type Activation</label>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <valueSet>
             <restricted>true</restricted>
             <valueSetDefinition>
-                <sorted>true</sorted>
+                <sorted>false</sorted>
                 <value>
                     <fullName>Agency</fullName>
                     <default>false</default>
@@ -320,6 +320,7 @@
         <columns>NAME</columns>
         <columns>Customer_Type_Activation__c</columns>
         <columns>RECORDTYPE</columns>
+        <columns>Is_Role_Selectable__c</columns>
         <columns>Service_Bundle__c</columns>
         <columns>Service_Provider_Name__c</columns>
         <columns>Is_Active__c</columns>
