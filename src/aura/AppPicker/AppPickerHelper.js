@@ -53,6 +53,22 @@
       		});
           	$A.enqueueAction(action);
       	},
+	getAppRoleSelectibility : function(component) {
+      		var action = component.get("c.getAppRoleSelectibility");
+      		var activeApp = component.get("v.activeApp");
+
+      		action.setParams({connectedapp : activeApp});
+      		action.setCallback(this, function(a) {
+      			var state = a.getState();
+      			if (state === "SUCCESS") {
+      				var results = a.getReturnValue();
+      				component.set("v.activeAppRoleSelectibility", results);
+      			} else {
+      				console.log(state);
+      			}
+      		});
+          	$A.enqueueAction(action);
+      	},
 	showSpinner: function(component) {
         var div = component.find("spinner");
         $A.util.removeClass(div, 'slds-hide');

@@ -36,6 +36,15 @@ public with sharing class OneIdTermsAndConditions {
                 appInfo.add(terms1);
                 appInfo.add(terms2);
                 appInfo.add(terms3);
+                
+                if(bundles.get(0).Additional_Terms_Custom_Labels__c != null){
+                    for(String additionalTerm : bundles.get(0).Additional_Terms_Custom_Labels__c.split(',')){
+                        String terms = ToTranslate(additionalTerm);
+                        System.debug('terms : ' + terms);
+                        appInfo.add(terms);
+                    }
+                }
+                
             } else {
                 appInfo.add('None Found');
             }

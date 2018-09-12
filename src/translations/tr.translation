@@ -45,6 +45,10 @@
         <name>FDS_ICCS</name>
     </customApplications>
     <customApplications>
+        <label><!-- FRED+ --></label>
+        <name>FRED</name>
+    </customApplications>
+    <customApplications>
         <label><!-- GDP --></label>
         <name>GDP</name>
     </customApplications>
@@ -11231,6 +11235,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>ISSP_Password</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PasswordChanged_FRED --></label>
+        <name>ISSP_PasswordChanged_FRED</name>
+    </customLabels>
+    <customLabels>
         <label>Parolalar eşleşmelidir.</label>
         <name>ISSP_PasswordMatch</name>
     </customLabels>
@@ -11580,6 +11588,10 @@ Akredite edilmiş acenteler için bir çok IATA faturası BPS/CASS yoluyla tahsi
     <customLabels>
         <label>Oturum açma denemeniz başarısız oldu. E-posta ve Parolanın doğru olduğundan emin olun.</label>
         <name>ISSP_Registration_Error_Login</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Registration_Error_MobilePhone --></label>
+        <name>ISSP_Registration_Error_MobilePhone</name>
     </customLabels>
     <customLabels>
         <label>Parola boş bırakılamaz, lütfen bir değer girin.</label>
@@ -13391,6 +13403,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_AccountSearch_Limit --></label>
+        <name>OneId_AccountSearch_Limit</name>
+    </customLabels>
+    <customLabels>
         <label>Şirket Bilgileri</label>
         <name>OneId_Account_Association</name>
     </customLabels>
@@ -13405,6 +13421,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label><!-- OneId_All rights reserved --></label>
         <name>OneId_All_rights_reserved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Authorization_Pending --></label>
+        <name>OneId_Authorization_Pending</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Billing City --></label>
@@ -13451,6 +13471,14 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Create_an_account</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_EligibleExistingUserError --></label>
+        <name>OneId_EligibleExistingUserError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_EligibleLoggedUserRegisteringError --></label>
+        <name>OneId_EligibleLoggedUserRegisteringError</name>
+    </customLabels>
+    <customLabels>
         <label>Lütfen e-posta adresinizi girin</label>
         <name>OneId_EmailError</name>
     </customLabels>
@@ -13459,8 +13487,184 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Email_Header_Identity</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_ExistingUserWithFredAccessError --></label>
+        <name>OneId_ExistingUserWithFredAccessError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_ContactUs_Link --></label>
+        <name>OneId_FRED_ContactUs_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_0 --></label>
+        <name>OneId_FRED_Terms_0</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_1 --></label>
+        <name>OneId_FRED_Terms_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_10 --></label>
+        <name>OneId_FRED_Terms_10</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_11 --></label>
+        <name>OneId_FRED_Terms_11</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_12 --></label>
+        <name>OneId_FRED_Terms_12</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_13 --></label>
+        <name>OneId_FRED_Terms_13</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_14 --></label>
+        <name>OneId_FRED_Terms_14</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_15 --></label>
+        <name>OneId_FRED_Terms_15</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_16 --></label>
+        <name>OneId_FRED_Terms_16</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_17 --></label>
+        <name>OneId_FRED_Terms_17</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_18 --></label>
+        <name>OneId_FRED_Terms_18</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_19 --></label>
+        <name>OneId_FRED_Terms_19</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_2 --></label>
+        <name>OneId_FRED_Terms_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_20 --></label>
+        <name>OneId_FRED_Terms_20</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_21 --></label>
+        <name>OneId_FRED_Terms_21</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_22 --></label>
+        <name>OneId_FRED_Terms_22</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_23 --></label>
+        <name>OneId_FRED_Terms_23</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_24 --></label>
+        <name>OneId_FRED_Terms_24</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_25 --></label>
+        <name>OneId_FRED_Terms_25</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_26 --></label>
+        <name>OneId_FRED_Terms_26</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_27 --></label>
+        <name>OneId_FRED_Terms_27</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_28 --></label>
+        <name>OneId_FRED_Terms_28</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_29 --></label>
+        <name>OneId_FRED_Terms_29</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_3 --></label>
+        <name>OneId_FRED_Terms_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_30 --></label>
+        <name>OneId_FRED_Terms_30</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_31 --></label>
+        <name>OneId_FRED_Terms_31</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_32 --></label>
+        <name>OneId_FRED_Terms_32</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_33 --></label>
+        <name>OneId_FRED_Terms_33</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_34 --></label>
+        <name>OneId_FRED_Terms_34</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_35 --></label>
+        <name>OneId_FRED_Terms_35</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_36 --></label>
+        <name>OneId_FRED_Terms_36</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_37 --></label>
+        <name>OneId_FRED_Terms_37</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_4 --></label>
+        <name>OneId_FRED_Terms_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_5 --></label>
+        <name>OneId_FRED_Terms_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_6 --></label>
+        <name>OneId_FRED_Terms_6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_7 --></label>
+        <name>OneId_FRED_Terms_7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_8 --></label>
+        <name>OneId_FRED_Terms_8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_9 --></label>
+        <name>OneId_FRED_Terms_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_Of_Use_Link --></label>
+        <name>OneId_FRED_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Troubleshooting --></label>
+        <name>OneId_FRED_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Troubleshooting_Link --></label>
+        <name>OneId_FRED_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Fred_Select_Type_of_Company --></label>
+        <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
         <label>&quot;GSA kodu ve ülke kombinasyonunuz için şirket bulunamaması ihtimaline karşı lütfen doğru bilgileri girdiğinizden emin olun veya &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;sorun giderme kılavuzu&lt;/a&gt; bölümümüze başvurun.&quot;</label>
@@ -13535,12 +13739,32 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Job_Function</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_LoggedUserWithServiceAccessRegisteringError --></label>
+        <name>OneId_LoggedUserWithServiceAccessRegisteringError</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Login --></label>
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_LoginFail --></label>
         <name>OneId_LoginFail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_LoginUserNotEligibleForFredMessage --></label>
+        <name>OneId_LoginUserNotEligibleForFredMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_LoginUserWithoutFredAccessMessage --></label>
+        <name>OneId_LoginUserWithoutFredAccessMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Max_Account_Reached --></label>
+        <name>OneId_Max_Account_Reached</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Max_Account_Reached2 --></label>
+        <name>OneId_Max_Account_Reached2</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_My available applications --></label>
@@ -13589,6 +13813,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label><!-- OneId_Password_ErrorBlank --></label>
         <name>OneId_Password_ErrorBlank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Passwords_Mix --></label>
+        <name>OneId_Passwords_Mix</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Please_Wait --></label>
@@ -13706,6 +13934,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>OneId_Terms_of_Use_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_Thank_you_Fred_Access_Request --></label>
+        <name>OneId_Thank_you_Fred_Access_Request</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Thank you for requesting access to our service. --></label>
         <name>OneId_Thank_you_for_requesting_access_to_our_service</name>
     </customLabels>
@@ -13724,6 +13956,14 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- OneId URL javaScript --></label>
         <name>OneId_URL_javaScript</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_UneligibleExistingUserError --></label>
+        <name>OneId_UneligibleExistingUserError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_UneligibleLoggedUserRegisteringError --></label>
+        <name>OneId_UneligibleLoggedUserRegisteringError</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_User_CreatedFromContact --></label>
@@ -14940,12 +15180,20 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Taxes</name>
     </customLabels>
     <customLabels>
+        <label><!-- TermsConditionFred --></label>
+        <name>TermsConditionFred</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Thank you --></label>
         <name>ThankYou</name>
     </customLabels>
     <customLabels>
         <label><!-- The attachments you select will be copied to the target case --></label>
         <name>The_attachments_you_select_will_be_copied_to_the_target_case</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TitleTermsConditionFred --></label>
+        <name>TitleTermsConditionFred</name>
     </customLabels>
     <customLabels>
         <label><!-- Title_Home_Page --></label>
