@@ -27,15 +27,20 @@
         var emailValue = emailCmp.get("v.value");
 
         //check if username is available (insert + rollback)
-        var action = c.get("c.checkIsUsernameIsAvailableInGlobalSalesforce");
+        var action = c.get("c.getUserInformationFromEmail");
         action.setParams({
-            "email":emailValue
+            "email":emailValue,
+		    "serviceName":c.get("v.serviceName")
         });
 
-        action.setCallback(this, function(a) {
-            var isUserCanBeCreated = a.getReturnValue();
-
-            if(isUserCanBeCreated){
+		action.setCallback(this, function(resp) {
+			var params = resp.getReturnValue();
+            console.log('ooo'+params);
+            c.set("v.isEmailAddressAvailable", params.isEmailAddressAvailable);
+            c.set("v.isServiceUser", params.isServiceUser);
+            c.set("v.isServiceEligible", params.isServiceEligible);
+            
+            if(params.isEmailAddressAvailable){
                 //notify parent component that step is completed
                 var e = c.getEvent("StepCompletionNotification");
                 e.setParams({
@@ -48,8 +53,10 @@
                 emailCmp.set("v.disabled", true);
                 c.find("termsaccepted").set("v.disabled", true);
             }else{
-                emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
-                c.set("v.Terms", false);
+                if(c.get("v.serviceName") != 'FRED'){
+                    emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
+                }
+				c.set("v.Terms", false);
             }
             $A.util.toggleClass(spinner, "slds-hide");
         });

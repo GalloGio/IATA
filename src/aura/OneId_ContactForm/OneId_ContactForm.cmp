@@ -5,6 +5,7 @@
     <aura:attribute name="userCountry" type="String"/>
     <aura:attribute name="hasJquery" type="Boolean"/>
     <aura:attribute name="contact" type="Contact" default="{'sObjectType':'Contact'}"/>
+    <aura:attribute name="serviceName" type="String"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler event="c:OneId_RequestCompletionCheck_EVT" action="{!c.checkCompletion}"/>
@@ -57,13 +58,23 @@
         
         
         <div aura:id="phoneContainer" class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
-            <label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Phone}</label>
-            <ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="phoneFormat slds-input" required="true" updateOn="keyup" keyup="{!c.validateNumber}" />
+            <label class="slds-form-element__label" >
+				<aura:if isTrue="{! v.serviceName != 'FRED'}">
+                	<abbr class="slds-required" title="required">*</abbr>
+                </aura:if>
+                {!v.contactLabels.Phone}
+            </label>
+            <ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="phoneFormat slds-input" required="{! v.serviceName != 'FRED'}" updateOn="keyup" keyup="{!c.validateNumber}" />
         </div>
         
-        <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
-            <label class="slds-form-element__label" >{!v.contactLabels.MobilePhone}</label>
-            <ui:inputPhone aura:id="contactMobilePhone" value="{!v.contact.MobilePhone}" class="mobileFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}" />
+        <div aura:id="mobilePhoneContainer" class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label" >
+				<aura:if isTrue="{! v.serviceName == 'FRED'}">
+                	<abbr class="slds-required" title="required">*</abbr>
+                </aura:if>
+				{!v.contactLabels.MobilePhone}
+            </label>
+            <ui:inputPhone aura:id="contactMobilePhone" value="{!v.contact.MobilePhone}" class="mobileFormat slds-input" required="{! v.serviceName == 'FRED'}" updateOn="keyup" keyup="{!c.validateNumber}" />
         </div>
         
         <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
