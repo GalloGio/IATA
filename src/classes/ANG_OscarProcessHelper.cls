@@ -5,6 +5,10 @@ global class ANG_OscarProcessHelper {
 
 	public static final String ANG_PCI_RENEWAL = 'ANG_PCI_RENEWAL'; //email template id name for pci automatic renewal
 
+	/* EasyPay Service Providers */
+	public static final Set<String> MODEL_A_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)'};
+	public static final Set<String> MODEL_B_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)','IATA EasyPay (MSTS)'};
+
 	public static boolean isIATACodeGenerationRunning = false;
 
 	webservice static String[] processIATACodeGeneration(String accountId, String onlineAccreditationId, String oscarId){
@@ -1697,7 +1701,7 @@ global class ANG_OscarProcessHelper {
 			FROM Contact WHERE AccountId IN :accsMap.keySet() 
             AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
                 AND ANG_Portal_Service_Role__c = 'IEP Admin' 
-                AND Portal_Application__r.Name = 'IATA EasyPay (EDENRED)')]){
+                AND Portal_Application__r.Name IN : (model == 'A' ? MODEL_A_PROVIDERS : MODEL_B_PROVIDERS))]){
                 
 			contactAcc.put(con.AccountId,con);
 		} 
@@ -1720,8 +1724,8 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
 	        fieldsOfObject.put('Origin','IEP portal');
-	        fieldsOfObject.put('Reason1__c', 'Onboarding IEP Model ' +model);
-	        fieldsOfObject.put('Subject','Onboarding IEP Model '+model+' - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Reason1__c', model == 'A' ? 'Onboarding IEP Model A' : 'Screening IEP Model B');
+	        fieldsOfObject.put('Subject',(model == 'A' ? 'Onboarding IEP Model A - ' : 'Screening IEP Model B -') + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 	        

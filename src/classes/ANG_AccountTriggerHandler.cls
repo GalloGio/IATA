@@ -590,7 +590,7 @@ public class ANG_AccountTriggerHandler {
 
 		for(Account a :triggerNew){
 
-			if(a.ANG_IEP_Status__c == 'In Progress' && oldMap.get(a.Id).ANG_IEP_Status__c == 'No IEP Account') 
+			if(a.ANG_IEP_Status__c == 'In Progress' && oldMap.get(a.Id).ANG_IEP_Status__c != 'In Progress') 
 				iepAccounts.add(a.Id);
 
 		}
