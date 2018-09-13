@@ -2,6 +2,8 @@
     Created by Kevin Ky 2015-09-23
 ****************************************************************************************************/
 public without sharing class Order_Sel extends Selector{
+
+    public static final Integer SIX_MONTHS_DAYS = 180;
     
     public List<Schema.SObjectField> getSObjectFieldList()
     {
@@ -770,11 +772,11 @@ public without sharing class Order_Sel extends Selector{
     public static List<Order> getCustomerRenewalNotices(Id idContact)
     {
         String type = IECConstants.ORDER_TYPE_RENEWAL_NOTIFICATION;
-
+        Date dateToCompare = Date.today().addDays(-SIX_MONTHS_DAYS);
         return [SELECT Id, OrderNumber, EffectiveDate, EndDate, Total_Amount__c, CreatedDate
             FROM Order
             WHERE Type = :type 
-            AND ((Status NOT IN :IECConstants.expiredStatus OR EffectiveDate > :IECConstants.dateToCompare) )
+            AND ((Status NOT IN :IECConstants.expiredStatus OR EffectiveDate > :dateToCompare) )
             AND BillToContactId = :idContact
             ORDER BY EffectiveDate DESC, OrderNumber DESC
         ];
@@ -795,7 +797,7 @@ public without sharing class Order_Sel extends Selector{
 
         String type = IECConstants.ORDER_TYPE_QUOTE;
         List<String> expiredStatus = IECConstants.expiredStatus;
-        Date dateToCompare = IECConstants.dateToCompare;
+        Date dateToCompare = Date.today().addDays(-SIX_MONTHS_DAYS);
         
         String query = String.format(
             'SELECT {0}' + 
@@ -936,7 +938,7 @@ public without sharing class Order_Sel extends Selector{
     public List<Order> getMyOrders(Id contactId)
     {
         List<String> expiredStatus = IECConstants.expiredStatus;
-        Date dateToCompare = IECConstants.dateToCompare;
+        Date dateToCompare = Date.today().addDays(-SIX_MONTHS_DAYS);
         String historyType = 'History';
 
             // 'AND SAP_Order_Number__c != null  AND SAP_Invoice__r.Contract_Number__c != null ' +
@@ -965,19 +967,12 @@ public without sharing class Order_Sel extends Selector{
         Created 2018/08
             Return list of orders of a specific contact for the order history page
     ****************************************************************************************************/
-    public List<Order> getMyOrdersForOrderHistory(Id contactId)
-    {
-        List<String> expiredStatus = IECConstants.expiredStatus;
-        Date dateToCompare = IECConstants.dateToCompare;
-        List<String> historyType = new List<String>();
-        historyType.add('History'); 
-        historyType.add('Renewal Notification');
-        historyType.add('Quote');
-        historyType.add('Cart');
+    public List<Order> getMyOrdersForOrderHistory(Id contactId) {
 
-            // 'AND SAP_Order_Number__c != null  AND SAP_Invoice__r.Contract_Number__c != null ' +
-            // 'AND ((type NOT IN :expiredType OR Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) AND type != :historyType) ' +
-         String query = String.format(
+        List<String> expiredStatus = IECConstants.expiredStatus;
+        List<String> expiredTypes = IECConstants.expiredTypes;
+        Date dateToCompare = Date.today().addDays(-SIX_MONTHS_DAYS);
+        String query = String.format(
             'SELECT {0}' + 
             ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c, ' +
             'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c,Discount__c, Setup_Fee__c ' +
@@ -985,7 +980,7 @@ public without sharing class Order_Sel extends Selector{
             'FROM {1} ' +
             'WHERE BillToContactId = :contactId ' +
            
-            'AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) AND Type NOT IN :historyType ' +
+            'AND Status NOT IN :expiredStatus AND EffectiveDate > :dateToCompare AND Type NOT IN :expiredTypes ' +
 
             'ORDER BY Type,  CreatedDate DESC', 
             new List<String>{
@@ -993,7 +988,8 @@ public without sharing class Order_Sel extends Selector{
                 getSObjectType().getDescribe().getName()
             }
         );
-         system.debug('### query: ' + query);
+         
+        system.debug('### query: ' + query);
         return Database.query(query);
     }
 
