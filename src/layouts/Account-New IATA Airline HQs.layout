@@ -5,6 +5,9 @@
     <customButtons>Chatter_Broadcast_Tool</customButtons>
     <customButtons>Key_Account_Plan</customButtons>
     <customButtons>Web_App_View</customButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -54,6 +57,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Portal_Service_Report__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ICAO_Member__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -173,7 +180,7 @@
                 <field>BIETA_Member__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ICH_Member__c</field>
             </layoutItems>
             <layoutItems>
@@ -336,6 +343,25 @@
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>FRED+</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>X8585_Name__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>fredp_aircraftoperator_eligibility__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -541,18 +567,6 @@
                 <behavior>Edit</behavior>
                 <field>Airline_CASS_Participations__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BSP_CI_Valid__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CASS_CI_Valid__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BSP_FOC_Valid__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -703,7 +717,7 @@
         <label>Services Rendered</label>
         <layoutColumns>
             <layoutItems>
-                <height>300</height>
+                <height>200</height>
                 <page>Airline_Services_Rendered_Account</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
@@ -898,23 +912,11 @@
     <miniLayout>
         <fields>Name</fields>
         <fields>ParentId</fields>
-        <fields>Membership_status__c</fields>
-        <fields>ICH_Member__c</fields>
-        <fields>ACH_Member__c</fields>
-        <fields>ICCS_Membership_Status__c</fields>
-        <fields>Due_Diligence_Status__c</fields>
-        <fields>Due_Diligence_Remarks__c</fields>
-        <fields>Airline_BSP_Participations__c</fields>
-        <fields>Airline_CASS_Participations__c</fields>
-        <fields>IATA_ISO_Country__c</fields>
         <fields>EF_SIS_Designator__c</fields>
         <fields>EF_SIS_Code__c</fields>
         <fields>SIS_ID__c</fields>
         <fields>SIS_Status__c</fields>
         <fields>SIS_Sub_Status__c</fields>
-        <fields>BSP_CI_Valid__c</fields>
-        <fields>BSP_FOC_Valid__c</fields>
-        <fields>CASS_CI_Valid__c</fields>
     </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
@@ -1087,10 +1089,6 @@
         <relatedList>Location__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>ISSP_Web_Service_Log__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

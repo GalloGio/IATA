@@ -3024,4 +3024,55 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                    And IATACode__c Like :iataCode];
     }
 
+    /*** AMSU-166 Start ***/
+    /**
+    *   Method that validates if the record fields contain only latin characters
+    **/
+    public static List<String> validateCharacters(sObject record, List<Schema.SObjectField> fieldsToCheck) {
+        List<String> res = new List<String>();
+        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        Pattern p = Pattern.compile(ISO_8859_1_regEx);
+
+        for(Schema.SObjectField field : fieldsToCheck) {
+            String fieldAPIName = field.getDescribe().getName();
+            String fieldLabel = field.getDescribe().getLabel();
+            Object value = record.get(fieldAPIName);
+            if( value == null || !(value instanceof String)) {
+                continue; //Skip non String fields
+            }
+
+            if(!p.matcher((String) value).matches()) {
+                res.add(fieldLabel + ': ' + Label.ISSP_EnterValidString);
+            }
+
+            if(((String) value).contains('\t')) {
+                res.add(fieldLabel + ': Please remove all tabs');
+            }
+        }
+
+        return res;
+    }
+
+    public static final List<Schema.SObjectField> STAGING_AREA_FIELDS_TO_VALIDATE = new List<Schema.SObjectField> {
+        AMS_Pax_Accreditation_Form__c.Account_Name__c, 
+        AMS_Pax_Accreditation_Form__c.IATACode__c, 
+        AMS_Pax_Accreditation_Form__c.CASS_Number__c, 
+        AMS_Pax_Accreditation_Form__c.Short_Name__c, 
+        AMS_Pax_Accreditation_Form__c.Trade_Name__c, 
+        AMS_Pax_Accreditation_Form__c.ISSP_AMS_License_No__c, 
+        AMS_Pax_Accreditation_Form__c.ISSP_AMS_VAT_number__c,
+        AMS_Pax_Accreditation_Form__c.Branch_Office_Street_name_number__c, 
+        AMS_Pax_Accreditation_Form__c.Branch_Office_Postal_code__c, 
+        AMS_Pax_Accreditation_Form__c.Branch_Office_City__c, 
+        AMS_Pax_Accreditation_Form__c.Shipping_Street__c, 
+        AMS_Pax_Accreditation_Form__c.Shipping_Postal_Code__c,
+        AMS_Pax_Accreditation_Form__c.Shipping_City__c, 
+        AMS_Pax_Accreditation_Form__c.Branch_Office_Email__c, 
+        AMS_Pax_Accreditation_Form__c.Website__c, 
+        AMS_Pax_Accreditation_Form__c.Abbreviated_name__c, 
+        AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c, 
+        AMS_Pax_Accreditation_Form__c.VAT_Number_2__c
+    };
+    /*** AMSU-166 End ***/
+
 }

@@ -92,6 +92,16 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1','Incomplete shipping address.','-1'};
 			}
 
+			/*** AMSU-166 ***/			
+			if(AMS_Utils.oscarNewProcesses.contains(oscar.Process__c)) {				
+				List<String> errorMessages = AMS_Utils.validateCharacters(theAccreditation, AMS_Utils.STAGING_AREA_FIELDS_TO_VALIDATE);
+				if(!errorMessages.isEmpty()) {
+					isIATACodeGenerationRunning = false;
+					System.debug('[ANG_OscarProcessHelper] ' + String.join(errorMessages, '\n'));
+					return new String[]{'-1',String.join(errorMessages, '\n'),'-1'};
+				}							
+			}
+
             if(theAccount.CNS_Agency__c == false && oscar.STEP6__c != AMS_Utils.PASSED && SanityCheckVerificationProcesses.contains(oscar.Process__c)) {
 				isIATACodeGenerationRunning = false;
 				System.debug('[ANG_OscarProcessHelper] In order to generate a IATA code you must first pass the Sanity Check.');
