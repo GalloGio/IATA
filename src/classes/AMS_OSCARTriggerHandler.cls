@@ -2598,9 +2598,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId     = 'ANG_Changes_DIS';
         else if(agencyType == AMS_Utils.IEPMODELAACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Model_A_Creation';
         else if(agencyType == AMS_Utils.IEPMODELAACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Model_A_SanityCheck_Passed';
-        else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (EDENRED)') templateId    = ' ANG_IEP_Model_B_Creation_EDENRED';
-        else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (MSTS)') templateId    = ' ANG_IEP_Model_B_Creation_MSTS'; //TODO: fix link on template
-        else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'ANG_IEP_Model_B_SanityCheck_Passed'; //TODO: create template
+        else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (EDENRED)') templateId    = 'ANG_IEP_Model_B_Creation_EDENRED';
+        else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (MSTS)') templateId    = 'ANG_IEP_Model_B_Creation_MSTS'; //TODO: fix link on template
+        //else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'ANG_IEP_Model_B_SanityCheck_Passed'; //TODO: create template?
 		else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Setup_Creation';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Setup_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'closed' && wasApproved) templateId  = 'IEP_Setup_Finalization_Passed';

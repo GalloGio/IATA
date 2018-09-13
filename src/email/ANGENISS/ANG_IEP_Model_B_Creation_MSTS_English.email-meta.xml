@@ -4,7 +4,7 @@
     <description>Sent when IEP Model B Account Setup OSCAR is created</description>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>IATADynamicSkyLetterhead</letterhead>
-    <name>ANG IEP Model B Creation MSTS</name>
+    <name>ANG IEP Model B Creation MSTS EN</name>
     <style>freeForm</style>
     <subject>Ref nr {!AMS_OSCAR__c.Name} – Registration of IEP Account</subject>
     <textOnly>Dear Sir/Madam,
