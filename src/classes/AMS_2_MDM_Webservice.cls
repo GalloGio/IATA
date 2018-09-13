@@ -106,7 +106,7 @@ global class AMS_2_MDM_Webservice {
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
                     Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c, ANG_Accreditation_Model__c, Remittance_frequency__c,
                     ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c, 
-                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c //AMSU-158
                     FROM Account where id in :ids
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
 
@@ -317,7 +317,7 @@ global class AMS_2_MDM_Webservice {
                     Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c,
                     ANG_Accreditation_Model__c, Remittance_frequency__c,
                     ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c,
-                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c //AMSU-158
                     FROM Account where id = :agencyId];
 
 /* EOF NEWGEN-801 */
