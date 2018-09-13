@@ -604,9 +604,9 @@ public class ANG_AccountTriggerHandler {
 			if(iepCountriesAccs.keySet().contains(iepAcc)){
 
 				if(iepCountriesAccs.get(iepAcc).IATA_ISO_Country__r.ANG_IEP_Model__c == 'Model A')
-					iepModelAAccounts.put(iepAcc, iepCountriesAccs.get(iepAcc));
+					iepModelAAccounts.put(iepAcc, newMap.get(iepAcc));
 				else if(iepCountriesAccs.get(iepAcc).IATA_ISO_Country__r.ANG_IEP_Model__c == 'Model B')
-					iepModelBAccounts.put(iepAcc, iepCountriesAccs.get(iepAcc));
+					iepModelBAccounts.put(iepAcc, newMap.get(iepAcc));
 			}
 
 		}
