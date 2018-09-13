@@ -3071,11 +3071,6 @@ public class AMS_OSCARTriggerHandler {
 
         if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
 
-            if(updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP && !updatedOscar.ANG_Share_documentation_with_vendor__c){
-                updatedOscar.addError('Share documentation with vendor must be check in order to pass Sanity check.');
-                return;
-            }
-
             System.debug('Sending the email for the user to anounce approval of the oscar');
 
             //using an already existing method to send email aler to user.
@@ -3083,9 +3078,14 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
-        if((updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP || updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+        if(updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed' && !updatedOscar.ANG_Share_documentation_with_vendor__c){
+            updatedOscar.addError('Share documentation with vendor must be check in order to pass Sanity check.');
+            return;
+        }
 
-            System.debug('Sending the email for the user to anounce Sanity Check Passing of the IEP bank account setup oscar');
+        if(updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce Sanity Check Passing of the IEP Model A oscar');
 
             //using an already existing method to send email alert to user.
             AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SANITYCHECK, true);
@@ -3116,7 +3116,7 @@ public class AMS_OSCARTriggerHandler {
             
             ID configID; 
             for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getall().values()){
-                if(cm.Change_Code == 'MaddY') configID = cm.id;
+                if(cm.Change_Code__c == 'MaddY') configID = cm.id;
             }
 
             insert new AMS_Agency_Updates__c(Account__c = updatedOscar.account__c, Update_Type__c = 'Update', Change_Code__c = 'MaddY', configurationID__C = configID, Integration_System__c='Mulesoft');
