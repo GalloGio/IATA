@@ -23,7 +23,8 @@ public without sharing class AMS_MigrationToolHelper {
 			AMS_Utils.NGFOP => 'FoP Management',
 			AMS_Utils.NGOPTINOUT => 'Financial review opt-in / opt-out',
 			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => 'IEP Bank account setup',
-			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP => 'Onboarding IEP Model A'
+			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP => 'Onboarding IEP Model A',
+			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP => 'Screening IEP Model B'
 		};
 		}
 		set;
@@ -356,10 +357,18 @@ public without sharing class AMS_MigrationToolHelper {
 
 				caseToProcess.CaseArea__c = 'Accreditation Process';
 				caseToProcess.Reason1__c = newgenCaseReason.get(processType);
-				caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+
+				if(processType == AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP)
+					caseToProcess.Subject = 'Screening IEP Model B - '+caseToProcess.Account.ANG_Accreditation_Model__c+' - '+caseToProcess.Account.Name;
+				else
+					caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+
 				if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP)
 					caseToProcess.Visible_on_ISS_Portal__c = true;
+			}else if(processType == AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP){
+					caseToProcess.Subject = 'Screening IEP Model B - '+caseToProcess.Account.Name;
 			}
+
 			
 			update caseToProcess;
 		}
@@ -649,7 +658,8 @@ public without sharing class AMS_MigrationToolHelper {
 		oscar.Change_effective_as_of__c = saamCase.Change_effective_as_of__c;
 		oscar.Criteria_remarks__c = saamCase.Criteria_remarks__c;
 		oscar.Documentation_remarks__c = saamCase.Documentation_remarks__c;
-		oscar.Dossier_Reception_Date__c = ((oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || oscar.Process__c == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP) && saamCase.Dossier_reception_date__c == null ? Date.today() : saamCase.Dossier_reception_date__c );
+		oscar.Dossier_Reception_Date__c = ((oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || oscar.Process__c == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP ||
+			oscar.Process__c == AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP) && saamCase.Dossier_reception_date__c == null ? Date.today() : saamCase.Dossier_reception_date__c );
 		oscar.Fees_refund_requested__c = saamCase.Fees_refund_requested__c;
 		oscar.Finalization_checklist__c = saamCase.Finalization_checklist__c;
 		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;
@@ -702,7 +712,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 			oscar = updateDatesFromSAAM(oscar,oscarCase.Id);
 
-			if (oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || oscar.Process__c == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP)
+			if (oscar.Process__c == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || oscar.Process__c == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP || oscar.Process__c == AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP)
 				oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 
 			if(oscar == null)
