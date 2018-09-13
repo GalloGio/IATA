@@ -7,7 +7,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static final Set<String> newgenProcesses = new Set<String>{'ANG.MAJOR.CHANGES.1.0','VR.1.0','CER.1.0','CORRECTION.1.0','BANK.ACCOUNT.CHANGES','NGFormsOfPayment','ANG_FS_OPTINOUT','ANG.NEW.HE.LITE.1.0','ANG.NEW.AE.1.0','ANG.NEW.HE.STANDARD.1.0'};
 
-	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES};
+	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES, AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP};
 	
 	public static Map<String,String> newgenCaseReason{
 		get{
@@ -755,7 +755,7 @@ public without sharing class AMS_MigrationToolHelper {
 
         AMS_Pax_Accreditation_Form__c accreditationObj = null;
 
-		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP ){
+		if(!doesNotNeedStagingAreaProcesses.contains(processType) ){
         
 	        accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
 
@@ -770,7 +770,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 		}
 
-		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
+		if(!doesNotNeedStagingAreaProcesses.contains(processType)){
 
 			List<AMS_Accreditation_Contact__c> contacts;
 
@@ -783,7 +783,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 		String oscarId = null;
 
-		if(!doesNotNeedStagingAreaProcesses.contains(processType) && processType != AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP && processType != AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP){
+		if(!doesNotNeedStagingAreaProcesses.contains(processType)){
 
 			oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
@@ -799,12 +799,12 @@ public without sharing class AMS_MigrationToolHelper {
 				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
 			if(processType == 'CER.1.0')
 				oscarRTId = oscarRT.get('CERTIFICATE');
-			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP ||  processType == AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
 				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
 
 
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
-			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP  || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP){
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP  || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP ||  processType == AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP){
 				caseToProcess.Visible_on_ISS_Portal__c = true;
 				 //assign to queue
 		         Database.DMLOptions dmo = new Database.DMLOptions();
