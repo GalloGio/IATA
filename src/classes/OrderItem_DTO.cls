@@ -70,6 +70,19 @@ public class OrderItem_DTO implements Comparable
     public Boolean isAutoRenew {get;set;}
     public Boolean availableForSubscription {get;set;}
 
+    //used for google analytics
+    public String productNameAnalytic {get; set;}
+    public String productNumber {get;set;}
+    public String productCategory {get;set;}
+    public String productBrand {get;set;}
+    public String productEdition {get;set;}
+    public String productLanguage {get;set;}
+    public String productInventoryStatus {get;set;}
+    public Date productAvailabilityDate {get;set;}
+    public String productMedia {get;set;}
+    public Date productEffectiveTo {get;set;}
+
+
     public Integer compareTo(Object compareTo)
     {
         OrderItem_DTO objWrap = (OrderItem_DTO) compareTo;

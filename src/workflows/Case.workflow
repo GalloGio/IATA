@@ -11598,7 +11598,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>CASSlink</value>
+            <value>CASSlink,PASS</value>
         </criteriaItems>
         <description>Designate the Product Manager ACR based on the DPC System - CASSlink to Nektarios Chazirakis</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -15242,7 +15242,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Customer Charge Request,Corrections</value>
+            <value>Customer Charge Request,CHG – Data Maintenance</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15413,7 +15413,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Corrections</value>
+            <value>CHG – Data Maintenance</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
