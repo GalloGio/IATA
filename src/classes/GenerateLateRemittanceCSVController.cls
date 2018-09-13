@@ -178,7 +178,7 @@ public without sharing class GenerateLateRemittanceCSVController {
                             BSP_CASS__c = 'BSP' 
                             OR (
                                 BSP_CASS__c = 'CASS'
-                                AND Account.Category__c IN ('CASS Associate', 'IATA Cargo Agent')
+                                AND Account.Category__c IN ('CASS Associate')
                                 AND Account.IATA_ISO_Country__r.ISO_Code__c NOT IN :listExcludedCountries
                             )
                         )
