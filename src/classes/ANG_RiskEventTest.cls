@@ -62,11 +62,16 @@ private class ANG_RiskEventTest {
     }
 
     static testMethod void test_RiskEventForCashlessAgencies() {
+
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
+        insert ctry ;
+
         Account acc1 = new Account(
             Name ='acc1',
             Location_Type__c=AMS_Utils.HE,
             Location_Class__c=AMS_Utils.LC_PASSENGER,
             ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASHLESS,
+            IATA_ISO_Country__c = ctry.Id,
             recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
         );
 

@@ -525,7 +525,7 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
 &quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
-&quot;RHC Information&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
 Application_Name__c
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>
@@ -1006,6 +1006,25 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
 )</errorConditionFormula>
         <errorDisplayField>Contact__c</errorDisplayField>
         <errorMessage>The user&apos;s portal status must be validated before granting access to any application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Internal_grant_access_by_accred_type</fullName>
+        <active>true</active>
+        <description>Services with the field ANG_Restrict_internal_selection__c = true can&apos;t be added or modified.</description>
+        <errorConditionFormula>AND(
+Portal_Application__r.ANG_Lock_access_to_accreditation_type__c,
+Text(Right__c) = &apos;Access Granted&apos;,
+NOT(CONTAINS(
+(
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Cash&apos;),&apos;Cash&apos;,NULL)+
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Cashless&apos;),&apos;Cashless&apos;,NULL)+
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Multicountry&apos;),&apos;Multicountry&apos;,NULL)
+), 
+TEXT(Contact__r.Account.ANG_Accreditation_Model__c)
+)),
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
+)</errorConditionFormula>
+        <errorMessage>Access cannot be granted since the Agency&apos;s accreditation type for this contact does not match the portal service (Restrict by Accreditation Type).</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>MR_cannot_be_approved_by_admin</fullName>

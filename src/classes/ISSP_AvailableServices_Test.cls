@@ -45,14 +45,16 @@ public class ISSP_AvailableServices_Test {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = easyPay1.id
+                ANG_Portal_Service__c = easyPay1.id,
+                ANG_Enable_NewGen__c = true
             );
 
 
         IATA_ISO_Country__c switzerland = new IATA_ISO_Country__c (
                 Name = 'Switzerland_test',
                 ISO_Code__c = 'CH',
-                ANG_Portal_Service__c = easyPay2.id
+                ANG_Portal_Service__c = easyPay2.id,
+                ANG_Enable_NewGen__c = true
             );
 
 
@@ -75,7 +77,8 @@ public class ISSP_AvailableServices_Test {
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
-                OwnerId = UserInfo.getUserId()
+                OwnerId = UserInfo.getUserId(),
+                Location_Class__c = 'P'
             );
 
         Account a2 = new Account (
@@ -84,7 +87,8 @@ public class ISSP_AvailableServices_Test {
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
                 Location_type__c = 'HE',
-                OwnerId = UserInfo.getUserId()
+                OwnerId = UserInfo.getUserId(),
+                Location_Class__c = 'P'
             );
 
         Account a3 = new Account (
@@ -760,10 +764,14 @@ public class ISSP_AvailableServices_Test {
             );
 
         System.runAs(testeUser3) {
+            
+            IATA_ISO_Country__c portugal = [Select Id from IATA_ISO_Country__c where Name = 'Portugal_test'];
 
             Account acc2 = ISSP_ObjectFactory.createNewAccount();        
             acc2.ANG_IEP_Status__c = 'Open';
             acc2.Location_Type__c = 'HE';
+            acc2.Location_Class__c = 'P';
+            acc2.IATA_ISO_Country__c = portugal.Id;
 
             insert acc2;
 

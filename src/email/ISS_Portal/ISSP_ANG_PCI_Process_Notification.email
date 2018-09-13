@@ -1,4 +1,4 @@
-<messaging:emailTemplate subject="Receipt of PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration - {!relatedTo.Account.IATACode__c} - {!relatedTo.Account.Name}" recipientType="User" relatedToType="Case" language="{!CASE(relatedTo.Contact.Preferred_Language__c, 'Arabic', 'ar', 'Chinese','zh_CN', 'English','en_US', 'German','de', 'French','fr', 'Italian','it', 'Indonesian', 'in', 'Japanese','ja',  'Korean', 'ko', 'Portuguese','pt_BR', '
+<messaging:emailTemplate subject="Receipt of PCI DSS Renewal Confirmation - {!relatedTo.Account.IATACode__c} - {!relatedTo.Account.Name}" recipientType="User" relatedToType="Case" language="{!CASE(relatedTo.Contact.Preferred_Language__c, 'Arabic', 'ar', 'Chinese','zh_CN', 'English','en_US', 'German','de', 'French','fr', 'Italian','it', 'Indonesian', 'in', 'Japanese','ja',  'Korean', 'ko', 'Portuguese','pt_BR', '
 ish', 'es', 'Thai', 'th', 'Vietnamese', 'vi', 'en_US')}">
     <messaging:emailHeader name="CaseId">
         {!relatedTo.Id}
