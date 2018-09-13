@@ -289,6 +289,27 @@ global class AMS_OSCAR_Attachments {
         return listFileDef;
     }
 
+    /*** AMSU-168 ***/
+    public PageReference acceptFiles() {
+        for(WrapperAttach attach : listAttachments) {            
+            if(attach.isSelected) {
+                attach.reviewStatus = 'Accepted';
+                attach.isSelected = false;
+            }
+        }
+        return null;
+    }
+
+    public PageReference rejectFiles() {
+        for(WrapperAttach attach : listAttachments) {            
+            if(attach.isSelected) {
+                attach.reviewStatus = 'Rejected';
+                attach.isSelected = false;
+            }
+        }
+        return null;
+    }
+
     global class FileDef {
         String name;
         String url;

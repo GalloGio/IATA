@@ -22,7 +22,7 @@
         </sharedTo>
         <criteriaItems>
             <field>Is_Non_Compliant__c</field>
-            <operation>equals</operation>
+            <operation>notEqual</operation>
             <value>True</value>
         </criteriaItems>
     </sharingCriteriaRules>
