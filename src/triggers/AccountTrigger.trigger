@@ -16,6 +16,7 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     AccountTriggerHelper.AccountNoDuplicateBranch(trigger.New, trigger.OldMap);
     AccountTriggerHelper.SectorCatToIndType(trigger.New, trigger.OldMap);
 
+
     //TIP_Utils.validateUniqueIATACodeForTIP(trigger.new, trigger.OldMap);  //ACAMBAS - TIP-234
   }
 
@@ -83,21 +84,6 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
         ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
     }
 
-    // ICCS trigger
-    if(Trigger.isAfter){
-    	if(Trigger.isInsert){
-    		ICCS_AccountTriggerHandler.handleAfterInsert(Trigger.newMap);
-    	}
-    	else if(Trigger.isUpdate){
-    		ICCS_AccountTriggerHandler.handleAfterUpdate(Trigger.newMap);
-    	}
-    	else if(Trigger.isDelete){
-    		ICCS_AccountTriggerHandler.handleAfterDelete(Trigger.oldMap);
-    	}
-    	else if(Trigger.isUndelete){
-    		ICCS_AccountTriggerHandler.handleAfterUndelete(Trigger.newMap);
-    	}
-    }
 	
 //Trigger the platform events
     if(trigger.isAfter)
