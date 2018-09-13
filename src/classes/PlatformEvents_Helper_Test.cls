@@ -81,7 +81,7 @@ private class PlatformEvents_Helper_Test {
         provider.HQ_Location__c = country.Id;
         insert provider;
 
-        Contact contact = new Contact(LastName = 'Last Name2');
+        Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
         insert contact;
 
         Account_Contact_Role__c acr = new Account_Contact_Role__c();
@@ -150,7 +150,7 @@ private class PlatformEvents_Helper_Test {
         provider.HQ_Location__c = country.Id;
         insert provider;
 
-        Contact contact = new Contact(LastName = 'Last Name2');
+        Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
         insert contact;
 
         Account_Contact_Role__c acr = new Account_Contact_Role__c();
@@ -228,7 +228,7 @@ private class PlatformEvents_Helper_Test {
         provider.HQ_Location__c = country.Id;
         insert provider;
 
-        Contact contact = new Contact(LastName = 'Last Name2');
+        Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
         insert contact;
 
         Account_Contact_Role__c acr = new Account_Contact_Role__c();
