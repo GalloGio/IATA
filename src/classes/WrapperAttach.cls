@@ -223,6 +223,8 @@ global class WrapperAttach implements Comparable {
             this.fileAmazon.amazonFile.Description__c = this.description;
             this.fileAmazon.amazonFile.Internal_Comments__c = this.internalComments;
             this.fileAmazon.amazonFile.isPublic__c = isPublic;
+            /*** AMSU-168 ***/
+            this.fileAmazon.amazonfile.Review_Status__c = this.reviewStatus;
 
             update this.fileAmazon.amazonFile;
         }
