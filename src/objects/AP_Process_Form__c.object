@@ -8155,7 +8155,6 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
     </recordTypes>
-    </recordTypes>
     <recordTypes>
         <fullName>SIS_Application_ISPA</fullName>
         <active>true</active>
