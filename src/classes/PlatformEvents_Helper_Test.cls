@@ -8,7 +8,6 @@ private class PlatformEvents_Helper_Test {
 		
 		Account provider = new Account(Name = 'ProviderTest1',
 			TIP_Provider_Type__c = 'Open Loop',
-			TIP_HQ_Location__c = country.Id,
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
@@ -34,7 +33,6 @@ private class PlatformEvents_Helper_Test {
 
 		Account provider = new Account(Name = 'ProviderTest1',
 			TIP_Provider_Type__c = 'Open Loop',
-			TIP_HQ_Location__c = country.Id,
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
@@ -66,7 +64,6 @@ private class PlatformEvents_Helper_Test {
 		
 		Account account = new Account(Name = 'ProviderTest1',
 			TIP_Provider_Type__c = 'Open Loop',
-			TIP_HQ_Location__c = country.Id,
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
@@ -135,7 +132,6 @@ private class PlatformEvents_Helper_Test {
 
 		Account account = new Account(Name = 'ProviderTest1',
 			TIP_Provider_Type__c = 'Open Loop',
-			TIP_HQ_Location__c = country.Id,
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
@@ -213,7 +209,6 @@ private class PlatformEvents_Helper_Test {
 
 		Account account = new Account(Name = 'ProviderTest1',
 					TIP_Provider_Type__c = 'Open Loop',
-					TIP_HQ_Location__c = country.Id,
 					RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 					Accreditation_date__c = Date.today(),
 					IataCode__c = '1234',

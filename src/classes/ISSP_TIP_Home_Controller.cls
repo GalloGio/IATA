@@ -509,10 +509,10 @@ public without sharing class ISSP_TIP_Home_Controller {
                         TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
                         Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
-                        ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,TIP_Documents__c,
+                        ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordTypeid, RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c, Account_Role__c,
+                        IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c,Country_ISO_Code__c, Account_Role__c,
                         (Select Account__c, Any_Other_Information__c, Effective_From_Date__c, Effective_To_Date__c, HQ_Location__c, 
         					   Last_Review_Date__c, Provider_Code__c, Provider_Type__c, Status__c, UniqueKey__c
         					   from Account_Roles__r
