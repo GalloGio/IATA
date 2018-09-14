@@ -4,6 +4,7 @@
 public without sharing class Order_Sel extends Selector{
 
     public static final Integer SIX_MONTHS_DAYS = 180;
+    public static final Integer THREE_YEARS = 3;
     
     public List<Schema.SObjectField> getSObjectFieldList()
     {
@@ -971,7 +972,7 @@ public without sharing class Order_Sel extends Selector{
 
         List<String> expiredStatus = IECConstants.expiredStatus;
         List<String> expiredTypes = IECConstants.expiredTypes;
-        Date dateToCompare = Date.today().addDays(-SIX_MONTHS_DAYS);
+        Date dateToCompare = Date.today().addYears(-THREE_YEARS);
         String query = String.format(
             'SELECT {0}' + 
             ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c, ' +
