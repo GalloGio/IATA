@@ -2453,7 +2453,7 @@ public without sharing class ISSP_AMS_Accreditation {
             return new Pagereference('/ISSP_Homepage?mid=M0S1' + commParam);
         }
 
-        if (newCase.Id != null && newCase.Status != 'Draft' && newCase.Status != 'Return application to customer' && newCase.Status != 'Open - EDMC' && !createListOfClosedStatuses().contains(newCase.Status) && !isFinalStep) {
+        if (newCase.Id != null && newCase.Status != 'Draft' && newCase.Status != 'Open - EDMC' && !createListOfClosedStatuses().contains(newCase.Status) && !isFinalStep) {
             return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
         } else if ((newCase.Id != null && newCase.Status != 'Draft' && newCase.Status != 'Open - EDMC' && createListOfClosedStatuses().contains(newCase.Status) && !isFinalStep) || (isNoticeOfChange && !isEligableForChange)) {
             string retURL = ApexPages.currentPage().getParameters().get('retURL');
