@@ -268,9 +268,11 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     //ACAMBAS - TIP-281 - Start 
     private void fillPrimaryContacts() {
-        primaryContacts =  [SELECT id, First_Name__c, Last_Name__c, Email__c
-                            FROM Account_Contact_Role__c 
-                            WHERE Account_Role__c  = :TheAccountRole.Id AND is_primary__c = True];
+        if(TheAccountRole != null) {
+            primaryContacts =  [SELECT id, First_Name__c, Last_Name__c, Email__c
+                                FROM Account_Contact_Role__c 
+                                WHERE Account_Role__c  = :TheAccountRole.Id AND is_primary__c = True];
+        }
     }
     //ACAMBAS - TIP-281 - End
 
