@@ -16,7 +16,7 @@ public without sharing class Order_Sel extends Selector{
             Order.OrderNumber,
             Order.Status,
             Order.Is_Paid__c,
-            Order.IEC_Order_Previous_Type__c, //To h andle order conversion
+            Order.IEC_Order_Previous_Type__c, //To handle order conversion
             Order.EffectiveDate,
             Order.EndDate,
             Order.AccountId,
