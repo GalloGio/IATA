@@ -828,9 +828,9 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 
 
-		//aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
-		//System.assertEquals('Non-Active', aa.Status__c);
+		System.assertEquals('Non-Active', aa.Status__c);
 
 	}
 
