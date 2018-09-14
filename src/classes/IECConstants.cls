@@ -23,8 +23,8 @@ global class IECConstants {
   public static final String ORDER_TYPE_HISTORY = 'History';
   public static final String ORDER_TYPE_CART = 'Cart';
   //Used to fetch orders that are not expired
-  public static final List<String> expiredStatus = new List<String>{ORDER_STATUS_NEW, ORDER_STATUS_CANCELLED, ORDER_STATUS_PAYMENT_FAILURE, ORDER_STATUS_READY_FOR_SAP, ORDER_STATUS_PENDING_PAYMENT};
-  public static final List<String> expiredTypes = new List<String>{ORDER_TYPE_HISTORY, ORDER_TYPE_RENEWAL_NOTIFICATION, ORDER_TYPE_QUOTE, ORDER_TYPE_CART};
+  public static final List<String> expiredStatus = new List<String>{ORDER_STATUS_CANCELLED};
+  public static final List<String> expiredTypes = new List<String>{ORDER_TYPE_RENEWAL_NOTIFICATION, ORDER_TYPE_QUOTE, ORDER_TYPE_CART};
 
 
   public static final String ORDER_PAYMENT_CONFIRMED = 'Payment Confirmed';//Used for bank transfer
