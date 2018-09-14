@@ -3,8 +3,8 @@
 **/
 public with sharing class OperationalCalendarHandler {
     
-    public static final list<String> AIRLINE_PROFILES = ISSP_CS__c.getValues('ISS Portal Airline Profiles').Value__c.split(',');
-    public static final list<String> AGENT_PROFILES = ISSP_CS__c.getValues('ISS Portal Agency Profiles').Value__c.split(',');
+    public static final list<String> AIRLINE_PROFILES = ISSP_CS__c.getValues('ISS OperationalCalendar Airline Profil').Value__c.split(',');
+    public static final list<String> AGENT_PROFILES = ISSP_CS__c.getValues('ISS OperationalCalendar Agency Profile').Value__c.split(',');
     
     public static list<User> TEST_LIST_AIRLINE_USER = new list<User>();
     public static list<User> TEST_LIST_AGENCY_USER = new list<User>();
@@ -27,12 +27,14 @@ public with sharing class OperationalCalendarHandler {
             map<Id,Operational_Calendar__c> mapRemittanceChanges = new map<Id,Operational_Calendar__c>();
             
             for (Operational_Calendar__c operationNew: mapNew.values()) {
-                Operational_Calendar__c operationOld = mapOld.get(operationNew.Id);
-                if (operationNew.Settlement_Day__c!=operationOld.Settlement_Day__c) {
-                    mapSettlementChanges.put(operationNew.Id,operationNew);
-                }
-                if (operationNew.Remittance_Day__c!=operationOld.Remittance_Day__c) {
-                    mapRemittanceChanges.put(operationNew.Id,operationNew);
+                if (operationNew.Visible_on_the_portal__c==true) {
+                    Operational_Calendar__c operationOld = mapOld.get(operationNew.Id);
+                    if (operationNew.Settlement_Day__c!=operationOld.Settlement_Day__c) {
+                        mapSettlementChanges.put(operationNew.Id,operationNew);
+                    }
+                    if (operationNew.Remittance_Day__c!=operationOld.Remittance_Day__c) {
+                        mapRemittanceChanges.put(operationNew.Id,operationNew);
+                    }
                 }
             }
             sendAgencyNotifications(mapRemittanceChanges);

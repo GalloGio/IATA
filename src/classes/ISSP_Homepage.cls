@@ -5,8 +5,8 @@ public with sharing class ISSP_Homepage {
     public boolean isPartner {get;private set;}
     public boolean isDPCUser {get;set;}
     public boolean isAdmin{set;get;}
-    public boolean isAirlineUser{set;get;}
-    public boolean isAgencyUser{set;get;}
+    public boolean isOpCalendarAirlineUser{set;get;}
+    public boolean isOpCalendarAgencyUser{set;get;}
     public boolean showIrregularities {get;private set;}
     public list<Case> caseList {get;private set;}
     public list<Case> caseList_CompanyOpenCases {get;private set;}
@@ -52,14 +52,14 @@ public with sharing class ISSP_Homepage {
         isAdmin =(profileName.containsIgnoreCase('admin'));
         String profileId15 = String.ValueOf(UserInfo.getProfileId()).left(15);
         try {
-            isAirlineUser = ISSP_CS__c.getValues('ISS Portal Airline Profiles').Value__c.split(',').contains(profileId15);
+            isOpCalendarAirlineUser = ISSP_CS__c.getValues('ISS OperationalCalendar Airline Profil').Value__c.split(',').contains(profileId15);
         } catch (Exception e) {
-            isAirlineUser = false;
+            isOpCalendarAirlineUser = false;
         }
         try {
-            isAgencyUser = ISSP_CS__c.getValues('ISS Portal Agency Profiles').Value__c.split(',').contains(profileId15);
+            isOpCalendarAgencyUser = ISSP_CS__c.getValues('ISS OperationalCalendar Agency Profile').Value__c.split(',').contains(profileId15);
         } catch (Exception e) {
-            isAgencyUser = false;
+            isOpCalendarAgencyUser = false;
         }
 
         //Survey init

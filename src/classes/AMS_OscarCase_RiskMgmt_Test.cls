@@ -51,8 +51,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         }
         System.assert(!listAgencyId.isEmpty(), 'No agency profiles found');
         list<ISSP_CS__c> listCs = new list<ISSP_CS__c>();
-        listCs.add(new ISSP_CS__c(Name='ISS Portal Airline Profiles',Value__c=String.join(listAirlineId,',')));
-        listCs.add(new ISSP_CS__c(Name='ISS Portal Agency Profiles',Value__c=String.join(listAgencyId,',')));
+        listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Airline Profil',Value__c=String.join(listAirlineId,',')));
+        listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Agency Profile',Value__c=String.join(listAgencyId,',')));
         insert listCs;
      
         //Create Operational Calendar

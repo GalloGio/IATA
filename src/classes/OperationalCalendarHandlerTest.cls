@@ -14,8 +14,8 @@ private class OperationalCalendarHandlerTest {
         }
         System.assert(!listAgencyId.isEmpty(), 'No agency profiles found');
         list<ISSP_CS__c> listCs = new list<ISSP_CS__c>();
-        listCs.add(new ISSP_CS__c(Name='ISS Portal Airline Profiles',Value__c=String.join(listAirlineId,',')));
-        listCs.add(new ISSP_CS__c(Name='ISS Portal Agency Profiles',Value__c=String.join(listAgencyId,',')));
+        listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Airline Profil',Value__c=String.join(listAirlineId,',')));
+        listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Agency Profile',Value__c=String.join(listAgencyId,',')));
         insert listCs;
     }
     
@@ -33,6 +33,7 @@ private class OperationalCalendarHandlerTest {
         
         Test.StartTest();
         Operational_Calendar__c operation = new Operational_Calendar__c(
+            Visible_on_the_portal__c = true,
             Operation_Code__c= 'SP_BSP_Y_EUR_D',
             Period_Code__c= '20180202M'
         );
@@ -66,6 +67,7 @@ private class OperationalCalendarHandlerTest {
         
         Test.StartTest();
         Operational_Calendar__c operation = new Operational_Calendar__c(
+            Visible_on_the_portal__c = true,
             Operation_Code__c= 'SP_CAS_E_EUR_X',
             Period_Code__c= '20180202M'
         );
@@ -105,6 +107,7 @@ private class OperationalCalendarHandlerTest {
         String frequency = 'D';
         
         Operational_Calendar__c operation = new Operational_Calendar__c(
+            Visible_on_the_portal__c = true,
             Operation_Code__c= 'SP_CAS_E_EUR_X',
             Period_Code__c= '20180202M',
             frequency_code__c = frequency,
@@ -160,6 +163,7 @@ private class OperationalCalendarHandlerTest {
         insert issOperation;
         
         Operational_Calendar__c operation = new Operational_Calendar__c(
+            Visible_on_the_portal__c = true,
             Operation_Code__c= 'SP_CAS_E_EUR_X',
             Period_Code__c= '20180202M'
         );

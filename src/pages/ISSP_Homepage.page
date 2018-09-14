@@ -555,7 +555,7 @@
                               </div>
   <!--------------------------------------------- end Carousel banner Section -------------------------------------------->
 <!---------------------------------------------key docs Section -------------------------------------------->
-                              <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="KeyDocuments" rendered="{!NOT(OR(isAirlineUser,isAgencyUser))}">
+                              <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="KeyDocuments" rendered="{!NOT(OR(isOpCalendarAirlineUser,isOpCalendarAgencyUser))}">
                                     <div class="panel panel-primary">
                                           <div class="panel-heading">
                                                 <h3 class="panel-title"><span class="glyphicon glyphicon-book"></span> {!$Label.ISSP_Popular_FAQs}</h3>
@@ -604,7 +604,7 @@
                               </apex:OutputPanel>
                               
 <!--------------------------------------------OperationalCalendar Section------------------------------------------>
-                            <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="OperationalCalendar" rendered="{!OR(isAirlineUser,isAgencyUser)}">
+                            <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="OperationalCalendar" rendered="{!OR(isOpCalendarAirlineUser,isOpCalendarAgencyUser)}">
                                 <c:ISSP_OperationalCalendarMini />
                             </apex:OutputPanel>
 <!-------------------------------------------- end OperationalCalendar Section--------------------------------------->

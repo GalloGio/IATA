@@ -12,14 +12,14 @@ global without sharing class ISSP_OperationalCalendarController {
     public static final list<String> AGENT_PROFILES = new list<String>();
     static {
         try {
-            AIRLINE_PROFILES.addAll(ISSP_CS__c.getValues('ISS Portal Airline Profiles').Value__c.split(','));
+            AIRLINE_PROFILES.addAll(ISSP_CS__c.getValues('ISS OperationalCalendar Airline Profil').Value__c.split(','));
         } catch(Exception e) {
-            System.debug('No profiles found in ISSP_CS.ISS Portal Airline Profiles');
+            System.debug('No profiles found in ISSP_CS.ISS OperationalCalendar Airline Profil');
         }
         try {
-            AGENT_PROFILES.addAll(ISSP_CS__c.getValues('ISS Portal Agency Profiles').Value__c.split(','));
+            AGENT_PROFILES.addAll(ISSP_CS__c.getValues('ISS OperationalCalendar Agency Profile').Value__c.split(','));
         } catch(Exception e) {
-            System.debug('No profiles found in ISSP_CS.ISS Portal Agency Profiles');
+            System.debug('No profiles found in ISSP_CS.ISS OperationalCalendar Agency Profile');
         }
     }
     public static final map<String,String> MAP_OPERATION_TYPES = new map<String,String>{
