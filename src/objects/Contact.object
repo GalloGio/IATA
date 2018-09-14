@@ -7679,6 +7679,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
     </fields>
     <fields>
         <fullName>Is_Primary_Account_Contact_Role__c</fullName>
+        <description>Indicates if contact is a primary contact for the account contact role</description>
         <externalId>false</externalId>
         <label>Is Primary Account Contact Role</label>
         <summaryFilterItems>
