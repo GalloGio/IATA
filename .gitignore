@@ -337,3 +337,4 @@ config/*
 out
 config/*
 README.md
+uncrustify.cfg

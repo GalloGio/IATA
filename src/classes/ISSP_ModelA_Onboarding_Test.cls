@@ -288,7 +288,7 @@ private class ISSP_ModelA_Onboarding_Test {
 
     @isTest static void testFetchRequirementsEurope() {
         Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel Portugal']);
-        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap, 'A');
         Case c = [SELECT Id FROM Case LIMIT 1];
         
         Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
@@ -307,7 +307,7 @@ private class ISSP_ModelA_Onboarding_Test {
     
     @isTest static void testFetchRequirementsAmericas() {
         Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel Argentina']);
-        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap, 'A');
         Case c = [SELECT Id FROM Case LIMIT 1];
         
         Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
@@ -326,7 +326,7 @@ private class ISSP_ModelA_Onboarding_Test {
 
     @isTest static void testFetchRequirementsAfrica() {
         Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel Algeria']);
-        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap, 'A');
         Case c = [SELECT Id FROM Case LIMIT 1];
         
         Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
@@ -345,7 +345,7 @@ private class ISSP_ModelA_Onboarding_Test {
 
     @isTest static void testFetchRequirementsChina() {
         Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel China']);
-        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap, 'A');
         Case c = [SELECT Id FROM Case LIMIT 1];
         
         Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
@@ -364,7 +364,7 @@ private class ISSP_ModelA_Onboarding_Test {
 
     @isTest static void testFetchRequirementsAsia() {
         Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel Australia']);
-        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap, 'A');
         Case c = [SELECT Id FROM Case LIMIT 1];
         
         Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
@@ -383,7 +383,7 @@ private class ISSP_ModelA_Onboarding_Test {
     
     @isTest static void testError() {
         Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name = 'Travel Error']);
-        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap, 'A' );
         Case c = [SELECT Id FROM Case LIMIT 1];
         
         Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));

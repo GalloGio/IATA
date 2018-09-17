@@ -329,6 +329,11 @@
                 });
             }
 
+            function scrollToErrors() {
+                var etop = $('[id$=errorMessages]').offset().top;
+                $(window).scrollTop(etop);
+            }
+
         </script>
 
         <c:ISSP_CustomNavigation communityName="{!communityName}" />
@@ -371,6 +376,8 @@
                                     <apex:param name="AgentSector" assignTo="{!agentsector}" value="Both"/>
                                     <apex:param name="isAddCompanyModal" assignTo="{!isAddCompanyModal}" value="true"/>
                                 </apex:actionFunction>
+
+                                <apex:actionFunction name="rerenderTreeArea" rerender="treeArea" />
 
                                 <apex:pageBlock id="step1Block" mode="edit">
                                     <div class="progress">
@@ -416,7 +423,7 @@
 
                                                         $j('#frmt').on("changed.jstree", function (e, data) {
                                                             //console.log('flag : ' + flag);
-                                                            if(data.selected.length == 1 && flag == 1 && '{!errorFound}' != 'true') {
+                                                            if(data.selected.length == 1 && flag == 1) {
                                                                 var iataCode = data.instance.get_node(data.selected[0]).text;
 
                                                                 $('[id$=currentIataCode]').val(iataCode);
@@ -492,7 +499,7 @@
                                                                     <apex:commandButton styleclass="btn btn-default"
                                                                         action="{!saveDraft}" onclick=""
                                                                         status="WaitingStatus"
-                                                                        reRender="treeArea, componentsArea, buttonsArea"
+                                                                        reRender="componentsArea, buttonsArea"
                                                                         value="{!$Label.ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN}"/>
 
                                                                 </div>
@@ -523,9 +530,9 @@
 
                                                                     <div class="center" style="display:{!IF(currentAccount.status == 'UP','inline-block','none')}">
                                                                         <apex:commandButton styleclass="btn btn-default"
-                                                                            action="{!confirmUpdate}" onclick=""
+                                                                            action="{!confirmUpdate}" oncomplete="if(!{!errorFound}) {rerenderTreeArea();} else {scrollToErrors()}"
                                                                             status="WaitingStatus"
-                                                                            reRender="treeArea, componentsArea, buttonsArea"
+                                                                            reRender="componentsArea, buttonsArea"
                                                                             value="{!$Label.ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN}"/>
 
                                                                         <apex:commandButton styleclass="btn btn-default"

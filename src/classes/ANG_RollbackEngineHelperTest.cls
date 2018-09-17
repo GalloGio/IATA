@@ -1086,6 +1086,8 @@ private class ANG_RollbackEngineHelperTest {
 		ANG_RollbackEngineHelper reh = new ANG_RollbackEngineHelper(oscar.Id);
 		reh.executeAdhoc();
 
+		System.assertEquals(true,[Select Id from AMS_Agencies_relationhip__c].size() == 0);
+		System.assertEquals(true,[Select Id from AMS_Agencies_Hierarchy__c].size() == 0);
 
 
 	}

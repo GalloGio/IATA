@@ -12,6 +12,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
     private Id newParentHierarchyId;
 
+    private boolean isHierarchyChange;
+
     public void execute(QueueableContext context){
         executeAdhoc();
     }
@@ -28,7 +30,9 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
             sp = Database.setSavePoint();
             AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
             AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false; 
+            System.debug('Initiating Rollback.');
             rollbackData();
+            System.debug('Rollback finished.');
             AMS_OscarChangesHelper.createInternalCase(new Set<Id>{oscarId});
             sendEmailConfirmation(null);
             AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
@@ -36,6 +40,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
             generateAgencyEvents(oscarId);
 
         }catch(Exception e){
+            System.debug('Something went wrong with the Rollback process:'+e.getStackTraceString());
             Database.rollback(sp);
             sendEmailConfirmation(e);
         }
@@ -60,6 +65,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         this.oscarName = oscar.Name;
 
         this.newParentHierarchyId = oscar.New_parent__c;
+
+        isHierarchyChange = oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_HIERARCHY);
 
     }
 
@@ -104,7 +111,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
                 processRollbackPortalAppRights(technicalLogsMap.get(entity));
         }
 
-        if(technicalLogsMap.get('AMS_Agencies_Hierarchy__c') != null || technicalLogsMap.get('AMS_Agencies_relationhip__c') != null)
+        if(technicalLogsMap.get('AMS_Agencies_Hierarchy__c') != null || technicalLogsMap.get('AMS_Agencies_relationhip__c') != null || isHierarchyChange)
             processRollbackHierarchy(technicalLogsMap.get('AMS_Agencies_Hierarchy__c'),technicalLogsMap.get('AMS_Agencies_relationhip__c'));
 
 

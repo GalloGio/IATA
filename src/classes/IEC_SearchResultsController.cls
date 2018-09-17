@@ -188,7 +188,7 @@ public with sharing class IEC_SearchResultsController extends IEC_PageController
             fw.label    = field.getLabel();
             fw.type_x   = field.getType().name();
 
-            if(fw.field == 'Inventory_Status__c'){
+			if(fw.field == 'Inventory_Status__c'){
                 FilterWrapper fw2 = new FilterWrapper();
                 fw2.field = field.getFieldPath()+'1';
                 fw2.type_x = field.getType().name();
@@ -264,5 +264,34 @@ public with sharing class IEC_SearchResultsController extends IEC_PageController
         for(Integer x= 0; x<allProducts.size(); x++)
             if(min <= x   && x <= max)
                 products.add(allProducts[x]);
+
+        /*** ENHCS-2018-7 ***/
+        List<Map<String,Object>> productsListWrapper = new List<Map<String,Object>>();
+        Integer pos = 1;
+        for(EComProduct_DTO prod : products) {
+            Map<String,Object> prodObj = new Map<String,Object>();
+            prodObj.put('id', prod.ProductNumber);
+            prodObj.put('name', prod.ProductName);
+            prodObj.put('category', prod.Portfolio);            
+            prodObj.put('price', prod.unitPrice == null ? 0.00 : prod.unitPrice);    
+            prodObj.put('brand', prod.ProductCategory);        
+            prodObj.put('list', 'Search results'); 
+            prodObj.put('position', pos);
+            prodObj.put('dimension1', prod.Edition);
+            prodObj.put('dimension2', prod.Language);
+            prodObj.put('dimension3', prod.InventoryStatus);
+            prodObj.put('dimension4', prod.AvailabilityDate);
+            prodObj.put('dimension5', prod.Media);
+            prodObj.put('dimension6', prod.EffectiveTo);
+
+            pos++;
+            productsListWrapper.add(prodObj);
+        }
+        productListStr = JSON.serialize(productsListWrapper);
     }
+
+    /*** ENHCS-2018-7 ***/
+    public String productListStr {get;set;}
+    public Integer pageNumber {get;set;}
+
 }

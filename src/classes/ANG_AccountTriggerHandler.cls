@@ -584,25 +584,36 @@ public class ANG_AccountTriggerHandler {
 
 	private void createIEPModelAOscars(){
 
-		Map<Id,Account> iepAccounts = new Map<Id,Account>();
+		Set<Id> iepAccounts = new Set<Id>();
+		Map<Id,Account> iepModelAAccounts = new Map<Id,Account>();
+		Map<Id,Account> iepModelBAccounts = new Map<Id,Account>();
 
 		for(Account a :triggerNew){
 
 			if(a.ANG_IEP_Status__c == 'In Progress' && oldMap.get(a.Id).ANG_IEP_Status__c != 'In Progress') 
-				iepAccounts.put(a.Id,a);
+				iepAccounts.add(a.Id);
 
 		}
 
-		Map<Id,Account> modelACountriesAccs = new Map<Id,Account>([SELECT Id FROM Account WHERE Id IN :iepAccounts.keySet() AND IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model A']);
+		if(iepAccounts.isEmpty()) return;
+
+		Map<Id,Account> iepCountriesAccs = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__r.ANG_IEP_Model__c FROM Account WHERE Id IN :iepAccounts AND (IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model A' OR IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model B')]);
 		
-		for(Id iepAcc: iepAccounts.keySet()){
+		for(Id iepAcc: iepAccounts){
 
-			If(!modelACountriesAccs.keySet().contains(iepAcc))
-				iepAccounts.remove(iepAcc);
+			if(iepCountriesAccs.keySet().contains(iepAcc)){
+
+				if(iepCountriesAccs.get(iepAcc).IATA_ISO_Country__r.ANG_IEP_Model__c == 'Model A')
+					iepModelAAccounts.put(iepAcc, newMap.get(iepAcc));
+				else if(iepCountriesAccs.get(iepAcc).IATA_ISO_Country__r.ANG_IEP_Model__c == 'Model B')
+					iepModelBAccounts.put(iepAcc, newMap.get(iepAcc));
+			}
 
 		}
 
-		if(!iepAccounts.isEmpty())
-			ANG_OscarProcessHelper.createIEPAccountOscar(iepAccounts);
+		if(!iepModelAAccounts.isEmpty())
+			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelAAccounts, 'A');
+		if(!iepModelBAccounts.isEmpty())
+			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBAccounts, 'B');
 	}
 }

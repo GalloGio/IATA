@@ -157,7 +157,8 @@ public with sharing class ANG_AgencyChangesHelper {
                 if(!validateTypeOfChange(oscar))
                     return;
                     
-				sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation);
+				if(!sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation))
+					return;
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
@@ -656,7 +657,8 @@ public with sharing class ANG_AgencyChangesHelper {
 					removeContactsFlag(accountsAffected); 
 
                     for(Id accountId: accountsAffected)
-                        toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+						if(toReturn.accountsMap.get(accountId) != null)
+    	                    toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
 				}
 				if(newAccreditationModel ==  'Cash')
@@ -786,7 +788,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				removeContactsFlag(accountsAffected);
 
                 for(Id accountId: accountsAffected)
-                    toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+					if(toReturn.accountsMap.get(accountId) != null)
+	                    toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
 			}
 
@@ -852,6 +855,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		if(toReturn == null)
 			toReturn = new AChangeStructure();
+
+		Set<Id> accountsToUpdateRHC = new Set<Id>();
 
 		System.debug('[ANG_AgencyChangesHelper] - Types of Change (' + oscarToProcess.ANG_Type_Of_Change__c + ') ');
 
@@ -969,6 +974,11 @@ public with sharing class ANG_AgencyChangesHelper {
 						objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
 
 
+					if(toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.HE && oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.VFMR){
+						if(accFieldApiName == 'Remittance_frequency__c' && oldValue != newValue)
+							accountsToUpdateRHC.add(accId);
+					}
+
 					acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
 				}
 
@@ -981,6 +991,8 @@ public with sharing class ANG_AgencyChangesHelper {
 					toReturn.changesStruct.get(acc.Id).changes.addAll(objectChangesList);
 			}
 
+			if(!accountsToUpdateRHC.isEmpty())
+				recalculateRHCInformation(accountsToUpdateRHC);
 		}
 
 		//this would overwrite existing struct, create a new method in the wrapper to add content in this struct
@@ -988,6 +1000,29 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		return toReturn;
 
+	}
+
+	public static void recalculateRHCInformation(Set<Id> accountIds){
+
+		List<ANG_RHC_Information__c> rhcInfoList = new List<ANG_RHC_Information__c>();
+		Set<Id> accountIdsToProcess = new Set<Id>();
+
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
+			rhcInfoList.add(r);
+			accountIdsToProcess.add(r.ANG_AccountId__c);
+		}
+
+		if(!rhcInfoList.isEmpty()){
+			ANG_RHCHelper.calculateRHCAmount(rhcInfoList);
+			update rhcInfoList;
+		}
+
+		if(!accountIdsToProcess.isEmpty()){
+			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs())
+				Database.executeBatch(new ANG_UpdateRHCInformationBatch(accountIdsToProcess, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+			else 
+				System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accountIdsToProcess, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+		}
 	}
 
 	public static AChangeStructure applyChangeOfOwnership(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn, Boolean isCorrection){
@@ -1069,7 +1104,8 @@ public with sharing class ANG_AgencyChangesHelper {
         	removeContactsFlag(accountsAffected);
 
             for(Id accountId: accountsAffected)
-                toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+				if(toReturn.accountsMap.get(accountId) != null)
+	                toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
         	ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
         }
@@ -1326,12 +1362,16 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static void sanityCheckValidations(AMS_OSCAR__c oscar, AChangeStructure changesContainer, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
+	public static boolean sanityCheckValidations(AMS_OSCAR__c oscar, AChangeStructure changesContainer, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
 
 		if(oscar.ANG_Type_of_change__c.containsIgnoreCase(AMS_Utils.ANG_ACCREDITATION_TYPE)){
-			if(changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c == oscarOnlineAccreditation.ANG_Accreditation_type__c)
+			if(changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c == oscarOnlineAccreditation.ANG_Accreditation_type__c){
 				oscar.addError('To pass sanity checks when type of change includes "Accreditation Type", this value must be modified.');
+				return false;
+			}
 		}
+
+		return true;
 
 	}
 

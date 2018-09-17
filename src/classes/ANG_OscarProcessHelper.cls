@@ -5,6 +5,10 @@ global class ANG_OscarProcessHelper {
 
 	public static final String ANG_PCI_RENEWAL = 'ANG_PCI_RENEWAL'; //email template id name for pci automatic renewal
 
+	/* EasyPay Service Providers */
+	public static final Set<String> MODEL_A_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)'};
+	public static final Set<String> MODEL_B_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)','IATA EasyPay (MSTS)'};
+
 	public static boolean isIATACodeGenerationRunning = false;
 
 	webservice static String[] processIATACodeGeneration(String accountId, String onlineAccreditationId, String oscarId){
@@ -84,6 +88,23 @@ global class ANG_OscarProcessHelper {
 			updater.oscarMap.put(oscar.Id,oscar);
 			updater.acctMap.put(theAccount.Id,theAccount);
 			updater.onlineAMap.put(theAccreditation.Id,theAccreditation);
+
+			/*** AMSU-162 ***/
+			if(AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) && !isShippingAddressValid(theAccreditation)) {
+				isIATACodeGenerationRunning = false;
+				System.debug('[ANG_OscarProcessHelper] Incomplete shipping address.');
+				return new String[]{'-1','Incomplete shipping address.','-1'};
+			}
+
+			/*** AMSU-166 ***/			
+			if(AMS_Utils.oscarNewProcesses.contains(oscar.Process__c)) {				
+				List<String> errorMessages = AMS_Utils.validateCharacters(theAccreditation, AMS_Utils.STAGING_AREA_FIELDS_TO_VALIDATE);
+				if(!errorMessages.isEmpty()) {
+					isIATACodeGenerationRunning = false;
+					System.debug('[ANG_OscarProcessHelper] ' + String.join(errorMessages, '\n'));
+					return new String[]{'-1',String.join(errorMessages, '\n'),'-1'};
+				}							
+			}
 
             if(theAccount.CNS_Agency__c == false && oscar.STEP6__c != AMS_Utils.PASSED && SanityCheckVerificationProcesses.contains(oscar.Process__c)) {
 				isIATACodeGenerationRunning = false;
@@ -318,6 +339,26 @@ global class ANG_OscarProcessHelper {
 
 		return new String[]{'0',returnMessage,dueDiligence ? '0' : '-1',caseId};
 
+	}
+
+	/*** AMSU-162 ***/
+	public static Boolean isShippingAddressValid(AMS_Pax_Accreditation_Form__c accreditation) {
+		String street = accreditation.Shipping_Street__c; 
+        String city = accreditation.Shipping_City__c;
+        String state = accreditation.Shipping_State__c;
+        String zipCode = accreditation.Shipping_Postal_Code__c;
+        Id isoState = accreditation.Shipping_ISO_State__c;
+        Id isoCountry = accreditation.Shipping_ISO_Country__c;
+
+        if(String.isBlank(street) && String.isBlank(city) && String.isBlank(state) && String.isBlank(zipCode) && isoState == null && isoCountry == null) {
+            return true;
+        }
+
+        if(!String.isBlank(street) && !String.isBlank(city) && !String.isBlank(isoState) && !String.isBlank(isoCountry)) {
+            return true;
+        }
+
+		return false;
 	}
 
 	public static void updateUpdater(EntityUpdater updater){
@@ -1232,7 +1273,7 @@ global class ANG_OscarProcessHelper {
 		if (origin == AMS_Utils.ANG_MASSIVE_FOP)
 			identifier = 'NG_FOP_PortalNotification';
 		else if (origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
-			identifier = 'NG_FOP_PortalNotification'; //change the identifier id we need to use another notification template
+			identifier = ANG_PCI_RENEWAL;
 
 		Notification_Template__c notificationTemplate = null;
 
@@ -1421,10 +1462,15 @@ global class ANG_OscarProcessHelper {
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME', contactsMap.get(nt.Contact__c).Name)
 				.replace('#IATACODE', acct.IataCode__c)
+				.replace('#ACCOUNTNAME', acct.Name)
 				.replace('#TODAY30',String.valueOf(Datetime.now().addDays(30).format('MM/dd/yyyy')))
 				.replace('#CASENUMBER',acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber);
-				
-				notifications.add(nt);
+
+			nt.Subject__c = nt.Subject__c
+				.replace('#IATACODE', acct.IataCode__c)
+				.replace('#ACCOUNTNAME', acct.Name);
+
+			notifications.add(nt);
     	}		
 
 		if(!notifications.isEmpty()) insert notifications;
@@ -1454,11 +1500,11 @@ global class ANG_OscarProcessHelper {
 
 			if(con.User_Portal_Status__c == 'Approved Admin')
 				contactsToReturn.add(new ContactOrdered(con,0));
-			if (con.Financial_Assessment_Contact__c)
+			else if (con.Financial_Assessment_Contact__c)
 				contactsToReturn.add(new ContactOrdered(con,10));
-			if(con.BSP_CASS_Payment_contact__c)
+			else if(con.BSP_CASS_Payment_contact__c)
 				contactsToReturn.add(new ContactOrdered(con,20));
-			if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
+			else if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
 				contactsToReturn.add(new ContactOrdered(con,30));
 
 		} 
@@ -1469,11 +1515,11 @@ global class ANG_OscarProcessHelper {
 
 				if(con.User_Portal_Status__c == 'Approved Admin')
 					contactsToReturn.add(new ContactOrdered(con,0));
-				if (con.Financial_Assessment_Contact__c)
+				else if (con.Financial_Assessment_Contact__c)
 					contactsToReturn.add(new ContactOrdered(con,10));
-				if(con.BSP_CASS_Payment_contact__c)
+				else if(con.BSP_CASS_Payment_contact__c)
 					contactsToReturn.add(new ContactOrdered(con,20));
-				if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
+				else if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
 					contactsToReturn.add(new ContactOrdered(con,30));
 
 			} 
@@ -1520,7 +1566,7 @@ global class ANG_OscarProcessHelper {
 	}
     
 
-	public static void sendFOPPortalNotificationAndEmail(Map<String,Map<Id,Case>> notifTempNameCaseMap, Map<String,Set<Id>> templateContIdMap){
+	public static void sendFOPPortalNotificationAndEmail(Map<String,Map<Id,Case>> notifTempNameCaseMap, Map<String,Set<Id>> templateContIdMap, Map<String,String> mapNotificationsTemplates){
 
 		List<String> notificationTargets = new List<String>();
 		Map<Id,Case> contactCaseMap = new Map<Id,Case>();
@@ -1530,7 +1576,7 @@ global class ANG_OscarProcessHelper {
 			conIds.addAll(templateContIdMap.get(key));
 		}
 
-		Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, Account.IataCode__c 
+		Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, Account.IataCode__c, Account.Name
 														FROM Contact WHERE Id IN :conIds]); 
 
 		for(String key :notifTempNameCaseMap.keySet()){
@@ -1544,9 +1590,14 @@ global class ANG_OscarProcessHelper {
 
 		for (Notification__c nt :notifications){
 			nt.Message__c = nt.Message__c
-				.replace('#CONTACTNAME#',contacts.get(nt.Contact__c).Name)
-				.replace('#IATACODE#',contacts.get(nt.Contact__c).Account.IataCode__c)
-				.replace('#DEADLINEDATE#',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
+				.replace('#CONTACTNAME',contacts.get(nt.Contact__c).Name)
+				.replace('#IATACODE',contacts.get(nt.Contact__c).Account.IataCode__c)
+				.replace('#ACCOUNTNAME', contacts.get(nt.Contact__c).Account.Name)
+				.replace('#DEADLINEDATE',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
+
+			nt.Subject__c = nt.Subject__c
+				.replace('#IATACODE', contacts.get(nt.Contact__c).Account.IataCode__c)
+				.replace('#ACCOUNTNAME',contacts.get(nt.Contact__c).Account.Name);
 		}
 
 		if (!notifications.isEmpty())
@@ -1558,15 +1609,22 @@ global class ANG_OscarProcessHelper {
 		OrgWideEmailAddress[] owea;
 	    owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
-	    for (Id conId :templateContIdMap.keyset()){
+		// casesByTemplateName map {TemplateId, Map<CaseId,Case>}
 
-	    	if(conId == ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);
 
-	    	else if(conId == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);			
+	    for (String conId :templateContIdMap.keyset()){
+
+			for(Id caseId: notifTempNameCaseMap.get(conId).KeySet()){
 	    	
-	    	else if(conId == ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_REMINDER_TEMPLATE_ID) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_REMINDER_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);
+				Case caseToProcess = notifTempNameCaseMap.get(conId).get(caseId);
+
+                List<Contact> contactIdList = new List<Contact>();
+                contactIdList.add(contacts.get(caseToProcess.ContactId));
+
+				AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contactIdList, contactCaseMap.get(caseToProcess.ContactId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(mapNotificationsTemplates.get(conId), null, false), caseToProcess.Id, owea[0], false);
+
+			}
 	    	
-	    	else if(conId == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{contacts.get(conId)}, contactCaseMap.get(conId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID, null, false), contactCaseMap.get(conId).Id, owea[0], false);
 	    }
 
 	}
@@ -1636,7 +1694,7 @@ global class ANG_OscarProcessHelper {
 
     }
 
-    public static void createIEPAccountOscar(Map<Id,Account> accsMap){
+    public static void createIEPAccountOscar(Map<Id,Account> accsMap, String model){
 
     	List<Account> accs = accsMap.values();
 
@@ -1649,11 +1707,12 @@ global class ANG_OscarProcessHelper {
 
 		Map<Id,Contact> contactAcc = new Map<Id,Contact>();
 
-		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId 
+		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId,
+			(SELECT Id, Portal_Application__r.Name FROM Portal_Application_Rights__r WHERE ANG_Portal_Service_Role__c = 'IEP Admin')
 			FROM Contact WHERE AccountId IN :accsMap.keySet() 
             AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
                 AND ANG_Portal_Service_Role__c = 'IEP Admin' 
-                AND Portal_Application__r.Name = 'IATA EasyPay (EDENRED)')]){
+                AND Portal_Application__r.Name IN : (model == 'A' ? MODEL_A_PROVIDERS : MODEL_B_PROVIDERS))]){
                 
 			contactAcc.put(con.AccountId,con);
 		} 
@@ -1676,8 +1735,8 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
 	        fieldsOfObject.put('Origin','IEP portal');
-	        fieldsOfObject.put('Reason1__c','IEP Bank account setup');
-	        fieldsOfObject.put('Subject','IEP Bank account setup - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Reason1__c', model == 'A' ? 'Onboarding IEP Model A' : 'Screening IEP Model B');
+	        fieldsOfObject.put('Subject',(model == 'A' ? 'Onboarding IEP Model A - ' : 'Screening IEP Model B -') + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 	        
@@ -1714,7 +1773,7 @@ global class ANG_OscarProcessHelper {
         for (Account acc : accs){
         
 			fieldsOfObject = new Map<String,Object>();
-	        fieldsOfObject.put('Process__c',AMS_Utils.IEPBANKACCOUNTSETUP);
+	        fieldsOfObject.put('Process__c',(model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP :AMS_Utils.IEPMODELBACCOUNTSETUP));
 			fieldsOfObject.put('Status__c','Open');
 			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
 			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
@@ -1756,7 +1815,7 @@ global class ANG_OscarProcessHelper {
 		//sending email with url for portal    
         for (Account acc: accs){
         
-            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.IEPBANKACCOUNTSETUP, 'Creation', true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
+            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : AMS_Utils.IEPMODELBACCOUNTSETUP), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
 
         }
 

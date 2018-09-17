@@ -8,6 +8,7 @@ global class ANG_MasterData_Interface{
             String IATACode = req.requestURI.substring(req.requestURI.lastIndexOf('/')+1);
             string sMode = req.params.get('mode');
             boolean bContinue = true;
+            String changeCode = req.params.get('ChangeCode');
             
             if(IATACode==null || IATACode== ''){
                 GenerateResponse(json.serialize(new ErrorPayload('400', 'No IATA Code received')), 400);
@@ -40,7 +41,7 @@ global class ANG_MasterData_Interface{
             }
             
             //All is good. Proceeding in generating payload
-            GenerateResponse(json.serialize(new MasterDataPayload(lsAccnt[0], sMode=='F'),true), 200);
+            GenerateResponse(json.serialize(new MasterDataPayload(lsAccnt[0], sMode=='F', changeCode),true), 200);
         }
         catch(exception e){
             GenerateResponse(json.serialize(new ErrorPayload('500', e.getMessage()) ), 500);
@@ -115,6 +116,17 @@ global class ANG_MasterData_Interface{
             this.percentage = percentage == null ? 0 : percentage; 
         }
     }
+
+    /* Due Diligence */
+    private class DueDiligence{
+        public string Type;
+        public string Value;
+        
+        public DueDiligence(string Type, string Value){
+            this.Type = Type;
+            this.Value = Value;
+        }
+    }
        
 
     private static final set<string> IGNORE_FIELDS_SET = new set<string>{'FormOfPayment'};
@@ -164,13 +176,14 @@ global class ANG_MasterData_Interface{
         public string dueDiligenceStatus;
         public boolean isNewGenAgency;
         public list<Owner> owners;
+        public list<DueDiligence> lsDueDiligence;
 
         
         
 
 
         /*Constructor*/
-        public MasterDataPayload(Account acc, boolean getChildren){
+        public MasterDataPayload(Account acc, boolean getChildren, String changeCode){
             try{
                 this.isBranchAbroad = acc.Is_Branch_Abroad__c;
                 this.PurgeCode = acc.Purge_Flag__c;
@@ -209,7 +222,19 @@ global class ANG_MasterData_Interface{
                 this.TradeName = acc.TradeName__c;
                 this.vatNumber = acc.VAT_Number__c;
                 this.topParentIATACode = acc.Top_Parent__r.IATACode__c;
-                
+                this.lsDueDiligence = new List<DueDiligence>();
+
+                /* Due Diligence to IEP - NEWGEN-3857  */
+                if(changeCode == 'MaddY'){
+                    this.lsDueDiligence.add(new DueDiligence('MaddY', acc.Due_Diligence_Status__c));
+                }
+
+                /* Due Diligence to IEP - NEWGEN-3841  */
+                if(changeCode == 'MAPDF'){
+                    this.lsDueDiligence.add(new DueDiligence('MAPDF', acc.Due_Diligence_Status__c));
+                }
+
+
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r)
                     this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, rhc.ANG_Financial_Security__c);

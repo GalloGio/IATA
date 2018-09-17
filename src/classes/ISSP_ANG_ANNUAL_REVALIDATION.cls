@@ -1011,7 +1011,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                        AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
-					   PhoneNational__c, FAX__c, Company_Name_Local__c
+					   PhoneNational__c, FAX__c, Company_Name_Local__c, Contact__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
 				   And RecordTypeId = :rtAccreditContCurrentOwner
@@ -1022,7 +1022,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                        AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
-					   PhoneNational__c, FAX__c, Company_Name_Local__c
+					   PhoneNational__c, FAX__c, Company_Name_Local__c, Contact__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
 				   And RecordTypeId = :rtAccreditContCurrentCompanyOwner
@@ -1033,7 +1033,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		return [Select Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                        Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
                        AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c,
-					   PhoneNational__c, FAX__c, Company_Name_Local__c
+					   PhoneNational__c, FAX__c, Company_Name_Local__c, Contact__c
                   From AMS_Accreditation_Contact__c
                  Where AMS_Pax_Accreditation_Form__c in :newFormIds
 				   And RecordTypeId = :rtAccreditContPreviousCompanyOwner
@@ -1231,8 +1231,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.fw.newform.ISSP_AMS_VAT_number__c == null && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
-					currentAccount.fw.newform.ISSP_AMS_VAT_number__c.addError(Label.ISSP_YouMustEnter);
+				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
+					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				} else if (currentAccount.fw.newForm.INVALID_Tax_Number__c && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);

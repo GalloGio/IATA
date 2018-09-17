@@ -347,6 +347,16 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>ANG_Share_documentation_with_vendor__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Share documentation with vendor</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_Type_Of_Change__c</fullName>
         <description>Used for Newgen ISS project</description>
         <externalId>false</externalId>
@@ -3451,6 +3461,16 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <fullName>ANG.ANNUAL.REVALIDATION</fullName>
                     <default>false</default>
                     <label>ANG.ANNUAL.REVALIDATION</label>
+                </value>
+                <value>
+                    <fullName>IEP.MODEL.A.ACCOUNT.SETUP</fullName>
+                    <default>false</default>
+                    <label>IEP.MODEL.A.ACCOUNT.SETUP</label>
+                </value>
+                <value>
+                    <fullName>IEP.MODEL.B.ACCOUNT.SETUP</fullName>
+                    <default>false</default>
+                    <label>IEP.MODEL.B.ACCOUNT.SETUP</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -8011,6 +8031,51 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <label>ISSP - Assignation queue</label>
         <language>en_US</language>
         <queue>ISSP_Queue_for_failed_assignation</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Africa_Mid_East_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Africa &amp; Mid. East</label>
+        <queue>Model_A_Onboarding_Africa_Mid_East</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Americas</label>
+        <queue>Model_A_Onboarding_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Asia_Pacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Asia &amp; Pacific</label>
+        <queue>Model_A_Onboarding_Asia_Pacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_China_North_Asia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - China &amp; North Asia</label>
+        <queue>Model_A_Onboarding_China_North_Asia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Europe</label>
+        <queue>Model_A_Onboarding_Europe</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -25381,6 +25446,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>IEP%2EBANK%2EACCOUNT%2ESETUP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IEP%2EMODEL%2EA%2EACCOUNT%2ESETUP</fullName>
                 <default>false</default>
             </values>
             <values>

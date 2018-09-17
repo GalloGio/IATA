@@ -681,7 +681,7 @@ private class ANG_OscarProcessHelperTest {
 			Test.startTest();
 
 			//Contact co2 = new Contact(AccountId = a1.id, Firstname = 'John1', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john1j@test.com', User_Portal_Status__c = 'Approved Admin');
-			Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com');
+			Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj4@test.com');
 			Contact co3 = new Contact(AccountId = a1.id, Firstname = 'John2', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john2j@test.com', Financial_Assessment_Contact__c = true);
 			Contact co4 = new Contact(AccountId = a1.id, Firstname = 'John3', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john3j@test.com', BSP_CASS_Payment_contact__c = true);
 

@@ -21,6 +21,7 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 
 	//Templates Names to use
 	private Map<String,String> notificationTemplates;
+	private Map<String,String> notificationTemplatesInverted;
 	//dates:
 	Date dateReminder; //15 days ago
 	Date dateNonCompliance; //30 days ago
@@ -41,9 +42,11 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 		System.debug('## dateNonCompliance: '+dateNonCompliance);
 
 		notificationTemplates = new Map<String,String>();
+		notificationTemplatesInverted = new Map<String,String>();
 
-		for (Notification_template__c nt :[SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c = :FOP_REMINDER_TEMPLATE_ID OR Identifier__c = :FOP_NONCOMPLIANCE_TEMPLATE_ID]){
+		for (Notification_template__c nt :[SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c = :FOP_REMINDER_TEMPLATE_ID OR Identifier__c = :FOP_NONCOMPLIANCE_TEMPLATE_ID or Identifier__c = :RENEWAL_FOP_REMINDER_TEMPLATE_ID OR Identifier__c =:RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID]){
 			notificationTemplates.put(nt.Identifier__c,nt.Name);
+			notificationTemplatesInverted.put(nt.Name,nt.Identifier__c);
 		}
 
 		String query;
@@ -89,30 +92,30 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
    			if (dt == dateReminder){
    				if(cse.origin == MASSIVE_FOP_ORIGIN){   					
    					reminderCases.put(cse.id,cse);
-	   				if(templateContIdMap.keySet().contains(FOP_REMINDER_TEMPLATE_ID)) templateContIdMap.get(FOP_REMINDER_TEMPLATE_ID).add(cse.ContactId);
-	   				else templateContIdMap.put(FOP_REMINDER_TEMPLATE_ID,new Set<Id>{cse.ContactId});
+	   				if(templateContIdMap.keySet().contains(notificationTemplates.get(FOP_REMINDER_TEMPLATE_ID))) templateContIdMap.get(notificationTemplates.get(FOP_REMINDER_TEMPLATE_ID)).add(cse.ContactId);
+	   				else templateContIdMap.put(notificationTemplates.get(FOP_REMINDER_TEMPLATE_ID),new Set<Id>{cse.ContactId});
 	   				
    				}else if(cse.origin == AUTOMATIC_RENEWAL_FOP_ORIGIN){
    					renewalReminderCases.put(cse.id,cse);
-   					if(templateContIdMap.keySet().contains(RENEWAL_FOP_REMINDER_TEMPLATE_ID)) templateContIdMap.get(RENEWAL_FOP_REMINDER_TEMPLATE_ID).add(cse.ContactId);
-	   				else templateContIdMap.put(RENEWAL_FOP_REMINDER_TEMPLATE_ID,new Set<Id>{cse.ContactId});	   				
+   					if(templateContIdMap.keySet().contains(notificationTemplates.get(RENEWAL_FOP_REMINDER_TEMPLATE_ID))) templateContIdMap.get(notificationTemplates.get(RENEWAL_FOP_REMINDER_TEMPLATE_ID)).add(cse.ContactId);
+	   				else templateContIdMap.put(notificationTemplates.get(RENEWAL_FOP_REMINDER_TEMPLATE_ID),new Set<Id>{cse.ContactId});	   				
    				}
    			}else if(dt == dateNonCompliance){
    				nonComplianceCases.put(cse.id,cse);
    				if(cse.origin == MASSIVE_FOP_ORIGIN){
    					nonComplianceCases.put(cse.id,cse);   
-	   				if(templateContIdMap.keySet().contains(FOP_NONCOMPLIANCE_TEMPLATE_ID)) templateContIdMap.get(FOP_NONCOMPLIANCE_TEMPLATE_ID).add(cse.ContactId);
-	   				else templateContIdMap.put(FOP_NONCOMPLIANCE_TEMPLATE_ID,new Set<Id>{cse.ContactId});
+	   				if(templateContIdMap.keySet().contains(notificationTemplates.get(FOP_NONCOMPLIANCE_TEMPLATE_ID))) templateContIdMap.get(notificationTemplates.get(FOP_NONCOMPLIANCE_TEMPLATE_ID)).add(cse.ContactId);
+	   				else templateContIdMap.put(notificationTemplates.get(FOP_NONCOMPLIANCE_TEMPLATE_ID),new Set<Id>{cse.ContactId});
 	   	
 	   			}else if(cse.origin ==AUTOMATIC_RENEWAL_FOP_ORIGIN){
 	   				renewalNonComplianceCases.put(cse.id,cse);
-	   				if(templateContIdMap.keySet().contains(RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID)) templateContIdMap.get(RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID).add(cse.ContactId);
-	   				else templateContIdMap.put(RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID,new Set<Id>{cse.ContactId});	   				
+	   				if(templateContIdMap.keySet().contains(notificationTemplates.get(RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID))) templateContIdMap.get(notificationTemplates.get(RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID)).add(cse.ContactId);
+	   				else templateContIdMap.put(notificationTemplates.get(RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID),new Set<Id>{cse.ContactId});	   				
 	   			}
    			} 		
    		}
 
-   		if (!reminderCases.isEmpty() || !nonComplianceCases.isEmpty()){
+   		if (!reminderCases.isEmpty() || !nonComplianceCases.isEmpty() || !renewalReminderCases.isEmpty() || !renewalNonComplianceCases.isEmpty()){
 
 	   		if(!reminderCases.isEmpty()) casesByTemplateName.put(notificationTemplates.get(FOP_REMINDER_TEMPLATE_ID),reminderCases);	   		
 	   		
@@ -123,7 +126,7 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	   		if(!renewalNonComplianceCases.isEmpty()) casesByTemplateName.put(notificationTemplates.get(RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID),renewalNonComplianceCases);	   		
 
 	   		try{
-		   		ANG_OscarProcessHelper.sendFOPPortalNotificationAndEmail(casesByTemplateName, templateContIdMap);	   		
+		   		ANG_OscarProcessHelper.sendFOPPortalNotificationAndEmail(casesByTemplateName, templateContIdMap,notificationTemplatesInverted);	   		
 	   		}catch(Exception e){
 	   			errors.add('Error running batch containing Case IDs: '+String.join(templateContIdMap.values(),',')+' - '+e.getMessage()+' - '+e.getStackTraceString()+'/n');
 	   		}	

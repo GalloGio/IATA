@@ -289,6 +289,29 @@ global class AMS_OSCAR_Attachments {
         return listFileDef;
     }
 
+    /*** AMSU-168 ***/
+    public PageReference acceptFiles() {
+        for(WrapperAttach attach : listAttachments) {            
+            if(attach.isSelected && attach.fileAmazon != null && attach.fileAmazon.amazonFile != null) {
+                attach.reviewStatus = 'Accepted';
+                attach.isSelected = false;
+                attach.fileAmazon.amazonFile.Review_Status__c = 'Accepted';
+            }
+        }
+        return null;
+    }
+
+    public PageReference rejectFiles() {
+        for(WrapperAttach attach : listAttachments) {            
+            if(attach.isSelected && attach.fileAmazon != null && attach.fileAmazon.amazonFile != null) {
+                attach.reviewStatus = 'Rejected';
+                attach.isSelected = false;
+                attach.fileAmazon.amazonFile.Review_Status__c = 'Rejected';
+            }
+        }
+        return null;
+    }
+
     global class FileDef {
         String name;
         String url;
