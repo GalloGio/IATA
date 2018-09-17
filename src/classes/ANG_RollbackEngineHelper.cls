@@ -30,7 +30,9 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
             sp = Database.setSavePoint();
             AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
             AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false; 
+            System.debug('Initiating Rollback.');
             rollbackData();
+            System.debug('Rollback finished.');
             AMS_OscarChangesHelper.createInternalCase(new Set<Id>{oscarId});
             sendEmailConfirmation(null);
             AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
@@ -38,6 +40,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
             generateAgencyEvents(oscarId);
 
         }catch(Exception e){
+            System.debug('Something went wrong with the Rollback process:'+e.getStackTraceString());
             Database.rollback(sp);
             sendEmailConfirmation(e);
         }
