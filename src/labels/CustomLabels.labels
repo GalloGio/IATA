@@ -24812,7 +24812,7 @@ errMissShipTo:&lt;br/&gt;Missing &quot;Ship To&quot; information
 errInvalidCoupon:Coupon &quot;{0}&quot; is already used
 errQuantity:Quantity &quot;{0}&quot; is invalid
 errTax:Error found in Freight &amp; Taxes calculation:
-msgWarnProductNotCompliant:- Billing/Shipping country is non-compliant with the product &quot;{0}&quot; ({1}).
+msgWarnProductNotCompliant:- We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.
 msgPayTypeThreshold: (threshold exceeded)
 msgPayTypeNotAllowed: (not allowed)
 msgPayTypeBlock: (blocked by product)
@@ -24829,7 +24829,7 @@ errMissAttn:Attention cannot be empty
 errMissPhone:Phone cannot be empty
 errMissState:State/Province cannot be empty
 msgAddrExist:Shipping address is already in system.
-msgErrorCartNotCompliant:Please contact Customer Services by email custserv@iata.org&lt;mailto:custserv@iata.org&gt; or telephone in Canada +1 (514) 390 6726, to order this product.</value>
+msgErrorCartNotCompliant:We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.</value>
     </labels>
     <labels>
         <fullName>Labels_IECConfirmOrder</fullName>
@@ -24904,7 +24904,7 @@ lblStockDate:Expected Availability Date:
 lblQtyInvalid:Invalid quantity to add
 lblDiscount:Discount
 lblFreeShipping:FREE SHIPPING
-msgErrorProductNotCompliant:Please contact Customer Services by email custserv@iata.org&lt;mailto:custserv@iata.org&gt; or telephone in Canada +1 (514) 390 6726, to order this product.</value>
+msgErrorProductNotCompliant:We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.</value>
     </labels>
     <labels>
         <fullName>Labels_IECProductRelated</fullName>

@@ -303,6 +303,9 @@ public without sharing class AMS_Utils {
     public static final String CASE_STATUS_CLOSED = 'Closed';
     public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
 
+    // Case - Reason1__c //AMSU-165
+    public static final String CASE_REASON_CHG_DATA_MAINTENANCE = 'CHG – Data Maintenance';
+
     //set with the ifap status to update the account's last financial review
     public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED};
 
