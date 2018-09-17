@@ -16,15 +16,15 @@
     <div class="slds-combobox_container">
         <div class="slds-combobox  slds-dropdown-trigger_click" aura:id="results" aria-expanded="true" aria-haspopup="listbox" role="combobox">
             <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-                <ui:inputText value="{!v.inputValue}" updateOn="keyup" keyup="{!c.search}" class="slds-input" disabled="{!v.disabled}" blur="{!c.closeResults}" />
-                <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                <ui:inputText value="{!v.inputValue}" updateOn="keyup" class="slds-input" disabled="{!v.disabled}" blur="{!c.closeResults}" />
+                <!--<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
                     <aura:if isTrue="{!v.searching}">
                         <lightning:spinner size="small"/>
                         <aura:set attribute="else">
                             <lightning:icon iconName="utility:search" size="x-small"/>
                         </aura:set>
                     </aura:if>
-                </span>
+                </span>-->
             </div>
 
             <div role="listbox">
