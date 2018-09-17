@@ -11,8 +11,9 @@
     <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
     <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
  
+   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div class="container">
-    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+    <div id="contentWrapper">
     
 <script type="text/javascript">
     function showArticle() {
@@ -61,12 +62,7 @@
     }
 </script>
      
- <style>
- ul li, ol li {
-            margin-left: inherit;
-            padding-left: inherit;
- }
-     
+ <style> 
  .close {
   float: right;
   font-size: 21px;
@@ -336,8 +332,9 @@ margin-top:50px;
     <!-- EO PORTAL_DIRECT Upload -->
     </div><!-- end panel body -->
             </div><!-- end  div class="panel panel-primary"-->
-       <c:ISSP_CustomFooter communityName="{!communityName}"/>
+    </div>
     </div><!-- end container-->  
+     <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </body>
     </html>
 </apex:page>
