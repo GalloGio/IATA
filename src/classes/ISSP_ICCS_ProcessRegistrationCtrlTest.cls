@@ -815,7 +815,8 @@ public class ISSP_ICCS_ProcessRegistrationCtrlTest {
 
         userRightsController.newUser();
       
-        
+        Test.stopTest();
+		
         List<SelectOption> ICCSPortalRoles = userRightsController.ICCSPortalRoles;
         
         // Activation /deactivation management
@@ -854,6 +855,6 @@ public class ISSP_ICCS_ProcessRegistrationCtrlTest {
 
         membershipManagementController.setMembershipToInactive();
 
-        Test.stopTest();
+        
     }
 }
