@@ -3,13 +3,29 @@
     <available>true</available>
     <description>Used on IEP Bank Account Setup OSCAR Process</description>
     <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>IEP Setup SanityCheck Passed</name>
-    <style>none</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – Register/Update of IEP Bank Account</subject>
-    <textOnly>Dear Sir/Madam,  
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Document submission for IEP Account opening</subject>
+    <textOnly>Dear Sir/Madam,
 
-We have well received your request for registering your Bank Account for EasyPay services. We will inform you as soon as the registration is completed. Don’t hesitate to contact the IATA Customer Service team for more information.  
 
-Thank you. IATA Customer Service Portal</textOnly>
-    <type>custom</type>
+
+The documents for registering your Account for EasyPay services have been correctly submitted and we will inform you as soon as the registration is completed. Don’t hesitate to contact the IATA Customer Service team for more information.
+
+
+
+
+
+Thank you,
+
+
+
+IATA Customer Service Portal
+
+
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
 </EmailTemplate>
