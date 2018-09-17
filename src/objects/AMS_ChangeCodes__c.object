@@ -439,6 +439,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Change_Code__c</columns>
         <columns>Reason_Code__c</columns>
         <columns>Reason_Code_Description__c</columns>
+        <columns>Published_in_bulletin__c</columns>
         <columns>Record_Type__c</columns>
         <columns>Field1__c</columns>
         <columns>Field2__c</columns>

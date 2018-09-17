@@ -82,7 +82,7 @@
         <accessLevel>Edit</accessLevel>
         <label>SIS visibility</label>
         <sharedTo>
-            <roleAndSubordinates>SISCustomerSupport</roleAndSubordinates>
+            <roleAndSubordinatesInternal>SISCustomerSupport</roleAndSubordinatesInternal>
         </sharedTo>
         <criteriaItems>
             <field>Email</field>
