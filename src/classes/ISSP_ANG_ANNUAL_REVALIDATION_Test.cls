@@ -56,7 +56,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true);
 		insert country;
 
         Account account = ISSP_ObjectFactory.createNewAccount();
@@ -103,11 +103,22 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 	@isTest
 	static void test4() {
 
+		Test.startTest();
+
+		insert new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL', Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)(([.])(([a-zA-Z]{2,3}))([.]){0,1}([a-zA-Z]{2,3}){0,1})');
+
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true );
 		insert country;
+
+		AMS_Accreditation_Country_CheckList__c aacc = new AMS_Accreditation_Country_CheckList__c(
+     		IATA_ISO_Country__c = country.Id,
+     		Operation__c = 'Travel Agent'
+     	);
+
+     	insert aacc;
 
         Account account = ISSP_ObjectFactory.createNewAccount();
         account.BillingCity = 'test';
@@ -133,7 +144,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
-		account.Location_Class__c = 'P';
+		child.Location_Class__c = 'P';
 
 		insert child;
 
@@ -166,6 +177,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		insert testcase;
 
+		Test.stopTest();
+
 		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
 
@@ -175,6 +188,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		List<SelectOption> countryNameList = ctrl.countryNameList;
 		AMS_Accreditation_Country_CheckList__c CountryCheckList = ctrl.CountryCheckList;
+		System.debug('rui2: ' + CountryCheckList);
+		//ctrl.currentAccount.isocountry.Iso_code__c
+		//currentAccount.Account.Sector__c
 
 		//ctrl.securityCheck();
 
@@ -224,6 +240,14 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.fw.newForm.Notify_Change_Ownership__c = false;
 
 		ctrl.confirmUpdate();
+
+		/*ctrl.currentAccount.fw.newform.Local_Physical_Address_Street__c = 'test';
+		ctrl.currentAccount.fw.newform.Local_Postal_Address_Street__c = 'test';
+		ctrl.currentAccount.fw.newform.Local_Physical_Address_City__c = 'test';
+		ctrl.currentAccount.fw.newform.Local_Postal_Address_City__c = 'test';
+		ctrl.currentAccount.fw.newform.Local_Physical_Address_Province__c = 'test';
+		ctrl.currentAccount.fw.newform.Local_Postal_Address_Province__c = 'test';
+		ctrl.currentAccount.fw.newform.Local_Legally_Registered_Name__c = 'test';*/
 
 		ctrl.currentAccount.fw.newForm.Notify_Change_Legal_Details__c = true;
 		ctrl.currentAccount.fw.newForm.Notify_Change_Location__c = true;
@@ -427,6 +451,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.confirmUpdate();
 
+		upd.validateVATNumber();
+
 	}
 
 	@isTest
@@ -435,8 +461,15 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true );
 		insert country;
+
+		AMS_Accreditation_Country_CheckList__c aacc = new AMS_Accreditation_Country_CheckList__c(
+     		IATA_ISO_Country__c = country.Id,
+     		Operation__c = 'Travel Agent'
+     	);
+
+     	insert aacc;
 
         Account account = ISSP_ObjectFactory.createNewAccount();
         account.BillingCity = 'test';
@@ -462,7 +495,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
-		account.Location_Class__c = 'P';
+		child.Location_Class__c = 'P';
 
 		insert child;
 
@@ -592,7 +625,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true );
 		insert country;
 
         Account account = ISSP_ObjectFactory.createNewAccount();
@@ -619,7 +652,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		child.parentId = account.id;
 		child.Top_Parent__c = account.id;
 		child.IATA_ISO_Country__c = country.Id;
-		account.Location_Class__c = 'P';
+		child.Location_Class__c = 'P';
 
 		insert child;
 

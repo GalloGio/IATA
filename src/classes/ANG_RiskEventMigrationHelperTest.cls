@@ -741,7 +741,8 @@ private class ANG_RiskEventMigrationHelperTest {
 															CurrencyIsoCode = 'EUR', 
 															ISO_Code_Numeric__c = 620, 
 															ISO_Code__c = 'PT',
-															AIMS_Area_ID__c='1');
+															AIMS_Area_ID__c='1',
+															ANG_Enable_NewGen__c = true);
 		insert isoTest;
 		
 		Account c = new Account(

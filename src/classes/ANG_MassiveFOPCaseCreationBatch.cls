@@ -4,12 +4,15 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 	
 	global Set<Id> accountIds;
 
-	global Set<String> resultItems;
+	global List<ANG_ConversionHelper.ConversionBatchItem> resultItems;
 
+	global List<String> fieldListContact;
+
+	private String errorMessages;
 
 	global ANG_MassiveFOPCaseCreationBatch(Set<Id> accountIdsIn) {
-		
-		resultItems = new Set<String>();
+		errorMessages = '';
+		resultItems = new List<ANG_ConversionHelper.ConversionBatchItem>();
 
 		List<String> fieldListAcct = new List<String>();
 
@@ -19,7 +22,7 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 			fieldListAcct.add(field);
 		}
 
-		List<String> fieldListContact = new List<String>();
+		fieldListContact = new List<String>();
 
 		Map<String, Schema.SObjectField> schemaFieldMapContacts = Contact.sObjectType.getDescribe().fields.getMap();
 
@@ -27,7 +30,7 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 			fieldListContact.add(field);
 		}
 
-		this.query = 'SELECT '+ String.join(fieldListAcct, ', ') + ' , ( SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contacts where Status__c  =\'Active\' ) FROM Account WHERE Id in:accountIds';
+		this.query = 'SELECT '+ String.join(fieldListAcct, ', ') + ' FROM Account WHERE Id in:accountIds';
 
 		this.accountIds = accountIdsIn;
 	}
@@ -44,19 +47,47 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 		Account acct = (Account) scope.get(0);
 
 		try{
-	
+
 			sp = Database.setSavePoint();
 
+			String queryContacts;
+
+			if(acct.ParentId == null)
+	            queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where Email <> null AND Email <> \'\' AND Status__c = \'Active\' and accountId = \''+acct.Id+'\'';
+			else
+				queryContacts = 'SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contact where Email <> null AND Email <> \'\' AND Status__c = \'Active\' and accountId in (\''+acct.Id+'\',\''+acct.ParentId+'\')';
+
+        	System.debug('Query is:'+queryContacts);
+        
+			List<Contact> contacts = Database.query(queryContacts);
+
+			if(contacts.isEmpty()){
+
+				
+				ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(new ANG_ConversionHelper.HierarchyStructure(acct), 1, BC.getJobId(), true, 'No contacts were found in the Account Hierarchy.');
+
+				resultItems.add(item);
+
+				return;
+
+			}
 			System.debug('Creating Oscar for Manage Forms of Payment for account ' + acct.Id + '('+acct.IATACode__c+')');
 
-			Id caseIdCreate = ANG_OscarProcessHelper.createPCIComplianceOscars(new List<Account>{acct}, new Map<Id,List<Contact>>{acct.Id => acct.contacts}, new Set<Id>{acct.Id}).get(0).Id;
+			Id caseIdCreate = ANG_OscarProcessHelper.createPCIComplianceOscars(new List<Account>{acct}, new Map<Id,List<Contact>>{acct.Id => contacts}, new Set<Id>{acct.Id}).get(0).Id;
 
 			System.debug('Case created with Id : ' + caseIdCreate );
 			
-			resultItems.add(acct.IATACode__c + ' - Success:'+caseIdCreate);
+			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(new ANG_ConversionHelper.HierarchyStructure(acct), 1, BC.getJobId(), false, null);
+			resultItems.add(item);
 
 		}catch(Exception e){
-			Database.rollback(sp);throw e;
+            System.debug('Exception processing account ' + acct.Id + ':' + e.getStackTraceString());
+            
+			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(new ANG_ConversionHelper.HierarchyStructure(acct), 1, BC.getJobId(), true, e.getMessage());
+
+			System.debug(item);resultItems.add(item);Database.rollback(sp);//throw e;
+
+			//Database.rollback(sp);resultItems.add(acct.IATACode__c + ' - Error:' + e.getMessage());throw e;
 		}
 	}
 	
@@ -76,23 +107,34 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 		mail.setSenderDisplayName('Apex Newgen Forms Of Payment  Module');
 		mail.setSubject('Batch Processing '+a.Status);
 
-		String toReturnBody = 'The Batch Apex job ('+BC.getJobId()+')processed  '+a.TotalJobItems+' batches with '+a.NumberOfErrors+' failures.'+' Job Item processed are'+a.JobItemsProcessed+'\n\n';
+		String toReturnBody = 'The Batch Apex job ('+BC.getJobId()+')processed  '+a.TotalJobItems+' batches.'+' Job Item processed are'+a.JobItemsProcessed+'\n\n';
 		
 		toReturnBody+= ':: Execution Summay ::'+'\n';
+	
+		toReturnBody+= ':: Errors Found ::'+'\n';
 
-		for(String value: resultItems){
-			
-			toReturnBody+= value + '\n';
+		for(ANG_ConversionHelper.ConversionBatchItem item:resultItems) 
+			if(item.isError){
+				toReturnBody+=item+'\n';
+            	errorMessages = (String.isEmpty(errorMessages) ?  '[{"iataCode":"' + item.iataCode + '", "errorMessage":"' + item.errorMessage + '"}' : errorMessages + ', {"iataCode":"' + item.iataCode + '", "errorMessage":"' + item.errorMessage + '"}');         
+            }
+		
+		toReturnBody+= '\n\n';
+		toReturnBody+= ':: Accounts Processed ::'+'\n'; 
 
-		}
+		for(ANG_ConversionHelper.ConversionBatchItem item:resultItems)
+			if(!item.isError)
+				toReturnBody+=item+'\n';
 
 		mail.setPlainTextBody(toReturnBody);
-
+		if(!String.isEmpty(errorMessages)) EventBus.publish(new Batch_Notification__e(Batch_id__c = BC.getJobId(), message__c = errorMessages + ']'));
+		
 		 if(Test.isRunningTest()){
 		 	return;
 		 }
 
 		Messaging.sendEmail(new Messaging.Singleemailmessage [] {mail});
+
 	}
 	
 }
