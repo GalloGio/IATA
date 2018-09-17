@@ -78,10 +78,9 @@
     });
   }
 </script>
-
+<c:ISSP_CustomNavigation />
 <div class="container">
-  <c:ISSP_CustomNavigation />
-
+  <div id="contentWrapper">
   <apex:form id="mainForm" styleclass="form-inline">
     <apex:actionFunction name="updateAppRight" action="{!updateAppRight}" rerender="notificationsSwitch"/>
 
@@ -278,7 +277,7 @@
 		</apex:pageBlock>
 
   </apex:form>
-
-  <c:ISSP_CustomFooter />
 </div>
+</div>
+ <c:ISSP_CustomFooter />
 </apex:page>

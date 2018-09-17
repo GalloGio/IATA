@@ -9,7 +9,6 @@
     
 	<html> 
 		<c:ISSP_Header communityName="{!communityName}" ></c:ISSP_Header>
-		<c:iss_ap_css />
 		<c:ISSP_WaitingStatus />
 		<body>
 		<script src="{!URLFOR($Resource.bootbox)}" />
@@ -21,155 +20,6 @@
 		<script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
 		
 	<style>
-		.adlabel	{
-		font-size: 91%;
-		text-align: right;
-		}
-		.adlabelpos	{
-		width: 37%;
-		margin-right: -2%;
-		}
-		.ui-autocomplete{	
-			z-index:9999 !important;
-		}
-		.ui-dialog{	
-			z-index:9999 !important;
-		}
-		.statusBox{margin-left: 76.6%;margin-top: -25.0%;}
-		.statusBoxOther{margin-left: 172.5%;margin-top: -25%;}
-		.statusBoxMW{margin-left: 59.5%;margin-top: -16.5%;}
-		.wid	{
-		width: 85%;
-		}
-		
-		.pbBody {
-		padding-left:10px !important;	
-		}
-
-		.apcontainer div {
-		border: 0px !important;
-		}
-			
-		.pbBody a{color:#337ab7 !important}
-				
-		.bPageBlock {
-			border-top-width : thin !important;
-		}
-		
-		.bEditBlock input {
-			vertical-align:top !important;
-		}
-		
-		.btn {
-			padding: 2px 12px !important;
-		}
-							
-		.btn-primary {
-			color: #fff !important;
-			background: inherit !important;
-			background-color: #337ab7 !important;
-			border-color: #2e6da4 !important;
-			border: 1px solid transparent !important;
-			/*background: */
-		}
-		
-		.tb-header {
-			padding-right:20px;
-		}
-				
-		.modalrow {
-			padding-top:10px;
-		}
-			
-		ul li, ol li {
-			margin-left: inherit;
-			padding-left: inherit;
-		}
-		
-		#contentWrapper {	background: #fff !important; margin: 0 auto;max-width: 1170px;}
-			
-		.requiredText {display:none;}
-		
-		.dateFormat {display:none;}
-		
-		.errorMsg {color:#d74c3b}
-			
-		.progress-bar-off {
-				color:#6BBBEA;
-				font-weight:bold;
-				background-image:none !important;
-				background-color:transparent !important;
-				border-right:2px solid white;
-		}
-		
-		body .bPageBlock .pbBody .pbSubheader{
-				background-image: url('') !important;
-				background-color:	#1797c0;
-				color: #fff;
-		}
-
-		body .bPageBlock .pbBody .summary-subsection .pbSubheader{
-				background-image: url('') !important;
-				background-color: initial;
-				color: initial;
-		}
-                   
-    	body .dataCol {
-        	width:5% !important;
-        }
-		
-		.pbSubheader {
-			font-weight:bold;
-			font-size:15px;
-		}
-					
-		.contact-detail {
-			font-size:12px;
-			margin-bottom:3px;
-		}
-					
-		.tbFooter {
-		text-align:right;
-		}
-					
-		.requiredBlock {
-			width:5px !important;
-		}
-
-		.checkbox-td {
-			text-align: center;
-		}
-
-		.summary-table th {
-			text-align: center;
-		}
-
-		.summary-table td.dataCell {
-			border: 1px solid #e0e3e5 !important;
-		}
-
-		.headerRow {
-			white-space: pre-line !important;
-		}
-		
-			.col1 {
-				padding-bottom:5px;
-				width:40%;
-				vertical-align: text-top;
-				font-weight:bold
-			}
-			
-			.col1_regular {
-				padding-bottom:5px;
-				width:25%;
-				vertical-align: text-top;
-				font-weight:bold
-			}		
-					
-			.col2 {width:60%; padding-left:50px;vertical-align: text-top;}
-			.col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
-			.col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
-			.col3 {width:50%}
 		#tooltip-add-ass-contact:hover:after{
 			content: attr(html-title);
 			display:block;
@@ -189,8 +39,8 @@
         select, input, textarea {
            	margin-left: 20px;
            }
-
-	</style>	
+	</style>
+    
 	<script type="text/javascript">
 	var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
 	var $j = jQuery.noConflict();
@@ -701,9 +551,9 @@
 		
 	</div>
 
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 	<div class="container">
 		<div id="contentWrapper">
-			<c:ISSP_CustomNavigation communityName="{!communityName}"/>
 	
 	<div class="panel-primary">
 		<div class="panel-heading head_panel_green">
@@ -813,7 +663,7 @@
 						</apex:pageBlockSectionItem>
 							
 						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Notify_Change_Accreditation_Type__c==false, newForm.Confirm_accreditation_type_are_correct__c==false, CanChangeAccreditationType), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
-							<apex:outputPanel>
+							<apex:outputPanel >
 								
 								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Accreditation_Type__c.Label}" style="color:black;font-size:110%"/>
 							</apex:outputPanel>
@@ -1070,7 +920,7 @@
 							</apex:outputPanel>
 							
 							<apex:pageBlockSectionItem labelStyleClass="agencyLocationComponent pageBlockSectionItem" dataStyleClass="agencyLocationComponent pageBlockSectionItem" id="locationItemWebsite">
-                                <apex:outputLabel value="{!$Label.ISSP_Registration_Website}"/>
+                                <apex:outputLabel value="* {!$Label.ISSP_Registration_Website}"/>
                                 <apex:inputField value="{!newForm.Website__c}" style="width:60%"/>
                              </apex:pageBlockSectionItem>
 
@@ -2211,8 +2061,8 @@
 	</div>	
 	</div>
 	</div>
-		<c:ISSP_CustomFooter communityName="{!communityName}"/>
 		</div>
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 		<script>
 			//NEWGEN-1885
 			$j ( document ).ready(function() {
