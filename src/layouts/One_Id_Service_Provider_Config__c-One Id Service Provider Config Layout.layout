@@ -78,6 +78,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Portal_Visible__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>App_Picture_Url__c</field>
             </layoutItems>
             <layoutItems>

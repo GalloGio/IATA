@@ -37,7 +37,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
+        <template>All/EF_Contact_Deactivation_Notification</template>
     </alerts>
     <alerts>
         <fullName>EF_Email_Notification_On_Operator_EF_Contact_Deactivation</fullName>
@@ -50,7 +50,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
+        <template>All/EF_Contact_Deactivation_Notification</template>
     </alerts>
     <alerts>
         <fullName>ISSP_BSPCASS_Payment_contact</fullName>
