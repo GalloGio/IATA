@@ -90,6 +90,9 @@ public with sharing class ISSP_SIS_AccountHandler {
                 if (accountnew.Status__c == 'Terminated') {
                     accountnew.SIS_Status__c = 'TERMINATED';
                 }
+                if (accountnew.Status__c == 'Approved') {
+                    accountnew.SIS_Status__c = 'Active';
+                }
             }
         }
         if (!listInsertAccountId.isEmpty()) {
@@ -136,7 +139,13 @@ public with sharing class ISSP_SIS_AccountHandler {
             } else {
                 return true; // if the status changing to Terminated then update it
             }
+
+        if (accountnew.Status__c == 'Approved') {
+            if (accountOld.Status__c != 'Approved') {
+                return true;
+            }      
         }
+
         if(accountnew.Status__c == 'Approved' 
                 || accountnew.Status__c == 'Cash basis/no commission' 
                 || accountnew.Status__c == 'Cash basis/with commission' 
