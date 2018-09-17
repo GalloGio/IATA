@@ -17,9 +17,35 @@ public with sharing class TopicAssignmentHelper {
 		}
 		topicstr.sort();
 
+		integer i=1;
+		Boolean requestFromVf = ApexPages.currentPage() != null;
+		
 		for (String at : topicstr) {
+			
 			setAccountChatterTopics.add(at);
-			strAcceptedValues += (strAcceptedValues == '' ? '' : '; ') + at;
+			
+			// If the request is from visualforce (ChatterBroadCast Tool)
+			// formats the topics as a two column "table"
+			if(requestFromVf){
+				
+				if(Math.mod(i, 2) != 0){
+					strAcceptedValues += '<tr>';
+					strAcceptedValues += '<td><b>' + at + '</b></td>';
+				}
+				else {
+					strAcceptedValues += '<td><b>' + at + '</b></td>';
+					strAcceptedValues += '</tr>';
+				}
+				
+				i++;
+							
+			}
+			else {
+				//Ideally the topics would be separated by tabs (\t)
+				//However "\t" does not work on Chrome
+				strAcceptedValues += (strAcceptedValues == '' ? '' : ';   ') + at;
+			}
+		
 		}
 
 		// only continue if a set of valid topics have been defined; otherwise we would be raising errors for every single topic
@@ -75,7 +101,7 @@ public with sharing class TopicAssignmentHelper {
 							System.debug(stBroadcastTopics.contains(ta.Topic.Name));
 
 							if (fi != null && mapAccountsPerId.get(fi.ParentId) != null && mapUnacceptableTopicsPerIds.get(ta.TopicId) != null  ) {
-								ta.addError('You have entered an invalid topic for an Account.\r\nPlease choose one or more of the following topics:\r\n' + strAcceptedValues);
+								ta.addError(Label.Invalid_Topic_Assignment + '\r\n' + strAcceptedValues);
 								system.debug('Error raised for topic: ' + mapUnacceptableTopicsPerIds.get(ta.TopicId).Name);
 							}
 						}

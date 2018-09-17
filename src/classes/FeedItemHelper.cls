@@ -8,16 +8,41 @@ public with sharing class FeedItemHelper {
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
 		String strAcceptedValues = '';
 		List<AMP_Account_Topics__c> topics = AMP_Account_Topics__c.getAll().Values();
-
+		
 		//sort topics by name
 		List<String> topicstr = new List<String>();
 		for (AMP_Account_Topics__c at : topics){
 			topicstr.add(at.Name);
 		}
 		topicstr.sort();
-
+		
+		integer i=1;
+		Boolean requestFromVf = ApexPages.currentPage() != null;
+		
 		for (String at : topicstr) {
-			strAcceptedValues += (strAcceptedValues == '' ? '' : '; ') + at;
+			
+			// If the request is from visualforce (ChatterBroadCast Tool)
+			// formats the topics as a two column "table"
+			if(requestFromVf){
+				
+				if(Math.mod(i, 2) != 0){
+					strAcceptedValues += '<tr>';
+					strAcceptedValues += '<td><b>' + at + '</b></td>';
+				}
+				else {
+					strAcceptedValues += '<td><b>' + at + '</b></td>';
+					strAcceptedValues += '</tr>';
+				}
+				
+				i++;
+							
+			}
+			else {
+				//Ideally the topics would be separated by tabs (\t)
+				//However "\t" does not work on Chrome
+				strAcceptedValues += (strAcceptedValues == '' ? '' : ';   ') + at;
+			}
+		
 		}
 
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
@@ -40,6 +65,7 @@ public with sharing class FeedItemHelper {
 				}
 			}
  	   	}
+ 	   	
 		if (!setRelatedAccountIds.isEmpty()) {
 
 			map<Id, Account> mapAccountsPerId = new map<Id, Account>([SELECT Id FROM Account
@@ -50,13 +76,12 @@ public with sharing class FeedItemHelper {
 			// if there are IATA member Airline HQ accounts that have invalid feeditems posted to them, raise the error
 			if (!mapAccountsPerId.values().isEmpty()) {
 
-
 				for (FeedItem fi : lstTriggerNew) {
- 	   				fi.addError ('Please use hashtags (#) to define the topic(s) of your post.\r\nYou can choose one or more of the following topics:\r\n' + strAcceptedValues);
-					// if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
-					// }
+ 	   				fi.addError(Label.Feed_Item_Invalid_Topics + '\r\n' + strAcceptedValues);
 				}
+ 	   		
  	   		}
  	   	}
 	}
+	
 }
