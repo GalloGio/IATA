@@ -537,8 +537,8 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
 &quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
-&quot;ICCS&quot;, &quot;ICCS&quot;,
 &quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;ICCS&quot;, &quot;ICCS&quot;,
 Application_Name__c
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>

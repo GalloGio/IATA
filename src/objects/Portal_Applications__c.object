@@ -676,8 +676,8 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
-&quot;ICCS&quot;,&quot;ICCS&quot;,
 &quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;ICCS&quot;,&quot;ICCS&quot;,
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
