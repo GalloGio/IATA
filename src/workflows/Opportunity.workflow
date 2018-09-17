@@ -216,7 +216,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Opportunity_Notification_to_Ben_Barrocas</template>
+        <template>All/Opportunity_Notification_to_Ben_Barrocas</template>
     </alerts>
     <alerts>
         <fullName>Opportunity_owner_Change</fullName>
