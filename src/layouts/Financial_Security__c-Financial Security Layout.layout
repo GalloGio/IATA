@@ -42,7 +42,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>First_Call_Letter_required__c</field>
+                <field>First_Call_Letter_required1__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

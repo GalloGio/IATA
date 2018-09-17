@@ -8016,6 +8016,51 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Model_A_Onboarding_Africa_Mid_East_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Africa &amp; Mid. East</label>
+        <queue>Model_A_Onboarding_Africa_Mid_East</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Americas</label>
+        <queue>Model_A_Onboarding_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Asia_Pacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Asia &amp; Pacific</label>
+        <queue>Model_A_Onboarding_Asia_Pacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_China_North_Asia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - China &amp; North Asia</label>
+        <queue>Model_A_Onboarding_China_North_Asia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Europe</label>
+        <queue>Model_A_Onboarding_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>NewGen_PCI_Africa_Middle_East_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>NewGen PCI - Africa &amp; Middle East</label>
