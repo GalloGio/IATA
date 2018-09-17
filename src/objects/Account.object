@@ -9973,6 +9973,38 @@ WSPN-Worldspan</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Give_SIS_Membership__c</fullName>
+        <description>Allow ISS portal users under this account to access to SIS Membership application</description>
+        <externalId>false</externalId>
+        <label>Give SIS Membership</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ISPA</fullName>
+                    <default>false</default>
+                    <label>ISPA</label>
+                </value>
+                <value>
+                    <fullName>ISUA</fullName>
+                    <default>false</default>
+                    <label>ISUA</label>
+                </value>
+                <value>
+                    <fullName>TOU</fullName>
+                    <default>false</default>
+                    <label>TOU</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Guaranteed_amount__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>
@@ -30551,6 +30583,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -33628,6 +33675,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -36378,6 +36440,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40058,6 +40135,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -43350,6 +43442,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47934,6 +48041,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -50825,6 +50947,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -55277,6 +55414,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -59605,6 +59757,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -62162,6 +62329,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -64646,6 +64828,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -69543,6 +69740,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75141,6 +75353,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -80220,6 +80447,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -86077,6 +86319,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -90550,6 +90807,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -97097,6 +97369,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -103620,6 +103907,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
