@@ -158,7 +158,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             if(!isAllHierarchySelected && isAccNameSpecialCase && isAgencyCorrection) {
                 editableFields.add('Account_Name__c');
             }
-            if(isAllHierarchySelected && isVATnumberSpecialCase && isAgencyCorrection) {
+            if(isAllHierarchySelected && !isSingleAccountHierarchy && isVATnumberSpecialCase && isAgencyCorrection) {
                 editableFields.remove('ISSP_AMS_VAT_number__c');
             }
 

@@ -228,6 +228,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_Lock_access_to_accreditation_type__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Only allow internal users to grant access to this portal service if the agency&apos;s accreditation type matches the &apos;Restrict by Accreditation Type&apos; of the portal service</inlineHelpText>
+        <label>Lock access to Accreditation Type</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_Restrict_by_Accreditation_Type__c</fullName>
         <description>Value used to restrict the visibility of the RHC Portal Service</description>
         <externalId>false</externalId>
@@ -666,8 +676,8 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
-&quot;RHC Information&quot;, $Label.ANG_ISSP_RHC_Information,
 &quot;ICCS&quot;,&quot;ICCS&quot;,
+&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

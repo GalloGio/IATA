@@ -175,6 +175,8 @@ public without sharing class ISSP_Case {
             }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Reason1__c == 'Annual revalidation' && newCase.Owner.Name.startsWith('Annual Revalidation')){
                 PageReference pr = new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + caseId);
                 return pr;
+            } else if (newCase.RecordType.Name == 'OSCAR Communication' && newCase.Owner.Name.startsWith('Model A Onboarding')) {
+                return new PageReference('/ISSP_ModelA_Onboarding?caseId=' + caseId);
             }
 
             // If Case is an ICCS Case, redirect to ICCS Service
