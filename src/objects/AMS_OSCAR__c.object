@@ -628,6 +628,16 @@ IF(INCLUDES( ANG_Type_Of_Change__c, &quot;VMFR&quot;), &quot;VMFR&quot;, NULL)</
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Backup_In_Progress__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Backup In Progress</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Bank_Guarantee_Currency__c</fullName>
         <externalId>false</externalId>
         <label>Bank Guarantee Currency</label>
@@ -45955,7 +45965,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     </validationRules>
     <validationRules>
         <fullName>ANG_IEP_require_ag_contact_on_san_check</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Cannot set sanity check as &quot;Passed&quot; if the Agency Contact is not filled</description>
         <errorConditionFormula>TEXT(Process__c)  = &apos;IEP.BANK.ACCOUNT.SETUP&apos; &amp;&amp;  TEXT(STEP6__c) = &apos;Passed&apos;  &amp;&amp;  ISBLANK( Agency_Contact__c )</errorConditionFormula>
         <errorMessage>Cannot set sanity check as &quot;Passed&quot; if Agency Contact is missing</errorMessage>

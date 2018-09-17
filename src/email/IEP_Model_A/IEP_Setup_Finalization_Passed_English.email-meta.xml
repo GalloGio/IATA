@@ -3,14 +3,28 @@
     <available>true</available>
     <description>Used on IEP Bank Account Setup OSCAR Process</description>
     <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>IEP Setup Finalization Passed</name>
-    <style>none</style>
-    <subject>Ref nr {!AMS_OSCAR__c.Name} – IEP Bank Account Approval</subject>
-    <textOnly>Dear Sir/Madam,  
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – IEP Account Approval</subject>
+    <textOnly>Dear Sir/Madam,
 
-Please be informed that your Bank Account registration is now completed. You can now use this Bank Account to funds your EasyPay wallet(s). Don’t hesitate to contact the IATA Customer Service team for more information.
 
-Thank you. 
-IATA Customer Service Portal</textOnly>
-    <type>custom</type>
+Please be informed that your Account registration for EasyPay is now completed. You can now use the Bank Account you registered to funds your EasyPay wallet(s). Don’t hesitate to contact the IATA Customer Service team for more information.
+
+
+
+
+
+Thank you,
+
+
+
+IATA Customer Service Portal
+
+
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
 </EmailTemplate>

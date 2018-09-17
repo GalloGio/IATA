@@ -9,13 +9,17 @@ public class ANG_RiskEventPopUpExtension_Test{
 		);
 		insert ret1;
 
+		IATA_ISO_Country__c isoCntr1 = new IATA_ISO_Country__c(Name = 'Portugal', Region__c = 'Europe', ISO_Code__c='PT', ANG_Enable_NewGen__c = true);
+		insert isoCntr1;
+
 		Account acc = new Account(
 			name='Test',
 			Location_Type__c=AMS_Utils.HE,
 			Location_Class__c=AMS_Utils.LC_PASSENGER,
 			Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
 			ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
-			recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
+			recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
+			IATA_ISO_Country__c = isoCntr1.Id
 		);
 		insert acc;
 	}
