@@ -442,7 +442,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         //if(String.isEmpty(account.TIP_HQ_Location__c)){
         if(String.isEmpty(TheAccountRole.HQ_Location__c)){
         //----------------------------
-            account.TIP_HQ_Location__c.addError('Please Choose the Location of Headquarter');
+            TheAccountRole.HQ_Location__c.addError('Please Choose the Location of Headquarter');
             return null;
         }
 
