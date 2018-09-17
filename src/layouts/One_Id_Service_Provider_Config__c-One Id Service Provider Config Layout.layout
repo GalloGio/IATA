@@ -35,6 +35,10 @@
                 <behavior>Required</behavior>
                 <field>Customer_Type_Activation__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TermConditions__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -71,6 +75,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_Active__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Portal_Visible__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
