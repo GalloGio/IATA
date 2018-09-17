@@ -292,9 +292,10 @@ global class AMS_OSCAR_Attachments {
     /*** AMSU-168 ***/
     public PageReference acceptFiles() {
         for(WrapperAttach attach : listAttachments) {            
-            if(attach.isSelected) {
+            if(attach.isSelected && attach.fileAmazon != null && attach.fileAmazon.amazonFile != null) {
                 attach.reviewStatus = 'Accepted';
                 attach.isSelected = false;
+                attach.fileAmazon.amazonFile.Review_Status__c = 'Accepted';
             }
         }
         return null;
@@ -302,9 +303,10 @@ global class AMS_OSCAR_Attachments {
 
     public PageReference rejectFiles() {
         for(WrapperAttach attach : listAttachments) {            
-            if(attach.isSelected) {
+            if(attach.isSelected && attach.fileAmazon != null && attach.fileAmazon.amazonFile != null) {
                 attach.reviewStatus = 'Rejected';
                 attach.isSelected = false;
+                attach.fileAmazon.amazonFile.Review_Status__c = 'Rejected';
             }
         }
         return null;

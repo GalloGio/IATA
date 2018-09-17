@@ -207,8 +207,8 @@ public class ANG_RME_Alert_Service_Test {
 		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
-
-		System.assertEquals('An unexpected error ocurred while contacting the external system. Please, try again later or contact your system admin', result.description);
+        
+		System.assertEquals('An unexpected error ocurred while contacting the external system. An incident has been raised on Service Now.', result.description);
 		System.assert(!result.isSuccess);
 	}
 	

@@ -951,7 +951,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // get parent case
                     //GM - IMPRO - START
                     Case[] parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, 
-                            c.secondFAnonComplianceDate__c, c.Account.Type, c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c 
+                            c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.ANG_IsNewGenAgency__c, c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c 
                             from Case c where c.Id =: newCase.ParentId];
                     if (parentCase != null && parentCase.size() > 0) {
                         // check if parent case is an IFAP case
@@ -996,10 +996,16 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                         }
                                         parentCase[0].firstFSnonComplianceDate__c = Date.today();
                                         // set 2nd FS deadline date for PAX and Domestic agents
+                                        
                                         if (isPassengerDomestic) {
                                             system.debug('##ROW##');
-                                            // business rule: 31 days after the non-compliance case is raised
-                                            parentCase[0].FS_Second_Deadline_Date__c = parentCase[0].firstFSnonComplianceDate__c.addDays(31);
+
+                                            //NEWGEN-3394 - deadline for NewGen to 60 days
+                                            if(parentCase[0].Account.ANG_IsNewGenAgency__c)
+                                                // business rule: 31 days after the non-compliance case is raised
+                                                parentCase[0].FS_Second_Deadline_Date__c = parentCase[0].firstFSnonComplianceDate__c.addDays(60);
+                                            else
+                                                parentCase[0].FS_Second_Deadline_Date__c = parentCase[0].firstFSnonComplianceDate__c.addDays(31);
                                             // business rule changed: the last day of the following month after the non-compliance case is raised
                                             //Date inTwoMonths = parentCase[0].firstFSnonComplianceDate__c.addMonths(2);
                                             //Date newDeadline = Date.newInstance(inTwoMonths.year(), inTwoMonths.month(), 1);
