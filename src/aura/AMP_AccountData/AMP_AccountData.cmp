@@ -101,16 +101,6 @@
                 </div>
             </div>   
         </div>
-        
-        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" >Training Website</label>
-                <div class="slds-form-element__control cut-overflow">
-                    <!--<force:outputField value="{!v.account.IATATrainingUrl__c}" />-->
-                    <a href="{!v.account.IATATrainingUrl__c}" target="_blank">{!v.account.IATATrainingUrl__c}</a>
-                </div>
-            </div>   
-        </div>
             	
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">

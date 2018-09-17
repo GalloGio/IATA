@@ -3,6 +3,7 @@ public with sharing class AMP_ProductsController {
 	public List<ServiceWrapper> lsServiceWrappers {get;set;}
 	public AMP_ProductsController(ApexPages.StandardController stdController) {
 		acc = (Account)stdController.getRecord();
+		acc = [SELECT Id, Membership_status__c, SAP_BW_report_with_sales_figures__c FROM Account WHERE Id = :acc.Id];
 		List<Account_Service__c> lsServices = getAccountServices(acc.Id);
 		lsServiceWrappers = new List<ServiceWrapper>();
 		Integer index = 0;

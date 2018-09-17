@@ -1,36 +1,37 @@
 <apex:page showHeader="true" sidebar="true" standardController="Account" extensions="AMP_ProductsController">
 
-<apex:pageBlock id="theBlock">
-	<table class="list"  border="0" cellpadding="0" cellspacing="0">
-		<thead class="rich-table-thead">
-			<tr class="headerRow" >
-				<th class="headerRow" scope="col" colspan="1" style="width: 20%;"><div>AMP LOB</div></th>
-				<th class="headerRow" scope="col" colspan="1" style="width: 70%;"><div>AMP Product</div></th>
-				<th class="headerRow" scope="col" colspan="1" style="width: 10%;"><div>Active</div></th>
-
-
-			</tr>
-		</thead>
-
-		<apex:form >
-		<apex:repeat value="{!lsServiceWrappers}" var="sWrapper">
-
-			<tr>
-				<apex:outputPanel rendered="{! sWrapper.rowspan > 0}">
-					<td class="dataCell" style="vertical-align: top;" rowspan="{! sWrapper.rowspan }">
-						{! sWrapper.service.Service__r.Service_Publication__c }
-					</td>
-				</apex:outputPanel>
-
-				<td class="dataCell" ><apex:outputLink value="/{! sWrapper.service.Service__c}" target="_blank">{! sWrapper.service.Service__r.Name }</apex:outputLink></td>
-				<td class="dataCell" ><apex:inputCheckBox value="{! sWrapper.service.Active__c }" disabled="true"/></td>
-
-			</tr>
-
-		</apex:repeat>
-		</apex:form>
-	</table>
-</apex:pageBlock>
-
+<apex:outputPanel rendered="{!acc.Membership_status__c == 'IATA member'}">
+	<apex:pageBlock id="theBlock">
+		<table class="list"  border="0" cellpadding="0" cellspacing="0">
+			<thead class="rich-table-thead">
+				<tr class="headerRow" >
+					<th class="headerRow" scope="col" colspan="1" style="width: 20%;"><div>AMP LOB</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 70%;"><div>AMP Product</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 10%;"><div>Active</div></th>
+	
+	
+				</tr>
+			</thead>
+	
+			<apex:form >
+			<apex:repeat value="{!lsServiceWrappers}" var="sWrapper">
+	
+				<tr>
+					<apex:outputPanel rendered="{! sWrapper.rowspan > 0}">
+						<td class="dataCell" style="vertical-align: top;" rowspan="{! sWrapper.rowspan }">
+							{! sWrapper.service.Service__r.Service_Publication__c }
+						</td>
+					</apex:outputPanel>
+	
+					<td class="dataCell" ><apex:outputLink value="/{! sWrapper.service.Service__c}" target="_blank">{! sWrapper.service.Service__r.Name }</apex:outputLink></td>
+					<td class="dataCell" ><apex:inputCheckBox value="{! sWrapper.service.Active__c }" disabled="true"/></td>
+	
+				</tr>
+	
+			</apex:repeat>
+			</apex:form>
+		</table>
+	</apex:pageBlock>
+</apex:outputPanel>
 
 </apex:page>
