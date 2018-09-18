@@ -25589,7 +25589,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_ContactUs_Link</shortDescription>
-        <value>https://fred-qa.iata.org/contact</value>
+        <value>https://fred.iata.org/contact</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_0</fullName>
