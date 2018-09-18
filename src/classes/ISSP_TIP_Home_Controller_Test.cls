@@ -24,7 +24,8 @@ private class ISSP_TIP_Home_Controller_Test {
         parent.Name = 'test';
         parent.sector__c = 'Travel Agent';
         parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID;
+        //parent.RecordTypeId = TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID;
+        parent.Account_Role__c = 'Payment Provider';
         parent.IATACode__c = '1000';
         parent.IATA_ISO_Country__c = country.id;
         parent.category__c = TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER;
