@@ -8,7 +8,6 @@ private class TIP_BINRangeTriggerHandlerTest {
         insert country;
 
 		Account account = new Account(Name = 'ProviderTest1',
-			TIP_Provider_Type__c = 'Open Loop',
 			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IATACode__c = '1000',
