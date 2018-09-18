@@ -75,7 +75,7 @@ public with sharing class vfIECGADResult_tst {
         oRefLocationType = IECTestUtil.createSampleGDPReferenceTableEntry('HO', 'Head Office');
         insert oRefLocationType;
 
-        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'); 
+        Id rtId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Agency').getRecordTypeId();
         
         oAgencyAccount = IECTestUtil.createSampleAccount();
         oAgencyAccount.Name = AGENCY1_NAME;
