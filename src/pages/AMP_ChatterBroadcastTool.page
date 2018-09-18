@@ -31,17 +31,27 @@
 
             <apex:pageMessages escape="false" />
 
-            <apex:pageBlockSection title="Step 1 - Select Accounts" columns="1" collapsible="false" rendered="{! step == 1}">
-
+            <apex:pageBlockSection title="Step 1 - Select Accounts" columns="2" collapsible="false" rendered="{! step == 1}">
+				
+                <apex:selectList value="{!membershipStatusSelected}" multiselect="false" size="1" onchange="reloadAccounts();" label="Show only Accounts from the following type:">
+                    <apex:selectOptions value="{!MembershipStatuses}"/>
+                </apex:selectList>
+               
                 <apex:selectList value="{!strRegion}" multiselect="false" size="1" onchange="reloadAccounts();" label="Show only Accounts from the following region(s):">
                     <apex:selectOptions value="{!lstRegions}"/>
                 </apex:selectList>
-
-                <apex:outputPanel >
-                    <apex:commandButton action="{!GoToStep2}" value="Next >" reRender="mainBlock" style="float: right;" />
-                </apex:outputPanel>
-
-                <apex:pageBlockTable value="{!lstAccounts}" var="accWrapper" id="AccountTable" >
+	            
+			</apex:pageBlockSection>
+			
+			<apex:pageBlockSection columns="1" collapsible="false" rendered="{! step == 1}">
+				
+				<apex:pageBlockSectionItem >
+					<apex:outputPanel >
+	                    <apex:commandButton action="{!GoToStep2}" value="Next >" reRender="mainBlock" style="float: right;" />
+	                </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockTable value="{!lstAccounts}" var="accWrapper" id="AccountTable">
                     <apex:column style="width:100px;">
                         <apex:facet name="header">
                             <apex:inputCheckbox value="{!selectWholeRegion}" onclick="cvCheckAllOrNone(this);"/> 
@@ -56,7 +66,7 @@
                         <apex:outputText value="{!accWrapper.acct.Name}" />
                     </apex:column>
                 </apex:pageBlockTable>
-
+              
                 <apex:outputPanel >
                     <apex:commandButton action="{!GoToStep2}" value="Next >" reRender="mainBlock" style="float: right;" />
                 </apex:outputPanel>
@@ -64,7 +74,6 @@
                 <apex:actionFunction name="reloadAccounts" action="{! RefreshAccountsList }" reRender="AccountTable" />
 
             </apex:pageBlockSection>
-
 
             <apex:pageBlockSection title="Step 2 - Compose Message and Broadcast" columns="1" collapsible="false" rendered="{! step == 2}">
 
