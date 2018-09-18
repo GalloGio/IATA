@@ -489,11 +489,11 @@
                                                             <apex:inputField value="{!s.ac.Financial_Assessment_Contact__c}" id="financialAssessment" rendered="{!NOT(s.blockEdit)}"/>
                                                         </th>
                                                         <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
-                                                            <apex:outputPanel rendered="{!isNewGenProcess}">
+                                                            <!-- <apex:outputPanel rendered="{!isNewGenProcess}"> -->
                                                                 {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Portal_administrator__c.Label}&nbsp;&nbsp;
-                                                            </apex:outputPanel>
-                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" rendered="{!AND(s.blockEdit,isNewGenProcess)}" html-disabled=""/>
-                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" id="portalAdmin" rendered="{!AND(NOT(s.blockEdit), isNewGenProcess)}"/>
+                                                            <!-- </apex:outputPanel> -->
+                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" id="portalAdmin" rendered="{!NOT(s.blockEdit)}"/>
                                                         </th>
                                                         
                                                     </tr>

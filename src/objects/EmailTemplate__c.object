@@ -675,6 +675,7 @@
         <columns>NAME</columns>
         <columns>Template_Language__c</columns>
         <columns>Template_Type__c</columns>
+        <columns>OBJECT_ID</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>

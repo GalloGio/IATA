@@ -529,8 +529,7 @@ private class CaseBeforeTriggerTest {
     // Create a Case for the Account
     Id ICCS_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
     Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
-                       ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD',
-                       Accelerated_Function__c = true);
+                       ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD';
     insert cs;
 
     List<Case> lstCases = [SELECT Id FROM Case];
@@ -849,6 +848,103 @@ private class CaseBeforeTriggerTest {
 
     test.stopTest();
   }
+    
+    @istest static void testInsertSeda() {
+    
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+        
+        Id RT_SEDA = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+        insert country;
+        
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
+        insert a;
+        
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
+        insert c;
+        
+        //////////////////////////
+        test.startTest();
+        
+        // Insert correctly a case
+        Case cas = new Case(recordtypeID = RT_SEDA,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          Casearea__c = 'FDS - Create Authorized Signatories Package',
+                          IFAP_Area__c = 'asda',
+                          Country_concerned__c = 'Italy',
+                          contactid = c.id,
+                          AccountId = a.id,
+                          CS_Contact_Result__c = 'Agent closed',
+                          Demand_by_Email_Fax__c = DateTime.now()
+        );
+        insert cas;
+        test.stopTest();
+        
+        Case resultCase = [Select Id, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
+        System.assertEquals(UserInfo.getUserId(),resultCase.CS_Rep_Contact_Customer__c);
+    }
+    
+    @istest static void testUpdateSeda() {
+    
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+        
+        Id RT_SEDA = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+        insert country;
+        
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
+        insert a;
+        
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
+        insert c;
+        
+        // Insert correctly a case
+        Case cas = new Case(recordtypeID = RT_SEDA,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          Casearea__c = 'FDS - Create Authorized Signatories Package',
+                          IFAP_Area__c = 'asda',
+                          Country_concerned__c = 'Italy',
+                          contactid = c.id,
+                          AccountId = a.id,
+                          CS_Contact_Result__c = 'Agent closed',
+                          Demand_by_Email_Fax__c = null
+        );
+        insert cas;
+        
+        Case resultCase = [Select Id, Demand_by_Email_Fax__c, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
+        System.assertEquals(null,resultCase.CS_Rep_Contact_Customer__c);
+        
+        test.startTest();
+        cas.Demand_by_Email_Fax__c = DateTime.now();
+        update cas;
+        test.stopTest();
+        
+        resultCase = [Select Id, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
+        System.assertEquals(UserInfo.getUserId(),resultCase.CS_Rep_Contact_Customer__c);
+    }
+
 
   @isTest static void trgICCS_ASP_CaseTest() {
 
@@ -1108,102 +1204,6 @@ private class CaseBeforeTriggerTest {
                  AND IRR_Withdrawal_Reason__c = null];
     system.assertEquals(2, cases.size());
   }
-
-      @istest static void testInsertSeda() {
-    
-        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-        User testUser = New User(
-            Alias = 'standt', Email='standarduser@testorg.com',
-            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-            LocaleSidKey='en_US', ProfileId = testProfile.Id,
-            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
-            License_Cost_Center__c = 'ISF005CH01'
-        );
-        insert testUser;
-        
-        Id RT_SEDA = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SEDA');
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
-        insert country;
-        
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Airline');
-        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
-        insert a;
-        
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeID('Contact', 'Standard_Contact');
-        Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
-        insert c;
-        
-        //////////////////////////
-        test.startTest();
-        
-        // Insert correctly a case
-        Case cas = new Case(recordtypeID = RT_SEDA,
-                          Status = 'Assessment Performed',
-                          Origin = 'asd',
-                          Casearea__c = 'FDS - Create Authorized Signatories Package',
-                          IFAP_Area__c = 'asda',
-                          Country_concerned__c = 'Italy',
-                          contactid = c.id,
-                          AccountId = a.id,
-                          CS_Contact_Result__c = 'Agent closed',
-                          Demand_by_Email_Fax__c = DateTime.now()
-        );
-        insert cas;
-        test.stopTest();
-        
-        Case resultCase = [Select Id, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
-        System.assertEquals(UserInfo.getUserId(),resultCase.CS_Rep_Contact_Customer__c);
-    }
-    
-    @istest static void testUpdateSeda() {
-    
-        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-        User testUser = New User(
-            Alias = 'standt', Email='standarduser@testorg.com',
-            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-            LocaleSidKey='en_US', ProfileId = testProfile.Id,
-            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
-            License_Cost_Center__c = 'ISF005CH01'
-        );
-        insert testUser;
-        
-        Id RT_SEDA = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SEDA');
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
-        insert country;
-        
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Airline');
-        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
-        insert a;
-        
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeID('Contact', 'Standard_Contact');
-        Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
-        insert c;
-        
-        // Insert correctly a case
-        Case cas = new Case(recordtypeID = RT_SEDA,
-                          Status = 'Assessment Performed',
-                          Origin = 'asd',
-                          Casearea__c = 'FDS - Create Authorized Signatories Package',
-                          IFAP_Area__c = 'asda',
-                          Country_concerned__c = 'Italy',
-                          contactid = c.id,
-                          AccountId = a.id,
-                          CS_Contact_Result__c = 'Agent closed',
-                          Demand_by_Email_Fax__c = null
-        );
-        insert cas;
-        
-        Case resultCase = [Select Id, Demand_by_Email_Fax__c, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
-        System.assertEquals(null,resultCase.CS_Rep_Contact_Customer__c);
-        
-        test.startTest();
-        cas.Demand_by_Email_Fax__c = DateTime.now();
-        update cas;
-        test.stopTest();
-        
-        resultCase = [Select Id, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
-        System.assertEquals(UserInfo.getUserId(),resultCase.CS_Rep_Contact_Customer__c);
-    }
 
 
   // test new filter: only count minor error policy cases after the last reinstatement

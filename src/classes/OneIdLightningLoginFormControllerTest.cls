@@ -174,7 +174,7 @@ private class  OneIdLightningLoginFormControllerTest {
     static void testGetSelfRegistrationURL() {
         OneIdLightningLoginFormController.getSelfRegistrationUrl();
         OneIdLightningLoginFormController.getSelfRegistrationUrl();
-		OneIdLightningLoginFormController.fakemethod();
+        OneIdLightningLoginFormController.fakemethod();
     }
 
 

@@ -79,27 +79,29 @@ public class ISSP_Portal_Application_RightTest {
 
     Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
-    One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(
-      Service_Provider_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV,
-      License_Upgrade_Required__c = true,
-      Profile_Id__c = 'a1',
-      Description__c = 'qualquer',
-      Is_Active__c = true,
-      Portal_Visible__c = false,
-      RecordTypeid = recTypeId,
-      App_Picture_Url__c = 'oi');
-    insert oi;
+  		One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(
+  			Service_Provider_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV,
+  			License_Upgrade_Required__c= true,
+  			Profile_Id__c='a1',
+  			Description__c='qualquer',
+  			Is_Active__c = true,
+  			Portal_Visible__c = false,
+  			RecordTypeid = recTypeId,
+        Customer_Type_Activation__c = 'Aircraft Operator;ICAO Member State',
+  			App_Picture_Url__c='oi');
+  		insert oi;
 
     System.debug('basto1p - testConfigObjsInit One_Id_Service_Provider_Config__c oi=' + oi);
 
-    One_Id_Service_Provider_Config__c rr =
-      new One_Id_Service_Provider_Config__c (
-      Service_Provider_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV,
-      Is_Active__c = true,
-      Portal_Visible__c = false,
-      RecordTypeid = recTypeId,
-      Service_Bundle__c = oi.id);
-    insert rr;
+  		One_Id_Service_Provider_Config__c rr =
+  		new One_Id_Service_Provider_Config__c (
+  			Service_Provider_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV,
+  			Is_Active__c = true,
+  			Portal_Visible__c = false,
+  			RecordTypeid = recTypeId,
+        Customer_Type_Activation__c = 'Aircraft Operator;ICAO Member State',
+  			Service_Bundle__c=oi.id);
+  		insert rr;
 
     System.debug('basto1p - testConfigObjsInit One_Id_Service_Provider_Config__c rr=' + rr);
 

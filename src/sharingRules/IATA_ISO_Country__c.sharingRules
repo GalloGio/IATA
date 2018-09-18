@@ -13,4 +13,17 @@
             <value>X</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>IATA_ISO_Country_Sharing_Rule_with_FRED_business_users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>IATA ISO Country Sharing Rule with FRED+ business users</label>
+        <sharedTo>
+            <group>FRED_Business_Team</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Is_Non_Compliant__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
 </SharingRules>

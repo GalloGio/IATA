@@ -16,16 +16,16 @@
             <apex:pageBlockButtons location="top">
                 <apex:commandButton value="Save" action="{!Save}" rendered="{! isEditMode }" rerender="mainform"/>
                 <apex:commandButton value="Cancel" action="{!Cancel}" rendered="{! isEditMode }" rerender="mainform" immediate="true"/>
-                <apex:commandButton value="Edit" action="{!Edit}" rendered="{! AND(NOT(isEditMode),lstRepaymentInstalments.size>0) }" rerender="mainform"/>
-                <apex:commandButton value="{!strAddNewLabel}" action="{!AddNewPaymentInstalment}" rendered="{! NOT(isEditMode) }" rerender="mainform"/>
+                <apex:commandButton value="Edit" action="{!Edit}" rendered="{! AND(NOT(isEditMode),isUpdateable,lstRepaymentInstalments.size>0) }" rerender="mainform"/>
+                <apex:commandButton value="{!strAddNewLabel}" action="{!AddNewPaymentInstalment}" rendered="{! AND(NOT(isEditMode),isCreateable) }" rerender="mainform"/>
             </apex:pageBlockButtons>
             
             <apex:variable value="{!1}" var="index" />
             
             <apex:pageBlockTable value="{! lstRepaymentInstalments }" var="ri" >
                 <apex:column headerValue="">
-                    <apex:commandLink action="{!DeleteRpi}" onclick="return confirmDeleteInstalment();"  value="Del" rendered="{! AND(ri.CreatedDate > (NOW() - 1), isEditMode) }">
-                        <apex:param name="rpiIdToDelete" value="{!ri.Id}" assignTo="{!rpiIdToDelete}"/>
+                    <apex:commandLink action="{!DeleteRpi}" onclick="return confirmDeleteInstalment();"  value="Del" rendered="{!AND(isEditMode,isDeletable)}">
+                        <apex:param name="rpiIndexToDelete" value="{!index-1}" assignTo="{!rpiIndexToDelete}"/>
                     </apex:commandLink>
                     <apex:outputLink onclick="redirect('/{!ri.Id}');" rendered="{! NOT(isEditMode) }" >View</apex:outputLink>
                 </apex:column>

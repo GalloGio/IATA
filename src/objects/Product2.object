@@ -2151,7 +2151,7 @@ SIS Charge Code Type.</description>
                 <value>
                     <fullName>Aircraft Reliability</fullName>
                     <default>false</default>
-                    <label>Aircraft Reliability</label>
+                    <label>Aircraft Reliability Guidelines</label>
                 </value>
                 <value>
                     <fullName>Airline Coding Directory</fullName>
@@ -2327,6 +2327,11 @@ SIS Charge Code Type.</description>
                     <fullName>Guide to Facilitation</fullName>
                     <default>false</default>
                     <label>Guide to Facilitation</label>
+                </value>
+                <value>
+                    <fullName>IATA and Aviation History</fullName>
+                    <default>false</default>
+                    <label>IATA and Aviation History</label>
                 </value>
                 <value>
                     <fullName>IATA Cargo Handling Manual</fullName>
@@ -3334,9 +3339,19 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <label>In stock</label>
                 </value>
                 <value>
+                    <fullName>Available Now</fullName>
+                    <default>false</default>
+                    <label>Available Now</label>
+                </value>
+                <value>
                     <fullName>Out of stock</fullName>
                     <default>false</default>
                     <label>Out of stock</label>
+                </value>
+                <value>
+                    <fullName>Coming Soon</fullName>
+                    <default>false</default>
+                    <label>Coming Soon</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -8243,6 +8258,14 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
             <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>In stock</fullName>
                 <default>false</default>
             </values>
@@ -11217,6 +11240,14 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
             <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>In stock</fullName>
                 <default>false</default>
             </values>
@@ -13711,6 +13742,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA and Aviation History</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Infectious Substances Shipping Guidelines</fullName>
                 <default>false</default>
             </values>
@@ -14297,6 +14332,14 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
+            <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>In stock</fullName>
                 <default>false</default>
@@ -17319,6 +17362,14 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
+            <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>In stock</fullName>
                 <default>false</default>

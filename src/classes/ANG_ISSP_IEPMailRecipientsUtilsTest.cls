@@ -47,7 +47,8 @@ private class ANG_ISSP_IEPMailRecipientsUtilsTest {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = easyPay1.id
+                ANG_Portal_Service__c = easyPay1.id,
+                ANG_Enable_NewGen__c = true
             );   
 
 		insert portugal;                 
@@ -58,6 +59,7 @@ private class ANG_ISSP_IEPMailRecipientsUtilsTest {
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
+                Location_Class__c = 'P',
                 OwnerId = UserInfo.getUserId()
             );
 
@@ -70,7 +72,8 @@ private class ANG_ISSP_IEPMailRecipientsUtilsTest {
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
                 OwnerId = UserInfo.getUserId(),
-                Top_Parent__c = topParent.id
+                Top_Parent__c = topParent.id,
+                Location_Class__c = 'P'
             );
 
 		insert a;

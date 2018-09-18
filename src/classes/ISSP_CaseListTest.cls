@@ -86,4 +86,31 @@ public class ISSP_CaseListTest {
 
     }
 
+ public static testMethod void testISSP_CaseList_http() {
+        ISSP_CaseList cttr = new ISSP_CaseList();
+        ISSPCaseListView__c cs = new ISSPCaseListView__c();
+        cs.Name = 'Test';
+        cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
+        cs.Field_Set_API_Name__c = 'ISSP_AllClosedCases';
+        insert cs;
+        cttr.initialization();
+        cttr.getCases();
+        cttr.refresh();
+
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        req.requestURI = '/newgenapp/v1/getCaseList';
+        req.httpMethod = 'GET';
+        req.addParameter('filterKey', 'ASC');
+        req.addParameter('page', '1');
+
+        RestContext.request = req;
+        RestContext.response= res;
+
+        Test.startTest();
+            ISSP_CaseList.doGet();
+        Test.stopTest();
+        //ISSP_CaseList.doGet();
+    }    
+
 }

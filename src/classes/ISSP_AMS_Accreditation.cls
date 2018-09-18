@@ -1000,13 +1000,13 @@ public without sharing class ISSP_AMS_Accreditation {
             selectedBranchCodes = newForm.Agency_Codes_Concerned__c.split(',');
 
         if (isHOcontact) {
-        return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c
+        return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
                                       FROM Account
                                       WHERE Top_Parent__c = :vHQAccountId AND IATACode__c != null AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) AND (IATACode__c NOT IN : selectedBranchCodes)
                                               ORDER BY Name, IATACode__c
                                      ];
         } else { // BR contacts can only apply for changes to their own BR and SAs of their BR
-            return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c
+            return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
                         FROM Account
                         WHERE Top_Parent__c = :vHQAccountId AND IATACode__c != null AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) AND (IATACode__c NOT IN : selectedBranchCodes)
                             AND (Id = :con.AccountId OR ParentId =: con.AccountId )
@@ -1303,7 +1303,11 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('hqAccount: ' + hqAccount);
         system.debug('cse: ' + cse);
         if(cse.id == null && String.isBlank(cse.CaseNumber) && cse.Reason1__c == 'New HO') {
-            List<Case> cases = [SELECT Id, CaseNumber FROM Case WHERE AccountId = :hqAccount.Id AND Reason1__c = 'New HO' AND IsClosed = false AND Type_of_customer__c = :cse.Type_of_customer__c LIMIT 1];
+            List<Case> cases = [SELECT Id, CaseNumber 
+                                FROM Case 
+                                WHERE (AccountId = :hqAccount.Id OR ContactId = :cse.ContactId) AND Reason1__c = 'New HO' AND 
+                                    (IsClosed = false AND (NOT Owner.Name LIKE '%Recycle%')) AND 
+                                    Type_of_customer__c = :cse.Type_of_customer__c  LIMIT 1];
 
             if(!cases.isEmpty()) {
                 res.add(cases[0].Id);
@@ -3068,7 +3072,8 @@ public without sharing class ISSP_AMS_Accreditation {
             newForm.Submitted_to_IATA__c = TRUE;
 
             //RB-INC381175: Oscar fields Shipping ISO Country & Shipping ISO State not populated by the account's equivalent fields
-            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP)) {
+            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP
+                || newForm.Location_Type__c == 'AE' || newForm.Location_Type__c == 'HE')) {
                 if (newForm.Shipping_ISO_Country__c == null) {
                     system.DEBUG('Branch_Office_Country__c + Shipping_ISO_Country__c: ' + newForm.Branch_Office_Country__c + newForm.Shipping_ISO_Country__c);
                     newForm.Shipping_ISO_Country__c = newForm.Branch_Office_Country__c;
@@ -3077,6 +3082,16 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (newForm.Shipping_ISO_State__c == null) {
                     system.DEBUG('IATA_ISO_State__c + Shipping_ISO_State__c: ' + newForm.IATA_ISO_State__c + newForm.Shipping_ISO_State__c);
                     newForm.Shipping_ISO_State__c = newForm.IATA_ISO_State__c;
+                }
+            }
+
+            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == 'Major Change')) {
+                if (newForm.Shipping_ISO_Country__c == null) {
+                    newForm.Shipping_ISO_Country__c = accountConcerned.IATA_ISO_Shipping_Country__c;
+                }
+
+                if (newForm.Shipping_ISO_State__c == null) {
+                    newForm.Shipping_ISO_State__c = accountConcerned.IATA_ISO_Shipping_State__c;
                 }
             }
 
@@ -3123,7 +3138,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 //NEWGEN 683
                 if (getIsAccreditationModelNotNullOrLegacy()) {
                     typeOfProcess = AMS_UTILS.NGCHANGES;
-                } else if(newCase.Reason1__c == 'Corrections') {//AMSU-140
+                } else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE) {//AMSU-140//AMSU-165
                     typeOfProcess = AMS_Utils.COR;  
                 } else {
                     typeOfProcess = 'MAJOR.CHANGES';
@@ -7235,7 +7250,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             newCase.Reason1__c = 'Bank Detail Update';
             newCase.Subject = Label.ISSP_AMS_NoC_Direct_Debit_Change + ' – ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
         } else if(newForm.Location_Class__c == 'I'){  //AMSU-140
-            newCase.Reason1__c = 'Corrections';
+            newCase.Reason1__c = AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE; //AMSU-165
             newCase.Subject =  'Agency Changes – ' + accountConcerned.Name;
         } else if ((newForm.Is_change_location__c && newForm.Is_change_legal_name__c) || (newForm.Is_change_location__c && newForm.Is_change_ownership_or_shareholding__c) || (newForm.Is_change_ownership_or_shareholding__c && newForm.Is_change_legal_name__c)) {
             newCase.Reason1__c = 'Major Change';

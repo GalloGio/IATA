@@ -159,7 +159,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <relationshipLabel>IATA ISO Countries</relationshipLabel>
         <relationshipName>IATA_ISO_Countries</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -2717,6 +2717,16 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>FRED ICAO Member State</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>That value does not exist or is not a valid ICAO Member State.</errorMessage>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>ICAO Member State</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>Account</referenceTo>
         <relationshipLabel>ISO Country / Territory Name</relationshipLabel>
         <relationshipName>IATA_ISO_Countries</relationshipName>

@@ -165,6 +165,25 @@ public with sharing class AMS_XML_Generator {
         Datetime dtFirstDayOfMonth = datetime.newInstance(dFirstDayOfMonth.year(), dFirstDayOfMonth.month(),dFirstDayOfMonth.day());
         Datetime dtLastDayOfMonth = datetime.newInstance(dLastDayOfMonth.year(), dLastDayOfMonth.month(),dLastDayOfMonth.day());
 
+        /*NEWGEN-3267 START - Discarded from Release 6 NEWGEN
+        Map<Id,Id> changeCodeOscarMap = new Map<Id,Id>();
+        Map<Id,String> changeCodeCaseNumber = new Map<Id,String>();
+
+        for(Agency_Applied_Change_code__c aacc: agencies){
+            if(aacc.OSCAR__c <> null && aacc.OSCAR__r.Oscar_Communication_Case_Id__c <> null){
+                changeCodeCaseNumber.put(aacc.Id,aacc.OSCAR__r.Oscar_Communication_Case_Id__c);
+            }
+            else if(aacc.OSCAR__c <> null)
+                changeCodeOscarMap.put(aacc.OSCAR__c,aacc.Id);
+        }
+
+
+        for(Case c: [Select Id, CaseNumber from Case where RecordTypeId = :AMS_Utils.OSCAR_COMUNICATION and OSCAR__c in: changeCodeOscarMap.Values() and ( ParentId = null or Parent.RecordTypeId != :AMS_Utils.OSCAR_COMUNICATION)]){
+            changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c),c.Id);
+        }
+        NEWGEN-3267 END*/
+        
+
         //for(Account ag : agencies){
         for(Agency_Applied_Change_code__c ag : agencies){
             Dom.Xmlnode liNode = rootNode.addChildElement('line_item', null, null);
@@ -180,6 +199,11 @@ public with sharing class AMS_XML_Generator {
 
             getElementNode(liNode, 'product_id', ag.Account__r.Location_Class__c + ag.Change_Code__c); 
             getElementNode(liNode, 'quantity', '1');
+
+            /*NEWGEN-3267 START - Discarded from Release 6 NEWGEN
+            if(changeCodeCaseNumber.get(ag.Id) <> null)
+                getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
+            NEWGEN-3267 END*/
         }
 
         system.debug('--------- doc: ' + doc.toXmlString());        

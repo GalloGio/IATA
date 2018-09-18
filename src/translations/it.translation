@@ -45,6 +45,10 @@
         <name>FDS_ICCS</name>
     </customApplications>
     <customApplications>
+        <label><!-- FRED+ --></label>
+        <name>FRED</name>
+    </customApplications>
+    <customApplications>
         <label><!-- GDP --></label>
         <name>GDP</name>
     </customApplications>
@@ -927,6 +931,10 @@
     <customLabels>
         <label><!-- ANG_ISSP_ProductComparisonCountrySpecificRequirements --></label>
         <name>ANG_ISSP_ProductComparisonCountrySpecificRequirements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip --></label>
+        <name>ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_ISSP_ProductComparisonFeature1 --></label>
@@ -4536,8 +4544,36 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Address</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Agency_Accreditation --></label>
+        <name>ISSP_AMS_Agency_Accreditation</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Agency Type --></label>
         <name>ISSP_AMS_Agency_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Associate_Entity --></label>
+        <name>ISSP_AMS_Apply_New_Associate_Entity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Branch_Office --></label>
+        <name>ISSP_AMS_Apply_New_Branch_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Head_Entity --></label>
+        <name>ISSP_AMS_Apply_New_Head_Entity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Office --></label>
+        <name>ISSP_AMS_Apply_New_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Head_Entity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Head_Office</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Associate Entity Cash --></label>
@@ -8252,6 +8288,14 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_ANNUAL_REV_ERROR_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP --></label>
+        <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL --></label>
+        <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_ANNUAL_REV_Q2 --></label>
         <name>ISSP_ANG_ANNUAL_REV_Q2</name>
     </customLabels>
@@ -8388,8 +8432,16 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Financial Security Exists --></label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_FORMULA --></label>
+        <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
         <label><!-- He message --></label>
@@ -8438,6 +8490,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP_ANG_LeftNav_Section1_AE_Details --></label>
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
+        <name>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</name>
     </customLabels>
     <customLabels>
         <label><!-- Must Add Users To Service --></label>
@@ -11234,6 +11290,10 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
         <name>ISSP_Password</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PasswordChanged_FRED --></label>
+        <name>ISSP_PasswordChanged_FRED</name>
+    </customLabels>
+    <customLabels>
         <label>Le password devono corrispondere.</label>
         <name>ISSP_PasswordMatch</name>
     </customLabels>
@@ -11582,6 +11642,10 @@ Tenga presente che molte fatture IATA vengono addebitate via BSP/CASS. La preghi
     <customLabels>
         <label>Tentativo di accesso non riuscito. Si assicuri che l&apos;e-mail e la password siano corrette.</label>
         <name>ISSP_Registration_Error_Login</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Registration_Error_MobilePhone --></label>
+        <name>ISSP_Registration_Error_MobilePhone</name>
     </customLabels>
     <customLabels>
         <label>Il campo della password non può essere vuoto, immetta un valore.</label>
@@ -13316,6 +13380,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>NewGenApp_CashConditionsNotification</name>
     </customLabels>
     <customLabels>
+        <label><!-- NewGenApp_PortalUserRequested --></label>
+        <name>NewGenApp_PortalUserRequested</name>
+    </customLabels>
+    <customLabels>
         <label><!-- NewGenApp_RHC_RiskAlert_Notification --></label>
         <name>NewGenApp_RHC_RiskAlert_Notification</name>
     </customLabels>
@@ -13326,6 +13394,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- NewGenApp_ServiceAccepted --></label>
         <name>NewGenApp_ServiceAccepted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NewGenApp_ServiceRequested --></label>
+        <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
         <label><!-- New password --></label>
@@ -13380,6 +13452,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_AccountSearchPlaceholder</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_AccountSearch_Limit --></label>
+        <name>OneId_AccountSearch_Limit</name>
+    </customLabels>
+    <customLabels>
         <label>Dati aziendali</label>
         <name>OneId_Account_Association</name>
     </customLabels>
@@ -13394,6 +13470,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- OneId_All rights reserved --></label>
         <name>OneId_All_rights_reserved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Authorization_Pending --></label>
+        <name>OneId_Authorization_Pending</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Billing City --></label>
@@ -13440,6 +13520,14 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Create_an_account</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_EligibleExistingUserError --></label>
+        <name>OneId_EligibleExistingUserError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_EligibleLoggedUserRegisteringError --></label>
+        <name>OneId_EligibleLoggedUserRegisteringError</name>
+    </customLabels>
+    <customLabels>
         <label>Inserisca il suo indirizzo e-mail</label>
         <name>OneId_EmailError</name>
     </customLabels>
@@ -13448,8 +13536,184 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Email_Header_Identity</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_ExistingUserWithFredAccessError --></label>
+        <name>OneId_ExistingUserWithFredAccessError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_ContactUs_Link --></label>
+        <name>OneId_FRED_ContactUs_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_0 --></label>
+        <name>OneId_FRED_Terms_0</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_1 --></label>
+        <name>OneId_FRED_Terms_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_10 --></label>
+        <name>OneId_FRED_Terms_10</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_11 --></label>
+        <name>OneId_FRED_Terms_11</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_12 --></label>
+        <name>OneId_FRED_Terms_12</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_13 --></label>
+        <name>OneId_FRED_Terms_13</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_14 --></label>
+        <name>OneId_FRED_Terms_14</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_15 --></label>
+        <name>OneId_FRED_Terms_15</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_16 --></label>
+        <name>OneId_FRED_Terms_16</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_17 --></label>
+        <name>OneId_FRED_Terms_17</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_18 --></label>
+        <name>OneId_FRED_Terms_18</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_19 --></label>
+        <name>OneId_FRED_Terms_19</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_2 --></label>
+        <name>OneId_FRED_Terms_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_20 --></label>
+        <name>OneId_FRED_Terms_20</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_21 --></label>
+        <name>OneId_FRED_Terms_21</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_22 --></label>
+        <name>OneId_FRED_Terms_22</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_23 --></label>
+        <name>OneId_FRED_Terms_23</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_24 --></label>
+        <name>OneId_FRED_Terms_24</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_25 --></label>
+        <name>OneId_FRED_Terms_25</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_26 --></label>
+        <name>OneId_FRED_Terms_26</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_27 --></label>
+        <name>OneId_FRED_Terms_27</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_28 --></label>
+        <name>OneId_FRED_Terms_28</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_29 --></label>
+        <name>OneId_FRED_Terms_29</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_3 --></label>
+        <name>OneId_FRED_Terms_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_30 --></label>
+        <name>OneId_FRED_Terms_30</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_31 --></label>
+        <name>OneId_FRED_Terms_31</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_32 --></label>
+        <name>OneId_FRED_Terms_32</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_33 --></label>
+        <name>OneId_FRED_Terms_33</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_34 --></label>
+        <name>OneId_FRED_Terms_34</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_35 --></label>
+        <name>OneId_FRED_Terms_35</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_36 --></label>
+        <name>OneId_FRED_Terms_36</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_37 --></label>
+        <name>OneId_FRED_Terms_37</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_4 --></label>
+        <name>OneId_FRED_Terms_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_5 --></label>
+        <name>OneId_FRED_Terms_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_6 --></label>
+        <name>OneId_FRED_Terms_6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_7 --></label>
+        <name>OneId_FRED_Terms_7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_8 --></label>
+        <name>OneId_FRED_Terms_8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_9 --></label>
+        <name>OneId_FRED_Terms_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_Of_Use_Link --></label>
+        <name>OneId_FRED_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Troubleshooting --></label>
+        <name>OneId_FRED_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Troubleshooting_Link --></label>
+        <name>OneId_FRED_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Fred_Select_Type_of_Company --></label>
+        <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
         <label>&quot;Nel caso in cui non siano presenti aziende corrispondenti alla combinazione di codice GSA e Paese indicata, verificare che le informazioni inserite siano corrette o consultare la nostra &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;guida alla risoluzione dei problemi&lt;/a&gt;&quot;</label>
@@ -13524,12 +13788,32 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Job_Function</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_LoggedUserWithServiceAccessRegisteringError --></label>
+        <name>OneId_LoggedUserWithServiceAccessRegisteringError</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Login --></label>
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_LoginFail --></label>
         <name>OneId_LoginFail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_LoginUserNotEligibleForFredMessage --></label>
+        <name>OneId_LoginUserNotEligibleForFredMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_LoginUserWithoutFredAccessMessage --></label>
+        <name>OneId_LoginUserWithoutFredAccessMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Max_Account_Reached --></label>
+        <name>OneId_Max_Account_Reached</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Max_Account_Reached2 --></label>
+        <name>OneId_Max_Account_Reached2</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_My available applications --></label>
@@ -13578,6 +13862,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- OneId_Password_ErrorBlank --></label>
         <name>OneId_Password_ErrorBlank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Passwords_Mix --></label>
+        <name>OneId_Passwords_Mix</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Please_Wait --></label>
@@ -13695,6 +13983,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>OneId_Terms_of_Use_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_Thank_you_Fred_Access_Request --></label>
+        <name>OneId_Thank_you_Fred_Access_Request</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Thank you for requesting access to our service. --></label>
         <name>OneId_Thank_you_for_requesting_access_to_our_service</name>
     </customLabels>
@@ -13713,6 +14005,14 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- OneId URL javaScript --></label>
         <name>OneId_URL_javaScript</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_UneligibleExistingUserError --></label>
+        <name>OneId_UneligibleExistingUserError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_UneligibleLoggedUserRegisteringError --></label>
+        <name>OneId_UneligibleLoggedUserRegisteringError</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_User_CreatedFromContact --></label>
@@ -14927,12 +15227,20 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>Taxes</name>
     </customLabels>
     <customLabels>
+        <label><!-- TermsConditionFred --></label>
+        <name>TermsConditionFred</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Thank you --></label>
         <name>ThankYou</name>
     </customLabels>
     <customLabels>
         <label><!-- The attachments you select will be copied to the target case --></label>
         <name>The_attachments_you_select_will_be_copied_to_the_target_case</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TitleTermsConditionFred --></label>
+        <name>TitleTermsConditionFred</name>
     </customLabels>
     <customLabels>
         <label><!-- Title_Home_Page --></label>
@@ -15373,6 +15681,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customTabs>
         <label><!-- Annual Certificate Campaign --></label>
         <name>Annual_Certificate_Campaign</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Apply RHC Equal to FS --></label>
+        <name>Apply_RHC_Equal_to_FS</name>
     </customTabs>
     <customTabs>
         <label>Servizi disponibili</label>

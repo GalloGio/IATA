@@ -585,14 +585,14 @@ private class AMS_UtilsTest {
 
         insert changeCodeConfig;
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
         insert ctry;
 
         Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         //create account to match triggering fields on settings
         Account acct = new Account(IATA_ISO_Country__c = ctry.id, Location_Type__c = 'HE', RecordTypeId = accountRT, IATACode__c='1234567',
-                                     Name='Test HE',Short_Name__c='Test HE',ANG_IEP_Status__c='Open',ANG_IEP_HE_AccntNum__c='126473547', Reason__c = '12-aaa', Status__c='approved');
+                                     Name='Test HE',Short_Name__c='Test HE',ANG_IEP_Status__c='Open',ANG_IEP_HE_AccntNum__c='126473547', Reason__c = '12-aaa', Status__c='approved',Location_Class__c = 'P');
         insert acct;
 
         //integration will run on trigger because settings conditions are met: ANG_IEP_Status__c changed and value is 'In Progress'

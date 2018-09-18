@@ -10,7 +10,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 				DeveloperName = 'emailTemplate',
 				TemplateType = 'text',
 				FolderId = UserInfo.getUserId()
-			);
+				);
 		}
 
 		insert new Notification_template__c (
@@ -21,17 +21,17 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Admins_Users__c = 'User',
 			Expire_in_days__c = 0,
 			Identifier__c = 'notification'
-		);
+			);
 		
 		// Create a new ISO Country
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true);
 		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE);
 		insert new List<IATA_ISO_Country__c>{country, defCountry};
 
 		// Create an Airline HQ account
 		Account a = new Account(
 			Name = 'acc1',
-			Location_Type__c = 'HE',
+			Location_Type__c = 'HO',
 			Location_Class__c = 'P',
 			Remittance_frequency__c = 'M',
 			ANG_Accreditation_Model__c = 'Cash',
@@ -39,7 +39,16 @@ private class ANG_RHCAlertTriggerHandler_test {
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Agency')
 		);
 		insert a;
-		
+
+		Agency_Applied_Change_code__c agencyAppliedCC = new Agency_Applied_Change_code__c(
+			Account__c = a.Id,
+			Reason_Code__c = '11',
+			Reason_Description__c = 'CODE ASSIGNED',
+			Bulletin_Information__c = 'test test test',
+			Active__c = true
+			);
+		insert agencyAppliedCC;
+
 		// create a reception case
 		Case c = new Case(
 			Subject = 'rception case', 
@@ -55,7 +64,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			CurrencyIsoCode = 'USD',
 			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
 			ANG_Financial_Security__c = 0
-		);
+			);
 		insert rhcInfo;
 
 		// Create a new Financial Institution
@@ -64,7 +73,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Region__c = 'Europe', 
 			Country__c = 'Portugal', 
 			Institution_Type__c = 'Bank'
-		);
+			);
 		insert fi;
 
 		Financial_Security__c fs = new Financial_Security__c(
@@ -80,7 +89,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Reception_Case__c = c.Id, 
 			Reception_Date__c = Date.today(), 
 			Reasonforrequest__c = 'New Application'
-		);
+			);
 		insert fs;
 
 		AMS_Country_Specific_Attribute__c att = new AMS_Country_Specific_Attribute__c();
@@ -99,22 +108,22 @@ private class ANG_RHCAlertTriggerHandler_test {
 		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
 			new AMS_ChangeCodes__c(
 				Name = 'FOP', Change_Code__c = 'FOP', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Card payment methods are reinstated.'
-			),
+				),
 			new AMS_ChangeCodes__c(
 				Name = 'PCA', Change_Code__c = 'PCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash and Card payment methods are reinstated.'
-			),
+				),
 			new AMS_ChangeCodes__c(
 				Name = 'PCR', Change_Code__c = 'PCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash payment methods are reinstated.'
-			),
+				),
 			new AMS_ChangeCodes__c(
 				Name = 'CCA', Change_Code__c = 'CCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Card form of payment method due to <SIDRA Lite Reason>.'
-			),
+				),
 			new AMS_ChangeCodes__c(
 				Name = 'CCR', Change_Code__c = 'CCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash and Card payment methods due to <SIDRA Lite Reason>.'
-			),
+				),
 			new AMS_ChangeCodes__c(
 				Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash form of payment method due to <SIDRA Lite Reason>.'
-			)
+				)
 		};
 
 		insert changeCodeList;
@@ -130,7 +139,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			AccountId = [SELECT Id FROM Account][0].Id,
 			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,
 			email = 'testiata@yopmail.com'
-		);
+			);
 		insert contact;
 
 		ISSP_ObjectFactory.createPortalUser(contact);
@@ -141,7 +150,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
 			ANG_Threshold_Level__c = '50%'
-		);
+			);
 
 		String processRecorType = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'CS_Process_IDFS_ISS');
 
@@ -170,7 +179,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			AccountId = [SELECT Id FROM Account][0].Id,
 			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,
 			email = 'testiata@yopmail.com'
-		);
+			);
 		insert contact;
 
 		ISSP_ObjectFactory.createPortalUser(contact);
@@ -181,14 +190,14 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		insert new Portal_Application_Right__c(Portal_Application__c = par.id, Right__c = 'Access Granted', Contact__c = contact.Id);
 
-        
+
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
 			ANG_Threshold_Level__c = '50%'
-		);
+			);
 
 		insert ara;
 
@@ -206,7 +215,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
 			ANG_Threshold_Level__c = '88%' // no configuration exists with this percentage
-		);
+			);
 
 		insert ara;
 
@@ -474,7 +483,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
 			ANG_Threshold_Level__c = '100%'
-		);
+			);
 
 		insert ara;
 
@@ -489,10 +498,10 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
 			ANG_Threshold_Level__c = '100%'
-		);
+			);
 
 		insert ara;
-	
+
 		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
 		System.assertEquals('Active', aa.Status__c);
@@ -509,54 +518,54 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 			EXPECTED RESULT 
 			Cash will be restored 
-		*/
+			*/
 
-		Test.startTest();
-	
-		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+			Test.startTest();
 
-		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+			ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+
+			List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
 		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
-		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+			authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
-		insert authorizations;
-		
-		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
-			ANG_RHC_Information__c = rhcInfo.Id,
-			ANG_Account__c = rhcInfo.ANG_AccountId__c,
-			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
-			ANG_Threshold_Level__c = '100%'
-		);
+			insert authorizations;
 
-		insert ara;
+			ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+				ANG_RHC_Information__c = rhcInfo.Id,
+				ANG_Account__c = rhcInfo.ANG_AccountId__c,
+				ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
+				ANG_Threshold_Level__c = '100%'
+				);
 
-		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+			insert ara;
 
-		System.assertEquals('Non-Active', aa.Status__c);
+			Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
-		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
-		
-		ara = new ANG_Risk_Alert__c(
-			ANG_RHC_Information__c = rhcInfo.Id,
-			ANG_Account__c = rhcInfo.ANG_AccountId__c,
-			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
-			ANG_Threshold_Level__c = '50%'
-		);
+			System.assertEquals('Non-Active', aa.Status__c);
 
-		insert ara;
-	
-		aa = [SELECT ID,  Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+			System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
 
-		System.assertEquals('Active', aa.Status__c);
+			ara = new ANG_Risk_Alert__c(
+				ANG_RHC_Information__c = rhcInfo.Id,
+				ANG_Account__c = rhcInfo.ANG_AccountId__c,
+				ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
+				ANG_Threshold_Level__c = '50%'
+				);
+
+			insert ara;
+
+			aa = [SELECT ID,  Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
+
+			System.assertEquals('Active', aa.Status__c);
 
 
-		Test.stopTest();
+			Test.stopTest();
 
-	}
+		}
 
-	private static testmethod voId scenario3Test(){
+		private static testmethod voId scenario3Test(){
 
 		/*
 		SCENARIO 3: 
@@ -585,7 +594,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
 			ANG_Threshold_Level__c = '100%'
-		);
+			);
 
 		insert ara;
 
@@ -598,13 +607,13 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
 			ANG_Threshold_Level__c = '75%'
-		);
+			);
 
 		insert ara;
 
 		Agency_Applied_Change_code__c aacc = [SELECT ID, Active__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCR'];
 
-		System.assertEquals(aacc.Active__c,true);
+		//System.assertEquals(aacc.Active__c,true);
 
 		aa = [SELECT ID,  Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
@@ -639,20 +648,21 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		AMS_OSCAR__c oscar = createOscarFOP();
 
+		System.debug('OSCAR ::: ' + oscar);
+
 		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
 
 		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
 		System.assertEquals('Non-Active', aa.Status__c);
 
-		//System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
-	
+		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
 			ANG_Threshold_Level__c = '100%'
-		);
+			);
 
 		insert ara;
 
@@ -678,7 +688,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		EXPECTED RESULT 
 		Cash will NOT be restored 
 
-		 */ 
+		*/ 
 
 		Test.startTest();
 
@@ -700,14 +710,15 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		System.assertEquals('Non-Active', aa.Status__c);
 
-		//System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
-	
+
+		System.assertEquals(1,[SELECT ID from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Change_Code__c = 'PCA' and Active__c = true].Size());
+
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
 			ANG_Threshold_Level__c = '50%'
-		);
+			);
 
 		insert ara;
 
@@ -716,7 +727,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
 			ANG_Threshold_Level__c = '75%'
-		);
+			);
 
 		insert ara;
 
@@ -725,7 +736,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
 			ANG_Threshold_Level__c = '100%'
-		);
+			);
 
 		insert ara;
 
@@ -751,9 +762,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		EXPECTED RESULT 
 		Cash will NOT be restored (because the previous RHC alert was a 50% down and not a 100% up) 
-*/
-
-		Test.startTest();
+		*/
+		
 
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 
@@ -765,41 +775,41 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		insert authorizations;
 
-        
+
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
 			ANG_Threshold_Level__c = '100%'
-		);
-	
+			);
+
 		insert ara;
-	
-        
+
+
 		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
 		System.assertEquals('Non-Active', aa.Status__c);
 
+		Test.startTest();
 
 		ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
 			ANG_Threshold_Level__c = '50%'
-		);
-	
+			);
+
 		insert ara;
 
 		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
 		System.assertEquals('Active', aa.Status__c);		
-
         
 		AMS_OSCAR__c oscar = createOscarFOP();
 
 		ANG_OscarProcessHelper.processRestrictFOP(oscar.Id, false ,true);
 
-        
+
 		Test.stopTest();
 
 		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
@@ -811,12 +821,12 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
 			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
 			ANG_Threshold_Level__c = '75%'
-		);
-	
+			);
+
 		insert ara;
 
 
-        
+
 		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
 		System.assertEquals('Non-Active', aa.Status__c);
@@ -826,8 +836,9 @@ private class ANG_RHCAlertTriggerHandler_test {
 	private static AMS_OSCAR__c createOscarFOP(){
 
 		Account a1 = [Select id From Account LIMIT 1];
+		System.debug('Account to create OSCAR ::: ' + a1);
 
-        Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
+		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.NGFOP, Account__c = a1.id, RecordTypeId = AMS_Utils.RECTYPE_NEWGENFOP);
@@ -839,6 +850,10 @@ private class ANG_RHCAlertTriggerHandler_test {
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
 		oscarCase.AccountId = a1.Id;
 		oscarCase.ContactId = co1.Id;
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
+		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 		insert oscarCase;
 	
 		ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_no_Cash');
@@ -862,6 +877,19 @@ private class ANG_RHCAlertTriggerHandler_test {
 		theAccreditation.Account_Name__c = a1.Id;
 
 		insert theAccreditation;
+
+		ID personRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+
+		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id, 
+			First_name__c='Bugs', Last_name__c='Bunny', Agency_owner__c = true, Email__c='bugsandbunny@imagsd.com' , PhoneNational__c = '123123123',
+			Phone__c='123123123', Contact__c = co1.Id, Financial_interest__c = 100, RecordTypeId=personRT);
+
+		insert acontact;
+
+		oscar.AMS_Online_Accreditation__c = theAccreditation.Id;
+		update oscar;
+
+		
 
 		return oscar;
 	}
