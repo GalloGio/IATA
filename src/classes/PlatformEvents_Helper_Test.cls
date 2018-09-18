@@ -7,7 +7,6 @@ private class PlatformEvents_Helper_Test {
 
 		
 		Account provider = new Account(Name = 'ProviderTest1',
-			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
 			status__C='Active'
@@ -31,7 +30,6 @@ private class PlatformEvents_Helper_Test {
         insert country;
 
 		Account provider = new Account(Name = 'ProviderTest1',
-			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
 			status__C='Active'
@@ -61,7 +59,6 @@ private class PlatformEvents_Helper_Test {
 
 		
 		Account account = new Account(Name = 'ProviderTest1',
-			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
 			status__C='Active'
@@ -128,7 +125,6 @@ private class PlatformEvents_Helper_Test {
 		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
 
 		Account account = new Account(Name = 'ProviderTest1',
-			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
 			status__C='Active'
@@ -204,7 +200,6 @@ private class PlatformEvents_Helper_Test {
 		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
 
 		Account account = new Account(Name = 'ProviderTest1',
-					RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 					Accreditation_date__c = Date.today(),
 					IataCode__c = '1234',
 					status__C='Active'

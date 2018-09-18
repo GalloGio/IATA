@@ -6,7 +6,7 @@ public class TIP_Utils{
 	public static String PORTAL_SERVICE_NAME_TIP= 'Transparency in Payments (TIP)';
 	//Account RT's
     public static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');  
-    public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
+    //public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
     
     //Account Role RT
     public static String ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account_Role__c').get('TIP_Payment_Provider');
@@ -129,8 +129,8 @@ public class TIP_Utils{
 	}*/
 
 	public static void setAssessmentDate(List<Account> triggerNew,map<id, Account> triggerOld) {
-		for(Account newAcc : triggerNew){
-			if(newAcc.recordtypeid == PAYMENT_PROVIDER_RECORD_TYPE_ID && triggerOld.get(newAcc.id).recordtypeid != newAcc.recordtypeid) newAcc.Assessment_Performed_Date__c = Date.today();
+		for(Account newAcc : triggerNew) {
+			if(newAcc.Account_Role__c != null && newAcc.Account_Role__c.contains('Payment Provider') && triggerOld.get(newAcc.id).recordtypeid != newAcc.recordtypeid) newAcc.Assessment_Performed_Date__c = Date.today();
 		}	
 	}
 	
