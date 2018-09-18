@@ -326,7 +326,8 @@ action="{!initActions}"
                                 </section>
 
                                 <div style="float: right;padding: 20px;" class="col-col-xs-6 col-md-4 col-md-offset-2">
-                                    <input type="button " id="newProductBtn" class="btn btn-block btn_iata_primary" onclick="openProdDetailPage(null);" value="Enroll New Product"/>
+                                    <!--input type="button " id="newProductBtn" class="btn btn-block btn_iata_primary" onclick="openProdDetailPage(null);" value="Enroll New Product"/-->
+                                    <button id="newProductBtn" onclick="openProdDetailPage(null);return false;" class="btn btn-block btn_iata_primary">Enroll New Product</button>
                                 </div>
 
                                 <apex:pageBlock >
