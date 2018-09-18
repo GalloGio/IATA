@@ -139,11 +139,10 @@ public with sharing class vfIECGADResult_tst {
         try {
             TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
             User u = IECTestUtil.createSampleGuestUserAndLogin();
+            // setup data
+            setupData();
             System.runAs(u) {
 
-                // setup data
-                setupData();
-                
                 Test.startTest();
                 
                 initSubscription();
