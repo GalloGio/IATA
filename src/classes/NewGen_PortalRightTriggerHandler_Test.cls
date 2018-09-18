@@ -15,7 +15,8 @@ private class NewGen_PortalRightTriggerHandler_Test {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = easyPay1.id
+                ANG_Portal_Service__c = easyPay1.id,
+                ANG_Enable_NewGen__c = true
             );   
 
         insert portugal;                 
@@ -27,7 +28,8 @@ private class NewGen_PortalRightTriggerHandler_Test {
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
                 OwnerId = UserInfo.getUserId(),
-                Reason_for_creation__c = 'Created by customer'
+                Reason_for_creation__c = 'Created by customer',
+                Location_Class__c = 'P'
             );
 
         insert topParent;
@@ -40,7 +42,8 @@ private class NewGen_PortalRightTriggerHandler_Test {
                 Location_type__c = 'HE',
                 OwnerId = UserInfo.getUserId(),
                 Top_Parent__c = topParent.id,
-                Reason_for_creation__c = 'Created by customer'
+                Reason_for_creation__c = 'Created by customer',
+                Location_Class__c = 'P'
             );
 
         insert a;

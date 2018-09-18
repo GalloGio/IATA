@@ -9,7 +9,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/KPI_Final_reminder_to_Responsible_Person</template>
+        <template>All/KPI_Final_reminder_to_Responsible_Person</template>
     </alerts>
     <alerts>
         <fullName>KPI_Send_email_to_responsible_person_to_update_the_KPI_value</fullName>
@@ -20,7 +20,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/KPI_Notification_to_Responsible_Person</template>
+        <template>All/KPI_Notification_to_Responsible_Person</template>
     </alerts>
     <fieldUpdates>
         <fullName>KPI_N_A_after_3_days_of_the_deadline</fullName>

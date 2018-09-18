@@ -32,10 +32,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Agency_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
         </layoutColumns>
@@ -104,14 +100,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IRIS_updated_processing__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DD_setup_with_R_S_confirmed__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DD_setup_with_agent_confirmed__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

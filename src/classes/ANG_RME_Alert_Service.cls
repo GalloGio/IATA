@@ -181,6 +181,7 @@ global class ANG_RME_Alert_Service {
 		webservice Boolean isSuccess;
 		webservice String description;
 		webservice String iataCode;
+		webservice ISSP_Web_Service_Log__c log; 
 
 		private RHCMessage res;
 
@@ -194,22 +195,36 @@ global class ANG_RME_Alert_Service {
 
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
-		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
+		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', false); //results are saved on the private varible "result"
 
 		if(result.isSuccess) {
 
 			if(result.res.iataCode != acc.IATACode__c){
 				log.Error_Code__c = 'Iata Code Mismatch';
 				result.isSuccess = false;
+				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
 				result.isSuccess = false;
 				log.Error_Code__c = 'Currency Mismatch';
+				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c,  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
+			}
+			else if (result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
+				result.isSuccess = false;
+				log.Error_Code__c = 'RHC Value Mismatch';
+				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c,  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else
 				updateRHC(result.res, acc.RHC_Informations__r[0]);
 
 		}
+
+		if(result.log != null)
+			insert result.log;
+
 		//
 		// To reset the singleton for future calls
 		//
@@ -227,8 +242,19 @@ global class ANG_RME_Alert_Service {
 
 		if(result.isSuccess){
 
-			if(result.res.iataCode != acc.IATACode__c) log.Error_Code__c = 'Iata Code Mismatch';
-			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode) log.Error_Code__c = 'Currency Mismatch';
+			if(result.res.iataCode != acc.IATACode__c){ 
+				log.Error_Code__c = 'Iata Code Mismatch';
+				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+			}
+			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){ 
+				log.Error_Code__c = 'Currency Mismatch';
+				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+			}
+			//COMMENTED - we should not validate this for provisional RHC
+			/*else if (result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
+				log.Error_Code__c = 'RHC Value Mismatch';
+				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+			}*/
 			else{
 				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
 				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
@@ -252,6 +278,10 @@ global class ANG_RME_Alert_Service {
 	}
 
 	private static WebserviceResult doRequest(String iataCode, String mappingName){
+		return doRequest(iataCode, mappingName, true);
+	}
+
+	private static WebserviceResult doRequest(String iataCode, String mappingName, boolean commitLog){
 
 		ANG_CalloutMapping__c params = ANG_CalloutMapping__c.getInstance(mappingName);
 
@@ -290,18 +320,23 @@ global class ANG_RME_Alert_Service {
 
 				log.Error_Code__c = String.valueOf(res.getStatusCode());
 				log.Error_Message__c = res.getBody();
+				if(res.getStatusCode() >= 400) ServiceNow_Helper.sendRequestToSNOW('Mulesoft', (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), 'featurespace-system-service', 'RME', String.valueOf(result),  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				result.description = 'An unexpected error ocurred while contacting the external system. An incident has been raised on Service Now.';
 			}
 		} catch(Exception e) {
 			result.isSuccess = false;
 
 			log.Error_Code__c = 'Unexpected Exception on Apex Class';
 			log.Error_Message__c = e.getMessage();
+			result.description = 'An unexpected error ocurred while contacting the external system. Please, try again later or contact your system admin';
 		}
 
 		log.Success__c = result.isSuccess;
-		if(!result.isSuccess) result.description = 'An unexpected error ocurred while contacting the external system. Please, try again later or contact your system admin';
 		
-		insert log;
+		if(commitLog)
+			insert log;
+
+		result.log = log;
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] log - ' + log);
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] result - ' + result);
