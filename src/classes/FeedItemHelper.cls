@@ -44,8 +44,7 @@ public with sharing class FeedItemHelper {
 
 			map<Id, Account> mapAccountsPerId = new map<Id, Account>([SELECT Id FROM Account
 																		WHERE Id IN :setRelatedAccountIds
-																		AND RecordType.DeveloperName = 'IATA_Airline'
-																		AND Membership_status__c = 'IATA member']);
+																		AND RecordType.DeveloperName = 'IATA_Airline']);
 
 			// if there are IATA member Airline HQ accounts that have invalid feeditems posted to them, raise the error
 			if (!mapAccountsPerId.values().isEmpty()) {
