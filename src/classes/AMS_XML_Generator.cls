@@ -1263,13 +1263,28 @@ public with sharing class AMS_XML_Generator {
                         /*** AMSU-158 Begin ***/
                         if(String.isNotBlank(ag.Reason__c)) {
                             List<String> reasonParsed = ag.Reason__c.split('-');
-                            if(reasonParsed[0].length() != 2 || !reasonParsed[0].isNumeric()) {
-                                reasonParsed = new List<String> {'',''};
-                                agenciesWithInvalidReason.add(ag);
+                            String code = '';
+                            String description = '';
+
+                            if(reasonParsed.isEmpty()) {
+                                if(!ag.CNS_Account__c) {
+                                	agenciesWithInvalidReason.add(ag);
+								}
+                            } else  {
+                                String firstElem = reasonParsed.remove(0);
+                                if(firstElem.isNumeric()) {
+                                    code = firstElem;
+                                } else {
+                                    if(reasonParsed.isEmpty()) {
+                                        reasonParsed.add(firstElem);
+                                    }
+                                    agenciesWithInvalidReason.add(ag);
+                                }
+                                description = String.join(reasonParsed, '-');
                             }
 
-                            getElementNode(agEndorsementNode, 'accreditation_endorsement_reason_code',  reasonParsed[0]);
-                            getElementNode(agEndorsementNode, 'accreditation_endorsement_reason_description',  reasonParsed[1]);
+                            getElementNode(agEndorsementNode, 'accreditation_endorsement_reason_code',  code);
+                            getElementNode(agEndorsementNode, 'accreditation_endorsement_reason_description',  description);
                         }
                         /*** AMSU-158 End ***/
                     }
@@ -1343,35 +1358,10 @@ public with sharing class AMS_XML_Generator {
         
         /*** AMSU-158 ***/
         if(!agenciesWithInvalidReason.isEmpty()) {
-            sendErrorNotification(agenciesWithInvalidReason);
+            System.enqueueJob(new NotificationsSender(agenciesWithInvalidReason)); 
         }
         
         return doc.toXmlString();   
-    }
-
-    /*** AMSU-158 ***/
-    public void sendErrorNotification(Set<Account> accounts) {
-        String body = 'Id, Reason\n';
-        for(Account acc : accounts) {
-            body += acc.Id + ',' + (String.isBlank(acc.Reason__c) ? '' : acc.Reason__c).escapeCSV() + '\n';
-        }
-
-        Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
-        Blob csvReport = Blob.valueOf(body);
-        csvAttc.setFileName('XML Generator errors report.csv');
-        csvAttc.setBody(csvReport);
-
-        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-        message.subject = 'XML Generator errors report';
-        message.setPlainTextBody('XML Generator errors - Check attachment with execution results - ' + DateTime.now());
-        message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
-        Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};        
-        
-        if(!Test.isRunningTest() && !String.isBlank(Label.AMS_XML_GEN_ERROR_RECEIVER)) {
-            List<String> emailAddresses = Label.AMS_XML_GEN_ERROR_RECEIVER.split(';');
-            message.setToaddresses(emailAddresses);
-            Messaging.sendEmail(messages);
-        }
     }
 
     public void getHeaderNode(Dom.Xmlnode rootNode, Map<String, String> mValues){
@@ -2280,6 +2270,40 @@ public with sharing class AMS_XML_Generator {
         } catch (SObjectException e)    { 
             System.Debug('----getObjectData SObjectException e:'+ e);
         } 
+    }
+
+
+    /*** AMSU-158 ***/
+    public class NotificationsSender implements Queueable {
+        public Set<Account> accounts {get;set;}
+
+        public NotificationsSender(Set<Account> accounts) {
+            this.accounts = accounts;
+        }
+
+        public void execute(QueueableContext context) {
+            String body = 'Id, Reason\n';
+            for(Account acc : accounts) {
+                body += acc.Id + ',' + (String.isBlank(acc.Reason__c) ? '' : acc.Reason__c).escapeCSV() + '\n';
+            }
+
+            Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
+            Blob csvReport = Blob.valueOf(body);
+            csvAttc.setFileName('XML Generator errors report.csv');
+            csvAttc.setBody(csvReport);
+
+            Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+            message.subject = 'XML Generator errors report';
+            message.setPlainTextBody('XML Generator errors - Check attachment with execution results - ' + DateTime.now());
+            message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
+            Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};        
+            
+            if(!Test.isRunningTest() && !String.isBlank(Label.AMS_XML_GEN_ERROR_RECEIVER)) {
+                List<String> emailAddresses = Label.AMS_XML_GEN_ERROR_RECEIVER.split(';');
+                message.setToaddresses(emailAddresses);
+                Messaging.sendEmail(messages);
+            }
+        }
     }
 
 }
