@@ -332,32 +332,6 @@ public without sharing class Order_Sel extends Selector{
         return (data.size() == 0 ? null : data[0]);
     } //*** end of "getConversionSFDC_SAP"
 
-    /****************************************************************************************************
-        Created by Thai 2015-12-15
-            Return a map of order ID and SFDC-SAP conversion
-    ****************************************************************************************************/
-    //public static Map<Id, SFDC_SAP_Mapping__c> getSAPConversionByOrder(List<Order> lstOrder)
-    //{
-    //    Map<String, SFDC_SAP_Mapping__c> mapOrderTypeSourceChannel_Conversion = new Map<String, SFDC_SAP_Mapping__c>();
-    //    Map<Id, SFDC_SAP_Mapping__c> mapOrderId_Conversion = new Map<Id, SFDC_SAP_Mapping__c>();
-        
-    //    //*** build criteria to filter conversion table
-    //    Set<String> criteria = new Set<String>();
-    //    for (Order o : lstOrder)
-    //        criteria.add('(SFDC_Order_Type__c=\'' + o.Type + '\' and SFDC_Order_Source__c=\'' + o.Source__c + '\' and SFDC_Order_Channel__c=\'' + o.Order_Channel__c + '\')');
-        
-    //    //*** build map of conversion based on SFDC values
-    //    for (SFDC_SAP_Mapping__c data : Database.query('select SFDC_Order_Type__c, SFDC_Order_Source__c, SFDC_Order_Channel__c'
-    //                                                       + ', SAP_Order_Type__c, SAP_Sales_Org__c, SAP_Distribition_Channel__c, SAP_Division__c'
-    //                                                 + ' from SFDC_SAP_Mapping__c where ' + String.join(new List<String>(criteria), ' or ')))
-    //        mapOrderTypeSourceChannel_Conversion.put(data.SFDC_Order_Type__c + '|' + data.SFDC_Order_Source__c + '|' + data.SFDC_Order_Channel__c, data);
-        
-    //    //*** build map of order ID and conversion
-    //    for (Order o : lstOrder)
-    //        mapOrderId_Conversion.put(o.Id, mapOrderTypeSourceChannel_Conversion.get(o.Type + '|' + o.Source__c + '|' + o.Order_Channel__c));
-        
-    //    return mapOrderId_Conversion;
-    //} //*** end of "getSAPConversionByOrder"
     
     /****************************************************************************************************
         Created by Thai 2015-10-13
@@ -527,9 +501,7 @@ public without sharing class Order_Sel extends Selector{
             ShipToContact_Salutation__c = c.Salutation,
             ShipToContact_First_Name__c = c.FirstName,
             ShipToContact_Last_Name__c  = c.LastName,
-            OwnerId = ownerId/*,
-            ShipToContact_Phone__c  = c.Phone,
-            ShipToContact_Email__c  = c.Email*/
+            OwnerId = ownerId
         );
         
         //*** get all locations for subsequent treatment/verification
@@ -581,21 +553,6 @@ public without sharing class Order_Sel extends Selector{
                 }
             }
             
-            //*** set Bill To address based on account address -> no Bill To location
-            //*** -> this scenario should not happen due to command Location_Svc.initializeDefaultLocations earlier
-            //if (String.isBlank(newOrder.BillingStreet))
-            //{
-            //    newOrder.BillingStreet         = Utility.removeNewline(a.BillingStreet);
-            //    newOrder.BillingCity           = a.BillingCity;
-            //    newOrder.BillingPostalCode     = a.BillingPostalCode;
-            //    newOrder.BillingCountry        = a.BillingCountry;
-            //    newOrder.BillingCountryCode__c = (a.IATA_ISO_Country__r.ISO_Code__c != null ? a.IATA_ISO_Country__r.ISO_Code__c
-            //                                                                                : (countryCodeByName.containsKey(a.BillingCountry)) ? countryCodeByName.get(a.BillingCountry) : null);
-            //    newOrder.BillingState          = a.BillingState;
-            //    newOrder.BillingStateCode__c   = (a.IATA_ISO_Billing_State__r.ISO_Code__c != null ? a.IATA_ISO_Billing_State__r.ISO_Code__c
-            //                                                                                      : (stateCodeByName.containsKey(a.BillingState)) ? stateCodeByName.get(a.BillingState) : null);
-            //    idBillToAddress = null;
-            //}
         }
         else
         {
@@ -646,32 +603,6 @@ public without sharing class Order_Sel extends Selector{
                 }
             }
             
-            //*** set Ship To address based on account address -> no Ship To location
-            //*** -> this scenario should not happen due to command Location_Svc.initializeDefaultLocations earlier
-            //if (String.isBlank(newOrder.ShipTo_Location__c))
-            //    if (String.isBlank(a.ShippingStreet))
-            //    {
-            //        newOrder.ShippingStreet         = newOrder.BillingStreet;
-            //        newOrder.ShippingCity           = newOrder.BillingCity;
-            //        newOrder.ShippingPostalCode     = newOrder.BillingPostalCode;
-            //        newOrder.ShippingCountry        = newOrder.BillingCountry;
-            //        newOrder.ShippingCountryCode__c = newOrder.BillingCountryCode__c;
-            //        newOrder.ShippingState          = newOrder.BillingState;
-            //        newOrder.ShippingStateCode__c   = newOrder.BillingStateCode__c;
-            //        newOrder.ShipToContact_VAT_Number__c = newOrder.BillToContact_VAT_Number__c;
-            //    }
-            //    else
-            //    {
-            //        newOrder.ShippingStreet         = Utility.removeNewline(a.ShippingStreet);
-            //        newOrder.ShippingCity           = a.ShippingCity;
-            //        newOrder.ShippingPostalCode     = a.ShippingPostalCode;
-            //        newOrder.ShippingCountry        = a.ShippingCountry;
-            //        newOrder.ShippingCountryCode__c = (a.IATA_ISO_Country__r.ISO_Code__c != null ? a.IATA_ISO_Country__r.ISO_Code__c
-            //                                                                                     : (countryCodeByName.containsKey(a.ShippingCountry)) ? countryCodeByName.get(a.ShippingCountry) : null);
-            //        newOrder.ShippingState          = a.ShippingState;
-            //        newOrder.ShippingStateCode__c   = (a.IATA_ISO_Shipping_State__r.ISO_Code__c != null ? a.IATA_ISO_Shipping_State__r.ISO_Code__c
-            //                                                                                            : (stateCodeByName.containsKey(a.ShippingState)) ? stateCodeByName.get(a.ShippingState) : null);
-            //    }
         }
         else
         {
