@@ -1,0 +1,120 @@
+<apex:component controller="ISSP_ICCS_SiEditController">
+    <apex:attribute name="pageCtrl" 
+                    type="ISSP_ICCS_ServiceController" 
+                    assignTo="{! pageController}"
+                    required="true" 
+                    description="The controller for the page." />
+
+	<div class="panel-primary">
+		<div class="panel-body" id="body-enquiries">
+			<apex:form styleClass="form-horizontal">
+	            <apex:outputPanel rendered="{! pageController.userMessage != null}">
+	                <br/>
+	                <div class="panel panel-default">
+	                    <div class="panel-body" style="font-weight:bold;">
+							<div class="pddg">
+								<apex:outputText value="{! pageController.userMessage}" escape="false" style="color : {! IF(pageController.isSuccessMessage, '#000000', '#FF0000')};"/>
+							</div>
+	                    </div>
+	                </div>
+	            </apex:outputPanel>
+				
+				<apex:pageBlock id="si_form">
+					<div class="row margin-top-bottom no-mrgn">
+						<div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+							<div class="section-title-gray {! IF(settlementInstruction.type.code == siStandard, 'srvc', 'cycle')}">
+								<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+								<apex:outputText value="{! siProcessTitle}" escape="false"/>
+							</div>
+
+							<div class="bottom-box" style="text-align: justify;text-justify: inter-word;">
+
+								<br/>
+
+								<div class="panel-heading head_panel_green">
+									<apex:outputPanel>
+										<div class="panel-title-3">
+											<h3>
+												<apex:outputText value="{! settlementInstruction.participation.cashflow.name + ' ' + settlementInstruction.participation.cashflow.processingCurrency + IF(settlementInstruction.type.code == siAdhoc || settlementInstruction.type.code == siFuture, ' - ' + $Label.ICCS_Cycle_Label + ' ' + settlementInstruction.cycle.cycleId, '')}" escape="false"/>
+											</h3>
+										</div>
+									</apex:outputPanel>
+								</div>
+
+			                    <div class="pddg">
+									<apex:outputText value="{! $Label.ICCS_Si_Edit_Standard}" escape="false" rendered="{! settlementInstruction.type.code == siStandard}"/>
+									<apex:outputText value="{! $Label.ICCS_Si_Edit_Future}" escape="false" rendered="{! settlementInstruction.type.code == siFuture && settlementInstructionId != null}"/>
+									<apex:outputText value="{! $Label.ICCS_Si_Create_Future}" escape="false" rendered="{! settlementInstruction.type.code == siFuture && settlementInstructionId == null }"/>
+									<apex:outputText value="{! $Label.ICCS_Si_Create_Adhoc}" escape="false" rendered="{! settlementInstruction.type.code == siAdhoc}"/>
+								</div>
+    			
+								<apex:pageBlockTable value="{! settlementInstruction.instructionLines}" var="instructionLine" id="instructionLineTable">
+									<apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
+										<apex:selectList value="{! instructionLine.accountCode.id_string}" multiselect="false" size="1">
+											<apex:selectOptions value="{! bankAccountCodes}"/>
+											<apex:actionSupport event="onchange" rerender="si_form"/>
+										</apex:selectList>
+									</apex:column>
+				
+									<apex:column headerValue="{! $Label.ICCS_Account_Currency_Label}">
+										<apex:outputText value="{! bankAccountCodesMap[instructionLine.accountCode.id].bankAccount.currency_x}"/>
+									</apex:column>
+				
+									<apex:column headerValue="{! $Label.ICCS_Account_Number_Label}">
+										<apex:outputText value="{! bankAccountCodesMap[instructionLine.accountCode.id].bankAccount.number_x}"/>
+									</apex:column>
+				
+									<apex:column headerValue="{! $Label.ICCS_Instruction_Line_Type_Label}">
+										<apex:selectList value="{! instructionLine.type.id_string}" multiselect="false" size="1">
+											<apex:selectOptions value="{! instructionLineTypes}"/>
+											<apex:actionSupport event="onchange" rerender="si_form"/>
+										</apex:selectList>
+									</apex:column>
+				
+									<apex:column headerValue="{! $Label.ICCS_Value_Label}">
+										<apex:inputText value="{! instructionLine.value}" rendered="{! instructionLine.type.id != balanceInstructionLineTypeId}">
+											<apex:actionSupport event="onchange" rerender="si_form"/>
+										</apex:inputText>
+									</apex:column>
+				
+									<apex:column headerValue="{! $Label.ICCS_Priority_Order_Label}">
+										<apex:selectList value="{! instructionLine.order}" multiselect="false" size="1">
+											<apex:selectOptions value="{! orders}"/>
+											<apex:actionSupport event="onchange" action="{! updateInstructionLinesOrder}" rerender="si_form">
+												<apex:param name="instructionLineOrder" value="{! instructionLine.order}" assignTo="{! instructionLineOrder}"/>
+											</apex:actionSupport>
+										</apex:selectList>
+									</apex:column>
+				
+									<apex:column headerValue="{! $Label.ICCS_Action_Label}">
+										<apex:commandLink action="{! deleteInstructionLine}" value="Delete" reRender="si_form" status="processActStatusId">
+											<apex:param name="instructionLineOrder" value="{! instructionLine.order}" assignTo="{! instructionLineOrder}"/>
+										</apex:commandLink>
+									</apex:column>
+								</apex:pageBlockTable>
+				
+								<br/>
+								
+								<div class="btn">
+									<apex:commandButton action="{! addInstructionLine}" value="{! $Label.ICCS_Add_Instruction_Line_Label}" rerender="instructionLineTable" status="processActStatusId"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</apex:pageBlock>
+				
+				<br/>
+				<br/>
+				
+				<center>
+					<apex:pageBlock id="processFormPageblockId">
+						<div class="btn-2">
+							<apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Cancel_Action}" action="{! pageController.cancel}" rerender="pageMainPanel" status="processActStatusId"/>
+							<apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Submit_Action}" action="{! submit}" rerender="pageMainPanel" status="processActStatusId"/>
+						</div>
+					</apex:pageBlock>
+				</center>
+			</apex:form>
+		</div>
+	</div>
+</apex:component>
