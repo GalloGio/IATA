@@ -458,7 +458,7 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-	<fields>
+    <fields>
         <fullName>New_Role_Requested__c</fullName>
         <description>When the portal user has a role in the service and requests another role, this field is used to store the requested role</description>
         <externalId>false</externalId>
@@ -692,7 +692,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-	<fields>
+    <fields>
         <fullName>Top_Account__c</fullName>
         <description>Id of the Top Account in the account hierarchy.</description>
         <externalId>false</externalId>

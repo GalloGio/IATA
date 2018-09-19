@@ -4238,7 +4238,7 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <shortDescription>ICAddressDoctor_url</shortDescription>
         <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ICCS_AML_Compliance_Label</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
