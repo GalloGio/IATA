@@ -57,6 +57,8 @@ public class ISSP_ModelA_Onboarding {
                 // User's language is in the list of requirements
                 if(availableLanguages.contains(checkLanguage)) {
                     filterLanguage = checkLanguage;
+                } else if (availableLanguages.contains('English')) {
+                    filterLanguage = 'English';
                 } else {
                     filterLanguage = firstLanguage;
                 }
