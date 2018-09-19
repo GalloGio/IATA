@@ -2659,7 +2659,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CaseTypeRecordTypeList</shortDescription>
         <value>CasesMENA,CasesAmericas,Cases_China_North_Asia,ExternalCasesIDFSglobal,CasesEurope,External_Cases_ACCA,ComplaintIDFS</value>
-    </labels>
+    </labels> 
     <labels>
         <fullName>CaseValidation_Area</fullName>
         <language>en_US</language>
@@ -7321,7 +7321,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_ITDICourse</shortDescription>
-        <value>ITDI Course (Optional)</value>
+        <value>IATA Training Courses (Optional)</value> 
     </labels>
     <labels>
         <fullName>IDCard_ITDICourses</fullName>
@@ -8892,14 +8892,14 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Package Travel Professionals 1</shortDescription>
-        <value>If you wish to take advantage of the Package for Travel Professionals, combining the IDCard with a selection of 2 ITDI online courses</value>
+        <value>Take advantage of the reduced price for any two of the following IATA Training courses. &lt;u&gt; The price will be added to the Fees below &lt;/u&gt;. Upon approval of your ID Card application, you will be contacted by IATA Training for access to the selected courses.</value>
     </labels>
     <labels>
         <fullName>ID_Card_Package_Travel_Professionals_2</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Package Travel Professionals 2</shortDescription>
-        <value>please select your courses here:</value>
+        <value>&lt;br&gt; Please select your courses here:</value> 
     </labels>
     <labels>
         <fullName>ID_Card_Photo_Disclaimer</fullName>
@@ -31628,5 +31628,51 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
+        <fullName>Acc_Fin_Mgmt_Agencies_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Acc_Fin_Mgmt_Agencies_Description</shortDescription>
+        <value>Your agency’s financial health is key to the survival of your business; analyzing and controlling your finances leads to strong business plans and better strategic decisions… (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/accounting-financial-management-tttg93.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
+        <fullName>Adv_Skills_Journey_Price_Ticket_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Adv_Skills_Journey_Price_Ticket_Description</shortDescription>
+        <value>This course is for the travel professional with basic knowledge and skills in air journey pricing and ticketing who wants to be recognized as the company or office expert. You will gain confidence in pricing more complex journeys that apply exceptions to standard pricing principles. A key additional benefit are study units on ticket exchanges and reissues resulting in a refund or an additional collection for the new ticket price or a penalty fee collection... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/journey-pricing-ticketing-tttg15.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
+        <fullName>Assist_Travelers_Special_Needs_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Assist_Travelers_Special_Needs_Description</shortDescription>
+        <value>Special needs travelers represent a promising market for the travel industry. To unlock this business opportunity, travel suppliers and agents must first be able to identify customers who may have special travel needs. Then they must deliver the services that make their journey safe and pleasant... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travelers-special-needs-tttg98.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
+        <fullName>Notions_Essentl_Tarif_Billet_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Notions_Essentl_Tarif_Billet_Description</shortDescription>
+        <value>L’interprétation des règles tarifaires et des éléments de données du billet électronique est essentielle pour satisfaire et retenir les clients. Il existe une foule de tarifs et d’options complexes. Les clients s’attendent à avoir un service exact, rapide et abordable. Ce cours enseigne les principes de la construction tarifaire, qui vous permettront de fournir d’excellents conseils et le tarif le plus bas pour un voyage en avion. Vous allez acquérir, grâce à des exercices pratiques et au matériel de référence, de nouvelles compétences qui vous aideront à devenir un professionnel du voyage et accroître la confiance de vos clients... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/notions-tarification-billeterie-tttg14-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
+        <fullName>Serving_The_Travel_Customer_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Serving_The_Travel_Customer_Description</shortDescription>
+        <value>Gain essential strategies to ensure that the customer’s level of satisfaction will influence a purchase or repurchase decision by ensuring that your front-line contact with the customer is remarkable... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/serving-travel-customer-tttg66.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
+        <fullName>Social_Media_Travel_Industry_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Social_Media_Travel_Industry_Description</shortDescription>
+        <value>This “how to” e-learning course is designed for travel professionals and highlights how to implement marketing activities through the four major social networking sites: Facebook, Twitter, YouTube and LinkedIn. You will learn essential theory about the role social media plays in the travel industry and, most importantly, how to implement social media strategies that can increase business opportunities... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/social-media-travel-tttg69.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
 </CustomLabels>
