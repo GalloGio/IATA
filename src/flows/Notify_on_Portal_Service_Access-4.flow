@@ -1597,7 +1597,7 @@ PRIORVALUE([Portal_Application_Right__c].ANG_Portal_Service_Role__c) != &quot;&q
         <name>formula_myRule_20</name>
         <dataType>Boolean</dataType>
         <expression>AND(
-BEGINS({!myVariable_current.Portal_Application__c.Name} , &apos;IATA EasyPay&apos;),
+BEGINS({!myVariable_current.Portal_Application__r.Name} , &apos;IATA EasyPay&apos;),
 NOT(ISCHANGED({!myVariable_current.Right__c})),
 ISCHANGED({!myVariable_current.ANG_Portal_Service_Role__c} ),
 (OR(
