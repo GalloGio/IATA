@@ -459,6 +459,18 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>New_Role_Requested__c</fullName>
+        <description>When the portal user has a role in the service and requests another role, this field is used to store the requested role</description>
+        <externalId>false</externalId>
+        <label>New Role Requested</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Notification_Template__c</fullName>
         <externalId>false</externalId>
         <label>Notification Template</label>
@@ -526,6 +538,7 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
 &quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
 &quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;ICCS&quot;, &quot;ICCS&quot;,
 Application_Name__c
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>
@@ -678,6 +691,19 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Top_Account__c</fullName>
+        <description>Id of the Top Account in the account hierarchy.</description>
+        <externalId>false</externalId>
+        <formula>IF(Contact__r.Account.Top_Parent__r.Id  &lt;&gt;  null, Contact__r.Account.Top_Parent__r.Id, Account__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Top Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>allowAssignFinContactFlowChange__c</fullName>

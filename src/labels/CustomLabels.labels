@@ -2053,6 +2053,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>https://iata.my.salesforce.com/services/Soap/c/9.0</value>
     </labels>
     <labels>
+        <fullName>Acc_Fin_Mgmt_Agencies_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Acc_Fin_Mgmt_Agencies_Description</shortDescription>
+        <value>Your agency’s financial health is key to the survival of your business; analyzing and controlling your finances leads to strong business plans and better strategic decisions… (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/accounting-financial-management-tttg93.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
         <fullName>Acceptance_date</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2165,6 +2173,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>An error occurred when editing your new address. Please try it again. Or you already have that address</value>
     </labels>
     <labels>
+        <fullName>Adv_Skills_Journey_Price_Ticket_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Adv_Skills_Journey_Price_Ticket_Description</shortDescription>
+        <value>This course is for the travel professional with basic knowledge and skills in air journey pricing and ticketing who wants to be recognized as the company or office expert. You will gain confidence in pricing more complex journeys that apply exceptions to standard pricing principles. A key additional benefit are study units on ticket exchanges and reissues resulting in a refund or an additional collection for the new ticket price or a penalty fee collection... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/journey-pricing-ticketing-tttg15.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
         <fullName>AirlineSuspensionContactId</fullName>
         <categories>0031100000uFe6s</categories>
         <language>en_US</language>
@@ -2228,6 +2243,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>Ask Delete Attachment</shortDescription>
         <value>Are you sure you want to delete this Attachment?</value>
+    </labels>
+    <labels>
+        <fullName>Assist_Travelers_Special_Needs_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Assist_Travelers_Special_Needs_Description</shortDescription>
+        <value>Special needs travelers represent a promising market for the travel industry. To unlock this business opportunity, travel suppliers and agents must first be able to identify customers who may have special travel needs. Then they must deliver the services that make their journey safe and pleasant... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travelers-special-needs-tttg98.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
     <labels>
         <fullName>Attachment_Name</fullName>
@@ -2659,7 +2682,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CaseTypeRecordTypeList</shortDescription>
         <value>CasesMENA,CasesAmericas,Cases_China_North_Asia,ExternalCasesIDFSglobal,CasesEurope,External_Cases_ACCA,ComplaintIDFS</value>
-    </labels> 
+    </labels>
     <labels>
         <fullName>CaseValidation_Area</fullName>
         <language>en_US</language>
@@ -4239,6 +4262,2128 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <value>https://validator5.addressdoctor.com/webservice5/v4/addressvalidation.asmx</value>
     </labels>
     <labels>
+        <fullName>ICCS_AML_Compliance_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS AML Compliance Label</shortDescription>
+        <value>AML Compliance</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_ASP_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS ASP Label</shortDescription>
+        <value>ASP</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_About_IATA_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS About IATA Link</shortDescription>
+        <value>About IATA</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_About_ICCS_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS About ICCS Link</shortDescription>
+        <value>About ICCS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Accept_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Accept Link</shortDescription>
+        <value>Accept</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Account_Currency_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Account Currency Label</shortDescription>
+        <value>Account Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Account_Name_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Account Name Label</shortDescription>
+        <value>Account Name</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Account_Number_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Account Number Label</shortDescription>
+        <value>Account Number</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Action_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Action Label</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Actions_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Actions Label</shortDescription>
+        <value>Actions</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Active_Bank_Accounts_Tooltip</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Active Bank Accounts Tooltip</shortDescription>
+        <value>This is your current active bank accounts in the ICCS service.
+Please go to Service Management page to Add in new bank account details.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Active_Participation_Tooltip</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Active Participation Tooltip</shortDescription>
+        <value>This provides a quick indication of your new ICCS opportunities.
+Please go to Service Mgmt page for the list of active ICCS participations.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Add_Action</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Add Action</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Add_Bank_Account_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Add Bank Account Label</shortDescription>
+        <value>Add Bank Account</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Add_Comment</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Add Comment</shortDescription>
+        <value>Add Comment</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Add_Instruction_Line_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Add Instruction Line Label</shortDescription>
+        <value>Add Instruction Line</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Additional_Codes_Number</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Additional Codes Number</shortDescription>
+        <value>Number of Additional codes to create</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Agreement_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Agreement Label</shortDescription>
+        <value>ICCS Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Airline_Prefix</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Airline Prefix</shortDescription>
+        <value>Airline Prefix</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_All_Forms_Zip_File</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS All Forms Zip File</shortDescription>
+        <value>All Forms Zip file</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Applied_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Applied Label</shortDescription>
+        <value>Applied</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Attachment_Type_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Attachment Type Label</shortDescription>
+        <value>Attachment Type</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Attachments_Status</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Attachments Status</shortDescription>
+        <value>Attachment Status</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Author_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Author Label</shortDescription>
+        <value>Author</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_BIC_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS BIC Label</shortDescription>
+        <value>BIC</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Bank_Account_Code_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Bank Account Code Label</shortDescription>
+        <value>Bank Account Code</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Bank_Account_Currency_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Bank Account Currency Label</shortDescription>
+        <value>Bank Account Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Bank_Account_Form_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Bank Account Form Message</shortDescription>
+        <value>To change an existing bank account, you will have to complete the bank detail form. The form must be carefully completed and signed by authorized signatories from the IATA ASP.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Bank_Account_Information</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Bank Account Information</shortDescription>
+        <value>Bank Account Information</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Bank_Accounts_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Bank Accounts Label</shortDescription>
+        <value>Bank Accounts</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Bank_Name_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Bank Name Label</shortDescription>
+        <value>Bank Name</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Cancel_Action</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Cancel Action</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Case_Account_Contact_Information</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Case Account Contact Information</shortDescription>
+        <value>Account and Contact Information</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Case_Comments</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Case Comments</shortDescription>
+        <value>Case Comments</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Case_Information</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Case Information</shortDescription>
+        <value>Case Information</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Case_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Case Label</shortDescription>
+        <value>Case</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Case_Not_Commented</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Case Not Commented</shortDescription>
+        <value>This case has not been commented yet</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Cases</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Cases</shortDescription>
+        <value>Cases</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Cases_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Cases Message</shortDescription>
+        <value>This area is used to access ICCS cases that you are currently working on.&lt;br/&gt;
+This gives you the possibility to resume your ICCS cases at any time in order to submit them to IATA for processing.
+&lt;br/&gt;&lt;br/&gt;
+Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in order to check the status of all cases you have with IATA, including ICCS cases already submitted.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Cases_No_Case</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Cases No Case</shortDescription>
+        <value>There is no case to display</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Cashflow_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Cashflow Label</shortDescription>
+        <value>Cashflow</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Category_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Category Label</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Client_Testimonial_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Client Testimonial Link</shortDescription>
+        <value>Client testimonial</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Clone_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Clone SI Link</shortDescription>
+        <value>Copy &amp; Edit SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Comment_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Comment Label</shortDescription>
+        <value>Comment</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Comments_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Comments Label</shortDescription>
+        <value>Comments</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Contact_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Contact Link</shortDescription>
+        <value>Contact the ICCS team</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Country_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Country Label</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Create_Adhoc_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Create Adhoc SI Link</shortDescription>
+        <value>Create AdHoc SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Create_Future_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Create Future SI Link</shortDescription>
+        <value>Create Future AdHoc SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Created_Date_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Created Date Label</shortDescription>
+        <value>Created Date</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Currency_Center_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Currency Center Link</shortDescription>
+        <value>Currency Center</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Currency_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Currency Label</shortDescription>
+        <value>Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_CycleMgmt_AdHoc_Header</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS CycleMgmt AdHoc Header</shortDescription>
+        <value>You will find below the current ICCS Cycle opened for adhoc instructions. You can override your SSI as long as the adhoc window time is open and you are instructing settlement to existing bank accounts. Please note all adhoc instructions are validated before processing, you will receive an acceptance notification.  SSI associated to a Notice of Assignment (NOA) are excluded from this adhoc feature.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_CycleMgmt_Adhoc_Table_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS CycleMgmt Adhoc Table Title</shortDescription>
+        <value>Current Cycles - Settlement Instructions</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_CycleMgmt_Future_Header</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS CycleMgmt Future Header</shortDescription>
+        <value>You have the possibility to submit adhoc instructions in advance for future cycles. This change of settlement instructions will be locked once the cycle is active and the adhoc window closed. Please note once the cycle is active the adhoc instructions you submitted will be validated before processing, you will receive an acceptance notification.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_CycleMgmt_Future_Table_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS CycleMgmt Future Table Title</shortDescription>
+        <value>Future Cycles - Settlement Instructions</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Cycle_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Cycle Label</shortDescription>
+        <value>Cycle</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Cycle_Management</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Cycle Management</shortDescription>
+        <value>Cycle Mgmt</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Deactivate_Membership_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Deactivate Membership Label</shortDescription>
+        <value>Deactivate ICCS Membership</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Delete_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Delete Label</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Delete_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Delete SI Link</shortDescription>
+        <value>Delete SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Description_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Description Label</shortDescription>
+        <value>Description</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Desired_Start_Date</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Desired Start Date</shortDescription>
+        <value>Desired Start Date</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Documents</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Documents</shortDescription>
+        <value>DOCUMENTS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Download_Action</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Download Action</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_EF_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS EF Link</shortDescription>
+        <value>E&amp;F</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Edit_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Edit SI Link</shortDescription>
+        <value>Edit SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Email_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Email Label</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_End_Date_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS End Date Label</shortDescription>
+        <value>End Date</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Endpoint_Password</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Endpoint Password</shortDescription>
+        <value>11i2p12gadlffdnvjjrp98hlfo5is1g8plmcgve96s1vd657r7jl</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Endpoint_Password_PROD</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Endpoint Password PROD</shortDescription>
+        <value>lk75phqudnsrvnvo2nl53abikd3d234fbtbq81285kvcf2k3u71</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Endpoint_Services_URL</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Endpoint Services URL</shortDescription>
+        <value>https://iccsqa-api.iata.org/api/v1</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Endpoint_Services_URL_PROD</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Endpoint Services URL PROD</shortDescription>
+        <value>https://iccsqa-api.iata.org/api/v1</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Endpoint_Token_URL</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Endpoint Token URL</shortDescription>
+        <value>https://iata-iccs-api-devqa.auth.eu-west-1.amazoncognito.com/oauth2/token</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Endpoint_Token_URL_PROD</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Endpoint Token URL PROD</shortDescription>
+        <value>https://iata-iccs-api.auth.eu-west-1.amazoncognito.com/oauth2/token</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Endpoint_Username</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Endpoint Username</shortDescription>
+        <value>70fk4cegoaj7bm78fmmj2cutfe</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Endpoint_Username_PROD</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Endpoint Username PROD</shortDescription>
+        <value>7r48aodfie7aim0aqd153tckrn</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Expected_Deadline</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Expected Deadline</shortDescription>
+        <value>Expected Deadline</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_FAQs_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS FAQs Link</shortDescription>
+        <value>ICCS : FAQs</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_FDS_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS FDS Link</shortDescription>
+        <value>IATA FDS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_FDS_Upcoming_Events_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS FDS Upcoming Events Link</shortDescription>
+        <value>FDS Upcoming Events</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_FX_Policy_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS FX Policy Label</shortDescription>
+        <value>FX Policy</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_File_Exists_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS File Exists Message</shortDescription>
+        <value>A file with the same name already exists for this case. Please rename your file and upload it again.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_File_is_Mandatory_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS File is Mandatory Message</shortDescription>
+        <value>file is mandatory</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Filter_By</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Filter By</shortDescription>
+        <value>Filter by</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_First_Name_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS First Name Label</shortDescription>
+        <value>First Name</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Format_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Format Label</shortDescription>
+        <value>Format</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Forms</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Forms</shortDescription>
+        <value>FORMS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Generated_Reports_Table_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Generated Reports Table Title</shortDescription>
+        <value>Generated Reports</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Headquarter_Branch</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Headquarter Branch</shortDescription>
+        <value>Headquarter - Branch</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Hide_Child_Codes</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Hide Child Codes</shortDescription>
+        <value>Hide Children</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Hide_Instruction_Lines_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Hide Instruction Lines Link</shortDescription>
+        <value>Hide Instruction Lines</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Hide_Old_Files_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Hide Old Files Label</shortDescription>
+        <value>Hide Old Files</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Hide_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Hide SI Link</shortDescription>
+        <value>Hide SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Hide_SIs_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Hide SIs Link</shortDescription>
+        <value>Hide SIs</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage</shortDescription>
+        <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Active_Bank_Accounts</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Active Bank Accounts</shortDescription>
+        <value>Active Bank Accounts</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Active_Participations</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Active Participations</shortDescription>
+        <value>Active Participations</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Discard_Registration_Case_Button</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Discard Registration Case Button</shortDescription>
+        <value>Discard Registration Case</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Discard_Registration_Case_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Discard Registration Case Message</shortDescription>
+        <value>If you created this case by mistake or figured out that you are not the right person to handle it, you can delete it in order to let another user in your company handle the registration to ICCS.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Folllow_Membership_Request</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Folllow Membership Request</shortDescription>
+        <value>To follow your registration to ICCS Service case, please click the link below.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Instruction_Table_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Instruction Table Title</shortDescription>
+        <value>Participation - Instructions</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Last_Cases_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Last Cases Title</shortDescription>
+        <value>Last ICCS Cases</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Links</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Links</shortDescription>
+        <value>To be completed</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Links_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Links Title</shortDescription>
+        <value>Links &amp; Documents</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Membership_Prospect_Granted</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Membership Prospect Granted</shortDescription>
+        <value>Another user started the ICCS Registration Process for your company.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_My_Opened_Cases_Only</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage My Opened Cases Only</shortDescription>
+        <value>My Opened Cases Only</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_No_Opened_Case</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage No Opened Case</shortDescription>
+        <value>There is no opened case</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Opportunities</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Opportunities</shortDescription>
+        <value>Opportunities</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_ParticipationInstructionTable</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage ParticipationInstructionTable</shortDescription>
+        <value>You will find below an overview of your ICCS Participations (active and inactive) with standard settlement instructions (SSI) associated.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Request_Membership_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Request Membership Message</shortDescription>
+        <value>Please, click the button below to request ICCS membership for your company.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Request_Membership_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Request Membership Title</shortDescription>
+        <value>ICCS Membership Request</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Request_Role_Button</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Request Role Button</shortDescription>
+        <value>Request Role</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Request_Role_Message1</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Request Role Message1</shortDescription>
+        <value>In order to get full access to the ICCS Service, you need to select a role then click the &quot;Request Role&quot; button.&lt;br/&gt; A notification will be sent to users in your company having the rights to upgrade your role.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Request_Role_Message2</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Request Role Message2</shortDescription>
+        <value>&lt;b&gt;Signatory (only through IATA FDS Authorized Signatory Package)&lt;/b&gt; &lt;br/&gt;
+Can execute all processes in the service (Update bank accounts, SSI&apos;s, CSI&apos;s, FSI&apos;s, Participations etc...) and can also assign roles to other users.
+&lt;br/&gt;&lt;br/&gt;
+&lt;b&gt;Level 1&lt;/b&gt;
+&lt;br/&gt;
+Can execute all processes in the service (Update bank accounts, SSI&apos;s, CSI&apos;s, FSI&apos;s, Participations etc...).
+&lt;br/&gt;&lt;br/&gt;
+&lt;b&gt;Read-Only&lt;/b&gt;
+&lt;br/&gt;
+Has read only access over different features of the service.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Select_Role_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Select Role Label</shortDescription>
+        <value>Select a role</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_UnapprovedUser</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage UnapprovedUser</shortDescription>
+        <value>You cannot access ICCS Service as long as you are not an approved portal user. Once approved, you will be able to request access to the ICCS Service in the Services tab.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Welcome_1</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Welcome 1</shortDescription>
+        <value>ICCS is a specialized cash management solution aimed to repatriate funds cross border at competitive exchange rates from various cash flows (sales proceeds) such as BSP, CASS, GSA, Credit Card and other.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Welcome_2</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Welcome 2</shortDescription>
+        <value>ICCS assists the treasury of its members to centralize funds and reporting, allowing for more effective cash forecasting and planning. Due to ICCS&apos;s unparalleled global banking network, airlines can benefit from repatriation in more challenging markets while benefiting from large cost savings in banking fees, and transfer charges, as well as competitive interest remuneration on funds in transit.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Welcome_3</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Welcome 3</shortDescription>
+        <value>ICCS is currently used by 300+ airlines, and operational in 130 BSP, and 73 CASS operations worldwide, and in 72 currencies.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Welcome_4</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Welcome 4</shortDescription>
+        <value>Would you be interested in our ICCS service, please contact ICCS Team via Salesforce support</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Homepage_Welcome_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Homepage Welcome Title</shortDescription>
+        <value>Welcome to ICCS Service</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_IATA_Code</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS IATA Code</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_IATA_Designator_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS IATA Designator Label</shortDescription>
+        <value>IATA Designator</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_IATA_Other_Products</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS IATA Other Products</shortDescription>
+        <value>IATA OTHER PRODUCTS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_IATA_Publications_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS IATA Publications Link</shortDescription>
+        <value>IATA Publications</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Instruction_Line_Type_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Instruction Line Type Label</shortDescription>
+        <value>Instruction Line Type</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Instruction_Type_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Instruction Type Label</shortDescription>
+        <value>Instruction Type</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Is_Mandatory</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Is Mandatory</shortDescription>
+        <value>is mandatory</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Joining_ICCS_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Joining ICCS Link</shortDescription>
+        <value>Joining ICCS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Label_Status</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Label Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Last_Modified_Date</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Last Modified Date</shortDescription>
+        <value>Last modified on&amp;nbsp;</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Last_Name_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Last Name Label</shortDescription>
+        <value>Last Name</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Library_Documents_Forms</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Library Documents Forms</shortDescription>
+        <value>LIBRARY - DOCUMENTS &amp; FORMS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_List_of_Countries_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS List of Countries Label</shortDescription>
+        <value>List of Countries</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Mandatory_Fields</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Mandatory Fields</shortDescription>
+        <value>Fields marked with (*) are mandatory</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Mandatory_Uploads_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Mandatory Uploads Message</shortDescription>
+        <value>&lt;b&gt;Uploads are mandatory in sections marked with (*).&lt;/b&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Marked_for_Deletion_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Marked for Deletion Label</shortDescription>
+        <value>Marked for Deletion</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Membership_Status</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Membership Status</shortDescription>
+        <value>ICCS Membership Status</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Membership_Suspended_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Membership Suspended Message</shortDescription>
+        <value>Your account&apos;s membership to ICCS has been suspended. It is not possible to request access to this service.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Membership_Withdrawn_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Membership Withdrawn Message</shortDescription>
+        <value>Your account&apos;s membership to ICCS has been withdrawn. It is not possible to request access to this service.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_More_About_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS More About Link</shortDescription>
+        <value>More about the New ICCS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Multiple_Signatories_Change_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Multiple Signatories Change Message</shortDescription>
+        <value>Please note, if you are changing two or more signatories, a new FDS package is mandatory.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Must_Be_Integer</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Must Be Integer</shortDescription>
+        <value>must be an integer</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_My_Cases_Only</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS My Cases Only</shortDescription>
+        <value>My Cases Only</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Name_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Name Label</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_New_Attachment_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS New Attachment Label</shortDescription>
+        <value>New Attachment</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Next_Action</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Next Action</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_NoA</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS NoA</shortDescription>
+        <value>NoA</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_NoA_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS NoA Message</shortDescription>
+        <value>In order to process termination of current Notice of Assignment, we shall be provided with:
+&lt;br/&gt;
+1. Release document from the bank
+&lt;br/&gt;
+2. New set of Standard Settlement Instructions (download form)
+&lt;br/&gt;&lt;br/&gt;
+If you have any question, please submit them through the comments section after submitting your case.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_No_Editable_Cycle_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS No Editable Cycle Message</shortDescription>
+        <value>There is currently no editable cycle</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_No_Report_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS No Report Message</shortDescription>
+        <value>There is no report matching your filtering selection</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Opened_Cases_Only</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Opened Cases Only</shortDescription>
+        <value>Opened Cases Only</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Opportunities_Tooltip</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Opportunities Tooltip</shortDescription>
+        <value>This provides a quick numerical view of the ICCS opportunities which can be made available to you.
+Please contact ICCS team to explore full potential of increasing your ICCS active participation.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Original_Received_Status</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Original Received Status</shortDescription>
+        <value>Original Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_PartNew_Step3_Header</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS PartNew Step3 Header</shortDescription>
+        <value>For each Cash Flow (BSP/CASS/GSA/Credit Card Sales/Direct Sales) in which you would like to implement ICCS, there is a form to complete instructing concerned offices, when applicable,  indicating to them that you will be using ICCS to collect the designated Cash Flow and therefore the settlements directly to an IATA-ICCS bank account.
+&lt;br/&gt;&lt;br/&gt;
+Each participation form is 1 page, which must be printed on your organization letterhead and signed by those designated in the IATA Authorized Signatories Package. You must also submit the Instruction Form providing ICCS with the Standard Settlement Instruction for this cash flow.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Participation_Information</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Participation Information</shortDescription>
+        <value>Participation Information</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Participations_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Participations Label</shortDescription>
+        <value>Participations</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Pending_Role_Request_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Pending Role Request Message</shortDescription>
+        <value>Your role upgrade request is pending</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Popular_Links</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Popular Links</shortDescription>
+        <value>POPULAR LINKS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Presentation_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Presentation Label</shortDescription>
+        <value>ICCS Presentation</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Previous_Action</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Previous Action</shortDescription>
+        <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Pricing_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Pricing Link</shortDescription>
+        <value>ICCS Pricing</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Pricing_Policy_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Pricing Policy Label</shortDescription>
+        <value>Pricing Policy</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Priority_Order_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Priority Order Label</shortDescription>
+        <value>Priority Order</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Processing_Currency_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Processing Currency Label</shortDescription>
+        <value>Processing Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Profile</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Profile</shortDescription>
+        <value>Profile</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Profile_Active_Bank_Acccounts</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Profile Active Bank Acccounts</shortDescription>
+        <value>Active Bank Accounts</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Profile_Active_Participations</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Profile Active Participations</shortDescription>
+        <value>Active Participations</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Profile_Participation_Opportunities</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Profile Participation Opportunities</shortDescription>
+        <value>Participations Opportunities</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Profile_User_Section_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Profile User Section Title</shortDescription>
+        <value>User Information</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Quick_Links</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Quick Links</shortDescription>
+        <value>QUICK LINKS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Reason_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Reason Label</shortDescription>
+        <value>Reason</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Redirect_to_Services_tab</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Redirect to Services tab</shortDescription>
+        <value>You don&apos;t have access to ICCS Service. Please go to the Services tab to request an access.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step1</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step1</shortDescription>
+        <value>Thank you for your interest in IATA ICCS services.&lt;br/&gt;&lt;br/&gt;
+You will find below a comprehensive overview of the service.
+&lt;br/&gt;&lt;br/&gt;
+You are advised to review the below documents before proceeding to the next steps where you will find the documents to fill in to complete your ICCS membership registration.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_AML</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 AML</shortDescription>
+        <value>IATA&apos;s financial settlement services are subject to the Swiss Money Laundering Act (LBA).  You will find the requirements of this compliance in the form AML Compliance Request, it is important to complete both Form A and Form K in order to become an ICCS Member.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_ASP1</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 ASP1</shortDescription>
+        <value>FDS Authorized Signatories package: This document allows us to verify if the correspondence we receive from</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_ASP2</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 ASP2</shortDescription>
+        <value>is authorized. The officers designated herein are generally those that would be designated on any banking forms and should include a senior finance officer.
+&lt;br/&gt;&lt;br/&gt;
+Page 1 - Please print this page on your corporate letterhead and have it signed by a senior corporate officer.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_ASP3</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 ASP3</shortDescription>
+        <value>Page 2 - Authorized Senior Officers: This page should list your organization&apos;s senior officers who will have the authority to sign: Bank account details form, ICH, Participation Banking mandate and instructions forms and all ICCS forms</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_ASP4</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 ASP4</shortDescription>
+        <value>Page 3 - Appendix A (Contacts): You should supply us with at least one person that can be contacted for Managerial issues and one that will be involved in day-to-day ICCS functions and is easy to reach for Operational issues. There is also a section for BSP/CASS Operational contacts that will be used by Participation.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_ASP5</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 ASP5</shortDescription>
+        <value>Page 4 - Appendix B (Signatures Card): We must have sample signatures of those listed in the entire document with authority to sign. Please include their passport copies so that we may verify the signatures.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_ASP6</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 ASP6</shortDescription>
+        <value>We ask you to provide us with a notarized copy of your organization&apos;s banking resolution; it is the document issued by the entity&apos;s governance body defining the authority and obligations of the entity&apos;s officers including the authority to act on behalf of the entity and enter into binding legal relationships in the entity&apos;s name.  These senior officers will in turn authorize a minimum of four signatories of their choosing for full signing rights across IATA. IATA will consider other equivalent documentation provided that clearly indicates the legal functions and powers of the entity&apos;s officers and is supported by the relevant legislation or governance documents outlining the legal requirements in the entity&apos;s jurisdiction to establish such authority.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_AllForms</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 AllForms</shortDescription>
+        <value>All forms below in a single download click.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_BankAccounts1</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 BankAccounts1</shortDescription>
+        <value>To add or change bank accounts, you will have to complete this form for every bank account to which you would ask ICCS to transfer funds to be signed in the manner designated in the IATA Authorized Signatories Package. The form must be carefully completed and signed.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_BankAccounts2</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 BankAccounts2</shortDescription>
+        <value>Each ICCS Member bank account is given a &quot;Participant ID code&quot;. This Participant ID Code will have the following convention:  your two-letter code, followed by your numeric code, a clear indication of the currency and lastly the sequential number.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_BankAccounts3</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 BankAccounts3</shortDescription>
+        <value>For example, if you are setting up two USD bank accounts and your designator code is XX and you numeric code 111 the bank accounts will be named as following:</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_BankAccounts4</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 BankAccounts4</shortDescription>
+        <value>XX111-USD-1</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_BankAccounts5</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 BankAccounts5</shortDescription>
+        <value>XX111-USD-2</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_BankAccounts6</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 BankAccounts6</shortDescription>
+        <value>If you wish to have payments done separaterly to the same USD account you can than use the following name convention (ICCS by default aggregates payment by account):</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_BankAccounts7</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 BankAccounts7</shortDescription>
+        <value>XX111-USD-1</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_BankAccounts8</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 BankAccounts8</shortDescription>
+        <value>XX111-USD-1-1</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_Contract</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 Contract</shortDescription>
+        <value>1- Review the agreement, including pricing schedule on page #22
+&lt;br/&gt;
+2- Complete sections on top of Page #3
+&lt;br/&gt;
+3- Complete and sign page #10, by an authorized Head Office officer(s) of your Airline</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_Header</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 Header</shortDescription>
+        <value>Following your review of your ICCS documents, you are now ready to complete the required forms and sign off the contractual agreement to start the registration of your membership.
+&lt;br/&gt;&lt;br/&gt;
+Note that in order to ensure a smooth process and to avoid delays, please follow the instructions steps below:
+&lt;br/&gt;
+- Download all form using the ZIP file or individually as attached to each section
+&lt;br/&gt;
+- Upload all completed documents in Step 3 – Registration
+&lt;br/&gt;&lt;br/&gt;
+Activation of ICCS can take between 10-20 days depending on the number of countries and speed of gathering the documents needed.
+&lt;br/&gt;&lt;br/&gt;
+The User guide is downloadable here again to assist you in this step.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_Participations1</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 Participations1</shortDescription>
+        <value>For each Cash Flow (BSP/CASS/GSA/Credit Card Sales/Direct Sales/Other) in which you would like to implement ICCS, there is a form to complete instructing concerned offices when applicable  indicating to them that you will be using ICCS to collect the designated Cash Flow and therefore the settlements directly to an IATA-ICCS bank account.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_Participations2</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 Participations2</shortDescription>
+        <value>Each participation letter is 1 page, which must be printed on your organization letterhead and signed by those designated in the IATA Authorized Signatories Package.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_Participations3</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 Participations3</shortDescription>
+        <value>Note that in the future, if you wish to add any other Cash Flow for ICCS, you would only have to request and complete this letter for each country as in this final step. INSTRUCTION PAGE? You must also submit the Instruction Form providing ICCS with the Standard Settlement Instruction for each participation.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step2_UserGuide</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step2 UserGuide</shortDescription>
+        <value>Provides a concise description of how ICCS works. The Guide also explains ICCS&apos; standard operating procedures and what procedures are implemented in exceptional circumstances.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Registration_Step3_Summary</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Registration Step3 Summary</shortDescription>
+        <value>Now that the documents were completed, please upload them for verification by the IATA Participation Team, making sure the desired date of activation is indicated.
+&lt;br/&gt;&lt;br/&gt;
+This step will trigger a ICCS Service Join Request case requiring our verification.
+&lt;br/&gt;&lt;br/&gt;
+After verification, if all documents are compliant, you will receive a confirmation to send originals for process.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Reject_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Reject Link</shortDescription>
+        <value>Reject</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Replace_Action</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Replace Action</shortDescription>
+        <value>Replace</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Report_Subscription_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Report Subscription Label</shortDescription>
+        <value>Subscribed To</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Report_Type_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Report Type Label</shortDescription>
+        <value>Report Type</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Reports</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Reports</shortDescription>
+        <value>Reports</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Reports_Notification_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Reports Notification Label</shortDescription>
+        <value>Get Reports Notifications</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Reports_Selection_Table_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Reports Selection Table Title</shortDescription>
+        <value>Report Types Selection</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Request_Level_1_Access_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Request Level 1 Access Label</shortDescription>
+        <value>Request Level 1 Access</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Request_Membership_Btn</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Request Membership Btn</shortDescription>
+        <value>Register to ICCS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Role_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Role Label</shortDescription>
+        <value>Role</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Save_Action</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Save Action</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Save_and_Leave_Action</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Save and Leave Action</shortDescription>
+        <value>Save Draft and Leave</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_See_Less</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS See Less</shortDescription>
+        <value>See Less</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_See_More</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS See More</shortDescription>
+        <value>See More</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_ServiceMgmt_Bank_Account_Codes</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS ServiceMgmt Bank Account Codes</shortDescription>
+        <value>Bank Account Codes</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_ServiceMgmt_Header</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS ServiceMgmt Header</shortDescription>
+        <value>You will find below an overview of your active ICCS Participations with standard settlement instructions (SSI) associated. You can edit your SSI with a simply click on Edit SI. Please note you can only change settlement instructions to existing bank accounts. If you wish to change the SSI for a new bank account than you must first complete the step of setting-up that bank account with ICCS, submitting the bank details form in the section underneath by selecting Add Bank Account.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_ServiceMgmt_Join_Participation_Btn</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS ServiceMgmt Join Participation Btn</shortDescription>
+        <value>Join Participation</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_ServiceMgmt_Leave_Participation_Btn</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS ServiceMgmt Leave Participation Btn</shortDescription>
+        <value>Leave Participation</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_ServiceMgmt_SSI_Table_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS ServiceMgmt SSI Table Title</shortDescription>
+        <value>Participations - Standard Settlement Instructions (SSI)</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Service_Access_Granted_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Service Access Granted Message</shortDescription>
+        <value>&lt;b&gt;Access granted&lt;br/&gt;You can now create a registration case in the&amp;nbsp;&lt;apex:outputLink value=&quot;/ISSP_ICCS_Service&quot;&gt;ICCS Service&lt;/apex:outputLink&gt;&lt;/b&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Service_Access_Granted_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Service Access Granted Title</shortDescription>
+        <value>ICCS Service Access Granted</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Service_Access_Inactive</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Service Access Inactive</shortDescription>
+        <value>Your company is not an ICCS member yet.&lt;br/&gt;&lt;br/&gt;You can get access to the ICCS Service information page and from there, create a case to start the registration process on behalf of your company.&lt;br/&gt;&lt;br/&gt;Once the registration will be completed, and unless you are a Signatory user, you will have to select a role in the ICCS service homepage and wait for another user to grant you this new role.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Service_Access_Status_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Service Access Status Label</shortDescription>
+        <value>Access Status</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Service_Description</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Service Description</shortDescription>
+        <value>Simplifying the business of international treasury
+&lt;br/&gt;
+&lt;br/&gt;
+The IATA Currency Clearance Service (ICCS) is an industry-developed cash management tool that assists your treasury to effectively centralize your international cash management operations.
+&lt;br/&gt;
+&lt;br/&gt;
+Thanks to ICCS, you can implement tailored solutions that allow you to outsource the reporting, receipt , conversion and repatriation of your international sales proceeds flowing from:
+&lt;br/&gt;
+- BSP’s (Billing and Settlement Plans)
+&lt;br/&gt;
+- CASSes (Cargo Account Settlement Systems)
+&lt;br/&gt;
+- GSA’s (General Sales Agents)
+&lt;br/&gt;
+- Credit Card Settlements
+&lt;br/&gt;
+- Direct Sales
+&lt;br/&gt;
+- Other
+&lt;br/&gt;&lt;br/&gt;
+Access our ICCS Service information page for more details on the service and how to become a Member.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Service_Management</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Service Management</shortDescription>
+        <value>Service Mgmt</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Service_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Service Title</shortDescription>
+        <value>IATA ICCS Service</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Service_Users_Table_Title</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Service Users Table Title</shortDescription>
+        <value>ICCS Service Users</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Show_Child_Codes</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Show Child Codes</shortDescription>
+        <value>Show Children</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Show_Instruction_Lines_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Show Instruction Lines Link</shortDescription>
+        <value>Show Instruction Lines</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Show_Old_Files_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Show Old Files Label</shortDescription>
+        <value>Show Old Files</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Show_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Show SI Link</shortDescription>
+        <value>Show SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Show_SIs_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Show SIs Link</shortDescription>
+        <value>Show SIs</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Create_Adhoc</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Create Adhoc</shortDescription>
+        <value>Kindly keep in mind the following rules for creating an Adhoc SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Create_Future</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Create Future</shortDescription>
+        <value>Kindly keep in mind the following rules for creating a future Adhoc SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Edit_Future</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Edit Future</shortDescription>
+        <value>Kindly keep in mind the following rules for editing your future Adhoc SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Edit_Standard</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Edit Standard</shortDescription>
+        <value>Kindly keep in mind the following rules for editing your SSI:
+&lt;br/&gt;
+The last line of the SSI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Start_Date_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Start Date Label</shortDescription>
+        <value>Start Date</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Subject_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Subject Label</shortDescription>
+        <value>Subject</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Submit_Action</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Submit Action</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Subscribe_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Subscribe Label</shortDescription>
+        <value>Subscribe</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Summary_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Summary Label</shortDescription>
+        <value>Summary</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Terminate_NoA_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Terminate NoA Link</shortDescription>
+        <value>Terminate NoA</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Treasury_Dashboard_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Treasury Dashboard Link</shortDescription>
+        <value>Treasury Dashboard</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Type_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Type Label</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Type_of_Change_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Type of Change Label</shortDescription>
+        <value>Select Type of Change (*)</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Type_of_Change_Mandatory_Message</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Type of Change Mandatory Message</shortDescription>
+        <value>&lt;br/&gt;Type of Change is mandatory</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Unsubscribe_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Unsubscribe Label</shortDescription>
+        <value>Unsubscribe</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Update_ASP_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Update ASP Label</shortDescription>
+        <value>Update ASP</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Update_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Update Label</shortDescription>
+        <value>Update</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Upload_Date_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Upload Date Label</shortDescription>
+        <value>Upload Date</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Upload_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Upload Label</shortDescription>
+        <value>Upload</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Uploaded_File_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Uploaded File Label</shortDescription>
+        <value>Uploaded File</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Uploads_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Uploads Label</shortDescription>
+        <value>Uploads</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_User_Guide_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS User Guide Label</shortDescription>
+        <value>User Guide</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Value_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Value Label</shortDescription>
+        <value>Value</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_will_replace_Label</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS will replace Label</shortDescription>
+        <value>will replace</value>
+    </labels>
+    <labels>
         <fullName>ICE_Portal_Service</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5199,7 +7344,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_ITDICourse</shortDescription>
-        <value>IATA Training Courses (Optional)</value> 
+        <value>IATA Training Courses (Optional)</value>
     </labels>
     <labels>
         <fullName>IDCard_ITDICourses</fullName>
@@ -6777,7 +8922,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Package Travel Professionals 2</shortDescription>
-        <value>&lt;br&gt; Please select your courses here:</value> 
+        <value>&lt;br&gt; Please select your courses here:</value>
     </labels>
     <labels>
         <fullName>ID_Card_Photo_Disclaimer</fullName>
@@ -25378,6 +27523,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Special characters &apos; and &amp; are not allowed, please rename the file.</value>
     </labels>
     <labels>
+        <fullName>Notions_Essentl_Tarif_Billet_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Notions_Essentl_Tarif_Billet_Description</shortDescription>
+        <value>L’interprétation des règles tarifaires et des éléments de données du billet électronique est essentielle pour satisfaire et retenir les clients. Il existe une foule de tarifs et d’options complexes. Les clients s’attendent à avoir un service exact, rapide et abordable. Ce cours enseigne les principes de la construction tarifaire, qui vous permettront de fournir d’excellents conseils et le tarif le plus bas pour un voyage en avion. Vous allez acquérir, grâce à des exercices pratiques et au matériel de référence, de nouvelles compétences qui vous aideront à devenir un professionnel du voyage et accroître la confiance de vos clients... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/notions-tarification-billeterie-tttg14-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
         <fullName>OSCAR_RISK_WARNING</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -28549,6 +30702,13 @@ title,Title,Name</value>
         <value>Services dates</value>
     </labels>
     <labels>
+        <fullName>Serving_The_Travel_Customer_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Serving_The_Travel_Customer_Description</shortDescription>
+        <value>Gain essential strategies to ensure that the customer’s level of satisfaction will influence a purchase or repurchase decision by ensuring that your front-line contact with the customer is remarkable... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/serving-travel-customer-tttg66.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
+    </labels>
+    <labels>
         <fullName>Shipping</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -28631,6 +30791,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>SiteTitle</shortDescription>
         <value>IATA: International Air Transport Association</value>
+    </labels>
+    <labels>
+        <fullName>Social_Media_Travel_Industry_Description</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Social_Media_Travel_Industry_Description</shortDescription>
+        <value>This “how to” e-learning course is designed for travel professionals and highlights how to implement marketing activities through the four major social networking sites: Facebook, Twitter, YouTube and LinkedIn. You will learn essential theory about the role social media plays in the travel industry and, most importantly, how to implement social media strategies that can increase business opportunities... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/social-media-travel-tttg69.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
     <labels>
         <fullName>SortBy</fullName>
@@ -29506,51 +31674,5 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
-    </labels>
-    <labels>
-        <fullName>Acc_Fin_Mgmt_Agencies_Description</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Acc_Fin_Mgmt_Agencies_Description</shortDescription>
-        <value>Your agency’s financial health is key to the survival of your business; analyzing and controlling your finances leads to strong business plans and better strategic decisions… (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/accounting-financial-management-tttg93.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
-    </labels>
-    <labels>
-        <fullName>Adv_Skills_Journey_Price_Ticket_Description</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Adv_Skills_Journey_Price_Ticket_Description</shortDescription>
-        <value>This course is for the travel professional with basic knowledge and skills in air journey pricing and ticketing who wants to be recognized as the company or office expert. You will gain confidence in pricing more complex journeys that apply exceptions to standard pricing principles. A key additional benefit are study units on ticket exchanges and reissues resulting in a refund or an additional collection for the new ticket price or a penalty fee collection... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/journey-pricing-ticketing-tttg15.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
-    </labels>
-    <labels>
-        <fullName>Assist_Travelers_Special_Needs_Description</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Assist_Travelers_Special_Needs_Description</shortDescription>
-        <value>Special needs travelers represent a promising market for the travel industry. To unlock this business opportunity, travel suppliers and agents must first be able to identify customers who may have special travel needs. Then they must deliver the services that make their journey safe and pleasant... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travelers-special-needs-tttg98.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
-    </labels>
-    <labels>
-        <fullName>Notions_Essentl_Tarif_Billet_Description</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Notions_Essentl_Tarif_Billet_Description</shortDescription>
-        <value>L’interprétation des règles tarifaires et des éléments de données du billet électronique est essentielle pour satisfaire et retenir les clients. Il existe une foule de tarifs et d’options complexes. Les clients s’attendent à avoir un service exact, rapide et abordable. Ce cours enseigne les principes de la construction tarifaire, qui vous permettront de fournir d’excellents conseils et le tarif le plus bas pour un voyage en avion. Vous allez acquérir, grâce à des exercices pratiques et au matériel de référence, de nouvelles compétences qui vous aideront à devenir un professionnel du voyage et accroître la confiance de vos clients... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/notions-tarification-billeterie-tttg14-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
-    </labels>
-    <labels>
-        <fullName>Serving_The_Travel_Customer_Description</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Serving_The_Travel_Customer_Description</shortDescription>
-        <value>Gain essential strategies to ensure that the customer’s level of satisfaction will influence a purchase or repurchase decision by ensuring that your front-line contact with the customer is remarkable... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/serving-travel-customer-tttg66.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
-    </labels>
-    <labels>
-        <fullName>Social_Media_Travel_Industry_Description</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Social_Media_Travel_Industry_Description</shortDescription>
-        <value>This “how to” e-learning course is designed for travel professionals and highlights how to implement marketing activities through the four major social networking sites: Facebook, Twitter, YouTube and LinkedIn. You will learn essential theory about the role social media plays in the travel industry and, most importantly, how to implement social media strategies that can increase business opportunities... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/social-media-travel-tttg69.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
 </CustomLabels>
