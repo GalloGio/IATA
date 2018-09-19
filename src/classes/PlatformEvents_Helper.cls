@@ -2,7 +2,7 @@ public class PlatformEvents_Helper {
     
     public static void publishEvents(Map<Id,sObject> ObjectMap, string PE_Name, string ObjSource, boolean bIsInsert, boolean bIsUpdate, boolean bIsDelete, boolean bIsUndelete){
         string sEventType = '';
-        if(bIsInsert) sEventType = 'Insert';
+        if(bIsInsert) sEventType = 'Create';
         if(bIsUpdate) sEventType = 'Update';
         if(bIsDelete) sEventType = 'Delete';
         if(bIsUndelete) sEventType = 'Undelete';
@@ -74,7 +74,7 @@ public class PlatformEvents_Helper {
         if(sObj=='Account__e'){
             return new map<String,String>{
                 'Id' => 'AccountId__c',
-                'Recordtype' => 'Recordtype__c',
+                'Recordtype' => 'RecordType__c',
                 'EventType' => 'Type__c'
             };
         }
