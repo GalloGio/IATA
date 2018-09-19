@@ -218,6 +218,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <default>true</default>
                     <label>Model B</label>
                 </value>
+                <value>
+                    <fullName>Banking Model</fullName>
+                    <default>false</default>
+                    <label>Banking Model</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
