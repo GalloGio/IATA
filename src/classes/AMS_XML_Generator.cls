@@ -2257,38 +2257,4 @@ public with sharing class AMS_XML_Generator {
         } 
     }
 
-
-    /*** AMSU-158 ***/
-    public class NotificationsSender implements Queueable {
-        public Set<Account> accounts {get;set;}
-
-        public NotificationsSender(Set<Account> accounts) {
-            this.accounts = accounts;
-        }
-
-        public void execute(QueueableContext context) {
-            String body = 'Id, Reason\n';
-            for(Account acc : accounts) {
-                body += acc.Id + ',' + (String.isBlank(acc.Reason__c) ? '' : acc.Reason__c).escapeCSV() + '\n';
-            }
-
-            Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
-            Blob csvReport = Blob.valueOf(body);
-            csvAttc.setFileName('XML Generator errors report.csv');
-            csvAttc.setBody(csvReport);
-
-            Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-            message.subject = 'XML Generator errors report';
-            message.setPlainTextBody('XML Generator errors - Check attachment with execution results - ' + DateTime.now());
-            message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
-            Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};        
-            
-            if(!Test.isRunningTest() && !String.isBlank(Label.AMS_XML_GEN_ERROR_RECEIVER)) {
-                List<String> emailAddresses = Label.AMS_XML_GEN_ERROR_RECEIVER.split(';');
-                message.setToaddresses(emailAddresses);
-                Messaging.sendEmail(messages);
-            }
-        }
-    }
-
 }
