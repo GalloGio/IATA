@@ -310,9 +310,6 @@ public with sharing class AMS_XML_Generator {
     //Type - determinates if it's "MasterData" or "ECC"
     //case -  Brings the OSCAR case Id for getting the ECC data
     public String getAgencyDetail(List<Account> agency, String[] r, String type, String caseId){
-        /*** AMSU-158 ***/
-        Set<Account> agenciesWithInvalidReason = new Set<Account>();
-
         
         Integer inicioCPU = Limits.getCpuTime();
         Integer inicioCPUx = Limits.getLimitCpuTime();
@@ -1266,20 +1263,13 @@ public with sharing class AMS_XML_Generator {
                             String code = '';
                             String description = '';
 
-                            if(reasonParsed.isEmpty()) {
-                                if(!ag.CNS_Account__c) {
-                                	agenciesWithInvalidReason.add(ag);
-								}
-                            } else  {
+                            if(!reasonParsed.isEmpty()) {
                                 String firstElem = reasonParsed.remove(0);
                                 if(firstElem.isNumeric()) {
                                     code = firstElem;
-                                } else {
-                                    if(reasonParsed.isEmpty()) {
+                                } else if(reasonParsed.isEmpty()) {
                                         reasonParsed.add(firstElem);
                                     }
-                                    agenciesWithInvalidReason.add(ag);
-                                }
                                 description = String.join(reasonParsed, '-');
                             }
 
@@ -1355,11 +1345,6 @@ public with sharing class AMS_XML_Generator {
         system.debug(sDebug);
         Integer fimCPU = Limits.getCpuTime();
         Integer fimCPUx = Limits.getLimitCpuTime();
-        
-        /*** AMSU-158 ***/
-        if(!agenciesWithInvalidReason.isEmpty()) {
-            System.enqueueJob(new NotificationsSender(agenciesWithInvalidReason)); 
-        }
         
         return doc.toXmlString();   
     }
