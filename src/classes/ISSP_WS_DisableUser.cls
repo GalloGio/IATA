@@ -204,6 +204,7 @@ global class ISSP_WS_DisableUser {
                         else if (app.toUpperCase() == 'BSPLINK'){
                             serviceId = serviceIdInstance.BSPLink__c;
                         }
+
                         Contact thisContact = contactList[0];
                         theUser = thisUser.Id;
                         theContact = thisContact.Id;
@@ -314,7 +315,8 @@ global class ISSP_WS_DisableUser {
         
         String theUser;
         String theContact;
-        
+        Boolean reactivateUser = false;
+        String emailForUsername;
         // Get request IP
         List <LoginHistory> loginList = [SELECT Id, SourceIp FROM LoginHistory
                                         WHERE UserId = :UserInfo.getUserId()
@@ -439,7 +441,7 @@ global class ISSP_WS_DisableUser {
                     
                     return retResponseOne;
                 }
-                else if (!thisUser.IsActive){
+                /*else if (!thisUser.IsActive){
                     errorCode = '014';
                     errorMessage = ISSP_Int_Error__c.getValues('014').Error_Message__c;
                     retResponseOne.isSuccess = false;
@@ -454,9 +456,9 @@ global class ISSP_WS_DisableUser {
                     insert newLog;
                     
                     return retResponseOne;
-                }
+                }*/
                 else{
-                    List <Contact> contactList = [SELECT Id FROM Contact WHERE Id = :thisUser.ContactId];
+                    List <Contact> contactList = [SELECT Id, Email FROM Contact WHERE Id = :thisUser.ContactId];
                     if (contactList.isEmpty()){
                         errorCode = '013';
                         errorMessage = ISSP_Int_Error__c.getValues('013').Error_Message__c;
@@ -500,9 +502,16 @@ global class ISSP_WS_DisableUser {
                         else if (app.toUpperCase() == 'BSPLINK'){
                             serviceId = serviceIdInstance.BSPLink__c;
                         }
+
+                        if (!thisUser.IsActive){
+                            system.debug('thisUser >>> '+ thisUser);
+                            reactivateUser = true;
+                        }
+
                         Contact thisContact = contactList[0];
                         theUser = thisUser.Id;
                         theContact = thisContact.Id;
+                        emailForUsername = thisContact.Email;
                         List <Portal_Applications__c> appList = [SELECT Id FROM Portal_Applications__c
                                                                 WHERE Id = :serviceId];
                         if (appList.isEmpty()){
@@ -585,16 +594,29 @@ global class ISSP_WS_DisableUser {
                 }
             }
         }
-        
         newLog.Finished__c = system.now();
         if (theUser != null && theUser != ''){
-            newLog.User__c = theUser;
+            if(reactivateUser){
+               updateUser(theUser, emailForUsername);
+            }
+
+        newLog.User__c = theUser;
         }
         if (theContact != null && theContact != ''){
             newLog.Contact__c = theContact;
         }
         insert newLog;
         return retResponseOne;
+    }
+
+    @future
+    public static void updateUser(String userID, String email) {
+        User userToReactivate = new User(
+            Id = userID,
+            IsActive = true,
+            Portal_User_Frozen_Checkbox__c = false,
+            Username = ISSP_Utilities.buildPortalUserName(email));
+            update userToReactivate;
     }
     
     // method to artificially increase test coverage, remove it asap
