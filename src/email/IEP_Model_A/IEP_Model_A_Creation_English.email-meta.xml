@@ -14,7 +14,7 @@ Thank you for submitting your request to activate the IATA EasyPay form of payme
 
 
 
-Attached you can find all the information related to the IATA EasyPay payment method, including instructions on how to create an IATA EasyPay Account.
+Here you can find all the information related to the IATA EasyPay payment method, including instructions on how to create an IATA EasyPay Account.
 
 
 Should you require additional information, please reply to this e-mail. We will soon contact you with an update on your request.
@@ -31,10 +31,7 @@ IATA Customer Service Portal
 
 
 
-{!AMS_OSCAR__c.Emails_reference_Id__c}
-
-
-https://portal.iata.org/faq/articles/en_US/FAQ/How-can-I-open-an-IATA-EasyPay-account/?l=en_US&amp;c=FAQs%3AIATA_EasyPay&amp;fs=Search&amp;pn=1</textOnly>
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
