@@ -3,13 +3,10 @@ private class AMS_MigrationToolHelperTest {
 
 	@testSetup static void setup() {
 
-		Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
-		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-
 		// create test account1
 		Account account1 = new Account();
 		account1.Name = 'Test account';
-		account1.RecordTypeId = agencyRT;
+		account1.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
 		account1.IATACode__c = '4242424';
 		account1.Type = 'IATA Passenger Sales Agent';
 		account1.BillingCity = 'Montreal';
@@ -34,7 +31,7 @@ private class AMS_MigrationToolHelperTest {
 		saamCase.Subject = 'Test SAAM case';
 		saamCase.Description = 'Test SAAM case';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
+		saamCase.RecordTypeId = AMS_Utils.RECTYPE_SAAM;
 		saamCase.Reason1__c = 'New HO';
 		insert saamCase;
 
@@ -239,13 +236,10 @@ private class AMS_MigrationToolHelperTest {
 		  
 		Test.startTest();
 
-		RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
-		Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
-
 		// create test account1
 		Account account1 = new Account();
 		account1.Name = 'Test account';
-        account1.RecordTypeId = agencyRT;
+        account1.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
 		account1.IATACode__c = '4242424';
 		account1.Type = 'IATA Passenger Sales Agent';
 		account1.BillingCity = 'Montreal';
@@ -270,7 +264,7 @@ private class AMS_MigrationToolHelperTest {
 		thecase.Subject = 'Test SAAM case';
 		thecase.Description = 'Test SAAM case';
 		thecase.Status = 'Open';
-		thecase.RecordTypeId = SAAMcaseRecordType.Id;
+		thecase.RecordTypeId = AMS_Utils.RECTYPE_SAAM;
 		thecase.Reason1__c = 'CLO - Closure';
 		insert thecase;
 

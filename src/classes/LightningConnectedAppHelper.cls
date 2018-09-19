@@ -92,12 +92,11 @@ public without sharing class LightningConnectedAppHelper {
             }
             else{
                 // Load  FRED limit and compare to account number
-                List<RecordType> recordTypes = [SELECT Id FROM RecordType WHERE SObjectType = 'One_Id_Service_Provider_Config__c' AND DeveloperName = 'Service_Provider'];
-    
+                ID rtID = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Provider');
                 One_Id_Service_Provider_Config__c config;
     
-                if(! recordTypes.isEmpty()){
-                    config = [select Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: connectedapp AND RecordTypeId =: recordTypes[0].Id LIMIT 1];
+                if(rtID != null){
+                    config = [select Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: connectedapp AND RecordTypeId =: rtID LIMIT 1];
                 }
                 else{
                     config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: connectedapp LIMIT 1];
