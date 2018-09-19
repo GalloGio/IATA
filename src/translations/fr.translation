@@ -1217,6 +1217,10 @@
         <name>API_URL</name>
     </customLabels>
     <customLabels>
+        <label><!-- Acc_Fin_Mgmt_Agencies_Description --></label>
+        <name>Acc_Fin_Mgmt_Agencies_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Acceptance date --></label>
         <name>Acceptance_date</name>
     </customLabels>
@@ -1280,6 +1284,10 @@
         <name>Address_edition_error</name>
     </customLabels>
     <customLabels>
+        <label><!-- Adv_Skills_Journey_Price_Ticket_Description --></label>
+        <name>Adv_Skills_Journey_Price_Ticket_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Airline Suspension Child Cases Contact Id --></label>
         <name>AirlineSuspensionContactId</name>
     </customLabels>
@@ -1314,6 +1322,10 @@
     <customLabels>
         <label><!-- Ask Delete Attachment --></label>
         <name>Ask_Delete_Attachment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Assist_Travelers_Special_Needs_Description --></label>
+        <name>Assist_Travelers_Special_Needs_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Attachment Name --></label>
@@ -14496,6 +14508,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>No_special_characters</name>
     </customLabels>
     <customLabels>
+        <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
+        <name>Notions_Essentl_Tarif_Billet_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OSCAR_RISK_WARNING --></label>
         <name>OSCAR_RISK_WARNING</name>
     </customLabels>
@@ -16175,6 +16191,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>Services_dates</name>
     </customLabels>
     <customLabels>
+        <label><!-- Serving_The_Travel_Customer_Description --></label>
+        <name>Serving_The_Travel_Customer_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Shipping --></label>
         <name>Shipping</name>
     </customLabels>
@@ -16217,6 +16237,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label><!-- SiteTitle --></label>
         <name>SiteTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Social_Media_Travel_Industry_Description --></label>
+        <name>Social_Media_Travel_Industry_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- SortBy --></label>

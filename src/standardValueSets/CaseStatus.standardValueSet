@@ -589,4 +589,10 @@
         <label>Closed_Disapproved</label>
         <closed>true</closed>
     </standardValue>
+    <standardValue>
+        <fullName>Return application to customer not found</fullName>
+        <default>false</default>
+        <label>Return application to customer not found</label>
+        <closed>false</closed>
+    </standardValue>
 </StandardValueSet>
