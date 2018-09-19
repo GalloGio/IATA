@@ -3771,11 +3771,7 @@
         <description>Salesforce Change Request - Evaluation required</description>
         <protected>false</protected>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>parkyr@iata.org</recipient>
+            <recipient>larivaa@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
