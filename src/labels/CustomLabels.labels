@@ -18678,6 +18678,22 @@ Please add below all your company valid email domains, including different ones 
         <value>dev@balink.net</value>
     </labels>
     <labels>
+        <fullName>ISSP_Emergency_Support</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Emergency Support</shortDescription>
+        <value>Emergency Support</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Emergency_Support_Subtitle</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Emergency Support Subtitle</shortDescription>
+        <value>Our GDC locations now offer 24x7 Emergency Support in English for critical situation. Of your request is not related to an emergency, please use the "Ask a Question" tab</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Encolment_page_Office_address</fullName>
         <language>en_US</language>
         <protected>false</protected>
