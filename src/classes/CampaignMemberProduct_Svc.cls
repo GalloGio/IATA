@@ -28,19 +28,10 @@ public class CampaignMemberProduct_Svc {
         //get the subscriptions for this products and contacts
         List<IEC_Event_Subscription__c> lstEventSubscriptions = new IEC_EventSubscription_Sel().getEventSubscriptionByProductsIdListAndContactsList(setOrderItemProductIds,contactIds);
         System.debug('JJ lstEventSubscriptions: ' + lstEventSubscriptions);
-        Map<Id,List<IEC_Event_Subscription__c>> mapSubscriptionByProductId = new Map<Id,List<IEC_Event_Subscription__c>>();
-        if(lstEventSubscriptions != null && !lstEventSubscriptions.isEmpty()){
-            for(IEC_Event_Subscription__c eventSubscriptionAux : lstEventSubscriptions){
-                if(mapSubscriptionByProductId.containsKey(eventSubscriptionAux.Product__c)){
-                    mapSubscriptionByProductId.get(eventSubscriptionAux.Product__c).add(eventSubscriptionAux);
-                }else{
-                    List<IEC_Event_Subscription__c> iecEventSubsTmp = new List<IEC_Event_Subscription__c>();
-                    iecEventSubsTmp.add(eventSubscriptionAux);
-                    mapSubscriptionByProductId.put(eventSubscriptionAux.Product__c,iecEventSubsTmp);
-                }
-            }
-        }
-        System.debug('JJ mapSubscriptionByProductId : ' +mapSubscriptionByProductId);
+
+        Map<Id,List<IEC_Event_Subscription__c>> mapSubscriptionByProductNbrWoVersion = IEC_EventSubscription_Svc.buildMapWithSubscByProductNbrWoVersion(lstEventSubscriptions);
+
+        System.debug('JJ mapSubscriptionByProductNbrWoVersion : ' +mapSubscriptionByProductNbrWoVersion);
 
         
         for(OrderItem item : items){
@@ -48,8 +39,8 @@ public class CampaignMemberProduct_Svc {
 
                 //get the subscription, if exists, for this order item by the product id and contact
                 IEC_Event_Subscription__c iecEventSubsAux = null;
-                if(mapSubscriptionByProductId.containsKey(item.Product__c)){
-                    List<IEC_Event_Subscription__c>  lstIecEventSubsAux = mapSubscriptionByProductId.get(item.Product__c);
+                if(mapSubscriptionByProductNbrWoVersion.containsKey(item.Product__c)){
+                    List<IEC_Event_Subscription__c>  lstIecEventSubsAux = mapSubscriptionByProductNbrWoVersion.get(item.Product__c);
                     for(IEC_Event_Subscription__c iecAux : lstIecEventSubsAux){
                         if(iecAux.Subscriber__c == item.Order.BillToContactId){
                             iecEventSubsAux = iecAux;

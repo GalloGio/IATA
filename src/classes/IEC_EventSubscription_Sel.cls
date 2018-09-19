@@ -51,7 +51,7 @@ public without sharing class IEC_EventSubscription_Sel extends Selector {
     public List<IEC_Event_Subscription__c> getEventSubscriptionByProductsIdListAndContactsList(Set<Id> lstProductsId, Set<Id> lstContactIds){
 
         String query = String.format(
-            'SELECT {0}  ' + 
+            'SELECT {0} ' + ', Product__r.SAP_Material_Number__c '
             'FROM {1} ' + 
             'WHERE Product__c IN :lstProductsId ' + 
             ' AND Subscriber__c IN :lstContactIds ' , 
