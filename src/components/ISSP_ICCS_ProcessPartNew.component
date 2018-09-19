@@ -1,0 +1,337 @@
+<apex:component controller="ISSP_ICCS_ProcessPartNewController" allowDML="true">
+    <apex:attribute name="caseProcessesCtrl" 
+                    type="ISSP_ICCS_CaseProcessesController" 
+                    assignTo="{! caseProcessesController}" 
+                    required="true" 
+                    description="The controller for the page." />
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<script>
+		$( function() {		
+			$( '[id$=datepicker]' ).datepicker();
+		} );
+	</script>
+
+    <!----------------------->
+    <!-- NEW OR DRAFT CASE -->
+    <!----------------------->
+
+    <apex:outputPanel rendered="{! caseProcessesController.cse.Id == null || caseProcessesController.cse.Status == 'Draft'}">
+        <!------------>
+        <!-- STEP 1 -->
+        <!------------>
+        <apex:outputPanel id="participationSelection" rendered="{! caseProcessesController.currentStep == 1}">
+            <apex:pageBlock>
+                <div class="col-md-6 col-sm-9 col-xs-6 center-card" style="padding-right:5px;padding-left:5px;">
+                    <div class="bottom-box no-pddg no-border" stye="text-align: justify;text-justify: inter-word;">
+                       <div class="table-form">
+                           <apex:pageBlockSection columns="1">
+			                    <apex:outputLabel value="{! $Label.ICCS_Category_Label} (*)"/>
+			                    <apex:outputPanel>
+			                        <apex:selectList value="{! selectedCategory}" multiselect="false" size="1">
+			                            <apex:actionSupport event="onchange" action="{! refreshSelectOptionLists}" reRender="participationSelection" status="processActStatusId"/>
+			                            <apex:selectOptions value="{! categoryFilter}"/>
+			                        </apex:selectList>
+									<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['selectedProductType']}">
+										<apex:outputText value="{! $Label.ICCS_Category_Label + ' ' + $Label.ICCS_Is_Mandatory}" escape="false"/>
+									</apex:outputPanel>
+								</apex:outputPanel>
+
+			                    <apex:outputLabel value="{! $Label.ICCS_Country_Label} (*)"/>
+			                    <apex:outputPanel>
+									<apex:selectList value="{! selectedCountry}" multiselect="false" size="1">
+										<apex:actionSupport event="onchange" action="{! refreshSelectOptionLists}" reRender="participationSelection" status="processActStatusId"/>
+										<apex:selectOptions value="{! countryFilter}"/>
+									</apex:selectList>
+									<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['selectedCountry']}">
+										<apex:outputText value="{! $Label.ICCS_Country_Label + ' ' + $Label.ICCS_Is_Mandatory}" escape="false"/>
+									</apex:outputPanel>
+								</apex:outputPanel>
+
+			                    <apex:outputLabel value="{! $Label.ICCS_Currency_Label} (*)"/>
+								<apex:outputPanel>
+									<apex:selectList value="{! selectedCurrency}" multiselect="false" size="1">
+										<apex:selectOptions value="{! currencyFilter}"/>
+									</apex:selectList>
+									<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['selectedCurrency']}">
+										<apex:outputText value="{! $Label.ICCS_Currency_Label + ' ' + $Label.ICCS_Is_Mandatory}" escape="false"/>
+									</apex:outputPanel>
+								</apex:outputPanel>
+
+                                <p>
+                                	<apex:outputText value="{! $Label.ICCS_Mandatory_Fields}" escape="false"/>
+                                </p>
+							</apex:pageBlockSection>    
+						</div>
+					</div>
+				</div>
+			</apex:pageBlock>
+		</apex:outputPanel>
+    
+        <!------------>
+        <!-- STEP 2 -->
+        <!------------>
+        <apex:outputPanel id="step2" rendered="{! caseProcessesController.currentStep == 2}">
+            <div class="apcontainer">
+                <apex:pageBlock>
+                    <div class="col-md-6 col-sm-9 col-xs-6 center-card" style="padding-right:5px;padding-left:5px;">
+	                    <div class="bottom-box no-pddg no-border" stye="text-align: justify;text-justify: inter-word;">
+	                        <b>Thank you for informing IATA about changes to your Bank Account details.</b>
+	                        <br />
+							This form must be fully completed and submitted on-line.
+							<br />
+							By agreeing with the Terms and Conditions, the Airline representative submitting this form confirms that it is authorized to do so.
+							<br />
+							<br />
+							<br />
+							<b>General Details - {!selectedCountry}</b>
+							<br />
+							This instruction is effective from and including the settlement date below, and for each settlement thereafter.
+
+							<div class="table-form">
+								<apex:pageBlockSection columns="1">
+									<apex:outputLabel value="Desired commencement date"/>
+									<apex:outputPanel>
+			                            <apex:inputField value="{! caseProcessesController.cse.Expected_Deadline__c}" id="datepicker"/>
+									</apex:outputPanel>
+
+									<apex:outputLabel value="* Social Title"/>
+									<apex:outputPanel>
+										<apex:inputField value="{! contactForm.Contact_Resp_Salutation__c}"/>
+										<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['socialTitle']}">
+											Social Title is mandatory
+										</apex:outputPanel>
+									</apex:outputPanel>
+
+									<apex:outputLabel value="* First Name"/>
+									<apex:outputPanel>
+										<apex:inputField value="{! contactForm.Contact_Resp_F_Name__c}"/>
+										<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['firstName']}">
+											First Name is mandatory
+										</apex:outputPanel>
+									</apex:outputPanel>
+
+									<apex:outputLabel value="* Job Title"/>
+									<apex:outputPanel>
+										<apex:inputField value="{! contactForm.Contact_Resp_Job_Title__c}"/>
+										<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['jobTitle']}">
+											Job title is mandatory
+										</apex:outputPanel>
+									</apex:outputPanel>
+
+									<apex:outputLabel value="* Last Name"/>
+									<apex:outputPanel>
+										<apex:inputField value="{! contactForm.Contact_Resp_L_Name__c}"/>
+										<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['lastName']}">
+											Last name is mandatory
+										</apex:outputPanel>
+									</apex:outputPanel>
+
+									<apex:outputLabel value="* Email"/>
+									<apex:outputPanel>
+										<apex:inputField value="{! contactForm.Contact_Resp_Email__c}"/>
+										<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['email']}">
+											Email is mandatory
+										</apex:outputPanel>
+									</apex:outputPanel>
+
+									<apex:outputLabel value="* Phone"/>
+									<apex:outputPanel>
+										<apex:inputField value="{! contactForm.Contact_Resp_Phone__c}"/>
+										<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['phone']}">
+											Phone is mandatory
+										</apex:outputPanel>
+									</apex:outputPanel>
+								</apex:pageBlockSection>
+								<p> Fields marked in red and with a "*" are required before you can submit your application.<br/>However, you can save the incomplete draft application and come back later to fill all the required fields before submitting it to IATA. </p>
+							</div>
+						</div>
+					</div>
+                </apex:pageBlock>
+            </div>
+        </apex:outputPanel>
+    
+    
+        <!------------>
+        <!-- STEP 3 -->
+        <!------------>
+        <apex:outputPanel id="step3" rendered="{! caseProcessesController.currentStep == 3}">
+            <div class="col-md-6 col-sm-9 col-xs-6 center-card" style="padding-right:5px;padding-left:5px;">
+                <div class="bottom-box no-pddg no-border" stye="text-align: justify;text-justify: inter-word;">
+
+					<apex:outputText value="{! $Label.ICCS_PartNew_Step3_Header}" escape="false"/>
+
+					<br/><br/>
+
+                    <div class="table-form">
+
+						<div class="bold-txt">
+							<apex:outputText value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Name}" escape="false"/>
+						</div>
+						<br/>
+						<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+						<div class="down-btn">
+							<div class="ic-pstn">
+								<a href="/servlet/servlet.FileDownload?file={! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Id}" target="_blank">
+									<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+									<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+								</a>
+							</div>
+						</div>
+						&nbsp;
+						<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+						<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+							<apex:param value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Join_Participation'].LastModifiedDate}" />
+						</apex:outputText>
+
+                        <br/><br/><br/>
+
+						<div class="bold-txt">
+							<apex:outputText value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Name}" escape="false"/>
+						</div>
+						<br/>
+						<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+						<div class="down-btn">
+							<div class="ic-pstn">
+                            	<a href="/servlet/servlet.FileDownload?file={! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Id}" target="_blank">
+									<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+									<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+								</a>
+							</div>
+						</div>
+						&nbsp;
+						<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+						<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+							<apex:param value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].LastModifiedDate}" />
+						</apex:outputText>
+
+						<div class="divider-4"/>
+
+						<div class="bold-txt">
+							<apex:outputText value="{! $Label.ICCS_Uploads_Label}" escape="false"/>
+						</div>
+
+						<br/>
+
+						<table>
+							<tr>
+								<td style="width: 1%;white-space: nowrap;">
+									Join Participation (*)
+								</td>
+								<td>
+									<c:ISSP_ICCS_TypedDocument docType="Join Participation" caseProcessCtrl="{! thisCtrl}"/>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 1%;white-space: nowrap;">
+									Bank Accounts
+								</td>
+								<td>
+									<c:ISSP_ICCS_TypedDocument docType="Bank Accounts" caseProcessCtrl="{! thisCtrl}"/>
+								</td>
+							</tr>
+						</table>
+                    </div>
+                </div>
+            </div>
+        </apex:outputPanel>
+
+    
+        <!------------>
+        <!-- STEP 4 -->
+        <!------------>
+        <apex:outputPanel id="step4" rendered="{! caseProcessesController.currentStep == 4}">
+			<apex:pageBlock>
+				<div class="col-md-6 col-sm-9 col-xs-6 center-card" style="padding-right:5px;padding-left:5px;">
+					<div class="bottom-box no-pddg no-border" stye="text-align: justify;text-justify: inter-word;">
+						<b>Terms and conditions</b>
+						<div class="table-form">
+							By submitting the present application form to IATA, I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in <b>{!selectedCountry}</b>
+							and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.
+							<br/>
+							<br/>
+							I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the ISS Participant, and that I am fully authorized to bind the ISS Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.
+							<br/>
+							<br/>
+							I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.
+							<br/>
+							<br/>
+							<apex:outputPanel>
+								<apex:inputField value="{! contactForm.Accept_terms_and_conditions__c}"/>
+								By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline.
+								<apex:outputPanel style="color:#FF0000;" rendered="{! caseProcessesController.displayMessages['termsAndConditionsAccepted']}">
+									<br/>
+									<br/>
+									You must accept the terms and conditions in order to submit your request.
+								</apex:outputPanel>
+							</apex:outputPanel>
+						</div>
+					</div>
+				</div>
+			</apex:pageBlock>
+        </apex:outputPanel>
+    </apex:outputPanel>
+    
+    <!----------------->
+    <!-- OPENED CASE -->
+    <!----------------->
+	<apex:outputPanel rendered="{! caseProcessesController.cse.Id != null && caseProcessesController.cse.Status != 'Draft'}">
+		<apex:pageBlock>
+			<div class="col-md-6 col-sm-6 col-xs-6 text-center left-card" style="padding-right:5px;padding-left:5px;">
+				<div class="section-title-gray prfl">
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+					<apex:outputText value="{! $Label.ICCS_Case_Account_Contact_Information}" escape="false"/>
+				</div>
+				<div class="bottom-box no-pddg left-right" style="text-align: left;"> 
+					<apex:pageBlockSection columns="1">
+						<apex:outputField value="{! caseProcessesController.cse.Account.Name}"/>
+						<apex:outputField value="{! caseProcessesController.cse.IATA_Code__c}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Name}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Email}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Phone}"/>
+					</apex:pageBlockSection>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-sm-6 col-xs-6 text-center right-card" style="padding-right:5px;padding-left:5px;">
+				<div class="section-title-gray cases">
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+					<apex:outputText value="{! $Label.ICCS_Case_Information}" escape="false"/>
+				</div>
+				<div class="bottom-box no-pddg left-right" style="text-align: left;">
+					<apex:pageBlockSection columns="1">
+						<apex:outputField value="{! caseProcessesController.cse.CaseNumber}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Subject}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Status}"/>
+						<apex:outputField value="{! caseProcessesController.cse.CaseArea__c}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Expected_Deadline__c}"/>
+					</apex:pageBlockSection>
+				</div>
+			</div>
+
+			<div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+				<div class="section-title-gray cycle">
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+					<apex:outputText value="{! $Label.ICCS_Participation_Information}" escape="false"/>
+				</div>
+				<div class="bottom-box no-pddg mrgn left-right" style="text-align: justify;text-justify: inter-word;">
+					<apex:pageBlockSection columns="1">
+						<apex:pageBlockSectionItem>
+		                    <apex:outputLabel value="{! $Label.ICCS_Category_Label}"/>
+							<apex:outputText value="{! caseProcessesController.cse.ICCS_Product__c}"/>
+						</apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem >
+		                    <apex:outputLabel value="{! $Label.ICCS_Country_Label}"/>
+							<apex:outputText value="{! caseProcessesController.cse.ICCS_Country__c}"/>
+						</apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem>
+		                    <apex:outputLabel value="{! $Label.ICCS_Currency_Label}"/>
+							<apex:outputText value="{! caseProcessesController.cse.ICCS_Currencies__c}"/>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+				</div>
+               </div>
+		</apex:pageBlock>
+	</apex:outputPanel>
+</apex:component>
