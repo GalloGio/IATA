@@ -117,10 +117,6 @@ public class TransformationHelper {
     return result;
   }
 
-
-  // store results in static map to be sure we won’t query for sqme object many times
-  private static  map<string, map<string, id>>  RtIDsPerDeveloperNamePerObjMap = new map<string, map<string, id>>();
-
   public  static boolean triggerOnCaseNSerRen = false;
 
   public static void setComingFromCase() {

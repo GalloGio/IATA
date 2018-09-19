@@ -1066,7 +1066,7 @@ private class Faq2CaseTest {
         insert isoC;
         
         //Account
-        Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Airline'].Id;
+        Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account testAccount = new Account(
             name= 'testAccount',
             RecordTypeId = agencyRecordTypeId,
@@ -1150,7 +1150,7 @@ private class Faq2CaseTest {
         insert isoC;
         
         //Account
-        Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Airline'].Id;
+        Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account testAccount = new Account(
             name= 'testAccount',
             RecordTypeId = agencyRecordTypeId,

@@ -439,8 +439,8 @@ public without sharing class LightningRegistrationProcess{
         // ISSP_Registration registration = new ISSP_Registration();
         // Boolean b = registration.pageIsValid();
         serviceName = servName;
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
-        if(con.RecordType == null) con.RecordTypeId = rt.Id;
+        Id rt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        if(con.RecordType == null) con.RecordTypeId = rt;
 
         //Debug
         System.debug('Contact ' + con);
@@ -453,16 +453,16 @@ public without sharing class LightningRegistrationProcess{
                 //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
                 acc.ownerid = ISSP_Constant.newAccountOwnerId;
                 String recname = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
-                List<RecordType> rtSet = [select id from RecordType where DeveloperName=:recname];
-                    if (rtSet!=null && rtSet.size()>0 && rtSet.get(0)!=null)
-                acc.recordtypeid = rtSet[0].id;
+                Id rtID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', recname);
+                    if (rtID!=null)
+                acc.recordtypeid = rtID;
                 
                 if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
                     acc.Category_Other_Value__c = null;
                 
                 //Assign countries and states
                 if (!String.isBlank(acc.BillingCountry)) {
-                    List <Iata_Iso_Country__c> cn = [SELECT id FROM Iata_Iso_Country__c WHERE Name = :acc.BillingCountry LIMIT 1];
+                    List <Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
                         acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
                     }

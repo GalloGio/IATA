@@ -268,7 +268,7 @@ private class ANG_AccountTriggerHandlerTest {
 		//
 
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
-		ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+		ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account a = new Account(ANG_FA_Opt_out__c = true, Name = 'NameTest1', IATACode__c = '12344567', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');
 
