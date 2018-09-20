@@ -1,0 +1,214 @@
+<apex:component controller="ISSP_ICCS_ServiceMgmtController">
+    <apex:attribute name="pageCtrl" 
+                    type="ISSP_ICCS_ServiceController" 
+                    assignTo="{!pageController}"
+                    required="true" 
+                    description="The controller for the page." />
+
+    <apex:pageBlock rendered="{! pageController.isSignatoryUser || pageController.isLevel1User || pageController.isReadOnlyUser}">
+        <apex:form id="serviceManagementForm">
+            <div class="row margin-top-bottom">
+	            <apex:outputPanel rendered="{! pageController.userMessage != null || pageController.displayCaseSavedMessage}">
+	                <br/>
+	                <div class="panel panel-default">
+	                    <div class="panel-body" style="font-weight:bold;">
+							<div class="pddg">
+								<apex:outputText value="{! pageController.userMessage}" escape="false" rendered="{! pageController.userMessage != null}" style="color : {! IF(pageController.isSuccessMessage, '#000000', '#FF0000')};"/>
+
+								<apex:outputPanel rendered="{! pageController.displayCaseSavedMessage}">
+				                    <apex:outputText value="Your case "/>
+				                    <apex:commandLink action="{! pageController.navigateToCase}" value="{! pageController.savedCase.CaseNumber}" reRender="pageMainPanel" status="processActStatusId">
+				                        <apex:param name="caseId" value="{! pageController.savedCase.Id}" assignTo="{! pageController.caseIdParameter}"/>
+				                    </apex:commandLink> 
+				                    <apex:outputText value=" - '{! pageController.savedCase.Subject}' has been successfully {! IF(pageController.savedCase.Status != 'Draft', 'submitted', 'saved')}"/>
+					            </apex:outputPanel>
+							</div>
+	                    </div>
+	                </div>
+	            </apex:outputPanel>
+
+                <!-- Bank Accounts -->
+                <div class="row margin-top-bottom no-mrgn">
+	                <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+	                    <div class="section-title-gray srvc">
+	                    	<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                    	<apex:outputText value="{! $Label.ICCS_ServiceMgmt_Bank_Account_Codes}" escape="false"/>
+	                    </div>
+						<div class="bottom-box" style="text-align: justify;text-justify: inter-word;">
+						
+							<apex:pageBlockTable value="{! bankAccountTable.rowsToDisplay}" var="bankAccountRow" id="bankAccountTable">
+								<apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
+									<apex:outputText value="{! bankAccountRow.bankAccountCode.code}" style="color : {! IF(bankAccountRow.isParentRow, '#000000', '#999999')}"/>
+								</apex:column>
+	
+								<apex:column headerValue="{! $Label.ICCS_Currency_Label}">
+									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.currency_x}" style="color : {! IF(bankAccountRow.isParentRow, '#000000', '#999999')}"/>
+								</apex:column>
+	
+								<apex:column headerValue="{! $Label.ICCS_Account_Number_Label}">
+									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.number_x}" style="color : {! IF(bankAccountRow.isParentRow, '#000000', '#999999')}"/>
+								</apex:column>
+	
+								<apex:column headerValue="{! $Label.ICCS_Bank_Name_Label}">
+									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.bank.name}" style="color : {! IF(bankAccountRow.isParentRow, '#000000', '#999999')}"/>
+								</apex:column>
+	
+								<apex:column headerValue="{! $Label.ICCS_BIC_Label}">
+									<apex:outputText value="{! bankAccountRow.bankAccountCode.bankAccount.bank.bic}" style="color : {! IF(bankAccountRow.isParentRow, '#000000', '#999999')}"/>
+								</apex:column>
+	
+	                            <apex:column headerValue="{! $Label.ICCS_Actions_Label}" rendered="{! pageController.isMembershipMember}">
+	                                <apex:outputPanel rendered="{! bankAccountRow.isParentRow}">
+	                                    <apex:commandLink style="white-space:nowrap;" action="{! bankAccountRow.updateBankAccount}" value="{! $Label.ICCS_Update_Label}" rerender="pageMainPanel" status="processActStatusId"/>
+	                                    
+	                                    <apex:outputPanel rendered="{! bankAccountRow.bankAccountBlock.hasChildRows}">
+											<div class="v-line"></div>
+										</apex:outputPanel>
+	
+										<apex:commandLink style="white-space:nowrap;" action="{! bankAccountRow.showChildRows}" value="{! $Label.ICCS_Show_Child_Codes}" rendered="{! !bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.bankAccountBlock.hasChildRows}" rerender="bankAccountTable" status="processActStatusId"/>
+	                                    <apex:commandLink style="white-space:nowrap;" action="{! bankAccountRow.hideChildRows}" value="{! $Label.ICCS_Hide_Child_Codes}" rendered="{! bankAccountRow.bankAccountBlock.displayChildRows && bankAccountRow.bankAccountBlock.hasChildRows}" rerender="bankAccountTable" status="processActStatusId"/>
+	                                </apex:outputPanel>
+	                            </apex:column>
+	                        </apex:pageBlockTable>
+
+	                        <div class="expand">
+	                        	<apex:commandLink id="expandBankAccount" style="color: #0075bb; white-space:nowrap;" action="{! expandCollapseBankAccountTable}" value="{! IF(isBankAccountTableExpanded, $Label.ICCS_See_Less, $Label.ICCS_See_More)}" rendered="{! isBankAccountTableExpandable}" rerender="bankAccountTable,expandBankAccount" status="processActStatusId"/>
+	                        </div>
+	                        
+	                        <div class="btn">
+	                            <apex:outputPanel rendered="{! pageController.isMembershipMember}">
+		                            <apex:commandButton action="{! createBankAccount}" value="{! $Label.ICCS_Add_Bank_Account_Label}" style="white-space:nowrap;" rerender="pageMainPanel" status="processActStatusId"/>
+	                           </apex:outputPanel>
+	                        </div>
+	                    </div>
+	                </div>
+				</div>
+            
+                <!-- Standard SI's -->
+                <div class="row margin-top-bottom">
+	                <div class="col-md-12 col-sm-12 col-xs-12 text-center mrgn" style="padding-right:5px;padding-left:5px;">
+	                    <div class="section-title-gray srvc">
+	                    	<apex:image url="{!URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                    	<apex:outputText value="{! $Label.ICCS_ServiceMgmt_SSI_Table_Title}" escape="false"/>
+	                    </div>
+	                    <div class="bottom-box mrgn-l-r" style="text-align: justify;text-justify: inter-word;">
+	                        <apex:outputPanel>
+	                            <div class="pddg-2">
+									<apex:outputText value="{! $Label.ICCS_ServiceMgmt_Header}" escape="false"/>
+	                            </div>         
+	
+	                            <div class="divider-srvc-2"/>
+	
+	                            <div class="filter-2">
+									<div class="labelText">
+										<apex:outputText value="{! $Label.ICCS_Filter_By}" escape="false"/>
+									</div>
+	
+									<apex:selectList value="{! participationTable.selectedCategory}" multiselect="false" size="1">
+										<apex:selectOptions value="{! participationTable.categoryFilter}"/>
+										<apex:actionSupport event="onchange" action="{! participationTable.applyFilters}" rerender="serviceManagementForm" status="processActStatusId"/>
+									</apex:selectList>
+	
+									<apex:selectList value="{! participationTable.selectedCountry}" multiselect="false" size="1">
+										<apex:selectOptions value="{! participationTable.countryFilter}"/>
+										<apex:actionSupport event="onchange" action="{! participationTable.applyFilters}" rerender="serviceManagementForm" status="processActStatusId"/>
+									</apex:selectList>
+	
+									<apex:selectList value="{! participationTable.selectedCurrency}" multiselect="false" size="1">
+										<apex:selectOptions value="{! participationTable.currencyFilter}"/>
+										<apex:actionSupport event="onchange" action="{! participationTable.applyFilters}" rerender="serviceManagementForm" status="processActStatusId"/>
+									</apex:selectList>
+								</div>
+							</apex:outputPanel>
+	                        
+							<apex:outputPanel id="standardSiTable">
+		                        <apex:repeat value="{! participationRows}" var="participationRow">
+		                            <apex:outputPanel rendered="{! !participationRow.isFilteredOut}">
+		                                <div class="panel-primary" style="min-height:20px;">
+		                                    <div class="panel-heading head_panel_green">
+		                                        <div class="panel-title">
+		                                            <table style="width : 100%;">
+		                                                <tr>
+		                                                    <td style="width : 50%; text-align : left;">
+		                                                        <apex:outputText value="{! participationRow.participation.cashflow.name + ' ' + participationRow.participation.cashflow.processingCurrency}"/>
+		                                                    </td>
+		                                                    <td style="width : 25%; text-align : left;">
+		                                                        <apex:outputText value="{! $Label.ICCS_NoA}" rendered="{! participationRow.participation.noa == 'true'}"/>
+		                                                    </td>
+		                                                    <td style="width : 25%; text-align : right; font-size : 10pt;">
+		                                                        <apex:commandLink style="white-space:nowrap;" action="{! leaveParticipation}" value="{! $Label.ICCS_ServiceMgmt_Leave_Participation_Btn}" rendered="{! pageController.isMembershipMember && participationRow.participation.noa != 'true'}" rerender="pageMainPanel" status="processActStatusId">
+		                                                        	<apex:param name="participationId" value="{! participationRow.participationId}" assignTo="{! participationIdParameter}"/>
+		                                                        </apex:commandLink>
+		                                                        <apex:commandLink style="white-space:nowrap;" action="{! createNoaCase}" value="{! $Label.ICCS_Terminate_NoA_Link}" rendered="{! pageController.isMembershipMember && participationRow.participation.noa == 'true'}" rerender="pageMainPanel" status="processActStatusId">
+		                                                        	<apex:param name="participationId" value="{! participationRow.participationId}" assignTo="{! participationIdParameter}"/>
+																</apex:commandLink>
+		                                                        <div class="v-line"></div>
+		
+		                                                        <apex:commandLink style="white-space:nowrap;" action="{! participationRow.showSettlementInstructions}" value="{! $Label.ICCS_Show_SI_Link}" rendered="{! !participationRow.displaySettlementInstructions}" rerender="serviceManagementForm" status="processActStatusId"/>
+		                                                        <apex:commandLink style="white-space:nowrap;" action="{! participationRow.hideSettlementInstructions}" value="{! $Label.ICCS_Hide_SI_Link}" rendered="{! participationRow.displaySettlementInstructions}" rerender="serviceManagementForm" status="processActStatusId"/>
+		                                                    </td>
+		                                                </tr>
+		                                            </table>
+		                                        </div>
+		                                    </div>
+		                                    <apex:outputPanel rendered="{! participationRow.displaySettlementInstructions}">
+												<apex:repeat value="{! participationRow.settlementInstructionRows}" var="settlementInstructionRow">
+													<apex:outputPanel rendered="{! pageController.isMembershipMember && (pageController.isSignatoryUser || pageController.isLevel1User) && participationRow.participation.noa == 'false'}">
+														<table style="width : 100%;">
+															<tr>
+																<td style="width : 100%; text-align : right; font-size : 10pt;">
+																	<apex:commandLink style="white-space:nowrap;" action="{! editSettlementInstruction}" value="{! $Label.ICCS_Edit_SI_Link}" rerender="pageMainPanel" status="processActStatusId">
+																		<apex:param name="settlementInstructionId" value="{! settlementInstructionRow.settlementInstructionId}" assignTo="{! settlementInstructionIdParameter}"/>
+																	</apex:commandLink>
+																</td>
+															</tr>
+														</table>
+													</apex:outputPanel>
+		
+		                                            <apex:pageBlockTable value="{!settlementInstructionRow.settlementInstruction.instructionLines}" var="instructionLine">
+		                                                <apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
+		                                                    <apex:outputText value="{!instructionLine.accountCode.code}"/>
+		                                                </apex:column>
+		
+		                                                <apex:column headerValue="{! $Label.ICCS_Account_Currency_Label}">
+		                                                    <apex:outputText value="{!instructionLine.accountCode.bankAccount.currency_x}"/>
+		                                                </apex:column>
+		 
+		                                                <apex:column headerValue="{! $Label.ICCS_Account_Number_Label}">
+		                                                    <apex:outputText value="{!instructionLine.accountCode.bankAccount.number_x}"/>
+		                                                </apex:column>
+		
+		                                                <apex:column headerValue="{! $Label.ICCS_Instruction_Line_Type_Label}">
+		                                                    <apex:outputText value="{!instructionLine.type.code}"/>
+		                                                </apex:column>
+		
+		                                                <apex:column headerValue="{! $Label.ICCS_Value_Label}">
+		                                                    <apex:outputText value="{!instructionLine.value}" rendered="{! instructionLine.type.code != 'Balance'}"/>
+		                                                </apex:column>
+		
+		                                                <apex:column headerValue="{! $Label.ICCS_Priority_Order_Label}">
+		                                                    <apex:outputText value="{!instructionLine.order}"/>
+		                                                </apex:column>
+		                                            </apex:pageBlockTable>
+		                                        </apex:repeat>
+		                                    </apex:outputPanel>                                 
+		                                </div>
+		                            </apex:outputPanel>
+		                        </apex:repeat>
+							</apex:outputPanel>
+	                        
+	                        <div class="expand">
+	                        	<apex:commandLink id="expandParticipation" style="color: #0075bb; white-space:nowrap;"  action="{! expandCollapseParticipationTable}" value="{! IF(isParticipationTableExpanded, $Label.ICCS_See_Less, $Label.ICCS_See_More)}" rendered="{! isParticipationTableExpandable}" rerender="standardSiTable,expandParticipation" status="processActStatusId"/>
+	                        </div>
+	                        <div class="btn">
+	                            <apex:outputPanel rendered="{! pageController.isMembershipMember}">
+		                            <apex:commandButton action="{! joinParticipation}" value="{! $Label.ICCS_ServiceMgmt_Join_Participation_Btn}" style="white-space:nowrap;" rerender="pageMainPanel" status="processActStatusId"/>
+	                            </apex:outputPanel>
+	                        </div>
+	                    </div>
+	                </div>
+				</div>
+            </div>
+        </apex:form>
+    </apex:pageBlock>
+</apex:component>
