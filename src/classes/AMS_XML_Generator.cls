@@ -310,6 +310,11 @@ public with sharing class AMS_XML_Generator {
     //Type - determinates if it's "MasterData" or "ECC"
     //case -  Brings the OSCAR case Id for getting the ECC data
     public String getAgencyDetail(List<Account> agency, String[] r, String type, String caseId){
+        return getAgencyDetail(agency, r, type, caseId, new List<String>());
+    }
+
+    /*** AMSU-158 ***/
+    public String getAgencyDetail(List<Account> agency, String[] r, String type, String caseId, List<String> listOfErrors){
         
         Integer inicioCPU = Limits.getCpuTime();
         Integer inicioCPUx = Limits.getLimitCpuTime();
@@ -1263,13 +1268,20 @@ public with sharing class AMS_XML_Generator {
                             String code = '';
                             String description = '';
 
-                            if(!reasonParsed.isEmpty()) {
+                            if(reasonParsed.isEmpty()) {
+                                if(!ag.CNS_Account__c) {                                
+                                    listOfErrors.add(ag.Id + ',' + (String.isBlank(ag.Reason__c) ? '' : ag.Reason__c).escapeCSV());
+                                }
+                            } else  {
                                 String firstElem = reasonParsed.remove(0);
                                 if(firstElem.isNumeric()) {
                                     code = firstElem;
-                                } else if(reasonParsed.isEmpty()) {
+                                } else {
+                                    if(reasonParsed.isEmpty()) {
                                         reasonParsed.add(firstElem);
                                     }
+                                    listOfErrors.add(ag.Id + ',' + (String.isBlank(ag.Reason__c) ? '' : ag.Reason__c).escapeCSV());
+                                }
                                 description = String.join(reasonParsed, '-');
                             }
 

@@ -36,6 +36,8 @@ global class AMS_2_MDM_Webservice {
     
     @future(callout=true)
     static void sendAgenciesContent(String GroupID, String ChunkSize , String ChunkKey, String ChunkTotal, List<String> ids){
+        /*** AMSU-158 ***/
+        List<String> listOfErrors = new List<String>();
         
         //Initiate Log
         Technical_Logs__c tlog = new Technical_Logs__c();
@@ -242,6 +244,42 @@ global class AMS_2_MDM_Webservice {
         }catch (Exception ex) {
                 system.debug('Log writing error: ' + ex.getMessage());
         }    
+
+        /*** AMSU-158 ***/
+        try {
+            sendCSVReport(listOfErrors);
+        } catch(Exception ex) {
+            System.debug('Error sending report: ' + ex.getMessage());
+        }
+    }
+
+    /*** AMSU-158 ***/
+    public static void sendCSVReport(List<String> listOfErrors) {
+        String body = 'Account Id, Reason';
+        
+        for(String error : listOfErrors) {
+            body += error + '\n';
+        }
+
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.subject = 'XML Generator report - ' + (listOfErrors.isEmpty() ? 'successful generation' : listOfErrors.size() + ' errors');
+        message.setPlainTextBody('XML Generator errors - Check attachment with execution results - ' + DateTime.now());
+
+        if(!listOfErrors.isEmpty()) {
+            Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
+            Blob csvReport = Blob.valueOf(body);
+            csvAttc.setFileName('XML Generator errors report.csv');
+            csvAttc.setBody(csvReport);
+            message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
+        }        
+        
+        Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};
+
+        if(!Test.isRunningTest() && !String.isBlank(Label.AMS_XML_GEN_ERROR_RECEIVER)) {
+            List<String> emailAddresses = Label.AMS_XML_GEN_ERROR_RECEIVER.split(';');
+            message.setToaddresses(emailAddresses);
+            Messaging.sendEmail(messages);
+        }
     }
     
    
