@@ -65,34 +65,19 @@ public with sharing class AMP_OwnershipController {
         
         sortedList.addAll(otherStakeholderTypesRecords);
         
-        // Define user rights related to the noAirlineSubsidiaries line
+		Boolean hasSpecialLine = !otherStakeholderTypesRecords.isEmpty();
+		Boolean canSpecialLineBeAdded = otherStakeholderTypesRecords.isEmpty();
+        
+        // Define user rights related to the Other Stakeholder Types line
 	    Id userId = UserInfo.getUserId();
 	    Id profileId = UserInfo.getProfileId();
 	    
         List<PermissionSetAssignment> permissionSet = [select Id from PermissionSetAssignment where AssigneeId =: userId and PermissionSet.Name = 'AMP_Manage_Account_Ownership'];
         List<Profile> accountManagementTeamProfile = [SELECT Id FROM Profile WHERE Id =: profileId and Name='Account management team'];
         
-	    Boolean canUserCreateSpecialLine = false;
-	    Boolean canUserEditSpecialLine = false;
-	    Boolean canUserDeleteSpecialLine = false;
-	    
-        // If user has the Account management team profile, he has full rights
-        if(!accountManagementTeamProfile.isEmpty()){
-		    canUserCreateSpecialLine = true;
-		    canUserEditSpecialLine = true;
-		    canUserDeleteSpecialLine = true;
-        }
-        // If user has the AMP_Manage_Account_Ownership permission set, he has some rights as well
-        else if(!permissionSet.isEmpty()){
-		    canUserCreateSpecialLine = true;
-		    canUserEditSpecialLine = true;
-			canUserDeleteSpecialLine = userId == specialLineCreatedById;
-        }
+		Boolean canUserHandleSpecialLine = !(accountManagementTeamProfile.isEmpty() && permissionSet.isEmpty());
 
-		// User cannot add a Other Stakeholder Types if one already exists
-        AMSAccountRoleList amsAccountRoleList = new AMSAccountRoleList(sortedList, !otherStakeholderTypesRecords.isEmpty(), otherStakeholderTypesRecords.isEmpty(), canUserCreateSpecialLine, canUserEditSpecialLine, canUserDeleteSpecialLine);
-
-        return amsAccountRoleList;
+        return new AMSAccountRoleList(sortedList, hasSpecialLine, canSpecialLineBeAdded, canUserHandleSpecialLine);
     }
 
     public AMSAccountRoleList getOwners() {
@@ -147,6 +132,9 @@ public with sharing class AMP_OwnershipController {
         }
 
         sortedList.addAll(noAirlineSubsidiariesRecords);
+
+		Boolean hasSpecialLine = !noAirlineSubsidiariesRecords.isEmpty();
+		Boolean canSpecialLineBeAdded = sortedList.isEmpty();
         
         // Define user rights related to the noAirlineSubsidiaries line
 	    Id userId = UserInfo.getUserId();
@@ -155,30 +143,12 @@ public with sharing class AMP_OwnershipController {
         List<PermissionSetAssignment> permissionSet = [select Id from PermissionSetAssignment where AssigneeId =: userId and PermissionSet.Name = 'AMP_Manage_Account_Ownership'];
         List<Profile> accountManagementTeamProfile = [SELECT Id FROM Profile WHERE Id =: profileId and Name='Account management team'];
         
-	    Boolean canUserCreateSpecialLine = false;
-	    Boolean canUserEditSpecialLine = false;
-	    Boolean canUserDeleteSpecialLine = false;
-	    
-        // If user has the Account management team profile, he has full rights
-        if(!accountManagementTeamProfile.isEmpty()){
-		    canUserCreateSpecialLine = true;
-		    canUserEditSpecialLine = true;
-		    canUserDeleteSpecialLine = true;
-        }
-        // If user has the AMP_Manage_Account_Ownership permission set, he has some rights as well
-        else if(!permissionSet.isEmpty()){
-		    canUserCreateSpecialLine = true;
-		    canUserEditSpecialLine = true;
-			canUserDeleteSpecialLine = userId == specialLineCreatedById;
-        }
-
-		// User can add a No Airline Subsidiaries line only if the list is empty
-        AMSAccountRoleList amsAccountRoleList = new AMSAccountRoleList(sortedList, !noAirlineSubsidiariesRecords.isEmpty(), sortedList.isEmpty(), canUserCreateSpecialLine, canUserEditSpecialLine, canUserDeleteSpecialLine);
+		Boolean canUserHandleSpecialLine = !(accountManagementTeamProfile.isEmpty() && permissionSet.isEmpty());
 
         system.debug('AccountId: ' + AccountId);
         system.debug('getSubs: ' + sortedList);
 
-        return amsAccountRoleList;
+        return new AMSAccountRoleList(sortedList, hasSpecialLine, canSpecialLineBeAdded, canUserHandleSpecialLine);
     }
 
     public AMSAccountRoleList getSubsidiaries() {
@@ -256,8 +226,6 @@ public with sharing class AMP_OwnershipController {
         }
     }
 
-
-
     public void EditLine() {
         isEditMode = true;
 
@@ -328,21 +296,13 @@ public with sharing class AMP_OwnershipController {
 	    public Boolean canSpecialLineBeAdded {get;set;}
 	    
 	    @AuraEnabled
-	    public Boolean canUserCreateSpecialLine {get;set;}
-	    
-	    @AuraEnabled
-	    public Boolean canUserEditSpecialLine {get;set;}
-	    
-	    @AuraEnabled
-	    public Boolean canUserDeleteSpecialLine {get;set;}
-	    
-	    public AMSAccountRoleList(List<AMS_Account_Role__c> amsAccountRoleList, Boolean hasSpecialLine, Boolean canSpecialLineBeAdded, Boolean canUserCreateSpecialLine, Boolean canUserEditSpecialLine, Boolean canUserDeleteSpecialLine){
+	    public Boolean canUserHandleSpecialLine {get;set;}
+
+	    public AMSAccountRoleList(List<AMS_Account_Role__c> amsAccountRoleList, Boolean hasSpecialLine, Boolean canSpecialLineBeAdded, Boolean canUserHandleSpecialLine){
 	    	this.amsAccountRoleList = amsAccountRoleList;
 	    	this.hasSpecialLine = hasSpecialLine;
 	    	this.canSpecialLineBeAdded = canSpecialLineBeAdded;
-	    	this.canUserCreateSpecialLine = canUserCreateSpecialLine;
-	    	this.canUserEditSpecialLine = canUserEditSpecialLine;
-	    	this.canUserDeleteSpecialLine = canUserDeleteSpecialLine;
+	    	this.canUserHandleSpecialLine = canUserHandleSpecialLine;
 	    }
     }
 }

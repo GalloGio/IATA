@@ -4,14 +4,14 @@
 	<apex:form >
 		<apex:pageBlock >
 			<apex:outputPanel id="SubsidiariesTable">
-				<h2>Subsidiaries</h2>
+				<h2>Airline-Subsidiaries</h2>
 
 				<apex:pageBlockTable value="{!subsidiaries.amsAccountRoleList}" var="item">
 
 					<apex:column style="width: 80px;">
 	                    <apex:facet name="header">Actions</apex:facet>
 
-	                    <apex:commandLink value="Del" action="{!DeleteLine}" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{! !(isEditMode && IdConcerned == item.Id) && canEdit && (!item.No_Airline_Subsidiaries__c || subsidiaries.canUserDeleteSpecialLine)}" >
+	                    <apex:commandLink value="Del" action="{!DeleteLine}" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{! !(isEditMode && IdConcerned == item.Id) && canEdit && (!item.No_Airline_Subsidiaries__c || subsidiaries.canUserHandleSpecialLine)}" >
                     		<apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
                     	</apex:commandLink>
                     	&nbsp;
@@ -62,8 +62,8 @@
 
 				</apex:pageBlockTable>
 
-				<apex:commandButton action="{!AddNewSubsidiary}" value="Add New Subsidiary" rendered="{!IF(OR(isEditMode, NOT(canEdit)), false, true) && NOT(subsidiaries.hasSpecialLine)}" />
-				<apex:commandButton action="{!AddNoAirlineSubsidiaries}" onclick="if(!confirm('Are you sure this airline has no subsidiaries?')){return false};" value="{! $Label.No_Airline_Subsidiaries_Label}" rendered="{! !isEditMode && canEdit && subsidiaries.canSpecialLineBeAdded && subsidiaries.canUserCreateSpecialLine}" />
+				<apex:commandButton action="{!AddNewSubsidiary}" value="Add Subsidiary" rendered="{!IF(OR(isEditMode, NOT(canEdit)), false, true) && NOT(subsidiaries.hasSpecialLine)}" />
+				<apex:commandButton action="{!AddNoAirlineSubsidiaries}" onclick="if(!confirm('Are you sure this airline has no subsidiaries?')){return false};" value="{! $Label.No_Subsidiaries}" rendered="{! !isEditMode && canEdit && subsidiaries.canSpecialLineBeAdded && subsidiaries.canUserHandleSpecialLine}" />
 			</apex:outputPanel>
 
 

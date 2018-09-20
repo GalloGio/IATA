@@ -25247,6 +25247,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>No-Reply</value>
     </labels>
     <labels>
+        <fullName>No_Subsidiaries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No_Subsidiaries</shortDescription>
+        <value>No Subsidiaries</value>
+    </labels>
+    <labels>
         <fullName>No_account_yet_Sign_up</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -28189,6 +28196,13 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>ReleaseDateMessage</shortDescription>
         <value>This title will be effective on</value>
+    </labels>
+    <labels>
+        <fullName>Remaining_Owners</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Remaining_Owners</shortDescription>
+        <value>Remaining Owners</value>
     </labels>
     <labels>
         <fullName>Renewal_Number</fullName>
