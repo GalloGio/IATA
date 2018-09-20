@@ -16,6 +16,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	public Boolean isSearch {get; set;}
 	public Boolean isIEPFlag {get; set;}
 	public Boolean isCashFlag {get; set;}
+	public String iepModel {get; set;}
 
 	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, List<Portal_Application_Right__c> services, Account account, Boolean isSearch) {
 		this.isCash = NO;
@@ -27,6 +28,11 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.isSearch = isSearch;
 		this.isIEPFlag = false;
 		this.isCashFlag = false;
+		this.iepModel = '';
+
+		if (account.IATA_ISO_Country__r.ANG_IEP_Model__c != null) {
+			this.iepModel = account.IATA_ISO_Country__r.ANG_IEP_Model__c;
+		}
 
 		this.isCashless = (contact != null && 
 						   account.ANG_Accreditation_Model__c != null && 
@@ -146,6 +152,19 @@ public with sharing class ANG_ISSP_AfpWrapper {
         	}		       
 
 			this.iepLinkLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
+
+			if (this.iepModel == 'Banking Model') {
+				if (account.IATA_ISO_Country__r.Name == 'India') 
+					this.iepLinkLabel = '?';
+					this.modalErrorMessage = '?';
+				if (account.IATA_ISO_Country__r.Name == 'India') 
+					this.iepLinkLabel = '?';
+					this.modalErrorMessage = '?';
+				if (account.IATA_ISO_Country__r.Name == 'India') 
+					this.iepLinkLabel = '?';
+					this.modalErrorMessage = '?';
+					//Rui
+			}
 
 			if(!isIEPAccountEnable) {
 				this.iepLink = '#';								
