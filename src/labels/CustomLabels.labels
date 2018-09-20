@@ -4856,7 +4856,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Services URL PROD</shortDescription>
-        <value>https://iccsqa-api.iata.org/api/v1</value>
+        <value>https://iccs-api.iata.org/api/v1</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Token_URL</fullName>
