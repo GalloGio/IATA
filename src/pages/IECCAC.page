@@ -264,14 +264,23 @@
 
                                         </tr>
                                         <tr>
-                                            <apex:outputText rendered="{!oAgency.Accreditation_Model__c!=null}">
+                                            <td>
+                                            <apex:outputText rendered="{!oAgency.Accreditation_Model__c != null}" value="Accreditation Model"/>
+                                            </td>
                                                 <td>
-                                                    Accreditation Model
-                                                </td>
-                                                <td>
-                                                  {!oAgency.Accreditation_Model__c}   
-                                                </td>
-                                            </apex:outputText>
+                                                    <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'L'}">
+                                                        Cashless
+                                                    </apex:outputpanel>
+                                                    <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'S'}">
+                                                        Cash
+                                                    </apex:outputpanel>
+                                                    <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'G'}">
+                                                        Multicountry
+                                                    </apex:outputpanel>
+                                                    <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'T'}">
+                                                        Legacy
+                                                    </apex:outputpanel>
+                                                </td>                                            
                                         </tr>
                                     </table>
                                 </apex:outputpanel>
