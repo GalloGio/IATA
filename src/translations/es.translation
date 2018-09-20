@@ -3939,7 +3939,7 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_IDCardAppNotFound</name>
     </customLabels>
     <customLabels>
-        <label>Cursos ITDI (Opcional)</label>
+        <label>Capacitación IATA Training (Opcional)</label>
         <name>IDCard_ITDICourse</name>
     </customLabels>
     <customLabels>
@@ -4834,11 +4834,11 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <name>ID_Card_Not_found_for_VER</name>
     </customLabels>
     <customLabels>
-        <label>Si usted desea tomar ventaja del paquete de agentes de viaje, combinando el IDcard con una selección de 2 cursos ITDI en línea</label>
+        <label>Aproveche  de un precio reducido para 2 cursos de capacitación con IATA Training. &lt;u&gt;El precio será agregado a la Tarifa&lt;/u&gt;. Una vez que su solicitud de la tarjeta IATA/IATAN haya sido aprobada , IATA Training se contactará con usted para el acceso a sus cursos.</label>
         <name>ID_Card_Package_Travel_Professionals_1</name>
     </customLabels>
     <customLabels>
-        <label>por favor seleccione sus cursos aquí:</label>
+        <label>&lt;br&gt; Por favor seleccione sus cursos aquí:</label>
         <name>ID_Card_Package_Travel_Professionals_2</name>
     </customLabels>
     <customLabels>
