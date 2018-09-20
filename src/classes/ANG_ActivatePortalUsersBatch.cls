@@ -54,7 +54,8 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
                 if (!userList.isEmpty()){
-                    ISSP_PortalUserStatusChange.updateUserSync(conId, true, currentEmail, profileId, ''); /*** AMSU-163 changed to be synchronous ***/
+                    //ISSP_PortalUserStatusChange.updateUserSync(conId, true, currentEmail, , profileId, ''); /*** AMSU-163 changed to be synchronous ***/
+                    System.enqueueJob(new UpdateUserStatus(conId, currentEmail, profileId));
                     //ISSP_HierarchyAccountTeamAccounts.HierarchyAccountTeamMemberAccounts(new Set<Id>{userList[0].Id});
                 }
                 else{
@@ -154,6 +155,22 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
             update newUser;
         }
 
+    }
+
+    public class UpdateUserStatus implements Queueable {
+        public Id contactId {get;set;}
+        public String email {get;set;}
+        public Id profileId {get;set;}
+
+        public UpdateUserStatus(Id contactId, String email, Id profileId) {
+            this.contactId = contactId;
+            this.email = email;
+            this.profileId = profileId;
+        }
+
+        public void execute(QueueableContext context) {
+            ISSP_PortalUserStatusChange.updateUserSync(contactId, true, email, profileId, '');
+        }
     }
 
 }
