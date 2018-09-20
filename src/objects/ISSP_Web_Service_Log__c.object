@@ -464,7 +464,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>7/5/2018 12:00 AM</value>
+            <value>8/31/2018 12:00 AM</value>
         </filters>
         <filters>
             <field>Method__c</field>

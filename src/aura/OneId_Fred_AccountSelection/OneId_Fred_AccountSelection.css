@@ -1,0 +1,55 @@
+.THIS .slds-card:hover {
+	background-color:#f1f1f1;
+}
+
+.THIS .headerRow {
+    background-color: #f1f2f4;
+    font-weight: bold;
+}
+
+.THIS .lastRow {
+	background-color: #00305b;
+	color:white;
+	font-size: 12px;
+    font-style: italic;
+}
+
+.THIS .lastRowInfo {
+	background-color: #00305b;
+	color:white;
+	font-size: 12px;
+    font-style: italic;
+}
+
+.THIS .lastRow:hover {
+	background-color: black !important;
+	color:white;
+}
+
+.THIS .lastRow a {
+	color: #00aeef !important;
+}
+
+.THIS .columnTitle{
+	font-size: 9px;
+}
+
+.THIS .columnValue{
+	font-size: 12px;
+    font-weight: bold;
+    color: #094278;
+}
+
+.THIS .slds-card__body.slds-card__body_inner {
+	margin-bottom: 0px;
+}
+
+.THIS .buttonStyle{
+	text-align: right;
+    margin-top: 20px;
+}
+
+.THIS .contactUsSuggestion:hover {
+ 	background-color: black !important;
+	color:white;
+}

@@ -36,6 +36,13 @@
                         </a>
                     </aura:set>
                 </aura:if>
+
+                <aura:if isTrue="{!equals(v.serviceName,'FRED')}">                        
+                    <a class="homeIcon" href="{!'/'+ $Label.c.OneId_Community_Name+'/login/?language=en_US&amp;serviceName='+v.serviceName}">
+                        <span class="icon icon-logo"></span>
+                        <span class="{!'subLogo' + v.serviceName}"></span>
+                    </a>
+                </aura:if>
 		    </div>
 
             <div class="slds-col slds-max-small-size_1-of-1 slds-align-bottom slds-p-horizontal_large">

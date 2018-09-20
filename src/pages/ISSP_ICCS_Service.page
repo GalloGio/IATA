@@ -1,0 +1,1027 @@
+<apex:page docType="html-5.0" controller="ISSP_ICCS_ServiceController" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+
+	<html>
+		<c:ISSP_Header ></c:ISSP_Header>
+
+		<apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+
+		<link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/home_page.css')}" />
+
+		<style>
+			html{
+				min-height:100%;/* make sure it is at least as tall as the viewport */
+				position:relative;
+			}
+
+			body{
+				height:100%; /* force the BODY element to match the height of the HTML element */
+                background-image: url(resource/1515514521000/IATA_ICCS_icons_new/bg-site.jpg) !important;
+                background-size: cover !important;
+            }
+            
+            /**** design changes ****/
+            
+                .logo {
+                    text-align: center;
+                    padding-top: 24px;
+                }
+                .col-xs-12.text-center.currency-center-title {
+                    padding-bottom: 24px !important;
+                    text-transform: uppercase;
+                    font-size: 40px;
+                }
+                .text-wrapper a {
+                    color: white;
+                    font-weight: normal;
+                }
+                .header-box-text-wrapper{
+                    color: white;
+					font-size: 12px;
+					text-transform: uppercase;
+                    letter-spacing: 1px;
+                    text-align: center;
+                }
+                .header-box-text-wrapper a{
+                    color: white;
+                }
+                .tab-text {
+	              	float: right;
+	              	width: 100%;
+                	padding-top: 105px;
+                }
+                .home {
+                    background-color: #e5166e;
+                }
+                .watch-list.home {
+                    background-image: url(resource/1515514521000/IATA_ICCS_icons_new/home.png);
+                }
+                .srvc {
+                    background-color: #F19200;
+                }
+                .watch-list.srvc {
+                    background-image: url(resource/1515514521000/IATA_ICCS_icons_new/service-management.png);
+                }
+                .cycle {
+                    background-color: #61B31B;
+                }
+                .all-others.cycle {
+                    background-image: url(resource/1515514521000/IATA_ICCS_icons_new/cycle-management.png);
+                }
+                .cases {
+                    background-color: #BDCF1B;
+                }
+                .manage-notif.cases {
+                    background-image: url(resource/1515514521000/IATA_ICCS_icons_new/cases.png);
+                }
+                .rprts {
+                    background-color: #1cb3d0;
+                }
+                .manage-notif.rprts {
+                    background-image: url(resource/1515514521000/IATA_ICCS_icons_new/reports.png);
+                }
+                .prfl {
+                    background-color: #0075bb;
+                }
+                .blocked-funds.prfl {
+                    background-image: url(resource/1515514521000/IATA_ICCS_icons_new/profile.png);
+                }
+                .section-title-gray {
+                    margin: 0;
+                    color: white;
+                    text-align: left;
+                    font-weight: normal;
+                    font-size: 12px;
+                    letter-spacing: 0.2px;
+                    border: 1px solid #e5eaee;
+                }
+                .section-title-gray img {
+                    margin-left: 12px;
+                    margin-right: 12px;
+                }
+                .bottom-box {
+                    margin: 0;
+                    padding: 0 !important;
+                    border: 0;
+                    border-left: 1px solid #e5eaee;
+                    border-right: 1px solid #e5eaee;
+                    border-bottom: 1px solid #e5eaee;
+                }
+                .margin-top-bottom {
+                    margin: 24px 0;
+                }
+                .margin-top {
+                    margin: 24px 0 0 0;
+                }
+                .margin-bottom {
+                    margin: 0 0 24px 0;
+                }
+                .text-center {
+                    margin: 0;
+                    padding: 0 !important;
+                }
+                .pddg {
+                    padding: 24px !important;
+                    font-size: 14px;
+                }
+                .pddg-2 {
+                    padding: 24px 24px 40px 24px;
+                    font-size: 14px;
+                }
+                .pddg-3 div {
+                    padding: 24px 24px 40px 24px;
+                    font-size: 14px;
+                }
+                .pddg-4 {
+                    padding: 24px 24px 0px 24px;
+                }
+                .pddg-bttm {
+                    padding-bottom: 24px !important;
+                }
+                .divider, 
+                .divider-2,
+                .divider-3,
+                .divider-4 {
+                    border-top: 1px dashed #3b95ca;
+                }
+                .divider {
+                    margin-top: 40px;
+                }
+                .divider-2 {
+                    margin-left: 24px;
+                    margin-right: 24px;
+                }
+                .divider-3 {
+                    margin-top: 40px;
+                    margin-left: 24px;
+                    margin-right: 24px;
+                }
+                .divider-4 {
+                    margin-top: 40px;
+                    margin-bottom: 40px;
+                }
+                .divider-home {
+                    border-top: 1px dashed #e5166e;
+                }
+                .divider-home {
+                    margin-top: 40px;
+                }
+                .divider-srvc,
+                .divider-srvc-2 {
+                    border-top: 1px dashed #F19200;
+                }
+                .divider-srvc {
+                    margin-top: 40px;
+                }
+                .divider-srvc-2 {
+                    margin-left: 24px;
+                    margin-right: 24px;
+                }
+                .divider-cycle-2 {
+                    border-top: 1px dashed #61B31B;
+                }
+                .divider-cycle-2 {
+                    margin-left: 24px;
+                    margin-right: 24px;
+                }
+                .divider-cases-2 {
+                    border-top: 1px dashed #BDCF1B;
+                }
+                .divider-cases-2 {
+                    margin-left: 24px;
+                    margin-right: 24px;
+                }
+                .left-card, 
+                .left-card-2 {
+                    margin-right: 0.5%;
+                    margin-bottom: 24px;
+                }
+                .left-card {
+                    width: 49.5%;
+                }
+                .left-card-2 {
+                    width: 32.5%;
+                }
+                .right-card, 
+                .right-card-2 {
+                    margin-left: 0.5%;
+                    margin-bottom: 24px;
+                }
+                .right-card {
+                    width: 49.5%;
+                }
+                .right-card-2 {
+                    width: 66.5%;
+                }
+                .down-btn {
+                    margin-left: 8px;
+                    background-color: #0075bb;
+                    color: white;
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    letter-spacing: 0.2px;
+                    width: auto;
+                    display: inline;
+                    cursor: pointer;
+                }
+                .down-btn a, 
+                .down-btn a:focus, 
+                .down-btn a:visited {
+                    color: white;
+                }
+                .ic-pstn {
+                    margin: 0;
+                    padding: 0;
+                    display: unset;
+                }
+                .ic-pstn img {
+                    margin-left: -6px;
+                }
+                .bold-txt {
+                    font-weight: bold;
+                    color: #454545;
+                    letter-spacing: 0.2px;
+                }
+                .border {
+                    padding: 12px;
+                    margin-bottom: 24px;
+                    border-top: 1px solid #e5eaee;
+                    border-left: 1px solid #e5eaee;
+                    border-right: 1px solid #e5eaee;
+                    border-bottom: 1px solid #e5eaee;
+                }
+                .row-1, 
+                .row-2 {
+                    display: inline-table;
+                    width: 100%;
+                }
+                .row-1 {
+                    color: #454545;
+                }
+                .row-2 {
+                    margin-top: 8px;
+                }
+                .col, 
+                .line {
+                    width: 33%;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+                .col, 
+                .headerRow {
+                    text-transform: uppercase;
+                    font-weight: bold;
+                }
+                .line {
+                    font-size: 12px;
+                    letter-spacing: 0.2px;
+                }
+                .bottom-box.no-pddg {
+                    padding: 0px !important;
+                }
+                .table, 
+                table {
+                    margin-bottom: 0px !important;
+                    table-layout: fixed;
+                }
+                .table-cases {
+                	table-layout: auto;
+                }
+                .table-cases tr th {
+                	padding: 12px !important;
+                }
+                .table-cases tr td {
+                	padding: 12px !important;
+                }
+                .table>tbody>tr>td, 
+                .table>tbody>tr>th, 
+                .table>tfoot>tr>td, 
+                .table>tfoot>tr>th, 
+                .table>thead>tr>td, 
+                .table>thead>tr>th {
+                    padding: 0px;
+                }
+                .headerRow {
+                    border: 0px;
+                    color: #454545 !important;
+                    vertical-align: middle !important;
+                    background: none !important;
+                }
+                td.data2Col {
+                    padding: 0px !important;
+                }
+                th {
+                    padding: 14px !important;
+                    color: #454545;
+                    font-size: 12px;
+                    letter-spacing: 0.2px;
+                }
+                td {
+                    padding: 12px 23px 12px 23px !important;
+                    font-size: 12px;
+                    letter-spacing: 0.2px;
+                }
+                th.headerRow {
+                    border: 0px ! important;
+                    text-align: center !important; 
+                }
+                td.dataCell {
+                    border: 0px ! important;
+                    vertical-align: middle !important;
+                    text-align: center !important;
+                    font-size: 12px;
+                    letter-spacing: 0.2px;
+                }
+                td a {
+                    color: #0075bb !important;
+                }
+                tr:nth-child(odd) {
+                    background-color: #f5f5f5;
+                }
+                .list.table tr:nth-child(even) {
+                    background-color: white !important;
+                }
+                .list.table tr:nth-child(odd) {
+                    background-color: #f5f5f5;
+                }
+                .detailList tr:nth-child(odd) {
+                    background-color: white;
+                }
+                .detailList tr td tr:nth-child(even) {
+                    background-color: white !important;
+                }
+                .detailList tr td tr:nth-child(odd) {
+                    background-color: #f5f5f5;
+                }
+                hr {
+                    margin-top: 100px;
+                }
+                .topborder {
+                    padding-bottom: 12px;
+                }
+                .mrgn {
+                    margin-bottom: 24px;
+                    padding: 0px !important;
+                }
+                .mrgn-2 {
+                    margin-bottom: 48px;
+                    padding: 0px !important;
+                }
+                .no-mrgn {
+                    margin: 0;
+                }
+                .btn, 
+                .btn-2,
+                .btn-3 {
+                    margin: 0;
+                    text-align: right;
+                    cursor: initial;
+                }
+                .btn,
+                .btn-2 {
+                    width: 100%;
+                    display: inline-block;
+                }
+                .btn {
+                    padding-right: 32px;
+                    padding-top: 48px;
+                    padding-bottom: 32px;
+                }
+                .expand {
+                    margin: 0;
+                    text-align: right;
+                    cursor: initial;
+                    width: 100%;
+                    display: inline-block;
+                    padding-right: 32px;
+                    padding-top: 16px;
+                    padding-bottom: 16px;
+                    font-size: 10pt;
+                }
+                button, 
+                html input[type=button], 
+                input[type=reset], 
+                input[type=submit] {
+                    -webkit-appearance: button;
+                    cursor: pointer;
+                    background: none;
+                    border-radius: 4px;
+                    border: 1px solid #0075bb;
+                    color: #0075bb;
+                    padding: 4px 24px;
+                    font-size: 12px;
+                    letter-spacing: 0.2px;
+                }
+                button:hover, 
+                input:hover {
+                    text-decoration: underline;
+                }
+                .v-line {
+                    border-right: 1px solid black;
+                    display: inline;
+                    margin-left: 8px;
+                    margin-right: 8px;
+                }
+                .mrgn-l-r .panel-primary {
+                    margin-left: 24px;
+                    margin-right: 24px;
+                }
+                .panel-heading {
+                    padding: 0;
+                }
+                .panel-primary>.panel-heading {
+                    background: none;
+                    border: 0;
+                    margin-top: 2px;
+			}
+                .panel-primary>.panel-heading tr td:first-child {
+                    font-size: 12px;
+                    font-weight: bold;
+                    color: #454545;
+                }
+                .panel-primary>.panel-heading td {
+                    font-size: 12px;
+                    letter-spacing: 0.2px;
+                }
+                .panel-heading tr:nth-child(odd) {
+                    background: none !important;
+                }
+                .mrgn-l-r .panel-heading table tr:first-child td { 
+                    background-color: #dadada;
+                    border-radius: 0;
+                }
+                .panel-heading td {
+                    color: black;
+                    padding: 0px 12px; 
+                }
+                .panel-primary span td {
+                    padding: 12px 26px 12px 26px;
+                }
+                .select {
+                    padding: 24px 24px 24px 24px;
+                    display: inline-block;
+                    line-height: 30px;
+                }
+                select[multiple], 
+                select[size] {
+                    min-width: 150px;
+                    /*max-width: 300px;*/
+                    width: auto;
+                    height: 30px;
+                    border: 1px solid #cdcdcd;
+                    -webkit-appearance: none;
+                    appearance: none;
+                    background-image: url(resource/1515514521000/IATA_ICCS_icons_new/select-arrow.png);
+                    background-repeat: no-repeat;
+                    background-size: 14px;
+                    background-position: 95% 50%;
+                    background-color: transparent;
+                    text-indent: 8px;
+                    font-size: 12px;
+                    color: black;
+                    letter-spacing: 0.2px;
+                    cursor: pointer;
+                    margin-left: 8px;
+                        padding-right: 40px;
+                }
+                option {
+                    max-width: 250px;
+                    overflow: hidden; 
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                input, 
+                textarea, 
+                select, a { 
+                    outline: none; 
+                }
+                .oddTable:nth-child(odd) {
+                    background-color: #f5f5f5;
+                }
+                .oddTable tr {
+                    background-color: transparent;
+                }
+                .msg-pstn {
+                    display: block;
+                }
+                .filter {
+                    margin: 24px;
+                    width: auto;
+                    display: inline-block;
+                    float: right;
+                }
+                .filter-2 {
+                    margin: 24px;
+                    width: auto;
+                    text-align: right;
+                }
+                .filter-3 {
+                    margin: 0 24px 24px 24px;
+                    padding-top: 24px;
+                    width: auto;
+                    text-align: right;
+                }
+                .prfl-tbl tr:nth-child(even) {
+                    background-color: #f5f5f5;
+                }
+                .labelText {
+                    display: inline-block;
+                }
+                .labelText, 
+                .labelText label,
+                .select span {
+                    font-size: 12px !important;
+                    font-weight: normal !important;
+                    color: #9e9e9e !important;
+                }
+                td label {
+                    text-transform: uppercase;
+                }
+                .outputTxt {
+                    font-size: 12px;
+                    display: inline-block;
+                    margin-right: 10px;
+                    margin-left: 10px;
+                }
+                .date {
+                    margin: 0px 24px 40px 24px;
+                    width: auto;
+                    display: inline-block;
+                    float: right;
+                }
+                input[type="text"] {
+                    max-width: 110px;
+                    height: 30px;
+                    border: 1px solid #cdcdcd;
+                    -webkit-appearance: none;
+                    border-radius: 4px;
+                    text-align: center;
+                    font-size: 12px;
+                }
+                input[type="text"]:hover {
+                    text-decoration: none;
+                }
+                .page-num {
+                    font-size: 11px;
+                    text-align: right;
+                    padding: 24px;
+                }
+                .page-num a {
+                    color: #757575;
+                }
+                .page-num span {
+                    color: #4b8cc4;
+                }
+               
+                .panel-heading.head_panel_green {
+                    background-color: transparent;
+                }
+                .panel-title-2 {
+                    margin: 24px;
+                    padding: 24px;
+                    background-color: #f5f5f5;
+                    border: 1px solid #dce1e5;
+                }
+                .panel-title-2 h3 {
+                    padding: 0;
+                    color: #454545;
+                    text-transform: uppercase;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+                .panel-title-2 p {
+                    color: black;
+                    font-size: 12px;
+                    letter-spacing: 0.2px;
+                    padding-top: 8px;
+                }
+                .panel-title-3 {
+                    margin: 0px 24px 0px 24px;
+                    padding: 24px;
+                    background-color: #f5f5f5;
+                    border: 1px solid #dce1e5;
+                }
+                .panel-title-3 h3 {
+                    padding: 0;
+                    color: #454545;
+                    text-transform: uppercase;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+                .panel-body {
+                    padding: 0;
+                }
+                .left-right tr:nth-child(even) {
+                    background-color: #f5f5f5 !important;
+                }
+                .left-right label {
+                    text-transform: initial;
+                    margin-bottom: 0 !important;
+                }
+                .even {
+                    background-color: #f5f5f5 !important;
+                }     
+                .even {
+                    background-color: #f5f5f5;
+                }
+                textarea {
+                    width: calc(100% - 48px);
+                    border: 1px solid #cdcdcd;
+                    -webkit-appearance: none;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    margin-right: 24px;
+                    margin-left: 24px;
+                    margin-top: 24px;
+                }
+                .algn-rgt {
+                    text-align: right;
+                    display: block;
+                    padding-right: 32px;
+                    padding-top: 48px;
+                    padding-bottom: 32px;
+                }
+                input.apbutton {
+                    margin-left: 24px;
+                }
+                .btn-2 .apbutton {
+                    background-color: #0075bb;
+                    color: white;
+                }
+                .progress {
+                    height: 48px !important;
+                    border-radius: 0 !important;
+                    background: none;
+                    box-shadow: none;
+                }
+                .progress-bar {
+                    text-transform: uppercase;
+                    letter-spacing: 0.2px;
+                    font-weight: normal !important;
+                    line-height: 48px;
+                    color: #a8a8a8;
+                    background-image: none !important;
+                    background-color: #dadada;
+                    position: relative;
+                    background-image: none !important;
+                    box-shadow: none !important;
+                }
+                .progress-bar.progress-bar-active {
+                    background-color: #0075bb !important;
+                    color: white;
+                    border: none;
+                    border-radius: none;
+                }
+                .progress-bar:before {
+                    content: "";
+                    border-top: 28px solid transparent;
+                    border-bottom: 28px solid transparent;
+                    position: absolute;
+                    left: 0px;
+                    top: -4px;
+                    border-left: 28px solid white;
+                }
+                .progress-bar:first-child:before,
+                .progress-bar:last-child:after {
+                    border: none !important;
+                }    
+                .progress-bar:after,
+                .progress-bar.progress-bar-active:after {
+                    content: "";
+                    border-top: 24px solid transparent;
+                    border-bottom: 24px solid transparent;
+                    position: absolute;
+                    right: -24px;
+                    top: 0;
+                    z-index: 2;
+                }
+                .progress-bar:after {
+                    border-left: 24px solid #dadada;
+                }  
+                .progress-bar.progress-bar-active:after {
+                    border-left: 24px solid #0075bb;
+                }
+                .center-card {
+                    margin-left: 12.25%;
+                    margin-top: 24px;
+                    margin-bottom: 24px;
+                    font-weight: normal;
+                    font-size: 12px;
+                    text-align: justify;
+                }
+                .no-border {
+                    border: 0;
+                }
+                .table-form {
+                    text-align: left;
+                    margin-top: 24px;
+                    padding-bottom: 40px;
+                }
+                .table-form label {
+                    text-transform: initial;
+                    padding-bottom: 8px;
+                }
+                .table-form select {
+                    margin-left: 0;
+                    width: 100%;
+                    background-position: 98% 50%;
+                    border-radius: 0;
+                    height: 30px;
+                    border: 1px solid #cdcdcd;
+                    -webkit-appearance: none;
+                    appearance: none;
+                    background-image: url(resource/1515514521000/IATA_ICCS_icons_new/select-arrow.png);
+                    background-repeat: no-repeat;
+                    background-size: 14px;
+                    background-color: transparent;
+                    text-indent: 8px;
+                    font-size: 12px;
+                    color: black;
+                    letter-spacing: 0.2px;
+                    cursor: pointer;
+                    margin-bottom: 24px;
+                }
+                .table-form textarea {
+                    width: 100%;
+                    margin: 0;
+                    border-radius: 0;
+                    min-height: 150px;
+                }
+                .table-form input {
+                    border-radius: 0;
+                }
+                .table-form p {
+                    padding-top: 8px;
+                }
+                .table-form input[type="text"] {
+                    max-width: none !important;
+                    width: 100% !important;
+                    display: block !important;
+                    text-align: left !important;
+                    text-indent: 4px;
+                    border-radius: none;
+                    margin-bottom: 24px;
+                }
+                .table-form td.data2Col.first {
+                    width: 100%;
+                }
+                .table-form span.dateFormat {
+                    position: absolute;
+                    margin-top: -47px;
+                    right: 14px;
+                }
+                .label-form, .label-form p{
+                    padding: 0 !important;
+                    display: block;
+                    margin-bottom: 12px;
+                }
+                .table-form input[type=checkbox] {
+                    margin-right: 12px;
+                }
+                .dlt-btn {
+                    margin-left:12px;
+                }
+                .file-lbl {
+                    padding-right: 15px;
+                    font-weight: bold !important;
+                    margin-top: 12px;
+                    margin-left: 24px;
+                }
+                .selected-txt {
+                    font-weight: normal;
+                    padding-bottom: 16px !important;
+                }
+                .error-msg,
+                .error-msg-2 {
+                    color: #FF0000;
+                    padding-bottom: 24px;
+                    display: inline-block;
+                }
+                .error-msg {
+                    margin-top: -16px;
+                }
+                .error-msg-2 {
+                    margin-top: -32px;
+                }
+
+            /**** end design changes ****/
+
+			.bottom-box{
+				height:100%;
+				padding:10px;
+			}
+
+			.news-item{
+				float:none;
+				padding:0px 0px 10px 0px;
+			}
+
+			.bloomberg-title-blue{
+				margin-top:10px;
+			}
+            
+			.LockOn {
+				background-image: url('/img/loading.gif');
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				background-position: center;
+				display: float; 
+				visibility: visible; 
+				position: absolute; 
+				z-index: 999; 
+				top: 0px; 
+				left: 0px; 
+				width: 100%; 
+				height: 100%; 
+				background-color: #ccc; 
+				text-align: center; 
+				filter: alpha(opacity=75); 
+				opacity: 0.75; 
+			}
+
+			.LockOff { 
+				display: none; 
+				visibility: hidden; 
+			}
+
+			.black_overlay{
+				display: none;
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom:0;
+				right:0;
+				background-color: black;
+				z-index:1001;
+				-moz-opacity: 0.8;
+				opacity:.80;
+				filter: alpha(opacity=80);
+			}
+
+			.white_content {
+				display: none;
+				position: fixed;
+				top: 10%;
+				left: 20%;
+				width: 60%;
+				//height: 80%;
+				padding: 16px;
+				border: 1px solid black;
+				background-color: white;
+				z-index:1002;
+				overflow: hidden;
+			}
+			.col-sm-9 {
+				width: 75%;
+			}
+			.LastModifiedOn {
+				color: #9e9e9e !important;
+				font-size: 11px;
+			}
+			.ui-state-default {
+				width: fit-content;
+			}			
+			.ui-datepicker td {
+				border: 0;
+				padding: 5px 0px 5px 15px !important;
+			}
+		</style>
+
+		<script>        
+			function startSpinner(elementId){
+				var lock = document.getElementById(elementId); 
+				if (lock){
+					lock.className = 'LockOn';
+				}
+			}
+
+			function stopSpinner(elementId){
+				var lock = document.getElementById(elementId);
+				if (lock){
+					lock.className = 'LockOff'; 
+				}
+			}
+
+			function showPanel(elementId, show) {
+				var value = show?"block":"none";
+				if(value=='block'){
+					$('html,body').scrollTop(0);
+					if(elementId == 'registrationForm'){
+						registrationFormActionFunction();
+					}
+				}
+				$( document ).ready(function() {
+					document.getElementById(elementId + 'Panel').style.display=value;
+					document.getElementById(elementId + 'Background').style.display=value;
+				});
+			}
+
+			function redirect(url){
+				window.location.href = url;
+			}
+
+			function startProcessSpinner(){
+				var lock = document.getElementById('processSpinner');
+				if (lock){
+					lock.className = 'LockOn';
+				}
+			}
+
+			function stopProcessSpinner(){
+				var lock = document.getElementById('processSpinner');
+				if (lock){
+					lock.className = 'LockOff'; 
+				}
+			}
+			
+			function doNothing(){}
+		</script>
+
+		<body>
+			<div class="container">
+				<c:ISSP_CustomNavigation />
+
+				<div id="processSpinner" class="LockOff"/>
+
+				<apex:actionStatus id="processActStatusId" onstart="startProcessSpinner();" onstop="stopProcessSpinner();"/>
+				<apex:actionStatus id="startOnly" onstart="startProcessSpinner();" onstop="doNothing();"/>
+				<apex:actionStatus id="stopOnly" onstart="doNothing();" onstop="stopProcessSpinner();"/>
+
+				<apex:outputPanel id="pageMainPanel">
+					<script>
+ 						$('html,body').scrollTop(0);
+					</script>
+					<div class="row">
+						<div class="col-xs-12 service-header">
+							<!--apex:outputPanel rendered="{! isRegistrationUser}">
+								<div class="row">
+	                                <div class="logo">
+	                                    <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'logo-white.png')}" height="32"/>
+	                                </div> 
+									<div class="col-xs-12 text-center currency-center-title">
+										<apex:outputText value="{! $Label.ICCS_Service_Title}" escape="false"/>
+									</div>
+								</div>
+							</apex:outputPanel-->
+							<!--apex:outputPanel rendered="{! isSignatoryUser || isLevel1User || isReadOnlyUser}"-->
+							<apex:outputPanel>
+								<div class="row">
+	                                <div class="logo"> <!-- new class -->
+	                                    <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'logo-white.png')}" height="32"/> <!-- change to iata iccs logo -->
+	                                </div> 
+									<div class="col-xs-12 text-center currency-center-title">
+										<apex:outputText value="{! $Label.ICCS_Service_Title}" escape="false"/>
+									</div>
+								</div>
+							</apex:outputPanel>
+
+							<apex:outputPanel rendered="{! (isMembershipMember || isMembershipSuspended) && (isSignatoryUser || isLevel1User || isReadOnlyUser)}">
+								<div>
+									<apex:form>
+										<div class="header-box-text-wrapper">
+		                                    <apex:commandLink styleCLass="col-md-2 col-sm-4 header-box watch-list home" reRender="pageMainPanel" action="{! navigateToHomepage}" status="processActStatusId">
+		                                    	<apex:outputText styleClass="tab-text" value="{! $Label.ICCS_Homepage}"/>
+	                                    	</apex:commandLink>
+
+		                                    <apex:commandLink styleCLass="col-md-2 col-sm-4 header-box watch-list srvc" reRender="pageMainPanel" action="{! navigateToServiceMgmt}" status="processActStatusId">
+		                                    	<apex:outputText styleClass="tab-text" value="{! $Label.ICCS_Service_Management}"/>
+	                                    	</apex:commandLink>
+
+		                                    <apex:commandLink styleCLass="col-md-2 col-sm-4 header-box all-others cycle" reRender="pageMainPanel" action="{! navigateToCycleMgmt}" status="processActStatusId">
+		                                    	<apex:outputText styleClass="tab-text" value="{! $Label.ICCS_Cycle_Management}"/>
+	                                    	</apex:commandLink>
+
+		                                    <apex:commandLink styleCLass="col-md-2 col-sm-4 header-box manage-notif cases" reRender="pageMainPanel" action="{! navigateToCases}" status="processActStatusId">
+		                                    	<apex:outputText styleClass="tab-text" value="{! $Label.ICCS_Cases}"/>
+	                                    	</apex:commandLink>
+
+		                                    <apex:commandLink styleCLass="col-md-2 col-sm-4 header-box manage-notif rprts" reRender="pageMainPanel" action="{! navigateToReports}" status="processActStatusId">
+		                                    	<apex:outputText styleClass="tab-text" value="{! $Label.ICCS_Reports}"/>
+	                                    	</apex:commandLink>
+
+		                                    <apex:commandLink styleCLass="col-md-2 col-sm-4 header-box blocked-funds prfl" reRender="pageMainPanel" action="{! navigateToProfile}" status="processActStatusId">
+		                                    	<apex:outputText styleClass="tab-text" value="{! $Label.ICCS_Profile}"/>
+	                                    	</apex:commandLink>
+										</div>
+									</apex:form>
+								</div>
+							</apex:outputPanel>
+						</div>
+					</div>
+
+			        <c:ISSP_ICCS_Homepage pageCtrl="{! thisCtrl}" rendered="{! displayHomepage}"/>
+					<c:ISSP_ICCS_ServiceMgmt pageCtrl="{! thisCtrl}" rendered="{! displayServiceMgmt}"/>
+					<c:ISSP_ICCS_CycleMgmt pageCtrl="{! thisCtrl}" rendered="{! displayCycleMgmt}"/>
+					<c:ISSP_ICCS_Cases pageCtrl="{! thisCtrl}" rendered="{! displayCases}"/>
+					<c:ISSP_ICCS_Reports pageCtrl="{! thisCtrl}" rendered="{! displayReports}"/>
+					<c:ISSP_ICCS_Profile pageCtrl="{! thisCtrl}" rendered="{! displayProfile}"/>
+					<c:ISSP_ICCS_SiEdit pageCtrl="{! thisCtrl}" rendered="{! displaySiEdit}"/>
+					<c:ISSP_ICCS_CaseProcesses pageCtrl="{! thisCtrl}" rendered="{! displayCaseProcesses}"/>
+
+				</apex:outputPanel>
+
+				<c:ISSP_CustomFooter />
+			</div>
+		</body>
+	</html>
+</apex:page>

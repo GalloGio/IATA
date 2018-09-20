@@ -218,6 +218,8 @@ private class IEC_CustomerInformationTest
 				ctrl.vfOrder = new Order_DTO(ctrl.sfOrder);
 				ctrl.initialOrder = new Order_DTO(ctrl.sfOrder);
 
+				String productWrapper = ctrl.productWrapper;
+
 				System.assertNotEquals(0,ctrl.availableSalutations.size());
 				System.assertNotEquals(0,ctrl.availableCountries.size());
 
