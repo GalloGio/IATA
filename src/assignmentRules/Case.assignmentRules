@@ -5622,7 +5622,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA CNA LO TW Risk Team</team>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_AME_Airlines</assignedTo>
+            <assignedTo>CasesAirlinesSCE</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND (2 OR 3 OR 4) AND 5 AND (6 OR 7)) OR (8 AND (6 OR 7))</booleanFilter>
             <criteriaItems>
@@ -5668,7 +5668,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_AME_Airlines_French</assignedTo>
+            <assignedTo>CasesAirlinesSCE</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND (2 OR 3 OR 4) AND 5 AND (6 OR 7)) OR (8 AND (6 OR 7))</booleanFilter>
             <criteriaItems>
@@ -7532,6 +7532,44 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <field>Case.Origin</field>
                 <operation>equals</operation>
                 <value>Email</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Airline_Participation_Drafts</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status</field>
+                <operation>equals</operation>
+                <value>Draft</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>AirlineParticipationHeadOffice</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status</field>
+                <operation>equals</operation>
+                <value>For Review and Acceptance</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
