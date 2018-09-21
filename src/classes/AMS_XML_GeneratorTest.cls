@@ -8,7 +8,7 @@ private class AMS_XML_GeneratorTest {
     private static AMS_Segment__c prog3 = new AMS_Segment__c (label__c = 'C', RecordTypeId = programRT );
     private static Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
     private static Id rtAccRoleEmployee = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
-    private static Id rtIATAStandardContact = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'IATAStandardContact');
+    private static Id rtIATAStandardContact = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
     private static AMS_Segment__c[] prgms = null;
 

@@ -309,10 +309,8 @@ private class GlobalContactTriggerTest {
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
 
-        ID gdpContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'GDP_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
-        con.recordtypeid = gdpContactRecordTypeID;
         con.Status__c = 'Active';
         con.title = 'Monsieur';
         con.function__c = 'Aeropolitical;Cargo';
@@ -483,7 +481,6 @@ private class GlobalContactTriggerTest {
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
 
-        ID gdpContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'GDP_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.Status__c = 'Active';
