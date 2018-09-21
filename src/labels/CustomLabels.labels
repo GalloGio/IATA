@@ -24405,6 +24405,22 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Available Period:</value>
     </labels>
     <labels>
+        <fullName>LVA_CallUsEmergencyAvailableHours</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsEmergencyAvailableHours</shortDescription>
+        <value>24/7</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsEmergencyPhoneNumber</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsEmergencyPhoneNumber</shortDescription>
+        <value>*************</value>
+    </labels>
+    <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>
         <categories>LVA</categories>
         <language>en_US</language>

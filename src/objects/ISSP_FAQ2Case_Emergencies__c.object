@@ -15,17 +15,6 @@ Only those topic and subtopics in this list are visible for emergencies</descrip
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <fields>
-        <fullName>Topic__c</fullName>
-        <description>Valid topic name for emergencies</description>
-        <externalId>false</externalId>
-        <label>Topic</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
     <label>ISSP FAQ2Case Emergencies</label>
     <listViews>
         <fullName>All</fullName>

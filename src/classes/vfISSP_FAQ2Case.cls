@@ -35,7 +35,6 @@ global class vfISSP_FAQ2Case
     public static final String BUT_CAT_ALL='BUT_CAT_ALL';
 
     public static final String LVA_CALL_US_GEN='LVA_CallUs_GEN';
-    public static final String LVA_CALL_US_EMERGENCY='LVA_CallUs_Emergency';
 
 	public static final Integer LVA_INTRO_VID_COOKIE_DEACTIVATED=-1;
 
@@ -1034,16 +1033,10 @@ global class vfISSP_FAQ2Case
     }
 
     public String getCallUsEmergencyFinalString(){
-        List<LVA_CallUsConfig__mdt> ListOfCallUsconfigs=
-            [SELECT DeveloperName,IsoCountry__c, Sector__c,PhoneNumber__c,AvailableHours__c
-            FROM LVA_CallUsConfig__mdt
-            WHERE DeveloperName=:LVA_CALL_US_EMERGENCY];
-        if (ListOfCallUsconfigs.size()>0){
-            return createCallUsString(ListOfCallUsconfigs[0]);
-        }
-        return getAndSetCallUsString();
+        return
+            Label.LVA_CallUsThruPhoneNum+' <b>'+Label.LVA_CallUsEmergencyPhoneNumber +'</b>'+
+            '<br/>'+Label.LVA_CallUsAvailableHours+' <b>'+Label.LVA_CallUsEmergencyAvailableHours+'</b>';
     }
-
 
     /*******************************************************************************************************
     * @description Constructs modal window "Call Us" string to be displayed.
@@ -2048,7 +2041,7 @@ for (string topicver:listofAllowedTopics){
                 if(this.Clicked_EmergencyRequest==null) this.Clicked_EmergencyRequest=false;
                 if (this.Clicked_EmergencyRequest) {
                     ISSP_FAQ2Case_Emergencies__c emergencyCategories = ISSP_FAQ2Case_Emergencies__c.getInstance(selectDataCategory.CategoryName);
-                    if (emergencyCategories!=null) {
+                    if (emergencyCategories!=null && emergencyCategories.Subtopic__c!=null) {
                         setEmergencyCategories.addAll(emergencyCategories.Subtopic__c.split(','));
                     }
                 }
