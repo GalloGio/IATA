@@ -228,7 +228,8 @@
     <validationRules>
         <fullName>Check_If_BIN_Range_Active</fullName>
         <active>true</active>
-        <errorConditionFormula>ISPICKVAL(TIP_Status__c, &quot;Active&quot;) &amp;&amp; (ISCHANGED(TIP_Effective_From_Date__c) || ISCHANGED(TIP_Range_Start__c) || ISCHANGED(TIP_Range_End__c))</errorConditionFormula>
+        <errorConditionFormula>NOT(ISCHANGED(TIP_Status__c)) &amp;&amp; 
+ISPICKVAL(TIP_Status__c, &quot;Active&quot;) &amp;&amp; (ISCHANGED(TIP_Effective_From_Date__c) || ISCHANGED(TIP_Range_Start__c) || ISCHANGED(TIP_Range_End__c))</errorConditionFormula>
         <errorMessage>Only Effective To Date can be changed for active Bin Ranges.</errorMessage>
     </validationRules>
     <validationRules>

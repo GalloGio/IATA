@@ -1070,7 +1070,12 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
 Portal_Application__r.Name = &apos;Transparency in Payments (TIP)&apos;, 
 OR(Text(Right__c) = &apos;Access Granted&apos;, Text(Right__c) = &apos;Access Requested&apos;), 
 NOT(INCLUDES(Contact__r.Account.Account_Role__c,&apos;Payment Provider&apos;)), 
-AND(NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),NOT(BEGINS($Profile.Name, &apos;ISS&apos;)),NOT(BEGINS($Profile.Name, &apos;IATA Portal&apos;)))
+AND( 
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;ISS&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;IATA Portal&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;identity&apos;)) 
+) 
 )</errorConditionFormula>
         <errorMessage>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</errorMessage>
     </validationRules>
