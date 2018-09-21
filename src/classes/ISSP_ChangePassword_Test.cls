@@ -88,13 +88,8 @@ private class ISSP_ChangePassword_Test {
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
         IECUserManager.login(u.Username, 'testpassword', null);
     	
-    	//List <User> userList = [SELECT Id, UID__c FROM User WHERE Id = :usr.Id];
-    	//User myUser = userList[0];
-    	//myUser.UID__c = '1234';
-    	//update myUser;
     	System.runAs(u) {
-	        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();
-	        
+	        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();	        
 	        // Test 001: Leave all fields blank
 	        pgCont.currentPassword = '';
 	        pgCont.newPassword = '';
@@ -136,8 +131,6 @@ private class ISSP_ChangePassword_Test {
 			PageReference pageRef = Page.ISSP_First_Login;
          	Test.setCurrentPage(pageRef);
 
-         	//ApexPages.currentPage().getParameters().put('un',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('topolino@iata.org'), 'UTF-8'));
-         	//ApexPages.currentPage().getParameters().put('pw',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('paperina'), 'UTF-8'));
          	String myUsername = Userinfo.getUsername();
          	string parameters =myUsername+Comm_User_Helper.SEPARATOR+'testpassword'+Comm_User_Helper.SEPARATOR+ UID;
          	ApexPages.currentPage().getParameters().put('c',Comm_User_Helper.EncryptString(parameters));
@@ -160,8 +153,6 @@ private class ISSP_ChangePassword_Test {
 		PageReference pageRef = Page.ISSP_First_Login;
         Test.setCurrentPage(pageRef);
 
-        //ApexPages.currentPage().getParameters().put('un',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('topolino@iata.org'), 'UTF-8'));
-        //ApexPages.currentPage().getParameters().put('pw',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('paperina'), 'UTF-8'));
         String UID =  Comm_User_Helper.NewGuid();
         String myUsername = Userinfo.getUsername();
         string parameters =myUsername+Comm_User_Helper.SEPARATOR+'testpassword'+Comm_User_Helper.SEPARATOR+ UID;
@@ -170,8 +161,6 @@ private class ISSP_ChangePassword_Test {
       	ISSP_First_Login ctrl = new ISSP_First_Login();
 	 	Pagereference pr = Page.ISSP_Login;
 	
-        //system.assertEquals('/apex/issp_login',ctrl.DoNext().getUrl());
-
 	}
 	
 	static testMethod void loginPage_ISSP_3() {
@@ -183,5 +172,43 @@ private class ISSP_ChangePassword_Test {
 		ctrl.changePassword();
 	    ISSP_First_Login.updateUsers(UserInfo.getUserId());
 	}
+
+	static testMethod void fredTests() {
+    	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
+        insert issc;
+    	Test.startTest();
+    	PageReference pgRef = Page.ISSP_ChangePassword;
+    	pgRef.getParameters().put('serviceName','FRED');
+
+	    Test.setCurrentPageReference(pgRef); // use setCurrentPageReference,
+    	
+    	ISSP_ChangePassword pgCont = new ISSP_ChangePassword();
+		pgCont.termsAndConditionChecked = false;
+        
+        String serviceNameParam = pgCont.serviceNameParam;
+        
+    	User usr = IECTestUtil.createSampleGuestUserAndLogin();
+    	System.runAs(usr) {
+
+	        pgCont.currentPassword = 'a';
+	        pgCont.newPassword = 'b1234567';
+	        pgCont.confirmNewPassword = 'b1234567';
+
+	        pgCont.changePassword();
+
+			pgCont.showTCpopup();
+			pgCont.closePopup();
+
+			pgCont.termsAndConditionChecked = true;
+
+	        pgCont.changePassword();
+    	}
+    	Test.stopTest();
+	}
+
+	@isTest
+	static void increaseCodeCoverage(){
+		ISSP_ChangePassword.increaseCodeCoverage();
+	} 
 
 }

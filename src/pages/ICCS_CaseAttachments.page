@@ -1,0 +1,64 @@
+<apex:page standardController="Case"  extensions="ICCS_CaseAttachmentsController">
+
+    <script>
+        function getS3LInk(fileName) {
+            ICCS_CaseAttachmentsController.getExpiringLink(fileName,function(result, event){
+                var result2= result.replace("&amp;","&");
+                var newWin = window.open(result2);
+                if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+                    alert('{!$Label.Check_popup_settings}');
+                }
+            }, {buffer: true, escape: false, timeout: 120000} );
+        }
+    </script>
+
+    <apex:form id="form">
+        <apex:outputPanel id="checklist">
+            <apex:pageBlock >
+                <apex:pageBlockTable value="{! wrappedAmazonFiles}" var="wrappedAmazonFile" id="attachmentsTable">
+                    <apex:column >
+                        <apex:facet name="header">ICCS File Type</apex:facet>
+                        <apex:outputText >{! wrappedAmazonFile.att.File_Identifier__c}</apex:outputText>
+                    </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">Name</apex:facet>
+                        <a title="view" escape="false" target="_blank" onclick="getS3LInk('{! wrappedAmazonFile.att.Full_Name_Unique__c}');" style="color:#015ba7; cursor: pointer; text-decoration: underline;" >{! LEFT(wrappedAmazonFile.att.Name,30)}</a>
+                    </apex:column>
+    
+                    <apex:column >
+                        <apex:facet name="header">Status</apex:facet>
+                        <apex:outputText value="{! wrappedAmazonFile.att.Review_Status__c}" rendered="{! !wrappedAmazonFile.editMode}"/>
+                        <apex:inputField value="{! wrappedAmazonFile.att.Review_Status__c}" rendered="{! wrappedAmazonFile.editMode}"/>
+                    </apex:column>
+    
+                    <apex:column >
+                        <apex:facet name="header">Original Received</apex:facet>
+                        <apex:inputCheckBox value="{! wrappedAmazonFile.att.Original_Received__c}" disabled="{! !wrappedAmazonFile.editMode}"/>
+                    </apex:column>
+    
+                    <apex:column >
+                        <apex:facet name="header">Comments</apex:facet>
+                        <apex:outputText value="{! wrappedAmazonFile.att.Internal_Comments__c}" rendered="{! !wrappedAmazonFile.editMode}"/>
+                        <apex:inputField value="{! wrappedAmazonFile.att.Internal_Comments__c}" rendered="{! wrappedAmazonFile.editMode}"/>
+                    </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">Created Date</apex:facet>
+                        <apex:outputField value="{! wrappedAmazonFile.att.CreatedDate}"/>
+                    </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">{! $Label.ICCS_Actions_Label}</apex:facet>
+                        <apex:commandLink value="{! $Label.ICCS_Update_Label}" action="{! wrappedAmazonFile.updateAttachment}" rendered="{! !wrappedAmazonFile.editMode}" rerender="attachmentsTable"/>
+                        <apex:outputPanel rendered="{! wrappedAmazonFile.editMode}">
+                            <apex:commandLink value="{! $Label.ICCS_Save_Action}"  action="{! wrappedAmazonFile.save}" rerender="attachmentsTable"/>
+                            &nbsp;&nbsp;&nbsp;
+                            <apex:commandLink value="{! $Label.ICCS_Cancel_Action}" action="{! wrappedAmazonFile.cancel}" rerender="attachmentsTable"/>
+                        </apex:outputPanel>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

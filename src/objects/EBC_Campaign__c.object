@@ -1062,10 +1062,12 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Sent</fullName>
         <columns>NAME</columns>
         <columns>Billing_Account__c</columns>
-        <columns>Campaign_ID__c</columns>
-        <columns>Audience__c</columns>
-        <columns>Number_of_Recipients__c</columns>
         <columns>NumberSent__c</columns>
+        <columns>Delivered7Days__c</columns>
+        <columns>Number_of_Unique_Opens__c</columns>
+        <columns>OpenRate7Days__c</columns>
+        <columns>Number_of_Unique_Clicks__c</columns>
+        <columns>ClickRate7Days__c</columns>
         <columns>Send_Datetime__c</columns>
         <filterScope>Everything</filterScope>
         <filters>

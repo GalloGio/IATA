@@ -6,6 +6,10 @@
   */
 global class IECConstants {
 
+  //use to fetch orders that are not expired
+  public static final Date dateToCompare = Date.today().addDays(-180);
+  public static final List<String> expiredStatus = new List<String>{'New','Cancelled','Payment Failure', 'Ready for SAP', 'Pending Payment'};
+
   //Order Status : add by CGI - David D 2015-10-16
   public static final String ORDER_STATUS_PAID       =  'Paid';//Used for credit card only
   public static final String ORDER_STATUS_READY_FOR_SAP   =   'Ready for SAP';
@@ -40,6 +44,7 @@ global class IECConstants {
   public static final string PARAM_RESETPASSWORD =    'respw';
   public static final string PARAM_APPFILTER_ID =      'appfid';
   public static final string PARAM_LIMITTOIDS =      'limittoids'; // Added by Mathieu Beausoleil
+  public static final string PARAM_UTM =              'utm_';
   
   //Get customer types constants
   public static final string PARAM_CUSTOMERTYPE_AIRLINE =     'Airline';

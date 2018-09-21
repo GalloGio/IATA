@@ -10,7 +10,11 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 	}
 
 	private static void sendCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId, String iataCode,Boolean isRunningBatch){
-		if(isRunningBatch || ANG_ConversionHelper.isMigrationTool || System.isBatch() || System.isFuture())
+		if(System.isBatch() && trigger.isExecuting)
+			{
+			System.enqueueJob(new executeCalloutQueueable(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode));		
+			}		
+		else if(isRunningBatch || ANG_ConversionHelper.isMigrationTool || System.isBatch() || System.isFuture())
 			executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode);
 		else
 			executeCalloutFuture(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode);
@@ -56,7 +60,8 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			log.Success__c = false;
 			insert log;
 
-			ANG_IEP_CalloutHelper.updateAgencyEvent(agencyUpdateId,false);
+			ANG_IEP_CalloutHelper.updateAgencyEvent(agencyUpdateId,false);			
+			ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' + log.Error_Code__c, e.getMessage(), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');			
 			return;
 		}
 
@@ -81,6 +86,8 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			log.Error_Code__c = String.valueOf(res.getStatusCode());
 			log.Error_Message__c = res.getStatus();
 			log.Success__c = false;
+			ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' +  String.valueOf(res.getStatusCode()),  String.valueOf(res.getStatusCode()), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');			
+
 		}
 		else{
 			System.debug('ANG_CalloutIEPMasterdata: Payload sent with success.');
@@ -89,5 +96,37 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 		insert log;
 		ANG_IEP_CalloutHelper.updateAgencyEvent(agencyUpdateId,log.Success__c);
+	}
+
+	public class executeCalloutQueueable implements Queueable, Database.AllowsCallouts {
+
+		private String body;
+		private String action;
+		private String namedCredential;
+		private String endPointCredential;
+		private String clientId;
+		private String clientSecret;
+		private String changeCodeId;
+		private String agencyUpdateId;
+		private String iataCode;
+	
+	public executeCalloutQueueable(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, String agencyUpdateId, String iataCode){
+		
+		this.body =	body;
+		this.action = action;
+		this.namedCredential = namedCredential;
+		this.endPointCredential = endPointCredential;
+		this.clientId =	clientId;
+		this.clientSecret =	clientSecret;
+		this.changeCodeId =	changeCodeId;
+		this.agencyUpdateId = agencyUpdateId;
+		this.iataCode =	iataCode;		
+		}
+
+	public void execute(QueueableContext context){
+
+		executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId, agencyUpdateId, iataCode);		
+		}
+	
 	}
 }

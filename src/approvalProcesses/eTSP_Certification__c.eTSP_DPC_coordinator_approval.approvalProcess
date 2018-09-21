@@ -47,7 +47,7 @@
             <type>RejectRequest</type>
         </rejectBehavior>
     </approvalStep>
-    <emailTemplate>unfiled$public/Approval_of_ETSP</emailTemplate>
+    <emailTemplate>All/Approval_of_ETSP</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>

@@ -14,9 +14,9 @@ public with sharing class CommunitiesLandingController {
 	    else{
             if(serviceName=='ISSP'){
               if(String.isNotBlank(startUrl) && !startUrl.equalsIgnoreCase('undefined')){
-                return new pageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + startUrl);
+                return new pageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, startUrl));
               }else{
-                return new pageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_Homepage');
+                return new pageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage'));
               }
             } 
 	    }

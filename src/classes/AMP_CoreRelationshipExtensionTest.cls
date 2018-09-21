@@ -77,7 +77,7 @@ private class AMP_CoreRelationshipExtensionTest {
 
 			List<LocalGovernance__c> lsGroups = AMP_CoreRelationshipExtension.getGroups();
 
-			List<AMP_CoreRelationshipExtension.Participant> lsParticipants = AMP_CoreRelationshipExtension.getParticipantWrappers(a.Id);
+			List<AMP_WrapperParticipant> lsParticipants = AMP_CoreRelationshipExtension.getParticipantWrappers(a.Id);
 			
 			// there are actually 2 participant wrappers since once has the place holder 'not this time'
 			System.assertEquals(2, lsParticipants.size(), 'There should be 2 Participant');

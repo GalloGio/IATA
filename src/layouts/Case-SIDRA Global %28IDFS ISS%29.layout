@@ -1209,10 +1209,10 @@
         <label>Repayment instalments</label>
         <layoutColumns>
             <layoutItems>
-                <height>200</height>
+                <height>320</height>
                 <page>SIDRARepaymentInstalments</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

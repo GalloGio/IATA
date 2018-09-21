@@ -104,6 +104,9 @@ private class AMS_RecordCreatorWebserviceTest {
 		
 		Account acct = [SELECT Id from Account LIMIT 1];
 
+		insert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CADM', Change_Code__c = 'CAD');
+		insert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CTA', Change_Code__c = 'CTA');
+
 		AMS_RecordCreatorWebservice.AccountChanges acctChange1 = new AMS_RecordCreatorWebservice.AccountChanges('TradeName__c','Old TradeName Value','New TradeName Value');
 		AMS_RecordCreatorWebservice.AccountChanges acctChange2 = new AMS_RecordCreatorWebservice.AccountChanges('Email__c','Old Email Value','New Email Value');
 		AMS_RecordCreatorWebservice.AccountChanges acctChange3 = new AMS_RecordCreatorWebservice.AccountChanges('In_a_Airport__c', 'true','false');
@@ -129,6 +132,8 @@ private class AMS_RecordCreatorWebserviceTest {
 		Test.startTest();
 		
 		Account acct = [SELECT Id from Account LIMIT 1];
+
+		insert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CADM', Change_Code__c = 'CAD');
 
 		AMS_RecordCreatorWebservice.AccountChanges acctChange1 = new AMS_RecordCreatorWebservice.AccountChanges('Name','Old Name Value','New Name Value');
 		AMS_RecordCreatorWebservice.AccountChanges acctChange2 = new AMS_RecordCreatorWebservice.AccountChanges('Email__c','Old Email Value','New Email Value');
@@ -536,9 +541,9 @@ private class AMS_RecordCreatorWebserviceTest {
 		
 		insert acct;
 
-		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'testd1@test.com', Financial_Assessment_Contact__c = false);
 		
-		Contact co2 = new Contact(AccountId = acct.Id, Firstname = 'teste2', Lastname='test2', Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
+		Contact co2 = new Contact(AccountId = acct.Id, Firstname = 'teste2', Lastname='test2', Phone = '911111111', MobilePhone = '911111111', Email = 'test2d1@test.com', Financial_Assessment_Contact__c = false);
 		
 		List<Contact> contacts = new List<Contact>{co1,co2};
 

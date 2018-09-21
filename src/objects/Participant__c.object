@@ -416,7 +416,7 @@ Contact__r.Account.Name
         <fullName>Representing__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <inlineHelpText>Name of the account that the participant represents for this specific group, if applicable.</inlineHelpText>
+        <inlineHelpText>If the participant is not representing his/her employer on this specific group, enter the name of the company represented.</inlineHelpText>
         <label>Representing</label>
         <lookupFilter>
             <active>true</active>

@@ -17,6 +17,66 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 	// if orderId passed by parameter to page
 	public String pageParameterOrderId { get; set; }
 
+	//Used for google analytics
+    public String productWrapper {
+        get {
+            Map<String,Object> ecommObj = new Map<String,Object>();
+            Map<String,Object> checkoutObj = new Map<String,Object>();
+            Map<String,Object> actionObj = new Map<String,Object>();
+            Map<String,Object> prodObj = new Map<String,Object>();
+            
+            String couponCodes = '';
+            if(vfOrder.orderItems != null && !vfOrder.orderItems.isEmpty()){
+                List<String> lstProductNames = new List<String>();
+                for(OrderItem_DTO orderItemAux : vfOrder.orderItems){
+                    lstProductNames.add(orderItemAux.couponCode);
+                }
+                couponCodes = String.join( lstProductNames,' - ');
+            }
+
+            ecommObj.put('purchase', checkoutObj);
+            
+            checkoutObj.put('products', new List<Object> {prodObj});
+
+            checkoutObj.put('actionField', actionObj);
+            actionObj.put('id',vfOrder.orderId);
+            actionObj.put('affiliation','IATA Publications');
+            actionObj.put('revenue', vfOrder.orderTotalAmount );
+            actionObj.put('tax', vfOrder.taxes);
+            actionObj.put('shipping', vfOrder.totalFreightCharge);
+            actionObj.put('coupon', couponCodes);
+
+
+            List<OrderItem_DTO> lstOrderItemsAux = storeCart.getOrderItems();
+            if(lstOrderItemsAux != null && !lstOrderItemsAux.isEmpty()){
+                List<Object> lstOrderItems = new List<Object>();
+                for(OrderItem_DTO orderItemDtoAux : lstOrderItemsAux){
+                    Map<String,Object> orderItemsObjMap = new Map<String,Object>();
+
+                    orderItemsObjMap.put('id', orderItemDtoAux.productNumber);
+                    orderItemsObjMap.put('name', orderItemDtoAux.productName);
+                    orderItemsObjMap.put('category', orderItemDtoAux.productCategory);
+                    orderItemsObjMap.put('price', orderItemDtoAux.unitPrice == null ? 0.00 : orderItemDtoAux.unitPrice);
+                    orderItemsObjMap.put('brand', orderItemDtoAux.productBrand);
+                    orderItemsObjMap.put('quantity', orderItemDtoAux.quantity);
+                    orderItemsObjMap.put('dimension1', orderItemDtoAux.productEdition);
+                    orderItemsObjMap.put('dimension2', orderItemDtoAux.productLanguage);
+                    orderItemsObjMap.put('dimension3', orderItemDtoAux.productInventoryStatus);
+                    orderItemsObjMap.put('dimension4', orderItemDtoAux.productAvailabilityDate);
+                    orderItemsObjMap.put('dimension5', orderItemDtoAux.productMedia);
+                    orderItemsObjMap.put('dimension6', orderItemDtoAux.productEffectiveTo);
+
+                    lstOrderItems.add(orderItemsObjMap);
+                }
+            
+                checkoutObj.put('products', lstOrderItems);
+            }
+
+            return JSON.serialize(ecommObj);
+        }
+        set;
+    }
+
 
 	public IEC_ConfirmOrderController() 
 	{
@@ -538,6 +598,8 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				for (Integer i1 = 0; i1 < oOrder.OrderItems.size(); i1++)
 					URL += '&product' + (i1 + 1) + '=' + EncodingUtil.urlEncode(oOrder.OrderItems[i1].SAP_Product_Number__c, 'UTF-8')
 					     + '&quantity' + (i1 + 1) + '=' + EncodingUtil.urlEncode(String.valueOf(oOrder.OrderItems[i1].Quantity), 'UTF-8');
+
+				System.debug('URL: ' + URL);
 
 				//*** send to Pardot
 				HttpRequest httpReq = new HttpRequest();

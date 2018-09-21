@@ -16,6 +16,7 @@
             <apex:inputField value="{!LocalGovernance__c.Group_Owner__c}" required="true" styleClass="hidePicklist"/>
             <!-- <apex:pageBlockSectionItem ></apex:pageBlockSectionItem> -->
             <apex:inputField value="{!LocalGovernance__c.Active__c}"  />
+            <apex:inputField value="{!LocalGovernance__c.Group_Administrator__c}" styleClass="hidePicklist"/>
             <apex:inputField value="{!LocalGovernance__c.Managed_in_SSW__c}"  />
 
         </apex:pageBlockSection>

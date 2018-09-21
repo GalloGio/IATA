@@ -230,19 +230,22 @@ global class AMS_OSCAR_Webservice {
     WebService static String createChangeCodeNEW(String oscarId) {
 
         try {
-            List<AMS_OSCAR__c> oscar = [select Account__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c from AMS_OSCAR__c where Id = : oscarId];
+            List<AMS_OSCAR__c> oscar = [select Account__c, Account__r.CNS_Agency__c, Business_Process__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c from AMS_OSCAR__c where Id = : oscarId];
 
             AMS_OSCAR__c theOSCAR = oscar[0];
 
             //AMS_Utils.isNewgenProcess = (AMS_Utils.oscarNewGenProcesses.contains(theOSCAR.Process__c));
 
+            String changeCodeId = 'NEW-' + theOSCAR.Business_Process__c;
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+            AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
 
-            changeCode.name = 'NEW';
-            changeCode.reasonCode = '21';
-            changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCode.name);
-            changeCode.reasonDesc  = 'NEW APPLICATION';
-            changeCode.status  = '2';
+            changeCode.name = n.Change_Code__c;
+            changeCode.reasonCode = n.Reason_Code__c;
+            changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
+            changeCode.reasonDesc  = n.Reason_Code_Description__c;
+            changeCode.status  = n.Account_status_change__c;
+            changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 
             Account acct = new Account(Id = theOSCAR.Account__c);
             AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {acct}, true);
@@ -554,7 +557,9 @@ global class AMS_OSCAR_Webservice {
             System.enqueueJob(new AMS_CertificateHelper.CertificateCreation(request.Id, System.now().format('YYYY'), null));
 
             //creates change code
-            Account acct = new Account(Id = agencyId);
+            //Account acct = new Account(Id = agencyId);
+            //TD 2080607: CNS
+            Account acct = [Select id, CNS_Agency__c, Status__c from account where id = :AgencyId];
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
 
             List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: agencyId AND Active__c = TRUE];

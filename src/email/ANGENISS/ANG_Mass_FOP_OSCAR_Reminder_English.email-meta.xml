@@ -15,7 +15,7 @@ IATA Code: {!Account.IATACode__c}
 This is a friendly reminder that the PCI DSS Attestation of Compliance or Nil Credit Card Self-Declaration has to be uploaded according to the already communicated deadline. If you have submitted the evidence already, please disregard this message.
 
 
-We would like highlight that the submission deadline date is {!AMS_OSCAR__c.Sanity_check_deadline__c}.
+We would like highlight that the submission deadline date is {!TODAY()+15} (mm/dd/yyyy).
 
 
 

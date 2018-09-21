@@ -7,6 +7,19 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     public Boolean isBatchRunning { get; set; }
     public Boolean isBatchFinished { get; set; }
     public Id batchId { get; set; }
+    public list<jsonError> allErrorMessages { get; set; }
+    public list<jsonError> errorMessagesToShow { get; set; }
+    private integer counter=0;  //keeps track of the offset
+    private integer list_size=10; //sets the page size or number of rows
+    public boolean updateTable {
+        get{
+            if(updateTable == null)
+                this.updateTable = false;
+
+            return this.updateTable;
+        }
+        set;
+    }
 
     public String operation {
         get;
@@ -46,7 +59,9 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
                                                 AND Region__c = :region
                                                 AND Sub_Region__c not in ('USA')
                                                 ORDER BY Name]) {
-                    if(operation == 'PCI' || c.ANG_Enable_NewGen__c) availableCountries.add(new SelectOption(c.Id , c.Name));
+                    if((operation == 'PCI' && !c.ANG_Enable_NewGen__c) || (operation != 'PCI' && c.ANG_Enable_NewGen__c)) {//AMSU-159
+                        availableCountries.add(new SelectOption(c.Id , c.Name));
+                    }
                 }
                 if(availableCountries.isEmpty()){
                     availableCountries.add(new SelectOption('', '--- No country found ---'));
@@ -74,6 +89,27 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
                 availableLocations.add(new SelectOption(AMS_Utils.AE,AMS_Utils.AE));
             }
             return availableLocations;
+        }
+        set;
+    }
+
+    /*** AMSU-157 ***/
+    public List<SelectOption> selectedClasses {
+        get{
+            if(selectedClasses == null) selectedClasses = new List<SelectOption>();
+            return selectedClasses;
+        }
+        set;
+    }
+
+    public List<SelectOption> availableClasses {
+        get{
+            if(availableClasses == null){
+                availableClasses = new List<SelectOption>();
+                availableClasses.add(new SelectOption('P', 'P'));
+                availableClasses.add(new SelectOption('D', 'D'));
+            }
+            return availableClasses;
         }
         set;
     }
@@ -132,6 +168,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     // ****************************************
     public AMS_PCI_Compliant_Mass_OSCAR_CreationCtr(){
         //constructor
+        allErrorMessages = new list<jsonError>();
     }
 
     // ****************************************
@@ -143,6 +180,8 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         selectedLocations = null;
         availableCountries = null;
         selectedCountries = null;
+        availableClasses = null;
+        selectedClasses = null;
         summaryMap = null;
         accountIds = null;
     }
@@ -153,6 +192,10 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         //input validations
         if(selectedCountries.isEmpty()) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select a Country'));
         if(selectedLocations.isEmpty()) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select a Location'));
+        /*** AMSU-157 ***/
+        if(operation == 'PCI' && selectedClasses.isEmpty()) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select a Location Class'));
+        }
 
         if(ApexPages.hasMessages()) return;
         
@@ -164,8 +207,12 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         for(SelectOption c : selectedLocations) locations.add(c.getValue());
 
         Set<String> locationClass = new Set<String>();
+        if(operation == 'FOP') {
         locationClass.add(AMS_Utils.LC_PASSENGER);
-        if(operation == 'FOP') locationClass.add('D');
+            locationClass.add('D');
+        } else { //AMSU-157
+            for(SelectOption c : selectedClasses) locationClass.add(c.getValue());
+        }
 
         Set<String> statuses = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S7_UNDERREVIEW, 'Review'};
 
@@ -200,17 +247,27 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
 
     public void createOSCARs() {
 
-        if(operation == 'PCI') batchId = Database.executeBatch(new AMS_PCI_Complaint_Batch(1, null, accountIds), 1);
+        if(operation == 'PCI') batchId = Database.executeBatch(new AMS_PCI_Complaint_Batch(1, accountIds), 1);
         if(operation == 'FOP') batchId = Database.executeBatch(new ANG_MassiveFOPCaseCreationBatch(accountIds), 1);
 
         startTime = System.now();
         isBatchRunning = true;
     }
 
+    public void compareIDs(){
+        String receivedID = Apexpages.currentPage().getParameters().get('batch');
+        String message = Apexpages.currentPage().getParameters().get('message');
+
+        if (receivedID == batchId){
+            allErrorMessages = (List<jsonError>) System.JSON.deserialize(message , List<jsonError>.class);
+            counter = 0;
+            setErrorToShow();            
+        } 
+    }
+
     public void checkBatchStatus(){
 
         AsyncApexJob batchRecord = [SELECT Id, Status FROM AsyncApexJob WHERE Id = :this.batchId];
-
         System.debug(loggingLevel.FINE, '____ [cls AMS_PCI_Compliant_Mass_OSCAR_CreationCtr - checkBatchStatus] batchRecord - ' + batchRecord);
         
         isBatchRunning = batchRecord.Status != 'Aborted' && batchRecord.Status != 'Completed' &&  batchRecord.Status != 'Failed';
@@ -251,6 +308,67 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         }
     }
 
+
+    //methods used for pagination of the errors
+
+    public void setErrorToShow(){
+        updateTable = false;
+        errorMessagesToShow = new List<jsonError>();
+        for(Integer i = 0 + counter; i < allErrorMessages.size() && i < counter + list_size ; i ++){
+            errorMessagesToShow.add(allErrorMessages[i]);
+        }
+        updateTable = true;
+    }
+
+   public PageReference Beginning() { //user clicked beginning
+      counter = 0;
+      setErrorToShow();
+      return null;
+   }
+
+   public PageReference Previous() { //user clicked previous button
+      counter -= list_size;
+      setErrorToShow();
+      return null;
+   }
+
+   public PageReference Next() { //user clicked next button
+      counter += list_size;
+      setErrorToShow();
+      return null;
+   }
+
+   public PageReference End() { //user clicked end
+      counter = (math.mod(allErrorMessages.size(), list_size) == 0 ? allErrorMessages.size() - list_size : allErrorMessages.size() - math.mod(allErrorMessages.size(), list_size) );
+      setErrorToShow();
+      return null;
+   }
+
+   public Boolean getDisablePrevious() { 
+      //this will disable the previous and beginning buttons
+      if (counter>0) return false; else return true;
+   }
+
+   public Boolean getDisableNext() { //this will disable the next and end buttons
+      if (counter + list_size < allErrorMessages.size()) return false; else return true;
+   }
+
+   public Integer getTotal_size() {
+      return allErrorMessages.size();
+   }
+
+   public Integer getPageNumber() {
+    return counter/list_size + 1;
+   }
+
+   public Integer getTotalPages() {
+      if (math.mod(allErrorMessages.size(), list_size) > 0) {
+         return allErrorMessages.size()/list_size + 1;
+      } else {
+         return (allErrorMessages.size()/list_size);
+      }
+   }
+
     // ****************************************
     // ************* helper methods ***********
     // ****************************************
@@ -267,5 +385,12 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
             errors = 0;
             created = 0;
         }
+    }
+
+    public class jsonError{
+        public String iataCode{get;set;}
+        public String errorMessage{get;set;}  
+        
+        public jsonError(){}    
     }
 }

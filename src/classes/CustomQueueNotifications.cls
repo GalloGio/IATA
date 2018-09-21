@@ -48,8 +48,8 @@ public with sharing class CustomQueueNotifications {
 	    					String body = Label.Custom_Queue_Notifications_Email_Template;
 	    					body = body.replace('{!QueueName}', mapQueuesPerId.get(c.OwnerId).Name);
 	    					body = body.replace('{!Case.CaseNumber}', c.CaseNumber);
-	    					body = body.replace('{!Case.Reason1__c} ', c.Reason1__c != null ? c.Reason1__c : '');
-	    					body = body.replace('{!Case.Subject} ', c.Subject);
+	    					body = body.replace('{!Case.Reason1__c}', c.Reason1__c != null ? c.Reason1__c : '');
+	    					body = body.replace('{!Case.Subject}', c.Subject);
 	    					body = body.replace('{!Case.Description}', c.Description != null ? c.Description : '');
 	    					body = body.replace('{!Case.Link}', System.URL.getSalesforceBaseUrl().toExternalForm() + '/' + c.Id);
 	    					

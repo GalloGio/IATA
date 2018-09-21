@@ -216,6 +216,17 @@
             }, {buffer: true, escape: false, timeout: 120000} );
           
         }
+
+        /*** AMSU-168 ***/
+        function selectAll() {
+            var val = $('#chk_selectAll').prop('checked');
+            $('*[id*=fileList] input.selectZipFilesCheckbox').prop('checked', val);
+            $('.selectionDiv input').val(val);
+        }
+
+        function setSelected(value) {
+            value.siblings().find('input').val(value.prop('checked'));
+        }
     </script>
 
     <apex:form id="mainform" >
@@ -233,6 +244,8 @@
                 <apex:commandButton value="{!$Label.site.save}" action="{!updateAllAttach}" oncomplete="refreshPage()" styleClass="saveButton" rendered="{!NOT(isReadOnly)}"  />
                 <input type="button" class="btn" value="Download All Files" onclick="downloadZIP(); return false;"/>
                 <input type="button" class="btn" value="Download Selected Files" onclick="downloadSelectedZIP(); return false;"/>
+                <apex:commandButton value="Accept" action="{!acceptFiles}"/> <!-- AMSU-168 -->
+                <apex:commandButton value="Reject" action="{!rejectFiles}"/> <!-- AMSU-168 -->
             </apex:pageblockButtons>
 
             <apex:pageMessages />
@@ -255,7 +268,14 @@
             <apex:pageBlockTable styleClass="tablesorter" id="tableAttachments" value="{!listAttachments}" var="attach" rendered="{!listAttachments.size > 0}">
 
                 <apex:column headerValue="" >
-                    <input type="checkbox" value="{!attach.Id}" class="selectZipFilesCheckbox" />
+                    <!-- AMSU-168 -->
+                    <apex:facet name="header">
+                        <input type="checkbox" id="chk_selectAll" onclick="selectAll();" />
+                    </apex:facet>
+                    <input type="checkbox" value="{!attach.Id}" class="selectZipFilesCheckbox" onclick="setSelected($(this));" />
+                    <div class="selectionDiv">
+                        <apex:inputHidden value="{!attach.isSelected}"/>
+                    </div>
                 </apex:column>
 
                 <!--  ACTIONS -->
@@ -381,6 +401,14 @@
                         <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
                             <apex:param value="{!attach.updatedDate}" />
                         </apex:outputText>
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column headerValue="History" >
+                    <apex:outputPanel layout="block" rendered="{!attach.isAmazon}">
+                        <apex:outputLink value="/{!attach.id}" id="theLink" target="_blank"> History </apex:outputLink>  
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="block" rendered="{!attach.isSalesforce}">
+                        <apex:outputText value="---------"/>  
                     </apex:outputPanel>
                 </apex:column>
             </apex:pageBlockTable>

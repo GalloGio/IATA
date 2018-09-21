@@ -2,7 +2,7 @@
 private class ang_AmendFS_test {
 	 @testSetup static void testSetup(){
 	 	  // Create a new ISO Country
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', ANG_Enable_NewGen__c = true);
         insert country;
         
         // Create an Airline HQ account
@@ -12,6 +12,7 @@ private class ang_AmendFS_test {
 			Location_Class__c='P',
 			Remittance_frequency__c='M',
 			ANG_Accreditation_Model__c ='Cash',
+			IATA_ISO_Country__c = country.Id,
         	RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
         );
         insert a;        
