@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Airline_Becomes_Active_for_the_First_Time_Alert</fullName>
+        <description>Airline Becomes Active for the First Time Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>humbertdrc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kirkl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>luntrarum@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>matepiner@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pilonb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Airline_Becomes_Active_for_the_First_Time_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Airline_Becomes_Inactive_Alert</fullName>
+        <description>Airline Becomes Inactive Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>humbertdrc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kirkl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>luntrarum@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>matepiner@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pilonb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Airline_Becomes_Inactive_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Airline_Becomes_Re_Activated_Alert</fullName>
+        <description>Airline Becomes Re-Activated Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>humbertdrc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kirkl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>luntrarum@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>matepiner@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pilonb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Airline_Becomes_Re_Activated_Notification</template>
+    </alerts>
+    <alerts>
         <fullName>FDS_CodingAOC</fullName>
         <description>FDS Coding - AOC Expiry alert</description>
         <protected>false</protected>
@@ -508,6 +592,36 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <active>false</active>
         <description>Used for updating the agency short name with the trade name if exist, if not then it updates it with the account name</description>
         <formula>AND ( RecordType.DeveloperName = &apos;IATA_Agency&apos;, OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Airline Becomes Active for the First Time</fullName>
+        <actions>
+            <name>Airline_Becomes_Active_for_the_First_Time_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(  ISNEW(),  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Airline Becomes Inactive</fullName>
+        <actions>
+            <name>Airline_Becomes_Inactive_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Active Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Inactive Company&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Airline Becomes Re-Activated</fullName>
+        <actions>
+            <name>Airline_Becomes_Re_Activated_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Inactive Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
