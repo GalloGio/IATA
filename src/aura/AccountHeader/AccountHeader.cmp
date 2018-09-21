@@ -156,7 +156,19 @@
                 </dl>
             </div>
 
-            <!-- PAGE HEADER / ROW 2 / COLUMN 6 -->
+			<aura:if isTrue="{!v.account.Membership_Status__c != 'IATA member'}">
+	            <!-- PAGE HEADER / ROW 2 / COLUMN 6 -->
+	            <div class="slds-col--padded ">
+	                <dl>
+	                    <dt>
+	                        <p class="slds-text-heading--label slds-truncate">Account Type</p>
+	                    </dt>
+	                    <dd>{!v.account.Account_Type_HQ__c}</dd>
+	                </dl>
+	            </div>
+            </aura:if>
+            
+            <!-- PAGE HEADER / ROW 2 / COLUMN 7 -->
             <div class="slds-col--padded ">
                 <dl>
                     <dt>
@@ -174,7 +186,7 @@
                 </dl>
             </div>
 
-            <!-- PAGE HEADER / ROW 2 / COLUMN 7 -->
+            <!-- PAGE HEADER / ROW 2 / COLUMN 8 -->
             <div class="slds-col--padded ">
                 <dl>
                     <dt>
