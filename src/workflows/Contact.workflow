@@ -270,26 +270,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIS_Assign_contact_recordtype</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IATA_SIS_Contact</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>SIS - Assign contact recordtype</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIS_Update_Contact_Owner</fullName>
-        <field>OwnerId</field>
-        <lookupValue>smitha@iata.org</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>SIS Update Contact Owner</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>STD_Opt_out</fullName>
         <description>STD Opt out</description>
         <field>HasOptedOutOfEmail</field>
@@ -601,24 +581,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         </criteriaItems>
         <description>Automatically Opt out all Key contact</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS HelpDesk - Assign SIS recordtype when new contact source system is SIS</fullName>
-        <actions>
-            <name>SIS_Assign_contact_recordtype</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Update_Contact_Owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contact.Source_System__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Update ID card contact checkbox</fullName>
