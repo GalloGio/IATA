@@ -324,7 +324,7 @@
                                                 <apex:outputPanel >
                                                 <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.is_PCI_DSS_required__c}" readonly="{!!editMode}">
                                                     <apex:selectOption itemValue="{!UPPER($Label.ISSP_Yes)}" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}"/>
-                                                    <apex:selectOption itemValue="{!UPPER($Label.ISSP_No)}" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
+                                                    <apex:selectOption itemValue="NA}" itemLabel="{!$Label.ISSP_Not_Applicable}"  itemDisabled="{!!editMode}"/>
                                                 </apex:selectRadio>
                                                 </apex:outputPanel>                                              
                                                     <apex:image value="/img/msg_icons/info16.png" style="padding: 4px;max-width: 26px;max-height: 25px;" styleClass="selector" title="{!$Label.ISSP_Portal_Product_is_Subject_to_PCI_Label}" html-data-placement="top" html-data-toggle="tooltip" rendered="{!editMode}"/>

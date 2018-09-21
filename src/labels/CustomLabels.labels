@@ -20645,6 +20645,13 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>No records available</value>
     </labels>
     <labels>
+        <fullName>ISSP_Not_Applicable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Not_Applicable</shortDescription>
+        <value>Not Applicable</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Not_Authorized</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
