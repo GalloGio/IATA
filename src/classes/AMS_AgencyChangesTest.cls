@@ -23,17 +23,17 @@ public class AMS_AgencyChangesTest {
 	
 	public static void init2Hierarchies(boolean isPax){
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
-		customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
+		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
 														  TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false, 
 														  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false, 
 														  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false, 
 														  TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
-		customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination09', TC_Ownership_to_IATA_Agent__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership; ',
+		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination09', TC_Ownership_to_IATA_Agent__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership; ',
 														  TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false, 
 														  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Location_type__c = false, 
 														  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,  
 														  TCA_Sanity_check__c = 'CHI', TCA_Manager_approval__c = 'CHF', TCA_Application_withdrawal__c = 'CWD'));
-		customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination10', TC_Ownership_to_non_IATA_Agent__c = true, TCA_Sanity_check__c = 'CHO', TCA_Manager_approval__c = 'CHF', TCA_Application_withdrawal__c = 'CWD'));
+		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination10', TC_Ownership_to_non_IATA_Agent__c = true, TCA_Sanity_check__c = 'CHO', TCA_Manager_approval__c = 'CHF', TCA_Application_withdrawal__c = 'CWD'));
 		insert customsettings;
 
 		List<AMS_ChangeCodes__c> changeCodeCustomsettings = new List<AMS_ChangeCodes__c>();
@@ -421,26 +421,4 @@ public class AMS_AgencyChangesTest {
 	static TestMethod void testChangeOfOwnershipIATABuysSomeBranches(){}
 	
 	static TestMethod void testChangeOfOwnershipIATABuysHOandSomeBranches(){}
-
-	static TestMethod void individualCallings() {
-		AMS_OSCAR_TestDataFactory.createOSCARtestData();
-		AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c LIMIT 1];
-
-		AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig('Name', oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'false'}});
-		AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig('', oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'true'}});
-		AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig('Name', oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'true'}});
-
-		AMS_AgencyChangesConfigHelper.setNotApplicableSteps(new List<String>{'STEP10'}, new List<String>(), oscar);
-
-
-		Set<String> setFields = AMS_AgencyChangesConfigHelper.getFieldsToMigrate( oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'false'}});
-
-
-		System.assertEquals('Name', AMS_AgencyChangesConfigHelper.getFieldSetsToMigrate(new Map<String, String>{'Fields to Migrate' => 'Name'})[0]);
-		System.assertEquals(null, AMS_AgencyChangesConfigHelper.getFieldSetsToMigrate(new Map<String, String>{'No Fields' => 'Name'}));
-
-		System.assertEquals('Name', AMS_AgencyChangesConfigHelper.getManagerDisapprovalChangeCode(new Map<String, String>{'Manager disapproval' => 'Name'}));
-		System.assertEquals('Name', AMS_AgencyChangesConfigHelper.getWithdrawalChangeCode(new Map<String, String>{'Application withdrawal' => 'Name'}));
-
-	}
 }

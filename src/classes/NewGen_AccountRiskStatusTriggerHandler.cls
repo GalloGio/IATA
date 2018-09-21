@@ -22,7 +22,8 @@ public with sharing class NewGen_AccountRiskStatusTriggerHandler {
 			if(oldAccountMap.get(acc.Id).ANG_RiskStatus__c != null && acc.ANG_RiskStatus__c != null &&
 				oldAccountMap.get(acc.Id).ANG_RiskStatus__c != acc.ANG_RiskStatus__c){
 				
-				NewGen_Account_Statement_Helper.sendPushNotification(usersPerAccount.get(acc.Id), Label.NewGenApp_RiskStatusNotification, new List <String> { acc.Name, String.valueOf(acc.ANG_RiskStatus__c) });  
+				NewGen_Account_Statement_Helper.sendPushNotification(usersPerAccount.get(acc.Id), Label.NewGenApp_RiskStatusNotification, 
+					new List <String> { acc.Name, String.valueOf(acc.ANG_RiskStatus__c) }, NewGen_Account_Statement_Helper.NAVIGATE_TO_RHC_RISK_PROFILE);  
 			}
 		}
 	}

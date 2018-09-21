@@ -15,7 +15,14 @@
 			if (pageLoad) {
 				pageLoad();
             }
+            //AMSU-1
+            if({!isCorrection} == true){
+            	
+            	checkCorrectionProcess();
+            	
+            }else{
 			testSetTabTitle();
+		}
 		}
 
 		function closeTab(){
@@ -161,6 +168,8 @@
 				</script>
 
 				<apex:actionFunction name="selectMain" action="{!selectMain}" status="blockEditing" reRender="table, dependentFields"/>
+				<apex:actionFunction name="checkCorrectionProcess" action="{!checkCorrectionProcess}" status="blockEditing" oncomplete="{!IF(closeTab, 'refreshTab();', '')}"/>
+
 
 				<apex:actionStatus id="blockEditing">
 					<apex:facet name="start">

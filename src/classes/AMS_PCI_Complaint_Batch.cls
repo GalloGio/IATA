@@ -1,8 +1,6 @@
 global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Database.Stateful, Schedulable {
     
     private Integer batchScope {get;set;}
-    public Id iata_iso_Country_id {get;set;}
-    public Set<String> list_iata_iso_Country_id {get;set;}
     global List<ErrorWrapper> lstErrors {get;set;}
     global List<ResultWrapper> lstResult {get;set;}
     public Set<Id> filteredAccounts {get;set;}
@@ -11,29 +9,24 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     public static Map<Id, List<Attachment>> templateIdVsAttachemnt {get;set;}
     public static Map<Id, Case> casesInfo {get;set;}
 
-    global AMS_PCI_Complaint_Batch(Integer batchScope, Set<String> list_iata_iso_Country_id) {
+    global AMS_PCI_Complaint_Batch(Integer batchScope) {
         this.batchScope = batchScope;
-        this.list_iata_iso_Country_id = list_iata_iso_Country_id;
         this.lstErrors = new List<ErrorWrapper>();
         this.lstResult = new List<ResultWrapper>();
     }
 
-    global AMS_PCI_Complaint_Batch(Integer batchScope, Set<String> list_iata_iso_Country_id, Set<Id> filteredAccounts) {
+    global AMS_PCI_Complaint_Batch(Integer batchScope, Set<Id> filteredAccounts) {
         this.batchScope = batchScope;
-        this.list_iata_iso_Country_id = list_iata_iso_Country_id;
         this.lstErrors = new List<ErrorWrapper>();
         this.lstResult = new List<ResultWrapper>();
         this.filteredAccounts = filteredAccounts;
     }
 
-    //public static void start(String cron, Integer scope) {
-    //    System.schedule('AMS PCI Compliant Batch', cron, new AMS_PCI_Complaint_Batch (scope, null));
-    //}
     public static void start(String cron, Integer scope) {
         if(!Test.isRunningTest()) {
-            System.schedule('AMS PCI Compliant Batch', cron, new AMS_PCI_Complaint_Batch (scope, null));
+            System.schedule('AMS PCI Compliant Batch', cron, new AMS_PCI_Complaint_Batch (scope));
         }else{
-            System.schedule('AMS PCI Compliant Batch TEST', cron, new AMS_PCI_Complaint_Batch (scope, null));
+            System.schedule('AMS PCI Compliant Batch TEST', cron, new AMS_PCI_Complaint_Batch (scope));
         }
         
     }
@@ -58,13 +51,15 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     }
     
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        String location = AMS_Utils.LC_PASSENGER;
+        Set<String> locations = new Set<String> {AMS_Utils.LC_PASSENGER, 'D'};
         Id AGENCY_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordtypeId();
+        Id OSCARCOMMRTID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
         String reason = 'PCI DSS Compliant';
         Set<String> availableStatus = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, 
                                                        AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED,
                                                        AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S7_UNDERREVIEW, 'Review'};
-        Set<String> pciValues = new Set<String> {'Yes', 'Nil CC'};
+
+        Set<String> pciValues = new Set<String> {null, 'No'};
         String query = 'SELECT Id, Name, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c,' +
                        ' Abbreviated_address__c, Abbreviated_name__c, BillingState, BillingCity,' +
                        ' IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode, BillingStreet,' +
@@ -74,23 +69,21 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                        ' ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c,' + 
                        ' Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, BillingCountry,' +
                        ' Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,' +
-                       ' IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c ' +
+                       ' IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c ' +
                        'FROM Account ' + 
                        'WHERE';
 
-        if(filteredAccounts != null && !filteredAccounts.isEmpty()) {
+        if(filteredAccounts != null && !filteredAccounts.isEmpty()) { /* Process starts from mass creation page*/
             query += ' Id IN :filteredAccounts';
-        } else {
-            query += ' Location_Class__c = :location AND Status__c IN :availableStatus AND ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:90' +
-                     ' AND PCI_DSS_Compliant__c = NULL' +
-                     ' AND Is_PCI_compliant__c IN :pciValues' +
-                     ' AND RecordtypeId = :AGENCY_RECORDTYPE';
-
-            if(list_iata_iso_Country_id != null && list_iata_iso_Country_id.size() > 0) {
-                query += ' AND IATA_ISO_Country__c IN :list_iata_iso_Country_id';
+        } else { /* Process for renewal batch */
+            query += ' ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:60';
+            query += ' AND Location_Class__c IN :locations';
+            query += ' AND Status__c IN :availableStatus';
+            query += ' AND Is_PCI_compliant__c NOT IN :pciValues';
+            query += ' AND RecordtypeId = :AGENCY_RECORDTYPE';
+            query += ' AND ANG_IsNewGenAgency__c = false';
+            query += ' AND Id NOT IN (SELECT AccountId FROM Case WHERE RecordTypeId = :OSCARCOMMRTID AND Reason1__c = :reason AND IsClosed = false)';
             }
-        }
-
         
         return Database.getQueryLocator(query);
     }
@@ -99,7 +92,9 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         List<ResultWrapper> resChunk = new List<ResultWrapper>();
         Savepoint sp = Database.setSavepoint();
         try {
-            validateCandidatesForRenewal(scope, resChunk);            
+            Boolean isRenewal = filteredAccounts == null; // if filteredAccounts is null means that is a renewal process running
+            system.debug('isRenewal: ' + isRenewal);
+            validateCandidatesForRenewal(scope, resChunk, isRenewal);            
         } catch(Exception e) {
             System.debug('execute validateCandidatesForRenewal - Exception : ' + e);
             System.debug('execute validateCandidatesForRenewal - Exception : ' + e.getStackTraceString());
@@ -136,7 +131,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         }
     }
 
-    public static void validateCandidatesForRenewal(List<Account> pciRequiringRenewal, List<ResultWrapper> resW){
+    public static void validateCandidatesForRenewal(List<Account> pciRequiringRenewal, List<ResultWrapper> resW, Boolean isRenewal){
 
         Set<Id> accountIds = new Set<Id>();
 
@@ -229,7 +224,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             isoCountries.add(acc.IATA_ISO_Country__c);
 
         
-        Map<String, Id> countryTemplates = PCIemailTemplates('PCI');
+        Map<String, Id> countryTemplates = PCIemailTemplates('PCI', isRenewal);
         OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
         for(Account agReg: pciRequiringRenewal){
@@ -257,7 +252,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
             system.debug('creating renewal for PCI');
 
-            AMS_OSCAR__c oscar = createStagingArea(agReg, comCasecontact);
+            AMS_OSCAR__c oscar = createStagingArea(agReg, comCasecontact, isRenewal);
             ResultWrapper resProcess = new ResultWrapper(agReg);
             if(comCaseContact != null) {
                 resProcess.con = comCaseContact;
@@ -282,17 +277,21 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     }
 
     
-    public static AMS_OSCAR__c createStagingArea(Account accountData, Contact communicationCaseContact){
+    public static AMS_OSCAR__c createStagingArea(Account accountData, Contact communicationCaseContact, Boolean isRenewal){
 
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_CERT, Account__c = accountData.Id,
                                     Process__c = AMS_Utils.PCI_COMPLIANT, Status__c='Accepted_Future Date', ANG_PCI_compliance_expiry_date__c = accountData.ANG_PCI_compliance_expiry_date__c);
         
         theOscar.OSCAR_Deadline__c = Date.today().addDays(30);
+		/*** AMSU-159 ***/
+        AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(new List<AMS_OSCAR__c> {theOscar});
+
         insert theOscar;
 
         system.debug('createStagingArea oscar: '+ theOscar);
         Case theCommunicationCase = new Case();
-
+        String renewalSubject = isRenewal ? ' - Renewal' : '';
+        theCommunicationCase.Subject = 'PCI DSS Compliant - ' + accountData.Name + renewalSubject;
         theCommunicationCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
         theCommunicationCase.OSCAR__c = theOscar.Id;
         theCommunicationCase.CaseArea__c = 'Accreditation Process';
@@ -310,6 +309,11 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             theCommunicationCase.ContactId = communicationCaseContact.Id;
 
         system.debug('before case: ' + theCommunicationCase);
+        
+        /*** AMSU-159 ***/
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule = true;
+        theCommunicationCase.setOptions(dmo);
         
         insert theCommunicationCase;
 
@@ -359,6 +363,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         theOscar.Oscar_Communication_Case_Id__c = theCommunicationCase.Id;
         theOscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), theCommunicationCase.Id);
         theOscar.AMS_Online_Accreditation__c = theStagingArea.Id;
+        theOscar.ANG_PCI_compliance_expiry_date__c = accountData.ANG_PCI_compliance_expiry_date__c;
         update theOscar;
 
 
@@ -604,13 +609,15 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                 List<Attachment> attachs = templateIdVsAttachemnt.get(mail.getTemplateId());
                 system.debug('DGR sendEmailAlert: attachs : ' + attachs);
                 List<Messaging.EmailFileAttachment> emailAttachs = new list<Messaging.EmailFileAttachment>();
-                for(Attachment attach : attachs){
-                    Messaging.EmailFileAttachment emailAttc = new Messaging.EmailFileAttachment();
-                    emailAttc.setFileName(attach.Name);
-                    emailAttc.setBody(attach.Body);
-                    emailAttc.setContenttype(attach.ContentType);
-
-                    emailAttachs.add(emailAttc);    
+                if(attachs != null) {
+	                for(Attachment attach : attachs){
+	                    Messaging.EmailFileAttachment emailAttc = new Messaging.EmailFileAttachment();
+	                    emailAttc.setFileName(attach.Name);
+	                    emailAttc.setBody(attach.Body);
+	                    emailAttc.setContenttype(attach.ContentType);
+	
+	                    emailAttachs.add(emailAttc);    
+	                }
                 }
                 system.debug('DGR sendEmailAlert: emailAttachs : ' + emailAttachs);
                 mail.setFileAttachments(emailAttachs);
@@ -641,12 +648,13 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         }
     }
 
-    private static Map<String, Id> PCIemailTemplates(String type){
+    private static Map<String, Id> PCIemailTemplates(String type, Boolean isRenewal){
 
         Map<String, Id> multilangTemplates = new Map<String, Id>();
         Map<String, EmailTemplate> auxCountryTemplates = new Map<String, EmailTemplate>();
         Map<Id, EmailTemplate> auxTemplateIdVsTemplates = new Map<Id, EmailTemplate>();
         Map<Id, List<Attachment>> auxTemplateIdVsAttachemnt = new Map<Id, List<Attachment>>();
+        type += isRenewal ? '_Renewal' : '';
         String devNameLike = 'AMS_' + type + '_Compliant%';
         List<EmailTemplate> etDGR = [SELECT Id, DeveloperName, HtmlValue, Body, Subject FROM EmailTemplate WHERE DeveloperName LIKE :devNameLike];
         list<Attachment> attachments = [select ContentType, Body, parentId, Id, Name From Attachment where parentId in :etDGR];

@@ -60,6 +60,14 @@
                 <name>praban@iata.org</name>
                 <type>user</type>
             </approver>
+            <approver>
+                <name>thamoh@iata.org</name>
+                <type>user</type>
+            </approver>
+            <approver>
+                <name>wongsf@iata.org</name>
+                <type>user</type>
+            </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>

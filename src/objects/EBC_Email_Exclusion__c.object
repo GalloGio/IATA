@@ -328,11 +328,12 @@
         <columns>Event_Date_Timestamp__c</columns>
         <columns>Source_Campaign__c</columns>
         <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Email__c</field>
             <operation>contains</operation>
-            <value>@iata.org</value>
+            <value>iata.org</value>
         </filters>
         <label>iata.org Domain Exclusions</label>
         <language>en_US</language>

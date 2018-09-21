@@ -269,6 +269,9 @@ global without sharing class AMS_RecordCreatorWebservice {
          if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
             return oscarRT.get('ANG_FS_OPTINOUT');
 
+         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
+            return oscarRT.get('NGCORRECTION');
+            
         return null;
 
     }
@@ -316,7 +319,9 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
         }
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP)){
+        //AMSU-140
+        //if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP)){
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP) || processType.equalsIgnoreCase(AMS_Utils.COR)){
 
             accreditationObj = fetchAccreditationObject(accreditationId);
 
@@ -363,7 +368,10 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         insert oscar;
 
-        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        //AMSU-140
+        //if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) || processType.equalsIgnoreCase(AMS_Utils.COR) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
+
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
@@ -382,10 +390,16 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static void fillNewAEFieldsFromParent(String parentId, String accountId, String accreditationId){
 
         //Let's get the parent account
-        Account acct = [Select Id, ANG_Accreditation_Model__c, Remittance_frequency__c from Account where Id = :parentId];
+        Account acct = [Select Id, ANG_Accreditation_Model__c, Location_type__c, Remittance_frequency__c, Parent.Remittance_frequency__c from Account where Id = :parentId];
 
         AMS_Pax_Accreditation_Form__c accredObject = new AMS_Pax_Accreditation_Form__c(Id =accreditationId);
-        accredObject.Remittance_frequency__c = acct.Remittance_frequency__c;
+
+        if(parentId == accountId && acct.Location_Type__c == 'AE'){
+            accredObject.Remittance_frequency__c = acct.Parent.Remittance_frequency__c;
+        }
+        else
+            accredObject.Remittance_frequency__c = acct.Remittance_frequency__c;
+
         update accredObject;
 
         Account acctChild = new Account(Id = accountId);
@@ -534,7 +548,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         // get the Account and creates a change code (Agency_Applied_Change_code__c)
         // Notify the Agent via email using predefined email template
 
-        Boolean processedTN = false;
+        Boolean hasTN = containsTradeName(accountChanges);
 
         List<Account> accountsToProcess = new List<Account>();
         List<AMS_OSCAR_JSON.ChangeCode> changeCodesToProcess = new List<AMS_OSCAR_JSON.ChangeCode>();
@@ -547,38 +561,42 @@ global without sharing class AMS_RecordCreatorWebservice {
             throw new CalloutException('Account Id must be filled.');
 
         Account account = new Account(Id = accountId);
+        Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, (SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
 
-        if(account == null)
+        if(a == null)
             throw new CalloutException('Account could not be found.');
 
-        List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: accountId AND Active__c = TRUE];
+        if(hasTN){
+                  
+            if(!a.CNS_Agency__c) {
+                changeCodeTN = generateChangeCodeTN(accountChanges, account.Status__c == 'Approved');
 
-        if(containsTradeName(accountChanges)){
+                if(a.Agencies_Applied_Change_codes__r.size() > 0){
+                        changeCodeTN.reasonCode = a.Agencies_Applied_Change_codes__r[0].Reason_Code__c;
+                        changeCodeTN.reasonDesc = a.Agencies_Applied_Change_codes__r[0].Reason_Description__c;
+                }
 
-            changeCodeTN = generateChangeCodeTN(accountChanges, account.Status__c == 'Approved');
-
-            if(accountActiveChangeCode.size() > 0){
-                    changeCodeTN.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
-                    changeCodeTN.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+                //2080607 DT: switched to A
+	            //accountsToProcess.add(account);
+	            accountsToProcess.add(a);
+                changeCodesToProcess.add(changeCodeTN);
+                oscarsToProcess.add(null);
             }
-
-            accountsToProcess.add(account);
-            changeCodesToProcess.add(changeCodeTN);
-            oscarsToProcess.add(null);
-
-            processedTN = true;
         }
 
-        if(accountChanges.size() > 1 ||  ( accountChanges.size() == 1 && !processedTN)){
+        if(accountChanges.size() > 1 ||  ( accountChanges.size() == 1 && !hasTN )){
 
             changeCode = generateChangeCode(accountChanges);
+            changeCode.publishedOnEBulletin = a.CNS_Agency__c && a.Location_Class__c == 'C'; //CAD change codes for CNS C agencies is published on the ebulletin
 
-            if(accountActiveChangeCode.size() > 0){
-                    changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
-                    changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+            if(a.Agencies_Applied_Change_codes__r.size() > 0){
+                    changeCode.reasonCode = a.Agencies_Applied_Change_codes__r[0].Reason_Code__c;
+                    changeCode.reasonDesc = a.Agencies_Applied_Change_codes__r[0].Reason_Description__c;
             }
 
-            accountsToProcess.add(account);
+            //2080607 DT: switched to A
+            //accountsToProcess.add(account);
+            accountsToProcess.add(a);
             changeCodesToProcess.add(changeCode);
             oscarsToProcess.add(null);
         }
@@ -653,10 +671,10 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static AMS_OSCAR_JSON.ChangeCode generateChangeCode(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
 
         AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
+        AMS_ChangeCodes__c cad = AMS_ChangeCodes__c.getInstance('CADM');
 
-        toReturn.name = 'CAD';
-        toReturn.memoText = 'Minor Changes';//createMemoText(accountChanges);
-        toReturn.status  = null;
+        toReturn.name = cad.Change_Code__c;
+        toReturn.memoText = cad.Bulletin_Memo_Text__c;
 
         return toReturn;
     }
@@ -664,10 +682,10 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static AMS_OSCAR_JSON.ChangeCode generateChangeCodeTN(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges,Boolean isToChangeStatus){
 
         AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
+        AMS_ChangeCodes__c cta = AMS_ChangeCodes__c.getInstance('CTA');
 
-        toReturn.name = 'CTA';
-        toReturn.memoText = 'Change of trade name';//createMemoText(accountChanges);
-        toReturn.status  = null;
+        toReturn.name = cta.Change_Code__c;
+        toReturn.memoText = cta.Bulletin_Memo_Text__c;//createMemoText(accountChanges);
 
         return toReturn;
     }

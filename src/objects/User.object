@@ -704,6 +704,17 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Federation_ID__c</fullName>
+        <description>Shows the federation Id to the permission set manage external users</description>
+        <externalId>false</externalId>
+        <formula>FederationIdentifier</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Federation ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Functional_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>Functional Expertise</label>
@@ -3461,36 +3472,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <sharedTo>
             <role>VPMACS</role>
         </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>TD</fullName>
-        <columns>FULL_NAME</columns>
-        <columns>CORE.USERS.DIVISION</columns>
-        <columns>CORE.USERS.ACTIVE</columns>
-        <columns>CORE.USERS.LAST_LOGIN</columns>
-        <columns>CORE.USER_ROLE.NAME</columns>
-        <columns>CORE.PROFILE.NAME</columns>
-        <columns>CREATED_BY_NAME</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.NAME</columns>
-        <columns>License_Cost_Center__c</columns>
-        <columns>CORE.USERS.USERNAME</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>CORE.USERS.EMAIL</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Portal_User_Frozen_Checkbox__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>LAST_UPDATE</field>
-            <operation>equals</operation>
-            <value>YESTERDAY</value>
-        </filters>
-        <label>TD</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>TTBS_Users</fullName>

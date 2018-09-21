@@ -695,14 +695,14 @@ private class AMS_UtilsTest {
 
         insert changeCodeConfig;
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
         insert ctry;
 
         Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
 
         //create account to match triggering fields on settings
         Account acct = new Account(IATA_ISO_Country__c = ctry.id, Location_Type__c = 'HE', RecordTypeId = accountRT, IATACode__c='1234567',
-                                     Name='Test HE',Short_Name__c='Test HE',ANG_IEP_Status__c='Open',ANG_IEP_HE_AccntNum__c='126473547');
+                                     Name='Test HE',Short_Name__c='Test HE',ANG_IEP_Status__c='Open',ANG_IEP_HE_AccntNum__c='126473547', Reason__c = '12-aaa', Status__c='approved',Location_Class__c = 'P');
         insert acct;
 
         //integration will run on trigger because settings conditions are met: ANG_IEP_Status__c changed and value is 'In Progress'
@@ -782,7 +782,7 @@ private class AMS_UtilsTest {
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
                 Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name
                  FROM Account WHERE Id IN :accountIds]);
-        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscarLst[0], accountIds, 'Ownership to non-IATA Agent;  Minor Shareholding', getAccounts, oscarOnlineAccreditation));
+        accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscarLst[0], getAccounts.values(), 'Ownership to non-IATA Agent;  Minor Shareholding', oscarOnlineAccreditation));
         onlineAccredsToUpdate.add(AMS_Utils.CopyDataFromAccountToStaging(AMS_UTILS.OWNERSHIP_IATA, A1, oscarOnlineAccreditation));
 
         //------------------------modifyInspectionStatus-----------------------

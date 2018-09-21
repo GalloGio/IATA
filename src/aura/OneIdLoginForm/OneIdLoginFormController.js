@@ -19,6 +19,7 @@
                         helper.getFindLocation(data.ip,component);
             });
             console.log('JQuery EVENTS Configured...');
+
          });
          
     },
@@ -49,7 +50,6 @@
             var startURL = event.getParam("paramsMap").startURL;
 
             if(/\S/.test(servName)){
-                console.warn(servName);
                 component.set("v.serviceName", servName);
                                 
                 var labelHelpLink = $A.getReference("$Label.c.OneId_" + servName + "_Troubleshooting_Link");
@@ -63,27 +63,23 @@
             if(/mobilesdk/.test(redirect_uri)){
                 //prevent redirection
                 component.set("v.startURL", 'mobileApp');
-                console.warn('matchedsdk');
             }else if(/\S/.test(startURL)){
                 component.set("v.startUrl", startURL);
-                console.warn('did not matchedsdk');
             }
 
-            console.warn('startURL '+component.get("v.startUrl"));
         }
         
         component.set("v.loaded", true);
     },
     
     handleLogin: function (component, event, helper) {
-        console.log('handleLogin');
-        helper.handleLogin(component, event, helper);
+        helper.handlePreLogin(component, event, helper);
     },
 
     onKeyUp: function(component, event, helper){
         //checks for "enter" key
         if(event.getParams().keyCode == 13){
-            helper.handleLogin(component, event, helper);
+	        helper.handlePreLogin(component, event, helper);
         }
     },
     

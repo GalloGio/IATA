@@ -27,7 +27,7 @@ private class ANG_OscarProcessHelperTest {
 
 	@testSetup static void setup(){
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true)  ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true, Region__c = 'Europe')  ;
         insert ctry ;
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
@@ -543,6 +543,18 @@ private class ANG_OscarProcessHelperTest {
 
 		insert configCC;
 
+		List<Group> testGroupList = [SELECT name FROM Group WHERE Type = 'Queue' and Name = 'Cases - France'];
+		system.debug('Group :::: ' + testGroupList);
+
+		System.runAs(new User(Id=UserInfo.getUserId()))
+		{
+			List<QueuesObject> testQueuesList = new List<QueuesObject>();
+			testQueuesList.add(new QueueSObject(QueueId = testGroupList.get(0).id, SObjectType = 'AMS_OSCAR__c'));
+			testQueuesList.add(new QueueSObject(QueueId = testGroupList.get(0).id, SObjectType = 'Case'));
+			Database.insert(testQueuesList);
+		}
+
+
 		Account a = [select Abbreviated_address__c, Abbreviated_name__c,
 						BillingState,
 						BillingCity,
@@ -588,7 +600,7 @@ private class ANG_OscarProcessHelperTest {
 
 		update a;
 
-		a = [select Abbreviated_address__c, Abbreviated_name__c,
+	/*	a = [select Abbreviated_address__c, Abbreviated_name__c,
 						BillingState,
 						BillingCity,
 						Email__c,
@@ -627,9 +639,10 @@ private class ANG_OscarProcessHelperTest {
 						TradeName__c,
 						VAT_Number_2__c,
 						Reason__c,
-						Website from account limit 1];
+						Website from account limit 1]; 
+	*/
         
-		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c from contact where accountid =:a.id];
+		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c, AccountId from contact where accountid =:a.id];
 		
 		Test.startTest();
 
@@ -657,5 +670,36 @@ private class ANG_OscarProcessHelperTest {
 
 	}
 
-	 
+	 	@isTest static void testFetchKeyContact() {
+			
+			IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c where Name='France'];
+			Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+
+			Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A', IATACode__c = '1234567', Status__c = 'Approved');
+			insert a1;
+
+			Test.startTest();
+
+			//Contact co2 = new Contact(AccountId = a1.id, Firstname = 'John1', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john1j@test.com', User_Portal_Status__c = 'Approved Admin');
+			Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj4@test.com');
+			Contact co3 = new Contact(AccountId = a1.id, Firstname = 'John2', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john2j@test.com', Financial_Assessment_Contact__c = true);
+			Contact co4 = new Contact(AccountId = a1.id, Firstname = 'John3', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john3j@test.com', BSP_CASS_Payment_contact__c = true);
+
+			List<Contact> contactsInserted =  new List<Contact>{co1,co4,co3};
+			insert contactsInserted;
+			
+	
+
+			List<Contact> contactsOrdered = ANG_OscarProcessHelper.fetchKeyContacts(a1, contactsInserted);
+
+			System.debug(contactsOrdered);
+
+			//System.assertEquals(co2, contactsOrdered.get(0));
+			System.assertEquals(co3, contactsOrdered.get(0));
+			System.assertEquals(co4, contactsOrdered.get(1));
+			System.assertEquals(co1, contactsOrdered.get(2));
+
+			Test.stopTest();
+
+		}
 }

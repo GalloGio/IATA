@@ -21,12 +21,8 @@
   	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation" access="private"/>
 	<aura:attribute type="IATA_ISO_Country__c" name="country" access="private"/>
 	<aura:attribute type="String" name="selectedCountry" access="private"/>
+  	<aura:attribute type="List" name="agencyTypes" access="private"/> 
 	<aura:attribute type="Boolean" name="showCreateNew" default="false" />
-
-  	<aura:attribute name="agencyTypes" type="List" default="[
-		{value : 'Travel Agent', label: 'Travel'},
-		{value : 'Cargo Agent', label: 'Cargo'}
-	]"/> 
 
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
@@ -51,7 +47,7 @@
 				</div>
 				<aura:if isTrue="{!v.customerType == 'Agency'}">
 					<div class="slds-m-bottom_medium slds-size_1-of-1">
-						<lightning:radioGroup name="agencyTypeRadio" type="button" label="Type of Agency" options="{!v.agencyTypes}" value="{!v.agencyType}" required="true" onchange="{!c.setAgencyType}" />
+						<lightning:radioGroup name="agencyTypeRadio" type="button" label="{!$Label.c.ISSP_Select_Agency_Type}" options="{!v.agencyTypes}" value="{!v.agencyType}" required="true" onchange="{!c.setAgencyType}" />
 					</div>
 				</aura:if>
 
@@ -108,7 +104,7 @@
 	<aura:if isTrue="{!v.showCreateNew || (v.customerType == 'GeneralPublic' &amp;&amp; !empty(v.country))}">
 
 		<div class="slds-grid slds-grid_align-end slds-m-top_medium">
-			<ui:button label="Submit" press="{!c.submit}" class="slds-size_1-of-1 slds-medium-size_3-of-12"/>
+			<ui:button label="{!$Label.site.submit}" press="{!c.submit}" class="slds-size_1-of-1 slds-medium-size_3-of-12"/>
 		</div>
 	</aura:if>
 	

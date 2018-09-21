@@ -81,12 +81,13 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 	private static Account createAccount(String name, Date startDate, Date endDate){
 		Account a1 = ISSP_ObjectFactory.createNewAccount();
+        Integer randomIATACode = Math.round(1000 + Math.floor(Math.random() * 900));
         a1.BillingCity = 'test';
         a1.Name = name;
         a1.sector__c = 'Travel Agent';
         a1.Location_Type__c = 'HO';
         a1.RecordTypeId = TIP_UTils.PAYMENT_PROVIDER_RECORD_TYPE_ID;
-        a1.IATACode__c = '1000';
+        a1.IATACode__c = String.valueOf(randomIATACode);
         a1.IATA_ISO_Country__c = country.id;
         a1.category__c = 'Payment Provider';
         a1.Accreditation_date__c = startDate;
@@ -178,10 +179,10 @@ public class TIP_BatchActivateRecordsByDate_test {
 	public static void testScheduledJobs (){
 		Test.startTest();
 		Time timeToExecute = Time.newInstance(10, 10, 0, 0);
-		Id jobID = TIP_BatchActivateRecordsByDate.scheduleJob(timeToExecute);
+		Id jobID = TIP_BatchActivateRecordsByDate.scheduleJob(timeToExecute);	
 		Test.stopTest();
-		system.debug('##test: ' +[SELECT name FROM CronJobDetail where id = :jobID]);
-		System.assertEquals(1,[SELECT count() FROM CronJobDetail where name like '%TIP_BatchActivateRecordsByDate%']);
+		system.debug('##test: ' +[SELECT CronJobDetailId, State, TimesTriggered FROM CronTrigger where id =: jobID]);
+		System.assertEquals(1,[SELECT count() FROM CronTrigger where id =: jobID]);
 	}
 
 }

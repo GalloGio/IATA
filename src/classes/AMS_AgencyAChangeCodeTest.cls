@@ -96,7 +96,7 @@ private class AMS_AgencyAChangeCodeTest {
 
         List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c, Location_Class__c, Is_NewGen__c  from AMS_OSCAR__c];
 
-        List<Account> accountLst = [SELECT ID, Status__c from Account ];
+        List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c from Account ];
 
         if(accreditationLst.isEmpty())
             System.assert(true,false);

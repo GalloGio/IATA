@@ -628,6 +628,16 @@ IF(INCLUDES( ANG_Type_Of_Change__c, &quot;VMFR&quot;), &quot;VMFR&quot;, NULL)</
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Backup_In_Progress__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Backup In Progress</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Bank_Guarantee_Currency__c</fullName>
         <externalId>false</externalId>
         <label>Bank Guarantee Currency</label>
@@ -1493,6 +1503,21 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Business_Process__c</fullName>
+        <description>Technical field. Used to match custom settings on Change Code generation.</description>
+        <externalId>false</externalId>
+        <formula>IF(Account__r.CNS_Agency__c,
+				&apos;CNS-&apos; + TEXT(Account__r.Location_Type__c) + &apos;-&apos;+TEXT(Account__r.Location_Class__c),
+				&apos;AMS&apos;
+)</formula>
+        <label>Business Process</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>CNS_process__c</fullName>
@@ -7986,6 +8011,51 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <label>ISSP - Assignation queue</label>
         <language>en_US</language>
         <queue>ISSP_Queue_for_failed_assignation</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Africa_Mid_East_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Africa &amp; Mid. East</label>
+        <queue>Model_A_Onboarding_Africa_Mid_East</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Americas</label>
+        <queue>Model_A_Onboarding_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Asia_Pacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Asia &amp; Pacific</label>
+        <queue>Model_A_Onboarding_Asia_Pacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_China_North_Asia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - China &amp; North Asia</label>
+        <queue>Model_A_Onboarding_China_North_Asia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Model_A_Onboarding_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Model A Onboarding - Europe</label>
+        <queue>Model_A_Onboarding_Europe</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -45940,7 +46010,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     </validationRules>
     <validationRules>
         <fullName>ANG_IEP_require_ag_contact_on_san_check</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Cannot set sanity check as &quot;Passed&quot; if the Agency Contact is not filled</description>
         <errorConditionFormula>TEXT(Process__c)  = &apos;IEP.BANK.ACCOUNT.SETUP&apos; &amp;&amp;  TEXT(STEP6__c) = &apos;Passed&apos;  &amp;&amp;  ISBLANK( Agency_Contact__c )</errorConditionFormula>
         <errorMessage>Cannot set sanity check as &quot;Passed&quot; if Agency Contact is missing</errorMessage>

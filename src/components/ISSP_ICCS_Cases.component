@@ -1,0 +1,84 @@
+<apex:component controller="ISSP_ICCS_CasesController">
+    <apex:attribute name="pageCtrl" 
+                    type="ISSP_ICCS_ServiceController" 
+                    assignTo="{! pageController}" 
+                    required="true" 
+                    description="The controller for the page."/>
+
+    <apex:form>
+        <apex:pageBlock mode="maindetail" rendered="{! pageController.isSignatoryUser || pageController.isLevel1User || pageController.isReadOnlyUser}">
+            <div class="row margin-top-bottom">
+	            <apex:outputPanel rendered="{! pageController.userMessage != null || pageController.displayCaseSavedMessage}" id="messagePanel">
+	                <br/>
+	                <div class="panel panel-default">
+	                    <div class="panel-body" style="font-weight:bold;">
+							<div class="pddg">
+								<apex:outputText value="{! pageController.userMessage}" escape="false" rendered="{! pageController.userMessage != null}" style="color : {! IF(pageController.isSuccessMessage, '#000000', '#FF0000')};"/>
+
+								<apex:outputPanel rendered="{! pageController.displayCaseSavedMessage}">
+				                    <apex:outputText value="Your case "/>
+				                    <apex:commandLink action="{! pageController.navigateToCase}" value="{! pageController.savedCase.CaseNumber}" reRender="pageMainPanel" status="processActStatusId">
+				                        <apex:param name="caseId" value="{! pageController.savedCase.Id}" assignTo="{! pageController.caseIdParameter}"/>
+				                    </apex:commandLink> 
+				                    <apex:outputText value=" - '{! pageController.savedCase.Subject}' has been successfully {! IF(pageController.savedCase.Status != 'Draft', 'submitted', 'saved')}"/>
+					            </apex:outputPanel>
+							</div>
+	                    </div>
+	                </div>
+	            </apex:outputPanel>
+
+                <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+                    <div class="section-title-gray cases">
+                    	<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+                    	<apex:outputText value="{! $Label.ICCS_Cases}" escape="false"/>
+                    </div>
+                    <div class="bottom-box" style="text-align: justify;text-justify: inter-word;">
+	                    <div class="pddg-3">
+	                    	<div style="margin-bottom:6px;padding-left:24px">
+		                        <apex:outputText value="{! $Label.ICCS_Cases_Message}" escape="false"/>
+							</div>
+	                    </div>
+
+	                    <div class="divider-cases-2"/>
+
+	                    <div class="pddg">
+	                        <apex:inputCheckbox styleClass="mrgn-r" value="{! userCasesOnly}">
+		                        <apex:actionSupport event="onchange" rerender="casesTable" status="processActStatusId"/>
+                    		</apex:inputCheckbox>
+                        	<apex:outputText styleClass="labelText" value="{! $Label.ICCS_My_Cases_Only}" escape="false"/>
+							<br/>
+	                        <apex:inputCheckbox styleClass="mrgn-r" value="{! openedCasesOnly}">
+		                        <apex:actionSupport event="onchange" rerender="casesTable" status="processActStatusId"/>
+                    		</apex:inputCheckbox>
+                        	<apex:outputText styleClass="labelText" value="{! $Label.ICCS_Opened_Cases_Only}" escape="false"/>
+                    	</div>
+
+	                    <apex:outputPanel id="casesTable">
+	                        <apex:outputText value="{! $Label.ICCS_Cases_No_Case}" escape="false" rendered="{! casesSize == 0}"/>
+	                        <apex:pageBlockTable value="{! cases}" var="case" styleClass="table-cases" rendered="{! casesSize > 0}">
+	                            <apex:column headerValue="{! $Label.ISSP_CaseNumber}">
+	                                <apex:commandLink action="{! pageController.navigateToCase}" value="{! case.CaseNumber}" reRender="pageMainPanel" status="processActStatusId">
+	                                    <apex:param name="caseId" value="{! case.Id}" assignTo="{! pageController.caseIdParameter}"/>
+	                                </apex:commandLink>
+	                            </apex:column>
+	                            <apex:column value="{! case.Contact.Name}"/>
+	                            <apex:column value="{! case.Subject}"/>
+	                            <apex:column value="{! case.Status}"/>
+								<apex:column headerValue="Creation Date">
+									<apex:outputText value="{0,date,yyyy-MM-dd}">
+										<apex:param value="{! case.CreatedDate}" />
+									</apex:outputText>
+								</apex:column>
+                	        </apex:pageBlockTable>
+            	        </apex:outputPanel>
+            	        
+                        <div class="expand">
+                        	<apex:commandLink style="color: #0075bb;" action="{! expandCollapseCasesTable}" value="{! IF(isCasesTableExpanded, $Label.ICCS_See_Less, $Label.ICCS_See_More)}" rerender="pageMainPanel" status="processActStatusId"/>
+                        </div>
+            	        
+        	        </div>
+    	        </div>
+	        </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:component>

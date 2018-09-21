@@ -96,7 +96,7 @@
         <description>Status</description>
         <externalId>false</externalId>
         <label>Status</label>
-        <length>20</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -148,7 +148,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>08000355,08000344</value>
+            <value>80470044266</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -253,7 +253,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>7/20/2018 12:00 AM</value>
+            <value>8/24/2018 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>
