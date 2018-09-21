@@ -1,0 +1,11 @@
+Dear {!User.Name},
+
+<br/>
+<br/>
+
+<a href="{!Account.Link}">{!Account.Name}</a>, based in {!Account.IATA_ISO_Country__c}, has become Re-Activated.
+
+<br/>
+<br/>
+
+Last modified by: {!Account.LastModifiedBy}, {!Account.LastModifiedDate}

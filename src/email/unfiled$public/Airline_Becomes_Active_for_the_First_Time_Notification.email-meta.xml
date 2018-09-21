@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Airline Becomes Active for the First Time Notification Email</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Airline Becomes Active for the First Time Notification</name>
+    <style>none</style>
+    <subject>{!Account.Name} HAS BECOME ACTIVE FOR THE FIRST TIME</subject>
+    <textOnly>Dear {!User.Name},
+
+{!Account.Name}, based in {!Account.IATA_ISO_Country__c}, has become Active.
+
+Last modified by: {!Account.LastModifiedBy}, {!Account.LastModifiedDate}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
