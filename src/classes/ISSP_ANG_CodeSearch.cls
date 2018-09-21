@@ -301,8 +301,12 @@ public class ISSP_ANG_CodeSearch {
 	}
 
 	private String translateAgencyStatus(Account agency) {
-		if(agency.Status__c == Ams_Utils.ACC_S0_TERMINATED) {
+		if (agency.Status__c == Ams_Utils.ACC_S0_TERMINATED) {
 			return Label.ISSP_ANG_STATUS_TERMINATED;
+		} else if (agency.Status__c == Ams_Utils.ACC_S5_CASHNOCOMMISSION) {
+			return Label.ISSP_ANG_STATUS_CASHNOCOMMISSION;
+		} else if (agency.Status__c == Ams_Utils.ACC_S6_CASHWITHCOMMISSION) {
+			return Label.ISSP_ANG_STATUS_CASHWITHCOMMISSION;
 		} else {
 			return Label.ISSP_ANG_STATUS_APPROVED;
 		}
