@@ -59,7 +59,7 @@ global class ANG_MasterData_Interface{
 
     private static List<AMS_Account_Role__c> fetchOwners(Id accountId){
         if (String.IsBlank(accountId)) return new List<AMS_Account_Role__c>();
-        return [SELECT Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name FROM AMS_Account_Role__c WHERE Account__c = :accountId AND Active__c = true];
+        return [SELECT Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name FROM AMS_Account_Role__c WHERE Account__c = :accountId AND Active__c = true AND RecordType.Name = 'Ownership'];
     }
 
 
