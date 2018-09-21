@@ -28,6 +28,35 @@ public without sharing class ServiceNow_Helper {
         else if(system.isFuture() || system.isBatch()) sendRequestToSNOW_Immediate(JSON.serialize(theBody));
         else sendRequestToSNOW_Future(JSON.serialize(theBody));
     }
+
+    public static void sendRequestToSNOW(string setting_name, ISSP_Web_Service_Log__c log, ANG_RME_Alert_Service.WebserviceResult result, Exception error, string iatacode){
+
+            ISSP_Int_Error__c s = ISSP_Int_Error__c.getall().get(setting_name);
+
+            SNOWBody theBody = new SNOWBody();
+        
+            theBody.caused_by = s.caused_by__c;
+            theBody.u_issue_identified_by = s.u_issue_identified_by__c;
+            theBody.u_operation_name = s.u_operation_name__c;
+            theBody.u_application = s.u_application__c;
+            theBody.business_service = s.business_service__c;
+            theBody.short_description = s.short_description__c; // TODO
+            theBody.description = s.description__c; //TODO
+            theBody.impact = s.impact__c;
+            theBody.urgency = s.urgency__c;
+            theBody.severity = s.severity__c;
+            theBody.category = s.category__c;
+            theBody.subcategory = s.subcategory__c;
+            theBody.caller_id = s.caller_id__c;
+            theBody.opened_by = s.opened_by__c;
+            theBody.u_business_service = s.u_business_service__c;
+            theBody.assignment_group = s.assignment_group__c;
+            theBody.contact_type = s.contact_type__c;
+
+        if(trigger.isExecuting && !(system.isFuture() || system.isBatch())) sendRequestToSNOW_Future(JSON.serialize(theBody));
+        else if(system.isFuture() || system.isBatch()) sendRequestToSNOW_Immediate(JSON.serialize(theBody));
+        else sendRequestToSNOW_Future(JSON.serialize(theBody));
+    }
     
     
     @future(callout=true)
@@ -112,6 +141,7 @@ public without sharing class ServiceNow_Helper {
         public string opened_by {get; set;} //Max Mule
         public string u_business_service {get; set;}    //Infrastructure Services
         public string assignment_group {get; set;}  //Mulesoft Support
+        public string contact_type {get; set;}  //
 
     }
     
