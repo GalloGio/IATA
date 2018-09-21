@@ -157,7 +157,7 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
 
     }
 
-    public class UpdateUserStatus implements Queueable {
+    public without sharing class UpdateUserStatus implements Queueable {
         public Id contactId {get;set;}
         public String email {get;set;}
         public Id profileId {get;set;}
@@ -169,7 +169,21 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
         }
 
         public void execute(QueueableContext context) {
-            ISSP_PortalUserStatusChange.updateUserSync(contactId, true, email, profileId, '');
+            List<User> users = [SELECT Id, IsActive, IsPortalEnabled, Email, Contact.Email, Community__c, ProfileId, Username FROM User WHERE ContactId = :contactId];
+            
+            if(users.isEmpty()) {
+                return;
+            }
+
+            for(User u : users) {
+                u.IsActive = true;
+                u.IsPortalEnabled = true;
+                u.ProfileId = profileId == null ? u.ProfileId : profileId;
+                u.Email = email;
+                u.Username = ISSP_Utilities.buildPortalUserName(email);
+            }
+
+            update users;
         }
     }
 
