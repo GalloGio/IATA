@@ -92,6 +92,18 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			}
 		}
 
+		if (this.iepModel == 'Banking Model') {
+			this.iepLink = '#';
+			this.iepLinkLabel = Label.ANG_ISSP_IEP_ModelBanking_link;
+			this.modalErrorMessageFlag = '-';
+			if (account.IATA_ISO_Country__r.Name == 'India') {
+				this.modalErrorMessage = Label.ANG_ISSP_IEP_ModelBanking_India_msg;
+			}
+			if (account.IATA_ISO_Country__r.Name == 'Korea, Republic of') {
+				this.modalErrorMessage = Label.ANG_ISSP_IEP_ModelBanking_SouthKorea_msg;
+			}	
+		}
+
 		if(account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
 			this.isIEP = YES;
 			this.isIEPFlag = true;
@@ -146,32 +158,17 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	            } else if (account.Location_Type__c == 'AO' || account.Top_Parent__r.Location_Type__c == 'AO') {
 	                this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
 	            }
-        	}
+	            this.iepLink = '#';
+        	} else 
+				this.iepLink = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';				
+			
         	if(modalErrorMessage != '') {
         		this.modalErrorMessageFlag = '-';
         	}		       
 
 			this.iepLinkLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
 
-			if (this.iepModel == 'Banking Model') {
-				if (account.IATA_ISO_Country__r.Name == 'India') 
-					this.iepLinkLabel = '?';
-					this.modalErrorMessage = '?';
-				if (account.IATA_ISO_Country__r.Name == 'India') 
-					this.iepLinkLabel = '?';
-					this.modalErrorMessage = '?';
-				if (account.IATA_ISO_Country__r.Name == 'India') 
-					this.iepLinkLabel = '?';
-					this.modalErrorMessage = '?';
-					//Rui
-			}
-
-			if(!isIEPAccountEnable) {
-				this.iepLink = '#';								
-			} else {
-				this.iepLink = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';				
-			}
-
+			
 		}
 	}
 }
