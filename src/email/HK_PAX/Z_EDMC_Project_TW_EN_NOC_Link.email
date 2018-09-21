@@ -1,0 +1,83 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="text-align: justify;"><br></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font size="2" face="Arial, sans-serif"><span lang="EN-GB">{!Account.Site}</span></font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font face="Arial, sans-serif" size="2"><span lang="EN-GB"></span><span lang="EN-GB"><o:p></o:p></span>&nbsp;</font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><span lang="EN-GB"><o:p><strong><font size="2" face="Arial, sans-serif">{!Account.Name}</font></strong></o:p></span></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><b><span lang="EN-GB"><font size="2" face="Arial, sans-serif"></font></span></b></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><st1:address w:st="on"><st1:street w:st="on"><span lang="EN-GB"><font size="2" face="Arial, sans-serif">{!Account.BillingAddress}</font></span></st1:street></st1:address></p><p class="MsoNormal" style="text-align: justify;"><font face="Arial, sans-serif" size="2"><br></font></p><p class="MsoNormal" style="text-align: justify;"><font face="Arial, sans-serif" size="2"><br></font></p><p class="MsoNormal" style="text-align: justify;"><font face="Arial, sans-serif" size="2"><br></font></p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">Dear <span style="background:yellow;mso-highlight:yellow">{Customer Name}</span>,</p><p style="margin:0in;font-size:11.0pt"><span style="font-family:SimSun">尊敬的</span><span style="font-family:Calibri;background:yellow;mso-highlight:yellow">{Customer
+Name},</span></p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">We have just
+received the <span style="font-weight: bold; text-decoration-line: underline;">Agency
+Status Form</span> correctly filled in and we would like to let you know that
+we have detected a <span style="font-weight:bold">Change of </span><span style="font-weight:bold;background:yellow;mso-highlight:yellow">Ownership /
+Legal Status / Shareholding / Legal Name / Location</span> in the agency data
+of your company which has to be considered by the Accreditation Department.</p><p style="margin:0in;font-size:11.0pt"><span style="font-family:SimSun">我們已收到貴公司提交之代理人資訊表，發現貴公司的</span><span style="font-weight:bold;font-family:SimSun;background:yellow;mso-highlight:
+yellow">所有權</span><span style="font-weight:bold;font-family:Calibri;background:
+yellow;mso-highlight:yellow">/</span><span style="font-weight:bold;font-family:
+SimSun;background:yellow;mso-highlight:yellow">法律地位</span><span style="font-weight:bold;font-family:Calibri;background:yellow;mso-highlight:
+yellow">/</span><span style="font-weight:bold;font-family:SimSun;background:
+yellow;mso-highlight:yellow">股權</span><span style="font-weight:bold;font-family:
+Calibri;background:yellow;mso-highlight:yellow">/</span><span style="font-weight:
+bold;font-family:SimSun;background:yellow;mso-highlight:yellow">公司名稱</span><span style="font-weight:bold;font-family:Calibri;background:yellow;mso-highlight:
+yellow">/</span><span style="font-weight:bold;font-family:SimSun;background:
+yellow;mso-highlight:yellow">地址</span><span style="font-family:SimSun">已有改變。</span></p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">In order to process
+the necessary adjustments and correct any invalid data, we would like ask you
+to send us back the <span style="font-weight: bold; text-decoration-line: underline;">Notice
+of Change</span> before <span style="font-weight:bold;background:yellow;
+mso-highlight:yellow">{DEADLINE DATE}</span>. The Agency responsible must sign,
+preferably in blue ink, in both transferor and transferee columns and it is
+mandatory to include the effective date of change (Section 04).</p><p style="margin:0in;font-size:11.0pt"><span style="font-family:SimSun">為執行貴公司的變更事項與資料更新，請於</span><span style="font-weight:bold;font-family:Calibri;background:yellow;mso-highlight:
+yellow">{DEADLINE DATE}</span><span style="font-family:SimSun">之前提交變更通知。貴公司代表人須在轉讓方及受讓方欄位使用藍色墨水筆簽名且必須包括變更生效日期。</span></p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">To access the Notice
+of Change through the IATA Portal, please follow <a href="https://portal.iata.org/ISSP_Login?retURL=/ISSP_AMS_Accreditation?caseId=500w000001WN69K%26isBankAccountChange=false%26isNoticeOfChange=true%26step=1">that
+Link</a>.</p><p style="margin:0in;font-size:11.0pt"><span style="font-family:SimSun">經由</span><span style="font-family:Calibri">IATA</span><span style="font-family:SimSun">客戶入口取得變更通知，請點擊此鍊結。</span></p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">Furthermore in order
+to submit the Notice of Change through the IATA Portal properly, please follow
+the instructions available through the following Link: <a href="https://www.iata-asd.com/78bf8095-2d9d-4b27-bb0d-4f6a5e9b3771/vedio/12.mp4">https://www.iata-asd.com/78bf8095-2d9d-4b27-bb0d-4f6a5e9b3771/vedio/12.mp4</a></p><p style="margin:0in;font-size:11.0pt"><span style="font-family:SimSun" lang="zh-CN">请进入我们的官网，点击以下的网址</span><span style="font-family:Calibri" lang="en-US">
+</span><a href="https://www.iata-asd.com/78bf8095-2d9d-4b27-bb0d-4f6a5e9b3771/vedio/12.mp4"><span style="font-family:Calibri" lang="en-US">https://www.iata-asd.com/78bf8095-2d9d-4b27-bb0d-4f6a5e9b3771/vedio/12.mp4</span></a><span style="font-family:SimSun" lang="en-US"> </span><span style="font-family:SimSun" lang="zh-CN">然后上传此变更通知。</span></p><p style="margin:0in;font-family:SimSun;font-size:11.0pt">&nbsp;</p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">Please note that
+IATA BSP shall always be notified of any changes that might affect the status
+of the agency, as prescribed in the Passenger Sales Agency Agreement
+(Resolution 824) and in Resolution 818g, Section 10 (available for download and
+review in (<a href="http://www.iata.org/services/accreditation-travel/travel-tourism/Pages/tah.aspx">http://www.iata.org/services/accreditation-travel/travel-tourism/Pages/tah.aspx</a>).</p><p style="margin:0in;font-size:11.0pt"><span style="font-family:SimSun">依國際航協代理人銷售代理協議</span><span style="font-family:Calibri">(</span><span style="font-family:SimSun">第</span><span style="font-family:Calibri">824</span><span style="font-family:SimSun">決議</span><span style="font-family:Calibri">)</span><span style="font-family:SimSun">及國際航協</span><span style="font-family:Calibri">818g</span><span style="font-family:SimSun">決議第十部分的要求</span><span style="font-family:Calibri">(</span><span style="font-family:SimSun">可參考以下鏈結</span><span style="font-family:Calibri">http://www.iata.org/services/accreditation-travel/travel-tourism/Pages/tah.aspx)</span><span style="font-family:SimSun">，任何影響到公司狀態的變更，均須通知國際航協。</span></p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">Should you have any
+further questions regarding this process, please do not hesitate to contact our
+Customer Service 010-85719909.</p><p style="margin:0in;font-family:SimSun;font-size:11.0pt"><span lang="zh-CN">如果您有任何的疑问，请让我们知道，请拨打我们的客户中心电话</span><span lang="en-US">010-85719909</span></p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">Yours sincerely,</p><p style="margin:0in;font-family:Calibri;font-size:11.0pt">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p><p style="margin:0in;font-family:SimSun;font-size:11.0pt">謹上</p><p style="margin:0in;font-family:SimSun;font-size:11.0pt"><br></p><p style="margin:0in;font-family:SimSun;font-size:11.0pt"><br></p><p class="MsoNormal" style="text-align: justify;"><span style="font-family: Arial, sans-serif; font-size: small;">{!Case.OwnerFullName}</span></p><p class="MsoNormal" style="text-align: justify;"><a name="OLE_LINK2" style="font-family: Arial, sans-serif; font-size: small;"><span lang="EN-GB">IATA Global Delivery Center</span></a></p><font color="#000000"><p class="MsoNormal" style="font-family: Arial, sans-serif; font-size: small; background-color: rgb(255, 255, 255);"><span lang="EN-GB">&nbsp;</span></p><p class="MsoNormal" style="font-family: Arial, sans-serif; font-size: small; background-color: rgb(255, 255, 255);"><a name="OLE_LINK24"></a><a name="OLE_LINK23"><span lang="EN-GB">Please log your queries through IATA new portal:&nbsp;</span></a><a name="OLE_LINK6"></a><a name="OLE_LINK5"></a><a name="OLE_LINK4"></a><a href="http://www.iata.org/cs">http://www.iata.org/cs</a><span lang="EN-GB">.</span><o:p></o:p></p><p class="MsoNormal" style="font-family: Arial, sans-serif; font-size: small; background-color: rgb(255, 255, 255);"><b><span style="color: rgb(51, 204, 0);">Welcome to the new portal and please</span></b><b>&nbsp;</b><a name="OLE_LINK9"></a><a name="OLE_LINK8"></a><a name="OLE_LINK7"></a><a href="http://portal.iata.org/"><b>login now</b></a><b><span style="color: rgb(51, 204, 0);">!</span></b></p><p style="margin-bottom: 12pt;"><br></p></font>]]></td>
+</tr>
+</table>
