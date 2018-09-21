@@ -122,8 +122,6 @@ private class PlatformEvents_Helper_Test {
     	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
         insert country;
 
-		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-
 		Account account = new Account(Name = 'ProviderTest1',
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
@@ -196,8 +194,6 @@ private class PlatformEvents_Helper_Test {
     static testMethod void Test_Platform_Event_On_PArtner_Product_Config() {
     	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
         insert country;
-
-		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
 
 		Account account = new Account(Name = 'ProviderTest1',
 					Accreditation_date__c = Date.today(),
