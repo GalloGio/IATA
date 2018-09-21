@@ -45,7 +45,7 @@
     <div class="col-md-4 col-sm-12 text-center">
       <img id="theImage" src="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/IEP.png')}" width="100" height="100"/>
       <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
-      <i class="{! wrapper.isIEP}" aria-hidden="true" style="color:{!IF(wrapper.isIEPFlag,'green','red')};"></i>
+      <i class="{! wrapper.isIEP}" aria-hidden="true" style="color:{!IF(wrapper.isIEPFlag,'green','red')}; display: {!IF(wrapper.iepModel == 'Banking Model', 'none', 'block')}"></i>
 
       <!--i class="fa fa-credit-card-alt fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
       <i class="{! wrapper.isIEP}" aria-hidden="true"></i-->
