@@ -101,6 +101,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
         <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
         <script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.js')}"></script>
+
         <script type="text/javascript"> 
                $(document).ready(function() {
                 
@@ -282,10 +283,13 @@
                                     <apex:pageBlockButtons >
                                         <apex:actionFunction name="submitProduct" action="{!submitProduct}"/>
                                         <apex:commandButton onclick="if(confirmSubmit())return true;" value="{!$Label.ISSP_TIP_SUBMIT_TO_IATA}" rendered="{!editMode}" reRender="inHid"   />
-                                        <apex:commandButton action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" rendered="{!editMode}"/>
+                                        <apex:commandButton action="{!saveDraft}" value="{!$Label.ISSP_Save_Draft}" rendered="{!editMode}"/> 
                                         <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" rendered="{!editMode}"/> 
                                         <apex:actionFunction name="cancelLeavePage" action="{!cancelNewEditProd}" immediate="true"/>
-                                        <apex:commandButton action="{!cancelNewEditProd}" immediate="true" value="{!$Label.ISSP_TIP_RETURN_HOMEPAGE}" rendered="{!!editMode}"/>                                                            
+                                        <apex:commandButton action="{!cancelNewEditProd}" immediate="true" value="{!$Label.ISSP_TIP_RETURN_HOMEPAGE}" rendered="{!!editMode}"/>
+                                        <!-- ACAMBAS - TIP-244 Start -->
+                                        <apex:commandButton action="{!terminateProduct}" value="{!$Label.ISSP_TIP_TERMINATE_PROD_BUTTON}" rendered="{!!editMode && !!activeProduct}" reRender="selectedBinRange,modalContentoutpanel" oncomplete="toggleDialog();"/>
+                                        <!-- ACAMBAS - TIP-244 End -->                                                            
                                     </apex:pageBlockButtons>    
                                     <apex:pageBlockSection columns="2" collapsible="true" title="{!$Label.ISSP_TIP_PRODUCT_DETAILS_SECTION}">
                                         <apex:pageBlockSectionItem labelStyle="width:26%" >
@@ -320,7 +324,7 @@
                                                 <apex:outputPanel >
                                                 <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.is_PCI_DSS_required__c}" readonly="{!!editMode}">
                                                     <apex:selectOption itemValue="{!UPPER($Label.ISSP_Yes)}" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}"/>
-                                                    <apex:selectOption itemValue="{!UPPER($Label.ISSP_No)}" itemLabel="{!$Label.ISSP_No}"  itemDisabled="{!!editMode}"/>
+                                                    <apex:selectOption itemValue="NA}" itemLabel="{!$Label.ISSP_Not_Applicable}"  itemDisabled="{!!editMode}"/>
                                                 </apex:selectRadio>
                                                 </apex:outputPanel>                                              
                                                     <apex:image value="/img/msg_icons/info16.png" style="padding: 4px;max-width: 26px;max-height: 25px;" styleClass="selector" title="{!$Label.ISSP_Portal_Product_is_Subject_to_PCI_Label}" html-data-placement="top" html-data-toggle="tooltip" rendered="{!editMode}"/>
@@ -374,12 +378,18 @@
                                                 </apex:outputPanel> 
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
+                                        <!-- //ACAMBAS - TIP-249 - Start -->
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
-                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}"/>
+                                            <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">
-                                                <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}"/>
+                                                <apex:outputPanel >                                    
+                                                <apex:inputField value="{!newpp.PP_Payment_Product_Network_type__c}" html-class="mandFld" rendered="{!editMode}" styleClass="sectionItem"/>
+                                                <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}" rendered="{!!editMode}"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="TBD" html-data-placement="top" html-data-toggle="tooltip" rendered="{!editMode}"/>
+                                                </apex:outputPanel>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
+                                        <!-- //ACAMBAS - TIP-249 - End -->    
                                         <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent" >
                                             <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.Label}" html-class="mandFld"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">                                        
@@ -595,6 +605,37 @@
                                                         addEditBinRange();
                                                     }
 
+                                                    //ACAMBAS - TIP-244 - Start        
+                                                    function checkTerminateProdMandatory() {
+
+                                                        if($('[id$="datepicker"]').val() === null || $('[id$="datepicker"]').val() =='' ) {
+                                                            if($('[id$="datepicker"]').next('.errorMsg').val()==undefined) {
+                                                                $('[id$="datepicker"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                                                            }
+                                                            stayOnModal=true;
+                                                            return;
+                                                        }
+                                                        else {
+                                                            clearErrorElement('[id$="datepicker"]');
+                                                        }
+
+                                                        if($('[id$="termReason"]').val() === null || $('[id$="termReason"]').val() =='' ) {
+                                                            if($('[id$="termReason"]').next('.errorMsg').val()==undefined)
+                                                                $('[id$="termReason"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                                                            stayOnModal=true;
+                                                            return;
+                                                        }
+                                                        else {
+                                                            clearErrorElement('[id$="termReason"]');
+                                                        }
+
+                                                        //document.querySelector("[Id$='submitProdTerminationBtn']").disabled = true;
+                                                        startLoading();
+                                                        stayOnModal=false;
+                                                        submitProductTermination(); 
+                                                    }
+                                                    //ACAMBAS - TIP-244 - End   
+
                                                     function padEnd(lid, digit){
                                                         var i = parseInt("{!binRangeLen}") - parseInt(''+$(lid).val().length);
                                                         while (i > 0) {
@@ -783,10 +824,14 @@
                                         </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
 
+                                </apex:pageblock>
+                                </apex:form>
+                                <apex:form >   
+                                <apex:pageblock > 
                                     <!-- ------------MODAL WIDOWN -------------------  -->
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                       <apex:outputPanel id="modalContentoutpanel">
-                                          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent" rendered="{!!renderCountryCondifPopup}"> 
+                                          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent" rendered="{!!renderCountryCondifPopup && !renderTerminateProdPopup}"> 
                                             <div class="modal-content"> 
                                               <div class="modal-header"> 
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -807,7 +852,7 @@
                                                         <apex:inputField id="rangeEnd" style="width:'100%'" value="{!nb.binRange.TIP_Range_End__c}" required="true"/>
                                                     </apex:column>
                                                 </apex:pageBlockTable>
-                                             </div>
+                                              </div>
                                               <div class="modal-footer">
                                                 <div class="row">
                                                   <div class="col-md-6">                                                
@@ -825,7 +870,7 @@
                                             <!-- /.modal-content -->
                                           </apex:outputPanel>
 
-                                          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent2" rendered="{!renderCountryCondifPopup}"> 
+                                          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent2" rendered="{!renderCountryCondifPopup && !renderTerminateProdPopup}"> 
                                             <div class="modal-content"> 
                                               <div class="modal-header"> 
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -835,6 +880,7 @@
                                                   <apex:pageblock id="pbCountrConfig"> 
                                                       <apex:PageMessages id="msgs"/>                           
                                                       <apex:pageBlockSection columns="1" collapsible="false">
+
                                                           <apex:pageBlockSectionItem labelStyle="width:26%" >
                                                             <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_BSP_Country__c.Label}"/> 
                                                             <apex:outputPanel >
@@ -843,7 +889,6 @@
                                                                 </apex:selectList>
                                                                 <apex:outputLabel value="{!selectedProvProdConf.countryName}" rendered="{!selectedProvProdConf.action=='M'}"/>
                                                             </apex:outputPanel>
-
                                                           </apex:pageBlockSectionItem>
 
                                                           <apex:pageBlockSectionItem labelStyle="width:26%" >
@@ -855,15 +900,15 @@
                                                             <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.Network_Fee__c.Label}"/> 
                                                             <apex:inputField id="nFfld" value="{!selectedProvProdConf.prodConfig.Network_Fee__c}"/>
                                                           </apex:pageBlockSectionItem>
-                                                      </apex:pageBlockSection>
 
+                                                      </apex:pageBlockSection>
                                                   </apex:pageblock>
                                               </div>
                                               <div class="modal-footer">
                                                 <div class="row">
                                                   <div class="col-md-6">                                                
                                                   <apex:actionFunction name="addEditCountryConfig" action="{!addUpdateCountryConfig}"  oncomplete="closeDialog()" reRender="countryConfigPanel"/>
-                                                    <a class="btn_iata_confirm btn-block btn" onclick=" validateCountryConfiguration();">{!$Label.ISSP_Confirm}</a>
+                                                    <a class="btn_iata_confirm btn-block btn" onclick="validateCountryConfiguration();">{!$Label.ISSP_Confirm}</a>
                                                   </div>
                                                   <div class="col-md-6">
                                                     <a class="btn_iata_cancel btn-block btn" onclick="toggleDialog()">
@@ -875,6 +920,96 @@
                                             </div>
                                             <!-- /.modal-content -->
                                           </apex:outputPanel>
+                                          <!-- ACAMBAS - TIP-244 Start -->  
+                                          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent3" rendered="{!renderTerminateProdPopup}"> 
+                                            <div class="modal-content"> 
+                                              <div class="modal-header"> 
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">{!$Label.ISSP_TIP_TERMINATE_PROD_TITLE}</h4>
+                                              </div>
+
+                                              <div class="modal-body" style="display:{!if(true,'','none')}">
+                                                <apex:pageblock id="terminateProd"> 
+                                                    <script>
+                                                        var date = new Date();
+                                                        var minDay = date.getDate()+{!terminationMaxDays};
+                                                        $('[id$=datepicker]').datepicker( 
+                                                            {
+                                                                "minDate": new Date(date.getFullYear(), date.getMonth(), minDay)});
+
+                                                        $('[id$=datepicker]').datepicker("option", $.datepicker.regional['en']);
+
+
+                                                        function startLoading() {
+                                                            $('.loadingBox').show();
+                                                        }
+                                                    </script>
+                                                    <style>
+                                                      .overlay {
+                                                        display: none;
+                                                        height: 100%;
+                                                        left: 0;
+                                                        position: fixed;
+                                                        top: 0;
+                                                        opacity: 0.3;
+                                                        -moz-opacity: 0.3;
+                                                        width: 100%;
+                                                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+                                                        filter: alpha(opacity=30);
+                                                        background: #000;
+                                                        -khtml-opacity: 0.3;
+                                                        z-index: 1000;
+                                                      }
+                                                      .loader {
+                                                        background: url('/img/loading32.gif') scroll no-repeat 0 0;
+                                                        width: 32px;
+                                                        height: 32px;
+                                                        position: absolute;
+                                                        left: 50%;
+                                                        top: 150px;
+                                                      }
+                                                    </style>
+                                                    <apex:PageMessages id="msgs"/>                           
+                                                    <apex:pageBlockSection columns="1" collapsible="false">
+
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%">
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_TERMINATE_PROD_MSG}"/>
+                                                      </apex:pageBlockSectionItem>
+
+                                                      <br/>
+
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_EFFECTIVE_DATE}*"/>
+                                                        <apex:inputText value="{!terminationDate}" id="datepicker"/> 
+                                                        <!--div id="datepicker"></div-->
+                                                      </apex:pageBlockSectionItem>
+
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_REASON_FOR_CANCEL}*"/>
+                                                        <apex:inputTextarea id="termReason" value="{!terminationReason}"/>
+                                                      </apex:pageBlockSectionItem>
+
+                                                    </apex:pageBlockSection>
+                                                </apex:pageblock>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <a class="btn_iata_cancel btn-block btn" onclick="toggleDialog()">
+                                                          {!$Label.ISSP_Cancel}</a>
+                                                    </div>
+                                                    <div class="col-md-6">                                                
+                                                        <apex:actionFunction name="submitProductTermination" action="{!submitProductTerminationRequest}"  oncomplete="closeDialog();" reRender="binTable"/>
+                                                        <button type="button" id="submitProdTerminationBtn" onclick="checkTerminateProdMandatory(); return false;" class="btn_iata_submit btn-block btn">{!$Label.ISSP_Submit}</button>
+                                                    </div>
+                                                    <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+                                                    <div class="loadingBox overlay"> </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                          </apex:outputPanel>
+                                          <!-- ACAMBAS - TIP-244 End -->  
                                       </apex:outputPanel>
                                       <!-- /.modal-dialog -->
                                     </div>

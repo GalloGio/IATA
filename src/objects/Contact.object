@@ -8013,6 +8013,21 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Primary_Account_Contact_Role__c</fullName>
+        <description>Indicates if contact is a primary contact for the account contact role</description>
+        <externalId>false</externalId>
+        <label>Is Primary Account Contact Role</label>
+        <summaryFilterItems>
+            <field>Account_Contact_Role__c.is_primary__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Account_Contact_Role__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Is_from_migration__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -31286,6 +31301,13 @@ AND(NOT(CONTAINS($Profile.Name , &quot;System Administrator&quot; )),
    ,ISBLANK(Senior_Contact_Phone__c))
   )</errorConditionFormula>
         <errorMessage>Please fill a phone number or an email address</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Primary_Contact_Must_Be_Active</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(Is_Primary_Account_Contact_Role__c  &gt; 0,   NOT(ISPICKVAL(Status__c, &apos;Active&apos;)))</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>This contact is a Primary Contact (Account Contact Role) for this account and so cannot be deactivated. Please designate a new Primary Contact before deactivating this one.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Required_Community</fullName>
