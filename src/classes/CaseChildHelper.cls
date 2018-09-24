@@ -34,26 +34,7 @@ public  class CaseChildHelper {
         List<String> fieldsToCopy = new List<String>{'IFAP_Country_ISO__c','Subject', 'Description','RecordTypeId', 
                                                      'Origin', 'AccountId','ContactId','Region__c','BusinessHoursID',
                                                      'Financial_Review_Type__c','IFAP_Financial_Year__c','FS_Deadline_Date__c',
-                                                     'IFAP_Financial_Month__c' //INC270744                                                     
-                                                     
-                                                     /*'BatchNumber__c','Priority',
-                                                     'Status', 'IFAP_Country_ISO__c','Origin', 'ArchivedDate__c',
-                                                     'Mass_Email_Send__c', 'Financial_Results_Archived_Date__c','FS_Mass_Email_Send__c', 'BusinessHoursId',
-                                                     'Mass_Case_Creation_Email_Send__c', 'Reassessment_rejection_reason__c','FS_Request_Mass__c', 'BounceEmailSubject__c','BounceEmailCounter__c',
-                                                     
-                                                     'AccountId','ContactId','Region__c',
-                                                     'Financial_Review_Type__c', 'IFAP_Financial_Month__c','IFAP_Financial_Year__c', 'Reason_of_rejection_IFAP__c',
-                                                     'Deadline_Date__c', 'firstFAnonComplianceDate__c','FA_Second_Deadline_Date__c', 'secondFAnonComplianceDate__c',
-                                                     'FA_Third_Deadline_Date__c', 'Third_FA_non_Compliance_Date__c','EmailTemplate__c', 'Submitted_Date__c',
-                                                     'FA_Letter_Sent__c','Assessment_Performed_Date__c','Reminder_EmailTemplate__c','Sanity_Check_Failure_Date__c','Financial_Review_Result__c',
-                                                     
-                                                     'Financial_Security_Amount__c','FS_EmailTemplate__c','Financial_Security_Currency__c','FS_Reminder_EmailTemplate__c',
-                                                     'FS_Deadline_Date__c','firstFSnonComplianceDate__c','FS_Second_Deadline_Date__c','secondFSnonComplianceDate__c',
-                                                     'FS_Letter_Sent__c','FS_Submitted_Date__c',
-                                                     
-                                                     'Agent_Name_chkbx__c','Financial_Security_Template_chkbx__c','Financial_Security_Amount_chkbx__c','Financial_Security_Provider_chkbx__c',
-                                                     'Financial_Security_Currency_chkbx__c','Expiry_Date_chkbx__c','Financial_Security_Type_chkbx__c',
-                                                     'IFAP_CanCreateWhileClosedCase__c'*/
+                                                     'IFAP_Financial_Month__c'                                                      
                                                     };    
          
         List<Case> casesToProcess = new List<Case>();
@@ -67,15 +48,7 @@ public  class CaseChildHelper {
         Map<Id,Case> parentIdToChild = new Map<Id,Case>(); //every parent should have max 1 child
 
         List<CustomPermission> customPermissions = customPermissionsList;
-/*
-        [SELECT Id, DeveloperName,
-            (SELECT Id, Parent.Name, Parent.Profile.Id, Parent.Profile.Name 
-                FROM SetupEntityAccessItems 
-                WHERE Parent.Profile.Id = :UserInfo.getProfileId()
-            )
-        FROM CustomPermission
-        WHERE DeveloperName = 'IFAP_Can_Bypass_Resubmission_Validation'];
-*/
+
         Boolean userProfileCanBypassValidation = false;
         if(customPermissions != null && customPermissions.size() > 0)
             userProfileCanBypassValidation = customPermissions[0].SetupEntityAccessItems == null || customPermissions[0].SetupEntityAccessItems.isEmpty() ? false : true;
@@ -104,20 +77,17 @@ public  class CaseChildHelper {
                 news[i].FS_Deadline_Date__c.addError('To resubmit the account FS deadline date is necessary.');
 
             // Case for which will be created a child case 
-            } else if(//(news[i].ParentId == null)&& 
-               statuses.contains(news[i].Status) &&
-               !String.isblank(news[i].Resubmission_of_accounts__c) &&
-               (isInsert || 
-               String.isblank(olds[i].Resubmission_of_accounts__c) /*|| 
-               olds[i].Status!=news[i].Status*/)) {
+            } else if(statuses.contains(news[i].Status) && !String.isblank(news[i].Resubmission_of_accounts__c) 
+                    && (isInsert || String.isblank(olds[i].Resubmission_of_accounts__c))) {
+
                 casesToProcess.add(news[i]);
                 casesId.add(news[i].Id);
                 idToCases.put(news[i].id,news[i]);
             
             // Cases for which the parent will be closed
-            } else if(news[i].ParentId != null && 
-                    news[i].Status == 'Assessment Performed' &&
-                    (isInsert || olds[i].Status != 'Assessment Performed')) {
+            } else if(news[i].ParentId != null && news[i].Status == 'Assessment Performed' 
+                  && (isInsert || olds[i].Status != 'Assessment Performed')) {
+
                 parentCasesIds.add(news[i].ParentId);
                 parentIdToChild.put(news[i].ParentId,news[i]);
                 idToCases.put(news[i].id,news[i]);
@@ -136,7 +106,7 @@ public  class CaseChildHelper {
             }
             
             for(Case c : casesToProcess) {
-                Case nc = new Case(ParentId = c.Id);//parentIdToChild.get(c.id)!=null ? parentIdToChild.get(c.id) : new Case(ParentId = c.Id);
+                Case nc = new Case(ParentId = c.Id);
                 for(String field : fieldsToCopy)
                     nc.put(field, c.get(field));
                 nc.Status = 'Agent Notified (Email)';

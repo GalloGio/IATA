@@ -149,23 +149,17 @@ public with sharing class SidraLiteManager {
         // get related Accounts
         map<Id,Account> mapAccounts = new map<Id,Account>();
         if (!listAccountId.isEmpty()) {
-            mapAccounts = new map<Id,Account>(
-            [Select Id, Type, Status__c, Accumulated_Irregularities__c, Category__c
-            from Account
-            where id in :listAccountId]);
+            mapAccounts = new map<Id,Account>([SELECT Id, Type, Status__c, Accumulated_Irregularities__c, Category__c
+                                               FROM Account WHERE id IN :listAccountId]);
         }
 
         list<Case> listUpdateParent = new list<Case>();
         for (Case cse: listCases) {
             Case parentCase = mapParents.get(cse.ParentId);
             Account account = mapAccounts.get(cse.AccountId);
-            //If there is a parent Ifap case then is a valid case to process
-            if (parentCase == null) {
-                // it's a SIDRA lite case without an IFAP Parent
-                //cse.addError('There is no valid parent case');
-
+            
             // if parent case is SMAP
-            } else if (parentCase.RecordTypeId == RECORDTYPE_SMAP) {
+            if (parentCase.RecordTypeId == RECORDTYPE_SMAP) {
                 try {
                     checkInsertSingleSidraLiteSmapParentCase(cse, parentCase, account);
                 } catch (SidraLiteException e) {
@@ -342,7 +336,6 @@ public with sharing class SidraLiteManager {
         cse.AccountId = account.Id;
         cse.Region__c = parentCase.Region__c;
         cse.BSPCountry__c = parentCase.BSPCountry__c;
-        //cse.SIDRA_Lite_Reason__c = SidraLiteHelperForOSCAR.getOSCARReason(parentCase);
         cse.SIDRA_Lite_Default_Date__c = Date.Today();
         cse.BSP_CASS__c = SidraLiteUtil.getBSPCASS(account);
 
@@ -421,14 +414,6 @@ public with sharing class SidraLiteManager {
             cse.Subject = 'SIDRA Lite – Financial Security Non-compliance';
             cse.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
             if (SidraLiteUtil.isAccountActive(account)) {
-                //cse.Propose_Irregularity__c = DateTime.now();
-                //cse.IRR_Approval_Rejection__c = 'Approved';
-                //cse.IRR_Approval_Rejection_Date__c = DateTime.now();
-                /*if (SidraLiteUtil.isPassenger(account)) {
-                    cse.IRR_Type__c = 'Double Irregularity';
-                } else {
-                    cse.IRR_Type__c = 'Single Irregularity';
-                }*/
                 cse.SIDRA_Lite_Default_Date__c = Date.Today();
                 cse.Reason_for_Default__c = 'Suspension - FS Non Compliance';
             } else {

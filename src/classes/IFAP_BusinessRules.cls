@@ -61,16 +61,8 @@ public with sharing class IFAP_BusinessRules {
 
         try {
             // the Agent Type is valid if it equals one of the two below values
-            /*isValid = (contactMap.get(theCase.id).Agent_Type__c != null
-                        && (contactMap.get(theCase.id).Agent_Type__c == 'IATA Cargo Agent' ||  contactMap.get(theCase.id).Agent_Type__c == 'IATA Passenger Sales Agent' || contactMap.get(theCase.id).Agent_Type__c == 'CASS Associate' ||  contactMap.get(theCase.id).Agent_Type__c == 'Domestic Agent'));*/
             isValid = (theCase.IFAP_Agent_Type__c != null
-                       && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associate' || theCase.IFAP_Agent_Type__c == 'Import Agent'));
-
-
-
-
-
-
+                     && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associate' || theCase.IFAP_Agent_Type__c == 'Import Agent'));
         } catch (Exception ex) {
 
         }
@@ -83,33 +75,12 @@ public with sharing class IFAP_BusinessRules {
      * Validates the Agent Code of a Contact
      */
     public static boolean isAgentCodeValid(Case theCase, map<Id, Account> accountMap) {
-
         boolean isValid = false;
-                System.debug('theCase.id=' +theCase.id);
-                System.debug('accountMap.get(theCase.id)=' +accountMap.get(theCase.id));
-
         try {
-            if (accountMap.get(theCase.id).IATACode__c != null) {
-
+            if (accountMap.get(theCase.id).IATACode__c != null)
                 isValid = (accountMap.get(theCase.id).IATACode__c.length() >= 7 && accountMap.get(theCase.id).IATACode__c.length() <= 11);
-                //INC249798
-                //Pattern valid_characters = Pattern.compile('([0-9]+)'); //only numbers
-                //Matcher check_chars = valid_characters.matcher(accountMap.get(theCase.id).IATACode__c);
-
-
-
-
-
-                //isValid &= check_chars.matches();
-            }
         } catch (Exception ex) {
-
-
-
-
-
         }
-
         return isValid;
     }
 
@@ -118,28 +89,18 @@ public with sharing class IFAP_BusinessRules {
      */
     public static void setCountryAreaAndISOCode(Case theCase, map<Id, Account> accountMap)  {
 
-        // get contact and account associated to the Case
-        //Contact con = [Select Id, AccountId from Contact where Id =: theCase.ContactId limit 1];
-        //Account acc = [Select Id, BillingCountry, Type from Account where Id =: con.AccountId limit 1];
         IATA_ISO_Country__c country ;
         try {
-
             country = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{accountMap.get(theCase.id).BillingCountry})[0];
-
         } catch (Exception e) {
             theCase.IFAP_Area__c.addError('The account\'s country is not a valid IATA_ISO_Country: ' + accountMap.get(theCase.id).BillingCountry);
             return;
         }
 
-        // Email Template
-
-
         theCase.IFAP_Area__c = 'Area ' + country.AIMS_Area_ID__c;
         theCase.IFAP_Country_ISO__c = country.ISO_Code__c;
-
         //adding region for case used in RPM approval flow todetermine which user the approval is sent to
         theCase.Region__c = country.Region__c;
-
     }
 
 
@@ -177,11 +138,6 @@ public with sharing class IFAP_BusinessRules {
             List<EmailTemplate__c> etReminder = new List<EmailTemplate__c>();
 
             try {
-                //Contact c = [Select Id, Email, Account.BillingCountry, Account.Type, accountId from Contact where Id =: contactId limit 1];
-                //Email template Details
-
-
-
                 aCase.ContactId = contactId;
                 aCase.AccountId = contacts.get(contactId).AccountId;
                 aCase.RecordTypeId = IFAPcaseRecordTypeID;
@@ -201,25 +157,17 @@ public with sharing class IFAP_BusinessRules {
                 aCase.Subject = subject;
                 aCase.Description = description;
                 aCase.Financial_Review_Type__c = reviewType;
-
                 aCase.Deadline_Date__c = deadlineDate;
-
                 aCase.EmailTemplate__c = templateLang;
-
                 aCase.IFAP_Financial_Year__c = financialYear;
                 aCase.IFAP_Financial_Month__c = financialMonth;
                 aCase.OwnerId = g.Id;
                 acase.IFAP_CanCreateWhileClosedCase__c = IFAP_CanCreateWhileClosedCase;
 
                 cList.add(aCase);
-
-
-
                 success.add('case number ' + aCase.CaseNumber + ' for contact ' + contacts.get(contactId).Email + ' (Id ' + contactId + ')');
-                //success.add(aCase.CaseNumber + ',' + c.Email + ',' + contactId + ',' + et[0].Name);
             } catch (Exception ex) {
                 errors.add('case for contact Id ' + contactId + '. Error message: ' + ex.getMessage());
-                //errors.add(contactId + '&' + ex.getMessage());
             }
 
 
@@ -376,7 +324,6 @@ public with sharing class IFAP_BusinessRules {
         Account newAcc = [Select Id, BillingCountry, Type from Account where Id = : newCase.AccountId limit 1];
 
         return (oldAcc.BillingCountry != newAcc.BillingCountry);
-        /*//return (oldCase.Account.BillingCountry != newCase.Account.BillingCountry);*/
     }
 
     /*// ** replaces validation rule: IFAP_FS_validation_check_box*/
@@ -403,31 +350,13 @@ public with sharing class IFAP_BusinessRules {
         return true;
     }
 
-    /*
-    * Return True if the account has one or more closed case for the specified financial year
-    */
-    public static Boolean accountHasClosedCases(String accountId, String financialYear) {
-        return (accountNbrClosedCase(accountId, financialYear) > 0);
-    }
+    public static Boolean checkIFAPFinancialYear(List<Case> caseList, String financialYear){
 
-    public static Integer accountNbrClosedCase(String accountId, String financialYear) {
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-
-        List<Case> cases = [Select c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId From Case c where c.AccountId = : accountId and c.Status = 'Closed' and c.IFAP_Financial_Year__c = : financialYear and c.RecordTypeId = : IFAPcaseRecordTypeID];
-        return (cases == null ? 0 : cases.size());
-    }
-
-    public static Boolean isSAAMCase(String caseId) {
-        ID ProcessISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
-
-        List<Case> theCase = [select c.Id, c.Subject, c.RecordTypeId from Case c where c.Id = :caseId and c.RecordTypeId = :ProcessISSPcaseRecordTypeID];
-        return (theCase != null && theCase.size() > 0);
-    }
-
-    public static Boolean caseHasChildIFAPCases(String caseId) {
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-        List<Case> childCases = [Select c.Status, c.RecordTypeId From Case c where c.ParentId = : caseId and c.RecordTypeId = : IFAPcaseRecordTypeID];
-        return (childCases != null && childCases.size() > 0);
+        for(Case c : caseList){
+            if(c.IFAP_Financial_Year__c == financialYear)
+                return true; 
+        }
+        return false;
     }
 
     public static void updateParentSAAMCase(Case previousIFAPCase, Case updatedIFAPCase) {

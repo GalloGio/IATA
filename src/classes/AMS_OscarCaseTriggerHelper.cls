@@ -5,7 +5,6 @@ public class AMS_OscarCaseTriggerHelper {
     **/
 
     //used to assign new created oscars to one of 5 queues, pending on the region.
-    //public static List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('Africa_ME_OSCAR','Americas_OSCAR','Asia_Pacific_OSCAR','China_N_Asia_OSCAR','Europe_OSCAR')];
     public static Map<String, Group> queues{
         get{
             if(queues == null){
@@ -42,9 +41,8 @@ public class AMS_OscarCaseTriggerHelper {
             }         
         }
         
-        for(Case c: casestoremoveoscar){ 
-          
-                c.Oscar__c = null;
+        for(Case c: casestoremoveoscar){
+            c.Oscar__c = null;
         }
     }
     
@@ -355,37 +353,24 @@ public class AMS_OscarCaseTriggerHelper {
 
     /*AMS-1580 and AMS-1585*/
     public static void copyDataFromOscar() {
-
-
         Map<Id, Case> oldMap = (Map<Id, Case>)Trigger.oldMap;
 
         List<Case> oscarCases = new List<Case>();
         Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c>();
 
         for(Case c : (List<Case>) Trigger.New){
-            if(
-                c.RecordTypeID == OSCARCaseRecordTypeID
-                && c.OSCAR__c != null
+            if(c.RecordTypeID == OSCARCaseRecordTypeID && c.OSCAR__c != null
                 && (Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c))
-            ){
-            
+            ){ 
                 oscarCases.add(c);
                 oscars.put(c.Oscar__c, null);
             }
             else{ // this is only for update  AMS-1667
 
-            if(
-                c.RecordTypeID == OSCARCaseRecordTypeID
-                && c.OSCAR__c != null
-                && Trigger.isUpdate 
-            ){
-
-                oscarCases.add(c);
-                oscars.put(c.Oscar__c, null);
-
-            }
-            
-
+                if(c.RecordTypeID == OSCARCaseRecordTypeID && c.OSCAR__c != null && Trigger.isUpdate){
+                    oscarCases.add(c);
+                    oscars.put(c.Oscar__c, null);
+                }
             }
         }
 

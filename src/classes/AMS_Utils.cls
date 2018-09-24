@@ -2311,10 +2311,8 @@ public static Map<String,List<String>> GetDependentOptions(String pObjName, Stri
 
     List<Integer> validIndexes;
     for (TPicklistEntry objDepPLE : objDS_Entries){
-
         validIndexes = cnvBits(objDepPLE.validFor);
-        //System.Debug('cnvBits: [' + objDepPLE.label + '] = ' + validIndexes);
-
+        
         for (Integer validIndex : validIndexes){
             mapResults.get( ctrl_ple[validIndex-1].getLabel() ).add( objDepPLE.label );
         }
@@ -2342,98 +2340,6 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
 }
 
-    /*
-    public static final Date knownSunday = date.newInstance(2012, 7, 1);
-
-    private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
-        get{
-            if(weekendDaysPerBusinessHours == null) weekendDaysPerBusinessHours = new Map<String, Set<Integer>>();
-            return weekendDaysPerBusinessHours;
-        }
-        set;
-    }
-
-    private static Set<Integer> addBusinessHours(String businessHours){
-        String findBusinessHours = (businessHours == null ? 'Default' : businessHours);
-
-        if(!weekendDaysPerBusinessHours.containsKey(findBusinessHours)){
-            List<BusinessHours> hs = [SELECT Id, Name, isDefault, isActive, SundayStartTime, MondayStartTime, TuesdayStartTime, WednesdayStartTime, ThursdayStartTime, FridayStartTime, SaturdayStartTime FROM BusinessHours WHERE isActive = true AND (Name = :findBusinessHours OR isDefault = true)];
-
-            Set<Integer> weekendDays = new Set<Integer>();
-            if(hs.isEmpty()){
-                System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found -- using Sunday and Saturday ');
-                weekendDays.add(0);
-                weekendDays.add(6);
-                weekendDaysPerBusinessHours.put(findBusinessHours, weekendDays);
-            }else{
-                for(BusinessHours h : hs){
-                    weekendDays = new Set<Integer>();
-                    if(h.SundayStartTime == null) weekendDays.add(0);
-                    if(h.MondayStartTime == null) weekendDays.add(1);
-                    if(h.TuesdayStartTime == null) weekendDays.add(2);
-                    if(h.WednesdayStartTime == null) weekendDays.add(3);
-                    if(h.ThursdayStartTime == null) weekendDays.add(4);
-                    if(h.FridayStartTime == null) weekendDays.add(5);
-                    if(h.SaturdayStartTime == null) weekendDays.add(6);
-
-                    if(h.Name == findBusinessHours) weekendDaysPerBusinessHours.put(h.Name, weekendDays);
-                    else if(h.isDefault) weekendDaysPerBusinessHours.put('Default', weekendDays);
-                }
-                //if we went through all business hours and didn't find the desired one, copy the default
-                if(!weekendDaysPerBusinessHours.containsKey(findBusinessHours)){
-                System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found for region -- copying default one ');
-                    weekendDaysPerBusinessHours.put(findBusinessHours, weekendDaysPerBusinessHours.get('Default'));
-                }
-            }
-        }
-
-        return weekendDaysPerBusinessHours.get(findBusinessHours);
-    }
-
-
-    public static Boolean IsWeekendDay(Date dateParam, String businessHours){
-        return IsWeekendDay(DateTime.newInstance(dateParam, Time.newInstance(0, 0, 0, 0)), businessHours);
-    }
-
-    public static Boolean IsWeekendDay(Datetime dateParam, String businessHours){
-       //Integer dayOfWeek  = Integer.valueOf(dateParam.format('u'));
-       //Integer dayOfWeek = dateParam.date().toStartOfWeek().daysBetween(dateParam.date());
-       Integer dayOfWeek = Math.mod(knownSunday.daysBetween(dateParam.date()), 7);
-
-       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] dateParam - ' + dateParam);
-       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] dayOfWeek - ' + dayOfWeek);
-
-       Set<Integer> weekendDays = new Set<Integer>();
-       if(weekendDaysPerBusinessHours.containsKey(businessHours)) weekendDays = weekendDaysPerBusinessHours.get(businessHours);
-       else weekendDays = addBusinessHours(businessHours);
-
-       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] weekendDays - ' + weekendDays);
-
-       return weekendDays.contains(dayOfWeek);
-    }
-
-    public static Date AddBusinessDays(Date d, Integer businessDaysToAdd, String businessHours){
-        return AddBusinessDays(Datetime.newInstance(d, Time.newInstance(0, 0, 0, 0)), businessDaysToAdd, businessHours).date();
-    }
-
-    public static Datetime AddBusinessDays(Datetime d, Integer businessDaysToAdd, String businessHours){
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] d - ' + d);
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] businessHours - ' + businessHours);
-
-        Datetime finalDate = d;
-
-        //Add or decrease in businessDaysToAdd days
-        Integer direction = businessDaysToAdd < 0 ? -1 : 1;
-
-        while(businessDaysToAdd != 0){
-            finalDate = finalDate.AddDays(direction);
-            if (!isWeekendDay(finalDate, businessHours)) businessDaysToAdd -= direction;
-        }
-
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] finalDate - ' + finalDate);
-        return finalDate;
-    }
-    */
     public static Date lastDayOfMonth(Date dateField) {
         return dateField.addMonths(1).toStartOfMonth().addDays(-1);
     }
@@ -2442,19 +2348,16 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     /**
         Process Parent Objects fields (up to 5 Parents?)
     */
-    public static Object processParentDependecies(String field , sObject sObj)
-    {
+    public static Object processParentDependecies(String field , sObject sObj){
 
-            if(field.contains('.'))
-            {
-                //Get the Object directly related to the field
-                wrapperData wDObj = new wrapperData(sObj,field);
+        if(field.contains('.')){
+            //Get the Object directly related to the field
+            wrapperData wDObj = new wrapperData(sObj,field);
 
-                return (wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName);
-            }
-
-            else
-                return (sObj.get(field) == null) ? '' : sObj.get(field);
+            return (wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName);
+        }
+        else
+            return (sObj.get(field) == null) ? '' : sObj.get(field);
     }
 
     /**
