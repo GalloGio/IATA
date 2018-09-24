@@ -23809,8 +23809,9 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Invalid Topic Assignment</shortDescription>
-        <value>You have entered an invalid topic for an Account.
-Please choose one or more of the following topics:</value>
+        <value>Your message was not posted because you are not using one of the mandatory topics.
+Please use hashtags (#) to define the topic(s) of your post.
+You can choose one or more of the following topics:</value>
     </labels>
     <labels>
         <fullName>Invoice_number</fullName>
