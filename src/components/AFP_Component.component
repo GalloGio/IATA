@@ -6,6 +6,7 @@
     function errorMessageModal(flag) {
       if(flag == '-') {
         showModal('#ModalErrorMessage');
+        $('[id$="ModalErrorMessage"]').parent().parent().css('display', 'block');
       }
     }
 
