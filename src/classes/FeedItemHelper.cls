@@ -6,45 +6,7 @@ public with sharing class FeedItemHelper {
 	 *  Validation put in place for the Account Management project.
 	 */
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
-		String strAcceptedValues = '';
-		List<AMP_Account_Topics__c> topics = AMP_Account_Topics__c.getAll().Values();
 		
-		//sort topics by name
-		List<String> topicstr = new List<String>();
-		for (AMP_Account_Topics__c at : topics){
-			topicstr.add(at.Name);
-		}
-		topicstr.sort();
-		
-		integer i=1;
-		Boolean requestFromVf = ApexPages.currentPage() != null;
-		
-		for (String at : topicstr) {
-			
-			// If the request is from visualforce (ChatterBroadCast Tool)
-			// formats the topics as a two column "table"
-			if(requestFromVf){
-				
-				if(Math.mod(i, 2) != 0){
-					strAcceptedValues += '<tr>';
-					strAcceptedValues += '<td><b>' + at + '</b></td>';
-				}
-				else {
-					strAcceptedValues += '<td><b>' + at + '</b></td>';
-					strAcceptedValues += '</tr>';
-				}
-				
-				i++;
-							
-			}
-			else {
-				//Ideally the topics would be separated by tabs (\t)
-				//However "\t" does not work on Chrome
-				strAcceptedValues += (strAcceptedValues == '' ? '' : ';   ') + at;
-			}
-		
-		}
-
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
 		set<Id> setRelatedAccountIds = new set<Id>();		
 		for (FeedItem fi : lstTriggerNew) {
@@ -76,6 +38,10 @@ public with sharing class FeedItemHelper {
 			// if there are IATA member Airline HQ accounts that have invalid feeditems posted to them, raise the error
 			if (!mapAccountsPerId.values().isEmpty()) {
 
+				TopicHelper.TopicsWrapper topicWrapper = TopicHelper.getTopicsInfo();
+				
+				String strAcceptedValues = topicWrapper.acceptedTopics;
+		
 				for (FeedItem fi : lstTriggerNew) {
  	   				fi.addError(Label.Feed_Item_Invalid_Topics + '\r\n' + strAcceptedValues);
 				}

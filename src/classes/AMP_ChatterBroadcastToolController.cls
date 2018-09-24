@@ -120,11 +120,13 @@ public with sharing class AMP_ChatterBroadcastToolController {
 				if (success > 0) {
 					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The message was successfully broadcasted.')); // to ' + success + ' account(s) out of ' + lstItemsToPost.size() + '. ' + errors + ' error(s) encountered.'));
 					step = 3;
-				} else {
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The message failed to be broadcasted.'));// with ' + errors + ' error(s) when trying to post.'));
+				} else if(!ApexPages.hasMessages(ApexPages.Severity.ERROR)){
+					//Only exhibits this message if it was not thrown an error before (e.g. trigger addError)
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The message failed to be broadcasted.'));
 				}
 
 			} catch (Exception e) {
+				System.debug(LoggingLevel.FINE, '____ [cls AMP_ChatterBroadcastToolController - broadcastMessage] Exception: ' + e.getMessage());
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
 			}
 		}
