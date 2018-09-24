@@ -4,7 +4,7 @@
 	<apex:form >
 		<apex:pageBlock >
 			<apex:outputPanel id="SubsidiariesTable">
-				<h2>Airline-Subsidiaries</h2>
+				<h2>Airline Subsidiaries</h2>
 
 				<apex:pageBlockTable value="{!subsidiaries.amsAccountRoleList}" var="item">
 
@@ -36,7 +36,7 @@
 	            			<apex:outputLink value="/{!item.Account__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" target="_blank" >{!item.Account__r.Name}</apex:outputLink>
 						</apex:outputPanel>
 						<apex:outputPanel rendered="{! item.No_Airline_Subsidiaries__c == true}">
-		            		<apex:outputText value="{! $Label.No_Airline_Subsidiaries_Label}" style="width: 80%;" />
+		            		<apex:outputText value="{! $Label.No_Subsidiaries}" style="width: 80%;" />
 						</apex:outputPanel>
 
 
@@ -63,7 +63,7 @@
 				</apex:pageBlockTable>
 
 				<apex:commandButton action="{!AddNewSubsidiary}" value="Add Subsidiary" rendered="{!IF(OR(isEditMode, NOT(canEdit)), false, true) && NOT(subsidiaries.hasSpecialLine)}" />
-				<apex:commandButton action="{!AddNoAirlineSubsidiaries}" onclick="if(!confirm('Are you sure this airline has no subsidiaries?')){return false};" value="{! $Label.No_Subsidiaries}" rendered="{! !isEditMode && canEdit && subsidiaries.canSpecialLineBeAdded && subsidiaries.canUserHandleSpecialLine}" />
+				<apex:commandButton action="{!AddNoAirlineSubsidiaries}" onclick="if(!confirm('Are you sure this account has no subsidiaries?')){return false};" value="{! $Label.No_Subsidiaries}" rendered="{! !isEditMode && canEdit && subsidiaries.canSpecialLineBeAdded && subsidiaries.canUserHandleSpecialLine}" />
 			</apex:outputPanel>
 
 

@@ -35,7 +35,7 @@
 	            			<apex:outputLink value="/{!item.Owner_Account__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" target="_blank">{!item.Owner_Account__r.Name}</apex:outputLink>
 						</apex:outputPanel>
 						<apex:outputPanel rendered="{! item.Other_Stakeholder_Types__c == true}">
-		            		<apex:outputText value="{! $Label.Other_Stakeholder_Types_Label}" style="width: 80%;" />
+		            		<apex:outputText value="{! $Label.Remaining_Owners}" style="width: 80%;" />
 						</apex:outputPanel>
 	            	</apex:column>
 

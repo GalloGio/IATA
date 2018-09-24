@@ -80,7 +80,7 @@
                         <td><span class="slds-truncate">{! v.relatedAccount.Owner_Account__r.Membership_status__c }</span></td>                        
                     	
                         <aura:set attribute="else">
-                            <td><span class="slds-truncate">{!$Label.c.Other_Stakeholder_Types_Label}</span></td>
+                            <td><span class="slds-truncate">{!$Label.c.Remaining_Owners}</span></td>
                             <td/>                    	
                         </aura:set>
                     </aura:if>
@@ -93,7 +93,7 @@
 	                        <td><span class="slds-truncate">{!v.relatedAccount.Percentage__c}<aura:if isTrue="{!v.relatedAccount.Percentage__c >= 0}">%</aura:if></span></td>
                             
                             <aura:set attribute="else">
-                                <td><span class="slds-truncate">{!$Label.c.No_Airline_Subsidiaries_Label}</span></td>
+                                <td><span class="slds-truncate">{!$Label.c.No_Subsidiaries}</span></td>
                                 <td/>                    	
                                 <td/>                    	
                             </aura:set>
