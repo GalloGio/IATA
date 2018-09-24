@@ -1381,6 +1381,33 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>GoLite_Agents</fullName>
+        <columns>NAME</columns>
+        <columns>Agency_Code__c</columns>
+        <columns>Accreditation_Class__c</columns>
+        <columns>Location_Type__c</columns>
+        <columns>Location_Type_Code_Interpreted__c</columns>
+        <columns>Agency_Status__c</columns>
+        <columns>Agency_Status_Code__c</columns>
+        <columns>Agency_Status_Code_Interpreted__c</columns>
+        <columns>Country_Name__c</columns>
+        <columns>Sub_Continent__c</columns>
+        <columns>Parent_GDP_Account_View__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Location_Type__c</field>
+            <operation>equals</operation>
+            <value>Associate Entity,Head Entity</value>
+        </filters>
+        <filters>
+            <field>Accreditation_Model__c</field>
+            <operation>equals</operation>
+            <value>L</value>
+        </filters>
+        <label>GoLite Agents</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Location_Type_HE_AE</fullName>
         <columns>NAME</columns>
         <columns>Agency_Code__c</columns>
