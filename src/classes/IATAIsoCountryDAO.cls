@@ -70,8 +70,6 @@ public class IATAIsoCountryDAO {
 	}
 
 
-	
-
 	/**
 	 * Method that return the mapIataIsoCountry using as key an ID of IATA_ISO_Country__c
 	 * 
@@ -228,10 +226,10 @@ public class IATAIsoCountryDAO {
 		
 		for(String areaName : aimsAreaNamesList){
 			for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
+				if(isoCountry.AIMS_Area_Name__c == null) continue;
 				if(areaName.containsIgnoreCase(isoCountry.AIMS_Area_Name__c)){
 					isoCountryList.add(isoCountry);
-					if(isoCountry.AIMS_Area_Name__c != '')
-						break;
+					break;
 				}
 			}
 		}
