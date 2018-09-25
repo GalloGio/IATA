@@ -8,8 +8,9 @@
 				<apex:form >
 					<c:ANG_ProductComparison helperParam="{! helper}"/>
 				</apex:form>
-				<c:ISSP_CustomFooter communityName="{!communityName}"/>
+				
 			</div>
+			<c:ISSP_CustomFooter communityName="{!communityName}"/>
 		</body>	   	
     </html>
 </apex:page>
