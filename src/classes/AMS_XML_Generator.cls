@@ -2137,7 +2137,7 @@ public with sharing class AMS_XML_Generator {
                                         String sCountryCode = '';
                                         if(sValue.length() == 4){
                                             sISO_code = sValue.substring(0,2);
-                                            sCountryCode = sValue.substring(2,4);
+                                            sCountryCode = sValue.substring(2,4).replace('-','');//AMSU-178
                                         //Test to check US, Canada and Australia states
                                         }else if(sValue.indexOf('-') > 1){
                                             sISO_code = sValue.substring(sValue.indexOf('-')+1,sValue.length());
