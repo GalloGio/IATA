@@ -1,5 +1,7 @@
 @RestResource(urlMapping='/ANG_GetMasterData/*')
 global class ANG_MasterData_Interface{
+
+    public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY'};
     
     @HttpGet
     global static void doGet(){
@@ -224,16 +226,10 @@ global class ANG_MasterData_Interface{
                 this.topParentIATACode = acc.Top_Parent__r.IATACode__c;
                 this.lsDueDiligence = new List<DueDiligence>();
 
-                /* Due Diligence to IEP - NEWGEN-3857  */
-                if(changeCode == 'MaddY'){
-                    this.lsDueDiligence.add(new DueDiligence('MaddY', acc.Due_Diligence_Status__c));
+                /* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
+                if(dueDiligenceIEPChangeCodes.contains(changeCode)){
+                    this.lsDueDiligence.add(new DueDiligence(changeCode, acc.Due_Diligence_Status__c));
                 }
-
-                /* Due Diligence to IEP - NEWGEN-3841  */
-                if(changeCode == 'MAPDF'){
-                    this.lsDueDiligence.add(new DueDiligence('MAPDF', acc.Due_Diligence_Status__c));
-                }
-
 
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r)
