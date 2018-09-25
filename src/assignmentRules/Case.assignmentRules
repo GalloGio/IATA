@@ -907,7 +907,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>ID Card</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Weblinkheadoffice</assignedTo>
@@ -1095,7 +1095,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>notEqual</operation>
                 <value>Risk Management Process</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Due_Diligence</assignedTo>
@@ -1110,7 +1110,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>notEqual</operation>
                 <value>IEP Due Diligence</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case_Assigned_to_the_Queue</template>
+            <template>All/New_Case_Assigned_to_the_Queue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>IEP_Model_A_Bank_Account</assignedTo>
@@ -1160,7 +1160,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Coding &amp; MITA,Airline Coding</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CallCentreIATAIWCases</assignedTo>
@@ -1170,7 +1170,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>External Cases (InvoiceWorks)</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case</template>
+            <template>All/New_Case</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Airline_Participation_Drafts</assignedTo>
@@ -1190,7 +1190,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Draft</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case_Assigned_to_the_Queue</template>
+            <template>All/New_Case_Assigned_to_the_Queue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>AirlineParticipationHeadOffice</assignedTo>
@@ -1216,7 +1216,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>notEqual</operation>
                 <value>Remittance &amp; Settlement</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case_Assigned_to_the_Queue</template>
+            <template>All/New_Case_Assigned_to_the_Queue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>MDM_confirmations_FDS_AP</assignedTo>
@@ -1226,7 +1226,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - MDM confirmations</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case_Assigned_to_the_Queue</template>
+            <template>All/New_Case_Assigned_to_the_Queue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>RecycleBinAmericas</assignedTo>
@@ -1331,7 +1331,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>startsWith</operation>
                 <value>#SARA</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Agency_Management_A_P_non_compliance</assignedTo>
@@ -1509,7 +1509,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>TIESS Banking,TIESS Remittance reports</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>TIESS_Europe</assignedTo>
@@ -1620,7 +1620,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>MITA &amp; BIETA</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>FDS_ICCS_Head_Office</assignedTo>
@@ -1636,7 +1636,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>New Membership First time joining,ICCS Invoicing Statements,Reports Citidirect Access</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case_Assigned_to_the_Queue</template>
+            <template>All/New_Case_Assigned_to_the_Queue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Complaints_GDC_MAD</assignedTo>
@@ -1677,7 +1677,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>notContain</operation>
                 <value>#C Asia &amp; Pacific,#C China &amp; North Asia</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Complaints_GDC_MAD</assignedTo>
@@ -1998,7 +1998,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>notContain</operation>
                 <value>-COMPLAINT-</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesAirlinesSCE</assignedTo>
@@ -2084,7 +2084,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Application Change Request (Salesforce)</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case</template>
+            <template>All/New_Case</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CS_Systems_Area1_MIA</assignedTo>
@@ -2104,7 +2104,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>&quot;Salesforce, Web and KPIs&quot;</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case</template>
+            <template>All/New_Case</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CS_Systems_Area2_MAD_AMM</assignedTo>
@@ -2124,7 +2124,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>&quot;Salesforce, Web and KPIs&quot;</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case</template>
+            <template>All/New_Case</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CS_Systems_Area3_SIN_BJS</assignedTo>
@@ -2144,7 +2144,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>&quot;Salesforce, Web and KPIs&quot;</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case</template>
+            <template>All/New_Case</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CS_Systems_GVA</assignedTo>
@@ -2174,7 +2174,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - ISS Reports</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case</template>
+            <template>All/New_Case</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesTTBS</assignedTo>
@@ -2417,7 +2417,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>IDPC</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Banking_GDC_Madrid</assignedTo>
@@ -2437,7 +2437,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Banking Management</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>AirlineSuspensionHeadOffice</assignedTo>
@@ -2503,7 +2503,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>notEqual</operation>
                 <value>Airline Cargo,GSA Cargo,Airline Passenger</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>InvoicingManagementHO</assignedTo>
@@ -2539,7 +2539,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Customer Charge Request</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Invoicing_Management_A_P</assignedTo>
@@ -2570,7 +2570,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - A&amp;P Invoicing</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case_Assigned_to_the_Queue</template>
+            <template>All/New_Case_Assigned_to_the_Queue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Invoicing_Collection_A_ME</assignedTo>
@@ -2626,7 +2626,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - SCE CIS invoicing</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Invoicing_Management_Americas</assignedTo>
@@ -2657,7 +2657,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case -  Invoicing Americas</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Finance_Europe</assignedTo>
@@ -2677,7 +2677,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Europe</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>RecycleBinOperationalManagementHO</assignedTo>
@@ -2787,7 +2787,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Application Change Request (DPC System)</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ChangeRequestsAIMS</assignedTo>
@@ -2797,7 +2797,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Application Change Request (AIMS)</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ChangeRequestsSalesforce</assignedTo>
@@ -2807,7 +2807,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Application Change Request (Salesforce)</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesRS</assignedTo>
@@ -2827,7 +2827,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Remittance &amp; Settlement</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CommunicationsWebUploadsEurope</assignedTo>
@@ -2852,7 +2852,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Communication,Web document</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Communications_Web_uploads_BJS</assignedTo>
@@ -2968,7 +2968,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Quality &amp; Operations Support,Operational Management,AIMS Reporting Center</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>FDS_Quality_HO</assignedTo>
@@ -3007,7 +3007,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Europe</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Business_Delivery_China_N_A</assignedTo>
@@ -3033,7 +3033,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - C&amp;NA Business Delivery</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Business_Delivery_Africa_ME</assignedTo>
@@ -3059,7 +3059,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - A&amp;ME Business Delivery</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Business_Delivery_A_P</assignedTo>
@@ -3079,7 +3079,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Asia &amp; Pacific</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Business_Delivery_Americas</assignedTo>
@@ -3136,7 +3136,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>SAAM,Internal Cases (IDFS ISS)</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Agency_Risk_Management_China_NA</assignedTo>
@@ -3229,7 +3229,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC</team>
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB Risk</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_ARM_Africa_Middle_East</assignedTo>
@@ -3507,7 +3507,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
             <team>SIDRA EUR LO DE&amp;AT</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesMalta</assignedTo>
@@ -3714,7 +3714,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
             <team>SIDRA EUR LO HU</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesRomaniaMoldova</assignedTo>
@@ -3755,7 +3755,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
             <team>SIDRA EUR LO RO</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Kazakhstan_Kyrgyzstan</assignedTo>
@@ -3796,7 +3796,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
             <team>SIDRA EUR LO KZ/KY/UZ/TJ</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesGreece</assignedTo>
@@ -3837,7 +3837,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
             <team>SIDRA EUR LO GR&amp;CY</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesCyprus</assignedTo>
@@ -3958,7 +3958,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
             <team>SIDRA EUR LO TR</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesCroatiaSlovWBalkSerbMo</assignedTo>
@@ -3999,7 +3999,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
             <team>SIDRA EUR LO WB</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Georgia</assignedTo>
@@ -4040,7 +4040,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
             <team>SIDRA EUR LO GE</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesNordicBaltic</assignedTo>
@@ -4200,7 +4200,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC</team>
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesPoland</assignedTo>
@@ -4241,7 +4241,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
             <team>SIDRA EUR LO PL</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Complaints_SIN</assignedTo>
@@ -4382,7 +4382,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>contains</operation>
                 <value>Dashboard: Key Controls Customer Service - Europe</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>BankingManagementEurope</assignedTo>
@@ -4402,7 +4402,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Banking Management</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>RemittanceSettlementChinaNA</assignedTo>
@@ -4428,7 +4428,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Finance,Remittance &amp; Settlement,Invoicing</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>BankingManagementChinaNAsia</assignedTo>
@@ -4448,7 +4448,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>China &amp; North Asia</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CustomerServiceChinaNAsia</assignedTo>
@@ -4484,7 +4484,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>TODAY</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>AgencyManagementChinaNAsia</assignedTo>
@@ -4525,7 +4525,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>SAAM,OSCAR Communication</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>BankingManagementAfricaME</assignedTo>
@@ -4545,7 +4545,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Africa &amp; Middle East</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>RecyclebinNorthAsia</assignedTo>
@@ -4722,7 +4722,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Airline Management,Operational Management</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>RemittanceSettlementAfricaME</assignedTo>
@@ -4797,7 +4797,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Asia &amp; Pacific</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>BankingManagementAP</assignedTo>
@@ -4823,7 +4823,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - A&amp;P Banking Management</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>OperationalManagementAP</assignedTo>
@@ -4849,7 +4849,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - A&amp;P Operations</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CustomerServiceAP</assignedTo>
@@ -4885,7 +4885,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>TODAY</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>AgencyRiskManagementAP</assignedTo>
@@ -4926,7 +4926,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>SAAM</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>AgencyManagementAP</assignedTo>
@@ -5002,7 +5002,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - CNS Endorsement</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>BankingManagementAmericas</assignedTo>
@@ -5022,7 +5022,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Internal Cases (IDFS ISS)</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Finance_AR_Americas</assignedTo>
@@ -5073,7 +5073,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - Americas R&amp;S,E-mail to Case - Americas R&amp;S Bulletins</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>AgencyManagementAmericas</assignedTo>
@@ -5124,7 +5124,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>SAAM,OSCAR Communication</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CustomerServiceAmericas</assignedTo>
@@ -5160,7 +5160,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>contains</operation>
                 <value>Dashboard: Key Controls Customer Service - Americas</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Airlines_A_P</assignedTo>
@@ -5409,7 +5409,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>contains</operation>
                 <value>AWB stock allocation</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>mamalakisg@iata.org</assignedTo>
@@ -5442,7 +5442,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Greece</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>corciulos@iata.org</assignedTo>
@@ -5462,7 +5462,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Italy</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>RecycleBinEurope</assignedTo>
@@ -5622,7 +5622,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA CNA LO TW Risk Team</team>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_AME_Airlines</assignedTo>
+            <assignedTo>CasesAirlinesSCE</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND (2 OR 3 OR 4) AND 5 AND (6 OR 7)) OR (8 AND (6 OR 7))</booleanFilter>
             <criteriaItems>
@@ -5665,10 +5665,10 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>SEDA</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_AME_Airlines_French</assignedTo>
+            <assignedTo>CasesAirlinesSCE</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND (2 OR 3 OR 4) AND 5 AND (6 OR 7)) OR (8 AND (6 OR 7))</booleanFilter>
             <criteriaItems>
@@ -5711,7 +5711,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>SEDA</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesJordanSyriaLebanon</assignedTo>
@@ -5741,7 +5741,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;ME HUB AM Team</team>
             <team>SIDRA A&amp;ME HUB R&amp;S Team</team>
             <team>SIDRA A&amp;ME Levant</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesEgypt</assignedTo>
@@ -5771,7 +5771,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;ME HUB AM RPM</team>
             <team>SIDRA A&amp;ME HUB AM Team</team>
             <team>SIDRA A&amp;ME HUB R&amp;S Team</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesSaudiArabiaYemen</assignedTo>
@@ -5801,7 +5801,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;ME HUB AM Team</team>
             <team>SIDRA A&amp;ME HUB R&amp;S Team</team>
             <team>SIDRA A&amp;ME LO Saudi Arabia &amp; Yemen</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesNorthAfrica</assignedTo>
@@ -5831,7 +5831,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;ME HUB AM Team</team>
             <team>SIDRA A&amp;ME HUB R&amp;S Team</team>
             <team>SIDRA A&amp;ME LO North Africa</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesUnitedArabEmirates</assignedTo>
@@ -5892,7 +5892,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;P HUB R&amp;S VN</team>
             <team>SIDRA A&amp;P HUB Risk</team>
             <team>SIDRA A&amp;P LO - VN</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_SASC</assignedTo>
@@ -6046,7 +6046,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;P HUB R&amp;S TH</team>
             <team>SIDRA A&amp;P HUB Risk</team>
             <team>SIDRA A&amp;P LO - TH/KH</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesPhilippines</assignedTo>
@@ -6078,7 +6078,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;P HUB Risk</team>
             <team>SIDRA A&amp;P LO - PH</team>
             <team>SIDRA A&amp;P LO AM - PH</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesSingapore</assignedTo>
@@ -6109,7 +6109,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;P HUB R&amp;S SG</team>
             <team>SIDRA A&amp;P HUB Risk</team>
             <team>SIDRA A&amp;P LO - SG</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesKorea</assignedTo>
@@ -6141,7 +6141,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;P HUB Risk</team>
             <team>SIDRA A&amp;P LO - KR</team>
             <team>SIDRA A&amp;P LO AM - KR</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesJapan</assignedTo>
@@ -6173,7 +6173,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;P HUB Risk</team>
             <team>SIDRA A&amp;P LO - JP</team>
             <team>SIDRA A&amp;P LO AM - JP</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesIndonesia</assignedTo>
@@ -6370,7 +6370,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;ME HUB R&amp;S Team</team>
             <team>SIDRA A&amp;ME HUB Risk Team</team>
             <team>SIDRA A&amp;ME LO Eastern Africa</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesSouthernAfrica</assignedTo>
@@ -6401,7 +6401,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;ME HUB R&amp;S Team</team>
             <team>SIDRA A&amp;ME HUB Risk Team</team>
             <team>SIDRA A&amp;ME LO Southern Africa</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesCentralWesternAfrica</assignedTo>
@@ -6432,7 +6432,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;ME HUB R&amp;S Team</team>
             <team>SIDRA A&amp;ME HUB Risk Team</team>
             <team>SIDRA A&amp;ME LO Central &amp; Western Africa</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesSouthWestAfrica</assignedTo>
@@ -6463,7 +6463,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA A&amp;ME HUB R&amp;S Team</team>
             <team>SIDRA A&amp;ME HUB Risk Team</team>
             <team>SIDRA A&amp;ME LO South West Africa</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Americas_Airlines</assignedTo>
@@ -6676,7 +6676,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB CS Team 2</team>
             <team>SIDRA AME HUB R&amp;S Team 2</team>
             <team>SIDRA AME LO CENAM</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesBrazil</assignedTo>
@@ -6756,7 +6756,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB CS Team 2</team>
             <team>SIDRA AME HUB R&amp;S Team 2</team>
             <team>SIDRA AME LO MX</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesColombia</assignedTo>
@@ -6791,7 +6791,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB AM TEAM</team>
             <team>SIDRA AME HUB R&amp;S Team 2</team>
             <team>SIDRA AME LO CO</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesVenezuela</assignedTo>
@@ -6831,7 +6831,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB AM TEAM</team>
             <team>SIDRA AME HUB R&amp;S Team 1</team>
             <team>SIDRA AME LO VE</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesBolivia</assignedTo>
@@ -6868,7 +6868,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB R&amp;S Team 3</team>
             <team>SIDRA AME LO BO</team>
             <team>SIDRA AME LO PE</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesArgentinaParaguayUruguay</assignedTo>
@@ -6908,7 +6908,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB AM TEAM</team>
             <team>SIDRA AME HUB R&amp;S Team 3</team>
             <team>SIDRA AME LO AR</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesChile</assignedTo>
@@ -6944,7 +6944,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB CS Team 1</team>
             <team>SIDRA AME HUB R&amp;S Team 3</team>
             <team>SIDRA AME LO CL</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesEcuador</assignedTo>
@@ -6985,7 +6985,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB CS Team 1</team>
             <team>SIDRA AME HUB R&amp;S Team 3</team>
             <team>SIDRA AME LO CO</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesCanada</assignedTo>
@@ -7025,7 +7025,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB AM TEAM</team>
             <team>SIDRA AME HUB R&amp;S Team 1</team>
             <team>SIDRA AME LO CA</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesPeru</assignedTo>
@@ -7061,7 +7061,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB CS Team 1</team>
             <team>SIDRA AME HUB R&amp;S Team 3</team>
             <team>SIDRA AME LO PE</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesWesternCaribbean</assignedTo>
@@ -7097,7 +7097,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB CS Team 2</team>
             <team>SIDRA AME HUB R&amp;S Team 1</team>
             <team>SIDRA AME LO WEC</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesUnitedStates</assignedTo>
@@ -7133,7 +7133,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>False</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesEasternCaribbean</assignedTo>
@@ -7178,7 +7178,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB AM TEAM</team>
             <team>SIDRA AME HUB R&amp;S Team 1</team>
             <team>SIDRA AME LO EAC</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesAmericasemails</assignedTo>
@@ -7188,7 +7188,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>E-mail to Case - Americas,E-mail to Case - Americas FAX,E-mail to Case - Agency Services</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Armenia_Belarus_Turkmenistan</assignedTo>
@@ -7244,7 +7244,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
             <team>SIDRA EUR LO AZ</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesUzbekistan</assignedTo>
@@ -7274,7 +7274,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC</team>
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesBulgaria</assignedTo>
@@ -7300,7 +7300,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>notContain</operation>
                 <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesCzechRepublicSlovakiaBSP</assignedTo>
@@ -7331,7 +7331,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR HUB ACC</team>
             <team>SIDRA EUR HUB ACC CASS</team>
             <team>SIDRA EUR HUB R&amp;S</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesIsrael</assignedTo>
@@ -7362,7 +7362,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR IL ACC &amp; Risk</team>
             <team>SIDRA EUR IL LO</team>
             <team>SIDRA EUR IL R&amp;S BSP</team>
-            <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Israel_CASS</assignedTo>
@@ -7412,7 +7412,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR IL LO</team>
             <team>SIDRA EUR IL R&amp;S CASS</team>
             <team>SIDRA EUR LO PL</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesIsrael</assignedTo>
@@ -7442,7 +7442,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR IL ACC &amp; Risk</team>
             <team>SIDRA EUR IL LO</team>
             <team>SIDRA EUR IL R&amp;S BSP</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Russia_CASS</assignedTo>
@@ -7492,7 +7492,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA EUR IL LO</team>
             <team>SIDRA EUR IL R&amp;S CASS</team>
             <team>SIDRA EUR LO PL</team>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesRussia</assignedTo>
@@ -7518,7 +7518,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>notContain</operation>
                 <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
             </criteriaItems>
-            <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>AGM_Internal</assignedTo>
@@ -7532,6 +7532,44 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <field>Case.Origin</field>
                 <operation>equals</operation>
                 <value>Email</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Airline_Participation_Drafts</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status</field>
+                <operation>equals</operation>
+                <value>Draft</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>AirlineParticipationHeadOffice</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status</field>
+                <operation>equals</operation>
+                <value>For Review and Acceptance</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -7553,7 +7591,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>equals</operation>
                 <value>Create temp account</value>
             </criteriaItems>
-            <template>unfiled$public/New_Case</template>
+            <template>All/New_Case</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>FSM_Africa_Middle_East</assignedTo>
