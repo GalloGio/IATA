@@ -269,16 +269,16 @@
                                             </td>
                                                 <td>
                                                     <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'L'}">
-                                                        Cashless
+                                                        GoLite Model under NewGen ISS
                                                     </apex:outputpanel>
                                                     <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'S'}">
-                                                        Cash
+                                                        GoStandard Model under NewGen ISS
                                                     </apex:outputpanel>
                                                     <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'G'}">
-                                                        Multicountry
+                                                        GoGlobal Model under NewGen ISS
                                                     </apex:outputpanel>
                                                     <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'T'}">
-                                                        Legacy
+                                                        Traditonal Model not under NewGen
                                                     </apex:outputpanel>
                                                 </td>                                            
                                         </tr>
