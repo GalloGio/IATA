@@ -223,6 +223,10 @@
                 <behavior>Readonly</behavior>
                 <field>Agent_Type_Code__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Covered_Ownership__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
