@@ -363,6 +363,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Covered_Ownership__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Original_Approval_DAte__c</field>
             </layoutItems>
             <layoutItems>
