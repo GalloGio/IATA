@@ -211,14 +211,17 @@ public class ISSP_AvailableServices_Test {
         insert acc;
         Contact con = ISSP_ObjectFactory.createNewContact();
         insert con;
-        Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report'); 
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report', Cannot_be_managed_by_portal_admin__c=true);
         insert app;
         
+        Test.startTest();
         ISSP_AvailableServices cttr = new ISSP_AvailableServices();
         Apexpages.currentPage().getParameters().put('ServId', app.Id);
         
+        cttr.initialization();
         cttr.doRequest();
         ISSP_AvailableServices.newAppsRequest(app.Id, app.Name, con.Id);
+        Test.stopTest();
     }
 
 
@@ -529,7 +532,6 @@ public class ISSP_AvailableServices_Test {
 
     public static testMethod void testnewAppsRequest2() {
         
-        Test.startTest();
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
@@ -559,7 +561,10 @@ public class ISSP_AvailableServices_Test {
 
         insert new List<Portal_Applications__c>{easyPay1, easyPay2};
         
+        Test.startTest();
+        
         ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+        cttr.initialization();
 
         ISSP_AvailableServices.newAppsRequest2 (easyPay1.Id, easyPay1.Name, con.Id, 'portalServiceRole', false, 'defaultPortalUserRole');
 
@@ -636,7 +641,6 @@ public class ISSP_AvailableServices_Test {
 
         insert con;
 
-        Test.startTest();
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
@@ -654,6 +658,7 @@ public class ISSP_AvailableServices_Test {
                 License_Cost_Center__c = 'XSMW01JO01'
             );
 
+        Test.startTest();
         System.runAs(testeUser3) {
 
             Account acc2 = ISSP_ObjectFactory.createNewAccount();        
@@ -671,6 +676,7 @@ public class ISSP_AvailableServices_Test {
             Contact con2 = ISSP_ObjectFactory.createNewContact();
             con2.AccountId = acc2.id;
             con2.Authorized_Signatory__c = true;
+            con2.Email = 'ISSP_test_092393@test.test';
             //con2.User_Portal_Status__c =
 
             insert con2;
@@ -694,7 +700,6 @@ public class ISSP_AvailableServices_Test {
 
         insert con;
 
-        Test.startTest();
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
@@ -712,6 +717,7 @@ public class ISSP_AvailableServices_Test {
                 License_Cost_Center__c = 'XSMW01JO01'
             );
 
+        Test.startTest();
         System.runAs(testeUser3) {
 
             Account acc2 = ISSP_ObjectFactory.createNewAccount();        
@@ -723,6 +729,7 @@ public class ISSP_AvailableServices_Test {
             con2.lastName = 'IATA';
             con2.AccountId = acc2.id;
             con2.Authorized_Signatory__c = false;
+            con2.Email = 'ISSP_test_092394@test.test';
 
             insert con2;
             
@@ -745,7 +752,6 @@ public class ISSP_AvailableServices_Test {
 
         insert con;
 
-        Test.startTest();
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
@@ -763,6 +769,7 @@ public class ISSP_AvailableServices_Test {
                 License_Cost_Center__c = 'XSMW01JO01'
             );
 
+        Test.startTest();
         System.runAs(testeUser3) {
             
             IATA_ISO_Country__c portugal = [Select Id from IATA_ISO_Country__c where Name = 'Portugal_test'];
@@ -779,6 +786,7 @@ public class ISSP_AvailableServices_Test {
             con2.lastName = 'IATA';
             con2.AccountId = acc2.id;
             con2.Authorized_Signatory__c = false;
+            con2.Email = 'ISSP_test_092395@test.test';
 
             insert con2;
             
@@ -802,7 +810,6 @@ public class ISSP_AvailableServices_Test {
 
         insert con;
 
-        Test.startTest();
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
@@ -820,6 +827,7 @@ public class ISSP_AvailableServices_Test {
                 License_Cost_Center__c = 'XSMW01JO01'
             );
 
+        Test.startTest();
         System.runAs(testeUser3) {
 
             Account acc2 = ISSP_ObjectFactory.createNewAccount();        
@@ -832,6 +840,7 @@ public class ISSP_AvailableServices_Test {
             con2.lastName = 'IATA';
             con2.AccountId = acc2.id;
             con2.Authorized_Signatory__c = false;
+            con2.Email = 'ISSP_test_092396@test.test';
 
             insert con2;
 
@@ -877,7 +886,6 @@ public class ISSP_AvailableServices_Test {
 
         insert con;
 
-        Test.startTest();
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
@@ -895,6 +903,7 @@ public class ISSP_AvailableServices_Test {
                 License_Cost_Center__c = 'XSMW01JO01'
             );
 
+        Test.startTest();
         System.runAs(testeUser3) {
 
             Account acc2 = ISSP_ObjectFactory.createNewAccount();        
@@ -907,6 +916,7 @@ public class ISSP_AvailableServices_Test {
             con2.lastName = 'IATA';
             con2.AccountId = acc2.id;
             con2.Authorized_Signatory__c = false;
+            con2.Email = 'ISSP_test_092397@test.test';
 
             insert con2;
 

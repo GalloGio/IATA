@@ -31691,4 +31691,19 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>ISSP_Enable_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Enable_Service</shortDescription>
+        <value>Enable this service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ServiceAccessConfirm</fullName>
+        <categories>ISSP, services</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ServiceAccessConfirm</shortDescription>
+        <value>Are you sure you want to enable this service?</value>
+    </labels>
 </CustomLabels>
