@@ -3110,16 +3110,21 @@ public class AMS_OSCARTriggerHandler {
         //NEWGEN-3841 NEWGEN-4000 - Send Notification to update results to IEP
         if((updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP || updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP) && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && (updatedOscar.STEP17__c == 'Passed' || updatedOscar.STEP17__c == 'Failed')){
             System.debug('Finish Setup Processing step for IEP bank account setup OSCAR. Sending notification to Mulesoft');
-            
+            String cc;
             Id configID; 
             for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getall().values()){
-                if(cm.Change_Code__c == 'MAPDF'){
+                cc = cm.Change_Code__c;
+                if(updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP && cm.Change_Code__c == 'MAPDF'){
+                    configID = cm.id;
+                    break;
+                }
+                if(updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP && cm.Change_Code__c == 'MBDIL'){
                     configID = cm.id;
                     break;
                 }
             }
             if(configID != null)
-                insert new AMS_Agency_Updates__c(Account__c = updatedOscar.account__c, Update_Type__c = 'Update', Change_Code__c = 'MAPDF', configurationID__C = configID, Integration_System__c='Mulesoft');
+                insert new AMS_Agency_Updates__c(Account__c = updatedOscar.account__c, Update_Type__c = 'Update', Change_Code__c = cc, configurationID__C = configID, Integration_System__c='Mulesoft');
         }
         /* commented as per NEWGEN-4238
         //NEWGEN-2473 - if due diligence step is failed automatically close the OSCAR/case
