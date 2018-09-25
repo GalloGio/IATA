@@ -1,0 +1,230 @@
+<apex:component controller="ISSP_ICCS_ProcessBankAccountController" allowDML="true">
+    <apex:attribute name="caseProcessesCtrl" 
+                    type="ISSP_ICCS_CaseProcessesController" 
+                    assignTo="{! caseProcessesController}" 
+                    required="true" 
+                    description="The controller for the page." />
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<script>
+		$( function() {		
+			$( '[id$=datepicker]' ).datepicker();
+		} );
+	</script>
+
+    <!----------------------->
+    <!-- NEW OR DRAFT CASE -->
+    <!----------------------->
+
+    <apex:outputPanel rendered="{! caseProcessesController.cse.Id == null || caseProcessesController.cse.Status == 'Draft'}">
+        <!------------>
+        <!-- STEP 1 -->
+        <!------------>
+        <apex:outputPanel rendered="{! caseProcessesController.currentStep == 1}" id="step1">
+            <div class="col-md-6 col-sm-9 col-xs-6 center-card no-mrgn" style="padding-right:5px;padding-left:5px;">
+                <div class="bottom-box no-pddg no-border" stye="text-align:justify;text-justify:inter-word;">
+					<apex:outputPanel rendered="{! bankAccountOperation == 'Create'}">
+						<apex:outputText value="{! $Label.ICCS_Registration_Step2_BankAccounts1}" escape="false"/>
+						<br/>
+						<br/>
+						<apex:outputText value="{! $Label.ICCS_Registration_Step2_BankAccounts2}" escape="false"/>
+						<br/>
+						<br/>
+						<apex:outputText value="{! $Label.ICCS_Registration_Step2_BankAccounts3}" escape="false"/>
+						<br/>
+						<br/>
+						<apex:outputText value="{! $Label.ICCS_Registration_Step2_BankAccounts4}" escape="false"/>
+						<br/>
+						<apex:outputText value="{! $Label.ICCS_Registration_Step2_BankAccounts5}" escape="false"/>
+						<br/>
+						<br/>
+						<apex:outputText value="{! $Label.ICCS_Registration_Step2_BankAccounts6}" escape="false"/>
+						<br/>
+						<br/>
+						<apex:outputText value="{! $Label.ICCS_Registration_Step2_BankAccounts7}" escape="false"/>
+						<br/>
+						<apex:outputText value="{! $Label.ICCS_Registration_Step2_BankAccounts8}" escape="false"/>
+						<br/>
+						<br/>
+					</apex:outputPanel>
+                    <div class="table-form">
+			            <apex:pageBlock>
+							<apex:pageBlockSection columns="1" rendered="{! bankAccountOperation == 'Update'}">
+	            		        <apex:outputLabel value="{! $Label.ICCS_Bank_Account_Code_Label}"/>
+								<apex:outputLabel value="{! bankAccountCode}" styleClass="selected-txt"/>
+
+								<apex:outputLabel value="{! $Label.ICCS_Bank_Name_Label}"/>
+								<apex:outputLabel value="{! bankName}" styleClass="selected-txt"/>
+
+								<apex:outputLabel value="{! $Label.ICCS_BIC_Label}"/>
+								<apex:outputLabel value="{! bankBic}" styleClass="selected-txt"/>
+
+								<apex:outputLabel value="{! $Label.ICCS_Account_Number_Label}"/>
+								<apex:outputLabel value="{! bankNumber}" escape="false" styleClass="selected-txt"/>
+
+								<apex:outputLabel value="{! $Label.ICCS_Bank_Account_Currency_Label}"/>
+								<apex:outputLabel value="{! bankCurrency}" escape="false" styleClass="selected-txt"/>
+
+								<apex:outputLabel value="{! $Label.ICCS_Reason_Label} (*)"/>
+								<apex:outputPanel>
+									<apex:selectList value="{! selectedReason}" multiselect="false" size="1">
+										<apex:selectOptions value="{! reasons}"/>
+										<apex:actionSupport event="onchange" reRender="step1" status="processActStatusId"/>
+									</apex:selectList>
+									<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['selectedReason']}">
+										<apex:outputText value="{! $Label.ICCS_Reason_Label + ' ' + $Label.ICCS_Is_Mandatory}" escape="false"/>
+									</apex:outputPanel>
+								</apex:outputPanel>
+
+								<apex:outputLabel value="{! $Label.ICCS_Additional_Codes_Number} (*)" rendered="{! bankAccountOperation == 'Update' && selectedReason == 'Add Bank Account Codes'}"/>
+								<apex:outputPanel rendered="{! bankAccountOperation == 'Update' && selectedReason == 'Add Bank Account Codes'}">
+									<apex:inputText value="{! additionalBankAccountCodes}"/>
+									<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['codeNumberNull']}">
+										<apex:outputText value="{! $Label.ICCS_Additional_Codes_Number + ' ' + $Label.ICCS_Is_Mandatory}" escape="false"/>
+									</apex:outputPanel>
+									<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['codeNumberNotAnInteger']}">
+										<apex:outputText value="{! $Label.ICCS_Additional_Codes_Number + ' ' + $Label.ICCS_Must_Be_Integer}" escape="false"/>
+									</apex:outputPanel>
+								</apex:outputPanel>
+							</apex:pageBlockSection>
+
+							<apex:pageBlockSection columns="1">
+								<apex:outputLabel value="{! $Label.ICCS_Expected_Deadline}"/>
+								<apex:outputPanel>
+		                            <apex:inputField value="{! caseProcessesController.cse.Expected_Deadline__c}" id="datepicker"/>
+								</apex:outputPanel>
+							</apex:pageBlockSection>
+						</apex:pageBlock>
+
+						<apex:outputPanel rendered="{! selectedReason != 'Add Bank Account Codes'}">
+		                    <div class="table-form">
+		                    
+		                    	<apex:outputPanel rendered="{! bankAccountOperation == 'Update'}">
+			                    	<apex:outputText value="{! $Label.ICCS_Bank_Account_Form_Message}"/>
+			                    	<br/>
+			                    	<br/>
+
+									<div class="divider-4"/>
+		                    	</apex:outputPanel>
+
+								<div class="bold-txt">
+		                        	<apex:outputText value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Name}" escape="false"/>
+								</div>
+								<br/>
+								<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+								<div class="down-btn">
+									<div class="ic-pstn">
+										<a href="/servlet/servlet.FileDownload?file={! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Id}" target="_blank">
+											<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+											<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+										</a>
+									</div>
+								</div>
+								&nbsp;
+								<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+								<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+									<apex:param value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].LastModifiedDate}" />
+								</apex:outputText>
+		
+								<div class="divider-4"/>
+		
+								<b>
+									<p class="label-form">
+										<apex:outputText value="{! $Label.ICCS_Uploads_Label}" escape="false"/>
+									</p>
+								</b>
+		
+								<table>
+									<tr>
+										<td style="width: 1%;white-space: nowrap;">
+											Bank Accounts (*)
+										</td>
+										<td>
+											<c:ISSP_ICCS_TypedDocument docType="Bank Accounts" caseProcessCtrl="{! thisCtrl}"/>
+										</td>
+									</tr>
+								</table>
+
+								<br/>
+
+                                <p>
+                                	<apex:outputText value="{! $Label.ICCS_Mandatory_Fields}" escape="false"/>
+                                </p>
+		                    </div>
+						</apex:outputPanel>
+					</div>
+				</div>
+			</div>
+		</apex:outputPanel>
+    </apex:outputPanel>
+    
+    <!----------------->
+    <!-- OPENED CASE -->
+    <!----------------->
+	<apex:outputPanel rendered="{! caseProcessesController.cse.Id != null && caseProcessesController.cse.Status != 'Draft'}">
+		<apex:pageBlock>
+			<div class="col-md-6 col-sm-6 col-xs-6 text-center left-card" style="padding-right:5px;padding-left:5px;">
+				<div class="section-title-gray prfl">
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+					<apex:outputText value="{! $Label.ICCS_Case_Account_Contact_Information}" escape="false"/>
+				</div>
+				<div class="bottom-box no-pddg left-right" style="text-align: left;">  
+					<apex:pageBlockSection columns="1">
+						<apex:outputField value="{! caseProcessesController.cse.Account.Name}"/>
+						<apex:outputField value="{! caseProcessesController.cse.IATA_Code__c}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Name}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Email}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Phone}"/>
+					</apex:pageBlockSection>
+				</div>
+			</div>
+			
+			<div class="col-md-6 col-sm-6 col-xs-6 text-center right-card" style="padding-right:5px;padding-left:5px;">
+				<div class="section-title-gray cases">
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+					<apex:outputText value="{! $Label.ICCS_Case_Information}" escape="false"/>
+				</div>
+				<div class="bottom-box no-pddg left-right" style="text-align: left;">
+					<apex:pageBlockSection columns="1">
+						<apex:outputField value="{! caseProcessesController.cse.CaseNumber}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Subject}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Status}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Reason1__c}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Expected_Deadline__c}"/>
+					</apex:pageBlockSection>
+				</div>
+			</div>
+			
+			<apex:outputPanel rendered="{! caseProcessesController.cse.CaseArea__c == 'ICCS – Update Bank Account'}">
+				<div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+					<div class="section-title-gray cycle">
+						<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+						<apex:outputText value="{! $Label.ICCS_Bank_Account_Information}" escape="false"/>
+					</div>
+					<div class="bottom-box no-pddg mrgn left-right" style="text-align: justify;text-justify: inter-word;">
+						<apex:pageBlockSection columns="2">
+	           		        <apex:outputLabel value="{! $Label.ICCS_Bank_Account_Code_Label}"/>
+							<apex:outputText value="{! bankAccountCode}"/>
+							
+							<apex:outputLabel value="{! $Label.ICCS_Bank_Name_Label}"/>
+							<apex:outputText value="{! IF(bankName != 'null', bankName, '')}"/>
+							
+							<apex:outputLabel value="{! $Label.ICCS_BIC_Label}"/>
+							<apex:outputText value="{! bankBic}"/>
+							
+							<apex:outputLabel value="{! $Label.ICCS_Account_Number_Label}"/>
+							<apex:outputText value="{! bankNumber}"/>
+							
+							<apex:outputLabel value="{! $Label.ICCS_Bank_Account_Currency_Label}"/>
+							<apex:outputText value="{! bankCurrency}"/>
+							
+							<apex:outputLabel value="{! $Label.ICCS_Additional_Codes_Number}" rendered="{! additionalBankAccountCodes != ''}"/>
+							<apex:outputText value="{! additionalBankAccountCodes}" rendered="{! additionalBankAccountCodes != ''}"/>
+						</apex:pageBlockSection>
+					</div>
+				</div>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:outputPanel>
+</apex:component>
