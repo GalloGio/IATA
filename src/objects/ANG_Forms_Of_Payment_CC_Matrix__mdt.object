@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Forms Of Payment CC Matrix</description>
+    <fields>
+        <fullName>Action_in_FoP_OSCAR__c</fullName>
+        <description>Process in OSCAR Process (restrict,restore)</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Action in FoP OSCAR</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Restrict Cash</fullName>
+                    <default>true</default>
+                    <label>Restrict Cash</label>
+                </value>
+                <value>
+                    <fullName>Restrict Credit Card</fullName>
+                    <default>false</default>
+                    <label>Restrict Credit Card</label>
+                </value>
+                <value>
+                    <fullName>Restrict_All</fullName>
+                    <default>false</default>
+                    <label>Restrict All</label>
+                </value>
+                <value>
+                    <fullName>Restore All</fullName>
+                    <default>false</default>
+                    <label>Restore All</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Cash_after__c</fullName>
+        <description>Value of Agency&apos;s Cash status after Forms Of Payment Process</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Cash after</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>true</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Deactivation in process</fullName>
+                    <default>false</default>
+                    <label>Deactivation in process</label>
+                </value>
+                <value>
+                    <fullName>Non-Active</fullName>
+                    <default>false</default>
+                    <label>Non-Active</label>
+                </value>
+                <value>
+                    <fullName>Not Authorized</fullName>
+                    <default>false</default>
+                    <label>Not Authorized</label>
+                </value>
+                <value>
+                    <fullName>Not set</fullName>
+                    <default>false</default>
+                    <label>Not set</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Cash_before__c</fullName>
+        <description>Value of Agency&apos;s Cash status before Forms Of Payment Process</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Cash before</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>true</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Deactivation in process</fullName>
+                    <default>false</default>
+                    <label>Deactivation in process</label>
+                </value>
+                <value>
+                    <fullName>Non-Active</fullName>
+                    <default>false</default>
+                    <label>Non-Active</label>
+                </value>
+                <value>
+                    <fullName>Not Authorized</fullName>
+                    <default>false</default>
+                    <label>Not Authorized</label>
+                </value>
+                <value>
+                    <fullName>Not set</fullName>
+                    <default>false</default>
+                    <label>Not set</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Change_Code__c</fullName>
+        <description>Change Code to be Created</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Change Code</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>PCA</fullName>
+                    <default>true</default>
+                    <label>PCA</label>
+                </value>
+                <value>
+                    <fullName>NOCC</fullName>
+                    <default>false</default>
+                    <label>NOCC</label>
+                </value>
+                <value>
+                    <fullName>CCA</fullName>
+                    <default>false</default>
+                    <label>CCA</label>
+                </value>
+                <value>
+                    <fullName>FOP</fullName>
+                    <default>false</default>
+                    <label>FOP</label>
+                </value>
+                <value>
+                    <fullName>PCR</fullName>
+                    <default>false</default>
+                    <label>PCR</label>
+                </value>
+                <value>
+                    <fullName>CCR</fullName>
+                    <default>false</default>
+                    <label>CCR</label>
+                </value>
+                <value>
+                    <fullName>FPR</fullName>
+                    <default>false</default>
+                    <label>FPR</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Credit_Card_after__c</fullName>
+        <description>Value of Agency&apos;s Credit Card status after Forms Of Payment Process</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Credit Card after</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not set</fullName>
+                    <default>true</default>
+                    <label>Not set</label>
+                </value>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Non-Active</fullName>
+                    <default>false</default>
+                    <label>Non-Active</label>
+                </value>
+                <value>
+                    <fullName>Deactivation in process</fullName>
+                    <default>false</default>
+                    <label>Deactivation in process</label>
+                </value>
+                <value>
+                    <fullName>Not Authorized</fullName>
+                    <default>false</default>
+                    <label>Not Authorized</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Credit_Card_before__c</fullName>
+        <description>Value of Agency&apos;s Credit Card status before Forms Of Payment Process</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Credit Card before</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>true</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Deactivation in process</fullName>
+                    <default>false</default>
+                    <label>Deactivation in process</label>
+                </value>
+                <value>
+                    <fullName>Non-Active</fullName>
+                    <default>false</default>
+                    <label>Non-Active</label>
+                </value>
+                <value>
+                    <fullName>Not Authorized</fullName>
+                    <default>false</default>
+                    <label>Not Authorized</label>
+                </value>
+                <value>
+                    <fullName>Not set</fullName>
+                    <default>false</default>
+                    <label>Not set</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Forms Of Payment CC Matrix</label>
+    <pluralLabel>Forms Of Payment CC Matrix</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
