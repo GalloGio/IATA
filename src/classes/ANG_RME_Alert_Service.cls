@@ -190,6 +190,16 @@ global class ANG_RME_Alert_Service {
 		}
 	}
 
+	public static WebserviceResult testWebserviceResult(){
+		if(Test.isRunningTest()){
+			WebserviceResult result = new WebserviceResult();
+			result.isSuccess=true;
+			result.description='test description';
+			return result;
+		}
+		return null;
+	}
+
 	//webservice called by salesforce (javascript button and portal) to request an update of RHC Consumption Status
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
 
