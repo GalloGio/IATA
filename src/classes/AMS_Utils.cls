@@ -3078,4 +3078,25 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     };
     /*** AMSU-166 End ***/
 
+    /*** AMSU-179 ***/
+    public static final List<Schema.SObjectField> ACCOUNT_FIELDS_TO_VALIDATE = new List<Schema.SObjectField> {
+        Account.Name,
+        Account.IATACode__c,
+        Account.TradeName__c,
+        Account.CASS_Number__c,
+        Account.Short_Name__c, 
+        Account.License_Number__c, 
+        Account.VAT_Number__c,
+        Account.BillingStreet, 
+        Account.BillingPostalCode, 
+        Account.BillingCity, 
+        Account.ShippingStreet,
+        Account.ShippingPostalCode,
+        Account.ShippingCity, 
+        Account.Email__c, 
+        Account.Website, 
+        Account.Abbreviated_name__c, 
+        Account.Abbreviated_Address__c, 
+        Account.VAT_Number_2__c
+    };
 }
