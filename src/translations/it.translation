@@ -9688,6 +9688,14 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_STATUS_APPROVED</name>
     </customLabels>
     <customLabels>
+        <label><!-- DEFAULT/SUSPENSION --></label>
+        <name>ISSP_ANG_STATUS_CASHNOCOMMISSION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- REVIEW/STDS REMOVAL/NOTICE OF TERMINATION --></label>
+        <name>ISSP_ANG_STATUS_CASHWITHCOMMISSION</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Terminated --></label>
         <name>ISSP_ANG_STATUS_TERMINATED</name>
     </customLabels>

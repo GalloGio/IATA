@@ -4912,7 +4912,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Services URL PROD</shortDescription>
-        <value>https://iccsqa-api.iata.org/api/v1</value>
+        <value>https://iccs-api.iata.org/api/v1</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Token_URL</fullName>
@@ -28150,7 +28150,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Troubleshooting_Link</shortDescription>
-        <value>https://fred.aws-sword.net/contact</value>
+        <value>https://fred.iata.org/contact</value>
     </labels>
     <labels>
         <fullName>OneId_ForgotPassword</fullName>
@@ -28365,7 +28365,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Max_Account_Reached2</shortDescription>
-        <value>Maximum number of accounts reached. Please copy and follow the troubleshooting link below</value>
+        <value>This account has one or more active users. Any additional users(s) must be invited by the Primary User of this account. Please contact the IATA FRED+ Team ( https://fred.iata.org/contact ) for more details.</value>
     </labels>
     <labels>
         <fullName>OneId_My_available_applications</fullName>

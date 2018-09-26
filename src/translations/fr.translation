@@ -3940,7 +3940,7 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
         <name>IDCard_IDCardAppNotFound</name>
     </customLabels>
     <customLabels>
-        <label>Cours ITDI (Facultatif)</label>
+        <label>Cours de IATA Training (Facultatif)</label>
         <name>IDCard_ITDICourse</name>
     </customLabels>
     <customLabels>
@@ -4840,11 +4840,11 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
         <name>ID_Card_Not_found_for_VER</name>
     </customLabels>
     <customLabels>
-        <label>Si vous souhaitez profiter du forfait pour les professionnels du voyage, combinant la Carte avec une sélection de 2 ITDI cours en ligne</label>
+        <label>Profitez du rabais sur deux cours au choix offerts par IATA Training. &lt;u&gt; Le prix devra être ajouté aux Frais suivants &lt;/u&gt;. Une fois votre demande de carte d&apos;identité IATA/IATAN approuvée, vous serez contacté par le département IATA Training qui vous donnera l&apos;accès au cours que vous aurez sélectionné</label>
         <name>ID_Card_Package_Travel_Professionals_1</name>
     </customLabels>
     <customLabels>
-        <label>Veuillez sélectionner votre cours ici:</label>
+        <label>&lt;br&gt; Veuillez sélectionner votre cours ici:</label>
         <name>ID_Card_Package_Travel_Professionals_2</name>
     </customLabels>
     <customLabels>
@@ -9719,6 +9719,14 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
     <customLabels>
         <label><!-- Approved --></label>
         <name>ISSP_ANG_STATUS_APPROVED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- DEFAULT/SUSPENSION --></label>
+        <name>ISSP_ANG_STATUS_CASHNOCOMMISSION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- REVIEW/STDS REMOVAL/NOTICE OF TERMINATION --></label>
+        <name>ISSP_ANG_STATUS_CASHWITHCOMMISSION</name>
     </customLabels>
     <customLabels>
         <label><!-- Terminated --></label>
