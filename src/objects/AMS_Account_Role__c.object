@@ -517,6 +517,26 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>No_Airline_Subsidiaries__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used  to indicate that the related account doesn&apos;t own any airline</description>
+        <externalId>false</externalId>
+        <label>No Airline Subsidiaries</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Other_Stakeholder_Types__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates that the related account is partially or completely owned by other stakeholders (not an account, a person, a contact)</description>
+        <externalId>false</externalId>
+        <label>Other Stakeholder Types</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Owner_Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>The Account that owns the Account Object - this is a Ownership Relation</description>
