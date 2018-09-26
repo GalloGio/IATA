@@ -24,7 +24,7 @@
                     <label>Restrict Credit Card</label>
                 </value>
                 <value>
-                    <fullName>Restrict_All</fullName>
+                    <fullName>Restrict All</fullName>
                     <default>false</default>
                     <label>Restrict All</label>
                 </value>
@@ -32,6 +32,16 @@
                     <fullName>Restore All</fullName>
                     <default>false</default>
                     <label>Restore All</label>
+                </value>
+                <value>
+                    <fullName>Restore Credit Card</fullName>
+                    <default>false</default>
+                    <label>Restore Credit Card</label>
+                </value>
+                <value>
+                    <fullName>Restore Cash</fullName>
+                    <default>false</default>
+                    <label>Restore Cash</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
