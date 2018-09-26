@@ -158,7 +158,7 @@ public class ANG_RiskEventGenerator {
 		if(reQuery){
 			// if any of the conditions fields includes a relationship (.) requery de object to get the relationships
 			try{
-				objToEvaluate = Database.query('SELECT Id, RecordTypeId, '+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
+				objToEvaluate = Database.query('SELECT Id, RecordTypeId, CreatedDate, '+(objectName == 'Case' ? 'ParentId, Parent.RecordType.Name, ':'')+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
 			}catch(System.QueryException e){
 				if(!e.getMessage().startsWith('No such column ')) throw e; 
 				else {
@@ -167,6 +167,28 @@ public class ANG_RiskEventGenerator {
 					friendlyMessage = friendlyMessage.replace('#objects#', Schema.getGlobalDescribe().get(objectName).getDescribe().getLabelPlural());
 					throw new RiskEventGeneratorException(friendlyMessage);
 				}
+			}
+		}
+
+		//query previous IFAPs if needed (objectName = Case AND Parent Case = IFAP)
+		Map<Id,List<Case>> previousIFAPsByAccount = new Map<Id,List<Case>>();
+		if(objectName == 'Case'){
+			Set<String> ifapIds = new Set<String>();
+			Set<String> accsIds = new Set<String>();
+			for (sObject o :objToEvaluate){
+				if(o.get('Parent.RecordType.Name') == AMS_Utils.RECTYPE_IFAP){
+					ifapIds.add(String.valueOf(o.get('ParentId')));
+					accsIds.add(String.valueOf(o.get('AccountId')));
+				}
+			}
+			for(Case c: [SELECT Id, AccountId, Status, CreatedDate FROM Case 
+				WHERE RecordType.Name = :AMS_Utils.RECTYPE_IFAP 
+				AND AccountId IN :accsIds AND Id NOT IN :ifapIds ORDER BY CreatedDate DESC]){
+
+				if(previousIFAPsByAccount.containsKey(c.AccountId))
+					previousIFAPsByAccount.get(c.AccountId).add(c);
+				else
+					previousIFAPsByAccount.put(c.AccountId, new List<Case>{c});
 			}
 		}		
 
@@ -198,7 +220,14 @@ public class ANG_RiskEventGenerator {
 						
 						if(config.ANG_Activate_In__c != null) risk.ANG_Issued_Date__c = System.today().addDays(Integer.valueOf(config.ANG_Activate_In__c));
 
-						riskEvents .add(risk);
+						//NEWGEN-2719 prevent "Fail Financial Statement" risk event creation for agents with previous ifap status = "Closed_Non compliance" 
+						if(config.ANG_Risk_Event_Type__c != ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS || objectName != 'Case' || !previousIFAPsByAccount.containsKey(String.valueOf(o.get('AccountId'))) 
+							|| !IFAP_BusinessRules.isPreviousIFAPStatusEquals(previousIFAPsByAccount.get(String.valueOF(o.get('AccountId'))),'Closed_Non compliance')){
+							riskEvents.add(risk);
+						}else{
+							//do the show error part
+							return;
+						}
 					}
 					
 				}
