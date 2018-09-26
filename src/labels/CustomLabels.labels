@@ -1106,6 +1106,13 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>Conversion From</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ConversionFromGoGlobalTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From GoGlobal Tooltip</shortDescription>
+        <value>Conversion From GoGlobal Tooltip</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ConversionFromGoLiteTooltip</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1780,6 +1787,14 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithCash</shortDescription>
         <value>GoStandard</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductStandardAccreditationWithMultiCountry</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductStandardAccreditationWithMultiCountry</shortDescription>
+        <value>GoGlobal</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
