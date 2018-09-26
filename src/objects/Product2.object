@@ -184,10 +184,54 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Fees_GoGlobal_GoLite__c</fullName>
+        <description>Fees to convert from GoGlobal to GoLite.</description>
+        <externalId>false</externalId>
+        <label>GoGlobal to GoLite</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Fees_GoGlobal_GoStandard__c</fullName>
+        <description>Fees to convert from GoGlobal to GoStandard.</description>
+        <externalId>false</externalId>
+        <label>GoGlobal to GoStandard</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Fees_GoLite_GoGlobal__c</fullName>
+        <description>Fees to convert from GoLite to GoGlobal.</description>
+        <externalId>false</externalId>
+        <label>GoLite to GoGlobal</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_Fees_GoLite_GoStandard__c</fullName>
         <description>Fees to convert from GoLite to GoStandard.</description>
         <externalId>false</externalId>
         <label>GoLite to GoStandard</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Fees_GoStandard_GoGlobal__c</fullName>
+        <description>Fees to convert from GoStandard to GoGlobal.</description>
+        <externalId>false</externalId>
+        <label>GoStandard to GoGlobal</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>

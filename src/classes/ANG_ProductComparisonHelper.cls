@@ -54,7 +54,7 @@ public with sharing class ANG_ProductComparisonHelper {
 										    	ANG_HE_Application_Registration_Fees__c, ANG_HE_AnnualFees_Small_Agents__c, ANG_HE_AnnualFees_Medium_Agents__c,
 										    	ANG_HE_AnnualFees_Large_Agents__c, ANG_AE_Application_Registration_Fees__c, ANG_AE_Fees_First_10_locations__c,
 										    	ANG_AE_Fees_Next_15_Locations__c, ANG_AE_Fees_Additional_Locations__c,
-										    	ANG_Fees_GoStandard_GoLite__c, ANG_Fees_GoLite_GoStandard__c,
+										    	ANG_Fees_GoStandard_GoLite__c, ANG_Fees_GoLite_GoStandard__c, ANG_Fees_GoGlobal_GoLite__c, ANG_Fees_GoGlobal_GoStandard__c, ANG_Fees_GoLite_GoGlobal__c, ANG_Fees_GoStandard_GoGlobal__c,
 	    									    (select id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c, Order__c from Product_BOM__r ORDER BY Order__c)
 	    								  from Product2 where id in:setProdId];
 	    		
@@ -102,7 +102,11 @@ public with sharing class ANG_ProductComparisonHelper {
 														       prod.ANG_AE_Fees_Next_15_Locations__c,
 														       prod.ANG_AE_Fees_Additional_Locations__c,
 														       prod.ANG_Fees_GoStandard_GoLite__c,
-														       prod.ANG_Fees_GoLite_GoStandard__c)
+														       prod.ANG_Fees_GoLite_GoStandard__c,
+														       prod.ANG_Fees_GoGlobal_GoLite__c,
+														       prod.ANG_Fees_GoGlobal_GoStandard__c, 
+														       prod.ANG_Fees_GoLite_GoGlobal__c, 
+														       prod.ANG_Fees_GoStandard_GoGlobal__c)
     												  ));
     					}
 
@@ -213,6 +217,10 @@ public with sharing class ANG_ProductComparisonHelper {
 
 	    public String Fees_GoStandard_GoLite {get; set;}
 	    public String Fees_GoLite_GoStandard {get; set;}
+	    public String Fees_GoGlobal_GoLite {get; set;}
+	    public String Fees_GoGlobal_GoStandard {get; set;}
+	    public String Fees_GoLite_GoGlobal {get; set;}
+	    public String Fees_GoStandard_GoGlobal {get; set;}
 
 	    public String ConversionFees {get; set;}
 	    public String ConversionFeesLabel {get; set;}
@@ -220,7 +228,8 @@ public with sharing class ANG_ProductComparisonHelper {
 
     	public Fees(String HE_Annual_Fees, String AE_Annual_Fees, String HE_Application_Registration_Fees, String HE_AnnualFees_Small_Agents, String HE_AnnualFees_Medium_Agents, String HE_AnnualFees_Large_Agents,
     			    String AE_Application_Registration_Fees, String AE_Fees_First_10_locations, String AE_Fees_Next_15_Locations, String AE_Fees_Additional_Locations,
-    			    String Fees_GoStandard_GoLite, String Fees_GoLite_GoStandard) {
+    			    String Fees_GoStandard_GoLite, String Fees_GoLite_GoStandard, String Fees_GoGlobal_GoLite,
+					String Fees_GoGlobal_GoStandard, String Fees_GoLite_GoGlobal, String Fees_GoStandard_GoGlobal) {
 
     		this.HE_Annual_Fees = HE_Annual_Fees;
 		    this.HE_Application_Registration_Fees = HE_Application_Registration_Fees;
@@ -235,20 +244,39 @@ public with sharing class ANG_ProductComparisonHelper {
 		    this.AE_Fees_Additional_Locations = AE_Fees_Additional_Locations;
 		    this.Fees_GoStandard_GoLite = Fees_GoStandard_GoLite;
 		    this.Fees_GoLite_GoStandard = Fees_GoLite_GoStandard;
+		    this.Fees_GoGlobal_GoLite = Fees_GoGlobal_GoLite;
+		    this.Fees_GoGlobal_GoStandard = Fees_GoGlobal_GoStandard;
+		    this.Fees_GoLite_GoGlobal = Fees_GoLite_GoGlobal;
+		    this.Fees_GoStandard_GoGlobal = Fees_GoStandard_GoGlobal;
 
- 			String type='Product2';
 			Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-			Schema.SObjectType leadSchema = schemaMap.get(type);
+			Schema.SObjectType leadSchema = schemaMap.get('Product2');
 			Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();		    
 
-		    if(Fees_GoStandard_GoLite != null && Fees_GoStandard_GoLite != '') {
-		    	ConversionFees = Fees_GoStandard_GoLite;		    	
+		    if (Fees_GoStandard_GoLite != null && Fees_GoStandard_GoLite != '') {
+		    	ConversionFees = Fees_GoStandard_GoLite;
 		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoStandard_GoLite__c').getDescribe().getLabel();
 		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoStandardTooltip;
-		    } else if(Fees_GoLite_GoStandard != null && Fees_GoLite_GoStandard != '') {
-		    	ConversionFees = Fees_GoLite_GoStandard;		    	
+		    } else if (Fees_GoLite_GoStandard != null && Fees_GoLite_GoStandard != '') {
+		    	ConversionFees = Fees_GoLite_GoStandard;
 		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoLite_GoStandard__c').getDescribe().getLabel();
 		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoLiteTooltip;
+		    } else if (Fees_GoGlobal_GoLite != null && Fees_GoGlobal_GoLite != '') {
+		    	ConversionFees = Fees_GoGlobal_GoLite;
+		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoGlobal_GoLite__c').getDescribe().getLabel();
+		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoGlobalTooltip;
+		    } else if (Fees_GoGlobal_GoStandard != null && Fees_GoGlobal_GoStandard != '') {
+		    	ConversionFees = Fees_GoGlobal_GoStandard;
+		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoGlobal_GoStandard__c').getDescribe().getLabel();
+		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoGlobalTooltip;
+		    } else if (Fees_GoLite_GoGlobal != null && Fees_GoLite_GoGlobal != '') {
+		    	ConversionFees = Fees_GoLite_GoGlobal;
+		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoLite_GoGlobal__c').getDescribe().getLabel();
+		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoLiteTooltip;
+		    } else if (Fees_GoStandard_GoGlobal != null && Fees_GoStandard_GoGlobal != '') {
+		    	ConversionFees = Fees_GoStandard_GoGlobal;
+		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoStandard_GoGlobal__c').getDescribe().getLabel();
+		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoStandardTooltip;
 		    }
     	}
     }
@@ -306,6 +334,8 @@ public with sharing class ANG_ProductComparisonHelper {
     		return 'New HE standard - Standard with Cash';
     	} else if (key == Label.ANG_ISSP_ProductStandardAccreditationWithNoCash) {
     		return 'New HE lite - Standard no Cash';
+    	} else if (key == Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry) {
+    		return 'New HE global - Standard ??';
     	} else {
     		return '';
     	}
@@ -316,6 +346,8 @@ public with sharing class ANG_ProductComparisonHelper {
     		return AMS_Utils.ACCREDITATIONMODEL_CASH;
     	} else if (key == Label.ANG_ISSP_ProductStandardAccreditationWithNoCash) {
     		return AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+    	} else if (key == Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry) {
+    		return AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
     	} else {
     		return '';
     	}
