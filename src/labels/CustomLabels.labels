@@ -18150,6 +18150,22 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Review / STDS Removal / Notice of Termination</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_STATUS_CASHNOCOMMISSION</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DEFAULT/SUSPENSION</shortDescription>
+        <value>Default / Suspension</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_STATUS_CASHWITHCOMMISSION</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>REVIEW/STDS REMOVAL/NOTICE OF TERMINATION</shortDescription>
+        <value>Review / STDS Removal / Notice of Termination</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_STATUS_TERMINATED</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
