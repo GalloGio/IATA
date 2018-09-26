@@ -222,6 +222,17 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>ANG_Change_Entity_Location__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Field related with the scenario of an accredited agency relocating in a different BSP.</description>
+        <externalId>false</externalId>
+        <label>Change of Entity Location</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_FA_Opt_out__c</fullName>
         <description>Financial Assessment opt-out flag for Newgen - this means if the Agent opted out from Financial Review.</description>
         <externalId>false</externalId>

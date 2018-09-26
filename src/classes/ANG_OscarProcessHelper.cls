@@ -701,15 +701,15 @@ global class ANG_OscarProcessHelper {
 
 		Set<AgencyAuthorizationOBject> accountsChanged = new Set<AgencyAuthorizationOBject>();
 
-    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts];
+    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and (ANG_FormOfPayment_ID__c = 'CA' or ANG_FormOfPayment_ID__c = 'CC')];
     	List<Agency_Authorization__c> aaLstToUpdate = new List<Agency_Authorization__c>();
 
 		Map<Id,AgencyAuthorizationOBject> accountsAA = new Map<Id,AgencyAuthorizationOBject>();
 
-		AgencyAuthorizationOBject aaObject;
-
 		for(Agency_Authorization__c aa: aaLst){
 			
+			AgencyAuthorizationOBject aaObject;
+
 			if(accountsAA.get(aa.Account__c) == null)
 				aaObject = new AgencyAuthorizationOBject(aa.Account__c);
 			else
@@ -739,20 +739,22 @@ global class ANG_OscarProcessHelper {
 
 		ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject;
 
-		for(AgencyAuthorizationOBject aaOject: accountsAA.values()){
+		for(AgencyAuthorizationOBject aaOjectToAnalyze: accountsAA.values()){
 			
-			matrixObject = matrixAAProcessMap.get(aaObject.oldCA+aaObject.oldCC);
+			matrixObject = matrixAAProcessMap.get(aaOjectToAnalyze.oldCA+aaOjectToAnalyze.oldCC);
 
-			aaOject.addCashValue(matrixObject.Cash_after__c, matrixObject.Change_Code__c);
-			aaOject.addCreditCardValue(matrixObject.Credit_Card_after__c, matrixObject.Change_Code__c);
+			System.debug('matrixObject is ' + matrixObject);
+
+			aaOjectToAnalyze.addCashValue(matrixObject.Cash_after__c, matrixObject.Change_Code__c);
+			aaOjectToAnalyze.addCreditCardValue(matrixObject.Credit_Card_after__c, matrixObject.Change_Code__c);
 			
-			if(aaObject.changedCA)
-				aaLstToUpdate.add(aaObject.cashAA);
-			if(aaObject.changedCC)
-				aaLstToUpdate.add(aaObject.creditCardAA);
+			if(aaOjectToAnalyze.changedCA)
+				aaLstToUpdate.add(aaOjectToAnalyze.cashAA);
+			if(aaOjectToAnalyze.changedCC)
+				aaLstToUpdate.add(aaOjectToAnalyze.creditCardAA);
 
-			if(aaObject.changedCA || aaObject.changedCC)
-				accountsChanged.add(aaObject);				
+			if(aaOjectToAnalyze.changedCA || aaOjectToAnalyze.changedCC)
+				accountsChanged.add(aaOjectToAnalyze);				
 		}
 
 				
