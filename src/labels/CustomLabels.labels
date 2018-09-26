@@ -1033,35 +1033,35 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</shortDescription>
-        <value>Please read this</value>
+        <value>You can access your IATA EasyPay account from the</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</shortDescription>
-        <value>FAQ</value>
+        <value>IATA Customer Service Portal</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</shortDescription>
-        <value>to learn more on how to manage your EasyPay account and get started.</value>
+        <value>at any time. Your colleagues can now also request access to your newly opened account.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</shortDescription>
-        <value>http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US</value>
+        <value>https://portal.iata.org/ISSP_Login</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</shortDescription>
-        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &amp;lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&amp;gt;FAQ&amp;lt;/a&amp;gt; above describes how you can manage user access.</value>
+        <value>Please refer to the FAQ/Help section on the IATA EasyPay portal for further information on how to manage your EasyPay account.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</fullName>
@@ -1069,10 +1069,14 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</shortDescription>
         <value>Congratulations on the opening of your new IATA EasyPay account.
-        Please follow this article that describes how to manage your EasyPay account and the initial steps in order to transfer funds so that you can start issuing EasyPay tickets.
-        Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The article above describes how you can manage user access.
-        Thank you,
-        IATA Customer Service</value>
+
+You can access your IATA EasyPay account from the IATA Customer Service Portal&lt;https://portal.iata.org/ISSP_Login&gt; at any time.
+
+Your colleagues can now also request access to your newly opened account.
+Please refer to the FAQ/Help section on the IATA EasyPay portal for further information on how to manage your EasyPay account.
+
+Thank you,
+IATA Customer Service</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ConfirmRequestIEP_1</fullName>
