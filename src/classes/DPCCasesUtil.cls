@@ -388,11 +388,7 @@ public without sharing class DPCCasesUtil {
                 // fill the total time values from the case - will be used for the calculations in the next milestones
                 cm.Total_Time_Escalated_Externally__c = c.Time_Escalated_Externally__c;
                 cm.Total_Time_Escalated_Internally__c = c.Time_Escalated__c;
-                cm.Total_Time_With_Support__c = c.Time_With_Support__c;
-                
-                // MOVED INSERT BELOW
-                //lstNewMilestones.add(cm);
-                
+                cm.Total_Time_With_Support__c = c.Time_With_Support__c;                
                 
                 // Check if any milestone was skipped between the current one and the previous milestone. If so create them with 0 time spent and total times the same as the previous.
                 // Only do this when skipping forward (e.g. when jumping from 3.0 to 8.0, but not when going from 8.0 to 3.0)

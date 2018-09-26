@@ -32,12 +32,10 @@ public with sharing class IFAP_BusinessRules {
      */
     public static boolean isCountryValid(Case theCase, map<id, Account> accountMap) {
 
-
         boolean isValid = false;
 
         // try to find the country base on the Billing country
         try {
-
             IATA_ISO_Country__c[] associatedCountry = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{accountMap.get(theCase.id).BillingCountry});
 
             // the country is valid if the country was found
@@ -46,9 +44,7 @@ public with sharing class IFAP_BusinessRules {
         } catch (Exception ex) {
 
         }
-
-
-        System.debug('** Is country valid ' + isValid);
+        System.debug('____ [cls IFAP_BusinessRules - isCountryValid: Is country valid' + isValid + ']');
         return isValid;
     }
 
@@ -62,7 +58,8 @@ public with sharing class IFAP_BusinessRules {
         try {
             // the Agent Type is valid if it equals one of the two below values
             isValid = (theCase.IFAP_Agent_Type__c != null
-                     && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associate' || theCase.IFAP_Agent_Type__c == 'Import Agent'));
+                     && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' || theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' 
+                        || theCase.IFAP_Agent_Type__c == 'CASS Associate' || theCase.IFAP_Agent_Type__c == 'Import Agent'));
         } catch (Exception ex) {
 
         }
@@ -192,113 +189,141 @@ public with sharing class IFAP_BusinessRules {
         System.debug('created cases : ' + cBatch.caseList);
     }
 
-    public static Boolean IsStatusCanBeSelected(Boolean isOnCaseCreation, Case UpdatedCase, Case OldCase, Profile currentUserProfile, Boolean isAuthorizedUser) {
+    public static Map<ID, Boolean> IsStatusCanBeSelected(Boolean isOnCaseCreation, List<Case> UpdatedCases, Map<ID, Case> OldCases, Profile currentUserProfile, Boolean isAuthorizedUser) {
 
-        String caseStatus = UpdatedCase.Status;
+        Map<ID, Boolean> mapCaseStatusCanBeSelected = new Map<ID, Boolean>();
+        List<Case> caseList = new List<Case>();
 
-        //System Administrator: Has permission to change to any status.
-        if (currentUserProfile.Name.toLowerCase().contains('system administrator')) {
-            system.debug('*** ADMIN BYPASS ***');
-            return true;
-        }
+        for(Case updateCase : UpdatedCases){
+            String caseStatus = updateCase.Status;
 
-        //Portal users can only change the case status using the button Confirm Submission of Documents to IATA.
-        //Status change coming from these users should always be allowed.
-        if (currentUserProfile.Name == 'ISS Portal Agency Delegated Admin User' || currentUserProfile.Name == 'ISS Portal Agency User (Partner)'  ) {
-            return true;
-        }
-
-        if (isOnCaseCreation) {
-
-            //initial status of the case must be one of the following
-            if (caseStatus == AGENT_NOTIFIED_EMAIL || caseStatus == AGENT_NOTIFIED_MAIL || caseStatus == AGENT_TO_BE_NOTIFIED) {
-                system.debug('** checking initial case status for agent notified email/mail or agent to be notified ');
-                return true;
+            //System Administrator: Has permission to change to any status.
+            if (currentUserProfile.Name.toLowerCase().contains('system administrator')) {
+                system.debug('*** ADMIN BYPASS ***');
+                mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                continue;
             }
 
-        } else {
-
-            String userIdsAllowedToBypass = UtilityCS__c.getInstance('IFAP Bypass Rules').value__c;
-
-            if (userIdsAllowedToBypass != null) {
-                Set<String> aux = new Set<String>(userIdsAllowedToBypass.split(',', 0));
-                if (aux.contains(UserInfo.getUserId()))
-                    return true;
+            //Portal users can only change the case status using the button Confirm Submission of Documents to IATA.
+            //Status change coming from these users should always be allowed.
+            if (currentUserProfile.Name == 'ISS Portal Agency Delegated Admin User' || currentUserProfile.Name == 'ISS Portal Agency User (Partner)') {
+                mapCaseStatusCanBeSelected.put(updateCase.id, true); 
+                continue;
             }
 
-            String oldCaseStatus = OldCase.Status;
-            //from status Action Needed the status can always be changed to the previous status
-            if (oldCaseStatus == ACTION_NEEDED && caseStatus != FINANCIAL_STATEMENTS_UPLOADED) {
-                // get case history
-                List <CaseHistory> caseH = [SELECT Id, CaseId, Field, CreatedById, CreatedDate, IsDeleted, NewValue, OldValue FROM CaseHistory where caseid = : UpdatedCase.ID  and field = 'Status' order by CreatedDate desc];
+            if (isOnCaseCreation) {
 
-                // we only let the user select the previous status
-                if (caseH.Size() > 0 && caseH[0].OldValue == caseStatus)
-                    return true;
+                //initial status of the case must be one of the following
+                if (caseStatus == AGENT_NOTIFIED_EMAIL || caseStatus == AGENT_NOTIFIED_MAIL || caseStatus == AGENT_TO_BE_NOTIFIED) {
+                    system.debug('** checking initial case status for agent notified email/mail or agent to be notified ');
+                    mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                    continue;
+                }
 
-            }
+            } else {
 
-            if (caseStatus == CLOSEDOPTOUT)
-                    return true;
+                String userIdsAllowedToBypass = UtilityCS__c.getInstance('IFAP Bypass Rules').value__c;
 
-            if (caseStatus == AGENT_NOTIFIED_EMAIL)
-                if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_MAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED)
-                    return true;
+                if (userIdsAllowedToBypass != null) {
+                    Set<String> aux = new Set<String>(userIdsAllowedToBypass.split(',', 0));
+                    if (aux.contains(UserInfo.getUserId())){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true); 
+                        continue;
+                    }
+                }
+                String oldCaseStatus = OldCases.get(updateCase.ID).Status;
+                //from status Action Needed the status can always be changed to the previous status
+                if (oldCaseStatus == ACTION_NEEDED && caseStatus != FINANCIAL_STATEMENTS_UPLOADED){
+                    caseList.add(updateCase); 
+                    continue;
+                }
+                if (caseStatus == CLOSEDOPTOUT){
+                    mapCaseStatusCanBeSelected.put(updateCase.id, true); 
+                    continue;
+                }
 
-            if (caseStatus == AGENT_NOTIFIED_MAIL)
-                if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_EMAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED)
-                    return true;
+                if (caseStatus == AGENT_NOTIFIED_EMAIL)
+                    if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_MAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
 
-            if (caseStatus ==  AGENT_TO_BE_NOTIFIED)
-                if (oldCaseStatus == ACTION_NEEDED)
-                    return true;
+                if (caseStatus == AGENT_NOTIFIED_MAIL)
+                    if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_EMAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                    
+                if (caseStatus ==  AGENT_TO_BE_NOTIFIED)
+                    if (oldCaseStatus == ACTION_NEEDED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                if (caseStatus == ASSESSMENT_PERFORMED) {
+                    if (oldCaseStatus == QI_REJECTED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                    //special situation only for authorized users
+                    if (isAuthorizedUser && (oldCaseStatus == REOPENED || oldCaseStatus == CLOSED)){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                }
 
-            if (caseStatus == ASSESSMENT_PERFORMED) {
-                if (oldCaseStatus == QI_REJECTED)
-                    return true;
+                if (caseStatus == CLOSED){
+                    //changing status to Closed is handled in the existing validation rule
+                    mapCaseStatusCanBeSelected.put(updateCase.id, false);
+                    continue;
+                }
+                if (caseStatus == FS_PROVIDED)
+                    if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == FS_REJECTED || oldCaseStatus == FS_REQUESTED || oldCaseStatus == QI_REJECTED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                if (caseStatus == FS_REJECTED)
+                    if (oldCaseStatus == FS_REQUESTED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                if (caseStatus == FS_REQUESTED) {
+                    if (oldCaseStatus == ASSESSMENT_PERFORMED || oldCaseStatus == FS_REJECTED || oldCaseStatus == QI_REJECTED || oldCaseStatus == QI_REQUEST_APPROVED || oldCaseStatus == QI_REQUESTED || oldCaseStatus == ACTION_NEEDED)
+                        if (updateCase.Financial_Review_Result__c != null && Pattern.matches('Satisfactory - New Financial Security|Satisfactory - Update Financial Security|Unsatisfactory - New Financial Security|Unsatisfactory - Update Financial Security', updateCase.Financial_Review_Result__c)
+                                && updateCase.Financial_Security_Amount__c != null && updateCase.Financial_Security_Currency__c != null  && updateCase.FS_Letter_Sent__c == true){
+                            mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                            continue;
+                        }
+                }
 
-                //special situation only for authorized users
-                if (isAuthorizedUser && (oldCaseStatus == REOPENED || oldCaseStatus == CLOSED))
-                    return true;
-
-            }
-
-            if (caseStatus == CLOSED)
-                //changing status to Closed is handled in the existing validation rule
-                return false;
-
-            if (caseStatus == FS_PROVIDED)
-                if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == FS_REJECTED || oldCaseStatus == FS_REQUESTED || oldCaseStatus == QI_REJECTED)
-                    return true;
-
-            if (caseStatus == FS_REJECTED)
-                if (oldCaseStatus == FS_REQUESTED)
-                    return true;
-
-            if (caseStatus == FS_REQUESTED) {
-                if (oldCaseStatus == ASSESSMENT_PERFORMED || oldCaseStatus == FS_REJECTED || oldCaseStatus == QI_REJECTED || oldCaseStatus == QI_REQUEST_APPROVED || oldCaseStatus == QI_REQUESTED || oldCaseStatus == ACTION_NEEDED)
-                    if (UpdatedCase.Financial_Review_Result__c != null && Pattern.matches('Satisfactory - New Financial Security|Satisfactory - Update Financial Security|Unsatisfactory - New Financial Security|Unsatisfactory - Update Financial Security', UpdatedCase.Financial_Review_Result__c)
-                            && UpdatedCase.Financial_Security_Amount__c != null && UpdatedCase.Financial_Security_Currency__c != null  && UpdatedCase.FS_Letter_Sent__c == true)
-                        return true;
-            }
-
-            if (caseStatus == QI_REQUEST_PENDING_APPROVAL)
-                if (oldCaseStatus == ASSESSMENT_PERFORMED || oldCaseStatus == FS_REQUESTED || oldCaseStatus == SCF || oldCaseStatus == QI_REJECTED)
-                    return true;
-
-            if (caseStatus == SCF)
-                if (oldCaseStatus == QI_REJECTED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED)
-                    return true;
-
-            if(caseStatus == QI_REQUEST_APPROVED || caseStatus == QI_REJECTED){ //TD - INC276565
-                if(oldCaseStatus == QI_REQUEST_PENDING_APPROVAL){
-                    return true;
+                if (caseStatus == QI_REQUEST_PENDING_APPROVAL)
+                    if (oldCaseStatus == ASSESSMENT_PERFORMED || oldCaseStatus == FS_REQUESTED || oldCaseStatus == SCF || oldCaseStatus == QI_REJECTED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                if (caseStatus == SCF)
+                    if (oldCaseStatus == QI_REJECTED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
+                if(caseStatus == QI_REQUEST_APPROVED || caseStatus == QI_REJECTED){
+                    if(oldCaseStatus == QI_REQUEST_PENDING_APPROVAL){
+                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
+                        continue;
+                    }
                 }
             }
+            /*// default value is false ...*/
+            System.debug('** Default Response -- This status change is not valid! **');
         }
-        /*// default value is false ...*/
-        System.debug('** Default Response -- This status change is not valid! **');
-        return false;
+
+        if(!caseList.isEmpty()){
+            // get case history
+            for(CaseHistory caseH: [SELECT Id, CaseId, Field, CreatedById, CreatedDate, IsDeleted, NewValue, OldValue 
+                                    FROM CaseHistory WHERE caseid IN :caseList AND field = 'Status' ORDER BY CreatedDate DESC]){
+                mapCaseStatusCanBeSelected.put(caseH.id, true);
+            }
+        }
+        return mapCaseStatusCanBeSelected;
     }
 
 
@@ -341,7 +366,7 @@ public with sharing class IFAP_BusinessRules {
         /*// only allow saving if status = FS Requested, FS Provided or Closed when the check boxes are checked*/
         if (!currentUserProfile.Name.toLowerCase().contains('system administrator')) {
 
-            if (  (UpdatedCase.Agent_Name_chkbx__c && UpdatedCase.Financial_Security_Amount_chkbx__c && UpdatedCase.Financial_Security_Currency_chkbx__c && UpdatedCase.Financial_Security_Type_chkbx__c && UpdatedCase.Financial_Security_Template_chkbx__c && UpdatedCase.Financial_Security_Provider_chkbx__c && UpdatedCase.Expiry_Date_chkbx__c )
+            if ((UpdatedCase.Agent_Name_chkbx__c && UpdatedCase.Financial_Security_Amount_chkbx__c && UpdatedCase.Financial_Security_Currency_chkbx__c && UpdatedCase.Financial_Security_Type_chkbx__c && UpdatedCase.Financial_Security_Template_chkbx__c && UpdatedCase.Financial_Security_Provider_chkbx__c && UpdatedCase.Expiry_Date_chkbx__c )
                     && ((UpdatedCase.Status == 'Financial Security Requested' && UpdatedCase.FS_Submitted_Date__c != null) || (UpdatedCase.Status == 'Financial Security Provided' && UpdatedCase.FS_Submitted_Date__c != null)  || UpdatedCase.Status  == 'Closed' || UpdatedCase.Status == 'Assessment Performed' || UpdatedCase.Status == 'Assessment Cancelled' || UpdatedCase.Status == 'Quality Issue Request Pending Approval' || UpdatedCase.Status == 'Quality Issue Request Approved' || UpdatedCase.Status == 'Quality Issue Rejected')) {
                 return false;
             }
@@ -359,35 +384,34 @@ public with sharing class IFAP_BusinessRules {
         return false;
     }
 
-    public static void updateParentSAAMCase(Case previousIFAPCase, Case updatedIFAPCase) {
+    public static void updateParentSAAMCase(Case previousIFAPCase, Case updatedIFAPCase, Case parentSAAMCase) {
         Boolean mustUpdateSAAMCase = false;
-        List<Case> parentSAAMCase = [select c.Financial_Assessment_requested__c, c.Financial_Assessment_received__c, c.Financial_Assessment_deadline__c, c.Financial_Assessment_compliant__c from Case c where c.Id = :updatedIFAPCase.ParentId];
-        if (parentSAAMCase == null || parentSAAMCase.size() == 0) {
+        if (parentSAAMCase == null) {
             updatedIFAPCase.addError('Could not find parent SAAM case for Case ' + updatedIFAPCase.CaseNumber + '.');
             return;
         }
 
         // check if the FA Submitted Date has changed
         if (previousIFAPCase.Submitted_Date__c <> updatedIFAPCase.Submitted_Date__c) {
-            parentSAAMCase[0].Financial_Assessment_requested__c = updatedIFAPCase.Submitted_Date__c;
+            parentSAAMCase.Financial_Assessment_requested__c = updatedIFAPCase.Submitted_Date__c;
             // requirements says 3 working days... business proposed 5 calendar days
-            parentSAAMCase[0].Financial_Assessment_deadline__c = updatedIFAPCase.Submitted_Date__c <> null ? updatedIFAPCase.Submitted_Date__c.addDays(5) : null;
+            parentSAAMCase.Financial_Assessment_deadline__c = updatedIFAPCase.Submitted_Date__c <> null ? updatedIFAPCase.Submitted_Date__c.addDays(5) : null;
             mustUpdateSAAMCase = true;
         }
 
         // check if the Assessment Performed Date has changed
         if (previousIFAPCase.Assessment_Performed_Date__c <> updatedIFAPCase.Assessment_Performed_Date__c) {
-            parentSAAMCase[0].Financial_Assessment_received__c = updatedIFAPCase.Assessment_Performed_Date__c;
+            parentSAAMCase.Financial_Assessment_received__c = updatedIFAPCase.Assessment_Performed_Date__c;
             mustUpdateSAAMCase = true;
         }
 
         // check if the Financial Review Result has changed
         if (previousIFAPCase.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c) {
             if (updatedIFAPCase.Financial_Review_Result__c.startsWith('Satisfactory')) {
-                parentSAAMCase[0].Financial_Assessment_compliant__c = 'Satisfactory';
+                parentSAAMCase.Financial_Assessment_compliant__c = 'Satisfactory';
                 mustUpdateSAAMCase = true;
             } else if (updatedIFAPCase.Financial_Review_Result__c.startsWith('Unsatisfactory')) {
-                parentSAAMCase[0].Financial_Assessment_compliant__c = 'Unsatisfactory';
+                parentSAAMCase.Financial_Assessment_compliant__c = 'Unsatisfactory';
                 mustUpdateSAAMCase = true;
             }
         }

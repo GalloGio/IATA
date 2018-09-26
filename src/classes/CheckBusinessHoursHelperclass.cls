@@ -62,7 +62,7 @@ public with sharing class CheckBusinessHoursHelperclass {
         for (Case newCaseObj: listNewCases){
             if (newCaseObj.CaseArea__c != null && newCaseObj.CaseArea__c == Label.SIS && newCaseObj.Status == Label.Escalated && (newCaseObj.Assigned_To__c != Label.SIS_Help_Desk_Agent 
                   && newCaseObj.Assigned_To__c != Label.SIS_Operations && newCaseObj.Assigned_To__c != Label.SIS_L2_Customer_Support)){
-                //modified July 2014 to lower SOQL queries
+                
                 Account theAccount = CBHAccountMap.get(newCaseObj.Assigned_To__c);
                 if (theAccount <> null){
                     system.debug('\nnewCaseObj.Assigned_To__c:_' + newCaseObj.Assigned_To__c + '_');

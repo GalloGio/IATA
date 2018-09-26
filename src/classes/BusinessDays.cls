@@ -8,7 +8,7 @@ public class BusinessDays {
 
     public static boolean isAllowedRunTwice = False;
 
-    public static   map<Id, Date>  BusinessDaysPerCaseIdCalc(map<id, Case> triggerNewMap) {
+    public static map<Id, Date> BusinessDaysPerCaseIdCalc(map<id, Case> triggerNewMap) {
 
         map<Id, Date> nextBusinessDay = new map<Id, Date>();
 
@@ -28,36 +28,26 @@ public class BusinessDays {
 
                 targetTime = Datetime.newInstance(year, month, day, 10, 30, 0);
 
-
                 NextDate = BusinessHours.nextStartDate(c.BusinessHoursId, targetTime);
                 dateTime businessNextDayAfter;
                 businessNextDayAfter = NextDate;
 
                 do {
                     businessNextDayAfter = BusinessHours.add(c.BusinessHoursId, businessNextDayAfter, 3600000); // we add one hour until we reach the other Biz day
-
                 } while (businessNextDayAfter.day() ==  NextDate.day());
 
                 returnDateTime = compareThisDates(targetTime, NextDate) ? businessNextDayAfter : NextDate; // 1 day in milliseconds
-
                 returnDate = Date.newInstance(returnDatetime.year(), returnDatetime.month(), returnDatetime.day());
-
                 nextBusinessDay.put(CaseID, returnDate);
-
             }
         }
-
-
         return nextBusinessDay;
-
     }
 
-
-    public static  boolean compareThisDates(dateTime date1, dateTime date2) {
+    public static boolean compareThisDates(dateTime date1, dateTime date2) {
 
         if (date1.year() == date2.year() && date1.month() == date2.month() && date1.day() == date2.day() )
             return true;
-
         return false;
     }
 
@@ -75,13 +65,11 @@ public class BusinessDays {
 
         }
         return  TriggerNewMap;
-
     }
 
     private static final set<String> REOPENINGREASONS = new set<string> {'new query', 'thank you', 'no action'};
 
     public static void calculateTheKpis( set<Id> casesIdSoCalculate , map<Id, Case> TriggerNewMap, map<Id, Case> TriggerOldMap) {
-
 
         // TO DO THIS GOES TO ANOTHER CLASS.....
         BusinessHours defaultHours = [select Id from BusinessHours where IsDefault = true];
@@ -93,9 +81,7 @@ public class BusinessDays {
         //Get the stop statuses
         for (Stop_Status__c stopStatus : [Select Name, Status_Bucket__c From Stop_Status__c]) {
             stopStatusSetPerBucket.put(stopStatus.Name, stopStatus.Status_Bucket__c );
-
         }
-
 
         //Get the closed statuses (because at the point of this trigger Case.IsClosed won't be set yet)
         Set<String> closedStatusSet = new Set<String>();
@@ -110,14 +96,6 @@ public class BusinessDays {
 
             Case updatedCase = TriggerNewMap.get(caseID);
             Case oldCase = TriggerOldMap.get(caseID);
-
-            //if(updatedCase.BusinessHoursId <> oldCase.BusinessHoursId){
-            
-            
-            /*dateTime originalCreated = updatedCase.CreatedDate;
-            dateTime createDatePlusOne = updatedCase.CreatedDate.addHours(1);
-            dateTime result  =   businessHours.nextStartDate( updatedCase.businessHoursId, createDatePlusOne);
-            updatedCase.First_Business_Day__c   = createDatePlusOne.day() == result.day() ?  originalCreated : result;*/
 
             dateTime originalCreated = updatedCase.CreatedDate;
             dateTime createdDatePlusOne = updatedCase.CreatedDate.addHours(1);
@@ -136,23 +114,10 @@ public class BusinessDays {
             else {
                 updatedCase.First_Business_Day__c =  businessHours.nextStartDate( updatedCase.businessHoursId, createdDatePlusOne);
             }
-
-
-            //}
-            /*    if(updatedCase.First_Business_Day__c.hour() == updatedCase.createdDate.addHours(1).hour())
-                throw new transformationException('updatedCase.First_Business_Day__c' +  updatedCase.First_Business_Day__c
-                                                    +'createDatePlusOne.day()' +createDatePlusOne.day()
-                                                    +'result.day()' +result.day()
-                                                     +'result     ' +      result
-                                                    +'originalCreated ' +originalCreated);*/
-
-
             //OK, the status has changed or the businessHoursChanged
 
-            if (
-                !oldCase.IsClosed
-                ||
-                (oldCase.IsClosed && updatedCase.Reopening_reason__c <>  null && !REOPENINGREASONS.contains(updatedCase.Reopening_reason__c) ) // as required
+            if (!oldCase.IsClosed
+                || (oldCase.IsClosed && updatedCase.Reopening_reason__c <>  null && !REOPENINGREASONS.contains(updatedCase.Reopening_reason__c) ) // as required
 
             ) {
 
@@ -197,14 +162,6 @@ public class BusinessDays {
             }
 
             updatedCase.Last_Status_Change__c = System.now();
-            //throw new transformationException('  asdsasd  ' + updatedCase.Last_Status_Change__c  +    '  updatedCase.First_closure_date__c  ' + updatedCase.First_closure_date__c );
-
-            /*if (updatedCase.First_closure_date__c <> null ) {
-                updatedCase.ClosedSameDay__c =  compareThisDates( updatedCase.First_Business_Day__c, updatedCase.First_closure_date__c) || (updatedCase.First_closure_date__c < updatedCase.First_Business_Day__c)  ? 'Yes' : 'No';
-                // throw new transformationException('updatedCase.First_Business_Day__c    '+ updatedCase.First_Business_Day__c
-                //                                     +   '   updatedCase.First_closure_date__c    ' + updatedCase.First_closure_date__c);
-            }*/
-
         }
     }
 

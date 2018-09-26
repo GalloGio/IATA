@@ -632,32 +632,20 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		/*trgParentCaseUpdate Trigger.isInsert*/
 		if(trgParentCaseUpdate){
 			system.debug('trgParentCaseUpdate Trigger.isInsert');
-			// Created Date - 16-12-2010 
-			//  TO FUTURE REVIEWER....IT WILL BE NICE TO FIND OUT WHY THIS TRIGGER WAS DEVELOPED AND WHY THE CONDITION ON LINE 18 FOR ALL CASES BUT IFAP
-			// PLEASE REVIEW IT...
+			Set<ID> CaseIdsNew = new Set<ID>();
 			for(Case c: trigger.new){
-				if(c.parentId != null && 
-					!(c.RecordTypeId == IFAPcaseRecordTypeID || c.Reason1__c == 'FA/ FS Non-Compliance') 
-					&& ( c.RecordTypeId != FSMcaseRecordTypeID)){
-					IFAPcases.add(c);
+				if(c.parentId != null && c.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE')
+					 && c.Reason1__c != 'FA/ FS Non-Compliance' && c.Status == 'Closed'){
+					CaseIdsNew.add(c.Id);
 				}
 			}
-			if(!IFAPcases.isempty()){    
+			if(!CaseIdsNew.isempty()){    
 				if(futureLimit < 10){ 
 					if (!FutureProcessorControl.inFutureContext && !System.isBatch()){  // do not execute if in a Batch context - added 2014-12-10 Constantin Buzduga
 						//Passing and calling the class according to the event     
-						If(Trigger.isInsert){ 
-							for(Case ObjCaseNew: IFAPcases){
-								// do not execute for IFAP cases - 2012-01-13 Alexandre McGraw
-								if (ObjCaseNew.RecordTypeId == IFAPcaseRecordTypeID)
-									continue;
-									//-------CONTROLLARE QUESTA PARTE DI CODICE--------
-									CaseIdsNew.add(ObjCaseNew.Id);
-							}
-							if(CaseIdsNew.Size() > 0){
-								clsInternalCaseDML.InternalCaseDMLMethod(CaseIdsNew, 'Insert');
-							}                           
-						}
+						if(CaseIdsNew.Size() > 0){
+							clsInternalCaseDML.InternalCaseDMLMethod(CaseIdsNew, 'Insert');
+						}                           
 					}
 				}
 			}
