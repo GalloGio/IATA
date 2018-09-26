@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>true</sorted>
+    <standardValue>
+        <fullName>Brochure</fullName>
+        <default>false</default>
+        <label>Brochure</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Commercial Kits</fullName>
+        <default>false</default>
+        <label>Commercial Kits</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email</fullName>
+        <default>false</default>
+        <label>Email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Fax</fullName>
+        <default>false</default>
+        <label>Fax</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Flyer</fullName>
+        <default>false</default>
+        <label>Flyer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Internet Ads (AdWords, etc)</fullName>
+        <default>false</default>
+        <label>Internet Ads (AdWords, etc)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Mailing</fullName>
+        <default>false</default>
+        <label>Mailing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Newsletter</fullName>
+        <default>false</default>
+        <label>Newsletter</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Promotional Items</fullName>
+        <default>false</default>
+        <label>Promotional Items</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Seminar / Conference</fullName>
+        <default>false</default>
+        <label>Seminar / Conference</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Telemarketing</fullName>
+        <default>false</default>
+        <label>Telemarketing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Webform</fullName>
+        <default>false</default>
+        <label>Webform</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Webinar</fullName>
+        <default>false</default>
+        <label>Webinar</label>
+    </standardValue>
+</StandardValueSet>

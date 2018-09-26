@@ -100,7 +100,7 @@ private class BtchGDPReplicate_tst {
 		oAccreditation1.AIMS_ID__c = oAccount1.AIMS_ID__c + 'ACC1';
 		oAccreditation1.WebStar_ID__c = null;
 		
-		oAccreditation1.Endorsed_Accredited_By__c = refTableEndorser.Id; // this is used for testing BtchGDPReplicateTerritories
+		// oAccreditation1.Endorsed_Accredited_By_Formula__c = refTableEndorser.Id; // this is used for testing BtchGDPReplicateTerritories
 		oAccreditation1.Class__c = refTableClass.Id; // this is used for testing BtchGDPReplicateTerritories
 		
 		sObjList.add(oAccreditation1);
@@ -287,7 +287,7 @@ private class BtchGDPReplicate_tst {
 		
 		List<Accreditation__c> accredall = [select Id, Name, AIMS_ID__c, Related_Account__c
 												, Related_Account__r.Name
-												, Endorsed_Accredited_By__c, Endorsed_Accredited_By__r.Code__c 
+												, Endorsed_Accredited_By_Formula__c 
 												, Class__c, Class__r.Code__c
 												from Accreditation__c
 										   		order by Id];
@@ -320,13 +320,7 @@ private class BtchGDPReplicate_tst {
 			+ '		AND LastModifiedDate < ' + batchStartTime.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
 			+ '		AND (AIMS_ID__c != null)'
 			//+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('GSA_Territory__c', 'Live') + '\''
-			+ '		AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE ' 
-					+ ' Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') ' 
-					+ ' AND ' 
-					+ ' Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') '
-					+ ' AND '
-					+ ' Related_Account__r.Id != null'
-					+ ')'
+			+ '     AND Related_Account__c IN (SELECT Id FROM Account WHERE Location_Class__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\'))'                   
 			+ '		AND Related_Accreditation__c != null '
 			;
 			
@@ -397,46 +391,41 @@ private class BtchGDPReplicate_tst {
 		System.debug('Unit Test: Finish: TestGDPReplicateScheduleAccount');
 	}
 	
-	static testMethod void TestGDPReplicateAccount() {
-		System.debug('Unit Test: Start: TestGDPReplicateAccount');
+	// static testMethod void TestGDPReplicateAccount() {
+	// 	System.debug('Unit Test: Start: TestGDPReplicateAccount');
 
 
-		Test.startTest();
+	// 	Test.startTest();
 
-		//*
-		// Account 
-		//*
-		IEC_Batch_Replication__c btchRep = IECUtil.GetBatchReplication('GDP Replicate: Account');
-		BtchGDPReplicateAccount btchProc = new BtchGDPReplicateAccount();
-		btchProc.idRecordTypeGDP = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
-		btchProc.query =
-			'SELECT AIMS_ID__c, Webstar_ID__c, GDP_Location_Type__c, Airline_Code__c, Name, TradeName__c'
-			+ '		, Email__c, Website, TTY__c, Passenger_And_Cargo__c, Incorporation_Type__c, GDP_Opt_In__c'
-			+ '		, Tax_ID_1__c, Tax_ID_2__c, BSP_CASS_Code__c, License_Number__c, Preferred_Language__c'
-			+ '		, CASS_Number_Xref__c, IATACode__c, CASS_Number__c, Ticketing_Agent_Last_Name__c'
-			+ '		, Ticketing_Agent_First_Name__c, Manager_Last_Name__c, Manager_First_Name__c'
-			+ '		, ParentId, Parent.AIMS_ID__c, Parent.Webstar_ID__c'
-			+ '	FROM Account'
-			+ '	WHERE LastModifiedDate >= ' + btchRep.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
-			+ '		AND IATACode__c != null'
-			+ '		AND ((Is_AIMS_Account__c = true AND AIMS_ID__c != null) OR Webstar_ID__c != null)'
-			+ '		AND Account.ID IN ('
-			+ '			SELECT Related_Account__c'
-			+ '			FROM Accreditation__c'
-			+ '			WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\')'
-			+ '				AND Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\')'
-			+ '				AND Related_Account__r.Id != null'
-			+ '			)'
-			+ '		AND RecordTypeId = \''
-			+ IECUtil.GetRecordTypeId('Account', 'IATA_Agency') 
-			+ '\'';
-		System.debug('SSS: SOQL Query: ' + btchProc.query);
-		Database.executeBatch(btchProc);
+	// 	//*
+	// 	// Account 
+	// 	//*
+	// 	IEC_Batch_Replication__c btchRep = IECUtil.GetBatchReplication('GDP Replicate: Account');
+	// 	BtchGDPReplicateAccount btchProc = new BtchGDPReplicateAccount();
+	// 	btchProc.idRecordTypeGDP = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
+	// 	btchProc.query =
+	// 		'SELECT AIMS_ID__c, Webstar_ID__c, GDP_Location_Type__c, Airline_Code__c, Name, TradeName__c'
+	// 		+ '		, Email__c, Website, TTY__c, Passenger_And_Cargo__c, Incorporation_Type__c, GDP_Opt_In__c'
+	// 		+ '		, Tax_ID_1__c, Tax_ID_2__c, BSP_CASS_Code__c, License_Number__c, Preferred_Language__c'
+	// 		+ '		, CASS_Number_Xref__c, IATACode__c, CASS_Number__c, Ticketing_Agent_Last_Name__c'
+	// 		+ '		, Ticketing_Agent_First_Name__c, Manager_Last_Name__c, Manager_First_Name__c'
+	// 		+ '		, ParentId, Parent.AIMS_ID__c, Parent.Webstar_ID__c'
+	// 		+ '	FROM Account'
+	// 		+ '	WHERE LastModifiedDate >= ' + btchRep.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
+	// 		+ '		AND IATACode__c != null'
+	// 		+ '		AND ((Is_AIMS_Account__c = true AND AIMS_ID__c != null) OR Webstar_ID__c != null)'
+	// 		+ '     AND Location_Class__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')'                    
+	// 		+ '		AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')'
+	// 		+ '		AND RecordTypeId = \''
+	// 		+ IECUtil.GetRecordTypeId('Account', 'IATA_Agency') 
+	// 		+ '\'';
+	// 	System.debug('SSS: SOQL Query: ' + btchProc.query);
+	// 	Database.executeBatch(btchProc);
 
-		Test.stopTest();
+	// 	Test.stopTest();
 		
-		System.debug('Unit Test: Finish: TestGDPReplicateAccount');
-	}
+	// 	System.debug('Unit Test: Finish: TestGDPReplicateAccount');
+	// }
 	
 	
 	static testMethod void TestGDPReplicateAccount2() {
@@ -527,7 +516,7 @@ private class BtchGDPReplicate_tst {
 		btchProc.dtSystemNow = btchRepAcc.Last_Modified_Date__c;
 		btchProc.query =
 			'SELECT AIMS_ID__c, WebStar_ID__c, Accreditation_ID__c, Class__c'
-			+ '		, Endorsed_Accredited_By__c, Last_change_date__c, Last_re_inspection_date__c'
+			+ '		, Endorsed_Accredited_By_Formula__c, Last_change_date__c, Last_re_inspection_date__c'
 			+ '		, Original_approval_date__c, Status__c, Date__c'
 			+ '		, Related_Account__r.AIMS_ID__c, Related_Account__r.WebStar_ID__c, Related_Account__r.IATACode__c'
 			+ '	FROM Accreditation__c'

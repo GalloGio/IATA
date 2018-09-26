@@ -21,7 +21,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ANG_Restrict_by_Agency_Sector__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Accredited_Agents_Only__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>VisibleCNS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Cannot_move_contact_between_Agencies__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -59,12 +71,18 @@
         <customButtons>Add_User_to_this_service</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>Account.ACC_NAME</fields>
+        <fields>Contact.Account_Country__c</fields>
         <fields>Contact.CNTC_FIRST_NAME</fields>
         <fields>Contact.NAME</fields>
         <fields>Right__c</fields>
+        <fields>ANG_Portal_Service_Role__c</fields>
         <fields>Account.ACC_RECORDTYPE</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Portal_Application_Right__c.Portal_Application__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>IATA_ISO_Country__c.ANG_Portal_Service__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>parkyr@iata.org</email>
     <name>CS Systems Area3 SIN&amp;BJS</name>
+    <queueMembers>
+        <users>
+            <user>saenzm@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

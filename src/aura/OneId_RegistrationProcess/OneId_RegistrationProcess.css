@@ -1,0 +1,171 @@
+.THIS.container {
+    background-color: white;
+    padding: 20px;
+}
+.THIS .bulletv2 {
+    font-size: 18px;
+    font-weight: bold;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+        height: 26px;
+        width: 26px;
+    text-align: center;
+    line-height: 26px !important;
+    margin: 0px 12px 0px;
+    border: 1px solid #0a4279;
+    color: #0a4279 !important;
+    border-radius: 25px;
+    vertical-align: middle;
+    display: block;
+    float: left;
+}
+
+.THIS .slds-accordion__section {
+    background-color: #F1F2F4;
+    margin:20px;
+}
+
+.THIS .slds-accordion__list-item {
+    border: none;
+}
+
+.THIS .category {
+   font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: -0.05rem;
+    color: #0a4279 !important;
+}
+/* For Mobile => Reduce large text for a better readness */
+@media (max-width: 600px) {
+      .THIS .category {
+       font-weight: bold;
+        font-size: 1rem;
+        letter-spacing: -0.05rem;
+    }
+
+    .THIS h1 {
+        font-size: 1.8rem !important;
+    }
+
+}
+
+.THIS .slds-accordion__summary-action:hover {  
+    background-color: #e4ebf3 !important;
+    cursor: pointer;
+}
+
+
+/************* above mine */
+/************* above mine */
+/************* above mine */
+
+
+.THIS label{
+    display: block !important;
+    /*
+    font-size: 24px;
+    font-weight:bold;*/
+}
+.THIS .required-input {
+    border-left: 0.3em solid red !important;
+    /*width: 200px;*/
+}
+
+
+
+
+.THIS select.multiple {
+    height: 100px !important;
+}
+
+.THIS #content {
+    width: 100% important;
+}
+.THIS h1 {
+    display: inline;
+}
+.THIS .headerText {
+    font-size: 120%;
+    /*width: 100%;*/
+}
+.THIS .headerDiv {
+    cursor: pointer;
+}
+
+.THIS .section {
+    background: #f0f0f0;
+    width: 100%;
+    border: 2px solid #aaa;
+}
+
+.THIS .inactive {
+    color: #e0e0e0;
+}
+.THIS .submitButton {
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0;
+    height: 3em;
+    background-color: #222;
+}
+
+
+/* fileUpload2.css is identical */
+.THIS .notUploading {
+    visibility: hidden;
+}
+
+.THIS .uploading {
+    visibility: visible;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.THIS .small-spinner {
+    height: 20px;
+    width: 20px;
+}
+
+.THIS .file {
+    margin-bottom: 5px;
+    display: block;
+}
+
+.THIS .liWrap {
+    width: 100%;
+   font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: -0.05rem;
+    display: table-cell;
+    vertical-align: text-top !important;
+}
+
+.THIS .bullet {
+    font-size: 18px;
+    font-weight: bold;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+        height: 26px;
+        width: 26px;
+    text-align: center;
+    line-height: 26px !important;
+    margin: 19px 12px 0px;
+    border: 1px solid #0a4279;
+    color: #0a4279;
+    border-radius: 25px;
+    vertical-align: middle;
+    display: block;
+    float: left;
+}
+
+.THIS .icon{
+    position: absolute;
+    right: 0;
+}

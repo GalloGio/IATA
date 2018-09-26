@@ -34,6 +34,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Region__c</fullName>
+        <description>Contains the region the chat button refers to (Europe, Africa &amp; Middle East, Americas, China &amp; North Asia, Asia &amp; Pacific)</description>
+        <externalId>false</externalId>
+        <label>Region</label>
+        <length>150</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Sectors__c</fullName>
         <description>CSV with the Account Sectors allowed to show the chat button</description>
         <externalId>false</externalId>

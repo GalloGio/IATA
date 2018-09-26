@@ -46,8 +46,8 @@
 
                     <apex:column >
                         <apex:facet name="header">{!$Label.Created_Date}</apex:facet>
-                        <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
-                            <apex:param value="{!att.createdDate}" />
+                        <apex:outputText value=" {0,date,d MMM yyyy h:mm a}">
+                            <apex:param value="{!att.createdDate+offset}" />
                         </apex:outputText>
                     </apex:column>
                 </apex:pageBlockTable>

@@ -7,6 +7,7 @@ public with sharing class IFAP_BusinessRules {
     //**POSSIBLE IFAP STATUS**//
     private static final string ACTION_NEEDED = 'Action Needed';
     private static final string AGENT_NOTIFIED_EMAIL = 'Agent Notified (Email)';
+    private static final string AGENT_NOTIFIED_TRACKED_EMAIL = 'Agent Notified (Tracked Email)';
     private static final string AGENT_NOTIFIED_MAIL = 'Agent Notified (Mail)';
     private static final string AGENT_TO_BE_NOTIFIED = 'Agent to be Notified';
     private static final string ASSESSMENT_CANCELLED = 'Assessment Cancelled';
@@ -23,6 +24,8 @@ public with sharing class IFAP_BusinessRules {
     private static final string REOPENED = 'Re-open/ed';
     private static final string SCF = 'Sanity Check Failure';
     private static final string SUBMITTED = 'Submitted';
+    private static final string CLOSEDOPTOUT = 'Closed Opt-out';
+
 
     /**
      * Validates the country of a Case's Account
@@ -83,10 +86,11 @@ public with sharing class IFAP_BusinessRules {
     public static boolean isAgentCodeValid(Case theCase, map<Id, Account> accountMap) {
 
         boolean isValid = false;
+                System.debug('theCase.id=' +theCase.id);
+                System.debug('accountMap.get(theCase.id)=' +accountMap.get(theCase.id));
 
         try {
             if (accountMap.get(theCase.id).IATACode__c != null) {
-
 
                 isValid = (accountMap.get(theCase.id).IATACode__c.length() >= 7 && accountMap.get(theCase.id).IATACode__c.length() <= 11);
                 //INC249798
@@ -185,10 +189,16 @@ public with sharing class IFAP_BusinessRules {
                 aCase.RecordTypeId = IFAPcaseRecordTypeID;
                 aCase.Origin = 'Agent Financial Review Notification';
                 aCase.BatchNumber__c = batchNumberId;
-                aCase.Status = status;
-                if ( status == 'Agent Notified (Email)'){
+                if ( status == AGENT_NOTIFIED_EMAIL){
                     aCase.Mass_Case_Creation_Email_Send__c = true;
                     aCase.FA_Letter_Sent__c = true;
+                    aCase.Status = status;
+                }
+                else if ( status == AGENT_NOTIFIED_TRACKED_EMAIL){
+                    aCase.Status = AGENT_TO_BE_NOTIFIED;
+                }
+                else{
+                    aCase.Status = status;
                 }
                 aCase.Subject = subject;
                 aCase.Description = description;
@@ -232,6 +242,8 @@ public with sharing class IFAP_BusinessRules {
         cBatch.agentsWithOpenCasesReportURL = agentsWithOpenCasesReportURL;
 
         ID batchprocessid = Database.executeBatch(cBatch, 5);
+        
+        System.debug('created cases : ' + cBatch.caseList);
     }
 
     public static Boolean CheckFinancialAssessmentContactExist(Contact theContact) {
@@ -318,6 +330,9 @@ public with sharing class IFAP_BusinessRules {
 
             }
 
+            if (caseStatus == CLOSEDOPTOUT)
+                    return true;
+
             if (caseStatus == AGENT_NOTIFIED_EMAIL)
                 if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_MAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED)
                     return true;
@@ -360,7 +375,7 @@ public with sharing class IFAP_BusinessRules {
             }
 
             if (caseStatus == QI_REQUEST_PENDING_APPROVAL)
-                if (oldCaseStatus == ASSESSMENT_PERFORMED || oldCaseStatus == FS_REQUESTED || oldCaseStatus == SCF)
+                if (oldCaseStatus == ASSESSMENT_PERFORMED || oldCaseStatus == FS_REQUESTED || oldCaseStatus == SCF || oldCaseStatus == QI_REJECTED)
                     return true;
 
             if (caseStatus == SCF)

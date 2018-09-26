@@ -2,6 +2,7 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SIS_SAP_Client_Request</customButtons>
     <customButtons>EF_Mass_Update_Material_Line_Items_in_BA</customButtons>
+    <customButtons>APXTConga4__Conga_Merge</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -107,6 +108,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EF_Client_SIS_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EF_Client_SIS_Designator__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

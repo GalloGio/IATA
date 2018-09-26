@@ -8,25 +8,14 @@ public with sharing class LogPhoneCaseController {
 	public Task newtask {get; set;}
 	public Boolean isNewTaskRequested {get; set;}
 	public String strSelectedRType {get; set;}
-	public List<SelectOption> lstRecordTypes {
-		public get {
-            List<SelectOption> options = new List<SelectOption>();
-            options.add(new SelectOption('','--None--'));
-            
-            for( String s : mapCaseRTNamePerUserRole.values()) {
-                options.add(new SelectOption(s, s));
-            }
-            
-            return options;
-        } private set;
-	}
 	
 	private map<String, String> mapCaseRTNamePerUserRole = new map<String, String>{
 				'MAD Hub' => 'Cases - Europe',
 				'China & N. Asia' => 'Cases - China & North Asia',
 				'Africa & ME' => 'Cases - Africa & Middle East',
 				'A&P' => 'Cases - Asia & Pacific',
-				'Americas' => 'Cases - Americas'};
+				'Americas' => 'Cases - Americas',
+				'IATAN' => 'Cases - Americas'};
 	
 	
 	public LogPhoneCaseController() {
@@ -139,5 +128,41 @@ public with sharing class LogPhoneCaseController {
         	system.debug(e);
         	return null;        	
         }
+    }
+    
+    public PageReference cancel() {
+        PageReference retPage = new PageReference('/' + con.Id);
+        retPage.setRedirect(true);
+        return retPage;
+    }
+    
+    public List<SelectOption> getCaseLanguageOptions(){
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('','--None--'));
+        for(Schema.PicklistEntry entry : Case.Case_Language__c.getDescribe().getPicklistValues()) {
+            options.add(new SelectOption(entry.getLabel(), entry.getValue())); 
+        }
+        return options;
+     }
+     
+     public List<SelectOption> getlstRecordTypes() {
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('','--None--'));
+        for( String s : mapCaseRTNamePerUserRole.values()) {
+            options.add(new SelectOption(s, s));
+        }
+        return options;
+	}
+
+    private static final list<String> VALID_CASE_TYPES = new list<String>{'Complaint','Compliment','General Question','Incident','Request'};
+    public List<SelectOption> getlstCaseTypes() {
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('','--None--'));
+        for(Schema.PicklistEntry entry : Case.Type.getDescribe().getPicklistValues()) {
+            if (VALID_CASE_TYPES.contains(entry.getValue())) {
+                options.add(new SelectOption(entry.getLabel(), entry.getValue())); 
+            }
+        }
+        return options;
     }
 }

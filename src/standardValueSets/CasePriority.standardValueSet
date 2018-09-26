@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Critical</fullName>
+        <default>false</default>
+        <label>Critical</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Urgent</fullName>
+        <default>false</default>
+        <label>Urgent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>High</fullName>
+        <default>false</default>
+        <label>High</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Normal</fullName>
+        <default>true</default>
+        <label>Normal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Medium</fullName>
+        <default>false</default>
+        <label>Medium</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Low</fullName>
+        <default>false</default>
+        <label>Low</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Undefined</fullName>
+        <default>false</default>
+        <label>Undefined</label>
+    </standardValue>
+    <standardValue>
+        <fullName>1</fullName>
+        <default>false</default>
+        <label>1</label>
+    </standardValue>
+    <standardValue>
+        <fullName>2</fullName>
+        <default>false</default>
+        <label>2</label>
+    </standardValue>
+    <standardValue>
+        <fullName>3</fullName>
+        <default>false</default>
+        <label>3</label>
+    </standardValue>
+    <standardValue>
+        <fullName>4</fullName>
+        <default>false</default>
+        <label>4</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Priority 1 (Showstopper)</fullName>
+        <default>false</default>
+        <label>Priority 1 (Showstopper)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Priority 2 (Major)</fullName>
+        <default>false</default>
+        <label>Priority 2 (Major)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Priority 3 (Minor)</fullName>
+        <default>false</default>
+        <label>Priority 3 (Minor)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Priority 4 (Trivial Defects)</fullName>
+        <default>false</default>
+        <label>Priority 4 (Trivial Defects)</label>
+    </standardValue>
+</StandardValueSet>

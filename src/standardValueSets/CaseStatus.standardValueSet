@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Accepted</fullName>
+        <default>false</default>
+        <label>Accepted</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Accepted_Future Date</fullName>
+        <default>false</default>
+        <label>Accepted_Future Date</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Accepted_Pending BG</fullName>
+        <default>false</default>
+        <label>Accepted_Pending BG</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Accepted_Pending Docs</fullName>
+        <default>false</default>
+        <label>Accepted_Pending Docs</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Accepted_Pending Agreement</fullName>
+        <default>false</default>
+        <label>Accepted_Pending Agreement</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Action Needed</fullName>
+        <default>false</default>
+        <label>Action Needed</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Approval/rejection received</fullName>
+        <default>false</default>
+        <label>Approval/rejection received</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Approved</fullName>
+        <default>false</default>
+        <label>Approved</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Archived</fullName>
+        <default>false</default>
+        <label>Archived</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigned to Level 2</fullName>
+        <default>false</default>
+        <label>Assigned to Level 2</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigned to Level 3</fullName>
+        <default>false</default>
+        <label>Assigned to Level 3</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Awaiting Approval</fullName>
+        <default>false</default>
+        <label>Awaiting Approval</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed</fullName>
+        <default>false</default>
+        <label>Closed</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed_Accredited</fullName>
+        <default>false</default>
+        <label>Closed_Accredited</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed_Rejected</fullName>
+        <default>false</default>
+        <label>Closed_Rejected</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed_Withdrawn</fullName>
+        <default>false</default>
+        <label>Closed_Withdrawn</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed - pending customer approval</fullName>
+        <default>false</default>
+        <label>Closed - pending customer approval</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Completed</fullName>
+        <default>false</default>
+        <label>Completed</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Completed - no bug</fullName>
+        <default>false</default>
+        <label>Completed - no bug</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Customer Hold</fullName>
+        <default>false</default>
+        <label>Customer Hold</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Escalated</fullName>
+        <default>false</default>
+        <label>Escalated</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Escalated Externally</fullName>
+        <default>false</default>
+        <label>Escalated Externally</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Escalated Internally</fullName>
+        <default>false</default>
+        <label>Escalated Internally</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>For Review and Acceptance</fullName>
+        <default>false</default>
+        <label>For Review and Acceptance</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>In progress</fullName>
+        <default>false</default>
+        <label>In progress</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>New</fullName>
+        <default>false</default>
+        <label>New</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>On Hold</fullName>
+        <default>false</default>
+        <label>On Hold</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>On Hold_External</fullName>
+        <default>false</default>
+        <label>On Hold_External</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>On Hold_Internal</fullName>
+        <default>false</default>
+        <label>On Hold_Internal</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Open</fullName>
+        <default>true</default>
+        <label>Open</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending approval by network</fullName>
+        <default>false</default>
+        <label>Pending approval by network</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending approval by PO</fullName>
+        <default>false</default>
+        <label>Pending approval by PO</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending customer</fullName>
+        <default>false</default>
+        <label>Pending customer</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending support</fullName>
+        <default>false</default>
+        <label>Pending support</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Reopen</fullName>
+        <default>false</default>
+        <label>Reopen</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Resolved by AFO</fullName>
+        <default>false</default>
+        <label>Resolved by AFO</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Reviewed and Accepted</fullName>
+        <default>false</default>
+        <label>Reviewed and Accepted</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Reviewed by RO</fullName>
+        <default>false</default>
+        <label>Reviewed by RO</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>User Clarification Required</fullName>
+        <default>false</default>
+        <label>User Clarification Required</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Waiting for Customer Feedback</fullName>
+        <default>false</default>
+        <label>Waiting for Customer Feedback</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Resolved</fullName>
+        <default>false</default>
+        <label>Resolved</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Agent to be notified (Email)</fullName>
+        <default>false</default>
+        <label>Agent to be notified (Email)</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Agent Notified (Email)</fullName>
+        <default>false</default>
+        <label>Agent Notified (Email)</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Agent Notified (Mail)</fullName>
+        <default>false</default>
+        <label>Agent Notified (Mail)</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Ready to process</fullName>
+        <default>false</default>
+        <label>Ready to process</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Submitted</fullName>
+        <default>false</default>
+        <label>Submitted</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Rejected by CMC</fullName>
+        <default>false</default>
+        <label>Rejected by CMC</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Financial Statements Uploaded</fullName>
+        <default>false</default>
+        <label>Financial Statements Uploaded</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Assessment Performed</fullName>
+        <default>false</default>
+        <label>Assessment Performed</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Sanity Check Failure</fullName>
+        <default>false</default>
+        <label>Sanity Check Failure</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Financial Security Requested</fullName>
+        <default>false</default>
+        <label>Financial Security Requested</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Financial Security Provided</fullName>
+        <default>false</default>
+        <label>Financial Security Provided</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Re-open/ed</fullName>
+        <default>false</default>
+        <label>Re-open/ed</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Agent to be Notified</fullName>
+        <default>false</default>
+        <label>Agent to be Notified</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Financial Security Rejected</fullName>
+        <default>false</default>
+        <label>Financial Security Rejected</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Assessment Cancelled</fullName>
+        <default>false</default>
+        <label>Assessment Cancelled</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Quality Issue Requested</fullName>
+        <default>false</default>
+        <label>Quality Issue Requested</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Quality Issue Rejected</fullName>
+        <default>false</default>
+        <label>Quality Issue Rejected</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Quality Issue Request Pending Approval</fullName>
+        <default>false</default>
+        <label>Quality Issue Request Pending Approval</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Quality Issue Request Approved</fullName>
+        <default>false</default>
+        <label>Quality Issue Request Approved</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Abandoned</fullName>
+        <default>false</default>
+        <label>Abandoned</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed - Dispute</fullName>
+        <default>false</default>
+        <label>Closed - Dispute</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Feedback From Requestor</fullName>
+        <default>false</default>
+        <label>Pending Feedback From Requestor</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Business Requirements Definition</fullName>
+        <default>false</default>
+        <label>Business Requirements Definition</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Solution and Effort Definition</fullName>
+        <default>false</default>
+        <label>Solution and Effort Definition</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Priority Setting / Timelines</fullName>
+        <default>false</default>
+        <label>Priority Setting / Timelines</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>On queue</fullName>
+        <default>false</default>
+        <label>On queue</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Ready for Deployment to Production</fullName>
+        <default>false</default>
+        <label>Ready for Deployment to Production</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Testing in Production</fullName>
+        <default>false</default>
+        <label>Testing in Production</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Deployed - Pilot</fullName>
+        <default>false</default>
+        <label>Deployed - Pilot</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Deployed</fullName>
+        <default>false</default>
+        <label>Deployed</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Ready for production</fullName>
+        <default>false</default>
+        <label>Ready for production</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>0. New - pending case assignment</fullName>
+        <default>false</default>
+        <label>0. New - pending case assignment</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>1.0 IE - Case Assigned</fullName>
+        <default>false</default>
+        <label>1.0 IE - Case Assigned</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>1.1 IE - pending internal eval/approval</fullName>
+        <default>false</default>
+        <label>1.1 IE - pending internal eval/approval</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>1.2 IE - pending DPCM eval/ approval</fullName>
+        <default>false</default>
+        <label>1.2 IE - pending DPCM eval/ approval</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>2.0 IE approved - Escalated DPC for PQ</fullName>
+        <default>false</default>
+        <label>2.0 IE approved - Escalated DPC for PQ</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>2.2 BC - Pending internal feedback</fullName>
+        <default>false</default>
+        <label>2.2 BC - Pending internal feedback</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>2.3 BC - Pending DPC feedback</fullName>
+        <default>false</default>
+        <label>2.3 BC - Pending DPC feedback</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>3.1 PQ received - pending DPCM feedback</fullName>
+        <default>false</default>
+        <label>3.1 PQ received - pending DPCM feedback</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>3.2 PQ received - pend Internal feedback</fullName>
+        <default>false</default>
+        <label>3.2 PQ received - pend Internal feedback</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>3.3 PQ approved - Stakeholder comm done</fullName>
+        <default>false</default>
+        <label>3.3 PQ approved - Stakeholder comm done</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>4.2 Development - pending DPC feedback</fullName>
+        <default>false</default>
+        <label>4.2 Development - pending DPC feedback</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>5.1 UAT Approval-Pend Internal Approval</fullName>
+        <default>false</default>
+        <label>5.1 UAT Approval-Pend Internal Approval</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>5.2 UAT approval - pending DPC feedback</fullName>
+        <default>false</default>
+        <label>5.2 UAT approval - pending DPC feedback</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>6.0 UAT Approval - DD - s/holder comm</fullName>
+        <default>false</default>
+        <label>6.0 UAT Approval - DD - s/holder comm</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>7.1 Doc review - pending DPC feedback</fullName>
+        <default>false</default>
+        <label>7.1 Doc review - pending DPC feedback</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>8.0 Doc review - completed</fullName>
+        <default>false</default>
+        <label>8.0 Doc review - completed</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>9.0 Closed</fullName>
+        <default>false</default>
+        <label>9.0 Closed</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>10. Rejected - before PQ</fullName>
+        <default>false</default>
+        <label>10. Rejected - before PQ</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>11. Rejected - after PQ</fullName>
+        <default>false</default>
+        <label>11. Rejected - after PQ</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Open - EDMC</fullName>
+        <default>false</default>
+        <label>Open - EDMC</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed_ Not Accepted</fullName>
+        <default>false</default>
+        <label>Closed_ Not Accepted</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Solution Provided</fullName>
+        <default>false</default>
+        <label>Solution Provided</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed Opt-out</fullName>
+        <default>false</default>
+        <label>Closed Opt-out</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Input requested</fullName>
+        <default>false</default>
+        <label>Input requested</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Reconsideration</fullName>
+        <default>false</default>
+        <label>Pending Reconsideration</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed_Disapproved</fullName>
+        <default>false</default>
+        <label>Closed_Disapproved</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Return application to customer</fullName>
+        <default>false</default>
+        <label>Return application to customer</label>
+        <closed>false</closed>
+    </standardValue>
+</StandardValueSet>

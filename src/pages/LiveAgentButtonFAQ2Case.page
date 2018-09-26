@@ -8,37 +8,367 @@
         margin: 5px;
         width: 197px;
     }
+    .chatButtons{
+    	 width:25px;
+    	 padding-left:2px;
+    	 margin-left:0px;
+    	 padding-right:2px;
+    	 margin-right:0px;
+    	 text-align: center;
+    }
+    .removeMargin{
+        margin:0;
+		padding:0;
+    }
+
 </style>
+	<!-- TO REMOVE basto1p -->
+    <script>
+        $( document ).ready(function() {
+            $('#loaderImg').attr("style", "display: block !important;");
+            //$('#loaderImg').addClass('classShow');
+            console.log( "basto1p - ############### document loaded" );
+        });
+
+        $( window ).on( "load", function() {
+            $('#loaderImg').attr("style", "display: none !important;");
+            //$('#loaderImg').addClass('classHidde');
+            console.log( "basto1p - ############### window loaded" );
+        });
+
+        function deactButtTemp(buttId){
+        	$('#liveagent_button_online_'+buttId).prop("disabled", true);
+
+        	setTimeout(
+        	function(){
+        	    $('#liveagent_button_online_'+buttId).prop("disabled", false);
+        	}
+        	, 5000);// 5 seconds
+        }
+    </script>
+
+	<span id="loaderImg" style="display: block;">
+        <apex:image url="{!$Resource.LVA_IconsLoading}"
+                    width="25px" />
+	</span>
 
     <apex:form >
-            <apex:outputPanel layout="block" id="LiveAgentButton">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-6">
-                        <button id="liveagent_button_online_{!liveAgentBtn.ButtonId__c}" class="btn btn-block btn_iata_primary" style="display: none;" onclick="liveagent.startChat('{!liveAgentBtn.ButtonId__c}');return false;">
-                            {!$Label.LiveAgentButtonLanguage}
-                        </button>
-                        <button id="liveagent_button_offline_{!liveAgentBtn.ButtonId__c}" class="btn btn-block btn_iata_primary" style="display: none; background-color: rgb(136, 136, 136);" onclick="return false;">
-                            {!$Label.LiveAgentOfflineButton}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <div id="liveagent_button_offline_{!liveAgentBtn.ButtonId__c}"  style="display: none;">
-
-                  </div> -->
-                  
-                    <script type="text/javascript">
-                    if (!window._laq) { window._laq = []; }
-                        window._laq.push(function(){
-                            liveagent.showWhenOnline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtn.ButtonId__c}'));
-                            liveagent.showWhenOffline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtn.ButtonId__c}'));
-                    });
-
-                </script>
 
 
-                <script type='text/javascript' src='https://c.{!$setup.LiveAgentMinutesPerUserInQueue__c.url__c}/content/g/js/37.0/deployment.js'></script>
+	            <apex:outputPanel layout="block" id="LiveAgentButton">
+					<!-- ************************************* -->
+					<!-- BEGIN - Normal Button PANEL -->
+					<!-- ************************************* -->
+					<apex:outputPanel layout="block" id="LiveAgentButtonRender" rendered="{!If(isEmergency, false, true)}">
+						<div id="singleButton">
+<!-- botao normal<br/> -->
+							<div class="container removeMargin">
+
+									<button id="liveagent_button_online_{!liveAgentBtn.ButtonId__c}"
+											class="btn btn-block btn_iata_primary chatButtons"
+											style="display: none; "
+											onclick="liveagent.startChat('{!liveAgentBtn.ButtonId__c}'); deactButtTemp('{!liveAgentBtn.ButtonId__c}');return false;"
+											title="{!$Label.LVA_AgentOnline} ({!csButton})">
+										{!csButtonAbreviation} <!-- {!$Label.LiveAgentButtonLanguage} -->
+									</button>
+									<button id="liveagent_button_offline_{!liveAgentBtn.ButtonId__c}"
+											class="btn btn-block btn_iata_primary chatButtons"
+											style="display: none; background-color: rgb(136, 136, 136);"
+											onclick="return false;"
+											title="{!$Label.LVA_AgentOffline} ({!csButton})">
+										{!csButtonAbreviation} <!-- {!$Label.LiveAgentOfflineButton} -->
+									</button>
+							</div>
+							  <!-- <div id="liveagent_button_offline_{!liveAgentBtn.ButtonId__c}"  style="display: none;">
+
+							  </div> -->
+
+								<script type="text/javascript">
+								if (!window._laq) { window._laq = []; }
+									window._laq.push(function(){
+										liveagent.showWhenOnline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtn.ButtonId__c}'));
+										liveagent.showWhenOffline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtn.ButtonId__c}'));
+
+										console.log( "basto1p - ############### inside chat" );
+								});
+
+							</script>
+						</div>
+					</apex:outputPanel>
+					<!-- ************************************* -->
+					<!-- END - Normal Button PANEL -->
+					<!-- ************************************* -->
+
+
+
+					<!-- ************************************************** -->
+					<!-- BEGIN - EMERGENCY BUTTON PANEL WHEN NUM BUTTONS >3 -->
+					<!-- ************************************************** -->
+					<apex:outputPanel layout="block" id="LiveAgentEmergencyButtonRender"
+									  rendered="{!If((isEmergency && NumberOfButtons>3), true, false)}">
+						<div id="EmergncyButton4">
+<!--	botao emergencia<br/> -->
+							<div class="container removeMargin">
+
+								<!-- Online button  -->
+								<button id="liveagent_button_online_{!liveAgentBtnEng.ButtonId__c}"
+										style="display: none;" onclick="return false;">
+								</button>
+								<button id="liveagent_button_online_{!liveAgentBtnCountry.ButtonId__c}"
+										style="display: none;" onclick="return false;">
+								</button>
+								<button id="liveagent_button_online_{!liveAgentBtnPortal.ButtonId__c}"
+										style="display: none;" onclick="return false;">
+								</button>
+
+
+								<div id="liveagent_button_offline_{!liveAgentBtnEng.ButtonId__c}" style="display: none;" onclick="return false;">
+
+									<div id="liveagent_button_offline_{!liveAgentBtnCountry.ButtonId__c}"  style="display: none;" onclick="return false;">
+
+										<div id="liveagent_button_offline_{!liveAgentBtnPortal.ButtonId__c}"  style="display: none;" onclick="return false;">
+
+											<!-- Chat With Premier Support - the 24*7 -->
+											<button id="liveagent_button_online_{!liveAgentBtn.ButtonId__c}"
+													class="btn btn-block btn_iata_primary chatButtons"
+													style="display: none;"
+													onclick="liveagent.startChat('{!liveAgentBtn.ButtonId__c}'); deactButtTemp('{!liveAgentBtn.ButtonId__c}');return false;"
+													title="{!$Label.LVA_AgentOnline} ({!csButton})">
+												{!csButtonAbreviation} <!-- {!$Label.LiveAgentButtonLanguage} -->
+											</button>
+											<button id="liveagent_button_offline_{!liveAgentBtn.ButtonId__c}"
+													class="btn btn-block btn_iata_primary chatButtons"
+													style="display: none; background-color: rgb(136, 136, 136);"
+													onclick="return false;"
+													title="{!$Label.LVA_AgentOffline} ({!csButton})">
+												{!csButtonAbreviation} <!-- {!$Label.LiveAgentOfflineButton} -->
+											</button>
+
+											 <script type="text/javascript">
+												if (!window._laq) { window._laq = []; }
+													window._laq.push(function(){
+														liveagent.showWhenOnline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtn.ButtonId__c}'));
+														liveagent.showWhenOffline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtn.ButtonId__c}'));
+												});
+
+											</script>
+										 </div>
+									 </div>
+								 </div>
+						   </div>
+
+							<script type="text/javascript">
+									if (!window._laq) { window._laq = []; }
+										var x = window._laq.push(
+											function(){
+												//liveagent.showWhenOnline('{!liveAgentBtnEng.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtnEng.ButtonId__c}'));
+												liveagent.showWhenOffline('{!liveAgentBtnEng.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtnEng.ButtonId__c}'));
+
+												//liveagent.showWhenOnline('{!liveAgentBtnCountry.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtnCountry.ButtonId__c}'));
+												liveagent.showWhenOffline('{!liveAgentBtnCountry.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtnCountry.ButtonId__c}'));
+
+												//liveagent.showWhenOnline('{!liveAgentBtnPortal.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtnPortal.ButtonId__c}'));
+												liveagent.showWhenOffline('{!liveAgentBtnPortal.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtnPortal.ButtonId__c}'));
+										});
+
+
+							</script>
+
+
+						</div>
+					</apex:outputPanel>
+					<!-- ************************************************** -->
+					<!-- END - EMERGENCY BUTTON PANEL WHEN NUM BUTTONS >3 -->
+					<!-- ************************************************** -->
+
+
+					<!-- ************************************************** -->
+					<!-- BEGIN - EMERGENCY BUTTON PANEL WHEN NUM BUTTONS = 3 -->
+					<!-- ************************************************** -->
+					<apex:outputPanel layout="block" id="LiveAgentEmergency2ButtonRender"
+									  rendered="{!If((isEmergency && NumberOfButtons==3), true, false)}">
+						<div id="EmergncyButton3">
+<!--	botao emergencia <br/> -->
+							<div class="container removeMargin">
+
+								<!-- Online button  -->
+								<button id="liveagent_button_online_{!liveAgentBtnEng.ButtonId__c}"
+										style="display: none;" onclick="return false;">
+								</button>
+								<button id="liveagent_button_online_{!liveAgentBtnCountry.ButtonId__c}"
+										style="display: none;" onclick="return false;">
+								</button>
+
+
+
+								<div id="liveagent_button_offline_{!liveAgentBtnEng.ButtonId__c}"
+									 style="display: none;" onclick="return false;">
+
+									<div id="liveagent_button_offline_{!liveAgentBtnCountry.ButtonId__c}"
+										 style="display: none;" onclick="return false;">
+
+											<!-- Chat With Premier Support - the 24*7 -->
+											<button id="liveagent_button_online_{!liveAgentBtn.ButtonId__c}"
+													class="btn btn-block btn_iata_primary chatButtons"
+													style="display: none;"
+													onclick="liveagent.startChat('{!liveAgentBtn.ButtonId__c}'); deactButtTemp('{!liveAgentBtn.ButtonId__c}');return false;"
+													title="{!$Label.LVA_AgentOnline} ({!csButton})">
+												{!csButtonAbreviation} <!-- {!$Label.LiveAgentButtonLanguage} -->
+											</button>
+											<button id="liveagent_button_offline_{!liveAgentBtn.ButtonId__c}"
+													class="btn btn-block btn_iata_primary chatButtons"
+													style="display: none; background-color: rgb(136, 136, 136);"
+													onclick="return false;"
+													title="{!$Label.LVA_AgentOffline} ({!csButton})">
+												{!csButtonAbreviation}  <!-- {!$Label.LiveAgentOfflineButton} -->
+											</button>
+
+											 <script type="text/javascript">
+												if (!window._laq) { window._laq = []; }
+													window._laq.push(function(){
+														liveagent.showWhenOnline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtn.ButtonId__c}'));
+														liveagent.showWhenOffline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtn.ButtonId__c}'));
+												});
+
+											</script>
+									 </div>
+								 </div>
+						   </div>
+
+							<script type="text/javascript">
+									if (!window._laq) { window._laq = []; }
+										var x = window._laq.push(
+											function(){
+												//liveagent.showWhenOnline('{!liveAgentBtnEng.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtnEng.ButtonId__c}'));
+												liveagent.showWhenOffline('{!liveAgentBtnEng.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtnEng.ButtonId__c}'));
+
+												//liveagent.showWhenOnline('{!liveAgentBtnCountry.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtnCountry.ButtonId__c}'));
+												liveagent.showWhenOffline('{!liveAgentBtnCountry.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtnCountry.ButtonId__c}'));
+
+										});
+							</script>
+
+						</div>
+					</apex:outputPanel>
+					<!-- ************************************************** -->
+					<!-- END - EMERGENCY BUTTON PANEL WHEN NUM BUTTONS = 3 -->
+					<!-- ************************************************** -->
+
+
+					<!-- ************************************************** -->
+					<!-- BEGIN - EMERGENCY BUTTON PANEL WHEN NUM BUTTONS = 2 -->
+					<!-- ************************************************** -->
+					<apex:outputPanel layout="block" id="LiveAgentEmergency1ButtonRender"
+									  rendered="{!If((isEmergency && NumberOfButtons==2), true, false)}">
+						<div id="EmergncyButton2">
+<!--	botao emergencia<br/> -->
+							<div class="container removeMargin">
+
+								<!-- Online button  -->
+								<button id="liveagent_button_online_{!liveAgentBtnEng.ButtonId__c}"
+										style="display: none;" onclick="return false;">
+								</button>
+
+
+								<div id="liveagent_button_offline_{!liveAgentBtnEng.ButtonId__c}"
+									 style="display: none;" onclick="return false;">
+
+									<!-- Chat With Premier Support - the 24*7 -->
+									<button id="liveagent_button_online_{!liveAgentBtn.ButtonId__c}"
+											class="btn btn-block btn_iata_primary chatButtons"
+											style="display: none;"
+											onclick="liveagent.startChat('{!liveAgentBtn.ButtonId__c}'); deactButtTemp('{!liveAgentBtn.ButtonId__c}');return false;"
+											title="{!$Label.LVA_AgentOnline} ({!csButton})">
+										{!csButtonAbreviation} <!-- {!$Label.LiveAgentButtonLanguage} -->
+									</button>
+									<button id="liveagent_button_offline_{!liveAgentBtn.ButtonId__c}"
+											class="btn btn-block btn_iata_primary chatButtons"
+											style="display: none; background-color: rgb(136, 136, 136);"
+											onclick="return false;"
+											title="{!$Label.LVA_AgentOffline} ({!csButton})">
+										{!csButtonAbreviation}  <!-- {!$Label.LiveAgentOfflineButton} -->
+									</button>
+
+											 <script type="text/javascript">
+												if (!window._laq) { window._laq = []; }
+													window._laq.push(function(){
+														liveagent.showWhenOnline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtn.ButtonId__c}'));
+														liveagent.showWhenOffline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtn.ButtonId__c}'));
+												});
+
+											</script>
+								 </div>
+						   </div>
+
+							<script type="text/javascript">
+								if (!window._laq) { window._laq = []; }
+									var x = window._laq.push(
+										function(){
+											//liveagent.showWhenOnline('{!liveAgentBtnEng.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtnEng.ButtonId__c}'));
+											liveagent.showWhenOffline('{!liveAgentBtnEng.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtnEng.ButtonId__c}'));
+
+									});
+							</script>
+						</div>
+					</apex:outputPanel>
+					<!-- ************************************************** -->
+					<!-- END - EMERGENCY BUTTON PANEL WHEN NUM BUTTONS = 2 -->
+					<!-- ************************************************** -->
+
+
+					<!-- ************************************************** -->
+					<!-- BEGIN - EMERGENCY BUTTON PANEL WHEN NUM BUTTONS = 1 -->
+					<!-- ************************************************** -->
+					<apex:outputPanel layout="block" id="LiveAgentEmergency0ButtonRender"
+									  rendered="{!If((isEmergency && NumberOfButtons==1), true, false)}">
+						<div id="EmergncyButton1">
+							<!--	botao emergencia<br/> -->
+							<div class="container removeMargin">
+
+								<!-- Chat With Premier Support - the 24*7 -->
+								<button id="liveagent_button_online_{!liveAgentBtn.ButtonId__c}"
+										class="btn btn-block btn_iata_primary chatButtons"
+										style="display: none;"
+										onclick="liveagent.startChat('{!liveAgentBtn.ButtonId__c}'); deactButtTemp('{!liveAgentBtn.ButtonId__c}');return false;"
+										title="{!$Label.LVA_AgentOnline} ({!csButton})">
+									{!csButtonAbreviation} <!-- {!$Label.LiveAgentButtonLanguage} -->
+								</button>
+								<button id="liveagent_button_offline_{!liveAgentBtn.ButtonId__c}"
+										class="btn btn-block btn_iata_primary chatButtons"
+										style="display: none; background-color: rgb(136, 136, 136);"
+										onclick="return false;"
+										title="{!$Label.LVA_AgentOffline} ({!csButton})">
+									{!csButtonAbreviation}  <!-- {!$Label.LiveAgentOfflineButton} -->
+								</button>
+
+								<script type="text/javascript">
+											if (!window._laq) { window._laq = []; }
+												window._laq.push(function(){
+													liveagent.showWhenOnline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtn.ButtonId__c}'));
+													liveagent.showWhenOffline('{!liveAgentBtn.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtn.ButtonId__c}'));
+											});
+
+								</script>
+
+							</div>
+
+							<script type="text/javascript">
+								if (!window._laq) { window._laq = []; }
+									var x = window._laq.push(
+										function(){
+											//liveagent.showWhenOnline('{!liveAgentBtnEng.ButtonId__c}', document.getElementById('liveagent_button_online_{!liveAgentBtnEng.ButtonId__c}'));
+											liveagent.showWhenOffline('{!liveAgentBtnEng.ButtonId__c}', document.getElementById('liveagent_button_offline_{!liveAgentBtnEng.ButtonId__c}'));
+
+									});
+							</script>
+						</div>
+					</apex:outputPanel>
+					<!-- ************************************************** -->
+					<!-- END - EMERGENCY BUTTON PANEL WHEN NUM BUTTONS = 1 -->
+					<!-- ************************************************** -->
+
+                <script type='text/javascript'
+						src='https://c.{!$setup.LiveAgentMinutesPerUserInQueue__c.url__c}/content/g/js/37.0/deployment.js'></script>
 
                 <script type="text/javascript">
 
@@ -58,15 +388,17 @@
                         liveagent.addCustomDetail('userContactId', '{!contactId}');
                         liveagent.addCustomDetail('userAccountId', '{!accountId}');
                         liveagent.addCustomDetail('caseRTId', '{!caseRecordTypeId}');
-                        liveagent.addCustomDetail('caseCountryConcerned','{!country.name}');
+                        liveagent.addCustomDetail('caseCountryConcerned',"{!country.Name}").saveToTranscript('Country_Concerned__c');
                         liveagent.addCustomDetail('buttonlanguage','{!buttonLanguage}');
+                        liveagent.addCustomDetail('#TopicEN', '{!topicId}').saveToTranscript('Topic__c');
+                        liveagent.addCustomDetail('#SubtopicEN', '{!subTopicId}').saveToTranscript('Subtopic__c');
                         //map() parameters: .map(String FieldName, String DetailName, Boolean doFind, Boolean isExactMatch, Boolean doCreate)
                         liveagent.findOrCreate('Case').map('RecordTypeId','caseRTId',false, true, true).map('Origin','Case Origin', false, true, true)
                             .map('Status','Case Status',false,true,true).map('Subject','Case Subject',false,true,true).map('Country_concerned_by_the_query__c','caseCountryConcerned',false,true,true).showOnCreate().saveToTranscript('Case');
                         liveagent.findOrCreate('Contact').map('Id','userContactId', true, true, false).linkToEntity('Case','ContactId').saveToTranscript('Contact');
                         liveagent.findOrCreate('Account').map('Id','userAccountId', true, true, false).linkToEntity('Case','AccountId').saveToTranscript('Account');
-                        liveagent.setChatWindowHeight(490);
-                        liveagent.setChatWindowWidth(315);
+                        liveagent.setChatWindowHeight(680);
+                        liveagent.setChatWindowWidth(400);
                         liveagent.init('https://d.{!$setup.LiveAgentMinutesPerUserInQueue__c.url__c}/chat', '{!liveAgentBtn.DeploymentId__c}','{!$Organization.Id}'.substring(0,15));
                 </script>
 

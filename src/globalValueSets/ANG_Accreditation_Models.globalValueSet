@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Legacy</fullName>
+        <default>false</default>
+        <label>Legacy</label>
+    </customValue>
+    <customValue>
+        <fullName>Cashless</fullName>
+        <default>false</default>
+        <label>Cashless</label>
+    </customValue>
+    <customValue>
+        <fullName>Cash</fullName>
+        <default>false</default>
+        <label>Cash</label>
+    </customValue>
+    <customValue>
+        <fullName>Multicountry</fullName>
+        <default>false</default>
+        <label>Multicountry</label>
+    </customValue>
+    <masterLabel>Accreditation Models</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

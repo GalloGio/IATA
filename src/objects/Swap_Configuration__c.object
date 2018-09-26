@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Junction Object used to configure rate plans swapping functionality, for Swap, Upgrade and Suggestions</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -60,24 +57,29 @@
         <fullName>Relationship_Type__c</fullName>
         <externalId>false</externalId>
         <label>Relationship Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Swap</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Upgrade</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Suggestion</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Swap</fullName>
+                    <default>false</default>
+                    <label>Swap</label>
+                </value>
+                <value>
+                    <fullName>Upgrade</fullName>
+                    <default>false</default>
+                    <label>Upgrade</label>
+                </value>
+                <value>
+                    <fullName>Suggestion</fullName>
+                    <default>false</default>
+                    <label>Suggestion</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Source_Product_Rate_Plan_Information__c</fullName>
@@ -87,12 +89,7 @@
         <label>Source Product Rate Plan Information</label>
         <lookupFilter>
             <active>true</active>
-            <booleanFilter>(1 AND 2) OR (3 AND 4)</booleanFilter>
-            <filterItems>
-                <field>Product_Rate_Plan_Information__c.Related_Product_Information__r.Product_Audience__c</field>
-                <operation>equals</operation>
-                <value>Default</value>
-            </filterItems>
+            <booleanFilter>1 OR (2 AND 3)</booleanFilter>
             <filterItems>
                 <field>$Source.Relationship_Type__c</field>
                 <operation>equals</operation>
@@ -139,6 +136,7 @@
         <columns>Target_Product_Rate_Plan_Information__c</columns>
         <columns>CREATEDBY_USER</columns>
         <columns>UPDATEDBY_USER</columns>
+        <columns>OBJECT_ID</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -181,4 +179,5 @@ OR(Target_Product_Rate_Plan_Information__r.Related_Product_Information__r.Relate
         <errorDisplayField>Target_Product_Rate_Plan_Information__c</errorDisplayField>
         <errorMessage>Target upgrade rate plan must only be unlimited.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

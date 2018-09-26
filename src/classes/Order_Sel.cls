@@ -13,6 +13,7 @@ public without sharing class Order_Sel extends Selector{
             Order.Type,
             Order.OrderNumber,
             Order.Status,
+            Order.Is_Paid__c,
             Order.IEC_Order_Previous_Type__c, //To h andle order conversion
             Order.EffectiveDate,
             Order.EndDate,
@@ -103,7 +104,9 @@ public without sharing class Order_Sel extends Selector{
             Order.IEC_Zuora_ST_InvoiceId__c,
             Order.IEC_Zuora_ST_InvoiceNumber__c,
             Order.IEC_Zuora_ST_SubscriptionId__c,
-            Order.IEC_Zuora_ST_SubscriptionNumber__c
+            Order.IEC_Zuora_ST_SubscriptionNumber__c,
+            Order.Payment_Gateway_Response__c,
+            Order.Accepted_Payment_Methods__c
         };
     }
 
@@ -197,7 +200,8 @@ public without sharing class Order_Sel extends Selector{
                     ActivatedDate,EffectiveDate, IEC_Event_Subscription__c,ShipToAccount_Name__c,
                     Payment_Type__c,Nb_Payment_Failure__c
                     , BillToAccount_Name__c, BillToContact_Name__c, OrderNumber, Is_Paid__c
-                    ,SubTotal_Amount__c, Discount_Amount__c, Taxes__c, Total_Freight_Charge__c, Total_handling_charges__c, Total_Amount__c
+                    ,SubTotal_Amount__c, Discount_Amount__c, Taxes__c, Total_Freight_Charge__c, Total_handling_charges__c, Total_Amount__c,
+                    Payment_Gateway_Response__c, Accepted_Payment_Methods__c
                 From Order 
                 Where id in :orderIds
                ];
@@ -250,7 +254,8 @@ public without sharing class Order_Sel extends Selector{
                      , ShipTo_Address__r.Street__c, ShipTo_Address__r.City__c, ShipTo_Address__r.Country__c,ShipTo_Address__r.ISO_Country_Code__c, ShipTo_Address__c 
                      , ShipTo_Address__r.State__c,ShipTo_Address__r.ISO_State_Code__c, ShipTo_Address__r.ZipCode__c, ShipTo_Address__r.ISO_Country__r.Name
                      , ShipTo_Address__r.ISO_Country_Name__c,ShipTo_Address__r.ISO_Country__r.ISO_Code__c,ShipTo_Address__r.ISO_State__r.ISO_Code__c
-                     , ShipTo_Address__r.ISO_Country__c, ShipTo_Address__r.ISO_State__r.Name,ShipTo_Address__r.ISO_State_Name__c, ShipTo_Address__r.ISO_State__c 
+                     , ShipTo_Address__r.ISO_Country__c, ShipTo_Address__r.ISO_State__r.Name,ShipTo_Address__r.ISO_State_Name__c, ShipTo_Address__r.ISO_State__c
+                     , Payment_Gateway_Response__c, Accepted_Payment_Methods__c
                      //, BillTo_VAT_Number__c, ShipTo_VAT_Number__c
                 from Order 
                 where Id = :orderId limit 1];
@@ -265,7 +270,8 @@ public without sharing class Order_Sel extends Selector{
                 SoldTo_Location__c, SoldToAccount_Partner_Number__c, SoldToAccount_Name__c,
                 // IEC_Shipping_Instruction_attention__c, IEC_Shipping_Instruction_email__c, IEC_Shipping_Instruction_phone__c,
                 TotalAmount,Total_Amount__c,SubTotal_Amount__c,Taxes__c,Total_Freight_Charge__c,Total_handling_charges__c,Sales_Volume__c, 
-                Payment_Type__c, Payment_Transaction_Number__c,Zuora_Transaction_Id__c, Zuora_GatewayResponse__c, Zuora_Credit_Card_Id__c,
+                Payment_Type__c, Payment_Transaction_Number__c,Zuora_Transaction_Id__c, Zuora_GatewayResponse__c, Zuora_Credit_Card_Id__c, Payment_Gateway_Response__c,
+                Accepted_Payment_Methods__c, 
                 (
                     Select Id, Quantity, UnitPrice, ListPrice, OrderItemNumber, 
                         Zuora_InvoiceId__c, Accepted_Term_Condition__c, Charge_Shipping__c, Division__c, Zuora_InvoiceNumber__c, 
@@ -410,18 +416,58 @@ public without sharing class Order_Sel extends Selector{
         );
 
         System.debug('query::'+query);
+        System.debug('typ::'+typ);
+        System.debug('stat::'+stat);
 
         List<Order> orders = Database.query(query);
 
         return (orders.isEmpty()) ? null : orders[0];
     }
 
-    public Order initializeOrder(Account a, Contact c)
+    /**
+        Retrieves the orders in status New and type of Cart and to the BillToContactId
+    */
+    public Order getPendingOrderByBillToContactId(Id billToContactId)
     {
-        return initializeOrder(a, c, true); 
+        String typ = 'Cart';
+        String stat = 'New';
+
+        String query = String.format(
+            'SELECT {0}  ' + 
+            '   , BillTo_Address__r.Street__c, BillTo_Address__r.City__c, BillTo_Address__r.ZipCode__c ' +
+            '   , BillTo_Address__r.ISO_State_Name__c, BillTo_Address__r.ISO_State_Code__c ' +
+            '   , BillTo_Address__r.ISO_Country_Name__c, BillTo_Address__r.ISO_Country_Code__c ' +
+            '   , ShipTo_Address__r.Street__c, ShipTo_Address__r.City__c, ShipTo_Address__r.ZipCode__c ' +
+            '   , ShipTo_Address__r.ISO_State_Name__c, ShipTo_Address__r.ISO_State_Code__c ' +
+            '   , ShipTo_Address__r.ISO_Country_Name__c, ShipTo_Address__r.ISO_Country_Code__c ' +
+            'FROM {1} ' + 
+            'WHERE BillToContactId = :billToContactId AND Type = :typ AND status = :stat  ORDER BY LastModifiedDate DESC LIMIT 1 ' , 
+            new List<String>{
+                String.join(getDefaultFields(), ', '),
+                getSObjectType().getDescribe().getName()
+            }
+        );
+
+        System.debug('query::'+query);
+        System.debug('typ::'+typ);
+        System.debug('stat::'+stat);
+
+        List<Order> orders = Database.query(query);
+
+        return (orders.isEmpty()) ? null : orders[0];
     }
-    
+
+    public Order initializeOrder(Account a, Contact c, Id ownerId)
+    {
+        return initializeOrder(a, c, ownerId, true); 
+    }
+
     public Order initializeOrder(Account a, Contact c, Boolean doInsert)
+    {
+        return initializeOrder(a, c, null, doInsert); 
+    }
+
+    public Order initializeOrder(Account a, Contact c, Id ownerId, Boolean doInsert)
     {
         Pricebook_Sel pricebookSelector = new Pricebook_Sel();  
         Pricebook2 stdPriceBook = pricebookSelector.getStandardPriceBook();
@@ -477,7 +523,8 @@ public without sharing class Order_Sel extends Selector{
             ShipToContact_Name__c   = c.Name,
             ShipToContact_Salutation__c = c.Salutation,
             ShipToContact_First_Name__c = c.FirstName,
-            ShipToContact_Last_Name__c  = c.LastName/*,
+            ShipToContact_Last_Name__c  = c.LastName,
+            OwnerId = ownerId/*,
             ShipToContact_Phone__c  = c.Phone,
             ShipToContact_Email__c  = c.Email*/
         );
@@ -643,6 +690,8 @@ public without sharing class Order_Sel extends Selector{
                 newOrder.ShipTo_same_BillTo__c = true;
         }
 
+        System.debug('Initialize Order: doInsert ? ' + (doInsert ? 'Yes' : 'No') + ', newOrder: ' + newOrder);
+
         if (doInsert)
             insert newOrder; 
         
@@ -722,11 +771,12 @@ public without sharing class Order_Sel extends Selector{
     {
         String type = IECConstants.ORDER_TYPE_RENEWAL_NOTIFICATION;
         String cart_type = 'Cart';
-        String new_status = 'New';
 
         return [SELECT Id, OrderNumber, EffectiveDate, EndDate, Total_Amount__c, CreatedDate
             FROM Order
-            WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type AND Status=:new_status)) AND BillToContactId = :idContact
+            WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type )) 
+            AND ((Status NOT IN :IECConstants.expiredStatus OR EffectiveDate > :IECConstants.dateToCompare) )
+            AND BillToContactId = :idContact
             ORDER BY EffectiveDate DESC, OrderNumber DESC
         ];
 
@@ -745,8 +795,10 @@ public without sharing class Order_Sel extends Selector{
     public List<Order> getQuotes(Id idContact){
 
         String type = IECConstants.ORDER_TYPE_QUOTE;
+        List<String> expiredStatus = IECConstants.expiredStatus;
+        Date dateToCompare = IECConstants.dateToCompare;
+        
         String cart_type = 'Cart';
-        String new_status = 'New';
 
         String query = String.format(
             'SELECT {0}' + 
@@ -754,7 +806,11 @@ public without sharing class Order_Sel extends Selector{
             'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c, Discount__c, Setup_Fee__c ' + 
             ' from Orderitems) ' + 
             'FROM {1} ' +  
-            'WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type AND Status=:new_status)) AND BillToContactId = :idContact ORDER BY EffectiveDate DESC, OrderNumber DESC ' , 
+
+            'WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type)) ' +
+            ' AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) '+ 
+            'AND BillToContactId = :idContact ORDER BY EffectiveDate DESC, OrderNumber DESC ' , 
+
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()
@@ -798,7 +854,7 @@ public without sharing class Order_Sel extends Selector{
             Return list of quotes for Visualforce page
     ****************************************************************************************************/
     public static Order getOrderDetail(Id idContact, String strQuoteNumber,String orderType) {
-        List<Order> data = [select Id, EffectiveDate, EndDate, OrderNumber
+        List<Order> data = [select Id, EffectiveDate, EndDate, OrderNumber, BillToContactId
                                  , Taxes__c, Total_Freight_Charge__c, TotalAmount, Total_Amount__c
                                  , BillToContact_Name__c, BillToContact_Email__c, BillToContact_Phone__c
                                  , BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, PONumber
@@ -882,25 +938,29 @@ public without sharing class Order_Sel extends Selector{
     ****************************************************************************************************/
     public List<Order> getMyOrders(Id contactId)
     {
-        String cancelStatus = 'Cancelled';
-        String renewStatus = IECConstants.ORDER_TYPE_RENEWAL_NOTIFICATION;
-        String quoteStatus = IECConstants.ORDER_TYPE_QUOTE;
-        String orderType = 'Order';
-        String bulkOrderType = 'Bulk Order';
+        List<String> expiredStatus = IECConstants.expiredStatus;
+        Date dateToCompare = IECConstants.dateToCompare;
+        String historyType = 'History';
+
+            // 'AND SAP_Order_Number__c != null  AND SAP_Invoice__r.Contract_Number__c != null ' +
+            // 'AND ((type NOT IN :expiredType OR Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) AND type != :historyType) ' +
          String query = String.format(
             'SELECT {0}' + 
             ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c, ' +
-            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c,Discount__c, Setup_Fee__c ' + 
-            ' from Orderitems) ' + 
-            'FROM {1} ' + 
-            'WHERE BillToContactId = :contactId and Status != :cancelStatus and Status != :renewStatus and Status != :quoteStatus ' +
-            'and (Type =:orderType OR Type =:bulkOrderType) ' +
+            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c,Discount__c, Setup_Fee__c ' +
+            ' from Orderitems) ' +
+            'FROM {1} ' +
+            'WHERE BillToContactId = :contactId ' +
+           
+            'AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) AND type != :historyType ' +
+
             'ORDER BY Type,  CreatedDate DESC', 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()
             }
         );
+         system.debug('### query: ' + query);
         return Database.query(query);
     }
 

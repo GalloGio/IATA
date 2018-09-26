@@ -512,6 +512,9 @@ public class vfIECEBC_TestSuite1 {
         newAccount.Name = 'Hello World';
         insert newAccount;
         Contact newContact = new Contact();
+		newContact.FirstName = 'Name';
+        newContact.Phone='5142640908';
+        newContact.Email='dashboard@iata.com';
         newContact.LastName = 'w00t';
         insert newContact;
         
@@ -543,6 +546,10 @@ public class vfIECEBC_TestSuite1 {
             layoutController.getSProdGSS();
             layoutController.getSContactEmail();
             layoutController.getSContactSubject();
+            layoutController.logout();
+            Boolean newNow=layoutController.showRenewNow;
+            String pageUrl=layoutController.renewalPageUrl;
+            layoutController.getIsUserLoggedIn();
             
             vfIECEBC_Dashboard dashboardCon = new vfIECEBC_Dashboard();
             System.assertEquals(4, dashboardCon.campaignsCount);
@@ -736,6 +743,7 @@ insert gpavs;*/
             recipientEditCon.validateNewFilter();
             System.assertEquals(3, recipientEditCon.newListStepNumber);
             
+            recipientEditCon.newFilter.Name = 'EBC_TEST_RUN';
             Integer cnt = vfIECEBC_RecipientEdit.getNewFilterCnt(recipientEditCon.getNewFilterJSON());
             System.assert(cnt > 0);
             recipientEditCon.newFilter.Number_of_Recipients__c = cnt;
@@ -829,6 +837,10 @@ insert gpavs;*/
             
             templateExtCon.selectedTemplate = templateExtCon.customHtmlTemplate.Id;
             templateExtCon.upsertDesignAndContinue();
+            // next() coverage
+            PageReference nextStep = campaignExtCon.next();
+            // previous() coverage
+            PageReference prevStep = campaignExtCon.previous();
         }
     }
     

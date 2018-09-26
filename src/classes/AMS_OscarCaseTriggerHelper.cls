@@ -6,39 +6,48 @@ public class AMS_OscarCaseTriggerHelper {
 
     //used to assign new created oscars to one of 5 queues, pending on the region.
     //public static List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('Africa_ME_OSCAR','Americas_OSCAR','Asia_Pacific_OSCAR','China_N_Asia_OSCAR','Europe_OSCAR')];
-    public static List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('AgencyManagementAP','AgencyManagementAfricaME','AgencyManagementAmericas','AgencyManagementChinaNAsia','CasesACCEuropeOffOnshore')];
+    public static Map<String, Group> queues{
+        get{
+            if(queues == null){
+                queues = new Map<String, Group>();
+                for(Group q : [SELECT Id, DeveloperName FROM Group WHERE  Type = 'Queue' AND DeveloperName IN ('AgencyManagementAP','AgencyManagementAfricaME','AgencyManagementAmericas','AgencyManagementChinaNAsia','CasesACCEuropeOffOnshore')]) queues.put(q.DeveloperName, q);
+            } 
+            return queues;
+        }
+        private set;
+    }
 
     private static Id OSCARCaseRecordTypeID = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
-	//remove OSCAR from child case, if case is being cloned from OSCAR parent
+    //remove OSCAR from child case, if case is being cloned from OSCAR parent
     public static void removeOscarFromChild(list<Case> triggerNew){
 
-		List<Case> casestoremoveoscar = new List<Case>();
-	    List<Id> parentcaseIds = new List<Id>();
+        List<Case> casestoremoveoscar = new List<Case>();
+        List<Id> parentcaseIds = new List<Id>();
 
-		//check parent record type
-		for(Case c: triggerNew)
-        	if(c.ParentId != null)
-            	parentcaseIds.add(c.ParentId);
+        //check parent record type
+        for(Case c: triggerNew)
+            if(c.ParentId != null)
+                parentcaseIds.add(c.ParentId);
                 
         Map<Id, Case> parentCase = new Map<Id, Case>([SELECT Id, Oscar__c, RecordTypeId FROM Case WHERE Id IN :parentcaseIds AND RecordTypeId = :OSCARCaseRecordTypeID]);
         
         for(Case c: triggerNew){
-        	
-        	Case parent = parentCase.get(c.parentId);	
-        	
-        	if(c.ParentId != null && c.Oscar__c != null && parent.Oscar__c != null){
-            	if(c.RecordTypeId == OSCARCaseRecordTypeID && parent.RecordTypeId == OSCARCaseRecordTypeID && parent.Oscar__c <> null && c.Oscar__c == parent.Oscar__c)
-                	casestoremoveoscar.add(c);
-        	}         
+            
+            Case parent = parentCase.get(c.parentId);   
+            
+            if(c.ParentId != null && c.Oscar__c != null && parent != null && parent.Oscar__c != null){
+                if(c.RecordTypeId == OSCARCaseRecordTypeID && parent.RecordTypeId == OSCARCaseRecordTypeID && parent.Oscar__c <> null && c.Oscar__c == parent.Oscar__c)
+                    casestoremoveoscar.add(c);
+            }         
         }
         
-	    for(Case c: casestoremoveoscar){ 
+        for(Case c: casestoremoveoscar){ 
           
                 c.Oscar__c = null;
         }
-	}
-	
+    }
+    
     public static void OSCARCaseCreationRules(list<Case> triggerNew){
 
         List<Case> oscarCases = new List<Case>();
@@ -115,7 +124,7 @@ public class AMS_OscarCaseTriggerHelper {
         List<Case> oscarCases = new List<Case>();
 
          for(Case c : triggerNew){
-            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID &&  (c.ParentId == null || (c.ParentId != null && c.Reason1__c == 'CLO - Closure')) ){
+            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID) { // &&  (c.ParentId == null || (c.ParentId != null && c.Reason1__c == 'CLO - Closure')) ){ --> CB - 6 APR 2017 - AMS Enhancements AMSU-2
                 //need to verify just for the first case on the trigger, since the second one will throw an error
                 if(oscarIds.add(c.Oscar__c)) oscarCases.add(c);
             }
@@ -124,7 +133,7 @@ public class AMS_OscarCaseTriggerHelper {
         if(oscarCases.isEmpty()) return;
 
         List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
-        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c FROM AMS_OSCAR__c where Id = :oscarIds]);
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c FROM AMS_OSCAR__c where Id = :oscarIds]);
 
         for(Case c : oscarCases){
             if(!oscars.containsKey(c.Oscar__c)) continue;
@@ -136,6 +145,11 @@ public class AMS_OscarCaseTriggerHelper {
                 System.debug(loggingLevel.FINE, '____ [cls AMS_OscarCaseTriggerHelper - populateOscarFields] Renaming OSCAR - ' + oscar.Id + '('+c.CaseNumber+')');
                 
                 oscar.Name = c.CaseNumber;
+
+                if(c.QuantityProduct__c != null && oscar.Certificate_Quantity__c != Integer.valueOf(c.QuantityProduct__c)){
+                    oscar.Certificate_Quantity__c = Integer.valueOf(c.QuantityProduct__c);
+                }
+
                 changed = true;
             }
 
@@ -161,81 +175,46 @@ public class AMS_OscarCaseTriggerHelper {
 
     }
 
-    public static void assignOscarToRegionQueue(List<AMS_OSCAR__c> triggerNew){
+    public static void assignOscarToRegionQueue(List<AMS_OSCAR__c> oscars){
+        Set<Id> accIds = new Set<Id>();
+        for(AMS_OSCAR__c o : oscars) accIds.add(o.Account__c);
 
-        String americas = null;
-        String europe = null;
-        String china = null;
-        String africa = null;
-        String asia = null;
-
-        for(Group q:queues){
-
-            if(q.DeveloperName.equals('AgencyManagementAmericas'))
-                americas = q.id;
-            else if(q.DeveloperName.equals('CasesACCEuropeOffOnshore'))
-                europe = q.id;
-            else if(q.DeveloperName.equals('AgencyManagementChinaNAsia'))
-                china = q.id;
-            else if(q.DeveloperName.equals('AgencyManagementAfricaME'))
-                africa = q.id;
-            else if(q.DeveloperName.equals('AgencyManagementAP'))
-                asia = q.id;
-        }
-
-        Set<Id> agencyids = new Set<Id>();
-        
-            for(AMS_OSCAR__c o:triggerNew){
-                if(o.Account__c != null)
-                    agencyids.add(o.Account__c);
-            }
-
-        Map<Id,Account> mapAgencies = new Map<Id,Account>([select id, IATA_ISO_Country__r.Region__c from Account where id in :agencyids]);  
-        
-        for(AMS_OSCAR__c oscar: triggerNew){
-
-            Account ag = mapAgencies.get(oscar.Account__c);
-
-            if(ag == null)
-                continue;
-
-            String region = fetchRegion(ag);
-
-            if(region == null)
-                continue;
-
-            if(region.contains('Americas')){
-                oscar.OwnerId = americas;
-                System.debug('Oscar assigned to Americas queue.');
-            }
-            else if(region.contains('Europe')){
-                oscar.OwnerId = europe;
-                System.debug('Oscar assigned to Europe queue.');
-            }
-            else if(region.contains('China')){
-                oscar.OwnerId = china;
-                System.debug('Oscar assigned to China queue.');
-            }
-            else if(region.contains('Africa')){
-                oscar.OwnerId = africa;
-                System.debug('Oscar assigned to Africa queue.');
-            }
-            else if(region.contains('Asia')){
-                oscar.OwnerId = asia;
-                System.debug('Oscar assigned to Asia queue.');
-            }
-
-        }
-
+        assignOscarToRegionQueue(oscars, new Map<Id, Account>([SELECT Id, Region_formula__c FROM Account WHERE Id IN :accIds]));
     }
 
-    public static String fetchRegion(Account agency){
+    public static void assignOscarToRegionQueue(List<AMS_OSCAR__c> oscars, Map<Id, Account> accounts){
+        
+        for(AMS_OSCAR__c oscar: oscars){
 
-        if(agency.IATA_ISO_Country__r == null || agency.IATA_ISO_Country__r.Region__c == null)
-            return null;
+            Account ag = accounts.get(oscar.Account__c);
 
-        return agency.IATA_ISO_Country__r.Region__c;
+            if(ag == null) continue;
 
+            String region = ag.Region_formula__c;
+
+            if(String.isBlank(region)) continue;
+
+            if(region.contains('Americas')){
+                oscar.OwnerId = queues.get('AgencyManagementAmericas').Id;
+                System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - assignOscarToRegionQueue] Oscar assigned to Americas queue.');
+            }
+            else if(region.contains('Europe')){
+                oscar.OwnerId = queues.get('CasesACCEuropeOffOnshore').Id;
+                System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - assignOscarToRegionQueue] Oscar assigned to Europe queue.');
+            }
+            else if(region.contains('China')){
+                oscar.OwnerId = queues.get('AgencyManagementChinaNAsia').Id;
+                System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - assignOscarToRegionQueue] Oscar assigned to China queue.');
+            }
+            else if(region.contains('Africa')){
+                oscar.OwnerId = queues.get('AgencyManagementAfricaME').Id;
+                System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - assignOscarToRegionQueue] Oscar assigned to Africa queue.');
+            }
+            else if(region.contains('Asia')){
+                oscar.OwnerId = queues.get('AgencyManagementAP').Id;
+                System.debug(LoggingLevel.FINE, 'cls [AMS_OscarCaseTriggerHelper - assignOscarToRegionQueue] Oscar assigned to Asia queue.');
+            }
+        }
     }
 
 
@@ -359,29 +338,29 @@ public class AMS_OscarCaseTriggerHelper {
         return irr;
     }
 
-	
-	private static id RTSidra = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
-	private static id RTSidraLite = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
-	
-	public static void CreateRiskChangeCode(){
-		if(AMS_OscarCase_RiskMgmt.runOnce()){
-			map<id, case> mapNewCase = new map<id, case>();
-			map<id, case> mapOldCase = new map<id, case>();
-			
-			for(Case c : (List<Case>)Trigger.new){
-	            Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
-	            if(c.RecordTypeId == RTSidra || c.RecordTypeId == RTSidraLite){
-	            	mapNewCase.put(c.Id, c);
-	            	if(cOld!=null)
-	            		mapOldCase.put(cOld.id, cOld);
-	            }
-	        }
-	        system.debug('DTULLO Helper 334 --> ' + mapNewCase.size());
-	        if(!mapNewCase.isEmpty())
-	        	AMS_OscarCase_RiskMgmt.CreateRiskChangeCode(mapOldCase, mapNewCase);
-		}
-		
-	}
+    
+    private static id RTSidra = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+    private static id RTSidraLite = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+    
+    public static void CreateRiskChangeCode(){
+        if(AMS_OscarCase_RiskMgmt.runOnce()){
+            map<id, case> mapNewCase = new map<id, case>();
+            map<id, case> mapOldCase = new map<id, case>();
+            
+            for(Case c : (List<Case>)Trigger.new){
+                Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
+                if(c.RecordTypeId == RTSidra || c.RecordTypeId == RTSidraLite){
+                    mapNewCase.put(c.Id, c);
+                    if(cOld!=null)
+                        mapOldCase.put(cOld.id, cOld);
+                }
+            }
+            system.debug('DTULLO Helper 334 --> ' + mapNewCase.size());
+            if(!mapNewCase.isEmpty())
+                AMS_OscarCase_RiskMgmt.CreateRiskChangeCode(mapOldCase, mapNewCase);
+        }
+        
+    }
 
     /*AMS-1580 and AMS-1585*/
     public static void copyDataFromOscar() {
@@ -421,7 +400,7 @@ public class AMS_OscarCaseTriggerHelper {
 
         if(oscarCases.isEmpty()) return;
 
-        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c , Account__r.Category__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
+        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c, Location_Class__c, Account__r.Category__c, Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c, Type_of_change__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
         for(Case c : oscarCases){
             
@@ -437,12 +416,56 @@ public class AMS_OscarCaseTriggerHelper {
                 c.Type_of_customer__c = typeOfCustomer;
 
             String newCaseSubject = null;
-			
-			if(c.reason1__c != null)
-				newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+            
+            if(c.reason1__c != null)
+                if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGVR && oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
+                    newCaseSubject = c.reason1__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
+                else if((oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGFOP || oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGANNUALREVAL)  && (c.Origin == 'Internal User' || c.Origin == 'Email'))
+                    newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.IATACode__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGANNUALREVAL || c.Origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL || (oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGFOP && (c.Origin == 'Portal' || c.Origin == AMS_Utils.ANG_MASSIVE_FOP)))
+                    newCaseSubject = 'PCI DSS compliance - ' + oscars.get(c.Oscar__c).Account__r.IATACode__c + ' - ' +oscars.get(c.Oscar__c).Account__r.Name;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWHELITE)
+                    newCaseSubject = 'New Head Entity - GoLite - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWHESTANDARD)
+                    newCaseSubject = 'New Head Entity - GoStandard - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWAE)
+                    newCaseSubject = 'New Associate Entity - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
+                else if(oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
+                    newCaseSubject = c.reason1__c + ' - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.new_MSO || (c.Subject != null && c.Subject.startsWith('MSO code '))) //AMSU-119
+					newCaseSubject = null;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.COR && oscars.get(c.Oscar__c).Location_Class__c == 'I' && c.Origin == 'Portal') //AMSU-140
+                    newCaseSubject = 'Agency Changes - ' +oscars.get(c.Oscar__c).Account__r.Name;
+				else {
+                    AMS_OSCAR__c oscar = oscars.get(c.Oscar__c); 
+                    newCaseSubject = c.reason1__c + ' - ' + oscar.Account__r.Name;
+                    /*** AMSU-133 Start ***/
+                    if(oscar.Process__c == AMS_Utils.AGENCYCHANGES && isTypeOfChange(new Set<String> {AMS_Utils.LOCATION, AMS_Utils.LOCATION_INSPECTION}, oscar)) {
+                        newCaseSubject += String.isBlank(oscar.Account__r.IATACode__c) ? '' : ' - ' + oscar.Account__r.IATACode__c;
+                    } 
+                    /*** AMSU-133  End***/
+                }
 
-            if(newCaseSubject != null && c.Subject != newCaseSubject && AMS_OscarMigrationFromCase.changeSubject)
+            if(newCaseSubject != null && c.Subject != newCaseSubject && (c.Subject == null || !c.Subject.startsWith(newCaseSubject)) && AMS_OscarMigrationFromCase.changeSubject)
                 c.Subject = newCaseSubject;
         }
     }
+
+    /*** AMSU-133 Start ***/
+    private static Boolean isTypeOfChange(Set<String> changes, AMS_OSCAR__c oscar) {
+        Set<String> typesOfChange = new Set<String>();
+
+        if(!String.isBlank(oscar.Type_of_change__c)) {
+            typesOfChange.addAll(oscar.Type_of_change__c.split(';'));
+        }
+
+        for(String toc : changes) {
+            if(typesOfChange.contains(toc)) {
+                return true;  
+            }
+        }
+
+        return false;
+    }
+    /*** AMSU-133  End***/
 }

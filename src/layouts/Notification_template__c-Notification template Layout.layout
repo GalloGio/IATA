@@ -49,6 +49,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Alert_Contact_By_Push_Notification__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>CriticalNotification__c</field>
             </layoutItems>
         </layoutColumns>
@@ -74,6 +78,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DDS_Update_Request__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Identifier__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

@@ -15,9 +15,13 @@
 	public Boolean throwException;
 	public String batchName;
 	public List<String> extraIds;
+    Set<String> locationsSet;
+    Set<String> statusSet;
+    public Boolean isManual;
 
-	public void init(Boolean runNext, List<String> ids)
+	public void init(Boolean runNext, List<String> ids, Boolean manual)
 	{
+		isManual = manual==null ? false : manual;
 		batchName = 'Job 9: Agency Profile and Specialization'; 
 		processNextBatch = runNext;
 		extraIds = ids;
@@ -27,15 +31,18 @@
 		String fields = ' Id, GR_Item__c,GR_Code__c, AMS_Agency_Profile__c.Account__c';
 
 		//-- Query conditions 
-		String accreditation_condition = 'SELECT Related_Account__c '
-			+	'FROM Accreditation__c '
-			+	'WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\')'
-			+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
+		// String accreditation_condition = 'SELECT Related_Account__c '
+		// 	+	'FROM Accreditation__c '
+		// 	+	'WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\')'
+		// 	+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
 
 		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			, 'Account__r.IATACode__c != null'
 			, 'GR_Item__c !=null'
-			, 'Account__c IN ('+accreditation_condition+')'
+            , 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+            , 'Account__r.CNS_Agency__c = false'
+			, 'Account__r.CNS_Account__c = false'
+			// , 'Account__c IN ('+accreditation_condition+')'
 		}; 
 
 		if(extraIds!=null && extraIds.size() > 0) {
@@ -52,13 +59,21 @@
 
 			if(specificIds.size() > 0)	conditions.add('Id IN (\''+String.join(specificIds,'\', \'')+'\')');}
 		}else{
+            if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
+                statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
+                conditions.add('Account__r.Status__c IN  :statusSet ');
+
+            }
+            if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+                locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+                conditions.add('Account__r.Location_Class__c IN:  locationsSet');
+            }
 			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
 			if(batchInfo != null)
 			{
 				//Run only on the deltas 
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
-
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 				if(String.isNotBlank(batchInfo.Failed_Records__c))
 				{
 					// Reprocess failed records 
@@ -85,17 +100,17 @@
 	
 	global ams2gdp_Batch_AMS_Agency_Profile() 
 	{
-		init(false,null);		
+		init(false, null, null);		
 	}
 
-	global ams2gdp_Batch_AMS_Agency_Profile(Boolean runNext) 
+	global ams2gdp_Batch_AMS_Agency_Profile(Boolean runNext, Boolean manual) 
 	{
-		init(runNext,null);		
+		init(runNext,null, manual);	
 	}
 
-	global ams2gdp_Batch_AMS_Agency_Profile(Boolean runNext, List<String> extra) 
+	global ams2gdp_Batch_AMS_Agency_Profile(Boolean runNext, List<String> extra, Boolean manual)
 	{
-		init(runNext,extra);		
+		init(runNext,extra,manual);	
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) 
@@ -164,20 +179,9 @@
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-
-		//-- Start next batch 
-		if(processNextBatch) Database.executeBatch(new ams2gdp_Batch_Account(false)); //Re-run first batch
-
-		//-- Update Last Sync Info 
-		upsert new AMS_GDP_Batch__c(
-			Batch_Name__c=batchName, 
-			Last_Sync_Start_Date__c=syncStartedDate, 
-			Last_Sync_End_Date__c=Datetime.now(),
-			Total_Failed_Records__c = errorsCount,
-			Total_Records_Processed__c = totalRecords,
-			Failed_Records__c = String.join(failed_records, ';').left(32768)
-		) Batch_Name__c; 
-
+		// if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Account(false, isManual, true));
+        if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Authorization(true, isManual));
+		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);		
 		//--Send completion notification 
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);
 	}	

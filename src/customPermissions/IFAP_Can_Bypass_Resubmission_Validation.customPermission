@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>used in CaseChildHelper class</description>
+    <label>IFAP Can Bypass Resubmission Validation</label>
+</CustomPermission>

@@ -27,6 +27,62 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 	public String selectedTopic{get;set;}
 	public String selectedTopicLabel{get;set;}
 
+	public String currencyCode {get;set;}
+
+	/*** ENHCS-2018-7 ***/
+	public String productWrapper {
+		get {
+			Map<String,Object> ecommObj = new Map<String,Object>();
+			Map<String,Object> detailObj = new Map<String,Object>();
+			Map<String,Object> actionObj = new Map<String,Object> {'list' => selectedCategory.getLabel() + ' > ' + selectedTopicLabel};
+			Map<String,Object> prodObj = new Map<String,Object>();
+
+			ecommObj.put('detail', detailObj);
+			ecommObj.put('currencyCode', currencyCode);
+			detailObj.put('actionField', actionObj);
+			detailObj.put('products', new List<Object> {prodObj});
+
+			prodObj.put('id', product.ProductNumber);
+			prodObj.put('name', product.ProductName);
+			prodObj.put('category', product.Portfolio);
+			prodObj.put('price', product.unitPrice == null ? 0.00 : product.unitPrice);    
+            prodObj.put('brand', product.ProductCategory);        
+            prodObj.put('dimension1', product.Edition);
+            prodObj.put('dimension2', product.Language);
+            prodObj.put('dimension3', product.InventoryStatus);
+            prodObj.put('dimension4', product.AvailabilityDate);
+            prodObj.put('dimension5', product.Media);
+            prodObj.put('dimension6', product.EffectiveTo);
+
+			if(lstRelatedProducts != null && !lstRelatedProducts.isEmpty()){
+	            List<Object> lstRelatedProductsObj = new List<Object>();
+            	for(EComProduct_DTO relProdObjDtoAux : lstRelatedProducts){
+            		Map<String,Object> relProdObjMap = new Map<String,Object>();
+
+            		relProdObjMap.put('id', relProdObjDtoAux.ProductNumber);
+					relProdObjMap.put('name', relProdObjDtoAux.ProductName);
+					relProdObjMap.put('category', relProdObjDtoAux.Portfolio);
+					relProdObjMap.put('price', relProdObjDtoAux.unitPrice == null ? 0.00 : relProdObjDtoAux.unitPrice);    
+		            relProdObjMap.put('brand', relProdObjDtoAux.ProductCategory);        
+		            relProdObjMap.put('dimension1', relProdObjDtoAux.Edition);
+		            relProdObjMap.put('dimension2', relProdObjDtoAux.Language);
+		            relProdObjMap.put('dimension3', relProdObjDtoAux.InventoryStatus);
+		            relProdObjMap.put('dimension4', relProdObjDtoAux.AvailabilityDate);
+		            relProdObjMap.put('dimension5', relProdObjDtoAux.Media);
+		            relProdObjMap.put('dimension6', relProdObjDtoAux.EffectiveTo);
+
+					lstRelatedProductsObj.add(relProdObjMap);
+            	}
+            
+            	ecommObj.put('impressions', lstRelatedProductsObj);
+            }
+
+			return JSON.serialize(ecommObj);
+		}
+		set;
+	}
+
+
 	/**************************************************************************************************************
      *  IEC_ProductDetailsController: Class Constructor                                                           *
      *  Author: David Daboué                                                                                      *  
@@ -46,13 +102,16 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
      **************************************************************************************************************/
 	public PageReference onLoadAction()
 	{
+
+		currencyCode = 'USD'; //Fixed, if needed change here
+
 		String productNumber = (pageParams.containsKey('id')) ? pageParams.get('id') : '';
 		String searchCond = '  SAP_Material_Number__c=\''+productNumber+'\' ';
 		String recommendedCond = '  (SAP_Material_Number__c!=\''+productNumber+'\' AND Recommended__c=true) ';
 
-		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, true, searchCond, null, false);
+		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, true, searchCond, null, false, null);
 
-		List<EComProduct_DTO> lst_recommendedProducts = Product_Sel.getEComProduct(null, true, recommendedCond, 'Recommended_Ranking__c', false); 
+		List<EComProduct_DTO> lst_recommendedProducts = Product_Sel.getEComProduct(null, true, recommendedCond, 'Recommended_Ranking__c', false, null); 
 		recommendedProducts = new List<EComProduct_DTO>();
 		for(Integer x = 0; x < lst_recommendedProducts.size(); x++)
 		{
@@ -63,10 +122,14 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 			}
 		}
 
+		System.debug('products.size(): ' + products.size());
+
 		if(products.size() >0)
 		{
 			product = products[0];
 			Date dt = Date.today();
+
+			System.debug('product: ' + product);
 
 			if(product.ProductInfoId != null)
 		    {
@@ -78,31 +141,50 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 		    //set the list of Related Products
 		    lstRelatedProducts = new List<EComProduct_DTO>();
-		    List<Recommended_Product__c> lstRecommendedProducts = [Select Id, Related_Product__r.Name, Related_Product__r.Short_Description__c, 
-		    															Related_Product__c, Related_Product__r.SAP_Material_Number__c 
+		    List<Recommended_Product__c> lstRecommendedProducts = [Select Id,Related_Product__c
 		    														FROM Recommended_Product__c 
-		    														where Product__c =:product.ProductId
-                                                                      and Related_Product__r.Display_to_ECommerce__c = true
+		    														WHERE Product__c = :product.ProductId
+                                                                      AND Related_Product__r.Display_to_ECommerce__c = true
 		    													];
-		    if(lstRecommendedProducts != null && lstRecommendedProducts.size() > 0){
+		    if(lstRecommendedProducts != null && !lstRecommendedProducts.isEmpty()){
+		    	Set<Id> lstRelatedProductsIds = new Set<Id>();
+		    	for(Recommended_Product__c recomProd : lstRecommendedProducts){
+		    		lstRelatedProductsIds.add(recomProd.Related_Product__c);
+		    	}
+		    	lstRelatedProducts = Product_Sel.getEComProduct(new List<Id>(lstRelatedProductsIds), true, null, 'Id');
+		    }
+			
+
+		    /*if(lstRecommendedProducts != null && lstRecommendedProducts.size() > 0){
 		    	for(Recommended_Product__c recomProd : lstRecommendedProducts){
 		    		EComProduct_DTO ecomProd = new EComProduct_DTO();
 		    		ecomProd.ProductId = String.valueOf(recomProd.Related_Product__c).left(15);
 		    		ecomProd.ProductNumber = recomProd.Related_Product__r.SAP_Material_Number__c;
 		    		ecomProd.ProductName = recomProd.Related_Product__r.Name;
 		    		ecomProd.ProductShortDesc = recomProd.Related_Product__r.Short_Description__c;
+		    		ecomProd.Portfolio = recomProd.Related_Product__r.Product_Segment__c;
+		    		ecomProd.unitPrice = 0.00;
+		    		ecomProd.ProductCategory = recomProd.
+		    		ecomProd.Edition = recomProd.
+		    		ecomProd.Language = recomProd.
+		    		ecomProd.InventoryStatus = recomProd.
+		    		ecomProd.AvailabilityDate = recomProd.
+		    		ecomProd.Media = recomProd.
+		    		ecomProd.EffectiveTo = recomProd.
+
+
 		    		lstRelatedProducts.add(ecomProd);
 		    	}
-		    }
+		    }*/
 
 
 
 		    Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c, Display_Ecom_Topic__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
 
 
-			bIsInStock 		= 	product.InventoryStatus == 'In stock';
-			bIsOutOfStock 	= 	product.InventoryStatus != 'In stock';
-			bIsPreOrder 	= 	(product.InventoryStatus != 'In stock' && !product.Is_Electronic_Product);
+            bIsInStock         =     (product.InventoryStatus == 'In stock' || product.InventoryStatus == 'Available Now');
+            bIsOutOfStock     =     (product.InventoryStatus != 'In stock' && product.InventoryStatus != 'Available Now');
+            bIsPreOrder     =     ((product.InventoryStatus != 'In stock' && product.InventoryStatus != 'Available Now') && !product.Is_Electronic_Product);
 			bIsDirectSales 	= 	((product.RegularPrice==null && product.CustomerPrice==null) || !sfProduct.Sell_through_eCommerce__c);
 
 			//Product discounts
@@ -130,8 +212,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 	        //Validate Product compliance 
 	        validateCountryCompliance();
-            if (!bIsProductCompliant) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
-            
+            if (!bIsProductCompliant) //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
+            	addErrorMessage(labels.get('msgErrorProductNotCompliant'));
 			//*** get category
 			selectedCategory = new SelectOption('', '');
 			for(SelectOption so : categories)
@@ -163,6 +245,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		}
 
 
+		System.debug('selected_mega_menu = publications');
+
 		selected_mega_menu = 'publications';
 		return null;
 	}
@@ -173,19 +257,38 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
      **************************************************************************************************************/
 	public PageReference addToCart()
 	{
+		System.debug('addToCart()');
+
 		try
 		{
 			if (!bIsProductCompliant)
 	        {
+				System.debug('Product Is Not Compliant');
+
 	        	addErrorMessage(labels.get('msgErrorProductNotCompliant'));
 				return null;
 	        }
 	        else 
 	        {
-	        	return IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');	        	
+				System.debug('Product Is Compliant - invoking addCartToCookie');
+
+				
+				// Ecommerce Enhancements R2 - aosantos, do not redirect immediately when creating cookie, it might not be stored
+				if (newShoppingCart == false) {
+	        		PageReference resultPageRef = IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');
+				} else {
+					storeCart.addItem(product.ProductNumber, product.OrderQuantity, null);
+				}
+
+				return null;
 	        }
 		}	
-		catch(Exception e){addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());return null;}
+		catch(Exception e) {
+			System.debug(e.getStackTraceString());
+
+			addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());
+			return null;
+		}
 	}
 
 	/**************************************************************************************************************

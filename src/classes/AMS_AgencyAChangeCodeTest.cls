@@ -94,9 +94,9 @@ private class AMS_AgencyAChangeCodeTest {
 
         List<AMS_Pax_Accreditation_Form__c> accreditationLst = [SELECT ID, Name, Short_Name__c, Trade_Name__c, Branch_Office_City__c, Branch_Office_Email__c from AMS_Pax_Accreditation_Form__c];
 
-        List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c, Location_Class__c from AMS_OSCAR__c];
+        List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c, Location_Class__c, Is_NewGen__c  from AMS_OSCAR__c];
 
-        List<Account> accountLst = [SELECT ID, Status__c from Account ];
+        List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c from Account ];
 
         if(accreditationLst.isEmpty())
             System.assert(true,false);
@@ -176,4 +176,16 @@ private class AMS_AgencyAChangeCodeTest {
 		
 		system.assertEquals('91', [select Reason_Code__c from Agency_Applied_Change_code__c where id=:cc.Id].Reason_Code__c);
 	}
+
+     @isTest static void testEventsTriggerHandler(){
+        //test to increase coverage on unused events on triggerhandler
+        ANG_AgencyAChangeCodeTriggerHandler triggerhandler = new ANG_AgencyAChangeCodeTriggerHandler();
+        triggerhandler.onBeforeInsert();
+        triggerhandler.onBeforeUpdate();
+        triggerhandler.onAfterUpdate();
+        triggerhandler.onBeforeDelete();
+        triggerhandler.onAfterDelete();
+
+    }
+
 }

@@ -30,11 +30,12 @@ public class HttpCall {
         HttpRequest req = new HttpRequest();      
         req.setEndpoint(endPoint + path);
 
-        if (method == HTTP_METHOD_PATCH) {
-            req.setHeader('X-HTTP-Method-Override', HTTP_METHOD_PATCH);
-            method = HTTP_METHOD_POST;
-        }
+        if (method == HTTP_METHOD_PATCH) { 
+            req.setHeader('X-HTTP-Method-Override', HTTP_METHOD_PATCH); 
+            method = HTTP_METHOD_PUT; 
+		}
         req.setMethod(method);
+        req.setTimeout(120000);
         req.setHeader('Accept', accept); // required by Azure AD
 
         if (!String.isBlank(this.authHeader)) { // required by Concur
@@ -51,7 +52,11 @@ public class HttpCall {
             req.setHeader('SOAPAction', this.soapAction);
         }
 
+        System.debug(loggingLevel.FINEST, '____ [cls HttpCall - invoke] req - ' + req);
+
         HttpResponse res = http.send(req);
+
+        System.debug(loggingLevel.FINEST, '____ [cls HttpCall - invoke] res - ' + res);
         
         Integer httpStatusCode = res.getStatusCode();
         String respStr = res.getBody();
@@ -61,14 +66,17 @@ public class HttpCall {
         result.put('isSuccess', isSuccess);
         result.put('httpResponseStr', respStr);
         
+        System.debug(loggingLevel.FINEST, '____ [cls HttpCall - invoke] result - ' + result);
+        
         return result;
     }
 
     // Static helper methods    
     public static String buildParam(String path, String paramValue, String paramName) {
         if (paramValue != null) {
-            if (path.contains('?')) return '&' + paramName + '=' + paramValue;
-            else return '?' + paramName + '=' + paramValue;
+            String encodedParam = EncodingUtil.urlEncode(paramValue, 'UTF-8');
+            if (path.contains('?')) return '&' + paramName + '=' + encodedParam;
+            else return '?' + paramName + '=' + encodedParam;
         }
         return '';
     }

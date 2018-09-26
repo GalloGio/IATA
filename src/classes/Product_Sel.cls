@@ -79,7 +79,8 @@ public class Product_Sel extends Selector
             Product2.IEC_OrderBy__c,
             Product2.IEC_Page_Areas_of_Activity__c,
             Product2.IEC_Page_Content_Types__c,
-            Product2.IEC_Use_on_IATA_org__c
+            Product2.IEC_Use_on_IATA_org__c,
+            Product2.ImageFile__c
         };
     }
 
@@ -158,7 +159,7 @@ public class Product_Sel extends Selector
         {
             query = String.format(
                 'SELECT {0}, Refinement_Language__c,  IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c ' +
-                '   , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c ' + 
+                '   , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, Sell_through_eCommerce__c ' + 
                 'FROM {1} ' + 
                 'WHERE {2} ' + 
                 'ORDER BY {3} ' +
@@ -176,7 +177,7 @@ public class Product_Sel extends Selector
         {
             query = String.format(
                 'SELECT {0}, Refinement_Language__c,  IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c ' +
-                '   , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c ' + 
+                '   , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, Sell_through_eCommerce__c ' + 
                 'FROM {1} ' + 
                 'WHERE {2} ' + 
                 'ORDER BY {3} ' , 
@@ -765,11 +766,13 @@ public class Product_Sel extends Selector
             "IECProductRelated_Ctrl_Test", etc.
     ****************************************************************************************************/
     public static List<EComProduct_DTO> getEComProduct (List<Id> listProductId, Boolean includeBOM, String productCriteria, String productSort) {
-        return getEComProduct (listProductId, includeBOM, productCriteria, productSort, true);
+        return getEComProduct (listProductId, includeBOM, productCriteria, productSort, true, null);
     }
-    public static List<EComProduct_DTO> getEComProduct (List<Id> listProductId, Boolean includeBOM, String productCriteria, String productSort, Boolean onlyParent) {
-        System.debug('listProductId::'+listProductId);
 
+
+    public static List<EComProduct_DTO> getEComProduct (List<Id> listProductId, Boolean includeBOM, String productCriteria, String productSort, Boolean onlyParent, String customerType) {
+        System.debug('listProductId::'+listProductId);
+		
         Map<String, Map<String, String>> mapPickList_Label = new Map<String, Map<String, String>>();
         Map<String, PriceInfo_DTO> mapProductNumber_Price = new Map<String, PriceInfo_DTO>();
         Product_Sel exe = new Product_Sel();
@@ -782,16 +785,15 @@ public class Product_Sel extends Selector
                     + '      , (select IATA_ISO_Country__r.Name, Display_in_E_Com__c from Non_Compliance_Countries__r) '
                     + '     , IEC_Product_Information__c, IEC_Product_Rate_Plan_Information__c '
                     + '     , IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c '
-                    + '     , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c '
+                    + '     , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, imageFile__c '
                     + ' from Product2'
                     + ' where SAP_Material_Number__c != null and Display_to_ECommerce__c = true ' + Utility.getSeqTextSetting('ECommerce Products Filter', '')
                     + ((onlyParent) ? ' and IEC_Parent_Product__c = null' : '')
                     + ((listProductId == null || listProductId.size() == 0) ? '' : ' and Id in :listProductId');
                 
-        String customerType = User_Sel.getCustomerType(UserInfo.getUserId());
+        customerType = customerType == null ? User_Sel.getCustomerType(UserInfo.getUserId()) : customerType;
         
-        //if (UserInfo.getUserType() == 'PowerPartner')
-            SOQL += ' and (Restricted_Customer_Type__c = null' + (String.isBlank(customerType) ? '' : ' or Restricted_Customer_Type__c includes (:customerType)') + ')';
+        SOQL += ' and (Restricted_Customer_Type__c = null' + (String.isBlank(customerType) ? '' : ' or Restricted_Customer_Type__c includes (:customerType)') + ')';
         
         if (productCriteria != null & productCriteria != '')
             SOQL += ' and (' + productCriteria + ')';
@@ -803,9 +805,9 @@ public class Product_Sel extends Selector
         
         List<Product2> listProduct, listFilteredProduct;
         List<EComProduct_DTO> listEComProduct = new List<EComProduct_DTO>();
-        
+
         //*** get products list and prepare for additional information
-system.debug('SOQL::'+SOQL);
+        system.debug('SOQL::'+SOQL);
         listProduct = Database.query(SOQL);
 
         // Filter products based on compliance requirements
@@ -1006,4 +1008,47 @@ system.debug('SOQL::'+SOQL);
         //return list of product by ProductInfoId
         return mapProductInfoId_Product;
     }
+
+
+//susana
+ public static List<Product2> getListOfProducts (List<Id> listProductId, Boolean includeBOM, String productCriteria, String productSort, Boolean onlyParent) {
+        System.debug('listProductId::'+listProductId);
+
+        String SOQL = ' select Id, Name, IEC_Static_Cart_Quantity__c, Line_of_Business__c, Is_Electronic_Product__c, IsNewRelease__c, Short_Title__c, Keywords__c, Family, Charge_Shipping__c, SAP_Material_Number__c, Edition__c, Media__c, Language__c, Effective_From__c, Effective_To__c, Short_Description__c, Description'
+                    + '      , Sell_through_eCommerce__c, Inventory_Status__c, Expected_Availability_Date__c, Product_Segment__c, Category_Group__c, SAP_Media_Code__c, Display_Price__c,Image__c'
+                    + '      , Hide_Effective_To_Date_in_eCommerce__c, Is_Quantity_Integer__c, Mega_Menu__c, Refinement_Language__c '
+                    + ((!includeBOM) ? '' : ', (select Related_Product__c, Related_Product__r.Name, Related_Product__r.Media__c, Related_Product__r.Edition__c' +
+                                                    ', Related_Product__r.Effective_From__c, Related_Product__r.Effective_To__c, Related_Product__r.SAP_Material_Number__c, Related_Product__r.Short_Description__c' +
+                                              ' from Product_BOM__r order by Related_Product__r.Name)')
+                    + '      , (select IATA_ISO_Country__r.Name, Display_in_E_Com__c from Non_Compliance_Countries__r) '
+                    + '     , IEC_Product_Information__c, IEC_Product_Rate_Plan_Information__c '
+                    + '     , IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c '
+                    + '     , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, ImageFile__c '
+                    + ' from Product2'
+                    + ' where SAP_Material_Number__c != null and Display_to_ECommerce__c = true ' + Utility.getSeqTextSetting('ECommerce Products Filter', '')
+                    + ((onlyParent) ? ' and IEC_Parent_Product__c = null' : '')
+                    + ((listProductId == null || listProductId.size() == 0) ? '' : ' and Id in :listProductId');
+                
+        String customerType = User_Sel.getCustomerType(UserInfo.getUserId());
+        
+        //if (UserInfo.getUserType() == 'PowerPartner')
+            SOQL += ' and (Restricted_Customer_Type__c = null' + (String.isBlank(customerType) ? '' : ' or Restricted_Customer_Type__c includes (:customerType)') + ')';
+        
+        if (productCriteria != null & productCriteria != '')
+            SOQL += ' and (' + productCriteria + ')';
+        
+        if (productSort != null & productSort != '')
+            SOQL += ' order by ' + productSort;
+        else
+            SOQL += ' order by Name';
+        
+        List<Product2> listProducts;
+
+        system.debug('SOQL::'+SOQL);
+        listProducts = Database.query(SOQL);
+
+        return listProducts;
+    }
+
+     
 }

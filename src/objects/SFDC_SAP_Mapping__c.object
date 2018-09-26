@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -110,106 +107,130 @@
         <fullName>SFDC_Order_Channel__c</fullName>
         <externalId>false</externalId>
         <label>SFDC Order Channel</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Central Direct Sales</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>eCommerce</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Telesales</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Central Direct Sales</fullName>
+                    <default>false</default>
+                    <label>Central Direct Sales</label>
+                </value>
+                <value>
+                    <fullName>eCommerce</fullName>
+                    <default>false</default>
+                    <label>eCommerce</label>
+                </value>
+                <value>
+                    <fullName>Telesales</fullName>
+                    <default>false</default>
+                    <label>Telesales</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>SFDC_Order_Source__c</fullName>
         <externalId>false</externalId>
         <label>SFDC Order Source</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Inbound call</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Outbound Solicitation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>eCommerce</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>eBroadcast Campaign</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA event</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non-IATA event</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Word of mouth</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Automatic Renewal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Subscription Renewal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Inbound call</fullName>
+                    <default>false</default>
+                    <label>Inbound call</label>
+                </value>
+                <value>
+                    <fullName>Outbound Solicitation</fullName>
+                    <default>false</default>
+                    <label>Outbound Solicitation</label>
+                </value>
+                <value>
+                    <fullName>eCommerce</fullName>
+                    <default>false</default>
+                    <label>eCommerce</label>
+                </value>
+                <value>
+                    <fullName>eBroadcast Campaign</fullName>
+                    <default>false</default>
+                    <label>eBroadcast Campaign</label>
+                </value>
+                <value>
+                    <fullName>IATA event</fullName>
+                    <default>false</default>
+                    <label>IATA event</label>
+                </value>
+                <value>
+                    <fullName>Non-IATA event</fullName>
+                    <default>false</default>
+                    <label>Non-IATA event</label>
+                </value>
+                <value>
+                    <fullName>Word of mouth</fullName>
+                    <default>false</default>
+                    <label>Word of mouth</label>
+                </value>
+                <value>
+                    <fullName>Automatic Renewal</fullName>
+                    <default>false</default>
+                    <label>Automatic Renewal</label>
+                </value>
+                <value>
+                    <fullName>Subscription Renewal</fullName>
+                    <default>false</default>
+                    <label>Subscription Renewal</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>SFDC_Order_Type__c</fullName>
         <externalId>false</externalId>
         <label>SFDC Order Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Order</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bulk Order</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Subscription</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Renewal Notification</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cart</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Event Auto-Renew</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Order</fullName>
+                    <default>false</default>
+                    <label>Order</label>
+                </value>
+                <value>
+                    <fullName>Bulk Order</fullName>
+                    <default>false</default>
+                    <label>Bulk Order</label>
+                </value>
+                <value>
+                    <fullName>Subscription</fullName>
+                    <default>false</default>
+                    <label>Subscription</label>
+                </value>
+                <value>
+                    <fullName>Renewal Notification</fullName>
+                    <default>false</default>
+                    <label>Renewal Notification</label>
+                </value>
+                <value>
+                    <fullName>Cart</fullName>
+                    <default>false</default>
+                    <label>Cart</label>
+                </value>
+                <value>
+                    <fullName>Event Auto-Renew</fullName>
+                    <default>false</default>
+                    <label>Event Auto-Renew</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>SFDC SAP Mapping</label>
     <listViews>
@@ -235,4 +256,5 @@
     <pluralLabel>SFDC SAP Mapping</pluralLabel>
     <searchLayouts/>
     <sharingModel>Read</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -2,7 +2,7 @@
 private class Product_Sel_Test
 {
     @isTest (seeAllData=true)
-    static void test_getProductPriceInfo()
+    static void test_getProductPriceInfo_and_getProductByZproduct()
     {
         TestDataGenerator.generateApexSetting(); 
 
@@ -75,10 +75,19 @@ private class Product_Sel_Test
         insert zTiers;
 
 
+        //IEC_Product_Rate_Plan_Information__c myRatePlanInfo = 
+        List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, false, 'IEC_Product_Information__c != null AND IEC_Product_Rate_Plan_Information__c != null', null, true, null);
+        
+
         Test.startTest();
             Product_Sel pSelector = new Product_Sel(); 
             
-            Map<String, PriceInfo_DTO> result = pSelector.getProductPriceInfo(new Set<String>{'99999-99'}, null,null,null,true); 
+            Map<String, PriceInfo_DTO> result = pSelector.getProductPriceInfo(new Set<String>{'99999-99'}, null,null,null,true);
+
+            Map<Id,Product2> result1 = pSelector.getProductByZproduct(new List<Id>{product.Id});
+
+            Map<String, Product2> result2 = Product_Sel.getProductsByProductRatePlan(new set<String>{'123456789'});
+
         Test.stopTest();
 
         //-- Call method
@@ -90,24 +99,48 @@ private class Product_Sel_Test
 
     }
 
-    @isTest static void test_selectById() 
+    @isTest (seeAllData=true) static void test_selectById_and_getProductById_and_getProducts_and_getDirectSaleProducts() 
     {
         TestDataGenerator.generateUtilitySetting();
         
         //-- Generate Test Data
         Product2 ProdA = new Product2(
-            Name = 'Product A'
+            Name = 'Product A',
+            SAP_Material_Number__c = '1212',
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
         Product2 ProdB = new Product2(
-            Name = 'Product B'
+            Name = 'Product B',
+            SAP_Material_Number__c = '2323',
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
+
+        Product2 ProdC = new Product2(
+            Name = 'Product C',
+            SAP_Status_Code__c = 'A',
+            SAP_Product_Type_Code__c = '07',
+            Inventory_Status__c = 'In stock',
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House',
+            SAP_Material_Number__c = '4321',
+            Post_to_Ecommerce_Date__c = Date.newInstance(2016, 11, 20)
+        ); 
+
         insert new List<Product2>{ProdA, ProdB};
+        insert ProdC;
 
         //-- Call Method 
         Product_Sel prodSelector = new Product_Sel(); 
         List<Product2> result = prodSelector.selectById(new Set<Id>{ProdA.Id, ProdB.Id}); 
         List<Product2> result2 = prodSelector.selectById(new Set<Id>{ProdA.Id, ProdB.Id}, new List<String>{'Id'});
-
+        Map<Id,Product2> result3 = prodSelector.getProductById(new Set<Id>{ProdA.Id, ProdB.Id});
+        List<Product2> result4 = prodSelector.getProducts('SAP_Material_Number__c != null',null,null,null);
+        List<Product2> result5 = prodSelector.getProducts('SAP_Material_Number__c != null',null,5,0);
+        List<EComProduct_DTO> result6 = prodSelector.getDirectSaleProducts(null);
+        list<Product2> result7 = Product_Svc.productsToSendToSAP(new list<Product2>{ProdA,ProdB,ProdC});
+        Set<Id> result8 = Product_Sel.getNonCompliantProductId(new Set<Id>{ProdA.Id, ProdB.Id, ProdC.Id}, new Set<String>{'FR'}); 
+        Map<Id, Product2> result9 = prodSelector.getProductLastVersions(new Set<Id>{ProdA.Id, ProdB.Id,ProdC.Id});
+        List<Product2> result10 = Product_Sel.getMiniCartProducts(new Set<String>{ProdA.SAP_Material_Number__c,ProdB.SAP_Material_Number__c,ProdC.SAP_Material_Number__c});
+        List<Product2> result11 = Product_Sel.getListOfProducts(new List<Id>{ProdA.Id, ProdB.Id, ProdC.Id}, true, null, null, false);
         //-- Assert
         System.assertEquals(2, result.size());
 
@@ -120,6 +153,61 @@ private class Product_Sel_Test
         }
     }
 
+        @isTest (seeAllData=true) static void test_selectAll_and_findProducts_and_updateProductsByMaterialNumb() 
+    {
+        TestDataGenerator.generateUtilitySetting();
+        List<Product2> prods = new List<Product2>();
+        List<Product_Information__c> prodInfo = new List<Product_Information__c>();
+        
+        //-- Generate Test Data
+        Product2 ProdA = new Product2(
+            Name = 'Product A',
+            SAP_Status_Code__c = 'A',
+            SAP_Product_Type_Code__c = '07',
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House',
+            SAP_Material_Number__c = '4321',
+            Post_to_Ecommerce_Date__c = Date.newInstance(2016, 11, 20)
+        ); 
+        prods.add(ProdA);
+
+        Product2 ProdB = new Product2(
+            Name = 'Product B',
+            SAP_Status_Code__c = 'A',
+            SAP_Product_Type_Code__c = '07',
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House',
+            SAP_Material_Number__c = '1234',
+            Post_to_Ecommerce_Date__c = Date.newInstance(2016, 11, 20)
+        ); 
+        prods.add(ProdB);
+
+        insert prods;
+
+        // create dummy Zuora product
+        zqu__ZProduct__c prod = IECTestUtil.CreateSampleProduct('Product1');
+        prod.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
+        prod.ProductCategory__c = IECConstants.ProductCategory_SF_CACPRO;
+        insert prod;
+
+        // create dummy product category
+        Product_Category__c myProdCat = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_CACPRO, true);
+        myProdCat.Active__c = true;
+        insert myProdCat;
+
+        // create dummy product info
+        Product_Information__c myProdInfo = IECTestUtil.CreateSampleProductInfo('My product', myProdCat, prod);
+        myProdInfo.Product_Audience__c = IECConstants.ProductInformationAudience_MEMBERAIRLINE;
+        insert myProdInfo;
+
+        //-- Call Method 
+        Product_Sel prodSelector = new Product_Sel(); 
+        List<Product2> result = prodSelector.selectAll();
+        List<EComProduct_DTO> result2 = Product_Sel.findProducts('Product', null, null);
+        //List<Product2> result3 = Product_Sel.activeProducts();
+        Map<Id, Product2> result3 = Product_Sel.getProductsByProductInfo(new set<Id>{myProdInfo.Id});
+        //-- Assert
+
+    }
+
 
     @isTest (seeAllData=true)
     static void test_format2zObject()
@@ -130,7 +218,8 @@ private class Product_Sel_Test
             Description = 'Description for Product A',
             SAP_Material_Number__c = TestDataGenerator.generateProductCode(),
             Effective_From__c = TestDataGenerator.DEFAULT_EFFECTIVE_START_DATE,
-            Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE
+            Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE,
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
         Product2 ProdB = new Product2(
             Name = 'Product B',
@@ -138,7 +227,8 @@ private class Product_Sel_Test
             SAP_Material_Number__c = TestDataGenerator.generateProductCode(),
             Zuora_Id__c = TestDataGenerator.generateZuoraFakeId(),
             Effective_From__c = TestDataGenerator.DEFAULT_EFFECTIVE_START_DATE,
-            Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE
+            Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE,
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
 
         List<Product2> lst = new List<Product2>{ProdA, ProdB};
@@ -165,9 +255,9 @@ private class Product_Sel_Test
         TestDataGenerator.generateUtilitySetting();
 
         List<Product2> listProd = new List<Product2>();
-        listProd.add(new Product2(Name='Test 1', Product_Section__c='tst111', Division__c='division 1', Sales_Channel__c='channel 1',SAP_Material_Number__c='1245-78'));
-        listProd.add(new Product2(Name='Test 2', Product_Section__c='tst222', Division__c='division 2',Status__c='A',SAP_Material_Number__c='7845-12'));
-        listProd.add(new Product2(Name='Test 3', Division__c='division 1', Sales_Channel__c='channel 2',Status__c='A',SAP_Material_Number__c='3265-98'));
+        listProd.add(new Product2(Name='Test 1', Product_Section__c='tst111', Division__c='division 1', Sales_Channel__c='channel 1',SAP_Material_Number__c='1245-78', Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='Test 2', Product_Section__c='tst222', Division__c='division 2',Status__c='A',SAP_Material_Number__c='7845-12',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='Test 3', Division__c='division 1', Sales_Channel__c='channel 2',Status__c='A',SAP_Material_Number__c='3265-98',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
         insert listProd;
 
         new Product_Sel().updateProducts(listProd);

@@ -1,70 +1,51 @@
 ({
-	doInit : function(component, event, helper) {
-		var act = component.get("c.getGroups");
-		var action = component.get("c.getParticipants");
-		var accountId = component.get("v.accountId");
+    doInit: function(component, event, helper) {       
+        var action = component.get("c.getParticipantWrappers");
+        var accountId = component.get("v.accountId");
 
-var account = component.get("v.account");
-console.log(JSON.stringify(account));
+        var account = component.get("v.account");        
 
-		action.setParams({
-		 		"accountId": accountId
-	 	});
-	 	act.setCallback(this, function(a) {
-			var groups = a.getReturnValue();
-			var state = a.getState();
+        action.setParams({
+            "accountId": accountId
+        });
 
-			if (component.isValid() && state === "SUCCESS") {
-				component.set("v.Groups", groups);
-		 }
-		// 		 else if (state === "ERROR") {}
-		});
+        action.setCallback(this, function(a) {
+            var participants = a.getReturnValue();
+            var state = a.getState();            
 
-	 	action.setCallback(this, function(a) {
-        var participants = a.getReturnValue();
-		// var groupNames = component.get("v.GroupNames");
-		var groups = component.get("v.Groups");
-        // console.log(JSON.stringify(participants));
-        var state = a.getState();
-        var ParticipantWrappers = new Array();
-        // var ParticipantWrappers = component.get("v.ParticipantWrappers");
-        if (component.isValid() && state === "SUCCESS") {
-					for(var j = 0; j < groups.length; j++) {
-						var found = false;
-						for(var i = 0; i < participants.length; i++) {
-							 if(participants[i].Local_Governance__c === groups[j].Id) {
-								found = true;
-								var pWrapper = {
-									GroupId : participants[i].Local_Governance__c,
-									GroupName : participants[i].Local_Governance__r.Name,
-									Role : participants[i].Participant_Type__c.replace(/^\d+\s/,''),
-									Salutation : participants[i].Contact__r.Salutation,
-									FirstName : participants[i].Contact__r.FirstName,
-									LastName : participants[i].Contact__r.LastName,
-									Title : participants[i].Contact__r.Title
-								};
-								ParticipantWrappers.push(pWrapper);
-							 }
-							//  console.log(ParticipantWrappers[j].groupName);
-						}
-						if(!found ) {
-							var pWrapper = {
-								GroupId : groups[j].Id,
-								GroupName : groups[j].Name,
-								Role : 'Not at this time'
+            var ParticipantWrappers = new Array();
+
+            if (component.isValid() && state === "SUCCESS") {
+                for (var j = 0; j < participants.length; j++) {
+                    if (!participants[j].found) {
+                        var pWrapper = {
+                            GroupId: participants[j].groupId,
+                            GroupName: participants[j].groupName,
+                            Role: 'Not at this time'
+                        };
+						console.log('pWrapper -- ' + pWrapper);
+						ParticipantWrappers.push(pWrapper);
+					}
+					else{
+						var pWrapper = {
+							GroupId: participants[j].groupId,
+							GroupName: participants[j].groupName,
+							Role: participants[j].role.replace(/^\d + \s/, ''),
+							Salutation: participants[j].salutation,
+							FirstName: participants[j].firstName,
+							LastName: participants[j].lastName,
+							Title: participants[j].title,
+							Representing: participants[j].representing
 							};
-							ParticipantWrappers.push(pWrapper);
-						}
-
-					 }
-				}
-					// 		component.set("v.Participants", participants);
-				component.set("v.ParticipantWrappers", ParticipantWrappers);
-
-		// 		 else if (state === "ERROR") {}
-		 	});
-			$A.enqueueAction(act);
-			$A.enqueueAction(action);
-
-	}
+						console.log('pWrapper -- ' + pWrapper);
+						ParticipantWrappers.push(pWrapper);
+					} 				
+                }
+            }
+            component.set("v.ParticipantWrappers", ParticipantWrappers);
+            // 		 else if (state === "ERROR") {}
+        });
+        
+        $A.enqueueAction(action);
+    }
 })

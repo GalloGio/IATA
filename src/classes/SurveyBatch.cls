@@ -9,7 +9,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
   global list<Case> cases;
   global Set<Id> ContactIds;
   //global List<Email> MyEmailToBeSent;
-  global map<string, Id> templates = new map<string, Id>();
+  global map<string, Id> templates = new map<string, Id>(); 
   //global String RoleName;
   global string log;
 
@@ -43,11 +43,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
   // Mapping of the complaint queues per region
   global map<String, String> mapComplaintQueueNamePerRegion = new map<String, String> {
-    'Africa & Middle East' => 'CasesComplaintsAME',
-    'Americas' => 'Cases_Complaints_Americas',
+    'Africa & Middle East' => 'Cases_Complaints_GDC_MAD',
+    'Americas' => 'Cases_Complaints_GDC_MAD',
     'China & North Asia' => 'Cases_Complaints_BJS',
     'Asia & Pacific' => 'Cases_Complaints_SIN',
-    'Europe' => 'CasesOCITComplaints'
+    'Europe' => 'Cases_Complaints_GDC_MAD'
   };
 
   // List of the DeveloperNames of the Case record types that are in the scope of this customer recorvery process
@@ -115,7 +115,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
                                Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
                                Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
-                               Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,
+                               Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,Account.Source_System__c,Account.CNS_Account__c,
                                Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
                                WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
                                WhoClosedCase__r.Profile.Name, CNSCase__c
@@ -270,7 +270,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
     if (!Test.isRunningTest() && sender != null)  email.setOrgWideEmailAddressId(sender.value__c);
-    email.setBccAddresses(new list<string> {'guerreirom@iata.org', 'rovedaa@iata.org'});
+    email.setBccAddresses(new list<string> {'aertsr@iata.org','rovedaa@iata.org'});
     email.setPlainTextBody(log);
     email.setSubject('Instant survey email batch');
     Messaging.sendEmail(new list<Messaging.SingleEmailMessage> {email});
@@ -285,7 +285,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     // Send an email to the Apex job's submitter notifying of job completion.
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-    String[] toAddresses = new String[] {'guerreirom@iata.org','garciam@iata.org'};
+    String[] toAddresses = new String[] {'aertsr@iata.org','rovedaa@iata.org'};
     mail.setToAddresses(toAddresses);
     mail.setSubject('Instant Survey Customer Recovery batch status: ' + a.Status);
     mail.setPlainTextBody ('The batch process that processes the Instant Surveys with a score between 0 and 4 processed ' + a.TotalJobItems + ' survey batches (containing up to 10 surveys each) with ' + a.NumberOfErrors + ' failures.');
@@ -437,7 +437,13 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         else if (AccountCountry == 'Egypt' || AccountCountry == 'Iraq' || AccountCountry == 'Jordan' || AccountCountry == 'Libya' ||
                  AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
           template = templates.get('Clicktools_Contact_Email_CX_AM_AR');
-
+          //start INC325289
+        else if(c.Account.Source_System__c == 'WEBSTAR' && 
+                (AccountCountry == 'United States' ||  AccountCountry == 'US TERRITORIES AND POSSESS' || AccountCountry == 'Northern Mariana Islands') &&
+               (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) && 
+              (c.CNSCase__c != true || c.Account.CNS_Account__c != true) && c.Case_Group__c == 'Process'){
+                template = templates.get('Clicktools_Contact_Email_IATAN_CX_AM_EN_2');
+        } //end INC325289
 
         else if (
 
@@ -670,7 +676,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
          c.Origin != 'Email' && c.Origin != 'Fax' && c.Origin != 'Funds Management' &&
          c.Origin != 'Internal Case' && c.Origin != 'IATA internal user' && c.Origin != 'Letter' && c.Origin != 'Monthly Report' &&
          c.Origin != 'myIATA' && c.Origin != 'New ISS Deployment' && c.Origin != 'OLS' &&
-         c.Origin != 'Other' && c.Origin != 'Walk-in' && c.Origin != 'Web SAF' &&
+         c.Origin != 'Other' && c.Origin != 'Walk-in' && c.Origin != 'Web SAF' && c.Origin != 'E&F Client – Email to Case' &&
          !c.Phone_Redirected_to_Web__c &&
          c.Case_Group__c == 'Query' &&
          RoleName != null)
@@ -684,11 +690,32 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         integer n = countersMap.get(c.Region__c) == null ? 0 : countersMap.get(c.Region__c);
         countersMap.put(c.Region__c, ++n);
 
-    system.debug('RoleName ------>> ' + RoleName);
-    system.debug('ProfileName ------>> ' + ProfileName);
+        system.debug('RoleName ------>> ' + RoleName);
+        system.debug('ProfileName ------>> ' + ProfileName);
+
+
+        /* Anyone from the following roles can send instant surveys for the 3 regions "Africa & Middle East, Americas, Europe"
+        1- Africa & ME CS Manager
+        2- Africa & ME First Level CS Staff
+        3- Africa & ME Second Level CS Staff
+        4- Americas Customer Service Manager
+        5- Americas Customer Service Staff
+        6- MAD Hub CS Manager
+        7- MAD Hub CS staff 
+        */
+        Set<String> rolesCanSendSurveysTo3Regions = new Set<String> {'Africa & ME CS Manager',
+          'Africa & ME First Level CS Staff','Africa & ME Second Level CS Staff',
+          'Americas Customer Service Manager','Americas Customer Service Staff','MAD Hub CS Manager','MAD Hub CS staff'};
 
         if(RoleName.contains('Distribution - Airline Coding & MITA')){
           template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
+        }
+        //Inc325289
+        else if(c.Account.Source_System__c == 'WEBSTAR' && 
+              AccountCountry == 'United States' && 
+               (c.Account.Status__c != '' ||  c.Account.Status__c != null) && 
+              (c.CNSCase__c != true || c.Account.CNS_Account__c != true) ){
+          template = templates.get('Clicktools_Contact_Email_IATAN_CX_CS_EN_2');
         }
         else if (c.CNSCase__c == true) {
             template = templates.get('Clicktools_Contact_Email_EN_CNS');
@@ -696,18 +723,25 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
         else if (ProfileName.contains('FDS ICCS Administrator') || ProfileName.contains('FDS ICCS User')){
           template = templates.get('Clicktools_Contact_Email_CX_ICCS_EN2');
+        } 
+         //inc321684 verification for roleName = 'Staff - TIESS'
+        else if (RoleName.contains('Staff - TIESS')) {
+          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');   
         }
+        else if (RoleName.contains('E&F')) {
+          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
 
+        }
         else if (
           RoleName.contains('China & N. Asia Customer Service') &&
           c.Region__c == 'China & North Asia' &&
           AccountCountry == 'People\'s Republic of China'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_ZH');
+          template = templates.get('Clicktools_Contact_Email_CX_ZH_AUG17');
 
 
         else if (
-          RoleName.contains('Americas Customer Service') &&
+          rolesCanSendSurveysTo3Regions.contains(RoleName) &&
           c.Region__c == 'Americas' &&
           AccountCountry == 'Canada'
         )
@@ -715,21 +749,20 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
         else if (
-          (RoleName.contains('MAD Hub CS') &&
-           c.Region__c == 'Europe' &&
+          rolesCanSendSurveysTo3Regions.contains(RoleName) &&
+          ((c.Region__c == 'Europe' &&
            AccountCountry == 'France' )
           ||
-          ((RoleName.contains('Africa & ME First Level CS') || RoleName.contains('Africa & ME Second Level CS')) &&
-           c.Region__c == 'Africa & Middle East' &&
+          (c.Region__c == 'Africa & Middle East' &&
            (AccountCountry == 'Benin' || AccountCountry == 'Burkina Faso' || AccountCountry == 'Cameroon' || AccountCountry == 'Cape Verde'
             || AccountCountry == 'Tchad' || AccountCountry == 'Congo, the Democratic Republic of the' || AccountCountry == 'Congo (Brazzaville)'
             || AccountCountry == 'Equatorial Guinea' || AccountCountry == 'Gabon' || AccountCountry == 'Guinea'
             || AccountCountry == 'Guinea-Bissau' || AccountCountry == 'Côte d\'Ivoire' || AccountCountry == 'Mali' || AccountCountry == 'Mauritania'
             || AccountCountry == 'Niger' || AccountCountry == 'Central African Republic' || AccountCountry == 'Senegal' || AccountCountry == 'Togo'
             || AccountCountry == 'Morocco' || AccountCountry == 'Tunisia' || AccountCountry == 'Algeria')
-          )
+          ))
         )
-          template = templates.get('Clicktools_Contact_Email_CX_FR');
+          template = templates.get('Clicktools_Contact_Email_CX_FR_AUG17');
 
         /*
         else if(
@@ -741,55 +774,53 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         */
 
         else if (
-          RoleName.contains('MAD Hub CS') &&
+          rolesCanSendSurveysTo3Regions.contains(RoleName) &&
           c.Region__c == 'Europe' &&
           (AccountCountry == 'Austria' || AccountCountry == 'Germany')
         )
-          template = templates.get('Clicktools_Contact_Email_CX_DE');
+          template = templates.get('Clicktools_Contact_Email_CX_DE_AUG17');
 
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') || RoleName.contains('Staff - Indonesia')) &&
+          (RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Indonesia')) &&
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Indonesia'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_ID');
+          template = templates.get('Clicktools_Contact_Email_CX_ID_AUG17');
 
 
         else if (
-          RoleName.contains('MAD Hub CS') &&
+          rolesCanSendSurveysTo3Regions.contains(RoleName) &&
           c.Region__c == 'Europe' &&
           AccountCountry == 'Italy'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_IT');
+          template = templates.get('Clicktools_Contact_Email_CX_IT_AUG17');
 
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') || RoleName.contains('Staff - Japan')) &&
+          (RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Japan')) &&
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Japan'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_JA');
+          template = templates.get('Clicktools_Contact_Email_CX_JA_AUG17');
 
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') || RoleName.contains('Staff - Thailand')) &&
+          (RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Thailand')) &&
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Korea, Republic of'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_KO');
+          template = templates.get('Clicktools_Contact_Email_CX_KO_AUG17');
 
 
         else if (
-          ((RoleName.contains('MAD Hub CS') &&
-            c.Region__c == 'Europe' &&
+            rolesCanSendSurveysTo3Regions.contains(RoleName) &&
+            (c.Region__c == 'Europe' &&
             AccountCountry == 'Portugal') ||
-           (RoleName.contains('Americas Customer Service Staff') &&
-            c.Region__c == 'Americas' &&
-            AccountCountry == 'Brazil'))
-
+            (c.Region__c == 'Americas' &&
+            AccountCountry == 'Brazil')
         )
-          template = templates.get('Clicktools_Contact_Email_CX_PT');
+          template = templates.get('Clicktools_Contact_Email_CX_PT_AUG17');
 
         /*
         else if(
@@ -801,27 +832,26 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         */
 
         else if (
-          ((RoleName.contains('MAD Hub CS') &&
-            c.Region__c == 'Europe' &&
+            rolesCanSendSurveysTo3Regions.contains(RoleName) &&
+            (c.Region__c == 'Europe' &&
             (AccountCountry == 'Spain' || AccountCountry == 'Andorra')) ||
-           (RoleName.contains('Americas Customer Service Staff') &&
-            c.Region__c == 'Americas' &&
+            (c.Region__c == 'Americas' &&
             (AccountCountry == 'Ecuador' || AccountCountry == 'Costa Rica' || AccountCountry == 'Colombia' || AccountCountry == 'El Salvador' ||
              AccountCountry == 'Belize' || AccountCountry == 'Panama' || AccountCountry == 'Guatemala' || AccountCountry == 'Nicaragua' ||
              AccountCountry == 'Honduras' || AccountCountry == 'Chile' || AccountCountry == 'Dominican Republic' || AccountCountry == 'Mexico' ||
              AccountCountry == 'Bolivia' || AccountCountry == 'Peru' || AccountCountry == 'Venezuela' || AccountCountry == 'Argentina' ||
-             AccountCountry == 'Paraguay' || AccountCountry == 'Uruguay' )))
+             AccountCountry == 'Paraguay' || AccountCountry == 'Uruguay' ))
 
         )
-          template = templates.get('Clicktools_Contact_Email_CX_ES');
+          template = templates.get('Clicktools_Contact_Email_CX_ES_AUG17');
 
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') || RoleName.contains('Staff - Thailand')) &&
+          (RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Thailand')) &&
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Thailand'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_TH');
+          template = templates.get('Clicktools_Contact_Email_CX_TH_AUG17');
 
         /*
         else if(
@@ -833,40 +863,40 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         */
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') || RoleName.contains('Staff - Vietnam')) &&
+          (RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Vietnam')) &&
           c.Region__c == 'Asia & Pacific' &&
           AccountCountry == 'Vietnam'
         )
-          template = templates.get('Clicktools_Contact_Email_CX_VI');
+          template = templates.get('Clicktools_Contact_Email_CX_VI_AUG17');
 
         else if (
-          (RoleName.contains('Africa & ME First Level CS') || RoleName.contains('Africa & ME Second Level CS')) &&
+          rolesCanSendSurveysTo3Regions.contains(RoleName) &&
           c.Region__c == 'Africa & Middle East' &&
           (AccountCountry == 'Egypt' || AccountCountry == 'Iraq' || AccountCountry == 'Jordan' || AccountCountry == 'Libya' ||
            AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
         )
-          template = templates.get('Clicktools_Contact_Email_CX_AR');
+          template = templates.get('Clicktools_Contact_Email_CX_AR_AUG17');
 
         else if (
-          (RoleName.contains('A&P Customer Service Staff') &&
+          (RoleName.contains('A&P Customer Service') &&
            c.Region__c == 'Asia & Pacific' &&
            (AccountCountry == 'Philippines' || AccountCountry == 'India' || AccountCountry == 'Nepal' || AccountCountry == 'Bangladesh' ||
             AccountCountry == 'Pakistan' || AccountCountry == 'Singapore' || AccountCountry == 'Sri Lanka' || AccountCountry == 'Cambodia' ||
             AccountCountry == 'New Zealand' || AccountCountry == 'Malaysia' ))
           ||
-          (RoleName.contains('MAD Hub CS') &&
+          (rolesCanSendSurveysTo3Regions.contains(RoleName) &&
            c.Region__c == 'Europe' &&
            (AccountCountry != 'Israel' && AccountCountry != 'France' && AccountCountry != 'Germany' &&
             AccountCountry != 'Italy' && AccountCountry != 'Portugal' &&
             AccountCountry != 'Spain' && AccountCountry != 'Andorra' && AccountCountry != 'Russian Federation'))
           ||
-          (RoleName.contains('China & N. Asia Customer Service Staff') &&
+          (RoleName.contains('China & N. Asia Customer Service') &&
            c.Region__c == 'China & North Asia' &&
            (AccountCountry == 'Mongolia' || AccountCountry == 'Chinese Taipei' || AccountCountry == 'Hong Kong (SAR), China' ))
           ||
-          ((RoleName.contains('Africa & ME First Level CS') || RoleName.contains('Africa & ME Second Level CS')) &&
-           c.Region__c == 'Africa & Middle East' &&
-           (AccountCountry != 'Benin' && AccountCountry != 'Burkina Faso' && AccountCountry != 'Cameroon' && AccountCountry != 'Cape Verde' &&
+           (rolesCanSendSurveysTo3Regions.contains(RoleName) &&
+           (c.Region__c == 'Africa & Middle East' &&
+            AccountCountry != 'Benin' && AccountCountry != 'Burkina Faso' && AccountCountry != 'Cameroon' && AccountCountry != 'Cape Verde' &&
             AccountCountry != 'Tchad' && AccountCountry != 'Congo, the Democratic Republic of the' && AccountCountry != 'Congo (Brazzaville)' &&
             AccountCountry != 'Equatorial Guinea' && AccountCountry != 'Gabon' && AccountCountry != 'Guinea' && AccountCountry != 'Guinea-Bissau' &&
             AccountCountry != 'Côte d\'Ivoire' && AccountCountry != 'Mali' && AccountCountry != 'Mauritania' && AccountCountry != 'Niger' &&
@@ -874,18 +904,17 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             AccountCountry != 'Tunisia' && AccountCountry != 'Algeria' &&
             AccountCountry != 'Egypt' && AccountCountry != 'Iraq' && AccountCountry != 'Jordan' &&
             AccountCountry != 'Libya' && AccountCountry != 'Somalia' && AccountCountry != 'South Sudan' && AccountCountry != 'Sudan' &&
-            AccountCountry != 'Suriname' && AccountCountry != 'Syria'))
+            AccountCountry != 'Suriname' && AccountCountry != 'Syria')
           ||
-          (RoleName.contains('Americas Customer Service Staff') &&
-           c.Region__c == 'Americas' &&
+           (c.Region__c == 'Americas' &&
            (AccountCountry == 'HAITI' || AccountCountry == 'JAMAICA' || AccountCountry == 'CAYMAN ISLANDS' ||
-            AccountCountry == 'TURKS AND CAICOS ISLANDS' || AccountCountry == 'Trinidad and Tobago' || AccountCountry == 'BERMUDA' ))
+            AccountCountry == 'TURKS AND CAICOS ISLANDS' || AccountCountry == 'Trinidad and Tobago' || AccountCountry == 'BERMUDA' )))
           ||
-          (RoleName.contains('A&P Customer Service Staff') &&
+          (RoleName.contains('A&P Customer Service') &&
            c.Region__c == 'Asia & Pacific' &&
            AccountCountry == 'Australia')
         )
-          template = templates.get('Clicktools_Contact_Email_CX_EN');
+          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
         else {
           noNation3++;
           noNationlog3 += c.id + ', ';
@@ -901,7 +930,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                        !c.Contact.Email.contains('@iata.org') &&
                        !c.Contact.Email.contains('@salesforce.com')){
         template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
-      } //end INC292755
+      } //end INC292755      
 
       /****** Preparing the email *****/
       if (template != null) {
@@ -1014,7 +1043,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
       String RoleName = c.WhoClosedCase__r.UserRole.Name != null ? c.WhoClosedCase__r.UserRole.Name : 'none';
       system.debug(LoggingLevel.error, '#### case ' + c.Subject + '; Region: ' + c.Region__c + '; c.RecordTypeId: ' + c.RecordTypeId + '; cond2: ' + mapComplaintQueueNamePerRegion.get(c.Region__c) + '; cond3: ' + mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c)));
       // Only handle cases for the defined regions; if the case region is not mapped to a complaint queue then the case is out of scope
-      if (c.Region__c != null &&
+      if ( !RoleName.contains('Staff - TIESS') && c.Region__c != null &&
           mapComplaintQueueNamePerRegion.get(c.Region__c) != null &&
           mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c)) != null ) {
         system.debug(LoggingLevel.error, '################### updating fields on case ' + c.Subject);
@@ -1036,4 +1065,5 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
       Database.update(lstCasesToUpdate, false);
     }
   }
-}
+
+  }

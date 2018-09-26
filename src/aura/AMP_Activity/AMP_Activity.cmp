@@ -1,22 +1,26 @@
-<aura:component >
+<aura:component controller="AMP_KeyAccountPlanExtension">
     <aura:attribute name="activity" type="Objective__c"  />
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="index" type="Integer"  />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
+    <aura:attribute name="divisionValues" type="String[]" />
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
     <aura:attribute name="isError" type="Boolean" default="false"/>
     <aura:attribute name="errorMessage" type="String"/>
+    <aura:attribute type="String[]" name="statusValues"/>
+    <aura:attribute type="String" name="status"/>
+    
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
     <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
-
     <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleAccountIssueIdUpdate}"/>
     <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleAccountIssueIdClear}"/>
 
     <aura:registerEvent name="updateActivity" type="c:AMP_UpdateIssueOrPriority"/>
     <aura:registerEvent name="deleteActivity" type="c:AMP_UpdateIssueOrPriority"/>
     <aura:registerEvent name="showMilestones" type="c:AMP_UpdateIssueOrPriority"/>
-
+    <aura:registerEvent name="cancelAddActivity" type="c:AMP_DeleteIssueOrPriority"/>
+    
     <aura:handler event="c:AMP_KAPActivityError" action="{!c.HandleActivityError}"/>
 
     <!-- <tr> -->
@@ -49,15 +53,24 @@
 
             </aura:if>
         </td>
-        <td class="allignTop"><ui:inputText value="{!v.activity.Name}" class="slds-input required" required="true"/></td>
-        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Details__c}" class="slds-textarea required" rows="5"/></td>
+        <td class="allignTop"><ui:inputText value="{!v.activity.Name}" class="slds-input required" required="true" maxlength = "80"/></td>
         <td class="allignTop">
-            <ui:inputSelect aura:id="status" class="slds-select required">
-                <ui:inputSelectOption label="On Track" text="On Track" value="{!v.activity.Status__c == 'On Track'}" />
-                <ui:inputSelectOption label="On Hold" text="On Hold" value="{!v.activity.Status__c == 'On Hold'}" />
-                <ui:inputSelectOption label="Delayed" text="Delayed" value="{!v.activity.Status__c == 'Delayed'}" />
-                <ui:inputSelectOption label="Delivered" text="Delivered" value="{!v.activity.Status__c == 'Delivered'}" />
-                <ui:inputSelectOption label="Cancelled" text="Cancelled" value="{!v.activity.Status__c == 'Cancelled'}" />/>
+            <ui:inputSelect aura:id="divisionList" class="slds-select" >
+                
+            </ui:inputSelect>
+        </td>
+        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Details__c}" class="slds-textarea required" rows="5" maxlength="32768"/></td>
+        <td class="allignTop">
+            <ui:inputSelect aura:id="statusList" class="slds-select required" >
+
+                <aura:iteration items="{!v.statusValues}" var="sv">
+                  <aura:if isTrue="{!v.status == sv}">
+                      <ui:inputSelectOption text="{!sv}" value="true" label="{!sv}"/>
+                      <aura:set attribute="else">
+                          <ui:inputSelectOption text="{!sv}" label="{!sv}"/>
+                      </aura:set>
+                  </aura:if>
+                </aura:iteration>
             </ui:inputSelect>
         </td>
         <td class="allignTop"><ui:inputDate value="{!v.activity.Deadline__c}" aura:id="deadline"  class="slds-input required" displayDatePicker="true" /></td>
@@ -72,7 +85,7 @@
                              listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#connected_apps"
                              listIconClass="slds-icon-standard-connected-apps" />
         </td>
-        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Benefits_to_Account__c}" aura:id="benefits" class="slds-textarea" rows="5"/></td>
+        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Benefits_to_Account__c}" aura:id="benefits" class="slds-textarea" rows="5" maxlength= "1024"/></td>
 
         <aura:set attribute="else">
             <td>
@@ -89,10 +102,11 @@
                 </div>
             </td>
             <td><ui:outputText value="{!v.activity.Name}" class="slds-truncate"/></td>
+            <td><ui:outputText value="{!v.activity.Division__c}" /></td>
             <td><c:AMP_LongText text="{!v.activity.Details__c}" /></td>
             <td><ui:outputText value="{!v.activity.Status__c}" /></td>
             <td><ui:outputDate value="{!v.activity.Deadline__c}" class="slds-truncate"/></td>
-            <td><ui:outputText value="{!v.activity.Account_Issue_or_Priority__r.Name}" /></td>
+            <td><c:AMP_LongText text="{!v.activity.Account_Issue_or_Priority__r.Name}" /></td>
             <td><c:AMP_LongText text="{!v.activity.Benefits_to_Account__c}" /></td>
         </aura:set>
     </aura:if>

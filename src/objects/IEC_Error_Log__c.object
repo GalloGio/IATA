@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -142,52 +139,55 @@
         <description>Type of the log</description>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Error</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Warning</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Info</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Error</fullName>
+                    <default>true</default>
+                    <label>Error</label>
+                </value>
+                <value>
+                    <fullName>Warning</fullName>
+                    <default>false</default>
+                    <label>Warning</label>
+                </value>
+                <value>
+                    <fullName>Info</fullName>
+                    <default>false</default>
+                    <label>Info</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>IEC Error Log</label>
     <listViews>
-        <fullName>AllErrors</fullName>
+        <fullName>DataLoader_GDS_Errors</fullName>
         <columns>NAME</columns>
         <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
         <columns>Source__c</columns>
-        <columns>Displayed_Message__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>IATACODE__c</columns>
         <columns>CREATED_DATE</columns>
+        <columns>Stack_Trace__c</columns>
+        <columns>Extra_Information__c</columns>
         <filterScope>Everything</filterScope>
-        <label>Errors</label>
+        <label>DataLoader - Webstar GDS Errors</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>DataLoader_All_Errors</fullName>
+        <fullName>DataLoader_GSS_Errors</fullName>
         <columns>NAME</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>IATACODE__c</columns>
         <columns>Source__c</columns>
         <columns>CREATED_DATE</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Displayed_Message__c</columns>
+        <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>startsWith</operation>
-            <value>DataLoader</value>
-        </filters>
-        <label>DataLoader - All Errors</label>
+        <label>00 - ALL</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -217,8 +217,8 @@
         <columns>NAME</columns>
         <columns>CREATED_DATE</columns>
         <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
         <columns>Source__c</columns>
+        <columns>Errror_Message__c</columns>
         <columns>Displayed_Message__c</columns>
         <columns>Stack_Trace__c</columns>
         <filterScope>Everything</filterScope>
@@ -293,6 +293,45 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>SourceProcessSalesOrd</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Source__c</columns>
+        <columns>Displayed_Message__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source__c</field>
+            <operation>startsWith</operation>
+            <value>Order_Svc/processSalesOrderResponse</value>
+        </filters>
+        <label>Source_processSalesOrderResponse</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Today_No_SAP</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Source__c</columns>
+        <columns>Displayed_Message__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source__c</field>
+            <operation>notContain</operation>
+            <value>SAP</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Today No SAP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Webstar_Accreditation_Errors</fullName>
         <columns>NAME</columns>
         <columns>Errror_Message__c</columns>
@@ -309,7 +348,7 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>X1_My_View1</fullName>
+        <fullName>ZZ_AdHoc_Search</fullName>
         <columns>NAME</columns>
         <columns>Errror_Message__c</columns>
         <columns>IATACODE__c</columns>
@@ -317,21 +356,27 @@
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Source__c</field>
-            <operation>startsWith</operation>
-            <value>DataLoader</value>
+            <field>Errror_Message__c</field>
+            <operation>contains</operation>
+            <value>term</value>
         </filters>
+        <label>ZZ-AdHoc Search</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Zuora</fullName>
+        <columns>NAME</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Type__c</columns>
+        <columns>Source__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
         <filters>
             <field>Source__c</field>
             <operation>contains</operation>
-            <value>Accreditations</value>
+            <value>Zuora</value>
         </filters>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>6/10/2016 12:00 AM</value>
-        </filters>
-        <label>DataLoader - Accreditation errors</label>
+        <label>Zuora</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -348,4 +393,5 @@
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

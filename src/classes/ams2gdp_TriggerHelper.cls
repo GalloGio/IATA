@@ -114,10 +114,10 @@ public with sharing class ams2gdp_TriggerHelper
 		if(assoc_Affiliations.size() > 0) delete assoc_Affiliations;
 	}
 
-	public static void crossDeleteAccreditations(List<AMS_Inspection__c> inspections)
+	public static void crossDeleteAccreditations(List<Account> accounts)
 	{
 		Set<String> keys = new Set<String>();
-		for(AMS_Inspection__c i : inspections)	keys.add(i.Id+'GDP');
+		for(Account i : accounts)	keys.add(i.Id+'GDP');
 
 		List<Accreditation__c> accreditations = [SELECT Id FROM Accreditation__c WHERE AMS_GDP_Key__c IN :keys];
 		if(accreditations.size() > 0) delete accreditations;

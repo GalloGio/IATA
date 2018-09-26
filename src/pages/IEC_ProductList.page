@@ -8,17 +8,168 @@
 	<![endif]-->
 	<!--[if !IE]><!-->
 	
+    <script type="text/javascript">
+        function setHeightForCustomImages() {
+
+        var imageDivs = document.getElementsByClassName('fileImage');
+        console.log(imageDivs);
+        for(i = 0; i<imageDivs.length; i++){
+            var img = imageDivs[i].childNodes[0];
+            console.log("here: " , img);
+
+                img.style = "height: 100%;";
+
+        }
+
+        };
+    </script>
+
+    
 	<html lang="{!language}">
 	<!--<![endif]-->
 
 		<head>
+			<!-- Google Tag Manager -->
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PWSNSM3');
+            </script>
+            <!-- End Google Tag Manager -->
+            <script>
+                function getDevice() {
+                    if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                        return "Tablet";
+                    } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                        return "Mobile";
+                    } else {
+                        return "Desktop";
+                    }
+                }      
+
+                window.dataLayer = window.dataLayer||[];
+                dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "memberStatus": "{!userDetails.userMemberStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "breadcrumb": "Home > {!selectedCategory.label}", 
+                        "language": "{!language}"
+                    },
+                    "ecommerce": {
+                    	"currencyCode": "USD",
+                    	"impressions": {!productListStr}
+                    }                    
+                });
+
+                function sortByPush() {
+                	dataLayer.push({
+					    "event": "userAction",
+					    "eventCategory": "Category Pages",
+					    "eventAction": "Sort By",
+					    "eventLabel": $("[id$='sort_by'] option:selected").text()
+					});
+                }
+
+                function paginationPush(val) {
+                	dataLayer.push({
+					    "event": "userAction",
+					    "eventCategory": "Category Pages",
+					    "eventAction": "Pagination",
+					    "eventLabel": val
+					});
+                }
+
+                function productListPush() {
+                	 dataLayer[1].ecommerce = JSON.parse($('input[id$=\'ecommerce\']').val());
+                }
+
+                function refinePush() {
+                	var filtersStr = $("[id$='selectedFilters']").val();
+                	var p = '';
+
+                	if(filtersStr) {
+                		var x = filtersStr.split(':');						
+						for(var i=0; i< x.length; i++) {
+							var y = x[i].split('|');
+							p+= y[1] + ' - ';
+						}
+						p = p.substring(0,p.length-3);
+                	}
+
+                	dataLayer.push({
+					    "event": "userAction",
+					    "eventCategory": "Category Pages",
+					    "eventAction": "Refine by",
+					    "eventLabel": p
+					});
+
+					productListPush();
+                }
+
+                function clickProductPush(type, id, name) {
+                	if(type == 'In stock') {
+                		selectPush(id)
+                	} else {
+                		preOrderPush(name, id);
+                	}
+                }
+
+                function preOrderPush(name, id) {
+                	dataLayer.push({
+					    "event": "userAction",
+					    "eventCategory": "Category Pages",
+					    "eventAction": "Pre-Order",
+					    "eventLabel": name + " - " + id
+					});
+                }
+
+                function selectPush(productId) {
+                	var products = JSON.parse($('input[id$=\'ecommerce\']').val());
+                	var product;
+                	for(var i=0; i<products.length; i++) {
+                		if(products[i].id == productId) {
+                			product = products[i];
+                			break;
+                		}
+                	}
+
+                	if(product) {
+                		dataLayer.push({
+						    "event": "productClick",
+						    "ecommerce": {
+						        "actionField": {"list": "{!selectedCategory.label} > {! IF(selectedTopicLabel == null || selectedTopicLabel == '', 'All', selectedTopicLabel)}"},
+						        "click": {
+						            "products": [product]
+						        }
+						    }
+						});
+                	}
+                }
+            </script>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
 			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
 			<title>{!$Label.PageTitleProductList} - {!$Label.SiteTitle}</title>
 		</head>
 
-		<body data-media-size="">
+        <body data-media-size="" onload="setHeightForCustomImages();">
+        	<!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
 			<div id="js-breakpoint-finder">
 				<span class="device-xs screen-xsmall"/>
 				<span class="device-sm screen-small"/>
@@ -66,6 +217,7 @@
 									<h2 class="group-title">Category</h2>
 									<div class="show-more-less-container">
 					                    <ul class="list show-more-less js-toggle-more-less" data-is-display-all="false">
+					                        
 					                        <li class="{!IF(selectedTopic==null,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}">All</a></li>
 					                        
 					                        <apex:variable value="{!0}" var="counter" />
@@ -144,7 +296,7 @@
 												<apex:inputHidden id="selectedFilters" value="{!selectedFilters}" />
 
 						                    	<apex:commandButton styleClass="button secondary" value="{!$Label.Refine}" action="{!refine}" reRender="main_container" status="sortByStatus" 
-						                    		oncomplete="javascript:matchHeight2();"/>
+						                    		oncomplete="javascript:matchHeight2();refinePush();"/>
 						                    </div>
 						                </div>
 
@@ -153,19 +305,19 @@
 								</section>
 							</div>
 
-							<apex:outputPanel styleClass="main-container" id="main_container">
-								<apex:outputPanel layout="block" styleClass="alert error" rendered="{!products.size == 0}">
+							<apex:outputPanel styleClass="main-container" id="main_container">								
+								<apex:outputPanel layout="block" styleClass="alert error" rendered="{!ProductRecordsList.size == 0}">
 									NO PRODUCT FOUND
 								</apex:outputPanel>
 
-								<apex:outputPanel layout="block" styleClass="sort-by" rendered="{!products.size > 0}">
+								<apex:outputPanel layout="block" styleClass="sort-by" rendered="{!ProductRecordsList.size > 0}">
 					                <label for="sort_by" class="input-label">{!$Label.SortBy}</label>
 					                <div class="custom-user-input select">
 					                    <i class="icon chevron-down"></i>
 					                    <apex:form >
 											<apex:selectList id="sort_by" value="{!sortBy}" styleClass="user-input select" size="1">
 	                                			<apex:selectOptions value="{!sortingFields}"/>
-	                                			<apex:actionSupport event="onchange" oncomplete="javascript:matchHeight2();" 
+	                                			<apex:actionSupport event="onchange" oncomplete="javascript:matchHeight2();sortByPush();" 
 	                                				action="{!sortProducts}" status="sortByStatus" reRender="main_container" />
 	                            			</apex:selectList>
 	                            			<apex:actionStatus id="sortByStatus">
@@ -178,18 +330,31 @@
 					                </div>
 					            </apex:outputPanel>
 
-								<apex:outputPanel layout="block" id="productList" rendered="{!products.size > 0}">
-									<ul class="list product-list">
-										<apex:repeat value="{!products}" var="prod">
-											<li class="list-item">
+
+					            <apex:outputPanel layout="block" id="productList" rendered="{!ProductRecordsList.size > 0}">
+									
+								<apex:pageBlock title="Products List">
+								  <apex:form id="theForm">
+								  	<apex:inputHidden id="ecommerce" value="{!productListStr}" />
+								    <ul class="list product-list">
+								      <apex:repeat var="prod" value="{!ProductRecordsList}">
+								        	<li class="list-item">
 												<div class="item-wrapper">
 													<figure class="item-image">
-														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">
-															<img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" />
+														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
+                                                            <apex:outputPanel layout="block" style="height: 180px;" rendered="{!prod.imageFile != '' }">
+
+                                                            <div class="fileImage" layout="block" style="height: 180px;">
+                                                                <apex:outputText value="{!prod.imageFile}" escape="false"/>
+                                                            </div>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!prod.imageFile == '' }">
+                                                                <img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" />
+                                                            </apex:outputPanel>
 														</a>
 													</figure>
 													<h2 class="item-name">
-														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a>
+														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">{!prod.ProductName}</a>
 													</h2>
 													<h3 class="item-description-title">{!prod.Media}</h3>
                                                     <p class="item-description" style="{! IF(prod.ProductInfoId == null, '', 'display:none')}">
@@ -197,23 +362,19 @@
 														Language: {!prod.Language}
 													</p>
 													<p class="item-description">{!prod.ProductShortDesc}</p>
-													
+
 													<!-- Scenario 1: In Stock -->
-                                                    <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock' && prod.ProductInfoId == null}">
+													<apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!(prod.InventoryStatus == 'In stock' || prod.InventoryStatus == 'Available Now') && prod.ProductInfoId == null}">
 		                                                {!prod.InventoryStatus}
 		                                            </apex:outputPanel>
 		                                            <!-- Scenario 2: Out of Stock -->
-                                                    <apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!prod.InventoryStatus != 'In stock' && prod.ProductInfoId == null}">
+													<apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!(prod.InventoryStatus != 'In stock' && prod.InventoryStatus != 'Available Now') && prod.ProductInfoId == null}">
 		                                                {!prod.InventoryStatus}
 		                                            </apex:outputPanel>
 
-		                                            <!-- Scenario 3: Pre-order -->
-                                                    <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!AND(prod.InventoryStatus != 'In stock', NOT(prod.Is_Electronic_Product), prod.ProductInfoId == null)}">
-		                                                <span class="text">{!$Label.Button_Pre_Order}</span>
-		                                            </apex:outputPanel>
 
 		                                            <!-- Regular Price if exist -->
-                                                    <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null}">
+                                                    <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null && prod.Sell_Through_eCommerce}">
 														<apex:outputText styleClass="price-value" value="{0, number, currency}">
 		                                                    <apex:param value="{!prod.RegularPrice}" />
 		                                                </apex:outputText>
@@ -233,22 +394,47 @@
 														<span class="price-label">{!$Label.Direct_Sales}</span>
 													</apex:outputPanel>
 
-													<a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!$Label.Select}</a>
+                                                    <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" 
+                                                    	onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
+                                                    	{! IF(OR(prod.InventoryStatus == 'Out of stock',prod.InventoryStatus == 'Coming Soon'), $Label.PreOrderAddToCart, $Label.Button_Select)}
+                                                	</a>
 												</div>
 											</li>
-										</apex:repeat>
-									</ul>
+								      </apex:repeat>
+								      </ul>
+								      </apex:form>
+								      <apex:pageBlockSection >
+								    </apex:pageBlockSection>
+								    <!--
+								    <apex:form id="thePages" >
+								    <apex:panelGrid columns="5" style="margin: 0 auto;">
+								    	  <apex:commandButton styleClass="button secondary" value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" />
+								          <apex:commandButton styleClass="button secondary" value="Previous" action="{!previous}" disabled="{!NOT(hasPrevious)}"/>&nbsp;Page {!pageNumbers} of {!totalPages}&nbsp;
+								          <apex:commandButton styleClass="button secondary" value="Next" action="{!next}" disabled="{!NOT(hasNext)}"/>
+								          <apex:commandButton styleClass="button secondary" value="Last" action="{!last}" disabled="{!NOT(hasNext)}"/>
+								    </apex:panelGrid> 
+								    </apex:form>
+									-->
+								    <apex:pageBlockSection >
+								    </apex:pageBlockSection>
+								    
+								  
+								</apex:pageBlock>
+									
 								</apex:outputPanel>
 
 								<!-- Pagination AJAX functions -->
 								<apex:form id="frmPagination">
-									<apex:actionFunction name="gotoPage" reRender="main_container" action="{!gotoPage}" status="sortByStatus" oncomplete="javascript:matchHeight2();">
+									<apex:actionFunction name="gotoPage" reRender="main_container" action="{!gotoPage}" status="sortByStatus" 
+										oncomplete="javascript:matchHeight2(); productListPush(); paginationPush($('input[id$=\'pageNumber\']').val());">
 				                        <apex:param name="pageNum" value="" />
 				                    </apex:actionFunction>
 
-				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!gotoNext}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
-
-				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!gotoPrevious}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
+				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!Next}" status="sortByStatus" 
+				                    	oncomplete="javascript:matchHeight2(); productListPush(); paginationPush('Next');" />
+ 
+				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!Previous}" status="sortByStatus" 
+				                    	oncomplete="javascript:matchHeight2(); productListPush(); paginationPush('Previous');" />
 								</apex:form>
 								
 								<!-- Pagination -->
@@ -256,7 +442,7 @@
 					                <div class="page-number">
 					                    <ol class="list page-number">
 					                        <apex:variable var="btnPrevious" value="1" rendered="{!showPrevious}">
-					                        	<li class="prev"><a href="javascript:gotoPrevious();"><span class="reader-only">Previous</span><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+					                        	<li class="prev(currentPageNumber,' selected')"><a href="javascript:gotoPrevious();"><span class="reader-only">Previous</span><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
 											</apex:variable>
 											<apex:variable var="max" value="{!7}" />
 											<apex:variable var="firstDot" value="{!0}" />
@@ -273,13 +459,13 @@
 												</apex:variable>
 					                        </apex:repeat>
 					                        <apex:variable var="btnNext" value="1" rendered="{!showNext}">
-					                        	<li class="next"><a href="javascript:gotoNext();"><span class="reader-only">Next</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+					                        	<li class="next(currentPageNumber,' selected')"><a href="javascript:gotoNext();"><span class="reader-only">Next</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
 				                        	</apex:variable>
 					                    </ol>
 					                </div>
 					            </div>
-
-					            <div class="pagination mobile">
+								
+								<div class="pagination mobile">
 					            	<apex:variable var="btnPreviousMobile" value="1" rendered="{!showPrevious}">
 						                <div class="control prev">
 						                    <a href="javascript:gotoPrevious();">
@@ -316,12 +502,16 @@
 					                </apex:variable> 
 					            </div>
 
+
+
+
+
+
 							</apex:outputPanel>
-
+							
 							<apex:form >
-								<apex:inputHidden id="pageNumber" value="{!pageNumber}" />
+								<apex:inputHidden id="pageNumber" value="{!pageNumber}" />								
 							</apex:form>
-
 						</div>
 					</main>
 
@@ -342,6 +532,7 @@
 			<script type="text/javascript">
 
 				var matchHeight2 = function(){
+                    setHeightForCustomImages();
 					var h = 0;
 		            $(".product-list .list-item").each(function(i){
 		                if($(this).height() > h)
@@ -352,17 +543,18 @@
 		                $(this).height(h);
 		            });
 				}
-
-				//Reload page with selected filters
-				var jsBackButonRefine = function(){
-					backButonRefine();
-				}
+				
 
 				//Go to the giving page number
-				var jsGotoPage = function(page){
-					$('input[id$=pageNumber]').val(page);
-					gotoPage(page);
-				}
+                var jsGotoPage = function(page){
+                    $('input[id$=pageNumber]').val(page);
+                    gotoPage(page);
+                }
+ 
+                //Reload page with selected filters
+                var jsBackButonRefine = function(){
+                    backButonRefine();
+                }
 
 				$(document).ready(function(){
 
@@ -373,10 +565,10 @@
 				    }
 
 				    //If the page number is not empty go the the page number
-				    var pageNumber = $('input[id$=pageNumber]').val();
-				    if(pageNumber != ''){
-				    	gotoPage(pageNumber);
-				    }
+				    // var pageNumber = $('input[id$=pageNumber]').val();
+                    //if(pageNumber != ''){
+                    //    gotoPage(pageNumber);
+                    //}
 				    
 				    $('body').bind('change', function(eventObject){
 				    	//console.log(eventObject);
@@ -410,7 +602,7 @@
 
 					$('.js-select-deselect')
 						.on('click', '.refine-select-all', function(event) {
-							
+
 							event.preventDefault();
 							var targetID = $(this).data('target'),
 								targetElement = $(this).data('target-element'),

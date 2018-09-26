@@ -6,6 +6,8 @@ public class ISSP_Ctrl_ContentPage
   public String UserPortalRegion {get;Set;}
   public String UserPortalAccountSector {get;set;}
   public String PortalUserId {get;set;}
+  public List<ContentVersion> allCV;
+  public List<SelectOption> paginationSizeOptions{get;set;}
 
 
   //Library section
@@ -14,12 +16,21 @@ public class ISSP_Ctrl_ContentPage
 
   // the soql without the order and limit
   private String soql {get;set;}
+  public ApexPages.StandardSetController setCon {get;set;}
+  public String search {get;set;}
+  public String selectedValCat {get;set;}
+  public String selectedValPub {get;set;}
 
-  // the collection of contacts to display
-  public List<ContentVersion> ContentVersions {get;set;}
+  public List<ContentVersion> getContentVersions() {      
+      return (List<ContentVersion>) setCon.getRecords();
+    }
+
+  public Integer currentPageNumber{get;set;}
+  public List<Integer> pageList{get;set;}
+  public Integer size{get;set;}
 
   public String csHost {get;set;}
-
+  
   public String UserPortalCategory;
   public String UserPortalRecodType;
   // List of names of the libraries with visibility
@@ -28,22 +39,31 @@ public class ISSP_Ctrl_ContentPage
   public Set<Id> DocIds_set = new Set<Id>();
   public Set<Id> PublicDocIds_set = new Set<Id>();
 
-  public List<String> allCountriesList {get;set;}
-  public List<String> allFileTypesList {get;set;}
-  public List<String> allDocumentCategoryList {get;set;}
-  public List<String> allLanguagesList {get;set;}
+  public List<SelectOption> allCountriesList {get;set;}
+  public List<SelectOption> allFileTypesList {get;set;}
+  public List<SelectOption> allDocumentCategoryList {get;set;}
+  public List<SelectOption> allLanguagesList {get;set;}
 
   //CNS
   public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 
-
-  //Consetructor
+  //Constructor
   public ISSP_Ctrl_ContentPage(){
+    size=10;
+        paginationSizeOptions = new List<SelectOption>();
+        paginationSizeOptions.add(new SelectOption('10','10'));
+        paginationSizeOptions.add(new SelectOption('25','25'));
+        paginationSizeOptions.add(new SelectOption('50','50'));
+        paginationSizeOptions.add(new SelectOption('100','100'));
+    search = '';
+    selectedValPub = '';
+    selectedValCat = '';
     Init();
   }
 
   //Initialize Variables and Parameters
   public void Init(){
+    currentPageNumber = 1;    
     List<ContentWorkspaceDoc> ContentWorkspaceDoc_Lst;
 
     List<ContentWorkspaceDoc> PublicDocs_list;
@@ -159,7 +179,24 @@ public class ISSP_Ctrl_ContentPage
     for(ContentWorkspaceDoc doc : PublicDocs_list)
        PublicDocIds_set.add(doc.ContentDocumentId);
 
-    system.debug('susana PublicDocIds_set : ' + PublicDocIds_set);
+      system.debug('susana PublicDocIds_set : ' + PublicDocIds_set);
+    string filterSearch = '';
+    
+    if(search!='' && search != null && String.isNotBlank(search)){
+      system.debug('##RN search: ' + search);
+      filterSearch = 'and (Title like \'' + '%' + search +'%' +'\' or Description like \'' + '%'  +search +  '%' +'\' or Country_of_publication__c includes (\'' +search +   '\') or Language__c = \'' +search +'\')'; 
+    }
+    string filterCat = '';
+    string filterCountryP = '';
+    system.debug('##RN selectedValCat: ' + selectedValCat);
+    if(selectedValCat!='' && selectedValCat != null && String.isNotBlank(selectedValCat)){
+      system.debug('##RN filterCat: ' + filterCat);
+      filterCat = ' and Document_Category__c = \'' + selectedValCat + '\'';
+    }
+
+    if(selectedValPub!='' && selectedValPub != null && String.isNotBlank(selectedValPub)){
+      filterCountryP = ' and Country_of_publication__c includes (\'' + selectedValPub  + '\')';
+    }
 
    // init the controller and display some sample data when the page loads
     soql = 'select id, Title, Description, FileType,OwnerId,Owner.Name, VersionNumber ,Country_visibilty__c ,User_status_access__c,Region__c,TagCsv ,ContentSize,Language__c,ContentDocumentId,Document_Category__c,Country_of_publication__c,ContentUrl '+
@@ -168,20 +205,23 @@ public class ISSP_Ctrl_ContentPage
          ' AND User_status_access__c includes (\''+String.escapeSingleQuotes(UserPortalStatus)+'\')'+
          ' AND ((ContentDocumentId IN: DocIds_set'+
          ' AND Country_visibilty__c includes (\'All - Globally\',\''+String.escapeSingleQuotes(UserPortalCountry)+'\', \'All - Region '+String.escapeSingleQuotes(UserPortalRegion)+'\'))'+
-         ' OR (ContentDocumentId IN: PublicDocIds_set))';
+         ' OR (ContentDocumentId IN: PublicDocIds_set))' + filterSearch + filterCat + filterCountryP;
 
 
     system.debug('susana soql ' + soql);
-    ContentVersions = sortContentVersions(Database.query(soql));
-    system.debug('susana ContentVersions : ' + ContentVersions);
+    setCon = new ApexPages.StandardSetController(sortContentVersions(Database.query(soql)));
+    system.debug('##RN: ' + Database.query(soql));
+ //   system.debug('##RN setCon.getRecords(): ' + setCon.getRecords().size);
+    //ContentVersions = sortContentVersions(;
+    system.debug('susana ContentVersions : ' + getContentVersions());
 
     allCountriesList = getPicklistValues('ContentVersion', 'Country_of_publication__c');
     allLanguagesList = getPicklistValues('ContentVersion', 'Language__c');
     allFileTypesList = getPicklistValues('ContentVersion', 'FileType');
     allDocumentCategoryList = getPicklistValues('ContentVersion', 'Document_Category__c');
+    refreshPageSize();
 
 }
-
     /*
     private List<String> getPicklistValuesFromField(SObject field){
         List<String> options = new List<String>();
@@ -198,18 +238,18 @@ public class ISSP_Ctrl_ContentPage
         return options;
     }*/
 
-    public static List<String> getPicklistValues(String ObjectApi_name,String Field_name){
+    public static List<SelectOption> getPicklistValues(String ObjectApi_name,String Field_name){
 
-      List<String> lstPickvals=new List<String>();
+      List<SelectOption> lstPickvals=new  List<SelectOption>();
       Schema.SObjectType targetType = Schema.getGlobalDescribe().get(ObjectApi_name);//From the Object Api name retrieving the SObject
       Sobject Object_name = targetType.newSObject();
       Schema.sObjectType sobject_type = Object_name.getSObjectType(); //grab the sobject that was passed
       Schema.DescribeSObjectResult sobject_describe = sobject_type.getDescribe(); //describe the sobject
       Map<String, Schema.SObjectField> field_map = sobject_describe.fields.getMap(); //get a map of fields for the passed sobject
       List<Schema.PicklistEntry> pick_list_values = field_map.get(Field_name).getDescribe().getPickListValues(); //grab the list of picklist values for the passed field on the sobject
-
+      lstPickvals.add(new SelectOption('','-None-'));
         for (Schema.PicklistEntry a : pick_list_values) { //for all values in the picklist list
-          lstPickvals.add(a.getValue());//add the value  to our final list
+          lstPickvals.add(new SelectOption(a.getValue(),a.getValue()));//add the value  to our final list
         }
 
       return lstPickvals;
@@ -302,4 +342,103 @@ public class ISSP_Ctrl_ContentPage
         return retDocs;
     }
 
+    public void currentPage(){
+      setCon.previous();
+    }
+
+    //Returns the previous page of records
+    public void previous()
+    {
+        Integer pageNum = setCon.getPageNumber();
+        currentPageNumber = pageNum-1;
+        setCon.previous();
+    }
+ 
+    //Returns the next page of records
+    public void next()
+    {
+        Integer pageNum = setCon.getPageNumber();
+        currentPageNumber = pageNum+1;
+        system.debug('##RN next: ' + currentPageNumber);
+        setCon.next();
+    }
+
+    //Page number of the current displaying records
+    public Integer pageNumber
+    {
+        get
+        {
+            return setCon.getPageNumber();
+        }
+        set{
+          system.debug('##RN: ' + pageNumber);
+        }
+    }
+
+    public Integer pageSize{
+       get
+        {
+            return setCon.getPageSize();
+        }
+        set;
+    }
+
+    /** total number of pages for page */
+    public Integer getTotalPages(){
+     Decimal totalSize = setCon.getResultSize();
+     Decimal pageSize = setCon.getPageSize();
+     Decimal pages = totalSize/pageSize;
+     return (Integer)pages.round(System.RoundingMode.CEILING);
+    }
+
+    public void first() {
+       setCon.first();
+    }
+
+    public void last() {
+       setCon.last();
+    }
+
+    public Boolean hasNext
+    {
+        get
+        {
+            return setCon.getHasNext();
+        }
+        set;
+    }
+ 
+    //Boolean to check if there are more records before the present displaying records
+    public Boolean hasPrevious
+    {
+        get
+        {
+            return setCon.getHasPrevious();
+        }
+        set;
+    }
+
+     //Changes the size of pagination
+    public PageReference refreshPageSize() {
+         currentPageNumber = 1; 
+         setCon.setPageSize(size);
+         return null;
+    }
+
+
+    public PageReference navigateToPage() {
+      system.debug('##RN setCon.PageNumber: ' + setCon.getPageNumber());
+      system.debug('##RN pageNumber: ' + currentPageNumber);
+         setCon.setPageNumber(currentPageNumber);
+         return null;
+    }
+
+    public List<Integer> getPageNumberButtons(){      
+    system.debug('##RN getPageNumberButtons');
+    pageList = new List<Integer>();     
+        for(Integer i=1; i<getTotalPages()+1;i++){
+            pageList.add(i);
+        }
+        return pageList;
+    }
 }

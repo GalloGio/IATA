@@ -1,0 +1,9 @@
+<aura:documentation>
+	<aura:description>
+        <p>Component that fills contact information </p>
+        <p>If you want to receive information back, pass on the contact that will hold the email</p>
+        <p>This component registers the OneId_StepCompletion_EVT event, with information with which step was completed and handles the OneId_RequestCompletionCheck_EVT (to which it responds with the OneId_StepCompletion_EVT)</p>
+        
+        <!-- TODO: create base step component for the step, that receives an identifier. Use the identifier on the event. -->
+    </aura:description>
+</aura:documentation>

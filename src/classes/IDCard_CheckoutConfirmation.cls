@@ -312,6 +312,7 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
                     idCardApplicationCaseNumber = 'Loading...';
                 } else {
                     idCardApplicationCaseNumber = aCaseApplication[0].CaseNumber;
+                    postPardot();
                 }
             }
 
@@ -338,4 +339,27 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
         ref.setRedirect(true);
         return ref;
     }
+
+    public void postPardot() {
+        String payLoad = 'email=' + iDCardApplication.Email_admin__c;
+        payLoad += '&paymentDate=' + paymentDate;
+        payLoad += '&paymentAmount=' + paymentAmount;
+        payLoad += '&paymentCurrency=' + paymentCurrency;
+        payLoad += '&CaseNumber=' + idCardApplicationCaseNumber;
+
+        system.debug('post pardor payLoad: ' + payLoad);
+
+        String endpoint = 'http://go.updates.iata.org/l/123902/2017-02-09/7kl76z/';
+        Http h = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(endpoint);
+        req.setTimeout(60000);
+        req.setMethod('POST');
+        req.setBody(payLoad);
+        if(!Test.isRunningTest()){
+           HttpResponse res = h.send(req);
+        }
+    }
+
+
 }

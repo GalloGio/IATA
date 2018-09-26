@@ -1,3 +1,7 @@
+/**
+    Batch process to generate Airline Suspension cases for the input cases
+    Those cases are for the Airline Participation Team and Customer Service Team 
+**/
 global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchable<sObject>{
 	global final Id ParentCaseId;
 	Case ParentCase;
@@ -321,6 +325,8 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 	
 	global void finish(Database.BatchableContext BC){
 		if (!isCloseChildCases) {
+			list<Case> listInsertCases = new list<Case>();
+
 			// create one single case for AP for the suspension
 			Id RT_AirlineParticipationProcess_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IDFS_Airline_Participation_Process');
 			
@@ -343,9 +349,7 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 			Database.DMLOptions dmo = new Database.DMLOptions();
 			dmo.assignmentRuleHeader.useDefaultRule= true;
 			APchildCase.setOptions(dmo);
-			
-			insert APchildCase;
-			
+			listInsertCases.add(APchildCase);
 			
 			// create one single case for the Coding Team
 			Id RT_InternalCases_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE');
@@ -354,10 +358,10 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 			CodingChildCase.ParentId = ParentCase.Id;
 			CodingChildCase.AccountId = ParentCase.AccountId;
 			CodingChildCase.ContactId = Label.AirlineSuspensionContactId != 'null' ? Label.AirlineSuspensionContactId : null;
-			CodingChildCase.Subject = 'Airline suspension - ' + parentCase.Account.Name;
+			CodingChildCase.Subject = ParentCase.Subject;
 			CodingChildCase.Description = ParentCase.Description;
 			CodingChildCase.Origin = 'Internal Case';
-			CodingChildCase.CaseArea__c = 'Airline Management';
+			CodingChildCase.CaseArea__c = 'Airline Coding';
 			CodingChildCase.Reason1__c = 'Airline suspension';
 			CodingChildCase.RecordTypeId = RT_InternalCases_Id;
 			CodingChildCase.Status = 'Open';
@@ -367,8 +371,29 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 					
 			// Set the option to assign the new child case using the default Assignment Rule
 			CodingChildCase.setOptions(dmo);
+			listInsertCases.add(CodingChildCase);
+
+			// Third new case 
+			Case MitaCase = new Case();
+			MitaCase.ParentId = ParentCase.Id;
+			MitaCase.AccountId = ParentCase.AccountId;
+			MitaCase.ContactId = Label.AirlineSuspensionContactId != 'null' ? Label.AirlineSuspensionContactId : null;
+			MitaCase.Subject = ParentCase.Subject;
+			MitaCase.Description = ParentCase.Description;
+			MitaCase.Origin = 'Internal Case';
+			MitaCase.CaseArea__c = 'MITA & BIETA';
+			MitaCase.Reason1__c = 'Airline suspension';
+			MitaCase.RecordTypeId = RT_InternalCases_Id;
+			MitaCase.Status = 'Open';
+			MitaCase.Priority = 'Normal';
+			MitaCase.Region__c = ParentCase.Account.IATA_ISO_Country__r.Region__c;
+			MitaCase.BSPCountry__c = ParentCase.Account.IATA_ISO_Country__r.Name;
+					
+			// Set the option to assign the new child case using the default Assignment Rule
+			MitaCase.setOptions(dmo);
+			listInsertCases.add(MitaCase);
 			
-			insert CodingChildCase;
+			insert listInsertCases;
 		}
 		
 		

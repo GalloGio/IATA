@@ -1,96 +1,218 @@
 <apex:page controller="IEC_ShoppingCartController" action="{!onLoadAction}" language="{!language}" 
-	docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="false">
-	
-	<!--[if lte IE 8]>
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="false">
+    
+    <!--[if lte IE 8]>
     <html lang="en" class="ie lte-ie8 no-svg">
-	<![endif]-->
-	<!--[if IE 9]>
-	    <html lang="en" class="ie ie9">
-	<![endif]-->
-	<!--[if !IE]><!-->
-	
-	<html lang="{!language}">
-	<!--<![endif]-->
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
 
-		<head>
-			<meta charset="UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1"/>
-			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
-			<apex:stylesheet value="{!URLFOR($Resource.ValidationEngine, 'css/validationEngine.jquery.css')}" />
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
+   <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
 
-			<title>{!$Label.PageTitleShoppingCart} - {!$Label.SiteTitle}</title>
+   <script type="text/javascript">
+    j$ = jQuery.noConflict(); 
+   function blockme() {
+       j$.blockUI({ css: {
+           border: 'none',
+           padding: '15px',
+           backgroundColor: '#000',
+           '-webkit-border-radius': '10px',
+           '-moz-border-radius': '10px',
+           opacity: .5,
+           color: '#fff'
+           } }); 
+     }
 
-			<script type="text/javascript">
-                var deleteOrderItem = function(productCode){
+    function redirectToCustomerInformation() {
+        var current = window.self.location.href;
+        
+        var prefix = current.substr(0, current.lastIndexOf("/"));
+
+        window.location.href = prefix + '/IEC_CustomerInformation';
+    }
+   </script>
+
+
+    
+    <html lang="{!language}">
+    <!--<![endif]-->
+
+        <head>
+            <!-- Google Tag Manager -->     
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PWSNSM3');
+            </script>
+            <!-- End Google Tag Manager -->
+            <script>
+                function getDevice() {
+                    if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                        return "Tablet";
+                    } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                        return "Mobile";
+                    } else {
+                        return "Desktop";
+                    }
+                }
+
+                window.dataLayer = window.dataLayer||[];
+                dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}",
+                        "userMemberStatus": "{!userDetails.userMemberStatus}",
+                        "userGender": "{!userDetails.userGender}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "breadcrumb": "Home > {!$Label.PageTitleShoppingCart}", 
+                        "language": "{!language}"
+                    }
+                });
+
+
+                function deleteProductFromCartPush(id,name,category,price,brand,quantity,edition,language,availability,availabilityDate,media,effectiveTo){
+                    dataLayer.push({
+                        "event": "removeFromCart",
+                        "ecommerce": {
+                            "remove": {
+                                "products": [{
+                                    "id": id,
+                                    "name": name,
+                                    "category": category,
+                                    "price": price,
+                                    "brand": brand,
+                                    "quantity": quantity,
+                                    "dimension1": edition,
+                                    "dimension2": language,
+                                    "dimension3": availability,
+                                    "dimension4": availabilityDate,
+                                    "dimension5": media,
+                                    "dimension6": effectiveTo
+                                }]
+                            }
+                        }
+                    });
+                }
+
+                function updateQuantityPush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Cart Page",
+                        "eventAction": "Update Quantity",
+                        "eventLabel": "{!cartProducts}"
+                    });
+                }
+
+                function clickOnContinuePush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Cart Page",
+                        "eventAction": "Click on Continue Shopping",
+                        "eventLabel": "{!cartProducts}"
+                    });
+                }
+
+
+            </script>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.ValidationEngine, 'css/validationEngine.jquery.css')}" />
+
+            <title>{!$Label.PageTitleShoppingCart} - {!$Label.SiteTitle}</title>
+
+            <script type="text/javascript">
+                var deleteOrderItem = function(productCode, id,name,category,price,brand,quantity,edition,language,availability,availabilityDate,media,effectiveTo){
                     if(confirm("{!$Label.JS_Confirm_Cart_Item_Deletion}")){
+                        deleteProductFromCartPush(id,name,category,price,brand,quantity,edition,language,availability,availabilityDate,media,effectiveTo);
                         removeProduct(productCode);
                     }
                 }
 
                 var updateQuantity = function(productCode, index, isInteger){
-                	
-                	var inputValue = isInt(Number($('#quantity-cart-item-'+index).val()));
-                	var updateQyt = true;
-                	if(isInteger){
-                		if(inputValue == false){
-                			updateQyt = false;
-                		}
-                	}
-                	if(updateQyt){
-                		updateProductQuantity(productCode, $('#quantity-cart-item-'+index).val());
-                	}else{
-                		$('.alert.success').css('display','None');
-                		$('#customError').css('display', 'block');
-                	}
-                	
+                    
+                    var inputValue = isInt(Number($('#quantity-cart-item-'+index).val()));
+                    var updateQyt = true;
+                    if(isInteger){
+                        if(inputValue == false){
+                            updateQyt = false;
+                        }
+                    }
+                    if(updateQyt){
+                        updateQuantityPush();
+                        updateProductQuantity(productCode, $('#quantity-cart-item-'+index).val());
+                    }else{
+                        $('.alert.success').css('display','None');
+                        $('#customError').css('display', 'block');
+                    }
+                    
                 }
 
                 var isInt = function(n){
-				    return Number(n) === n && n % 1 === 0;
-				}
+                    return Number(n) === n && n % 1 === 0;
+                }
 
             </script>
 
-		</head>
+        </head>
 
-		<body data-media-size="" class="page-checkout" id="page-top">
+        <body data-media-size="" class="page-checkout" id="page-top">
+            <!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
+            <div id="js-breakpoint-finder">
+                <span class="device-xs screen-xsmall"/>
+                <span class="device-sm screen-small"/>
+                <span class="device-md screen-medium"/>
+                <span class="device-lg screen-large"/>
+                <span class="device-xl screen-xlarge"/>
+            </div>
 
-			<div id="js-breakpoint-finder">
-				<span class="device-xs screen-xsmall"/>
-				<span class="device-sm screen-small"/>
-				<span class="device-md screen-medium"/>
-				<span class="device-lg screen-large"/>
-				<span class="device-xl screen-xlarge"/>
-			</div>
+            <div id="js-app-container" class="app-container">
+                <!-- Page Header -->
+                <c:IEC_PageHeader is_checkout="true" />
 
-			<div id="js-app-container" class="app-container">
-				<!-- Page Header -->
-				<c:IEC_PageHeader is_checkout="true" />
+                <div id="js-page-container" class="page-container">
+                    <main class="main-content shopping-cart">
+                        <apex:outputPanel layout="block" styleClass="inner-wrapper" id="inner_wrapper">
+                            <h1 class="page-title">{!$Label.PageTitleShoppingCart}</h1>
 
-				<div id="js-page-container" class="page-container">
-					<main class="main-content shopping-cart">
-						<apex:outputPanel layout="block" styleClass="inner-wrapper" id="inner_wrapper">
-							<h1 class="page-title">{!$Label.PageTitleShoppingCart}</h1>
+                            <!-- Empty cart  -->
+                            <apex:outputPanel layout="block" styleClass="empty-cart" rendered="{!isCartEmpty}">
+                                <p>{!$Label.Warning_Empty_Cart}</p>
 
-							<!-- Empty cart  -->
-							<apex:outputPanel layout="block" styleClass="empty-cart" rendered="{!isCartEmpty}">
-							    <p>{!$Label.Warning_Empty_Cart}</p>
-
-							    <div class="footer-actions">
-					        	    <ul class="list actions">
-						                <li><a href="{!$Site.BaseUrl}/IEC_ProductList" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
-						            </ul>
-						        </div>
-							    
-				            </apex:outputPanel>
-							
-							<!-- Cart not empty -->
-							<apex:variable var="notEmptyCart" value="1" rendered="{!NOT(isCartEmpty)}">
-								<p>{!$Label.ShoppingCartQtyMsg}</p>
-	        					<p class="light"><em>{!$Label.ShoppingCartCurrencyMsg}</em></p>
-        						<apex:form id="frmCartItems">
-									<!-- Ajax calls  -->
-    								<apex:actionFunction name="removeProduct" reRender="inner_wrapper" action="{!removeProduct}" status="loadingStatus">
+                                <div class="footer-actions">
+                                    <ul class="list actions">
+                                        <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category=publications&topic=New" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
+                                    </ul>
+                                </div>
+                                
+                            </apex:outputPanel>
+                            
+                            <!-- Cart not empty -->
+                            <apex:variable var="notEmptyCart" value="1" rendered="{!NOT(isCartEmpty)}">
+                                <p>{!$Label.ShoppingCartQtyMsg}</p>
+                                <p class="light"><em>{!$Label.ShoppingCartCurrencyMsg}</em></p>
+                                <apex:form id="frmCartItems">
+                                    <!-- Ajax calls  -->
+                                    <apex:actionFunction name="removeProduct" reRender="inner_wrapper" action="{!removeProduct}" status="loadingStatus">
                                         <apex:param name="productCode" assignTo="{!productCode}" value="" />
                                     </apex:actionFunction>
 
@@ -99,190 +221,197 @@
                                         <apex:param name="quantity" assignTo="{!quantity}" value="" />
                                     </apex:actionFunction>
 
+<!--
                                     <apex:actionFunction name="startCheckout" action="{!startCheckout}" status="startCheckoutStatus" reRender="inner_wrapper" />
+-->
 
                                     <!-- Custom integer Error Message  -->
                                     <apex:outputPanel id="customerMessageBlock">
                                     <div id="customError" class="alert error" style="display: None;">
-										<span id="">
-											<span id="">
-												<div class="message errorM3" role="alert">
-													<table class="messageTable" style="padding:0px;margin:0px;" border="0" cellpadding="0" cellspacing="0">
-														<tbody>
-															<tr valign="top">
-																<td><img alt="ERROR" class="msgIcon" src="/s.gif" title="ERROR" /></td>
-																<td class="messageCell">
-																	<div id="j" class="messageText">
-																		<span id="" style="color:#cc0000">
-																			<h4>Error:</h4>
-																		</span>
-																		Invalid decimal<br />
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<td></td>
-																<td></td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-											</span>
-										</span>
-									</div>
-									</apex:outputPanel>
+                                        <span id="">
+                                            <span id="">
+                                                <div class="message errorM3" role="alert">
+                                                    <table class="messageTable" style="padding:0px;margin:0px;" border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr valign="top">
+                                                                <td><img alt="ERROR" class="msgIcon" src="/s.gif" title="ERROR" /></td>
+                                                                <td class="messageCell">
+                                                                    <div id="j" class="messageText">
+                                                                        <span id="" style="color:#cc0000">
+                                                                            <h4>Error:</h4>
+                                                                        </span>
+                                                                        Invalid decimal<br />
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    </apex:outputPanel>
 
-									<!-- Error Messages -->
-		        					<apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
-							        	<apex:pageMessages escape="false"/>
-						        	</apex:outputPanel>
+                                    <!-- Error Messages -->
+                                    <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
+                                        <apex:pageMessages escape="false"/>
+                                    </apex:outputPanel>
 
-						        	<!-- Success Message -->
-						        	<apex:outputPanel styleClass="alert success" rendered="{!hasConfirm}" layout="block">
-							        	<apex:pageMessages escape="false"/>
-						        	</apex:outputPanel>
+                                    <!-- Success Message -->
+                                    <apex:outputPanel styleClass="alert success" rendered="{!hasConfirm}" layout="block">
+                                        <apex:pageMessages escape="false"/>
+                                    </apex:outputPanel>
 
-						        	<!-- Cart Content -->
-		        					<div class="table-container">
-		        						<apex:actionStatus id="loadingStatus">
-			                                <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
-			                            </apex:actionStatus>
+                                    <!-- Cart Content -->
+                                    <div class="table-container">
+                                        <apex:actionStatus id="loadingStatus">
+                                            <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
+                                        </apex:actionStatus>
 
-	        							<table class="data-table table-shopping-cart">
-		        							<tr class="heading">
-						                        <th class="product-name">Product Name</th>
-						                        <th class="product-number" style="text-align: left!important;">Product Number</th>
-						                        <th class="delete"></th>
-						                        <th class="quantity" style="text-align: left!important;">Quantity</th>
-						                        <th class="item-price">Item Price</th>
-						                        <th class="total-price">Total Price</th>
-						                    </tr>
-							                
-							                <apex:variable var="itemCount" value="{!0}"/>
-							                <apex:variable var="totalAmount" value="{!0}"/>
-											
-							                <apex:repeat value="{!vfOrder.orderItems}" var="item">
-							                	<tr class="item">
-								                	<apex:variable var="itemCount" value="{!itemCount + 1}"/>
-								                	<td class="product-name">
-								                		<h2 class="item-name">{!item.productName}</h2>
-								                		<div class="product-number">Product Number: {!item.productCode}</div>
-								                	</td>
-								                	<td class="product-number" style="text-align: left!important;">{!item.productCode}</td>
-								                	<td class="delete">
-								                		<a href="javascript:deleteOrderItem('{!item.productCode}')" class="icon delete"><span class="reader-only">Delete</span><i class="fa fa-trash-o"></i></a>
-							                		</td>
-								                	<td class="quantity" style="text-align: left!important;">
-								                		<label for="quantity-cart-item-{!itemCount}" class="input-label quantity">Quantity: </label>
-								                		<apex:variable value="1" var="inputNotDisabled" rendered="{!AND(item.IsCompliant,item.IECStaticCartQuantity == null)}">
-							                            	<input id="quantity-cart-item-{!itemCount}" type="number" class="user-input quantity js-input-quantity validate[custom[number]]" value="{!item.quantityStripped}" html-min="1" html-step="{!IF(item.IsQuantityInteger, '1', 'any')}" />
-							                            	<a href="javascript:updateQuantity('{!item.productCode}', {!itemCount}, {!item.IsQuantityInteger})">update</a>
+                                        <table class="data-table table-shopping-cart">
+                                            <tr class="heading">
+                                                <th class="product-name">Product Name</th>
+                                                <th class="product-number" style="text-align: left!important;">Product Number</th>
+                                                <th class="delete"></th>
+                                                <th class="quantity" style="text-align: left!important;">Quantity</th>
+                                                <th class="item-price">Item Price</th>
+                                                <th class="total-price">Total Price</th>
+                                            </tr>
+                                            
+                                            <apex:variable var="itemCount" value="{!0}"/>
+                                            <apex:variable var="totalAmount" value="{!0}"/>
+                                            
+                                            <apex:repeat value="{!vfOrder.orderItems}" var="item">
+                                                <tr class="item">
+                                                    <apex:variable var="itemCount" value="{!itemCount + 1}"/>
+                                                    <td class="product-name">
+                                                        <h2 class="item-name">{!item.productName}</h2>
+                                                        <div class="product-number">Product Number: {!item.productCode}</div>
+                                                    </td>
+                                                    <td class="product-number" style="text-align: left!important;">{!item.productCode}</td>
+                                                    <td class="delete">
+                                                        <a href="javascript:deleteOrderItem('{!item.productCode}', '{!item.productNumber}', {!item.productNameAnalytic}, '{!item.productCategory}', '{!item.unitPrice}', '{!item.productBrand}', '{!item.quantityStripped}', '{!item.productEdition}', '{!item.productLanguage}', '{!item.productInventoryStatus}', '{!item.productAvailabilityDate}', '{!item.productMedia}', '{!item.productEffectiveTo}')" class="icon delete"><span class="reader-only">Delete</span><i class="fa fa-trash-o"></i></a>
+                                                    </td>
+                                                    <td class="quantity" style="text-align: left!important;">
+                                                        <label for="quantity-cart-item-{!itemCount}" class="input-label quantity">Quantity: </label>
+                                                        <apex:variable value="1" var="inputNotDisabled" rendered="{!AND(item.IsCompliant,item.IECStaticCartQuantity == null)}">
+                                                            <input id="quantity-cart-item-{!itemCount}" type="number" class="user-input quantity js-input-quantity validate[custom[number]]" value="{!item.quantityStripped}" html-min="1" html-step="{!IF(item.IsQuantityInteger, '1', 'any')}" />
+                                                            <a href="javascript:updateQuantity('{!item.productCode}', {!itemCount}, {!item.IsQuantityInteger})">update</a>
 
-														</apex:variable>
-														<apex:variable value="0" var="inputDisabled" rendered="{!OR(NOT(item.IsCompliant) ,item.IECStaticCartQuantity != null)}">
-							                            	<input id="quantity-cart-item-{!itemCount}" type="text" class="user-input quantity js-input-quantity " disabled="true" value="{!item.quantityStripped}"  />
-														</apex:variable>&nbsp;
-														
-								                	</td>
-								                	<td class="price item-price">
-								                		<apex:outputText value="{0, number, currency}">
-			                                                <apex:param value="{!item.unitPrice}" />
-			                                            </apex:outputText>
+                                                        </apex:variable>
+                                                        <apex:variable value="0" var="inputDisabled" rendered="{!OR(NOT(item.IsCompliant) ,item.IECStaticCartQuantity != null)}">
+                                                            <input id="quantity-cart-item-{!itemCount}" type="text" class="user-input quantity js-input-quantity " disabled="true" value="{!item.quantityStripped}"  />
+                                                        </apex:variable>&nbsp;
+                                                        
+                                                    </td>
+                                                    <td class="price item-price">
+                                                        <apex:outputText value="{0, number, currency}">
+                                                            <apex:param value="{!item.unitPrice}" />
+                                                        </apex:outputText>
 
-								                	</td>
-								                	<td class="price total-price">
-								                		<apex:outputText value="{0, number, currency}">
-			                                                <apex:param value="{!IF(AND(item.setupFee != null, item.setupFee > 0),item.subTotal - item.setupFee,item.subTotal)}"/>
-			                                            </apex:outputText>
-			                                            
-								                	</td>	
-							                	</tr>
-							                	<apex:variable value="0" var="setup" rendered="{!AND(item.setupFee != null, item.setupFee > 0)}"> 
-												<tr class="promotion">
-													<td class="product-name" colspan="3"><i>Flat fee</i></td>
-													<td class="quantity"></td>
-													<td class="price item-price"></td>
-													<td class="price total-price">
-														<apex:outputText value="{0, number, currency}">
-			                                                <apex:param value="{!item.setupFee}" />
-			                                            </apex:outputText>
-													</td>
-												</tr>
-							                	</apex:variable>
+                                                    </td>
+                                                    <td class="price total-price">
+                                                        <apex:outputText value="{0, number, currency}">
+                                                            <apex:param value="{!IF(AND(item.setupFee != null, item.setupFee > 0),item.subTotal - item.setupFee,item.subTotal)}"/>
+                                                        </apex:outputText>
+                                                        
+                                                    </td>   
+                                                </tr>
+                                                <apex:variable value="0" var="setup" rendered="{!AND(item.setupFee != null, item.setupFee > 0)}"> 
+                                                <tr class="promotion">
+                                                    <td class="product-name" colspan="3"><i>Flat fee</i></td>
+                                                    <td class="quantity"></td>
+                                                    <td class="price item-price"></td>
+                                                    <td class="price total-price">
+                                                        <apex:outputText value="{0, number, currency}">
+                                                            <apex:param value="{!item.setupFee}" />
+                                                        </apex:outputText>
+                                                    </td>
+                                                </tr>
+                                                </apex:variable>
 
-							                	<apex:variable var="totalAmount" value="{!totalAmount + item.subTotal}"/>			                	
-							                </apex:repeat>
-							                <tr class="total sub-total">
-							                    <td class="sub-total">Subtotal</td>
-							                    <td class="quantity" colspan="4">{!itemCount} item(s) in shopping cart</td>
-							                    <td class="price total-price">
-							                    	<apex:outputText value="{0, number, currency}">
-		                                                <apex:param value="{!totalAmount}"/>
-		                                            </apex:outputText>					                    	
-							                    </td>
-							                </tr>
-		        						</table>	        						
-		        					</div>
-	        					</apex:form>
+                                                <apex:variable var="totalAmount" value="{!totalAmount + item.subTotal}"/>                               
+                                            </apex:repeat>
+                                            <tr class="total sub-total">
+                                                <td class="sub-total">Subtotal</td>
+                                                <td class="quantity" colspan="4">{!itemCount} item(s) in shopping cart</td>
+                                                <td class="price total-price">
+                                                    <apex:outputText value="{0, number, currency}">
+                                                        <apex:param value="{!totalAmount}"/>
+                                                    </apex:outputText>                                          
+                                                </td>
+                                            </tr>
+                                        </table>                                    
+                                    </div>
+                                </apex:form>
 
-								<div class="test">
-									<apex:outputText value="{!$Label.ShoppingCartFooterMsg}" escape="false" />
-						        </div>
+                                <div class="test">
+                                    <apex:outputText value="{!$Label.ShoppingCartFooterMsg}" escape="false" />
+                                </div>
 
-						        <div class="footer-actions">
-					        	    <ul class="list actions">
-						                <li><a href="{!$Site.BaseUrl}/IEC_ProductList" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
-						                <li>
-						                	<button class="button" onclick="startCheckout();">
-						                		{!$Label.Button_Proceed_Checkout}
-												<apex:actionStatus id="startCheckoutStatus">
-					                                <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
-					                            </apex:actionStatus>
-						                	</button>
-					                	</li>
-						            </ul>
-						        </div>
-							</apex:variable>
-						</apex:outputPanel>
-					</main>
+                                <div class="footer-actions">
+                                    <ul class="list actions">
+                                        <li><a onclick="clickOnContinuePush();" href="{!$Site.BaseUrl}/IEC_ProductList?category=publications&topic=New" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
+                                        <li>
+                                            <!--
+                                            <button class="button" onclick="startCheckout();">
+                                                {!$Label.Button_Proceed_Checkout}
+                                                <apex:actionStatus id="startCheckoutStatus">
+                                                    <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
+                                                </apex:actionStatus>
+                                            </button>
+                                            -->
+                                            <apex:form rendered="{!NOT(hasError)}">
+                                                <apex:commandButton styleClass="button" onclick="blockme();" oncomplete="j$.unblockUI(); redirectToCustomerInformation();" action="{!startCheckout}" value="{!$Label.Button_Proceed_Checkout}" />
+                                            </apex:form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </apex:variable>
+                        </apex:outputPanel>
+                    </main>
 
-					<!-- Page Footer  -->
-					<c:Footer is_checkout="true" />
-				</div>
-			</div>
+                    <!-- Page Footer  -->
+                    <c:Footer is_checkout="true" />
+                </div>
+            </div>
 
-			<style type="text/css">
-				.user-input.quantity{
-					width: 70px !important;
-				}
-			</style>
+            <style type="text/css">
+                .user-input.quantity{
+                    width: 70px !important;
+                }
+            </style>
 
-			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
-			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
 
-			<apex:variable var="validationLanguage" value="js/languages/jquery.validationEngine-{!language}.js"/>
-		    <script src="{!URLFOR($Resource.ValidationEngine, validationLanguage)}"></script>
-		    <script src="{!URLFOR($Resource.ValidationEngine, 'js/jquery.validationEngine.js')}"></script>
+            <apex:variable var="validationLanguage" value="js/languages/jquery.validationEngine-{!language}.js"/>
+            <script src="{!URLFOR($Resource.ValidationEngine, validationLanguage)}"></script>
+            <script src="{!URLFOR($Resource.ValidationEngine, 'js/jquery.validationEngine.js')}"></script>
 
-			<script type="text/javascript">
-				
-				var openModal = function(elt){
-		    		$(elt).removeClass(className.hidden);
-		    		$('body').attr('data-is-modal-open', 'true');
-		    	}
+            <script type="text/javascript">
+                
+                var openModal = function(elt){
+                    $(elt).removeClass(className.hidden);
+                    $('body').attr('data-is-modal-open', 'true');
+                }
 
-		    	var closeModal = function(elt){
-		    		$(elt).addClass(className.hidden);
-		    		$('body').attr('data-is-modal-open', 'false');
-		    		$("#tncFrame").attr('src','');
-		    	}
-				$(document).ready(function(){
-					$("form").validationEngine();	
-				});
+                var closeModal = function(elt){
+                    $(elt).addClass(className.hidden);
+                    $('body').attr('data-is-modal-open', 'false');
+                    $("#tncFrame").attr('src','');
+                }
+                $(document).ready(function(){
+                    $("form").validationEngine();   
+                });
 
-			</script>
-		</body>
+            </script>
+        </body>
 
-	</html>
+    </html>
 
 </apex:page>

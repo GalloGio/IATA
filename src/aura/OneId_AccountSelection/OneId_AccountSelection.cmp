@@ -1,0 +1,114 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_RegistrationProcessController">
+
+	<aura:handler name="itemSelected" event="c:OneId_ItemSelected_EVT" action="{!c.handleItem}"/>
+	
+	<aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
+
+	<aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent' }" />
+	<aura:attribute type="Contact" name="contact" default="{ 'sobjectType': 'Contact' }" />
+	<aura:attribute type="Boolean" name="search" default="true" />
+	<aura:attribute type="String" name="serviceName" />
+
+	<aura:attribute type="String" name="customerType" default="" access="private"/>
+	<aura:attribute type="String" name="agencyType" default="Travel" access="private"/>
+
+	<aura:attribute type="String[]" name="fieldLabels" access="private"/>
+	<aura:attribute type="String[]" name="fieldNames" access="private"/>
+	<aura:attribute type="String[]" name="searchFields" access="private"/>
+	<aura:attribute type="Map" name="accountLabels" access="private"/>
+	<aura:attribute type="Map" name="filters" default="{}" access="private"/>
+
+  	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation" access="private"/>
+	<aura:attribute type="IATA_ISO_Country__c" name="country" access="private"/>
+	<aura:attribute type="String" name="selectedCountry" access="private"/>
+  	<aura:attribute type="List" name="agencyTypes" access="private"/> 
+	<aura:attribute type="Boolean" name="showCreateNew" default="false" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+	<aura:if isTrue="{!v.search}">
+
+		<div class="slds-grid slds-wrap slds-gutters">
+			<div class="slds-col slds-size_1-of-1">				
+				<h2 class="slds-text-heading_medium slds-size_1-of-1 slds-m-bottom_medium">{!$Label.c.OneId_SearchAccount}</h2>
+
+				<div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+					<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_Type_of_Customer}</label>
+					<div class="slds-form-element__control">
+						<ui:inputSelect value="{!v.customerType}" class="slds-select" change="{!c.customerSelected}">
+							<ui:inputSelectOption text="" label="{!$Label.c.ISSP_Select_Type_of_Company}" value="true"/>
+							<ui:inputSelectOption text="Airline" label="{!$Label.c.ISSP_Airline}"/>
+							<ui:inputSelectOption text="GloballSalesAgent" label="{!$Label.c.ISSP_GSSA}"/>
+							<ui:inputSelectOption text="Agency" label="{!$Label.c.IDCard_ka_agency}"/>
+							<ui:inputSelectOption text="OtherCompany" label="{!$Label.c.ISSP_Other_Company}"/>
+							<ui:inputSelectOption text="GeneralPublic" label="{!$Label.c.ISSP_General_Public}"/>
+						</ui:inputSelect>
+					</div>
+				</div>
+				<aura:if isTrue="{!v.customerType == 'Agency'}">
+					<div class="slds-m-bottom_medium slds-size_1-of-1">
+						<lightning:radioGroup name="agencyTypeRadio" type="button" label="{!$Label.c.ISSP_Select_Agency_Type}" options="{!v.agencyTypes}" value="{!v.agencyType}" required="true" onchange="{!c.setAgencyType}" />
+					</div>
+				</aura:if>
+
+				<div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+					<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_CompanyLocation}</label>
+					<div class="slds-form-element__control">
+						<ui:inputSelect value="{!v.selectedCountry}" class="slds-select" change="{!c.setCountry}">
+							<ui:inputSelectOption text="" label=""/>
+							<aura:iteration items="{!v.countryInformation.countryList}" var="country">
+								<ui:inputSelectOption text="{!country.Id}" label="{!country.Name}"/>
+							</aura:iteration>
+						</ui:inputSelect>
+					</div>
+				</div>
+				
+				<aura:if isTrue="{!v.customerType != '' &amp;&amp; v.customerType != 'GeneralPublic'}">
+				<div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+					<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_CompanyName}</label>
+
+					<div class="slds-form-element__control">
+						<c:OneId_AccountSearch customerType="{!v.customerType}" fieldLabels="{!v.fieldLabels}" fieldNames="{!v.fieldNames}" searchFields="{!v.searchFields}" filters="{!v.filters}" disabled="{!v.customerType == '' || v.selectedCountry == ''}" showCreateNew="{!v.customerType != 'GloballSalesAgent' &amp;&amp; v.customerType != 'GeneralPublic'}"/>
+					</div>
+				</div>
+				</aura:if>
+				
+			</div>
+		</div>
+		
+		<aura:set attribute="else">
+			<c:OneId_AccountCreation aura:id="creationComponent"
+				account="{!v.account}"
+				country="{!v.country}"
+				changeName="{! !(v.customerType == 'Airline' &amp;&amp; !empty(v.account.IATA_ISO_Country__c) &amp;&amp; v.account.IATA_ISO_Country__c != v.selectedCountry)}"
+				changeSector="{!v.customerType == 'OtherCompany'}"
+				changeCategory="{!v.customerType == 'OtherCompany' || (v.customerType == 'Airline' &amp;&amp; (empty(v.account.IATA_ISO_Country__c) || v.account.IATA_ISO_Country__c == v.selectedCountry))}"
+			/>
+		</aura:set>
+	</aura:if>
+
+	<div aura:id="backdrop" class="slds-backdrop"></div>
+	<div aura:id="errorMessage" class="slds-notify_container slds-region_narrow slds-is-absolute slds-hide">
+		<div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+			<span class="slds-assistive-text">Error</span>
+			<div class="slds-notify__content">
+				<span class="slds-text-heading_x-small "><aura:unescapedHtml value="{!$Label.c.ISSP_Registration_generalError}"/></span>
+			</div>
+			<button class="slds-button slds-button_icon slds-notify__close" title="Close" onclick="{!c.closeError}">
+				<lightning:icon iconName="utility:close" variant="inverse" class="slds-button__icon slds-button__icon_large"/>
+				<span class="slds-assistive-text">Close</span>
+			</button>
+		</div>
+	</div>
+	
+	<aura:if isTrue="{!v.showCreateNew || (v.customerType == 'GeneralPublic' &amp;&amp; !empty(v.country))}">
+
+		<div class="slds-grid slds-grid_align-end slds-m-top_medium">
+			<ui:button label="{!$Label.site.submit}" press="{!c.submit}" class="slds-size_1-of-1 slds-medium-size_3-of-12"/>
+		</div>
+	</aura:if>
+	
+	<div aura:id="loading" class="slds-hide">
+		<lightning:spinner />
+	</div>
+</aura:component>

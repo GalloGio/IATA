@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,8 +45,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -62,6 +59,7 @@
         <label>Batch Name</label>
         <length>100</length>
         <required>true</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -71,15 +69,38 @@
         <externalId>false</externalId>
         <label>Failed Records</label>
         <length>32768</length>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Is_Manual_Replication__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if the batch was runned manually</description>
+        <externalId>false</externalId>
+        <label>Is Manual Replication</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Job_1_Original_Start_Date__c</fullName>
+        <description>Copy of Job 1 Last Sync Start Date taken on Job 1 first execution. This date is used by the Replication Job 1 Second Pass for population of formula fields and relationship</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Last Sync Start Date taken on First Execution of Job 1. Date used by Job 1 Second Pass for population of formulas</inlineHelpText>
+        <label>Job 1 Original Start Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Last_Sync_End_Date__c</fullName>
         <externalId>false</externalId>
         <label>Last Sync End Date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -88,6 +109,7 @@
         <externalId>false</externalId>
         <label>Last Sync Start Date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -98,6 +120,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -109,6 +132,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -122,6 +146,7 @@
         <columns>Total_Failed_Records__c</columns>
         <columns>Last_Sync_Start_Date__c</columns>
         <columns>Last_Sync_End_Date__c</columns>
+        <columns>Job_1_Original_Start_Date__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All Batches with Details</label>
@@ -130,6 +155,7 @@
     <nameField>
         <displayFormat>BATCH-{0000}</displayFormat>
         <label>AMS =&gt; GDP Batch Name</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS =&gt; GDP Batches</pluralLabel>
@@ -141,4 +167,5 @@
         <customTabListAdditionalFields>Total_Failed_Records__c</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

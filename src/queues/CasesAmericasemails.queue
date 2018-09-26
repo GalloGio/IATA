@@ -3,6 +3,19 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases - Americas (emails)</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAmericasCustomerService</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>IDFSAmericasRegionalOfficeA</role>
+            <role>MADHubCSManagerA</role>
+            <role>MADHubCSstaffA</role>
+        </roles>
+        <users>
+            <user>rodriguezp@iata.org.inactive</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -2,7 +2,7 @@
 	<apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
-            <title>eBroadcast Dashboard</title>
+            <title>eBroadcast Campaigns</title>
             <!-- End of Page </head> -->
             <style type="text/css">
             	.action-box.create-campaign {

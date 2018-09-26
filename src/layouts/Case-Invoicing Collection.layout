@@ -4,6 +4,7 @@
     <customButtons>Accept_Case</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
+    <customButtons>Reset_New_interactions</customButtons>
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
@@ -47,6 +48,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>New_interaction__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -189,6 +194,14 @@
                 <behavior>Readonly</behavior>
                 <field>Invoice_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invoice_number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Payment_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -214,11 +227,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>CS_Contact_Remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Contact_Agent_by_Phone__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Demand_by_Email_Fax__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CS_Contact_Result__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -256,6 +277,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Termination_date_manual_entry__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Case_Thread_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -311,6 +336,22 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Emails</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>EmailMessagesView</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Attachments</label>
         <layoutColumns>
             <layoutItems>
@@ -344,9 +385,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedEmailMessageList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

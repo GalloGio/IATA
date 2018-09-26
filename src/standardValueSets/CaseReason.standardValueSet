@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Accreditation</fullName>
+        <default>false</default>
+        <label>Accreditation</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>BSPlink</fullName>
+        <default>false</default>
+        <label>BSPlink</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>BSP System (internal only)</fullName>
+        <default>false</default>
+        <label>BSP System (internal only)</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Credit Card</fullName>
+        <default>false</default>
+        <label>Credit Card</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Implementation of a new Agent</fullName>
+        <default>false</default>
+        <label>Implementation of a new Agent</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Output/reports</fullName>
+        <default>false</default>
+        <label>Output/reports</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Product Inquiry</fullName>
+        <default>true</default>
+        <label>Product Inquiry</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Remittance Payment</fullName>
+        <default>false</default>
+        <label>Remittance Payment</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Reporting of documents</fullName>
+        <default>false</default>
+        <label>Reporting of documents</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Tickets</fullName>
+        <default>false</default>
+        <label>Tickets</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Salesforce Internal</fullName>
+        <default>false</default>
+        <label>Salesforce Internal</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>SF Internal, survey</fullName>
+        <default>false</default>
+        <label>SF Internal, survey</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Web</fullName>
+        <default>false</default>
+        <label>Web</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Instructions Not Clear</fullName>
+        <default>false</default>
+        <label>Instructions Not Clear</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Didn&apos;t Attend Training</fullName>
+        <default>false</default>
+        <label>Didn&apos;t Attend Training</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Existing Problem</fullName>
+        <default>false</default>
+        <label>Existing Problem</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>New Problem</fullName>
+        <default>false</default>
+        <label>New Problem</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Quality</fullName>
+        <default>false</default>
+        <label>Quality</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Change requests</fullName>
+        <default>false</default>
+        <label>Change requests</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Summary reports</fullName>
+        <default>false</default>
+        <label>Summary reports</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Template instructions</fullName>
+        <default>false</default>
+        <label>Template instructions</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Assessment hold request</fullName>
+        <default>false</default>
+        <label>Assessment hold request</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Template instructions – GFA query</fullName>
+        <default>false</default>
+        <label>Template instructions – GFA query</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Assessments – GFA query</fullName>
+        <default>false</default>
+        <label>Assessments – GFA query</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Assessments not received</fullName>
+        <default>false</default>
+        <label>Assessments not received</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Reassessments not received</fullName>
+        <default>false</default>
+        <label>Reassessments not received</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Local criteria/Resolution exception</fullName>
+        <default>false</default>
+        <label>Local criteria/Resolution exception</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Volume projections</fullName>
+        <default>false</default>
+        <label>Volume projections</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Meeting agenda</fullName>
+        <default>false</default>
+        <label>Meeting agenda</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Quality reviews</fullName>
+        <default>false</default>
+        <label>Quality reviews</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Accreditation - training</fullName>
+        <default>false</default>
+        <label>Accreditation - training</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>CCG/MC Review</fullName>
+        <default>false</default>
+        <label>CCG/MC Review</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP/Insurance Bond Provider Review</fullName>
+        <default>false</default>
+        <label>DIP/Insurance Bond Provider Review</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP New Application - Tier 1</fullName>
+        <default>false</default>
+        <label>DIP New Application - Tier 1</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP New Application - Tier 2</fullName>
+        <default>false</default>
+        <label>DIP New Application - Tier 2</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP New Application - Tier 3</fullName>
+        <default>false</default>
+        <label>DIP New Application - Tier 3</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP Annual Review - Tier 1</fullName>
+        <default>false</default>
+        <label>DIP Annual Review - Tier 1</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP Annual Review - Tier 2</fullName>
+        <default>false</default>
+        <label>DIP Annual Review - Tier 2</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP Annual Review - Tier 3</fullName>
+        <default>false</default>
+        <label>DIP Annual Review - Tier 3</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+</StandardValueSet>

@@ -31,7 +31,6 @@
     </customConsoleComponents>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
-    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -179,6 +178,10 @@
                 <behavior>Edit</behavior>
                 <field>Subtopic__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Case_Language__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -200,6 +203,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Type</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -490,6 +497,9 @@
         <fields>CX_NPS_rating__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Instant_Surveys__c.Relationship_to_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedTeamMemberList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

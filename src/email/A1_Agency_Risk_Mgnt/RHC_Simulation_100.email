@@ -1,0 +1,48 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<p class="MsoNormal"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">Dear Agent,<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">We would like to inform you that according to our
+records you have reached <b>100 %</b> (equal to <b>{!ANG_RHC_Information__c.ANG_RHC_Amount_Simulation__c}</b>) of your Remittance
+Holding Capacity (RHC).<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">At this time and until <b>01st March 2018</b>, this
+message is for your information only – no action is required. Please note that
+as of that <b>01 March 2018</b>, whenever your Agency reaches <b>100%</b> of
+your RHC, the Cash form of payment will be temporarily restricted, although,
+you will be able to continue issuing tickets through other form of payments
+such as Credit Card (if applicable), IATA EasyPay and/or other alternative
+transfer methods.<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">Should you wish to re-activate the Cash payment
+method, you may:<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:40.5pt;text-indent:-27.0pt"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Prepay any outstanding BSP Cash sales
+before or on the remittance date to reduce the amount of RHC consumed or<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:40.5pt;text-indent:-27.0pt"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Present additional financial security to
+increase the RHC amount applicable to your agency. The increase in RHC will be
+equal to the amount of increase of the financial security.<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">For more information on Remittance Holding Capacity,
+please do not hesitate to contact us via the IATA Customer Portal.<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span lang="EN-US" style="font-size: 10pt; font-family: Arial, sans-serif;">Best Regards,<o:p></o:p></span></p>
+
+<b><span lang="EN-US" style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;color:#1F497D;
+background:white;mso-ansi-language:EN-US;mso-fareast-language:FR-CH;mso-bidi-language:
+HE">IATA – Global Delivery Center<u1:p></u1:p></span></b>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

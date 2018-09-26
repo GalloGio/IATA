@@ -23,5 +23,14 @@
         <unique>false</unique>
     </fields>
     <label>AMS XML Tags</label>
+    <listViews>
+        <fullName>AMS</fullName>
+        <columns>NAME</columns>
+        <columns>Name__c</columns>
+        <columns>Tag__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>AMS</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

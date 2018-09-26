@@ -8,7 +8,8 @@ private class AMS_AccreditationContactHelperTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Account acc1 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account acc1 = new Account(RecordTypeId=agencyRT, Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
         insert acc1;
 
 		Contact c1 = new Contact(AccountId = acc1.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
@@ -34,6 +35,7 @@ private class AMS_AccreditationContactHelperTest {
         testCase.Account_Concerned__c = acc1.Id;
         testCase.IFAP_Country_ISO__c = 'tq';
         testCase.AccountId = acc1.id;
+        testCase.QuantityProduct__c = '1';
         insert testCase;
 
  		AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = acc1.Name);
@@ -71,7 +73,7 @@ private class AMS_AccreditationContactHelperTest {
 
         Set<Id> acPersonSet = new Set<Id>();
 
-		AMS_AccreditationContactHelper.findRolesAndPersonsByEmail(emailSet,acPersonSet);
+		Map<String, AMS_Account_Role__c> roles = AMS_AccreditationContactHelper.findRolesAndPersonsByEmail(emailSet,acPersonSet);
 
 		List<Account> accts = [SELECT Id from Account];
 
@@ -81,13 +83,17 @@ private class AMS_AccreditationContactHelperTest {
 
 		AMS_Account_role__c role = [SELECT Id, Account__c, Person__c,Contact__c, Percentage__c from AMS_Account_role__c ];
 
-		List<AMS_Accreditation_Contact__c> acontactList = [SELECT Id,Name, Person_AMS__c, Registration_number__c, Agency_owner__c,RecordType.DeveloperName, RecordType.Id, RecordType.Name, Agency_role__c,Time_devoted_to_Agency_business__c, Financial_Interest__c, AMSPerson__c, Contact__c, AMS_Pax_Accreditation_Form__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c ,Company__c, First_name__c, Last_name__c, Job_title__c, Mobile__c, Phone__c, Email__c from AMS_Accreditation_Contact__c];
+		List<AMS_Accreditation_Contact__c> acontactList = [SELECT Id,Name, Person_AMS__c, Registration_number__c, Agency_owner__c,RecordType.DeveloperName, RecordType.Id, RecordType.Name, Agency_role__c,Time_devoted_to_Agency_business__c, Financial_Interest__c, AMSPerson__c, Contact__c, AMS_Pax_Accreditation_Form__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c ,Company__c, First_name__c, Last_name__c, Job_title__c, Mobile__c, Phone__c, Email__c, Membership_Main_Contact__c, Financial_Assessment_Contact__c, FAX__c, Birthdate__c, ISO_Country__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Authorised_signatory__c, Portal_administrator__c, Invoicing_Contact__c, AddressStreet__c, AddressCity__c, AddressPostcode__c, AddressCountry__c, Date_Joined_agency__c, Prev_Job1_From__c, Prev_Job1_To__c, Prev_Job2_From__c, Prev_Job2_To__c from AMS_Accreditation_Contact__c];
 
 		AMS_Accreditation_Contact__c acontact = acontactList.get(0);
 
 		AMS_Accreditation_Contact__c acontact2 = acontactList.get(1);
 
 		Contact contact = [SELECT Id, AccountId, Firstname, Lastname, Phone,MobilePhone, Email, Financial_Assessment_Contact__c from Contact ];
+
+		AMS_AccreditationContactHelper.findContactsByNameOrEmail(contact.Firstname, contact.Lastname, contact.Email);
+
+		AMS_AccreditationContactHelper.populateNewContactFields(contact, acontact2);
 
 		AMS_AccreditationContactHelper.updateAmsAccountRole(role,acontact);
 
@@ -124,6 +130,13 @@ private class AMS_AccreditationContactHelperTest {
 		update oscar;
 
 		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole(new List<AMS_OSCAR__c>{oscar},null);
+
+		List<AMS_AccreditationContactController.AccreditationContactWrapper> wrapperList = new List<AMS_AccreditationContactController.AccreditationContactWrapper>();
+		AMS_AccreditationContactController.AccreditationContactWrapper accwr1 = new AMS_AccreditationContactController.AccreditationContactWrapper(acontact);
+		wrapperList.add(accwr1);
+		AMS_AccreditationContactController.AccreditationContactWrapper accwr2 = new AMS_AccreditationContactController.AccreditationContactWrapper(acontact2);
+		wrapperList.add(accwr2);
+		AMS_AccreditationContactHelper.insertAmsRolesForAccreditationContacts(wrapperList);
 
 		Test.stopTest();
 

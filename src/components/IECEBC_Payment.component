@@ -140,6 +140,14 @@
         //Radio Button Selectable
         jQuery('input[type=radio]').attr('disabled', flag);
     }
+    function checkEmptyCountryState(){
+      if(jQuery('select[id*=slctState]').val() == ''){
+        jQuery('div[id*=slctStateMsgError]').show();
+      }
+      if(jQuery('select[id*=slctCountry]').val() == ''){
+        jQuery('div[id*=slctCountryMsgError]').show();
+      }
+    }
     </script>
     
     <div class="row row-payment">
@@ -164,15 +172,16 @@
                                             <th>Contact Name</th>
                                             <td >
                                                 <apex:outputField rendered="{!!editMode}" value="{!billingAccount.Contact__r.Name}" />                                               
-                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text" html-placeholder="First name" />
-                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" styleClass="user-input text" html-placeholder="Last name"/>
+                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" required="true" styleClass="user-input text" html-placeholder="First name" />
+                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" required="true" styleClass="user-input text" html-placeholder="Last name"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Job Title</th>
                                             <td >
                                                 <apex:outputText rendered="{!!editMode}" value="{!billingAccount.Contact__r.Title}" />                                           
-                                                <apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Title}" styleClass="user-input text" />
+                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.Title}" required="true" styleClass="user-input text" />
+
                                                 <!-- <input type="type" class="user-input text" value="Lorem ipsum dolor"> -->
                                             </td>
                                         </tr>
@@ -181,7 +190,7 @@
                                             <th>Phone</th>
                                             <td >
                                                 <apex:outputText rendered="{!!editMode}" value="{!oPaymentBillingContact.Phone}" />
-                                                <apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Phone}" styleClass="user-input text" />
+                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.Phone}" required="true" styleClass="user-input text" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -209,14 +218,14 @@
                                                     <div class="field-group text inline">
                                                         <label>
                                                             <span class="input-label">Street</span>
-                                                            <apex:inputField value="{!oBillingAddress.Street__c}" styleClass="user-input text" />
+                                                            <apex:inputField value="{!oBillingAddress.Street__c}" required="true" styleClass="user-input text" />
                                                         </label>
                                                     </div>
                                                     
                                                     <div class="field-group text inline">
                                                         <label>
                                                             <span class="input-label">City</span>
-                                                            <apex:inputField value="{!oBillingAddress.City__c}" styleClass="user-input text"/>
+                                                            <apex:inputField value="{!oBillingAddress.City__c}" required="true" styleClass="user-input text"/>
                                                             
                                                         </label>
                                                     </div>
@@ -227,14 +236,16 @@
                                                         <div class="custom-user-input select">
                                                             <i class="icon angle-down"></i>
                                                             
-                                                            <apex:selectList style="color: {!IF(oBillingAddress.ISO_Country__c != null, '#000', '#aaa')}" value="{!oBillingAddress.ISO_Country__c}" size="1"  
+                                                            <apex:selectList id="slctCountry" style="color: {!IF(oBillingAddress.ISO_Country__c != null, '#000', '#aaa')}" value="{!oBillingAddress.ISO_Country__c}" size="1" required="true" 
                                                                 styleClass="user-input select" 
                                                             >
                                                                 <apex:selectOptions value="{!lstISOCountries}"/>
                                                                 <apex:actionsupport event="onchange" action="{!onChangeBillingCountry}" rerender="panelBillingStatesProvince" />
                                                             </apex:selectList>
-                                                            
                                                         </div>
+                                                    </div>
+                                                    <div id="slctCountryMsgError" class="errorMsg" style="margin-left: 164px; display: none;">
+                                                      <apex:outputText value="{!$Label.IEC_Required_Field_Error_Msg}" escape="false"/>
                                                     </div>
                                                     <div class="field-group select inline">
                                                         <apex:outputPanel id="panelBillingStatesProvince">
@@ -243,8 +254,8 @@
                                                                 <div class="custom-user-input select">
                                                                     <i class="icon angle-down"></i>
                                                                 
-                                                                    <apex:selectList style="color: {!IF(oBillingAddress.ISO_State__c != null, '#000', '#aaa')}"
-                                                                        title="Country" 
+                                                                    <apex:selectList id="slctState" style="color: {!IF(oBillingAddress.ISO_State__c != null, '#000', '#aaa')}"
+                                                                        title="State" 
                                                                         value="{!oBillingAddress.ISO_State__c}" 
                                                                         size="1"  styleClass="user-input select">
                                                                         <apex:selectOptions value="{!lstStateProvince}" />
@@ -252,6 +263,9 @@
                                                                 </div>
                                                             </apex:outputPanel>
                                                         </apex:outputPanel>
+                                                    </div>
+                                                    <div id="slctStateMsgError" class="errorMsg" style="margin-left: 164px; display: none;">
+                                                      <apex:outputText value="{!$Label.IEC_Required_Field_Error_Msg}" escape="false"/>
                                                     </div>
                                                     <div class="field-group text inline">
                                                         <label>
@@ -300,7 +314,8 @@
                                                         value="Save" 
                                                         reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
                                                         status="statusId"
-                                                        styleClass="button secondary" onclick="ShoworHideTerms(false);ShowWaitingStatus('.sectionAddress,.sectionActions');"/>
+                                                        styleClass="button secondary" onclick="ShoworHideTerms(false);ShowWaitingStatus('.sectionAddress,.sectionActions');"
+                                                        oncomplete="checkEmptyCountryState();"/>
                                         </li>
                                     </apex:outputText>
                                     </ul>                                    
@@ -624,7 +639,8 @@
                         <div class="footer-actions">
                             <ul class="list actions sectionActions"> 
                                 <apex:outputText rendered="{!AND(OR(showPaymentButtons,showTaxButtons), NOT(showBankTransferText),NOT(isPaymentCompleted))}">
-                                    <li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');history.back(1);" value="Cancel" styleClass="text-link" /></li>
+                                    <!--<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');history.back(1);" value="Cancel" styleClass="text-link" /></li>-->
+                                    <li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!backToPreviousStep}" value="Cancel" styleClass="text-link" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!AND(showPaymentButtons,NOT(showBankTransferText),NOT(isPaymentCompleted))}">
                                     <li id="buttonSubmitPayment"><apex:commandLink action="{!EBCSubscribeNow}"  onclick="ShowWaitingStatus('.sectionActions');" styleClass="button" value="Submit payment"  /></li>

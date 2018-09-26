@@ -2,7 +2,7 @@
 
 cd build
 
-ant getCode -Dsfdc.username=$SF_USERNAME -Dsfdc.password=$SF_PASSWORD -Dsfdc.serverurl=$SF_SERVER_URL -Dbasedir=$BITBUCKET_CLONE_DIR
+ant getCodePointAndClick -Dsfdc.username=$SF_USERNAME -Dsfdc.password=$SF_PASSWORD -Dsfdc.serverurl=$SF_SERVER_URL -Dbasedir=$BITBUCKET_CLONE_DIR
 
 cd ..
 

@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>AddProduct</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EditAllProduct</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>AWS_download_link__c</fullName>
+        <externalId>false</externalId>
+        <label>AWS download link</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Accepted_Payment_Methods__c</fullName>
+        <externalId>false</externalId>
+        <label>Accepted Payment Methods</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Accepted_Term_Condition__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Accepted Term &amp; Condition</label>
+        <referenceTo>Term_and_Condition__c</referenceTo>
+        <relationshipLabel>Order Products</relationshipLabel>
+        <relationshipName>Order_Products</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Renew__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Auto Renew</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>AvailableQuantity</fullName>
+    </fields>
+    <fields>
+        <fullName>Available_for_Subscription__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(PricebookEntry.Product2.IEC_Parent_Product__c), PricebookEntry.Product2.Available_for_Subscription__c, PricebookEntry.Product2.IEC_Parent_Product__r.Available_for_Subscription__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Available for Subscription</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Carrier_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Carrier Name</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Carrier_Tracking_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Carrier Tracking Number</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Carrier_Tracking_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(NOT(CONTAINS(&quot;,UPS,FEDEX,GLOBEX,SDV,&quot;, &quot;,&quot; &amp; UPPER(Carrier_Name__c) &amp; &quot;,&quot;)), ISBLANK(Carrier_Tracking_Number__c)), IF(ISBLANK(Carrier_Name__c), &apos;&apos;, &apos;(&apos; &amp; UPPER(Carrier_Name__c) &amp; &apos;) &apos;) &amp; Carrier_Tracking_Number__c,
+HYPERLINK(
+CASE(UPPER(Carrier_Name__c),
+&quot;UPS&quot;, &quot;http://wwwapps.ups.com/etracking/tracking.cgi?tracknums_displayed=5&amp;TypeOfInquiryNumber=T&amp;sort_by=status&amp;InquiryNumber1=&quot;,
+&quot;FEDEX&quot;, &quot;https://www.fedex.com/apps/fedextrack/?action=track&amp;trackingnumber=&quot;,
+&quot;GLOBEX&quot;, &quot;http://www.globexcourier.com/index.php/en/tracking-results?globexNumbers=&quot;,
+&quot;SDV&quot;, &quot;https://link.sdv.com/Contact/Shipment/&quot;,
+&quot;&quot;) + Carrier_Tracking_Number__c, &apos;(&apos; &amp; UPPER(Carrier_Name__c) &amp; &apos;) &apos; &amp; Carrier_Tracking_Number__c, &quot;_blank&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Carrier Tracking</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Charge_Shipping__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Shipping Charge</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Confirmed_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Confirmed Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Coupon__c</fullName>
+        <externalId>false</externalId>
+        <label>Coupon</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Credit_Debit__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit/Debit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Days_available_for_download_1__c</fullName>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Days_available_for_download_1__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Days available for download</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delivery_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Delivery Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Discount__c</fullName>
+        <externalId>false</externalId>
+        <label>Discount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Division__c</fullName>
+        <description>IEC - SAP division code to send in sales order</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(PricebookEntry.Product2.IEC_Parent_Product__c), PricebookEntry.Product2.SAP_Division_Code__c, PricebookEntry.Product2.IEC_Parent_Product__r.SAP_Division_Code__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Division</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Effective_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATE(
+  YEAR( Order.EffectiveDate ) + FLOOR( ( MONTH ( Order.EffectiveDate ) +  IEC_Number_of_months_of_subscription__c - 1 ) / 12 ),
+  MOD( MONTH ( Order.EffectiveDate ) +  IEC_Number_of_months_of_subscription__c - 1 + 
+    IF( DAY ( Order.EffectiveDate ) &gt; CASE( MOD( MONTH( Order.EffectiveDate ) +  IEC_Number_of_months_of_subscription__c - 1, 12 ) + 1, 
+      2, 28,
+      4, 30,
+      6, 30,
+      9, 30, 
+      11, 30,
+      31 ), 1, 0 ), 12 ) + 1,
+    IF( DAY( Order.EffectiveDate ) &gt; CASE( MOD( MONTH( Order.EffectiveDate ) +  IEC_Number_of_months_of_subscription__c - 1, 12 ) + 1,
+      2, 28, 
+      4, 30, 
+      6, 30, 
+      9, 30, 
+      11, 30, 
+      31 ), 
+    1, DAY( Order.EffectiveDate )
+  )
+) - 1</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Effective End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EndDate</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>File_Path__c</fullName>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.File_Path__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>File Path</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Freight_Charge__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Handling_charges__c</fullName>
+        <externalId>false</externalId>
+        <label>Handling</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Contract_End_Date__c</fullName>
+        <description>IEC - end date to use to create contract for items created from Zuora invoices</description>
+        <externalId>false</externalId>
+        <label>IEC Contract End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Contract_Start_Date__c</fullName>
+        <description>IEC - start date to use to create contract for items created from Zuora invoices</description>
+        <externalId>false</externalId>
+        <label>IEC Contract Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Event_Subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>IEC Event Subscription</label>
+        <referenceTo>IEC_Event_Subscription__c</referenceTo>
+        <relationshipLabel>Order Products</relationshipLabel>
+        <relationshipName>Order_Products</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Is_Paid__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>IEC - true means product is paid in order to trigger fullfilment process if applicable</description>
+        <externalId>false</externalId>
+        <label>Is Paid</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Number_of_months_of_subscription__c</fullName>
+        <description>IEC - duration in months for subscription</description>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE(IF(ISBLANK(PricebookEntry.Product2.IEC_Parent_Product__c), PricebookEntry.Product2.Number_of_months_of_subscription__c, PricebookEntry.Product2.IEC_Parent_Product__r.Number_of_months_of_subscription__c), 12)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Number of months of Subscription</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Override_Profit_Center__c</fullName>
+        <description>IEC - true to use profit center in ISO country when create contract instead of profit center of product</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(PricebookEntry.Product2.IEC_Parent_Product__c), PricebookEntry.Product2.IEC_Override_Profit_Center__c,  PricebookEntry.Product2.IEC_Parent_Product__r.IEC_Override_Profit_Center__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Override Profit Center</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Static_Cart_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.IEC_Static_Cart_Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Static Cart Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Subscribe_to_Zuora__c</fullName>
+        <description>Determine if to subscribe the product to Zuora on purchase</description>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.IEC_Subscribe_to_Zuora__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subscribe to Zuora</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Invoice_Number__c), &quot;&quot;, HYPERLINK(&quot;/apex/IECInvoice?invoice=&quot; + Invoice_Number__c, Invoice_Number__c, &quot;_blank&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Invoice Number URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Electronic_Product__c</fullName>
+        <description>IEC - identify if product is an electronic product</description>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Is_Electronic_Product__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Electronic Product</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Quantity_Integer__c</fullName>
+        <description>IEC - check if product allows only integer quantity in order to format quantity&apos;s field in UI</description>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Is_Quantity_Integer__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Quantity Integer</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_SAP_Editable__c</fullName>
+        <description>Determines whether the order item is editable after it has been submitted to SAP</description>
+        <externalId>false</externalId>
+        <formula>IF(&quot;A&quot; == TEXT(Order.StatusCode), false, IF(Order.Is_Paid__c &amp;&amp; NOT(Is_Shippable_Product__c), false, true))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is SAP Editable</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Shippable_Product__c</fullName>
+        <description>IEC - identify if product is a physical product</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(PricebookEntry.Product2.IEC_Parent_Product__c), PricebookEntry.Product2.Is_Shippable__c, PricebookEntry.Product2.IEC_Parent_Product__r.Is_Shippable__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Shippable Product</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Web_Download__c</fullName>
+        <description>IEC - identify if product is web downloadable</description>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Is_Web_Download__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Web Download</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ListPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>Number_of_download__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of download</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OrderId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OriginalOrderItemId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Transaction_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Transaction Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product2Id</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ProductCode</fullName>
+    </fields>
+    <fields>
+        <fullName>Product_Availability__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(PricebookEntry.Product2.Inventory_Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Availability</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Manager__c</fullName>
+        <description>IEC - name of product manager</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(PricebookEntry.Product2.IEC_Parent_Product__c), PricebookEntry.Product2.Product_Manager_lookup__r.FirstName + &apos; &apos; + PricebookEntry.Product2.Product_Manager_lookup__r.LastName, PricebookEntry.Product2.IEC_Parent_Product__r.Product_Manager_lookup__r.FirstName + &apos; &apos; + PricebookEntry.Product2.IEC_Parent_Product__r.Product_Manager_lookup__r.LastName)</formula>
+        <label>Product Manager</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.SAP_Material_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product__c</fullName>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>SAP_Contract_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Contract Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_Product_Number__c</fullName>
+        <description>Determines the accurate SAP Material number based on whether the selected product has a parent product or not.</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(PricebookEntry.Product2.IEC_Parent_Product__c), PricebookEntry.Product2.IEC_SAP_Material_Number_Unformatted__c,  PricebookEntry.Product2.IEC_Parent_Product__r.IEC_SAP_Material_Number_Unformatted__c)</formula>
+        <label>SAP Product Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Volume__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total__c + Credit_Debit__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sales Volume</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Scheduled_Delivery_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Scheduled Delivery Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ServiceDate</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Setup_Fee__c</fullName>
+        <externalId>false</externalId>
+        <label>Setup Fee</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Shipped_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipped Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Shipped_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipped Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Source__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Source of the Order Item, either Ecommerce (frontend) or NULL if from CDS console.</inlineHelpText>
+        <label>Source</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Confimed</fullName>
+                    <default>false</default>
+                    <label>Confimed</label>
+                </value>
+                <value>
+                    <fullName>Backorder</fullName>
+                    <default>false</default>
+                    <label>Backorder</label>
+                </value>
+                <value>
+                    <fullName>Shipped</fullName>
+                    <default>false</default>
+                    <label>Shipped</label>
+                </value>
+                <value>
+                    <fullName>Invoiced</fullName>
+                    <default>false</default>
+                    <label>Invoiced</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SubTotal__c</fullName>
+        <externalId>false</externalId>
+        <formula>(Quantity * UnitPrice) + BLANKVALUE(Setup_Fee__c,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sub Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order.IEC_Payment_Date__c  + ( ( 365 / 12 ) * PricebookEntry.Product2.Number_of_months_of_subscription__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subscription_End_Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TC_Accepted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>T&amp;C Accepted</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Tax__c</fullName>
+        <externalId>false</externalId>
+        <label>Taxes</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>TotalPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>Total__c</fullName>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE(SubTotal__c, 0) - BLANKVALUE(Discount__c, 0) + BLANKVALUE(Freight_Charge__c, 0) + BLANKVALUE(Tax__c, 0) + BLANKVALUE( Handling_charges__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>UnitPrice</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Use_Contract_when_ordered__c</fullName>
+        <description>IEC - determine if to create contract instead of send with sales order</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(PricebookEntry.Product2.IEC_Parent_Product__c), PricebookEntry.Product2.Use_Contract_when_ordered__c, PricebookEntry.Product2.IEC_Parent_Product__r.Use_Contract_when_ordered__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Use Contract when ordered</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Zuora_InvoiceId__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora InvoiceId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_InvoiceNumber__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora InvoiceNumber</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_Rate_Plan_Charge_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora Rate Plan Charge Id</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_Rate_Plan_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora Rate Plan Id</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_Setup_Fee_Charge_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora Setup Fee Charge Id</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_Setup_Fee_Plan_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora Setup Fee Plan Id</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_SubscriptionId__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora SubscriptionId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_Subscription_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora Subscription Number</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_Subscription_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora Subscription Status</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>

@@ -7,7 +7,7 @@
 				<tr class="headerRow" >
 					<th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>IATA Group Name</div></th>
 					<th class="headerRow" scope="col" colspan="1" style="width: 12%;"><div>IATA Group Owner</div></th>
-					<th class="headerRow" scope="col" colspan="1" style="width: 30%;"><div>Mission of IATA Group (Reg/Div Groups Only)</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 30%;"><div>Mission of IATA Group</div></th>
 					<th class="headerRow" scope="col" colspan="1" style="width: 11%;"><div>Role Within Group</div></th>
 					<th class="headerRow" scope="col" colspan="1" style="width: 5%;"><div>Salutation</div></th>
 					<th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>First Name</div></th>
@@ -20,7 +20,7 @@
 			<apex:variable value="{!''}" var="previousUnderGroup" />
 
 			<apex:repeat value="{!lstParticipants}" var="pWrapper">
-				
+
 				<apex:outputPanel rendered="{! pWrapper.participant.Local_Governance__r.AM_Under__r.Name <> previousUnderGroup}">
 					<tr class="headerRow">
 						<td class="headerRow" colspan="8"><div>Under {! pWrapper.participant.Local_Governance__r.AM_Under__r.Name}</div></td>
@@ -35,14 +35,29 @@
 								<apex:outputLink value="/{!pWrapper.participant.Local_Governance__c}" target="_blank">{! pWrapper.participant.Local_Governance__r.Name }</apex:outputLink>
 						</td>
 						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.gOwner}</td>
-						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.participant.Local_Governance__r.Mission__c }</td>
+						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">
+							<!-- {! pWrapper.participant.Local_Governance__r.Mission__c } -->
+							<apex:outputPanel styleClass="long-text-area hidden"  >
+							  <apex:outputText value="{!pWrapper.participant.Local_Governance__r.Mission__c}"   />
+							  <a href="#" class="show-less">[show less]</a>
+							</apex:outputPanel>
+							<apex:outputPanel styleClass="short-text-area">
+							  <apex:outputText value="{!LEFT(pWrapper.participant.Local_Governance__r.Mission__c,100)}" />
+							  <apex:outputPanel rendered="{!LEN(pWrapper.participant.Local_Governance__r.Mission__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+							</apex:outputPanel>
+						</td>
 					</apex:outputPanel>
 
 					<td class="dataCell" >{! pWrapper.participant.Participant_Type__c }</td>
 					<td class="dataCell" >{! pWrapper.participant.Contact__r.Salutation }</td>
 					<td class="dataCell" >{! IF(pWrapper.participant.Contact__r.AM_First_Name_Latin_Char__c != null, pWrapper.participant.Contact__r.AM_First_Name_Latin_Char__c , pWrapper.participant.Contact__r.FirstName) }</td>
 					<td class="dataCell" >{! IF(pWrapper.participant.Contact__r.AM_Last_Name_Latin_Char__c != null, pWrapper.participant.Contact__r.AM_Last_Name_Latin_Char__c , pWrapper.participant.Contact__r.LastName) }</td>
-					<td class="dataCell" >{! IF(pWrapper.participant.Contact__r.AM_Job_Title_English__c != null, pWrapper.participant.Contact__r.AM_Job_Title_English__c , pWrapper.participant.Contact__r.Title) }</td>
+					<td class="dataCell" >
+						{! IF(pWrapper.participant.Contact__r.AM_Job_Title_English__c != null, pWrapper.participant.Contact__r.AM_Job_Title_English__c , pWrapper.participant.Contact__r.Title) }
+						<apex:outputPanel rendered="{! pWrapper.participant.Representing__c != null }">
+							<apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>
+						</apex:outputPanel>
+					</td>
 
 				</tr>
 
@@ -51,5 +66,24 @@
 
 		</table>
 	</apex:pageBlock>
+	<!-- JAVASCRIPT -->
+    <apex:includeScript value="{!$Resource.jQuery172}" />
+    <script>
+      $(document).ready(function(){
+        enableShowMoreOrLess();
+      });
+      function enableShowMoreOrLess() {
+        $('.show-more').click(function() {
+          event.preventDefault();
+          $(this).parents('.short-text-area').hide().siblings('.long-text-area').show();
+          // $(this).parent().siblings('.long-text-area').show();
+        });
+        $('.show-less').click(function() {
+          event.preventDefault();
+          $(this).parents('.long-text-area').hide();
+          $(this).parent().siblings('.short-text-area').show();
+        });
 
+      }
+    </script>
 </apex:page>

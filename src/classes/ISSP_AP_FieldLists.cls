@@ -1,3 +1,8 @@
+/**
+    Class to store definitions for controller ISSP_APProcess.cls
+    These static maps are used to define the behavior of the Airline Participation
+    Joining Applications Form 
+**/
 public class ISSP_AP_FieldLists {
     
     public static final Map<String,String> bspMandatoryFields = new Map<String,String>{
@@ -34,7 +39,16 @@ public class ISSP_AP_FieldLists {
             'Accept_payment_Cards_for_BSP_ticket__c' 	=> '',
             'Join_BSP_ECCB__c' 							=> ''
             };
-                
+
+    // mandatory fields when Participate_in_any_Commission_Control__c == 'Yes'
+    // only for BSP
+    //  key = DPC_System__c value
+    //  value = list of mandatory fields
+    public static final Map<String,list<String>> bspCommissionMandatoryFields = new Map<String,list<String>>{
+        'IBSPS'     => new list<String>{'Default_Commission_Rate__c','Maximum_Commission_Rate__c'},
+        'Maestro'   => new list<String>{'Default_Commission_Rate__c','Minimum_Commission_Rate__c','Maximum_Commission_Rate__c'}
+    };
+
     //Mandatory BSP fields specific to Brazil
     public static final Map<String,String> bsp_BR_MandatoryFields = new Map<String,String>{
         'AP_BR_Address_CNP__c'     					=> '',

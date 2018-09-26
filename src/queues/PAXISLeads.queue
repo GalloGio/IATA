@@ -2,6 +2,25 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>PAX IS Leads</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>SalesDirectorA</role>
+            <role>SalesManagerBIITCOA</role>
+            <role>SalesManagersAmericasA</role>
+            <role>SalesManagersAsiaPacA</role>
+            <role>SalesManagersEuropeA</role>
+        </roles>
+        <users>
+            <user>barrocasb@iata.org</user>
+            <user>tayk@iata.org</user>
+            <user>schaaft@iata.org</user>
+            <user>liwei@iata.org</user>
+            <user>jiaz@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Lead</sobjectType>
     </queueSobject>

@@ -9,9 +9,14 @@
     <aura:attribute name="milestonesBackup" type="Task[]" />
     <aura:attribute name="milestones" type="Task[]" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
+    <aura:attribute name="showDeletionCheck" type="Boolean" default="false" />
+    <aura:attribute name="activityToDelete" type="Objective__c" />
+    <aura:attribute name="milestoneToDelete" type="Task" />
+    <aura:attribute name="divisionValues" type="String[]"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
-    <aura:handler name="deleteActivity" event="c:AMP_UpdateIssueOrPriority" action="c.handleDeleteActivity" />
+    <aura:handler name="deleteActivity" event="c:AMP_UpdateIssueOrPriority" action="c.showDeletePopup" />
+    <aura:handler name="cancelAddActivity" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteActivity" />
     <aura:handler name="updateActivity" event="c:AMP_UpdateIssueOrPriority" action="c.handleUpdateActivity" />
     <aura:handler name="showMilestones" event="c:AMP_UpdateIssueOrPriority" action="c.handleShowMilestones" />
 
@@ -20,6 +25,7 @@
     <aura:attribute name="newActivity" type="Objective__c"
                     default="{     'sobjectType' : 'Objective__c',
                              'Name': '',
+                             'Division__c': '',
                              'Details__c': '',
                              'Status__c': '',
                              'Account_Issue_or_Priority__c': '',
@@ -65,20 +71,21 @@
                 <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
                     <thead>
                         <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
-                            <th scope="col" class="narrowColumn"><span class="slds-truncate">Actions</span></th>
+                            <th scope="col" class="narrowColumn"><span class="slds-truncate"></span></th><!--Actions-->
                             <th scope="col" class="mediumColumn"><span class="slds-truncate">Activity</span></th>
+                            <th scope="col" class="wideColumn"><span class="slds-truncate">Division</span></th>
                             <th scope="col" class="wideColumn"><span class="slds-truncate">Description</span></th>
                             <th scope="col" class="narrowColumn"><span class="slds-truncate">Overall Status</span></th>
                             <th scope="col" class="narrowColumn"><span class="slds-truncate">End Date</span></th>
                             <th scope="col" class="mediumColumn"><span class="slds-truncate">Account Issue or Priority</span></th>
-                            <th scope="col" class="wideColumn"><span class="slds-truncate">Benefits to the Account</span></th>
+                            <th scope="col" class="wideColumn"><span class="slds-truncate">Comment</span></th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <aura:iteration items="{!v.activities}" var="activity" indexVar="index">
                             <tr>
-                                <c:AMP_Activity activity="{!activity}" accountId="{!v.accountId}" index="{!index}" canEdit="{!v.canEdit}"/>
+                                <c:AMP_Activity activity="{!activity}" accountId="{!v.accountId}" index="{!index}" canEdit="{!v.canEdit}" divisionValues="{!v.divisionValues}"/>
                             </tr>
                         </aura:iteration>
                     </tbody>
@@ -95,6 +102,38 @@
                 <c:AMP_Milestones accountId="{!v.accountId}" activity="{!v.activity}" activityId="{!v.activityId}" activityName="{!v.activityName}" milestones="{!v.milestones}" canEdit="{!v.canEdit}"/>
             </aura:set>
         </aura:if>
+
+        <aura:if isTrue="{!v.showDeletionCheck}">
+        <div class="slds-modal slds-fade-in-open " style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+
+                        <lightning:button class="slds-button slds-modal__close slds-button--icon-inverse close-button"  onclick="{!c.hideDeletePopup}">
+                            <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#close" class="slds-icon "/>
+                            <span class="slds-assistive-text">Close</span>
+                        </lightning:button>
+                        <h2 id="header99" class="slds-text-heading--medium">Confirmation</h2>
+                    </div>
+
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>Are you sure you want to delete this activity and all its milestones?</p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="slds-button slds-button--neutral" title="No" onclick="{!c.hideDeletePopup}">
+                            No
+                        </lightning:button>
+                        &nbsp;&nbsp;
+                        <lightning:button class="slds-button slds-button--neutral" title="Yes" onclick="{!c.handleDeleteActivity}">
+                            Yes
+                        </lightning:button>
+
+                    </footer>
+                </div>
+            </section>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
 
     </div>
 

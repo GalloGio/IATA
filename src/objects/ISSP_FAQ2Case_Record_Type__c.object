@@ -95,5 +95,19 @@ the case field refers to &quot;IFAP_Country_ISO__c&quot; which is named &quot;CO
         <unique>false</unique>
     </fields>
     <label>ISSP FAQ2Case Record Type</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Complaint__c</columns>
+        <columns>Topic__c</columns>
+        <columns>SubTopic__c</columns>
+        <columns>Flag_Assignment_Rules__c</columns>
+        <columns>RecordType__c</columns>
+        <columns>OwnerId__c</columns>
+        <columns>Country_concerned_by_the_query__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

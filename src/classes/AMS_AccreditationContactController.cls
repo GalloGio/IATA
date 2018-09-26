@@ -23,6 +23,59 @@ public with sharing class AMS_AccreditationContactController {
     public List<TrainedStaffWrapper> trainedStaffWrapper{get; set;}
     public boolean isNewProcess {get; set;}
     public boolean isChangeProcess {get; set;}
+    public boolean isNewGenProcess {get; set;}
+    public List<AMS_Agency_Regulation__c> agRegList {get; set;} //AMSU-132
+
+    public List<AgRegItemWrapper> agRegValuesForDisplay{ //AMSU-132
+        get{
+            
+            if(agRegValuesForDisplay == null) {
+                agRegValuesForDisplay = new List<AgRegItemWrapper>();
+
+                //FM AMSU-132 - Load Agency Regulations records associated with account
+                this.agRegList = [SELECT Id,Account__c,Certificate_Name__c,Expired__c,Expiry_Date__c,
+                            First_Name__c,Issuer__c,Last_Name__c,Name,OSCAR__c,OSCAR__r.Name,Type_Of_Certificate__c,
+                             Position__c, Issued_on__c, Validity__c, Air_cargo_transport_business_exp__c,
+                             IATA_FIATA_training_history__c, Training_dangerous_goods_completed__c, Registration_Number__c
+                            FROM AMS_Agency_Regulation__c 
+                            WHERE Account__c = :this.aoa.SAAM_Case__r.OSCAR__r.Account__c 
+                            AND Type_Of_Certificate__c = 'DGR'
+                            AND (Expiry_Date__c = LAST_N_YEARS:2 OR Expiry_Date__c > LAST_N_YEARS:2)];
+                
+                for(AMS_Agency_Regulation__c reg : this.agRegList){
+                    Boolean bExist = false;
+                    if(reg.OSCAR__c != null){
+                        agRegValuesForDisplay.add(new AgRegItemWrapper(reg, false, false, false));
+                    }else{
+                        agRegValuesForDisplay.add(new AgRegItemWrapper(reg, false, false, true));
+                    }
+                    
+                }
+            }
+            return agRegValuesForDisplay;
+        }
+        set;
+    }
+
+    public Boolean selectAll{ //AMSU-132
+        get{
+            if(selectAll == null) selectAll = false;
+            return selectAll;
+        }
+        set;
+    }
+
+    //FM 09-10-2017 - AMSU-72 - get date format based on user regional settings
+    date myDate = date.newInstance(2001, 12, 21);
+    public String dateFormatToShow {
+        get {
+            String s = myDate.format();
+            s = s.replace('2001', 'YYYY');
+            s = s.replace('12', 'MM');
+            s = s.replace('21', 'DD');
+            return s;
+        }
+    }
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
@@ -36,6 +89,8 @@ public with sharing class AMS_AccreditationContactController {
 
 
     };
+
+    public static final List<String> NGOWNEREDITABLECHANGES = new List<String>{'minor shareholding','major shareholding','ownership'};
 
     
     // TODO at a later stage: after having 100% ownershiprate in total and saving the owners, need to update OSCAR's field that states that the 
@@ -57,7 +112,8 @@ public with sharing class AMS_AccreditationContactController {
                             SAAM_Case__r.OSCAR__r.Account__r.Location_class__c, SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c, 
                             SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c,
                             SAAM_Case__r.OSCAR__r.Account__r.Sector__c, SAAM_Case__r.OSCAR__r.Account__r.Category__c,
-                            SAAM_Case__r.OSCAR__r.CNS_process__c
+                            SAAM_Case__r.OSCAR__r.CNS_process__c, ANG_IsNewGenAgency__c,  SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c, SAAM_Case__r.OSCAR__r.RecordTypeId,
+                            SAAM_Case__r.OSCAR__c,SAAM_Case__r.OSCAR__r.AMS_Target_Agency__c //FM - AMSU-1
                             from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
             this.aoa = aoaList.get(0);
             String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
@@ -132,10 +188,17 @@ public with sharing class AMS_AccreditationContactController {
 
         blockOwnershipEdit = (aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO
                                 && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AO
+                                && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE
                                 && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR
                                 && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES)
                             || typeOfChangeContainsOwnershipToIATA
                             || (aoa.SAAM_Case__r.OSCAR__r.CNS_process__c && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Class__c =='R');
+
+        if(aoa.ANG_IsNewGenAgency__c && (aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NEWAE || (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c != null && ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
+            blockOwnershipEdit = false;
+
+        if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHANGES && (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c == null || !(ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
+            blockOwnershipEdit = true;
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
@@ -143,15 +206,26 @@ public with sharing class AMS_AccreditationContactController {
 
         isCertificationOSCAR = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION ? true : false;
 
-        isNewProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW? true : false;
+        isNewProcess = (aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW)? true : false;
         isChangeProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_CHANGE? true : false;
+        isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(aoa.SAAM_Case__r.OSCAR__r.Process__c) ? true : false;
+
+        //FM AMSU-1
+        if(isCorrection){
+            AMS_OSCAR__c auxOscar = new AMS_OSCAR__c();
+            auxOscar.Account__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c;
+            auxOscar.AMS_Target_Agency__c = this.aoa.SAAM_Case__r.OSCAR__r.AMS_Target_Agency__c;
+            auxOscar.Id = this.aoa.SAAM_Case__r.OSCAR__c;
+            auxOscar.AMS_Online_Accreditation__c = stdController.getRecord().id;
+            this.oscarObj = auxOscar;
+        }
     }
     
     public void addEmptyRow()
     {
         Id rt = this.aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.AGENCYCHANGES || this.aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR ? AcCurrentOwnerRt : AcPersonRt;
 
-        AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId =  rt, Company__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c));
+        AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId =  rt));
         this.acWrapper.add(acWrapper);
     }
     
@@ -215,6 +289,23 @@ public with sharing class AMS_AccreditationContactController {
             this.forDeletion.add(acToDelete);
         }
         
+        //AMSU-132
+        if(acToDelete.AgencyRegulation__c != null){
+            System.debug('this.agRegValuesForDisplay: ' + this.agRegValuesForDisplay);            
+
+            System.debug('acToDelete.AgencyRegulation__c: ' + acToDelete.AgencyRegulation__c);
+            for(AgRegItemWrapper agRegItem : this.agRegValuesForDisplay){
+                System.debug('agRegItem: ' + agRegItem);
+                if(agRegItem.agReg.id == acToDelete.AgencyRegulation__c){
+                    agRegItem.enable = true;
+                    agRegItem.selected = false;
+                    System.debug('agRegItem.enable: ' + agRegItem.enable);
+                    System.debug('agRegItem.selected: ' + agRegItem.selected);
+                }
+            }
+            System.debug('this.agRegValuesForDisplay: ' + this.agRegValuesForDisplay);  
+        }
+        
         this.trainedStaffWrapper.remove(this.toUnselect);
         return null;
     }
@@ -247,9 +338,15 @@ public with sharing class AMS_AccreditationContactController {
             
         }
 
-        if(!calculateTotalOwnership() && !isCertificationOSCAR)
+        if(!isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
+            return null;
+        }
+
+        if(isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to at least 99.99% before saving.'));
             return null;
         }
         
@@ -286,6 +383,8 @@ public with sharing class AMS_AccreditationContactController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, errorMissingExpiryDate));
             return null;
         }
+
+        Integer numberPortalAdmin = 0;
         
         // Verify that no emails entered for "new" contacts are found in the system
         Set<String> emailSetToConfirm = new Set<String>();
@@ -296,7 +395,18 @@ public with sharing class AMS_AccreditationContactController {
                 if(ac.ac.Email__c != '')
                     emailSetToConfirm.add(ac.ac.Email__c);
             }
+
+            if(ac.ac.Portal_administrator__c == true)
+                numberPortalAdmin++;
+
         }
+
+        if(numberPortalAdmin > 1 /*&& isNewGenProcess AMSU-163*/){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'A maximum of 1 portal administrator is allowed on this page.'));
+            return null;
+        }
+
+
         if(emailSetToConfirm.size() >0)
         {
             Map<Id, Contact> idContactMap = AMS_AccreditationContactHelper.findContactsByEmail(emailSetToConfirm);
@@ -448,6 +558,38 @@ public with sharing class AMS_AccreditationContactController {
         return new PageReference('/' + ApexPages.currentPage().getParameters().get('Id'));
     }
     
+    //AMSU-132
+    public void doSelectAll(){
+        for(AgRegItemWrapper ar : agRegValuesForDisplay){
+            ar.selected = selectAll;
+        }
+    }
+
+    //AMSU-132
+    public PageReference saveImport(){
+        try {
+
+            List<AMS_Agency_Regulation__c> agRegListLocal = new List<AMS_Agency_Regulation__c>(); 
+            System.debug('before saveImport: agRegValuesForDisplay: ' + agRegValuesForDisplay);
+            for(AgRegItemWrapper ari : agRegValuesForDisplay){
+                System.debug('before saveImport: ari: ' + ari);
+                 if(ari.selected){ 
+                     ari.enable = false;
+                     agRegListLocal.add(ari.agReg);
+                 }
+            }
+
+            convertExistingAgencyRegulationsToAccContact(this.aoa.Id, agRegListLocal);
+            
+        } catch(Exception e) {
+            //DML Exceptions are sometimes displayed on the page
+            //if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+            System.debug(loggingLevel.ERROR, '____ [cls AMS_AccreditationContactController - save] error - ' + e.getMessage());
+        }
+        return null;
+    }
+    
+    
     public boolean calculateTotalOwnership()
     {
         ownership = 0;
@@ -461,7 +603,8 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && ownership != 100)
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' &&
+         ((!isNewGenProcess && ownership != 100)||(isNewGenProcess && ownership < 99.99 )))
         {
             return false;
         } else
@@ -572,17 +715,41 @@ public with sharing class AMS_AccreditationContactController {
 
             for(Integer i=0;i<5;i++)
             {
-                if(i == 0)
+                if(i == 0){
+                    if(wrapped.ac.Date_joined_agency__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Date_joined_agency__c.year(), wrapped.ac.Date_joined_agency__c.month(),wrapped.ac.Date_joined_agency__c.day());
+                        wrapped.dateJoined = dt.format('yyyy-MM-dd');
+                    }
                     fieldToCheck = wrapped.dateJoined;
-                if(i == 1)
+                }
+                if(i == 1){
+                    if(wrapped.ac.Prev_Job1_From__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job1_From__c.year(), wrapped.ac.Prev_Job1_From__c.month(),wrapped.ac.Prev_Job1_From__c.day());
+                        wrapped.prev1From = dt.format('yyyy-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev1From;
-                if(i == 2)
+                }
+                if(i == 2){
+                    if(wrapped.ac.Prev_Job1_To__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job1_To__c.year(), wrapped.ac.Prev_Job1_To__c.month(),wrapped.ac.Prev_Job1_To__c.day());
+                        wrapped.prev1To = dt.format('yyyy-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev1To;
-                if(i == 3)
+                }
+                if(i == 3){
+                    if(wrapped.ac.Prev_Job2_From__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job2_From__c.year(), wrapped.ac.Prev_Job2_From__c.month(),wrapped.ac.Prev_Job2_From__c.day());
+                        wrapped.prev2From = dt.format('yyyy-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev2From;
-                if(i == 4)
+                }
+                if(i == 4){
+                    if(wrapped.ac.Prev_Job2_To__c != null){
+                        DateTime dt = DateTime.newInstance(wrapped.ac.Prev_Job2_To__c.year(), wrapped.ac.Prev_Job2_To__c.month(),wrapped.ac.Prev_Job2_To__c.day());
+                        wrapped.prev2To = dt.format('yyyy-MM-dd');
+                    }
                     fieldtoCheck = wrapped.prev2To;
-
+                }
                 if(!dateFieldValidation(fieldtoCheck))
                     return wrapped.ac.First_Name__c + ' '+wrapped.ac.Last_Name__c + ' with date: ' + fieldToCheck;
             }
@@ -597,11 +764,21 @@ public with sharing class AMS_AccreditationContactController {
 
             for(Integer i=0;i<2;i++)
             {
-                if(i == 0)
+                if(i == 0){
+                    if(tsw.ac.Certificate_Issued_on__c != null){
+                        DateTime dt = DateTime.newInstance(tsw.ac.Certificate_Issued_on__c.year(), tsw.ac.Certificate_Issued_on__c.month(),tsw.ac.Certificate_Issued_on__c.day());
+                        tsw.certificateIssueDate = dt.format('yyyy-MM-dd');
+                    }
                     fieldToCheck = tsw.certificateIssueDate;
-                if(i == 1)
+                }    
+                if(i == 1){
+                    if(tsw.ac.Certificate_Issued_on__c != null && (tsw.ac.Type_of_certificate__c == 'DGR' || tsw.ac.Type_of_certificate__c == 'CATA')){
+                        system.debug('RB Valid until: ' + tsw.ac.Valid_until__c);
+                        DateTime dt = DateTime.newInstance(tsw.ac.Valid_until__c.year(), tsw.ac.Valid_until__c.month(),tsw.ac.Valid_until__c.day());
+                        tsw.validUntil = dt.format('yyyy-MM-dd');
+                    }
                     fieldtoCheck = tsw.validUntil;
-
+                }    
                 if(!dateFieldValidation(fieldtoCheck))
                 {
                     String tsFirstName = tsw.ac.First_Name__c == null ? '' : tsw.ac.First_Name__c;
@@ -861,6 +1038,8 @@ public with sharing class AMS_AccreditationContactController {
                        (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c!=null && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c.contains(AMS_Utils.OWNERSHIP_IATA) ||
                        (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != null &&
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
+                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE &&
+                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AE && 
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES));
 
                 }
@@ -876,10 +1055,10 @@ public with sharing class AMS_AccreditationContactController {
             this.prev2To = String.valueOf(acParam.Prev_Job2_To__c);
             
             this.ac = acParam;
-            if(this.ac.Company__c == null)
+            /*if(this.ac.Company__c == null)
             {
                 this.ac.Company__c = acParam.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
-            }
+            }*/
             if(acParam.Person_AMS__c != null)
             {
                 this.recordId = acParam.Person_AMS__c;
@@ -940,6 +1119,158 @@ public with sharing class AMS_AccreditationContactController {
             this.ac = trainedStaffAc;
             this.certificateIssueDate = String.valueOf(trainedStaffAc.Certificate_Issued_on__c);
             this.validUntil = String.valueOf(trainedStaffAc.Valid_until__c);
+        }
+    }
+
+	//FM AMSU-1
+    public AMS_OSCAR__c oscarObj { 
+        get{ 
+            if(this.oscarObj == null)
+                return new AMS_OSCAR__c();
+            else return this.oscarObj;
+        }
+        set; }
+
+    //FM AMSU-1
+    public Boolean isAllHierarchySelected{
+        get{
+            System.debug('isAllHierarchySelected - entrei - isAllHierarchySelected : ' + isAllHierarchySelected);
+            if(isAllHierarchySelected != null){
+                return isAllHierarchySelected;
+            }else{
+                Map<Id, List<AMS_Process_Detail__c>> processDetailPerOSCAR = new Map<Id, List<AMS_Process_Detail__c>>();
+                Set<Id> accountIds = new Set<Id>();
+                Set<Id> oscarIds = new Set<Id>();
+                Set<Id> oscarOnlineAccredIds = new Set<Id>();
+                Map<Id, Account> accounts = new Map<Id, Account>();
+                
+                //store all the updates to be made on account as consequence of migration of data from staging area to master data
+                Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+                
+                accountIds.add(oscarObj.Account__c);
+                accountIds.add(oscarObj.AMS_Target_Agency__c);
+                oscarIds.add(oscarObj.Id);
+                oscarOnlineAccredIds.add(oscarObj.AMS_Online_Accreditation__c);
+
+
+                Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = new Map<Id, AMS_Pax_Accreditation_Form__c>([SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
+                    ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__r.Name, Branch_Office_Country__r.Due_diligence_mandatory__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
+                    Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
+                    Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
+                    Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
+                    Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c   
+                    FROM AMS_Pax_Accreditation_Form__c
+                    WHERE Id IN :oscarOnlineAccredIds]);
+
+                AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = onlineAccreditations.get(oscarObj.AMS_Online_Accreditation__c);
+
+                //query the the Process Detail object for all the agencies that are being bought
+                List<AMS_Process_Detail__c> allProcessDetails = new List<AMS_Process_Detail__c>([SELECT Id, Account__c, OSCAR__c, Account__r.Status__c, RecordType.Developername FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscarIds and RecordType.Developername = 'Agency_Involved']);
+
+                for (AMS_Process_Detail__c pd : allProcessDetails) {
+                    //TERMINATED AGENCIES IGNORED
+                    if(pd.Account__c != null && pd.Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
+                        if (processDetailPerOSCAR.get(pd.OSCAR__c) == null)
+                            processDetailPerOSCAR.put(pd.OSCAR__c, new List<AMS_Process_Detail__c> {pd});
+                        else
+                            processDetailPerOSCAR.get(pd.OSCAR__c).add(pd);
+                    }
+
+                }
+
+                Set<Id> oscarAccountIds = new Set<Id>();
+                oscarAccountIds.add(oscarObj.Account__c);
+                Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(oscarAccountIds);
+
+                for (List<AMS_Agencies_relationhip__c> hierarchyRelations : accountHierarchyRelationships.values()) {
+                    for (AMS_Agencies_relationhip__c relationship : hierarchyRelations) {
+                        if(relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Parent_Account__r.Status__c != '' ){
+                            accountIds.add(relationship.Parent_Account__c);
+                            accounts.put(relationship.Parent_Account__c, new Account(id = relationship.Parent_Account__c, Status__c = relationship.Parent_Account__r.Status__c));
+                        }
+                        if(relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Child_Account__r.Status__c != '' ){
+                            accountIds.add(relationship.Child_Account__c);
+                            accounts.put(relationship.Child_Account__c, new Account(id = relationship.Child_Account__c, Status__c = relationship.Child_Account__r.Status__c));
+                        }
+                    }
+                }
+
+                List<AMS_Process_Detail__c> pds = processDetailPerOSCAR.get(oscarObj.Id);
+
+                Set<Id> agenciesAffected = new Set<Id>();
+                Set<Id> agenciesAffectedWithHO = new Set<Id>();
+                agenciesAffectedWithHO.add(oscarObj.Account__c);
+
+                if (pds != null){
+                    for (AMS_Process_Detail__c pd : pds){
+                        agenciesAffected.add(pd.Account__c);
+                        agenciesAffectedWithHO.add(pd.Account__c);
+                    }
+                }
+
+                
+
+                system.debug('applyChangeCodesWithDependencies() -> processDetailPerOSCAR : ' + processDetailPerOSCAR);
+                system.debug('applyChangeCodesWithDependencies() -> accountHierarchyRelationships : ' + accountHierarchyRelationships);
+                system.debug('applyChangeCodesWithDependencies() -> accountIds : ' + accountIds);
+                system.debug('applyChangeCodesWithDependencies() -> accounts : ' + accounts);
+                system.debug('applyChangeCodesWithDependencies() -> agenciesAffected : ' + agenciesAffected);
+                
+
+                //Checks if all Hierarchy was Selected
+                isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, accountHierarchyRelationships.get(oscarObj.Account__c), accounts);
+                return isAllHierarchySelected;
+                //system.debug('applyChangeCodesWithDependencies() -> isAllHierarchySelected : ' + isAllHierarchySelected);
+            }
+        }
+        private set;
+    }
+
+
+    // AMSU-132
+    public class AgRegItemWrapper{
+
+        public AMS_Agency_Regulation__c agReg { get; set; }
+        public Boolean main { get; set; }
+        public Boolean selected { get; set; }
+        public Boolean enable { get; set; }
+
+        public AgRegItemWrapper(AMS_Agency_Regulation__c ar, Boolean main, Boolean selected, Boolean enable){
+            this.agReg = ar;
+            this.main = main;
+            this.selected = selected;
+            this.enable = enable;
+        }
+    }
+    //AMSU-132
+    public void convertExistingAgencyRegulationsToAccContact(Id stagingId, List<AMS_Agency_Regulation__c> regulations){
+
+        List<AMS_Accreditation_Contact__c> accToInsert = new List<AMS_Accreditation_Contact__c>();
+
+        //create trained staff accreditation contact from the existing agency regulations
+        //in the accreditation contact we save the link to the agency regulation object.
+        for(AMS_Agency_Regulation__c reg  :regulations){
+
+            AMS_Accreditation_Contact__c ac = new AMS_Accreditation_Contact__c();
+
+            ac.RecordTypeId = AMS_Utils.AccreditationContactTrainedStaffRT;
+            ac.Certificate_Name__c = reg.Certificate_Name__c;
+            ac.First_Name__c = reg.First_Name__c;
+            ac.Last_Name__c = reg.Last_Name__c;
+            ac.Position_trained_staff__c = reg.Position__c;
+            ac.Type_of_Certificate__c = reg.Type_of_Certificate__c;
+            ac.AMS_Pax_Accreditation_Form__c = stagingId;
+            ac.Certificate_Issued_on__c = reg.Issued_on__c;
+            ac.Certificate_Validity__c = reg.Validity__c;
+            ac.Valid_until__c = reg.Expiry_Date__c;
+            ac.Certificate_Issuer__c = reg.Issuer__c;
+            ac.AgencyRegulation__c = reg.Id;
+            ac.Air_cargo_transport_business_exp__c = reg.Air_cargo_transport_business_exp__c;
+            ac.IATA_FIATA_training_history__c = reg.IATA_FIATA_training_history__c;
+            ac.Training_dangerous_goods_completed__c = reg.Training_dangerous_goods_completed__c;
+            ac.Registration_number__c = reg.Registration_Number__c; 
+
+            this.trainedStaffWrapper.add(new TrainedStaffWrapper(ac));
         }
     }
 }

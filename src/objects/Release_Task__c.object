@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Track Bugs, Enhancement Requests, and Action Items to be resolved during the Build, Validate, Deploy and/or Post-Deployment phases.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -117,24 +114,29 @@
         <fullName>Business_Value__c</fullName>
         <externalId>false</externalId>
         <label>Business Value</label>
-        <picklist>
-            <picklistValues>
-                <fullName>No impact</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Evolution requested has a negative impact</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Positive impact on business value</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No impact</fullName>
+                    <default>true</default>
+                    <label>No impact</label>
+                </value>
+                <value>
+                    <fullName>Evolution requested has a negative impact</fullName>
+                    <default>false</default>
+                    <label>Evolution requested has a negative impact</label>
+                </value>
+                <value>
+                    <fullName>Positive impact on business value</fullName>
+                    <default>false</default>
+                    <label>Positive impact on business value</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Closed__c</fullName>
@@ -173,24 +175,29 @@
         <fullName>Communication_needed__c</fullName>
         <externalId>false</externalId>
         <label>Communication needed</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Home Page Communication</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training Webinar</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>End User Documentation Update</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Home Page Communication</fullName>
+                    <default>false</default>
+                    <label>Home Page Communication</label>
+                </value>
+                <value>
+                    <fullName>Training Webinar</fullName>
+                    <default>false</default>
+                    <label>Training Webinar</label>
+                </value>
+                <value>
+                    <fullName>End User Documentation Update</fullName>
+                    <default>false</default>
+                    <label>End User Documentation Update</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -221,24 +228,29 @@
         <fullName>Data_Accuracy__c</fullName>
         <externalId>false</externalId>
         <label>Data Accuracy</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not relevant</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Evolution requested has a negative impact on data quality</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reduces risk of error on a importance information (example : direct link with cost or revenue)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not relevant</fullName>
+                    <default>true</default>
+                    <label>Not relevant</label>
+                </value>
+                <value>
+                    <fullName>Evolution requested has a negative impact on data quality</fullName>
+                    <default>false</default>
+                    <label>Evolution requested has a negative impact on data quality</label>
+                </value>
+                <value>
+                    <fullName>Reduces risk of error on a importance information (example : direct link with cost or revenue)</fullName>
+                    <default>false</default>
+                    <label>Reduces risk of error on a importance information (example : direct link with cost or revenue)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Deployment__c</fullName>
@@ -254,28 +266,34 @@
         <fullName>Derived_Urgency__c</fullName>
         <externalId>false</externalId>
         <label>Derived Urgency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Low (Nice to have)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>High</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Critical</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Low (Nice to have)</fullName>
+                    <default>false</default>
+                    <label>Low (Nice to have)</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+                <value>
+                    <fullName>Critical</fullName>
+                    <default>false</default>
+                    <label>Critical</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Description__c</fullName>
@@ -298,68 +316,83 @@
         <fullName>Design_Impact__c</fullName>
         <externalId>false</externalId>
         <label>Design Impact</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Workshop</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Communication to Design Team</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Gap Analysis with Release</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Workshop</fullName>
+                    <default>false</default>
+                    <label>Workshop</label>
+                </value>
+                <value>
+                    <fullName>Communication to Design Team</fullName>
+                    <default>false</default>
+                    <label>Communication to Design Team</label>
+                </value>
+                <value>
+                    <fullName>Gap Analysis with Release</fullName>
+                    <default>false</default>
+                    <label>Gap Analysis with Release</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Development_Component__c</fullName>
         <externalId>false</externalId>
         <label>Development Component</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Reports</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Dashboards</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accounts</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Contacts</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Profiles and Security Settings</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Opportunities</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cases</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Data quality/De duplication</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Reports</fullName>
+                    <default>false</default>
+                    <label>Reports</label>
+                </value>
+                <value>
+                    <fullName>Dashboards</fullName>
+                    <default>false</default>
+                    <label>Dashboards</label>
+                </value>
+                <value>
+                    <fullName>Accounts</fullName>
+                    <default>false</default>
+                    <label>Accounts</label>
+                </value>
+                <value>
+                    <fullName>Contacts</fullName>
+                    <default>false</default>
+                    <label>Contacts</label>
+                </value>
+                <value>
+                    <fullName>Profiles and Security Settings</fullName>
+                    <default>false</default>
+                    <label>Profiles and Security Settings</label>
+                </value>
+                <value>
+                    <fullName>Opportunities</fullName>
+                    <default>false</default>
+                    <label>Opportunities</label>
+                </value>
+                <value>
+                    <fullName>Cases</fullName>
+                    <default>false</default>
+                    <label>Cases</label>
+                </value>
+                <value>
+                    <fullName>Data quality/De duplication</fullName>
+                    <default>false</default>
+                    <label>Data quality/De duplication</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Due_date__c</fullName>
@@ -464,32 +497,39 @@
         <fullName>LOE_Hours__c</fullName>
         <externalId>false</externalId>
         <label>LOE (Hours)</label>
-        <picklist>
-            <picklistValues>
-                <fullName>&lt; 1 hour</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>1 to 8 hours</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>8+ to 40 hours</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>40+ to 160 hours</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>&gt; 160 hours</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>&lt; 1 hour</fullName>
+                    <default>false</default>
+                    <label>&lt; 1 hour</label>
+                </value>
+                <value>
+                    <fullName>1 to 8 hours</fullName>
+                    <default>false</default>
+                    <label>1 to 8 hours</label>
+                </value>
+                <value>
+                    <fullName>8+ to 40 hours</fullName>
+                    <default>false</default>
+                    <label>8+ to 40 hours</label>
+                </value>
+                <value>
+                    <fullName>40+ to 160 hours</fullName>
+                    <default>false</default>
+                    <label>40+ to 160 hours</label>
+                </value>
+                <value>
+                    <fullName>&gt; 160 hours</fullName>
+                    <default>false</default>
+                    <label>&gt; 160 hours</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>New_Process_Score__c</fullName>
@@ -508,24 +548,29 @@
         <fullName>New_Process__c</fullName>
         <externalId>false</externalId>
         <label>New Process</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not relevant</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Low impact</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>High impact</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not relevant</fullName>
+                    <default>true</default>
+                    <label>Not relevant</label>
+                </value>
+                <value>
+                    <fullName>Low impact</fullName>
+                    <default>false</default>
+                    <label>Low impact</label>
+                </value>
+                <value>
+                    <fullName>High impact</fullName>
+                    <default>false</default>
+                    <label>High impact</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Object_Change__c</fullName>
@@ -577,28 +622,34 @@
         <fullName>Priority__c</fullName>
         <externalId>false</externalId>
         <label>Priority/Severity</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Critical</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>High</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Critical</fullName>
+                    <default>false</default>
+                    <label>Critical</label>
+                </value>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Productivity_Score__c</fullName>
@@ -617,24 +668,29 @@
         <fullName>Productivity__c</fullName>
         <externalId>false</externalId>
         <label>Productivity</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not relevant</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Evolution requested has a negative impact on productivity</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Functional response time or process duration reduced</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not relevant</fullName>
+                    <default>true</default>
+                    <label>Not relevant</label>
+                </value>
+                <value>
+                    <fullName>Evolution requested has a negative impact on productivity</fullName>
+                    <default>false</default>
+                    <label>Evolution requested has a negative impact on productivity</label>
+                </value>
+                <value>
+                    <fullName>Functional response time or process duration reduced</fullName>
+                    <default>false</default>
+                    <label>Functional response time or process duration reduced</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Raised_by__c</fullName>
@@ -662,52 +718,64 @@
         <fullName>Related_to_Business_Process__c</fullName>
         <externalId>false</externalId>
         <label>Related to Business Process</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agency Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Agency Risk Management (IFAP)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Participation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Service Process</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DPC Processes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Exception Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ICCS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ID Card</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marketing and Commercial Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agency Management</fullName>
+                    <default>false</default>
+                    <label>Agency Management</label>
+                </value>
+                <value>
+                    <fullName>Agency Risk Management (IFAP)</fullName>
+                    <default>false</default>
+                    <label>Agency Risk Management (IFAP)</label>
+                </value>
+                <value>
+                    <fullName>Airline Participation</fullName>
+                    <default>false</default>
+                    <label>Airline Participation</label>
+                </value>
+                <value>
+                    <fullName>Customer Service Process</fullName>
+                    <default>false</default>
+                    <label>Customer Service Process</label>
+                </value>
+                <value>
+                    <fullName>DPC Processes</fullName>
+                    <default>false</default>
+                    <label>DPC Processes</label>
+                </value>
+                <value>
+                    <fullName>Exception Management</fullName>
+                    <default>false</default>
+                    <label>Exception Management</label>
+                </value>
+                <value>
+                    <fullName>ICCS</fullName>
+                    <default>false</default>
+                    <label>ICCS</label>
+                </value>
+                <value>
+                    <fullName>ID Card</fullName>
+                    <default>false</default>
+                    <label>ID Card</label>
+                </value>
+                <value>
+                    <fullName>Marketing and Commercial Services</fullName>
+                    <default>false</default>
+                    <label>Marketing and Commercial Services</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Release__c</fullName>
@@ -752,104 +820,128 @@
         <fullName>Resource_Type__c</fullName>
         <externalId>false</externalId>
         <label>Resource Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Apex Class</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Apex Trigger</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Java Script</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Visualforce</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Apex Class</fullName>
+                    <default>false</default>
+                    <label>Apex Class</label>
+                </value>
+                <value>
+                    <fullName>Apex Trigger</fullName>
+                    <default>false</default>
+                    <label>Apex Trigger</label>
+                </value>
+                <value>
+                    <fullName>Java Script</fullName>
+                    <default>false</default>
+                    <label>Java Script</label>
+                </value>
+                <value>
+                    <fullName>Visualforce</fullName>
+                    <default>false</default>
+                    <label>Visualforce</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>New</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Feedback required</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Feedback provided</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ready for Deployment to PREPROD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ready for Test in PREPROD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ready for Deployment to Production</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ready for Test in Production</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed (Duplicate)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed (Verified)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Re-Open</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>On Hold</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ready in Dev</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No Go</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ready In Config</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ready for UAT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New</fullName>
+                    <default>true</default>
+                    <label>New</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Feedback required</fullName>
+                    <default>false</default>
+                    <label>Feedback required</label>
+                </value>
+                <value>
+                    <fullName>Feedback provided</fullName>
+                    <default>false</default>
+                    <label>Feedback provided</label>
+                </value>
+                <value>
+                    <fullName>Ready for Deployment to PREPROD</fullName>
+                    <default>false</default>
+                    <label>Ready for Deployment to PREPROD</label>
+                </value>
+                <value>
+                    <fullName>Ready for Test in PREPROD</fullName>
+                    <default>false</default>
+                    <label>Ready for Test in PREPROD</label>
+                </value>
+                <value>
+                    <fullName>Ready for Deployment to Production</fullName>
+                    <default>false</default>
+                    <label>Ready for Deployment to Production</label>
+                </value>
+                <value>
+                    <fullName>Ready for Test in Production</fullName>
+                    <default>false</default>
+                    <label>Ready for Test in Production</label>
+                </value>
+                <value>
+                    <fullName>Closed (Duplicate)</fullName>
+                    <default>false</default>
+                    <label>Closed (Duplicate)</label>
+                </value>
+                <value>
+                    <fullName>Closed (Verified)</fullName>
+                    <default>false</default>
+                    <label>Closed (Verified)</label>
+                </value>
+                <value>
+                    <fullName>Re-Open</fullName>
+                    <default>false</default>
+                    <label>Re-Open</label>
+                </value>
+                <value>
+                    <fullName>On Hold</fullName>
+                    <default>false</default>
+                    <label>On Hold</label>
+                </value>
+                <value>
+                    <fullName>Ready in Dev</fullName>
+                    <default>false</default>
+                    <label>Ready in Dev</label>
+                </value>
+                <value>
+                    <fullName>No Go</fullName>
+                    <default>false</default>
+                    <label>No Go</label>
+                </value>
+                <value>
+                    <fullName>Ready In Config</fullName>
+                    <default>false</default>
+                    <label>Ready In Config</label>
+                </value>
+                <value>
+                    <fullName>Ready for UAT</fullName>
+                    <default>false</default>
+                    <label>Ready for UAT</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Steps_to_Reproduce__c</fullName>
@@ -893,59 +985,72 @@
         <fullName>Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Question</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Data</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Process</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Implementation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Deployment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Validation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Question</fullName>
+                    <default>false</default>
+                    <label>Question</label>
+                </value>
+                <value>
+                    <fullName>Data</fullName>
+                    <default>false</default>
+                    <label>Data</label>
+                </value>
+                <value>
+                    <fullName>Process</fullName>
+                    <default>false</default>
+                    <label>Process</label>
+                </value>
+                <value>
+                    <fullName>Training</fullName>
+                    <default>false</default>
+                    <label>Training</label>
+                </value>
+                <value>
+                    <fullName>Implementation</fullName>
+                    <default>false</default>
+                    <label>Implementation</label>
+                </value>
+                <value>
+                    <fullName>Deployment</fullName>
+                    <default>false</default>
+                    <label>Deployment</label>
+                </value>
+                <value>
+                    <fullName>Validation</fullName>
+                    <default>false</default>
+                    <label>Validation</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Type_of_Fix__c</fullName>
         <externalId>false</externalId>
         <label>Type of Fix</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Permanent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Work Around</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Permanent</fullName>
+                    <default>false</default>
+                    <label>Permanent</label>
+                </value>
+                <value>
+                    <fullName>Work Around</fullName>
+                    <default>false</default>
+                    <label>Work Around</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>User_Friendliness_Score__c</fullName>
@@ -964,24 +1069,29 @@
         <fullName>User_Friendliness__c</fullName>
         <externalId>false</externalId>
         <label>User Friendliness</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not relevant</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Evolution requested has a negative impact on user friendliness</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Positive impact on user friendliness</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not relevant</fullName>
+                    <default>true</default>
+                    <label>Not relevant</label>
+                </value>
+                <value>
+                    <fullName>Evolution requested has a negative impact on user friendliness</fullName>
+                    <default>false</default>
+                    <label>Evolution requested has a negative impact on user friendliness</label>
+                </value>
+                <value>
+                    <fullName>Positive impact on user friendliness</fullName>
+                    <default>false</default>
+                    <label>Positive impact on user friendliness</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>User_Interface_Impact_Analysis__c</fullName>
@@ -1010,36 +1120,44 @@
         <externalId>false</externalId>
         <inlineHelpText>Which user or group is affected by the request</inlineHelpText>
         <label>User or Group Impacted</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Individual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Business Unit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Country</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Region</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>All</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Unknown</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Individual</fullName>
+                    <default>false</default>
+                    <label>Individual</label>
+                </value>
+                <value>
+                    <fullName>Business Unit</fullName>
+                    <default>false</default>
+                    <label>Business Unit</label>
+                </value>
+                <value>
+                    <fullName>Country</fullName>
+                    <default>false</default>
+                    <label>Country</label>
+                </value>
+                <value>
+                    <fullName>Region</fullName>
+                    <default>false</default>
+                    <label>Region</label>
+                </value>
+                <value>
+                    <fullName>All</fullName>
+                    <default>false</default>
+                    <label>All</label>
+                </value>
+                <value>
+                    <fullName>Unknown</fullName>
+                    <default>false</default>
+                    <label>Unknown</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Validation_Rule__c</fullName>
@@ -1057,32 +1175,39 @@
         <fullName>Workaround__c</fullName>
         <externalId>false</externalId>
         <label>Workaround?</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not relevant</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Existing satisfactory alternative method</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reasonable workaround (effort to make it happen)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Difficult workaround (effort to make it happen)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No alternative or unacceptable alternative method</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not relevant</fullName>
+                    <default>true</default>
+                    <label>Not relevant</label>
+                </value>
+                <value>
+                    <fullName>Existing satisfactory alternative method</fullName>
+                    <default>false</default>
+                    <label>Existing satisfactory alternative method</label>
+                </value>
+                <value>
+                    <fullName>Reasonable workaround (effort to make it happen)</fullName>
+                    <default>false</default>
+                    <label>Reasonable workaround (effort to make it happen)</label>
+                </value>
+                <value>
+                    <fullName>Difficult workaround (effort to make it happen)</fullName>
+                    <default>false</default>
+                    <label>Difficult workaround (effort to make it happen)</label>
+                </value>
+                <value>
+                    <fullName>No alternative or unacceptable alternative method</fullName>
+                    <default>false</default>
+                    <label>No alternative or unacceptable alternative method</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Workflow_Rule__c</fullName>
@@ -2712,4 +2837,5 @@
         <errorDisplayField>Assigned_to__c</errorDisplayField>
         <errorMessage>The technical owner is a mandatory field</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

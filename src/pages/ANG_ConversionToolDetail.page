@@ -1,0 +1,127 @@
+<apex:page controller="ANG_ConversionToolController" showHeader="true">
+
+ <apex:includeScript value="/support/console/34.0/integration.js"/>
+    <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+
+    <script type="text/javascript">
+        function openPrimaryTab(tabId,tabName) {
+            var changeTab = function(result){
+                if(result.success == false){
+                    sforce.console.focusPrimaryTabByName(tabId);
+                }
+            };
+            //Open a new agency primary tab
+            sforce.console.openPrimaryTab(null, tabId, true,tabName, changeTab, tabId);
+        }
+    </script>
+
+	<style>
+	.errorM4 .msgIcon, .errorSmall {
+	    background-image: url(/img/samples/flag_red.gif) !important;
+	}
+
+	.myCustomMessage .message {
+	    background: none  !important;
+	    border: none !important;
+	}
+
+	</style>
+
+	<apex:sectionHeader title="Agencies migration tool: exception management" />   
+	<apex:form >
+	<apex:PageBlock id="pb"  >
+		<apex:pageBlockSection title="Exception management" collapsible="false" id="Overview"  rendered="true" columns="1">
+			<h1>{!DetailMessage} for {!selectedCountryName}</h1>
+			<br />
+			{!LongDetailMessage}
+			<br /><br />
+			<h1>Workaround</h1>
+			<br />
+			{!$Label['ANG_Conversion_Tool_Workaround']}
+		</apex:pageBlockSection>
+		
+		<apex:pageBlockSection title="{!DetailMessage}, ISO country: {!selectedCountryName}" collapsible="true" id="exList"  rendered="true" columns="1">
+		<br /><br />
+			
+				<table style="width:60%;padding: 0px;border: 0px;border-spacing: 0px;">
+					<tr>
+						<td>		
+							<apex:pageBlockTable value="{!DetailTable}" var="tbl" frame="vsides" >
+								<apex:column headerValue="Select/Unselect all">
+									<apex:facet name="header">
+										<apex:inputCheckbox onclick="checkAll(this,'checkedone')"/>
+									</apex:facet>
+									<apex:inputCheckbox value="{!tbl.selected}" id="checkedone" />
+								</apex:column>
+								<apex:column headerValue="Hierarchy Top Parent">
+									<!--<apex:outputLink value="/{!tbl.struct.topParentId}" id="accLink">{!tbl.struct.nameTopParent}</apex:outputLink>-->
+								
+								<apex:outputLink value="#" onclick="openPrimaryTab('/{!tbl.struct.topParentId}?inContextPane=true','{!JSINHTMLENCODE(tbl.struct.nameTopParent)}');return false;" >{!tbl.struct.nameTopParent}</apex:outputLink>
+
+								</apex:column>
+								<apex:column value="{!tbl.struct.iataCodeTopParent}" headerValue="IATA Code Top Parent" />
+							</apex:pageBlockTable>
+						</td>
+					</tr>
+					
+					<tr>
+						<td >
+						<br /><br /><br /><br /><br /><br />	
+						</td>
+					</tr>
+					<tr>
+						<td style="border:0px #dddddd;text-align:center">
+							
+							<apex:outputPanel styleClass="myCustomMessage" rendered="{!errorDetailCode == -8}">
+					        	<apex:pageMessage severity="error"
+				                          strength="1"
+				                          summary="Orpah Branches are not automatically migrated. Please contact the global administrator." />
+					    	</apex:outputPanel>
+
+							<apex:commandButton action="{!migrateSelectedHierarchies}" value="Migrate selected hierarchies" rendered="{!errorDetailCode != -8}" />
+                            <apex:commandButton action="{!backToMainPage}" value="Back to the main page" rendered="true"  />
+						</td>
+					</tr>
+				</table>			
+		
+			
+		</apex:pageBlockSection>
+		
+	</apex:PageBlock>
+
+			<apex:pageBlock mode="edit" id="StatusPageBlock">
+
+            <apex:pageBlockSection columns="1" title="Process Status" rendered="{!batchStatusBool}">
+
+                <apex:actionStatus id="act" startText="Checking..." />
+
+                <apex:outputText styleClass="processText" value="Migration process status: {!batchJob.Status}"/>
+
+                <apex:outputText styleClass="processText" value="Hierarchies processed: {!batchJob.JobItemsProcessed}"/>
+
+                <apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
+
+                <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="StatusPageBlock" status="act"/>
+            
+            </apex:pageBlockSection>
+
+		</apex:pageBlock>
+
+	</apex:form>
+
+<script type="text/javascript">
+    function checkAll(cb,cbid)
+        {
+            var inputElem = document.getElementsByTagName("input");                     
+            for(var i=0; i<inputElem.length; i++)
+            {             
+                 if(inputElem[i].id.indexOf(cbid)!=-1){                                        
+                    inputElem[i].checked = cb.checked;
+                }
+            }
+        }
+</script>
+
+		
+
+</apex:page>

@@ -1,12 +1,16 @@
 trigger HandleProvisioningRequest on UserProvisioningRequest (after insert, after update) {
 
     UserProvisioningRequestHandler handler = new UserProvisioningRequestHandler(Trigger.isExecuting, Trigger.size);
+    ANG_UserProvisioningRequestHandler angHandler = new ANG_UserProvisioningRequestHandler();
+    FRED_UserProvisioningRequestHandler fredHandler = new FRED_UserProvisioningRequestHandler();
 
     if(Trigger.isInsert && Trigger.isAfter){
         handler.OnAfterInsert(Trigger.new);
     }
     else if(Trigger.isUpdate && Trigger.isAfter){
         handler.OnAfterUpdate(Trigger.old, Trigger.new, Trigger.oldMap, Trigger.newMap);
+        angHandler.OnAfterUpdate();
+        fredHandler.onAfterUpdate(Trigger.oldMap, Trigger.newMap);
     }
 
 

@@ -99,6 +99,10 @@
                 <behavior>Edit</behavior>
                 <field>IEC_Page_Content_Types__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Accepted_Payment_Methods__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -184,6 +188,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Restricted_Customer_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ImageFile__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -333,6 +341,12 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <relatedList>RelatedPricebookEntryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedStandardPriceList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>Related_Product__c</fields>
         <fields>Recommended_Product_Number__c</fields>
@@ -358,6 +372,9 @@
         <fields>Media__c</fields>
         <fields>Product_Manager__c</fields>
         <relatedList>Product2.IEC_Parent_Product__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

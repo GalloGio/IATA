@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Banners for carousel section of home portalhome page</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -105,780 +102,973 @@
         <fullName>Background_image_url_link_target__c</fullName>
         <externalId>false</externalId>
         <label>Background-image url link target</label>
-        <picklist>
-            <picklistValues>
-                <fullName>_self</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>_blank</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>_self</fullName>
+                    <default>false</default>
+                    <label>_self</label>
+                </value>
+                <value>
+                    <fullName>_blank</fullName>
+                    <default>false</default>
+                    <label>_blank</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Country__c</fullName>
         <description>Contact&apos;s account billing address in these countries will be allowed to see the banner</description>
         <externalId>false</externalId>
         <label>Country</label>
-        <picklist>
-            <picklistValues>
-                <fullName>All - Globally</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>All - Region Africa &amp; Middle East</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>All - Region Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>All - Region Asia &amp; Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>All - Region China &amp; North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>All - Region Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>All - CNS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Albania</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Andorra</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Antigua and Barbuda</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Argentina</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aruba</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Australia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Austria</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Azerbaijan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bahamas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bahrain</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bangladesh</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Barbados</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Belgium</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Belize</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Benin</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bermuda</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bolivia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bonaire</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bosnia &amp; Herzegovina</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Botswana</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Brazil</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>British Virgin Islands</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bulgaria</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Burkina Faso</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cambodia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cameroon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Canada</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cayman Islands</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chad</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chile</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chinese Taipei (Taiwan)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Colombia Domestic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Colombia International</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Congo (Brazzaville)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cook Islands</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Costa Rica</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Côte d’Ivoire</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Croatia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Curacao</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cyprus</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Czech Republic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Denmark</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Dominican</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Dominican Republic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ecuador</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Egypt</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>El Salvador</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Estonia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ethiopia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fiji</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Finland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>France</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>French Guyana</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>French Polynesia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FYROM Macedonia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Gabon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Georgia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Germany</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ghana</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Gibraltar</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Greece</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Greenland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Grenada</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Guadeloupe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Guam</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Guatemala</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Guyana</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Haiti</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Honduras</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Hong Kong (SAR), China</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Hungary</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Iceland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>India</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Indonesia Domestic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Indonesia International</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ireland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Israel</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Italy</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Jamaica</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Japan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Jordan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Kazakhstan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Kenya</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Kiribati</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Kosovo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Kuwait</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Kyrgyzstan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Latvia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lebanon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lesotho</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Liechtenstein</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lithuania</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Luxembourg</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Macao (SARC)h, ina</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Malawi</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Malaysia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mali</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Malta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marshall Islands</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Martinique</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mauritania</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mauritius</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mayotte</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mexico</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Micronesia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Moldova</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monaco</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mongolia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Montenegro</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Montserrat</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Morocco</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mozambique</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Namibia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Nepal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Netherlands</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Caledonia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Zealand</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Nicaragua</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Niger</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Nigeria</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Northern Mariana Islands</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Norway</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Oman</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pakistan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Palau</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Panama</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Papua New Guinea</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Paraguay</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Peru</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Philippines</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Poland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Portugal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Qatar</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reunion</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Romania</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Russia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rwanda</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Saint Kitts and Nevis</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Saint Lucia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Saint Martens</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Saint Pierre and Miquelon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Saint Vincent and the Grenadines</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Samoa</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>San Marino</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Saudi Arabia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Senegal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Serbia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Singapore</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Slovakia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Slovenia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>South Africa</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>South Korea</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Spain</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sri Lanka</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Suriname</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Swaziland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sweden</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Switzerland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Syria</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Tanzania</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Thailand</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Togo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Tonga</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Tortola</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Trinidad and Tobago</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Tunisia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Turkey</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Turks and Caicos Islands</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Uganda</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ukraine</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>United Arab Emirates</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>United Kingdom</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Uruguay</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Venezuela</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Vietnam</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Wallis and Futuna Islands</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Yemen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Zambia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Zimbabwe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>All - Globally</fullName>
+                    <default>false</default>
+                    <label>All - Globally</label>
+                </value>
+                <value>
+                    <fullName>All - Region Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>All - Region Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>All - Region Americas</fullName>
+                    <default>false</default>
+                    <label>All - Region Americas</label>
+                </value>
+                <value>
+                    <fullName>All - Region Asia &amp; Pacific</fullName>
+                    <default>false</default>
+                    <label>All - Region Asia &amp; Pacific</label>
+                </value>
+                <value>
+                    <fullName>All - Region China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>All - Region China &amp; North Asia</label>
+                </value>
+                <value>
+                    <fullName>All - Region Europe</fullName>
+                    <default>false</default>
+                    <label>All - Region Europe</label>
+                </value>
+                <value>
+                    <fullName>All - CNS</fullName>
+                    <default>false</default>
+                    <label>All - CNS</label>
+                </value>
+                <value>
+                    <fullName>Albania</fullName>
+                    <default>false</default>
+                    <label>Albania</label>
+                </value>
+                <value>
+                    <fullName>Andorra</fullName>
+                    <default>false</default>
+                    <label>Andorra</label>
+                </value>
+                <value>
+                    <fullName>Antigua and Barbuda</fullName>
+                    <default>false</default>
+                    <label>Antigua and Barbuda</label>
+                </value>
+                <value>
+                    <fullName>Argentina</fullName>
+                    <default>false</default>
+                    <label>Argentina</label>
+                </value>
+                <value>
+                    <fullName>Aruba</fullName>
+                    <default>false</default>
+                    <label>Aruba</label>
+                </value>
+                <value>
+                    <fullName>Australia</fullName>
+                    <default>false</default>
+                    <label>Australia</label>
+                </value>
+                <value>
+                    <fullName>Austria</fullName>
+                    <default>false</default>
+                    <label>Austria</label>
+                </value>
+                <value>
+                    <fullName>Azerbaijan</fullName>
+                    <default>false</default>
+                    <label>Azerbaijan</label>
+                </value>
+                <value>
+                    <fullName>Bahamas</fullName>
+                    <default>false</default>
+                    <label>Bahamas</label>
+                </value>
+                <value>
+                    <fullName>Bahrain</fullName>
+                    <default>false</default>
+                    <label>Bahrain</label>
+                </value>
+                <value>
+                    <fullName>Bangladesh</fullName>
+                    <default>false</default>
+                    <label>Bangladesh</label>
+                </value>
+                <value>
+                    <fullName>Barbados</fullName>
+                    <default>false</default>
+                    <label>Barbados</label>
+                </value>
+                <value>
+                    <fullName>Belgium</fullName>
+                    <default>false</default>
+                    <label>Belgium</label>
+                </value>
+                <value>
+                    <fullName>Belize</fullName>
+                    <default>false</default>
+                    <label>Belize</label>
+                </value>
+                <value>
+                    <fullName>Benin</fullName>
+                    <default>false</default>
+                    <label>Benin</label>
+                </value>
+                <value>
+                    <fullName>Bermuda</fullName>
+                    <default>false</default>
+                    <label>Bermuda</label>
+                </value>
+                <value>
+                    <fullName>Bolivia</fullName>
+                    <default>false</default>
+                    <label>Bolivia</label>
+                </value>
+                <value>
+                    <fullName>Bonaire</fullName>
+                    <default>false</default>
+                    <label>Bonaire</label>
+                </value>
+                <value>
+                    <fullName>Bosnia &amp; Herzegovina</fullName>
+                    <default>false</default>
+                    <label>Bosnia &amp; Herzegovina</label>
+                </value>
+                <value>
+                    <fullName>Botswana</fullName>
+                    <default>false</default>
+                    <label>Botswana</label>
+                </value>
+                <value>
+                    <fullName>Brazil</fullName>
+                    <default>false</default>
+                    <label>Brazil</label>
+                </value>
+                <value>
+                    <fullName>British Virgin Islands</fullName>
+                    <default>false</default>
+                    <label>British Virgin Islands</label>
+                </value>
+                <value>
+                    <fullName>Bulgaria</fullName>
+                    <default>false</default>
+                    <label>Bulgaria</label>
+                </value>
+                <value>
+                    <fullName>Burkina Faso</fullName>
+                    <default>false</default>
+                    <label>Burkina Faso</label>
+                </value>
+                <value>
+                    <fullName>Cambodia</fullName>
+                    <default>false</default>
+                    <label>Cambodia</label>
+                </value>
+                <value>
+                    <fullName>Cameroon</fullName>
+                    <default>false</default>
+                    <label>Cameroon</label>
+                </value>
+                <value>
+                    <fullName>Canada</fullName>
+                    <default>false</default>
+                    <label>Canada</label>
+                </value>
+                <value>
+                    <fullName>Cayman Islands</fullName>
+                    <default>false</default>
+                    <label>Cayman Islands</label>
+                </value>
+                <value>
+                    <fullName>Chad</fullName>
+                    <default>false</default>
+                    <label>Chad</label>
+                </value>
+                <value>
+                    <fullName>Chile</fullName>
+                    <default>false</default>
+                    <label>Chile</label>
+                </value>
+                <value>
+                    <fullName>China</fullName>
+                    <default>false</default>
+                    <label>China</label>
+                </value>
+                <value>
+                    <fullName>Chinese Taipei (Taiwan)</fullName>
+                    <default>false</default>
+                    <label>Chinese Taipei (Taiwan)</label>
+                </value>
+                <value>
+                    <fullName>Colombia Domestic</fullName>
+                    <default>false</default>
+                    <label>Colombia Domestic</label>
+                </value>
+                <value>
+                    <fullName>Colombia International</fullName>
+                    <default>false</default>
+                    <label>Colombia International</label>
+                </value>
+                <value>
+                    <fullName>Congo (Brazzaville)</fullName>
+                    <default>false</default>
+                    <label>Congo (Brazzaville)</label>
+                </value>
+                <value>
+                    <fullName>Cook Islands</fullName>
+                    <default>false</default>
+                    <label>Cook Islands</label>
+                </value>
+                <value>
+                    <fullName>Costa Rica</fullName>
+                    <default>false</default>
+                    <label>Costa Rica</label>
+                </value>
+                <value>
+                    <fullName>Côte d’Ivoire</fullName>
+                    <default>false</default>
+                    <label>Côte d’Ivoire</label>
+                </value>
+                <value>
+                    <fullName>Croatia</fullName>
+                    <default>false</default>
+                    <label>Croatia</label>
+                </value>
+                <value>
+                    <fullName>Curacao</fullName>
+                    <default>false</default>
+                    <label>Curacao</label>
+                </value>
+                <value>
+                    <fullName>Cyprus</fullName>
+                    <default>false</default>
+                    <label>Cyprus</label>
+                </value>
+                <value>
+                    <fullName>Czech Republic</fullName>
+                    <default>false</default>
+                    <label>Czech Republic</label>
+                </value>
+                <value>
+                    <fullName>Denmark</fullName>
+                    <default>false</default>
+                    <label>Denmark</label>
+                </value>
+                <value>
+                    <fullName>Dominican</fullName>
+                    <default>false</default>
+                    <label>Dominican</label>
+                </value>
+                <value>
+                    <fullName>Dominican Republic</fullName>
+                    <default>false</default>
+                    <label>Dominican Republic</label>
+                </value>
+                <value>
+                    <fullName>Ecuador</fullName>
+                    <default>false</default>
+                    <label>Ecuador</label>
+                </value>
+                <value>
+                    <fullName>Egypt</fullName>
+                    <default>false</default>
+                    <label>Egypt</label>
+                </value>
+                <value>
+                    <fullName>El Salvador</fullName>
+                    <default>false</default>
+                    <label>El Salvador</label>
+                </value>
+                <value>
+                    <fullName>Estonia</fullName>
+                    <default>false</default>
+                    <label>Estonia</label>
+                </value>
+                <value>
+                    <fullName>Ethiopia</fullName>
+                    <default>false</default>
+                    <label>Ethiopia</label>
+                </value>
+                <value>
+                    <fullName>Fiji</fullName>
+                    <default>false</default>
+                    <label>Fiji</label>
+                </value>
+                <value>
+                    <fullName>Finland</fullName>
+                    <default>false</default>
+                    <label>Finland</label>
+                </value>
+                <value>
+                    <fullName>France</fullName>
+                    <default>false</default>
+                    <label>France</label>
+                </value>
+                <value>
+                    <fullName>French Guyana</fullName>
+                    <default>false</default>
+                    <label>French Guyana</label>
+                </value>
+                <value>
+                    <fullName>French Polynesia</fullName>
+                    <default>false</default>
+                    <label>French Polynesia</label>
+                </value>
+                <value>
+                    <fullName>FYROM Macedonia</fullName>
+                    <default>false</default>
+                    <label>FYROM Macedonia</label>
+                </value>
+                <value>
+                    <fullName>Gabon</fullName>
+                    <default>false</default>
+                    <label>Gabon</label>
+                </value>
+                <value>
+                    <fullName>Georgia</fullName>
+                    <default>false</default>
+                    <label>Georgia</label>
+                </value>
+                <value>
+                    <fullName>Germany</fullName>
+                    <default>false</default>
+                    <label>Germany</label>
+                </value>
+                <value>
+                    <fullName>Ghana</fullName>
+                    <default>false</default>
+                    <label>Ghana</label>
+                </value>
+                <value>
+                    <fullName>Gibraltar</fullName>
+                    <default>false</default>
+                    <label>Gibraltar</label>
+                </value>
+                <value>
+                    <fullName>Greece</fullName>
+                    <default>false</default>
+                    <label>Greece</label>
+                </value>
+                <value>
+                    <fullName>Greenland</fullName>
+                    <default>false</default>
+                    <label>Greenland</label>
+                </value>
+                <value>
+                    <fullName>Grenada</fullName>
+                    <default>false</default>
+                    <label>Grenada</label>
+                </value>
+                <value>
+                    <fullName>Guadeloupe</fullName>
+                    <default>false</default>
+                    <label>Guadeloupe</label>
+                </value>
+                <value>
+                    <fullName>Guam</fullName>
+                    <default>false</default>
+                    <label>Guam</label>
+                </value>
+                <value>
+                    <fullName>Guatemala</fullName>
+                    <default>false</default>
+                    <label>Guatemala</label>
+                </value>
+                <value>
+                    <fullName>Guyana</fullName>
+                    <default>false</default>
+                    <label>Guyana</label>
+                </value>
+                <value>
+                    <fullName>Haiti</fullName>
+                    <default>false</default>
+                    <label>Haiti</label>
+                </value>
+                <value>
+                    <fullName>Honduras</fullName>
+                    <default>false</default>
+                    <label>Honduras</label>
+                </value>
+                <value>
+                    <fullName>Hong Kong (SAR), China</fullName>
+                    <default>false</default>
+                    <label>Hong Kong (SAR), China</label>
+                </value>
+                <value>
+                    <fullName>Hungary</fullName>
+                    <default>false</default>
+                    <label>Hungary</label>
+                </value>
+                <value>
+                    <fullName>Iceland</fullName>
+                    <default>false</default>
+                    <label>Iceland</label>
+                </value>
+                <value>
+                    <fullName>India</fullName>
+                    <default>false</default>
+                    <label>India</label>
+                </value>
+                <value>
+                    <fullName>Indonesia Domestic</fullName>
+                    <default>false</default>
+                    <label>Indonesia Domestic</label>
+                </value>
+                <value>
+                    <fullName>Indonesia International</fullName>
+                    <default>false</default>
+                    <label>Indonesia International</label>
+                </value>
+                <value>
+                    <fullName>Ireland</fullName>
+                    <default>false</default>
+                    <label>Ireland</label>
+                </value>
+                <value>
+                    <fullName>Israel</fullName>
+                    <default>false</default>
+                    <label>Israel</label>
+                </value>
+                <value>
+                    <fullName>Italy</fullName>
+                    <default>false</default>
+                    <label>Italy</label>
+                </value>
+                <value>
+                    <fullName>Jamaica</fullName>
+                    <default>false</default>
+                    <label>Jamaica</label>
+                </value>
+                <value>
+                    <fullName>Japan</fullName>
+                    <default>false</default>
+                    <label>Japan</label>
+                </value>
+                <value>
+                    <fullName>Jordan</fullName>
+                    <default>false</default>
+                    <label>Jordan</label>
+                </value>
+                <value>
+                    <fullName>Kazakhstan</fullName>
+                    <default>false</default>
+                    <label>Kazakhstan</label>
+                </value>
+                <value>
+                    <fullName>Kenya</fullName>
+                    <default>false</default>
+                    <label>Kenya</label>
+                </value>
+                <value>
+                    <fullName>Kiribati</fullName>
+                    <default>false</default>
+                    <label>Kiribati</label>
+                </value>
+                <value>
+                    <fullName>Kosovo</fullName>
+                    <default>false</default>
+                    <label>Kosovo</label>
+                </value>
+                <value>
+                    <fullName>Kuwait</fullName>
+                    <default>false</default>
+                    <label>Kuwait</label>
+                </value>
+                <value>
+                    <fullName>Kyrgyzstan</fullName>
+                    <default>false</default>
+                    <label>Kyrgyzstan</label>
+                </value>
+                <value>
+                    <fullName>Latvia</fullName>
+                    <default>false</default>
+                    <label>Latvia</label>
+                </value>
+                <value>
+                    <fullName>Lebanon</fullName>
+                    <default>false</default>
+                    <label>Lebanon</label>
+                </value>
+                <value>
+                    <fullName>Lesotho</fullName>
+                    <default>false</default>
+                    <label>Lesotho</label>
+                </value>
+                <value>
+                    <fullName>Liechtenstein</fullName>
+                    <default>false</default>
+                    <label>Liechtenstein</label>
+                </value>
+                <value>
+                    <fullName>Lithuania</fullName>
+                    <default>false</default>
+                    <label>Lithuania</label>
+                </value>
+                <value>
+                    <fullName>Luxembourg</fullName>
+                    <default>false</default>
+                    <label>Luxembourg</label>
+                </value>
+                <value>
+                    <fullName>Macao (SARC)h, ina</fullName>
+                    <default>false</default>
+                    <label>Macao (SARC)h, ina</label>
+                </value>
+                <value>
+                    <fullName>Malawi</fullName>
+                    <default>false</default>
+                    <label>Malawi</label>
+                </value>
+                <value>
+                    <fullName>Malaysia</fullName>
+                    <default>false</default>
+                    <label>Malaysia</label>
+                </value>
+                <value>
+                    <fullName>Mali</fullName>
+                    <default>false</default>
+                    <label>Mali</label>
+                </value>
+                <value>
+                    <fullName>Malta</fullName>
+                    <default>false</default>
+                    <label>Malta</label>
+                </value>
+                <value>
+                    <fullName>Marshall Islands</fullName>
+                    <default>false</default>
+                    <label>Marshall Islands</label>
+                </value>
+                <value>
+                    <fullName>Martinique</fullName>
+                    <default>false</default>
+                    <label>Martinique</label>
+                </value>
+                <value>
+                    <fullName>Mauritania</fullName>
+                    <default>false</default>
+                    <label>Mauritania</label>
+                </value>
+                <value>
+                    <fullName>Mauritius</fullName>
+                    <default>false</default>
+                    <label>Mauritius</label>
+                </value>
+                <value>
+                    <fullName>Mayotte</fullName>
+                    <default>false</default>
+                    <label>Mayotte</label>
+                </value>
+                <value>
+                    <fullName>Mexico</fullName>
+                    <default>false</default>
+                    <label>Mexico</label>
+                </value>
+                <value>
+                    <fullName>Micronesia</fullName>
+                    <default>false</default>
+                    <label>Micronesia</label>
+                </value>
+                <value>
+                    <fullName>Moldova</fullName>
+                    <default>false</default>
+                    <label>Moldova</label>
+                </value>
+                <value>
+                    <fullName>Monaco</fullName>
+                    <default>false</default>
+                    <label>Monaco</label>
+                </value>
+                <value>
+                    <fullName>Mongolia</fullName>
+                    <default>false</default>
+                    <label>Mongolia</label>
+                </value>
+                <value>
+                    <fullName>Montenegro</fullName>
+                    <default>false</default>
+                    <label>Montenegro</label>
+                </value>
+                <value>
+                    <fullName>Montserrat</fullName>
+                    <default>false</default>
+                    <label>Montserrat</label>
+                </value>
+                <value>
+                    <fullName>Morocco</fullName>
+                    <default>false</default>
+                    <label>Morocco</label>
+                </value>
+                <value>
+                    <fullName>Mozambique</fullName>
+                    <default>false</default>
+                    <label>Mozambique</label>
+                </value>
+                <value>
+                    <fullName>Namibia</fullName>
+                    <default>false</default>
+                    <label>Namibia</label>
+                </value>
+                <value>
+                    <fullName>Nepal</fullName>
+                    <default>false</default>
+                    <label>Nepal</label>
+                </value>
+                <value>
+                    <fullName>Netherlands</fullName>
+                    <default>false</default>
+                    <label>Netherlands</label>
+                </value>
+                <value>
+                    <fullName>New Caledonia</fullName>
+                    <default>false</default>
+                    <label>New Caledonia</label>
+                </value>
+                <value>
+                    <fullName>New Zealand</fullName>
+                    <default>false</default>
+                    <label>New Zealand</label>
+                </value>
+                <value>
+                    <fullName>Nicaragua</fullName>
+                    <default>false</default>
+                    <label>Nicaragua</label>
+                </value>
+                <value>
+                    <fullName>Niger</fullName>
+                    <default>false</default>
+                    <label>Niger</label>
+                </value>
+                <value>
+                    <fullName>Nigeria</fullName>
+                    <default>false</default>
+                    <label>Nigeria</label>
+                </value>
+                <value>
+                    <fullName>Northern Mariana Islands</fullName>
+                    <default>false</default>
+                    <label>Northern Mariana Islands</label>
+                </value>
+                <value>
+                    <fullName>Norway</fullName>
+                    <default>false</default>
+                    <label>Norway</label>
+                </value>
+                <value>
+                    <fullName>Oman</fullName>
+                    <default>false</default>
+                    <label>Oman</label>
+                </value>
+                <value>
+                    <fullName>Pakistan</fullName>
+                    <default>false</default>
+                    <label>Pakistan</label>
+                </value>
+                <value>
+                    <fullName>Palau</fullName>
+                    <default>false</default>
+                    <label>Palau</label>
+                </value>
+                <value>
+                    <fullName>Panama</fullName>
+                    <default>false</default>
+                    <label>Panama</label>
+                </value>
+                <value>
+                    <fullName>Papua New Guinea</fullName>
+                    <default>false</default>
+                    <label>Papua New Guinea</label>
+                </value>
+                <value>
+                    <fullName>Paraguay</fullName>
+                    <default>false</default>
+                    <label>Paraguay</label>
+                </value>
+                <value>
+                    <fullName>Peru</fullName>
+                    <default>false</default>
+                    <label>Peru</label>
+                </value>
+                <value>
+                    <fullName>Philippines</fullName>
+                    <default>false</default>
+                    <label>Philippines</label>
+                </value>
+                <value>
+                    <fullName>Poland</fullName>
+                    <default>false</default>
+                    <label>Poland</label>
+                </value>
+                <value>
+                    <fullName>Portugal</fullName>
+                    <default>false</default>
+                    <label>Portugal</label>
+                </value>
+                <value>
+                    <fullName>Qatar</fullName>
+                    <default>false</default>
+                    <label>Qatar</label>
+                </value>
+                <value>
+                    <fullName>Reunion</fullName>
+                    <default>false</default>
+                    <label>Reunion</label>
+                </value>
+                <value>
+                    <fullName>Romania</fullName>
+                    <default>false</default>
+                    <label>Romania</label>
+                </value>
+                <value>
+                    <fullName>Russia</fullName>
+                    <default>false</default>
+                    <label>Russia</label>
+                </value>
+                <value>
+                    <fullName>Rwanda</fullName>
+                    <default>false</default>
+                    <label>Rwanda</label>
+                </value>
+                <value>
+                    <fullName>Saint Kitts and Nevis</fullName>
+                    <default>false</default>
+                    <label>Saint Kitts and Nevis</label>
+                </value>
+                <value>
+                    <fullName>Saint Lucia</fullName>
+                    <default>false</default>
+                    <label>Saint Lucia</label>
+                </value>
+                <value>
+                    <fullName>Saint Martens</fullName>
+                    <default>false</default>
+                    <label>Saint Martens</label>
+                </value>
+                <value>
+                    <fullName>Saint Pierre and Miquelon</fullName>
+                    <default>false</default>
+                    <label>Saint Pierre and Miquelon</label>
+                </value>
+                <value>
+                    <fullName>Saint Vincent and the Grenadines</fullName>
+                    <default>false</default>
+                    <label>Saint Vincent and the Grenadines</label>
+                </value>
+                <value>
+                    <fullName>Samoa</fullName>
+                    <default>false</default>
+                    <label>Samoa</label>
+                </value>
+                <value>
+                    <fullName>San Marino</fullName>
+                    <default>false</default>
+                    <label>San Marino</label>
+                </value>
+                <value>
+                    <fullName>Saudi Arabia</fullName>
+                    <default>false</default>
+                    <label>Saudi Arabia</label>
+                </value>
+                <value>
+                    <fullName>Senegal</fullName>
+                    <default>false</default>
+                    <label>Senegal</label>
+                </value>
+                <value>
+                    <fullName>Serbia</fullName>
+                    <default>false</default>
+                    <label>Serbia</label>
+                </value>
+                <value>
+                    <fullName>Singapore</fullName>
+                    <default>false</default>
+                    <label>Singapore</label>
+                </value>
+                <value>
+                    <fullName>Slovakia</fullName>
+                    <default>false</default>
+                    <label>Slovakia</label>
+                </value>
+                <value>
+                    <fullName>Slovenia</fullName>
+                    <default>false</default>
+                    <label>Slovenia</label>
+                </value>
+                <value>
+                    <fullName>South Africa</fullName>
+                    <default>false</default>
+                    <label>South Africa</label>
+                </value>
+                <value>
+                    <fullName>South Korea</fullName>
+                    <default>false</default>
+                    <label>South Korea</label>
+                </value>
+                <value>
+                    <fullName>Spain</fullName>
+                    <default>false</default>
+                    <label>Spain</label>
+                </value>
+                <value>
+                    <fullName>Sri Lanka</fullName>
+                    <default>false</default>
+                    <label>Sri Lanka</label>
+                </value>
+                <value>
+                    <fullName>Suriname</fullName>
+                    <default>false</default>
+                    <label>Suriname</label>
+                </value>
+                <value>
+                    <fullName>Swaziland</fullName>
+                    <default>false</default>
+                    <label>Swaziland</label>
+                </value>
+                <value>
+                    <fullName>Sweden</fullName>
+                    <default>false</default>
+                    <label>Sweden</label>
+                </value>
+                <value>
+                    <fullName>Switzerland</fullName>
+                    <default>false</default>
+                    <label>Switzerland</label>
+                </value>
+                <value>
+                    <fullName>Syria</fullName>
+                    <default>false</default>
+                    <label>Syria</label>
+                </value>
+                <value>
+                    <fullName>Tanzania</fullName>
+                    <default>false</default>
+                    <label>Tanzania</label>
+                </value>
+                <value>
+                    <fullName>Thailand</fullName>
+                    <default>false</default>
+                    <label>Thailand</label>
+                </value>
+                <value>
+                    <fullName>Togo</fullName>
+                    <default>false</default>
+                    <label>Togo</label>
+                </value>
+                <value>
+                    <fullName>Tonga</fullName>
+                    <default>false</default>
+                    <label>Tonga</label>
+                </value>
+                <value>
+                    <fullName>Tortola</fullName>
+                    <default>false</default>
+                    <label>Tortola</label>
+                </value>
+                <value>
+                    <fullName>Trinidad and Tobago</fullName>
+                    <default>false</default>
+                    <label>Trinidad and Tobago</label>
+                </value>
+                <value>
+                    <fullName>Tunisia</fullName>
+                    <default>false</default>
+                    <label>Tunisia</label>
+                </value>
+                <value>
+                    <fullName>Turkey</fullName>
+                    <default>false</default>
+                    <label>Turkey</label>
+                </value>
+                <value>
+                    <fullName>Turks and Caicos Islands</fullName>
+                    <default>false</default>
+                    <label>Turks and Caicos Islands</label>
+                </value>
+                <value>
+                    <fullName>Uganda</fullName>
+                    <default>false</default>
+                    <label>Uganda</label>
+                </value>
+                <value>
+                    <fullName>Ukraine</fullName>
+                    <default>false</default>
+                    <label>Ukraine</label>
+                </value>
+                <value>
+                    <fullName>United Arab Emirates</fullName>
+                    <default>false</default>
+                    <label>United Arab Emirates</label>
+                </value>
+                <value>
+                    <fullName>United Kingdom</fullName>
+                    <default>false</default>
+                    <label>United Kingdom</label>
+                </value>
+                <value>
+                    <fullName>Uruguay</fullName>
+                    <default>false</default>
+                    <label>Uruguay</label>
+                </value>
+                <value>
+                    <fullName>Venezuela</fullName>
+                    <default>false</default>
+                    <label>Venezuela</label>
+                </value>
+                <value>
+                    <fullName>Vietnam</fullName>
+                    <default>false</default>
+                    <label>Vietnam</label>
+                </value>
+                <value>
+                    <fullName>Wallis and Futuna Islands</fullName>
+                    <default>false</default>
+                    <label>Wallis and Futuna Islands</label>
+                </value>
+                <value>
+                    <fullName>Yemen</fullName>
+                    <default>false</default>
+                    <label>Yemen</label>
+                </value>
+                <value>
+                    <fullName>Zambia</fullName>
+                    <default>false</default>
+                    <label>Zambia</label>
+                </value>
+                <value>
+                    <fullName>Zimbabwe</fullName>
+                    <default>false</default>
+                    <label>Zimbabwe</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>10</visibleLines>
     </fields>
     <fields>
@@ -1094,84 +1284,104 @@
         <description>Sector of the contact&apos;s account</description>
         <externalId>false</externalId>
         <label>Sector</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accommodation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Supplier</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Association</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Equipment Manufacturer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Institution</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Governmental Institution</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Holding Company</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>General Sales Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Infrastructure Partner</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Internal Use</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non-Airline Transportation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recreational</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Airline</fullName>
+                    <default>false</default>
+                    <label>Airline</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>Cargo Agent</label>
+                </value>
+                <value>
+                    <fullName>Travel Agent</fullName>
+                    <default>false</default>
+                    <label>Travel Agent</label>
+                </value>
+                <value>
+                    <fullName>Accommodation</fullName>
+                    <default>false</default>
+                    <label>Accommodation</label>
+                </value>
+                <value>
+                    <fullName>Airline Supplier</fullName>
+                    <default>false</default>
+                    <label>Airline Supplier</label>
+                </value>
+                <value>
+                    <fullName>Association</fullName>
+                    <default>false</default>
+                    <label>Association</label>
+                </value>
+                <value>
+                    <fullName>Education</fullName>
+                    <default>false</default>
+                    <label>Education</label>
+                </value>
+                <value>
+                    <fullName>Equipment Manufacturer</fullName>
+                    <default>false</default>
+                    <label>Equipment Manufacturer</label>
+                </value>
+                <value>
+                    <fullName>Financial Institution</fullName>
+                    <default>false</default>
+                    <label>Financial Institution</label>
+                </value>
+                <value>
+                    <fullName>Governmental Institution</fullName>
+                    <default>false</default>
+                    <label>Governmental Institution</label>
+                </value>
+                <value>
+                    <fullName>Holding Company</fullName>
+                    <default>false</default>
+                    <label>Holding Company</label>
+                </value>
+                <value>
+                    <fullName>IATA</fullName>
+                    <default>false</default>
+                    <label>IATA</label>
+                </value>
+                <value>
+                    <fullName>General Sales Agent</fullName>
+                    <default>false</default>
+                    <label>General Sales Agent</label>
+                </value>
+                <value>
+                    <fullName>Infrastructure Partner</fullName>
+                    <default>false</default>
+                    <label>Infrastructure Partner</label>
+                </value>
+                <value>
+                    <fullName>Internal Use</fullName>
+                    <default>false</default>
+                    <label>Internal Use</label>
+                </value>
+                <value>
+                    <fullName>Media</fullName>
+                    <default>false</default>
+                    <label>Media</label>
+                </value>
+                <value>
+                    <fullName>Non-Airline Transportation</fullName>
+                    <default>false</default>
+                    <label>Non-Airline Transportation</label>
+                </value>
+                <value>
+                    <fullName>Recreational</fullName>
+                    <default>false</default>
+                    <label>Recreational</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -1179,20 +1389,24 @@
         <description>If the banner is inactive is will not be shown</description>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>true</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>TH_Zone_text_1__c</fullName>
@@ -1223,24 +1437,29 @@
         <description>Contacts having these user portal statuses will be able to see the banner</description>
         <externalId>false</externalId>
         <label>User portal Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Approved User</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved Admin</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pending Approval</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Approved User</fullName>
+                    <default>false</default>
+                    <label>Approved User</label>
+                </value>
+                <value>
+                    <fullName>Approved Admin</fullName>
+                    <default>false</default>
+                    <label>Approved Admin</label>
+                </value>
+                <value>
+                    <fullName>Pending Approval</fullName>
+                    <default>false</default>
+                    <label>Pending Approval</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -1304,288 +1523,358 @@
         <fullName>Zone_1_text_background_colour__c</fullName>
         <externalId>false</externalId>
         <label>Zone 1 text background colour</label>
-        <picklist>
-            <picklistValues>
-                <fullName>transparent</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>white</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>gray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>steelblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>orange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>yellow</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>red</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>springgreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Black</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>magenta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Blue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>skyblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Brown</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>orangered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>paleturquoise</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chartreuse</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chocolate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Coral</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CornflowerBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cornsilk</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Crimson</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cyan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkCyan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGoldenRod</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkKhaki</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkMagenta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOliveGreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrchid</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkRed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkSalmon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>transparent</fullName>
+                    <default>true</default>
+                    <label>transparent</label>
+                </value>
+                <value>
+                    <fullName>white</fullName>
+                    <default>false</default>
+                    <label>white</label>
+                </value>
+                <value>
+                    <fullName>gray</fullName>
+                    <default>false</default>
+                    <label>gray</label>
+                </value>
+                <value>
+                    <fullName>steelblue</fullName>
+                    <default>false</default>
+                    <label>steelblue</label>
+                </value>
+                <value>
+                    <fullName>orange</fullName>
+                    <default>false</default>
+                    <label>orange</label>
+                </value>
+                <value>
+                    <fullName>yellow</fullName>
+                    <default>false</default>
+                    <label>yellow</label>
+                </value>
+                <value>
+                    <fullName>red</fullName>
+                    <default>false</default>
+                    <label>red</label>
+                </value>
+                <value>
+                    <fullName>springgreen</fullName>
+                    <default>false</default>
+                    <label>springgreen</label>
+                </value>
+                <value>
+                    <fullName>Black</fullName>
+                    <default>false</default>
+                    <label>Black</label>
+                </value>
+                <value>
+                    <fullName>magenta</fullName>
+                    <default>false</default>
+                    <label>magenta</label>
+                </value>
+                <value>
+                    <fullName>Blue</fullName>
+                    <default>false</default>
+                    <label>Blue</label>
+                </value>
+                <value>
+                    <fullName>skyblue</fullName>
+                    <default>false</default>
+                    <label>skyblue</label>
+                </value>
+                <value>
+                    <fullName>Brown</fullName>
+                    <default>false</default>
+                    <label>Brown</label>
+                </value>
+                <value>
+                    <fullName>orangered</fullName>
+                    <default>false</default>
+                    <label>orangered</label>
+                </value>
+                <value>
+                    <fullName>paleturquoise</fullName>
+                    <default>false</default>
+                    <label>paleturquoise</label>
+                </value>
+                <value>
+                    <fullName>Chartreuse</fullName>
+                    <default>false</default>
+                    <label>Chartreuse</label>
+                </value>
+                <value>
+                    <fullName>Chocolate</fullName>
+                    <default>false</default>
+                    <label>Chocolate</label>
+                </value>
+                <value>
+                    <fullName>Coral</fullName>
+                    <default>false</default>
+                    <label>Coral</label>
+                </value>
+                <value>
+                    <fullName>CornflowerBlue</fullName>
+                    <default>false</default>
+                    <label>CornflowerBlue</label>
+                </value>
+                <value>
+                    <fullName>Cornsilk</fullName>
+                    <default>false</default>
+                    <label>Cornsilk</label>
+                </value>
+                <value>
+                    <fullName>Crimson</fullName>
+                    <default>false</default>
+                    <label>Crimson</label>
+                </value>
+                <value>
+                    <fullName>Cyan</fullName>
+                    <default>false</default>
+                    <label>Cyan</label>
+                </value>
+                <value>
+                    <fullName>DarkBlue</fullName>
+                    <default>false</default>
+                    <label>DarkBlue</label>
+                </value>
+                <value>
+                    <fullName>DarkCyan</fullName>
+                    <default>false</default>
+                    <label>DarkCyan</label>
+                </value>
+                <value>
+                    <fullName>DarkGoldenRod</fullName>
+                    <default>false</default>
+                    <label>DarkGoldenRod</label>
+                </value>
+                <value>
+                    <fullName>DarkGray</fullName>
+                    <default>false</default>
+                    <label>DarkGray</label>
+                </value>
+                <value>
+                    <fullName>DarkGreen</fullName>
+                    <default>false</default>
+                    <label>DarkGreen</label>
+                </value>
+                <value>
+                    <fullName>DarkKhaki</fullName>
+                    <default>false</default>
+                    <label>DarkKhaki</label>
+                </value>
+                <value>
+                    <fullName>DarkMagenta</fullName>
+                    <default>false</default>
+                    <label>DarkMagenta</label>
+                </value>
+                <value>
+                    <fullName>DarkOliveGreen</fullName>
+                    <default>false</default>
+                    <label>DarkOliveGreen</label>
+                </value>
+                <value>
+                    <fullName>DarkOrange</fullName>
+                    <default>false</default>
+                    <label>DarkOrange</label>
+                </value>
+                <value>
+                    <fullName>DarkOrchid</fullName>
+                    <default>false</default>
+                    <label>DarkOrchid</label>
+                </value>
+                <value>
+                    <fullName>DarkRed</fullName>
+                    <default>false</default>
+                    <label>DarkRed</label>
+                </value>
+                <value>
+                    <fullName>DarkSalmon</fullName>
+                    <default>false</default>
+                    <label>DarkSalmon</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_1_text_colour__c</fullName>
         <description>color values</description>
         <externalId>false</externalId>
         <label>Zone 1 text colour</label>
-        <picklist>
-            <picklistValues>
-                <fullName>White</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>gray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>steelblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>orange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>yellow</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>red</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Black </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>green</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Blue </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>skyblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Brown </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BurlyWood </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CadetBlue </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chartreuse </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chocolate </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Coral </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CornflowerBlue </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cornsilk </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Crimson </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cyan </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkBlue </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkCyan </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGoldenRod </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGray </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGreen </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkKhaki </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkMagenta </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOliveGreen </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrange </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrchid </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkRed </fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkSalmon </fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>White</fullName>
+                    <default>false</default>
+                    <label>White</label>
+                </value>
+                <value>
+                    <fullName>gray</fullName>
+                    <default>false</default>
+                    <label>gray</label>
+                </value>
+                <value>
+                    <fullName>steelblue</fullName>
+                    <default>false</default>
+                    <label>steelblue</label>
+                </value>
+                <value>
+                    <fullName>orange</fullName>
+                    <default>false</default>
+                    <label>orange</label>
+                </value>
+                <value>
+                    <fullName>yellow</fullName>
+                    <default>false</default>
+                    <label>yellow</label>
+                </value>
+                <value>
+                    <fullName>red</fullName>
+                    <default>false</default>
+                    <label>red</label>
+                </value>
+                <value>
+                    <fullName>Black </fullName>
+                    <default>false</default>
+                    <label>Black </label>
+                </value>
+                <value>
+                    <fullName>green</fullName>
+                    <default>false</default>
+                    <label>green</label>
+                </value>
+                <value>
+                    <fullName>Blue </fullName>
+                    <default>false</default>
+                    <label>Blue </label>
+                </value>
+                <value>
+                    <fullName>skyblue</fullName>
+                    <default>false</default>
+                    <label>skyblue</label>
+                </value>
+                <value>
+                    <fullName>Brown </fullName>
+                    <default>false</default>
+                    <label>Brown </label>
+                </value>
+                <value>
+                    <fullName>BurlyWood </fullName>
+                    <default>false</default>
+                    <label>BurlyWood </label>
+                </value>
+                <value>
+                    <fullName>CadetBlue </fullName>
+                    <default>false</default>
+                    <label>CadetBlue </label>
+                </value>
+                <value>
+                    <fullName>Chartreuse </fullName>
+                    <default>false</default>
+                    <label>Chartreuse </label>
+                </value>
+                <value>
+                    <fullName>Chocolate </fullName>
+                    <default>false</default>
+                    <label>Chocolate </label>
+                </value>
+                <value>
+                    <fullName>Coral </fullName>
+                    <default>false</default>
+                    <label>Coral </label>
+                </value>
+                <value>
+                    <fullName>CornflowerBlue </fullName>
+                    <default>false</default>
+                    <label>CornflowerBlue </label>
+                </value>
+                <value>
+                    <fullName>Cornsilk </fullName>
+                    <default>false</default>
+                    <label>Cornsilk </label>
+                </value>
+                <value>
+                    <fullName>Crimson </fullName>
+                    <default>false</default>
+                    <label>Crimson </label>
+                </value>
+                <value>
+                    <fullName>Cyan </fullName>
+                    <default>false</default>
+                    <label>Cyan </label>
+                </value>
+                <value>
+                    <fullName>DarkBlue </fullName>
+                    <default>false</default>
+                    <label>DarkBlue </label>
+                </value>
+                <value>
+                    <fullName>DarkCyan </fullName>
+                    <default>false</default>
+                    <label>DarkCyan </label>
+                </value>
+                <value>
+                    <fullName>DarkGoldenRod </fullName>
+                    <default>false</default>
+                    <label>DarkGoldenRod </label>
+                </value>
+                <value>
+                    <fullName>DarkGray </fullName>
+                    <default>false</default>
+                    <label>DarkGray </label>
+                </value>
+                <value>
+                    <fullName>DarkGreen </fullName>
+                    <default>false</default>
+                    <label>DarkGreen </label>
+                </value>
+                <value>
+                    <fullName>DarkKhaki </fullName>
+                    <default>false</default>
+                    <label>DarkKhaki </label>
+                </value>
+                <value>
+                    <fullName>DarkMagenta </fullName>
+                    <default>false</default>
+                    <label>DarkMagenta </label>
+                </value>
+                <value>
+                    <fullName>DarkOliveGreen </fullName>
+                    <default>false</default>
+                    <label>DarkOliveGreen </label>
+                </value>
+                <value>
+                    <fullName>DarkOrange </fullName>
+                    <default>false</default>
+                    <label>DarkOrange </label>
+                </value>
+                <value>
+                    <fullName>DarkOrchid </fullName>
+                    <default>false</default>
+                    <label>DarkOrchid </label>
+                </value>
+                <value>
+                    <fullName>DarkRed </fullName>
+                    <default>false</default>
+                    <label>DarkRed </label>
+                </value>
+                <value>
+                    <fullName>DarkSalmon </fullName>
+                    <default>false</default>
+                    <label>DarkSalmon </label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_1_text_hyperlink__c</fullName>
@@ -1601,55 +1890,67 @@
 _blank = new window</description>
         <externalId>false</externalId>
         <label>Zone 1 text hyperlink target window</label>
-        <picklist>
-            <picklistValues>
-                <fullName>_self</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>_blank</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>_self</fullName>
+                    <default>false</default>
+                    <label>_self</label>
+                </value>
+                <value>
+                    <fullName>_blank</fullName>
+                    <default>false</default>
+                    <label>_blank</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_1_text_size__c</fullName>
         <externalId>false</externalId>
         <label>Zone 1 text size</label>
-        <picklist>
-            <picklistValues>
-                <fullName>medium</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>xx-small</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>x-small</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>small</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>large</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>x-large</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>medium</fullName>
+                    <default>true</default>
+                    <label>medium</label>
+                </value>
+                <value>
+                    <fullName>xx-small</fullName>
+                    <default>false</default>
+                    <label>xx-small</label>
+                </value>
+                <value>
+                    <fullName>x-small</fullName>
+                    <default>false</default>
+                    <label>x-small</label>
+                </value>
+                <value>
+                    <fullName>small</fullName>
+                    <default>false</default>
+                    <label>small</label>
+                </value>
+                <value>
+                    <fullName>large</fullName>
+                    <default>false</default>
+                    <label>large</label>
+                </value>
+                <value>
+                    <fullName>x-large</fullName>
+                    <default>false</default>
+                    <label>x-large</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_2_text__c</fullName>
@@ -1663,283 +1964,352 @@ _blank = new window</description>
         <fullName>Zone_2_text_background_colour__c</fullName>
         <externalId>false</externalId>
         <label>Zone 2 text background colour</label>
-        <picklist>
-            <picklistValues>
-                <fullName>transparent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>white</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>gray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>steelblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>orange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>yellow</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>red</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>green</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Black</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Blue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Brown</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>skyblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CadetBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chartreuse</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chocolate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Coral</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CornflowerBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cornsilk</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Crimson</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cyan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkCyan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGoldenRod</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkKhaki</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkMagenta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOliveGreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrchid</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkRed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkSalmon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>transparent</fullName>
+                    <default>false</default>
+                    <label>transparent</label>
+                </value>
+                <value>
+                    <fullName>white</fullName>
+                    <default>false</default>
+                    <label>white</label>
+                </value>
+                <value>
+                    <fullName>gray</fullName>
+                    <default>false</default>
+                    <label>gray</label>
+                </value>
+                <value>
+                    <fullName>steelblue</fullName>
+                    <default>false</default>
+                    <label>steelblue</label>
+                </value>
+                <value>
+                    <fullName>orange</fullName>
+                    <default>false</default>
+                    <label>orange</label>
+                </value>
+                <value>
+                    <fullName>yellow</fullName>
+                    <default>false</default>
+                    <label>yellow</label>
+                </value>
+                <value>
+                    <fullName>red</fullName>
+                    <default>false</default>
+                    <label>red</label>
+                </value>
+                <value>
+                    <fullName>green</fullName>
+                    <default>false</default>
+                    <label>green</label>
+                </value>
+                <value>
+                    <fullName>Black</fullName>
+                    <default>false</default>
+                    <label>Black</label>
+                </value>
+                <value>
+                    <fullName>Blue</fullName>
+                    <default>false</default>
+                    <label>Blue</label>
+                </value>
+                <value>
+                    <fullName>Brown</fullName>
+                    <default>false</default>
+                    <label>Brown</label>
+                </value>
+                <value>
+                    <fullName>skyblue</fullName>
+                    <default>false</default>
+                    <label>skyblue</label>
+                </value>
+                <value>
+                    <fullName>CadetBlue</fullName>
+                    <default>false</default>
+                    <label>CadetBlue</label>
+                </value>
+                <value>
+                    <fullName>Chartreuse</fullName>
+                    <default>false</default>
+                    <label>Chartreuse</label>
+                </value>
+                <value>
+                    <fullName>Chocolate</fullName>
+                    <default>false</default>
+                    <label>Chocolate</label>
+                </value>
+                <value>
+                    <fullName>Coral</fullName>
+                    <default>false</default>
+                    <label>Coral</label>
+                </value>
+                <value>
+                    <fullName>CornflowerBlue</fullName>
+                    <default>false</default>
+                    <label>CornflowerBlue</label>
+                </value>
+                <value>
+                    <fullName>Cornsilk</fullName>
+                    <default>false</default>
+                    <label>Cornsilk</label>
+                </value>
+                <value>
+                    <fullName>Crimson</fullName>
+                    <default>false</default>
+                    <label>Crimson</label>
+                </value>
+                <value>
+                    <fullName>Cyan</fullName>
+                    <default>false</default>
+                    <label>Cyan</label>
+                </value>
+                <value>
+                    <fullName>DarkBlue</fullName>
+                    <default>false</default>
+                    <label>DarkBlue</label>
+                </value>
+                <value>
+                    <fullName>DarkCyan</fullName>
+                    <default>false</default>
+                    <label>DarkCyan</label>
+                </value>
+                <value>
+                    <fullName>DarkGoldenRod</fullName>
+                    <default>false</default>
+                    <label>DarkGoldenRod</label>
+                </value>
+                <value>
+                    <fullName>DarkGray</fullName>
+                    <default>false</default>
+                    <label>DarkGray</label>
+                </value>
+                <value>
+                    <fullName>DarkGreen</fullName>
+                    <default>false</default>
+                    <label>DarkGreen</label>
+                </value>
+                <value>
+                    <fullName>DarkKhaki</fullName>
+                    <default>false</default>
+                    <label>DarkKhaki</label>
+                </value>
+                <value>
+                    <fullName>DarkMagenta</fullName>
+                    <default>false</default>
+                    <label>DarkMagenta</label>
+                </value>
+                <value>
+                    <fullName>DarkOliveGreen</fullName>
+                    <default>false</default>
+                    <label>DarkOliveGreen</label>
+                </value>
+                <value>
+                    <fullName>DarkOrange</fullName>
+                    <default>false</default>
+                    <label>DarkOrange</label>
+                </value>
+                <value>
+                    <fullName>DarkOrchid</fullName>
+                    <default>false</default>
+                    <label>DarkOrchid</label>
+                </value>
+                <value>
+                    <fullName>DarkRed</fullName>
+                    <default>false</default>
+                    <label>DarkRed</label>
+                </value>
+                <value>
+                    <fullName>DarkSalmon</fullName>
+                    <default>false</default>
+                    <label>DarkSalmon</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_2_text_colour__c</fullName>
         <externalId>false</externalId>
         <label>Zone 2 text colour</label>
-        <picklist>
-            <picklistValues>
-                <fullName>white</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>gray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>steelblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>orange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>yellow</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>red</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>green</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Black</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>skyblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Blue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BlueViolet</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Brown</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BurlyWood</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CadetBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chartreuse</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chocolate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Coral</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CornflowerBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cornsilk</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Crimson</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cyan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkCyan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGoldenRod</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkKhaki</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkMagenta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOliveGreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrchid</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkRed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkSalmon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>white</fullName>
+                    <default>false</default>
+                    <label>white</label>
+                </value>
+                <value>
+                    <fullName>gray</fullName>
+                    <default>false</default>
+                    <label>gray</label>
+                </value>
+                <value>
+                    <fullName>steelblue</fullName>
+                    <default>false</default>
+                    <label>steelblue</label>
+                </value>
+                <value>
+                    <fullName>orange</fullName>
+                    <default>false</default>
+                    <label>orange</label>
+                </value>
+                <value>
+                    <fullName>yellow</fullName>
+                    <default>false</default>
+                    <label>yellow</label>
+                </value>
+                <value>
+                    <fullName>red</fullName>
+                    <default>false</default>
+                    <label>red</label>
+                </value>
+                <value>
+                    <fullName>green</fullName>
+                    <default>false</default>
+                    <label>green</label>
+                </value>
+                <value>
+                    <fullName>Black</fullName>
+                    <default>false</default>
+                    <label>Black</label>
+                </value>
+                <value>
+                    <fullName>skyblue</fullName>
+                    <default>false</default>
+                    <label>skyblue</label>
+                </value>
+                <value>
+                    <fullName>Blue</fullName>
+                    <default>false</default>
+                    <label>Blue</label>
+                </value>
+                <value>
+                    <fullName>BlueViolet</fullName>
+                    <default>false</default>
+                    <label>BlueViolet</label>
+                </value>
+                <value>
+                    <fullName>Brown</fullName>
+                    <default>false</default>
+                    <label>Brown</label>
+                </value>
+                <value>
+                    <fullName>BurlyWood</fullName>
+                    <default>false</default>
+                    <label>BurlyWood</label>
+                </value>
+                <value>
+                    <fullName>CadetBlue</fullName>
+                    <default>false</default>
+                    <label>CadetBlue</label>
+                </value>
+                <value>
+                    <fullName>Chartreuse</fullName>
+                    <default>false</default>
+                    <label>Chartreuse</label>
+                </value>
+                <value>
+                    <fullName>Chocolate</fullName>
+                    <default>false</default>
+                    <label>Chocolate</label>
+                </value>
+                <value>
+                    <fullName>Coral</fullName>
+                    <default>false</default>
+                    <label>Coral</label>
+                </value>
+                <value>
+                    <fullName>CornflowerBlue</fullName>
+                    <default>false</default>
+                    <label>CornflowerBlue</label>
+                </value>
+                <value>
+                    <fullName>Cornsilk</fullName>
+                    <default>false</default>
+                    <label>Cornsilk</label>
+                </value>
+                <value>
+                    <fullName>Crimson</fullName>
+                    <default>false</default>
+                    <label>Crimson</label>
+                </value>
+                <value>
+                    <fullName>Cyan</fullName>
+                    <default>false</default>
+                    <label>Cyan</label>
+                </value>
+                <value>
+                    <fullName>DarkBlue</fullName>
+                    <default>false</default>
+                    <label>DarkBlue</label>
+                </value>
+                <value>
+                    <fullName>DarkCyan</fullName>
+                    <default>false</default>
+                    <label>DarkCyan</label>
+                </value>
+                <value>
+                    <fullName>DarkGoldenRod</fullName>
+                    <default>false</default>
+                    <label>DarkGoldenRod</label>
+                </value>
+                <value>
+                    <fullName>DarkGray</fullName>
+                    <default>false</default>
+                    <label>DarkGray</label>
+                </value>
+                <value>
+                    <fullName>DarkGreen</fullName>
+                    <default>false</default>
+                    <label>DarkGreen</label>
+                </value>
+                <value>
+                    <fullName>DarkKhaki</fullName>
+                    <default>false</default>
+                    <label>DarkKhaki</label>
+                </value>
+                <value>
+                    <fullName>DarkMagenta</fullName>
+                    <default>false</default>
+                    <label>DarkMagenta</label>
+                </value>
+                <value>
+                    <fullName>DarkOliveGreen</fullName>
+                    <default>false</default>
+                    <label>DarkOliveGreen</label>
+                </value>
+                <value>
+                    <fullName>DarkOrange</fullName>
+                    <default>false</default>
+                    <label>DarkOrange</label>
+                </value>
+                <value>
+                    <fullName>DarkOrchid</fullName>
+                    <default>false</default>
+                    <label>DarkOrchid</label>
+                </value>
+                <value>
+                    <fullName>DarkRed</fullName>
+                    <default>false</default>
+                    <label>DarkRed</label>
+                </value>
+                <value>
+                    <fullName>DarkSalmon</fullName>
+                    <default>false</default>
+                    <label>DarkSalmon</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_2_text_hyperlink__c</fullName>
@@ -1953,55 +2323,67 @@ _blank = new window</description>
         <fullName>Zone_2_text_hyperlink_target_window__c</fullName>
         <externalId>false</externalId>
         <label>Zone 2 text hyperlink target window</label>
-        <picklist>
-            <picklistValues>
-                <fullName>_self</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>_blank</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>_self</fullName>
+                    <default>false</default>
+                    <label>_self</label>
+                </value>
+                <value>
+                    <fullName>_blank</fullName>
+                    <default>false</default>
+                    <label>_blank</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_2_text_size__c</fullName>
         <externalId>false</externalId>
         <label>Zone 2 text size</label>
-        <picklist>
-            <picklistValues>
-                <fullName>medium</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>xx-small</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>x-small</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>small</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>large</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>x-large</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>medium</fullName>
+                    <default>true</default>
+                    <label>medium</label>
+                </value>
+                <value>
+                    <fullName>xx-small</fullName>
+                    <default>false</default>
+                    <label>xx-small</label>
+                </value>
+                <value>
+                    <fullName>x-small</fullName>
+                    <default>false</default>
+                    <label>x-small</label>
+                </value>
+                <value>
+                    <fullName>small</fullName>
+                    <default>false</default>
+                    <label>small</label>
+                </value>
+                <value>
+                    <fullName>large</fullName>
+                    <default>false</default>
+                    <label>large</label>
+                </value>
+                <value>
+                    <fullName>x-large</fullName>
+                    <default>false</default>
+                    <label>x-large</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_3_text__c</fullName>
@@ -2015,291 +2397,362 @@ _blank = new window</description>
         <fullName>Zone_3_text_background_colour__c</fullName>
         <externalId>false</externalId>
         <label>Zone 3 text background colour</label>
-        <picklist>
-            <picklistValues>
-                <fullName>transparent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>white</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>gray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>steelblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>orange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>yellow</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>red</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>green</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Black</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>skyblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Blue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BlueViolet</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Brown</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BurlyWood</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CadetBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chartreuse</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chocolate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Coral</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CornflowerBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cornsilk</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Crimson</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cyan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkCyan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGoldenRod</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkKhaki</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkMagenta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOliveGreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrchid</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkRed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkSalmon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>transparent</fullName>
+                    <default>false</default>
+                    <label>transparent</label>
+                </value>
+                <value>
+                    <fullName>white</fullName>
+                    <default>false</default>
+                    <label>white</label>
+                </value>
+                <value>
+                    <fullName>gray</fullName>
+                    <default>false</default>
+                    <label>gray</label>
+                </value>
+                <value>
+                    <fullName>steelblue</fullName>
+                    <default>false</default>
+                    <label>steelblue</label>
+                </value>
+                <value>
+                    <fullName>orange</fullName>
+                    <default>false</default>
+                    <label>orange</label>
+                </value>
+                <value>
+                    <fullName>yellow</fullName>
+                    <default>false</default>
+                    <label>yellow</label>
+                </value>
+                <value>
+                    <fullName>red</fullName>
+                    <default>false</default>
+                    <label>red</label>
+                </value>
+                <value>
+                    <fullName>green</fullName>
+                    <default>false</default>
+                    <label>green</label>
+                </value>
+                <value>
+                    <fullName>Black</fullName>
+                    <default>false</default>
+                    <label>Black</label>
+                </value>
+                <value>
+                    <fullName>skyblue</fullName>
+                    <default>false</default>
+                    <label>skyblue</label>
+                </value>
+                <value>
+                    <fullName>Blue</fullName>
+                    <default>false</default>
+                    <label>Blue</label>
+                </value>
+                <value>
+                    <fullName>BlueViolet</fullName>
+                    <default>false</default>
+                    <label>BlueViolet</label>
+                </value>
+                <value>
+                    <fullName>Brown</fullName>
+                    <default>false</default>
+                    <label>Brown</label>
+                </value>
+                <value>
+                    <fullName>BurlyWood</fullName>
+                    <default>false</default>
+                    <label>BurlyWood</label>
+                </value>
+                <value>
+                    <fullName>CadetBlue</fullName>
+                    <default>false</default>
+                    <label>CadetBlue</label>
+                </value>
+                <value>
+                    <fullName>Chartreuse</fullName>
+                    <default>false</default>
+                    <label>Chartreuse</label>
+                </value>
+                <value>
+                    <fullName>Chocolate</fullName>
+                    <default>false</default>
+                    <label>Chocolate</label>
+                </value>
+                <value>
+                    <fullName>Coral</fullName>
+                    <default>false</default>
+                    <label>Coral</label>
+                </value>
+                <value>
+                    <fullName>CornflowerBlue</fullName>
+                    <default>false</default>
+                    <label>CornflowerBlue</label>
+                </value>
+                <value>
+                    <fullName>Cornsilk</fullName>
+                    <default>false</default>
+                    <label>Cornsilk</label>
+                </value>
+                <value>
+                    <fullName>Crimson</fullName>
+                    <default>false</default>
+                    <label>Crimson</label>
+                </value>
+                <value>
+                    <fullName>Cyan</fullName>
+                    <default>false</default>
+                    <label>Cyan</label>
+                </value>
+                <value>
+                    <fullName>DarkBlue</fullName>
+                    <default>false</default>
+                    <label>DarkBlue</label>
+                </value>
+                <value>
+                    <fullName>DarkCyan</fullName>
+                    <default>false</default>
+                    <label>DarkCyan</label>
+                </value>
+                <value>
+                    <fullName>DarkGoldenRod</fullName>
+                    <default>false</default>
+                    <label>DarkGoldenRod</label>
+                </value>
+                <value>
+                    <fullName>DarkGray</fullName>
+                    <default>false</default>
+                    <label>DarkGray</label>
+                </value>
+                <value>
+                    <fullName>DarkGreen</fullName>
+                    <default>false</default>
+                    <label>DarkGreen</label>
+                </value>
+                <value>
+                    <fullName>DarkKhaki</fullName>
+                    <default>false</default>
+                    <label>DarkKhaki</label>
+                </value>
+                <value>
+                    <fullName>DarkMagenta</fullName>
+                    <default>false</default>
+                    <label>DarkMagenta</label>
+                </value>
+                <value>
+                    <fullName>DarkOliveGreen</fullName>
+                    <default>false</default>
+                    <label>DarkOliveGreen</label>
+                </value>
+                <value>
+                    <fullName>DarkOrange</fullName>
+                    <default>false</default>
+                    <label>DarkOrange</label>
+                </value>
+                <value>
+                    <fullName>DarkOrchid</fullName>
+                    <default>false</default>
+                    <label>DarkOrchid</label>
+                </value>
+                <value>
+                    <fullName>DarkRed</fullName>
+                    <default>false</default>
+                    <label>DarkRed</label>
+                </value>
+                <value>
+                    <fullName>DarkSalmon</fullName>
+                    <default>false</default>
+                    <label>DarkSalmon</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_3_text_colour__c</fullName>
         <externalId>false</externalId>
         <label>Zone 3 text colour</label>
-        <picklist>
-            <picklistValues>
-                <fullName>white</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>gray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>steelblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>orange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>yellow</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>red</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>green</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Black</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>skyblue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Blue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BlueViolet</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Brown</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BurlyWood</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CadetBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chartreuse</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chocolate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Coral</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CornflowerBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cornsilk</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Crimson</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cyan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkBlue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkCyan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGoldenRod</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGray</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkGreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkKhaki</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkMagenta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOliveGreen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkOrchid</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkRed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DarkSalmon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>white</fullName>
+                    <default>false</default>
+                    <label>white</label>
+                </value>
+                <value>
+                    <fullName>gray</fullName>
+                    <default>false</default>
+                    <label>gray</label>
+                </value>
+                <value>
+                    <fullName>steelblue</fullName>
+                    <default>false</default>
+                    <label>steelblue</label>
+                </value>
+                <value>
+                    <fullName>orange</fullName>
+                    <default>false</default>
+                    <label>orange</label>
+                </value>
+                <value>
+                    <fullName>yellow</fullName>
+                    <default>false</default>
+                    <label>yellow</label>
+                </value>
+                <value>
+                    <fullName>red</fullName>
+                    <default>false</default>
+                    <label>red</label>
+                </value>
+                <value>
+                    <fullName>green</fullName>
+                    <default>false</default>
+                    <label>green</label>
+                </value>
+                <value>
+                    <fullName>Black</fullName>
+                    <default>false</default>
+                    <label>Black</label>
+                </value>
+                <value>
+                    <fullName>skyblue</fullName>
+                    <default>false</default>
+                    <label>skyblue</label>
+                </value>
+                <value>
+                    <fullName>Blue</fullName>
+                    <default>false</default>
+                    <label>Blue</label>
+                </value>
+                <value>
+                    <fullName>BlueViolet</fullName>
+                    <default>false</default>
+                    <label>BlueViolet</label>
+                </value>
+                <value>
+                    <fullName>Brown</fullName>
+                    <default>false</default>
+                    <label>Brown</label>
+                </value>
+                <value>
+                    <fullName>BurlyWood</fullName>
+                    <default>false</default>
+                    <label>BurlyWood</label>
+                </value>
+                <value>
+                    <fullName>CadetBlue</fullName>
+                    <default>false</default>
+                    <label>CadetBlue</label>
+                </value>
+                <value>
+                    <fullName>Chartreuse</fullName>
+                    <default>false</default>
+                    <label>Chartreuse</label>
+                </value>
+                <value>
+                    <fullName>Chocolate</fullName>
+                    <default>false</default>
+                    <label>Chocolate</label>
+                </value>
+                <value>
+                    <fullName>Coral</fullName>
+                    <default>false</default>
+                    <label>Coral</label>
+                </value>
+                <value>
+                    <fullName>CornflowerBlue</fullName>
+                    <default>false</default>
+                    <label>CornflowerBlue</label>
+                </value>
+                <value>
+                    <fullName>Cornsilk</fullName>
+                    <default>false</default>
+                    <label>Cornsilk</label>
+                </value>
+                <value>
+                    <fullName>Crimson</fullName>
+                    <default>false</default>
+                    <label>Crimson</label>
+                </value>
+                <value>
+                    <fullName>Cyan</fullName>
+                    <default>false</default>
+                    <label>Cyan</label>
+                </value>
+                <value>
+                    <fullName>DarkBlue</fullName>
+                    <default>false</default>
+                    <label>DarkBlue</label>
+                </value>
+                <value>
+                    <fullName>DarkCyan</fullName>
+                    <default>false</default>
+                    <label>DarkCyan</label>
+                </value>
+                <value>
+                    <fullName>DarkGoldenRod</fullName>
+                    <default>false</default>
+                    <label>DarkGoldenRod</label>
+                </value>
+                <value>
+                    <fullName>DarkGray</fullName>
+                    <default>false</default>
+                    <label>DarkGray</label>
+                </value>
+                <value>
+                    <fullName>DarkGreen</fullName>
+                    <default>false</default>
+                    <label>DarkGreen</label>
+                </value>
+                <value>
+                    <fullName>DarkKhaki</fullName>
+                    <default>false</default>
+                    <label>DarkKhaki</label>
+                </value>
+                <value>
+                    <fullName>DarkMagenta</fullName>
+                    <default>false</default>
+                    <label>DarkMagenta</label>
+                </value>
+                <value>
+                    <fullName>DarkOliveGreen</fullName>
+                    <default>false</default>
+                    <label>DarkOliveGreen</label>
+                </value>
+                <value>
+                    <fullName>DarkOrange</fullName>
+                    <default>false</default>
+                    <label>DarkOrange</label>
+                </value>
+                <value>
+                    <fullName>DarkOrchid</fullName>
+                    <default>false</default>
+                    <label>DarkOrchid</label>
+                </value>
+                <value>
+                    <fullName>DarkRed</fullName>
+                    <default>false</default>
+                    <label>DarkRed</label>
+                </value>
+                <value>
+                    <fullName>DarkSalmon</fullName>
+                    <default>false</default>
+                    <label>DarkSalmon</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_3_text_hyperlink__c</fullName>
@@ -2313,59 +2766,72 @@ _blank = new window</description>
         <fullName>Zone_3_text_hyperlink_target_window__c</fullName>
         <externalId>false</externalId>
         <label>Zone 3 text hyperlink target window</label>
-        <picklist>
-            <picklistValues>
-                <fullName>_self</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>_blank</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>_self</fullName>
+                    <default>false</default>
+                    <label>_self</label>
+                </value>
+                <value>
+                    <fullName>_blank</fullName>
+                    <default>false</default>
+                    <label>_blank</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Zone_3_text_size__c</fullName>
         <externalId>false</externalId>
         <label>Zone 3 text size</label>
-        <picklist>
-            <picklistValues>
-                <fullName>medium</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>xx-small</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>x-small</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>small</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>large</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>x-large</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>xx-large</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>medium</fullName>
+                    <default>true</default>
+                    <label>medium</label>
+                </value>
+                <value>
+                    <fullName>xx-small</fullName>
+                    <default>false</default>
+                    <label>xx-small</label>
+                </value>
+                <value>
+                    <fullName>x-small</fullName>
+                    <default>false</default>
+                    <label>x-small</label>
+                </value>
+                <value>
+                    <fullName>small</fullName>
+                    <default>false</default>
+                    <label>small</label>
+                </value>
+                <value>
+                    <fullName>large</fullName>
+                    <default>false</default>
+                    <label>large</label>
+                </value>
+                <value>
+                    <fullName>x-large</fullName>
+                    <default>false</default>
+                    <label>x-large</label>
+                </value>
+                <value>
+                    <fullName>xx-large</fullName>
+                    <default>false</default>
+                    <label>xx-large</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>ISSP Banner</label>
     <listViews>
@@ -2453,4 +2919,5 @@ _blank = new window</description>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

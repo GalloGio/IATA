@@ -124,12 +124,12 @@ private class IDCard_AdmUserManagmentPictureCtrlTest {
         idcards.add(new ID_Card__c (Related_Contact__c = cs[0].id,
                                 Valid_To_Date__c = date.today().addDays(40),
                                 Name_on_ID_Card__c = 'nameidcard',
-                                Card_status__c = 'Approved',
+                                Card_status__c = 'Sent ID Card',
                                 VER_Number__c = '111'));
         idcards.add(new ID_Card__c (Related_Contact__c = cs[2].id,
                                 Valid_To_Date__c = date.today().addDays(40),
                                 Name_on_ID_Card__c = 'nameidcard',
-                                Card_status__c = 'Approved',
+                                Card_status__c = 'Sent ID Card',
                                 VER_Number__c = '333'));
 
         insert idcards;

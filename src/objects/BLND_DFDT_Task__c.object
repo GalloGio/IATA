@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -132,24 +129,29 @@
         <fullName>BLND_Dependent__c</fullName>
         <externalId>false</externalId>
         <label>Dependent</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Units</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Work</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Duration</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Units</fullName>
+                    <default>false</default>
+                    <label>Units</label>
+                </value>
+                <value>
+                    <fullName>Work</fullName>
+                    <default>false</default>
+                    <label>Work</label>
+                </value>
+                <value>
+                    <fullName>Duration</fullName>
+                    <default>false</default>
+                    <label>Duration</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BLND_Description__c</fullName>
@@ -342,28 +344,34 @@
         <fullName>BLND_Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Low Priority</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Standard</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>High Priority</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Critical</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Low Priority</fullName>
+                    <default>false</default>
+                    <label>Low Priority</label>
+                </value>
+                <value>
+                    <fullName>Standard</fullName>
+                    <default>true</default>
+                    <label>Standard</label>
+                </value>
+                <value>
+                    <fullName>High Priority</fullName>
+                    <default>false</default>
+                    <label>High Priority</label>
+                </value>
+                <value>
+                    <fullName>Critical</fullName>
+                    <default>false</default>
+                    <label>Critical</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BLND_Version__c</fullName>
@@ -416,4 +424,5 @@
     <pluralLabel>DreamTeam Tasks</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -1,10 +1,13 @@
 <!-- This component must be inside of a form -->
+<!-- This component was made to to hold the functionality to upload files from staging area and portal -->
 <apex:component controller="UploadMultipleFileToAmazonButtonCtrl" allowDML="true" >
 	<apex:attribute name="sObjectId" type="Id" required="true" assignto="{!parentId}" description="id of the parent object" />
 	<apex:attribute name="AmazonCredential" type="String" required="true" description="credential name to access to the amazon bucket" />
 	<apex:attribute name="path" type="String" required="true" assignto="{!folder}" description="destination folder"  />
 	<apex:attribute name="uploaderWizard" description="uploader" type="String" required="false" assignTo="{!uploader}" />
     <apex:attribute name="sourceSystem" description="source" type="String" required="false" assignTo="{!source}" />
+    <!-- AMSU-154 -->
+    <apex:attribute name="sObjectOwnerId" description="SObject owner Id" required="false" assignTo="{!ownerId}" type="Id"/> 
 	
     <apex:includeScript value="/soap/ajax/33.0/connection.js"/>
 	<apex:includeScript value="/soap/ajax/33.0/apex.js"/>
@@ -14,6 +17,12 @@
 
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+	<style>
+		.notifyOwner {
+			margin-top: 10px;
+		}
+	</style>
 
 <script>
 	var fileIdentifierPick;
@@ -54,6 +63,9 @@
 	}
 
 	function uploadFile(file, fileIdentifierPick) {
+
+		var notifyOwner = $("#notifyOwner:checked");
+
 		UploadMultipleFileToAmazonButtonCtrl.createUploadFile("{!sobjectId}",file.name,file.type, file.size, '{!path}', '{!AmazonCredential}', function(result, event){
 			if(event.type == "exception") {
 				alert("Exception!!");
@@ -80,6 +92,15 @@
 				var arrayBuffer = reader.result;
 				remoteFunctionPut(amazonCredentials, file, reader.result, fileIdentifierPick);
 			};
+
+			/*** AMSU-154 ***/
+			if(notifyOwner.length) {
+				UploadMultipleFileToAmazonButtonCtrl.notifyOscarOwner("{!sObjectId}", fileIdentifierPick , function(result, event) {
+					alert(result);
+				});
+			}
+
+			$("#notifyOwner").prop("checked", false);
 		}, {buffer: true, escape: true, timeout: 120000} );
 
 	}
@@ -100,7 +121,8 @@
 
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4) {
-				fileCounter.refreshIfEmpty();
+				//fileCounter.refreshIfEmpty(); /* AMSU-135 commented */
+				
 				var status = this.status;
 				if (status == 200) { 
 					////progressUpload(100, this.progressBar);
@@ -150,7 +172,11 @@
 		if(fileIdentifierPick == null){
             fileIdentifierPick = '';
         }
- 		UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(path, file.size,"{!sobjectId}", "{!uploader}", fileIdentifierPick, "{!source}", function(result, event){});
+ 		UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(path, file.size,"{!sobjectId}", "{!uploader}", fileIdentifierPick, "{!source}", function(result, event){ 
+ 			/* AMSU-135 force refresh on oscar process attachments list*/
+ 			fileCounter.refreshIfEmpty();
+ 			if(typeof(refreshList) == 'function') { console.log('refreshList -> function'); refreshList();} else {console.log('refreshList -> unknown');}
+ 		});
  	}
 
     function uploadAmsFile() {
@@ -187,6 +213,10 @@
         <div id="dialog" style="display: none;" title="{!$Label.Select_File}">
             {!$ObjectType.AmazonFile__c.fields.File_Identifier_picklist__c.Label}:&nbsp;<apex:inputField id="fileIdentifierPick" value="{!amazonFile.File_Identifier_picklist__c}"/>
             <input class="btn" id="btnUpload" value="{!$Label.Upload_File}" type="submit" onclick="uploadAmsFile(); return false;" />
+            <apex:outputPanel styleClass="notifyOwner" rendered="{!IF(AND(source == 'Internal', NOT(ISBLANK(ownerId)), $User.Id != ownerId), true, false)}" layout="block">            	
+            	<input id="notifyOwner" type="checkbox"/>
+            	<label for="notifyOwner">{!$Label.AMS_Notify_OSCAR_Owner}</label>
+        	</apex:outputPanel>
         </div>
 	</apex:outputPanel>
 </apex:component>

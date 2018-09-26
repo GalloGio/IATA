@@ -1,4 +1,4 @@
-<apex:page controller="GenerateLateRemittanceCSVController" contentType="{!contentType}" showHeader="{!filterView}" sidebar="{!filterView}" standardStylesheets="{!filterView}">
+<apex:page controller="GenerateLateRemittanceCSVController" contentType="{!contentType}" showHeader="{!filterView}" sidebar="{!filterView}" standardStylesheets="{!filterView}" readOnly="true">
 <apex:form rendered="{! filterView}">
 
     <apex:pageblock title="Generate Late Remittance CSV Report" >

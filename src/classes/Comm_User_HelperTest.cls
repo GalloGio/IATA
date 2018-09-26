@@ -11,10 +11,9 @@ private class Comm_User_HelperTest {
         insert issc;
         
         String defaultProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)'].Id;
-        ISSP_CS__c profileCS = new ISSP_CS__c();
-        profileCS.Name = 'ISS_Portal';
-        profileCS.Value__c = defaultProfileId;
-        insert profileCS;
+        ISSP_CS__c profileCS = new ISSP_CS__c(Name = 'ISS_Portal', Value__c = defaultProfileId);
+        ISSP_CS__c identityPortalCS = new ISSP_CS__c(Name = 'IdentityPortal', Value__c = 'customer-portal-iata.force.com');
+        insert new List<ISSP_CS__c>{profileCS, identityPortalCS};
 
         ID standardRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
         ID Branch  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId ;
@@ -51,13 +50,18 @@ private class Comm_User_HelperTest {
     	system.runAs(thisUser){
 	        test.startTest();
 	        userId = Comm_User_Helper.createNewUser(con,  selectedCustomerType, community);
-	        test.stopTest();
+	        
 	
-	        user ug = [SELECT ID, ContactID FROM User where id =: userID] ;
-	
+	        user ug = [SELECT ID, ContactID FROM User where id =: userID] ;	
 	        system.assertEquals(ug.ContactID, con.id);
+            userId = Comm_User_Helper.createNewUser(con,  selectedCustomerType, 'ISSP');
+
+            Comm_User_Helper.updateUsersGUID(userId);
+            test.stopTest();
     	}
 
+        String enc = Comm_User_Helper.EncryptString('testtest');
+        Comm_User_Helper.DecryptString(enc);
     }
 
     
@@ -142,7 +146,11 @@ private class Comm_User_HelperTest {
         u.languagelocalekey = 'en_US'; 
         u.alias = 'cspu';
         
-
+        Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  'adsasd' , con.Community__c);
+        Comm_User_Helper.getUserListByNameOrEmail(con.email);
+        Comm_User_Helper.getUserListByNameOrEmail2(con.email);
+        Comm_User_Helper.resetPasswordComm(con.id, 'ISSP',false);
+        Comm_User_Helper.resetPasswordISSPContact(con.id);
         Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
 
 
@@ -150,15 +158,17 @@ private class Comm_User_HelperTest {
         system.runAs(u2[0]){
         insert u; }
        
+        boolean res1;
         boolean res;
         User thisUser = [ select Id from User where Id <> :UserInfo.getUserId() and isactive = true and profile.name = 'System Administrator' limit 1];
         System.runAs ( thisUser ) {
 
-         res =  Comm_User_Helper.resetPassword(u.Email,'IEC');
+         res1 = Comm_User_Helper.resetPassword(u.Email,'IEC');
+         res =  Comm_User_Helper.resetPassword(u.Email,'CNS');
+         res =  Comm_User_Helper.resetPassword(u.Email,'ISSP');
+         res =  Comm_User_Helper.resetPassword(u.Email,'IDENTITY');
         }       
-        system.assertEquals(res,true);  
-
-
+        system.assertEquals(res1,true);  
     }
     
 }

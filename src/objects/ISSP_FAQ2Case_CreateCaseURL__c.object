@@ -33,5 +33,17 @@
         <unique>false</unique>
     </fields>
     <label>ISSP FAQ2Case Create Case URL</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Topic__c</columns>
+        <columns>Subtopic__c</columns>
+        <columns>URL__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

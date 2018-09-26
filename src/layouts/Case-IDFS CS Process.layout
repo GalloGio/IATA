@@ -97,6 +97,10 @@
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TIP_Partner_Product__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>AIMS_status__c</field>
             </layoutItems>

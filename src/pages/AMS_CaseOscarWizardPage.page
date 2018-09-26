@@ -48,7 +48,8 @@
     </style>
 
     <flow:interview name="OscarCaseMigration" interview="{!myflow}"  buttonLocation="bottom"  rerender="myPageBlock" buttonStyle="color:black; background-color:#fed; border:1px solid;" finishLocation="/{!$CurrentPage.parameters.caseId}"  >
-
+        <apex:param name="AccountConcerned" value="{!Case.Account_Concerned__c}"/>
+        <apex:param name="AccountId" value="{!$CurrentPage.parameters.accountId}"/><!-- AMSU-140 -->
     </flow:interview>
     
     <apex:form >

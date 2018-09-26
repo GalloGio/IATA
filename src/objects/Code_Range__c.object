@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -151,6 +148,32 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Original_Max_Range__c</fullName>
+        <description>Original Max Range</description>
+        <externalId>false</externalId>
+        <label>Original Max Range</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Original_Min_Range__c</fullName>
+        <description>Original Min Range</description>
+        <externalId>false</externalId>
+        <label>Original Min Range</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Placeholder__c</fullName>
         <description>Used when importing the file through dataloader page. Technical field only.</description>
         <externalId>false</externalId>
@@ -203,89 +226,110 @@ T-TIDS
 V-Travel Service Intermediaries-TSI (USA Only) 
 X-Handling Agents and Shipping Lines</inlineHelpText>
         <label>Program</label>
-        <picklist>
-            <picklistValues>
-                <fullName>A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>G</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>K</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>L</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>M</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>O</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>S</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>U</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>X</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Y</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Z</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>D</label>
+                </value>
+                <value>
+                    <fullName>G</fullName>
+                    <default>false</default>
+                    <label>G</label>
+                </value>
+                <value>
+                    <fullName>I</fullName>
+                    <default>false</default>
+                    <label>I</label>
+                </value>
+                <value>
+                    <fullName>K</fullName>
+                    <default>false</default>
+                    <label>K</label>
+                </value>
+                <value>
+                    <fullName>L</fullName>
+                    <default>false</default>
+                    <label>L</label>
+                </value>
+                <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                    <label>M</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>N</label>
+                </value>
+                <value>
+                    <fullName>O</fullName>
+                    <default>false</default>
+                    <label>O</label>
+                </value>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                    <label>P</label>
+                </value>
+                <value>
+                    <fullName>Q</fullName>
+                    <default>false</default>
+                    <label>Q</label>
+                </value>
+                <value>
+                    <fullName>R</fullName>
+                    <default>false</default>
+                    <label>R</label>
+                </value>
+                <value>
+                    <fullName>S</fullName>
+                    <default>false</default>
+                    <label>S</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>T</label>
+                </value>
+                <value>
+                    <fullName>U</fullName>
+                    <default>false</default>
+                    <label>U</label>
+                </value>
+                <value>
+                    <fullName>X</fullName>
+                    <default>false</default>
+                    <label>X</label>
+                </value>
+                <value>
+                    <fullName>Y</fullName>
+                    <default>false</default>
+                    <label>Y</label>
+                </value>
+                <value>
+                    <fullName>Z</fullName>
+                    <default>false</default>
+                    <label>Z</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Program__c</fullName>
@@ -331,17 +375,12 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <filters>
             <field>IATA_ISO_Country__c</field>
             <operation>equals</operation>
-            <value>China (People&apos;s Republic of)</value>
+            <value>Denmark</value>
         </filters>
         <filters>
             <field>RECORDTYPE</field>
             <operation>equals</operation>
             <value>Code_Range__c.IATA_Code</value>
-        </filters>
-        <filters>
-            <field>ProgramCode__c</field>
-            <operation>equals</operation>
-            <value>P</value>
         </filters>
         <label>JG view</label>
         <language>en_US</language>
@@ -459,4 +498,5 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

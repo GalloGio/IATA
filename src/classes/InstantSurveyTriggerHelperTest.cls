@@ -42,6 +42,7 @@ private class InstantSurveyTriggerHelperTest {
         insert a;
         
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'Name',
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true,
@@ -72,7 +73,7 @@ private class InstantSurveyTriggerHelperTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Instant_Survey_Feedback_requested__c = true,
                           Subject = 'c1');
         insert c1;

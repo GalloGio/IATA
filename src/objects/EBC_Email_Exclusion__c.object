@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>This table store the raw events related to email exclusions, such as hardbounce, optout, etc.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -62,7 +59,7 @@
         <label>BillingAccName</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -74,7 +71,7 @@
         <inlineHelpText>The Email Address to opt out</inlineHelpText>
         <label>Email</label>
         <required>true</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -88,7 +85,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -101,7 +98,7 @@
         <inlineHelpText>The event date</inlineHelpText>
         <label>Event Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -112,7 +109,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Manual cancellation of an exclusion should use this field</inlineHelpText>
         <label>Is Active</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -123,7 +120,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Is the relation has been created by the batch job</inlineHelpText>
         <label>Is Relation Created</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -134,7 +131,7 @@
         <inlineHelpText>The reason of this event</inlineHelpText>
         <label>Other Reason</label>
         <length>131000</length>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>5</visibleLines>
@@ -150,7 +147,7 @@
         <relationshipLabel>EBC Email Exclusions</relationshipLabel>
         <relationshipName>EBC_Email_Exclusions</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -160,30 +157,36 @@
         <externalId>false</externalId>
         <inlineHelpText>Type of exclusion</inlineHelpText>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>OPTOUT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HARDBOUNCE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LISTDETECTIVE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>OTHER</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>OPTOUT</fullName>
+                    <default>false</default>
+                    <label>OPTOUT</label>
+                </value>
+                <value>
+                    <fullName>HARDBOUNCE</fullName>
+                    <default>false</default>
+                    <label>HARDBOUNCE</label>
+                </value>
+                <value>
+                    <fullName>LISTDETECTIVE</fullName>
+                    <default>false</default>
+                    <label>LISTDETECTIVE</label>
+                </value>
+                <value>
+                    <fullName>OTHER</fullName>
+                    <default>false</default>
+                    <label>OTHER</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Unsubscribe_From__c</fullName>
@@ -196,7 +199,7 @@
         <relationshipLabel>EBC Email Exclusions</relationshipLabel>
         <relationshipName>EBC_Email_Exclusions</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -205,9 +208,73 @@
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Email__c</columns>
+        <columns>Is_Relation_Created__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Exclusion_Search_By_Billing_Account</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>BillingAccName__c</columns>
+        <columns>Unsubscribe_From__c</columns>
+        <columns>Is_Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>BillingAccName__c</field>
+            <operation>contains</operation>
+            <value>Silver</value>
+        </filters>
+        <label>Exclusion Search By Billing Account</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Exclusion_Search_By_Source_Campaign</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Campaign__c</field>
+            <operation>contains</operation>
+            <value>Silvercar. Car rental the way it should be</value>
+        </filters>
+        <label>Exclusion Search By Source Campaign</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Exclusion_with_No_Relations</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Relation_Created__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>Exclusion with No Relations</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -224,6 +291,11 @@
             <operation>notEqual</operation>
             <value>LISTDETECTIVE</value>
         </filters>
+        <filters>
+            <field>Source_Campaign__c</field>
+            <operation>notContain</operation>
+            <value>Banana Island</value>
+        </filters>
         <label>Exclusions other than List Detective</label>
         <language>en_US</language>
     </listViews>
@@ -235,6 +307,10 @@
         <columns>Type__c</columns>
         <columns>Is_Relation_Created__c</columns>
         <columns>Event_Date__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Type__c</field>
@@ -245,6 +321,24 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>IATA_Domain_Exclusions</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Type__c</columns>
+        <columns>Event_Date_Timestamp__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Email__c</field>
+            <operation>contains</operation>
+            <value>iata.org</value>
+        </filters>
+        <label>iata.org Domain Exclusions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>List_detective_Exclusions</fullName>
         <columns>NAME</columns>
         <columns>Email__c</columns>
@@ -252,6 +346,10 @@
         <columns>Type__c</columns>
         <columns>Is_Relation_Created__c</columns>
         <columns>Event_Date__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Type__c</field>
@@ -270,13 +368,39 @@
         <columns>Is_Relation_Created__c</columns>
         <columns>Unsubscribe_From__c</columns>
         <columns>Event_Date__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Type__c</field>
             <operation>equals</operation>
             <value>OPTOUT</value>
         </filters>
+        <filters>
+            <field>Source_Campaign__c</field>
+            <operation>contains</operation>
+            <value>silver</value>
+        </filters>
         <label>Opt Out Exclusions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Solo_Email_Search</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Email__c</field>
+            <operation>equals</operation>
+            <value>ptscanada@aexp.com</value>
+        </filters>
+        <label>Solo Email Search</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -284,21 +408,25 @@
         <columns>NAME</columns>
         <columns>Email__c</columns>
         <columns>Type__c</columns>
-        <columns>Event_Date_Timestamp__c</columns>
-        <columns>Source_Campaign__c</columns>
+        <columns>Is_Active__c</columns>
         <columns>Is_Relation_Created__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Unsubscribe_From__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Event_Date__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Email__c</field>
             <operation>contains</operation>
-            <value>gm-tour@hanmail.net</value>
+            <value>normanstravel@aol.com</value>
         </filters>
         <label>Use for Search by Specific Email Address</label>
         <language>en_US</language>
     </listViews>
     <nameField>
         <label>EBC Exclusion Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>EBC Email Exclusions</pluralLabel>
@@ -311,4 +439,5 @@
         <customTabListAdditionalFields>Unsubscribe_From__c</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

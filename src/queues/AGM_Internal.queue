@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>noreply@iata.org</email>
+    <name>AGM Internal</name>
+    <queueMembers>
+        <roles>
+            <role>APAgencyManagementA</role>
+            <role>APAgencyManagementStaffA</role>
+            <role>AmericasAgencyManagementManagerA</role>
+            <role>AmericasAgencyManagementStaffA</role>
+            <role>ChinaNAsiaAgencyManagementMgrA</role>
+            <role>ChinaNAsiaAgencyManagementStaffA</role>
+            <role>DistributionAgencyManagementHOA</role>
+            <role>MADHubACCManagerA</role>
+            <role>MAD_Hub_ARM_Staff</role>
+        </roles>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

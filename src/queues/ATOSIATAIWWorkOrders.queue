@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>iata_css@atosorigin.com</email>
     <name>ATOS (IATA IW Work Orders)</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAIWProjectTeam</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>ATOSA</role>
+            <role>IATAInvoiceWorksA</role>
+            <role>IATAIWCallCentreA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Work_Order__c</sobjectType>
     </queueSobject>

@@ -14,15 +14,160 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 
 	public Boolean stopProcess { get; set; }
 
+	// if orderId passed by parameter to page
+	public String pageParameterOrderId { get; set; }
+
+	//Used for google analytics
+    public String productWrapper {
+        get {
+            Map<String,Object> ecommObj = new Map<String,Object>();
+            Map<String,Object> checkoutObj = new Map<String,Object>();
+            Map<String,Object> actionObj = new Map<String,Object>();
+            Map<String,Object> prodObj = new Map<String,Object>();
+            
+            String couponCodes = '';
+            if(vfOrder.orderItems != null && !vfOrder.orderItems.isEmpty()){
+                List<String> lstProductNames = new List<String>();
+                for(OrderItem_DTO orderItemAux : vfOrder.orderItems){
+                    lstProductNames.add(orderItemAux.couponCode);
+                }
+                couponCodes = String.join( lstProductNames,' - ');
+            }
+
+            ecommObj.put('purchase', checkoutObj);
+            
+            checkoutObj.put('products', new List<Object> {prodObj});
+
+            checkoutObj.put('actionField', actionObj);
+            actionObj.put('id',vfOrder.orderId);
+            actionObj.put('affiliation','IATA Publications');
+            actionObj.put('revenue', vfOrder.orderTotalAmount );
+            actionObj.put('tax', vfOrder.taxes);
+            actionObj.put('shipping', vfOrder.totalFreightCharge);
+            actionObj.put('coupon', couponCodes);
+
+
+            List<OrderItem_DTO> lstOrderItemsAux = storeCart.getOrderItems();
+            if(lstOrderItemsAux != null && !lstOrderItemsAux.isEmpty()){
+                List<Object> lstOrderItems = new List<Object>();
+                for(OrderItem_DTO orderItemDtoAux : lstOrderItemsAux){
+                    Map<String,Object> orderItemsObjMap = new Map<String,Object>();
+
+                    orderItemsObjMap.put('id', orderItemDtoAux.productNumber);
+                    orderItemsObjMap.put('name', orderItemDtoAux.productName);
+                    orderItemsObjMap.put('category', orderItemDtoAux.productCategory);
+                    orderItemsObjMap.put('price', orderItemDtoAux.unitPrice == null ? 0.00 : orderItemDtoAux.unitPrice);
+                    orderItemsObjMap.put('brand', orderItemDtoAux.productBrand);
+                    orderItemsObjMap.put('quantity', orderItemDtoAux.quantity);
+                    orderItemsObjMap.put('dimension1', orderItemDtoAux.productEdition);
+                    orderItemsObjMap.put('dimension2', orderItemDtoAux.productLanguage);
+                    orderItemsObjMap.put('dimension3', orderItemDtoAux.productInventoryStatus);
+                    orderItemsObjMap.put('dimension4', orderItemDtoAux.productAvailabilityDate);
+                    orderItemsObjMap.put('dimension5', orderItemDtoAux.productMedia);
+                    orderItemsObjMap.put('dimension6', orderItemDtoAux.productEffectiveTo);
+
+                    lstOrderItems.add(orderItemsObjMap);
+                }
+            
+                checkoutObj.put('products', lstOrderItems);
+            }
+
+            return JSON.serialize(ecommObj);
+        }
+        set;
+    }
+
+
 	public IEC_ConfirmOrderController() 
 	{
 		discountLabels = Utility.buildMapFromString(Label.Labels_IECDiscountType, '\n', ':');
 	}
 
-	public void initorder()
+	/* Fallback method for support existing test classes */
+	public void initorder() {
+		initorder(null, null);
+	}
+
+	/*
+		Ecommerce Enhancements R1
+
+		Introduced a orderId Query String parameter where we can visualize the order passed by parameter.
+
+	*/
+	public void initorder(Order order, Order_DTO orderDto)
 	{
-		sfOrder = IECOrder_Svc.getPenddingOrder(true);
-		vfOrder = new Order_DTO(sfOrder);
+		if (order == null || orderDto == null) {
+			sfOrder = IECOrder_Svc.getPenddingOrder(true);
+			vfOrder = new Order_DTO(sfOrder);
+		} else {
+			sfOrder = order;
+			vfOrder = orderDto;
+
+			String transactionNub = '';
+			if (sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_BankTransfer) {
+				successMessage = Label.Order_wire_transfer_confirmation_message;
+			} else if (sfOrder.Payment_Type__c == IECConstants.ORDER_STATUS_CHECK) {
+				successMessage = Label.Order_Check_confirmation_message;
+			} else if (sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_ICH) {
+				successMessage = Label.Order_ICH_confirmation_message;
+			} else if (sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard) {
+				//If the transaction was successfully created
+				if(sfOrder.Zuora_GatewayResponse__c == null && sfOrder.Payment_Transaction_Number__c != null) {
+					successMessage = Label.Order_Credit_Card_confirmation_message;
+					transactionNub = Label.IEC_CREDIT_CARD_TRANSACTION_NUMBER + ' ' + sfOrder.Payment_Transaction_Number__c + '.<br />';
+				} else {
+					addErrorMessage(Label.Order_transaction_failed_message, Label.IEC_ZUORA_GATEWAY_RESPONSE + ' ' + sfOrder.Zuora_GatewayResponse__c);
+					isOrderConfirmed = true;
+					return;
+				}
+				successMessage = Label.Order_Credit_Card_confirmation_message;
+			}
+
+			successMessage = String.format(successMessage, new String[] { sfOrder.OrderNumber,transactionNub });
+
+			String subscriptionInfos = '';
+			Map<Id, List<OrderItem>> orderId_items = new OrderItem_Sel().getOrderItems(new Set<Id>{sfOrder.Id});
+			List<OrderItem> orderItems = orderId_items.get(sfOrder.Id);
+			for(OrderItem oi : orderItems)
+			{
+				if(oi.Zuora_Subscription_Number__c != null && oi.IEC_Subscribe_to_Zuora__c) subscriptionInfos += '<br />Subscription Number : ' + oi.Zuora_Subscription_Number__c;
+			}
+
+			if (subscriptionInfos != '') {
+				successMessage += '<br />' + subscriptionInfos;
+			}
+
+
+			isOrderConfirmed = true;
+
+			checkOrderPayments(successMessage, sfOrder.Id);
+
+			/*
+			addConfirmMessage(successMessage);
+
+			isOrderConfirmed = true;
+
+			checkOrderPayments(sfOrder.Id);
+			*/
+		}
+	}
+
+	private String getOrderIdParameter() {
+		String paramOrderId = ApexPages.currentPage().getParameters().get('orderId');
+
+		if (paramOrderId != null) {
+			if (paramOrderId.trim().length() == 0) {
+				paramOrderId = null;
+			}
+		}
+
+		return paramOrderId;
+	}
+
+	private Order getOrderById(Id orderId) {
+		Order order = Order_Sel.getOrderForVF(orderId);
+
+		return order;
 	}
 
 	/**************************************************************************************************************
@@ -31,6 +176,9 @@ public class IEC_ConfirmOrderController extends IEC_PageController
      **************************************************************************************************************/
 	public PageReference onLoadAction()
 	{
+		Order order;
+		Order_DTO orderDto;
+
 		if(loggedCustomer == null)
 		{
 			//-- redfirect to login 
@@ -39,13 +187,22 @@ public class IEC_ConfirmOrderController extends IEC_PageController
         	return pgRef;
 		}
 
-		if(cartContent.isEmpty())
-	    {
-	        addErrorMessage(Label.Warning_Empty_Cart);
-	        return null;
-	    }
+		pageParameterOrderId = getOrderIdParameter();
 
-		initorder();
+		if (pageParameterOrderId != null) {
+			order = getOrderById(pageParameterOrderId);
+			orderDto = new Order_DTO(order);
+		}
+
+		if (orderDto == null) {
+			if(cartContent.isEmpty())
+		    {
+		        addErrorMessage(Label.Warning_Empty_Cart);
+		        return null;
+		    }
+		}
+
+		initorder(order, orderDto);
 
 		orderPaymentType = sfOrder.Payment_Type__c;
 		orderCreditCardId = sfOrder.Zuora_Credit_Card_Id__c;
@@ -71,15 +228,20 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 			return null;
 		}
 
-		//*** check if has a payment method -> check again in method "submitOrder"
-		if (String.isBlank(sfOrder.Payment_Type__c) || (sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && card == null))
-		{
-			stopProcess = true;
-			addErrorMessage(Label.IEC_Error_PleaseSelectPaymentMethod);
-			return null;
+		if (isOrderConfirmed == false) {
+			//*** check if has a payment method -> check again in method "submitOrder"
+			if (String.isBlank(sfOrder.Payment_Type__c) || (sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && card == null))
+			{
+				stopProcess = true;
+				addErrorMessage(Label.IEC_Error_PleaseSelectPaymentMethod);
+				return null;
+			}
 		}
 
-		isOrderConfirmed = false;
+		if (order == null || orderDto == null) {
+			isOrderConfirmed = false;
+		}
+
 		return null;		
 	}
 
@@ -139,7 +301,7 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				else if (card != null)   //*** generate test data
 					subscribeSub = new Map<Id,Zuora.zApi.SubscribeResult>{vfOrder.orderId => null};
 				if (subscribeSub == null || subscribeSub.size() == 0) {
-					addErrorMessage(Label.Order_transaction_failed_message);
+					addErrorMessage(Label.Order_transaction_failed_message, 'Could not subscribe.');
 					return null;
 				}
 				
@@ -157,11 +319,11 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 						orderItemsResponse = new Map<Id,String>{vfOrder.orderId => (card.name != 'TEST FAILED' ? 'Success' : 'Failed')};
 					for(Id ordItem : orderItemsResponse.keySet())
 						if (orderItemsResponse.get(ordItem) != 'Success') {
-							addErrorMessage(Label.Order_transaction_failed_message);
+							addErrorMessage(Label.Order_transaction_failed_message, 'Insuccess on OrderItem: ' + ordItem + ' [' + orderItemsResponse.get(ordItem) + ']');
 							return null;
 						}
 				}catch(Exception ex){
-					addErrorMessage(Label.Order_transaction_failed_message);
+					addErrorMessage(Label.Order_transaction_failed_message, ex);
 					return null;
 				}
 				
@@ -181,6 +343,16 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				
 				if(orderItemsRes != null)
 				{
+					// Ecommerce Enhancements R2, flag the order as failed in case of error.
+					Order updateOrder = new Order(Id = vfOrder.orderId, Status = 'Transaction Failed');
+
+					try {
+						update updateOrder;
+					} catch (Exception e) {
+						// TODO: remove the following addErrorMessage
+						addErrorMessage('Error updating the order status: ' + e.getMessage());
+					}
+					
 					addErrorMessage(Label.Order_transaction_failed_message);
 					addErrorMessage(orderItemsRes);
 					return null;
@@ -201,9 +373,9 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				//If the transaction was successfully created
 				if(updatedOrder.Zuora_GatewayResponse__c == null && updatedOrder.Payment_Transaction_Number__c != null){
 					successMessage = Label.Order_Credit_Card_confirmation_message;
-					transactionNub = 'Your Transaction number is : ' + updatedOrder.Payment_Transaction_Number__c + '<br />';
+					transactionNub = Label.IEC_CREDIT_CARD_TRANSACTION_NUMBER + ' ' + updatedOrder.Payment_Transaction_Number__c + '.<br />';
 				} else {
-					addErrorMessage(Label.Order_transaction_failed_message);
+					addErrorMessage(Label.Order_transaction_failed_message, Label.IEC_ZUORA_GATEWAY_RESPONSE + ' ' + updatedOrder.Zuora_GatewayResponse__c);
 					return null;
 				}
 				successMessage = Label.Order_Credit_Card_confirmation_message;
@@ -255,32 +427,54 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 			if(sfOrder.Payment_Type__c != IECConstants.PaymentThresholdType_CreditCard)
 				updatedOrder.Payment_Type__c = sfOrder.Payment_Type__c;
 			
-			//Set the sfOrder status
-			updatedOrder.Status = Order_Svc.getOrderStatusByPaymentType(sfOrder.Payment_Type__c);
+			/** 
+					Ecommerce Enhancements R1.
 
-			//Set the is paid flag base on the payment type
-			updatedOrder.Is_Paid__c = Order_Svc.isOrderPaidByPaymentType(sfOrder.Payment_Type__c);
-			
-			updatedOrder.Type = 'Order';
-			updatedOrder.EffectiveDate = Date.today();
+					If Credit Card payment type then transition the Order to status Pending Payment.
+					Upon on sucessful payment processing the Zuora__Payment__c object trigger will
+                    update the order status to Paid and run similar code as bellow.
 
 
+			*/
 
+			if (updatedOrder.Payment_Type__c != IECConstants.PaymentThresholdType_CreditCard) {
+				//Set the sfOrder status
+				updatedOrder.Status = Order_Svc.getOrderStatusByPaymentType(sfOrder.Payment_Type__c);
 
+				//Set the is paid flag base on the payment type
+				updatedOrder.Is_Paid__c = Order_Svc.isOrderPaidByPaymentType(sfOrder.Payment_Type__c);
+				
+				updatedOrder.Type = 'Order';
+				updatedOrder.EffectiveDate = Date.today();
 
+				update updatedOrder;
 
-			update updatedOrder;
+				//-- If Order come from Campaign Update campaign Member Status 
+				updateCampaignMembers(updatedOrder.Id);
 
-			//-- If Order come from Campaign Update campaign Member Status 
-			updateCampaignMembers(updatedOrder.Id);
+				Order_Svc.saveCouponUsed(updatedOrder.Id, updatedOrder.ShipToContactId);
 
-			Order_Svc.saveCouponUsed(updatedOrder.Id, updatedOrder.ShipToContactId);
+				//addConfirmMessage(successMessage);
 
-			addConfirmMessage(successMessage);
-			isOrderConfirmed=true;
+				isOrderConfirmed=true;
 
-			//*** send information to Pardot
-			sendFormHandlerToPardot(sfOrder.Id);
+				//*** send information to Pardot
+				sendFormHandlerToPardot(sfOrder.Id);
+			}
+
+			if (sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard) {
+				updatedOrder.Status = 'Pending Payment';
+				
+				updatedOrder.Type = 'Order';
+				updatedOrder.EffectiveDate = Date.today();
+				updatedOrder.Is_Paid__c = false;
+
+				update updatedOrder;
+
+				isOrderConfirmed=true;
+
+				checkOrderPayments(successMessage, sfOrder.Id);
+			}
 		}
 		catch(Exception ex){
 			//log Subscription exception
@@ -293,10 +487,64 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 			return null;
 		}
 		
-		//Clear the customer cookies
-		IECOrder_Svc.deleteAllCookies();
+		if (newShoppingCart == false) {
+			//Clear the customer cookies
+			IECOrder_Svc.deleteAllCookies();
+		} else {
+			storeCart.submitEvent();
+		}
+
+		//susana alves INC332088
+		Order orderToDelete = storeCart.getCartOrderContent();
+		system.debug('submitOrder -> orderToDelete :: ' + orderToDelete);
+		Boolean canDeleteOrder = !([SELECT count() FROM OrderItem WHERE OrderId = :orderToDelete.Id] > 0);
+		system.debug('submitOrder -> canDeleteOrder? : ' + canDeleteOrder);
 		
+		if(canDeleteOrder){
+			// the order don't have related products, so can be deleted
+			system.debug('submitOrder -> empty order on the cart to be deleted : ' + storeCart.getCartOrderContent());
+			IECOrder_Svc.deleteOrder(storeCart.getCartOrderContent());
+		}
 		return null;
+	} 
+
+	/*
+
+		checkOrderPayments - check if last payment associated with Order is with success / failure and set messaging accordingly.
+
+
+	*/
+	private void checkOrderPayments(String messageHistory, Id orderId) {
+		Order order = [SELECT Id, Status, Payment_Type__c, Payment_Gateway_Response__c FROM Order WHERE Id = :orderId LIMIT 1];
+		
+		if (order.Payment_Type__c == 'Credit Card') {
+			if (order.Status == 'Pending Payment') {
+				addWarningMessage(messageHistory + '<br />' + Label.IEC_CREDIT_CARD_PENDING_PAYMENT);
+			} else if (order.Status == 'Payment Failure') {
+				addErrorMessage(messageHistory + '<br />' + Label.IEC_CREDIT_CARD_PAYMENT_ERROR + ' ' + order.Payment_Gateway_Response__c + '.');				
+			} else {
+				List<Zuora__Payment__c> orderPaymentList = [SELECT Id, Zuora__Status__c, Zuora__PaymentMethod__c, Zuora__GatewayResponse__c FROM Zuora__Payment__c WHERE Order__c = :orderId ORDER BY LastModifiedDate DESC];
+				Zuora__Payment__c lastPayment;
+
+				if (orderPaymentList.size() > 0) {
+					lastPayment = orderPaymentList.get(0);
+				}
+
+				if (lastPayment != null) {
+					if (lastPayment.Zuora__PaymentMethod__c != null && lastPayment.Zuora__PaymentMethod__c.startsWith(IECConstants.ZUORA_PAYMENT_METHOD_PREFIX_CREDIT_CARD)) {
+						if (lastPayment.Zuora__Status__c == 'Error') {
+							addErrorMessage(messageHistory + '<br />' + Label.IEC_CREDIT_CARD_PAYMENT_ERROR + ' ' + lastPayment.Zuora__GatewayResponse__c + '.');
+						} else if (lastPayment.Zuora__Status__c == 'Processed') {
+							addConfirmMessage(messageHistory + '<br />' + Label.IEC_CREDIT_CARD_PAYMENT_SUCCESSFUL);
+						}
+					}					
+				} else {
+					addWarningMessage(messageHistory + '<br />' + Label.IEC_CREDIT_CARD_PENDING_PAYMENT);
+				}
+			}
+		} else {
+			addConfirmMessage(messageHistory);
+		}
 	}
 
 	/************************************************************************************************************************
@@ -327,7 +575,7 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 	    Created by CGI, Thai 2017-01-25
 	        Send information to Pardot
 	****************************************************************************************************/
-	@future (callout=true) static void sendFormHandlerToPardot(Id idOrder)
+	@future (callout=true) public static void sendFormHandlerToPardot(Id idOrder)
 	{
 		String URL = Utility.getTextSetting('Pardot Campaign');
 		if (URL != '')
@@ -350,6 +598,8 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				for (Integer i1 = 0; i1 < oOrder.OrderItems.size(); i1++)
 					URL += '&product' + (i1 + 1) + '=' + EncodingUtil.urlEncode(oOrder.OrderItems[i1].SAP_Product_Number__c, 'UTF-8')
 					     + '&quantity' + (i1 + 1) + '=' + EncodingUtil.urlEncode(String.valueOf(oOrder.OrderItems[i1].Quantity), 'UTF-8');
+
+				System.debug('URL: ' + URL);
 
 				//*** send to Pardot
 				HttpRequest httpReq = new HttpRequest();

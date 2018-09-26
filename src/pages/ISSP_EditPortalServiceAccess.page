@@ -1,6 +1,10 @@
 <apex:page controller="ISSP_EditPortalServiceAccess" showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
     <html>
  <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
+
+ <link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.css')}" type="text/css" />
+ <script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.js')}"></script>
+
  
  <style>
   .iatainputbox{    
@@ -27,6 +31,10 @@
  </style>
  
  <script>
+    var portalRoleEmpty = false;
+    var isEasyPayService = false;
+    var isSelectedUsers = false;
+
     function askReason(myReasonId) {
         var thisReason = prompt("Do you want to provide a reason?");
         if (thisReason != null){
@@ -36,6 +44,37 @@
         else{
             return false;
         }
+    }
+
+    function iepContinue() {
+      isEasyPayService = true;
+      
+      var appPortalRole = '';
+
+      if($("input[type='radio'].radioBtnClass").is(':checked')) {
+        appPortalRole = $("input[type='radio'].radioBtnClass:checked").val();
+      }
+    
+      if (appPortalRole == "") {
+        portalRoleEmpty = true;
+        document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';
+      } else {
+        portalRoleEmpty = false;
+        document.querySelector("[Id$='portalRoleErrorMessage']").style.display = 'none';      
+        otherContinue();
+        $('[id$="portalServiceRole"]').val(appPortalRole);
+      }
+    }
+
+    function otherContinue() {
+      var users = $('[id$="ContactList"]').val();
+      if (users == null || users == '') {
+        isSelectedUsers = false;
+        document.querySelector("[Id$='portalNoUsersErrorMessage']").style.display = '';
+      } else {
+        isSelectedUsers = true;
+        document.querySelector("[Id$='portalNoUsersErrorMessage']").style.display = 'none';        
+      }
     }
     
     function showConfirmModal(){
@@ -67,16 +106,31 @@
         $('#theReasonDeny').modal('hide');
     }
     
-    function showUserListModal(){
-        $('#userListModal').modal('show');
+    function showUserListModal(){      
+      if(!portalRoleEmpty && isSelectedUsers) {
+        if(isEasyPayService) {
+          $('#iataIepRequestAccessModal').modal('show');
+        } else {
+          $('#userListModal').modal('show');
+        }
+      }
     }
     
     function closeUserListModal(){
         $('#userListModal').modal('hide');
     }
+
+    function closeIataIepRequestAccessModal(){
+        $('#iataIepRequestAccessModal').modal('hide');
+    }
+
+    function onComplete() {  
+        startLoading();
+        CreateNewPortalAccess();
+    }
     
 </script>
-       
+
  <body>
   <div class="container">
       <c:ISSP_CustomNavigation communityName="{!communityName}"/>
@@ -84,10 +138,23 @@
               <div class="panel-heading head_panel_green">
                   <h3 class="panel-title">{!$Label.ISSP_Add_User_to_this_service} - {!Operation}</h3>
               </div>
+
+              <div class="alert alert-danger" id="portalRoleErrorMessage" style ="display: none">
+                <strong>{!$Label.ANG_ISSP_PortalRoleErrorMessage}</strong>
+              </div>
+
+              <div class="alert alert-danger" id="portalNoUsersErrorMessage" style ="display: none">
+                <strong>{!$Label.ISSP_ANG_MustAddContactsToService}</strong>
+              </div>
+
+
+
               <apex:define name="body"> 
                   {!$Label.ISSP_Help_Edit_services_page}
                 <div class="panel-body" id="body-enquiries">
                     <apex:form id="myForm" rendered="{!isAddUser == false}">
+
+                    <apex:inputHidden value="{!portalServiceRole}" id="portalServiceRole"/>
         
                     <apex:pageBlock id="pgBlock" mode="edit" title="">
                         <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
@@ -105,7 +172,12 @@
                             <div class="col-lg-2"><apex:commandButton onClick="showReasonModalDeny();" rerender="pgBlock" styleclass="btn btn_iata_primary btn-block" rendered="{!OR(AND(Operation == 'IFAP', AccessStatus == 'Access Requested'), AND(Operation != 'IFAP', OR(AccessStatus == 'Access Granted', AccessStatus == 'Access Requested')))}" value="{!$Label.ISSP_Deny_Access}" id="DenyAccess"/></div>
                             <div class="col-lg-4"><apex:commandButton action="{!AssignIFAPContact}" styleclass="btn btn_iata_primary btn-block" rendered="{!(Operation == 'IFAP')}" value="{!$Label.ISSP_Assign_IFAP}" id="assignIFAP"/></div>
                         </apex:outputPanel>
-                            </div>
+
+                        <!--This div is for EASY PAY Denny Access button Logic-->
+                        <div class="col-lg-2">
+                          <apex:commandButton onclick="showReasonModalDeny();" reRender="pgBlock" styleclass="btn btn_iata_primary btn-block" rendered="{!CONTAINS(operation,'EasyPay') && (AccessStatus == 'Access Granted')}" value="{!$Label.ISSP_Deny_Access}"/></div>
+                         </div>
+
                         <table class="table table-condensed" style="margin-top:20px;">
                             <tr >
                                 <th class="col-md-3">{!$ObjectType.Contact.fields.Name.Label}</th>
@@ -114,7 +186,7 @@
                             
                             <tr>
                                 <th>{!$ObjectType.Portal_Applications__c.fields.Name.Label}</th>
-                                <td><apex:outputField id="outps" value="{!PSA.PortalServiceTranslatedName__c }"/>11</td>
+                                <td><apex:outputField id="outps" value="{!PSA.PortalServiceTranslatedName__c }"/></td>
                             </tr>
                             
                             <tr>
@@ -122,6 +194,13 @@
                                 <td>
                                     <apex:outputField id="outStatus" value="{!PSA.Right__c}"  styleClass="form-control" />
                                 </td>
+                            </tr>
+
+                            <tr style="{!IF(PSA.ANG_Portal_Service_Role__c == '','display:none','')}">                                                            
+                                <th>{!$ObjectType.Portal_Application_Right__c.fields.ANG_Portal_Service_Role__c.Label}</th>                                
+                                  <td>
+                                    <apex:outputField id="outPortalRole" value="{!PSA.ANG_Portal_Service_Role__c}" styleClass="form-control"/>
+                                  </td>                                                             
                             </tr>
                             
                             <tr>
@@ -203,6 +282,12 @@
                   </apex:form>
                   
                   <apex:form rendered="{!isAddUser == true}">
+
+                      <apex:inputHidden value="{!portalServiceRole}" id="portalServiceRole"/>
+
+                      <apex:actionFunction name="confirmContacts" action="{!confirmContacts}" reRender=""/>
+                      <apex:actionFunction name="CreateNewPortalAccess" action="{!CreateNewPortalAccess}" reRender=""/>
+
                       <apex:pageBlock id="addUserBlock" >
                            <table class="table table-condensed" style="margin-top:20px;">
                        
@@ -211,7 +296,7 @@
                                 <label for="ContactList" styleClass="iatainputbox" >Full Name</label>
                                 </th>
                                 <td class="data2Col  first ">
-                                <apex:selectList styleClass="iatainputbox" id="ContactList" value="{!SelectedContacts}" required="true" multiselect="true" size="5">                                    
+                                <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="ContactList" value="{!SelectedContacts}" required="true" multiselect="true" size="5" title="{!$Label.ANG_ISSP_SelectContacts}">
                                     <apex:selectOptions value="{!if(Contacts.size == 1, Contacts[0], Contacts[1])}" />
                                     <apex:selectOptions value="{!if(Contacts.size == 3, Contacts[2], "")}" rendered="{!if(Contacts.size == 3, true, false)}"/>
                                     <apex:selectOptions value="{!if(Contacts.size == 4, Contacts[3], "")}" rendered="{!if(Contacts.size == 4, true, false)}"/>
@@ -238,43 +323,61 @@
                                     "Treasury Dashboard - Premium", $Label.ISSP_TD_Premium,
                                     "Baggage Proration", $Label.ISSP_BaggageProration,
                                     "TestApp", $Label.ISSP_TestApp,
-
-                                    "click here"
+                                    "IATA EasyPay (EDENRED)", $Label.ANG_ISSP_IATA_EasyPay,
+                                    "IATA EasyPay (MSTS)", $Label.ANG_ISSP_IATA_EasyPay,
+                                    "IATA EasyPay (WEX)", $Label.ANG_ISSP_IATA_EasyPay,
+                                    "IATA Accreditation ", $Label.ISSP_Become_Accredited_Agent,
+                                    "BSP / CASS Change of Bank details", $Label.ISSP_Change_Bank,
+                                    "RHC Information", $Label.ANG_ISSP_RHC_Information,
+                                    servname
                                     )}"/>
                                 </td>
                             </tr>
-                            <!-- 
-                            <tr>
-                                <th>{!$ObjectType.Portal_Application_Right__c.fields.Right__c.Label}</th>
-                                <td>
-                                    <apex:inputField id="outStatus" value="{!PSA.Right__c}"  styleClass="form-control" />
-                                </td>
-                            </tr> -->
 
-                             <tr>
-                                <th>{!$ObjectType.Portal_Application_Right__c.fields.Right__c.Label}</th>
+                            <apex:outputPanel rendered="{!isEasyPayService}">
+                              <tr>
+                                <th>{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE}</th>
                                 <td>
-                                   <apex:selectList styleclass="form-control" value="{!SelectedRightOption}" required="true" multiselect="false" size="1"  >
-                                        <apex:selectOptions value="{!RightsOptions}" />
-                                   </apex:selectList>
+                                  <apex:repeat value="{!availablePortalServiceRoles}" var="role" id="portalRoles">
+
+                                    <div class="radio" style="border-bottom: 1px solid rgb(229, 229, 229); padding-top: 5px;">
+                                      <label style="min-width: 35%; font-weight: bold;"><input type="radio" class="radioBtnClass" name="role" value="{!role.value}">{!role.value}</input></label>
+                                      <apex:outputText value="{!role.helpText}" escape="false"></apex:outputText>
+                                    </div>                          
+                                  </apex:repeat>
                                 </td>
-                            </tr>
-                           <!--  
-                            <tr>
-                                <th>{!$ObjectType.Portal_Application_Right__c.fields.Access_Status_Reason__c.Label}</th>
-                                <td>
-                                    <apex:inputField id="inStatusReason" value="{!PSA.Access_Status_Reason__c}"  styleClass="form-control" />
-                                   
-                                </td>
-                            </tr>   -->                 
+                              </tr>
+                            </apex:outputPanel>
+
                         </table>
                           <div class="row">
                               <div class="col-md-4 pull-right">
                                   
-                              
+                            <!--onComplete="showUserListModal();"-->  
                           <!-- <apex:commandButton action="{!CreateNewPortalAccess}" styleclass="btn btn_iata_success"  value="{!$Label.site.save}"  id="btn-Save"/>&nbsp; -->
-                          <apex:commandButton action="{!confirmContacts}" styleclass="btn btn_iata_success"  value="{!$Label.site.save}"  id="btn-Save" onComplete="showUserListModal();" rerender="userListPanel" />&nbsp;
-                          <apex:commandButton action="{!RedirectToService}" styleclass="btn btn_iata_cancel"  value="{!$Label.site.cancel}" id="btn-Cancel" immediate="true"/>
+                          <apex:commandButton action="{!confirmContacts}"
+                            onclick="iepContinue();"                          
+                            rendered="{! isEasyPayService}"
+                            styleclass="btn btn_iata_success"
+                            value="{!$Label.ISSP_PCI_Stay}"                            
+                            id="btn-Continue"
+                            onComplete="showUserListModal();"              
+                            rerender="userListPanel" />&nbsp;
+
+                          <apex:commandButton action="{!confirmContacts}"
+                            onclick="otherContinue();"
+                            rendered="{! NOT isEasyPayService}"
+                            styleclass="btn btn_iata_success"
+                            value="{!$Label.ISSP_Grant_Access}"
+                            id="btn-Save"
+                            onComplete="showUserListModal();"
+                            rerender="userListPanel" />&nbsp;
+
+                          <apex:commandButton action="{!RedirectToService}"
+                            styleclass="btn btn_iata_cancel"
+                            value="{!$Label.site.cancel}"
+                            id="btn-Cancel"
+                            immediate="true"/>
                        
                               </div>
    </div><!--end row -->                       
@@ -302,8 +405,38 @@
                                 </apex:repeat>
                               </div>
                               <div class="modal-footer">
-                                <apex:commandButton action="{!CreateNewPortalAccess}" onclick="closeUserListModal();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
-                                <apex:commandButton onclick="closeUserListModal();" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
+                                <apex:commandButton action="{!CreateNewPortalAccess}" onclick="closeUserListModal();" value="{!$Label.ISSP_Confirm}"
+                                   status="loadStatusSpinner"
+                                   rerender="pgBlock, loadStatusSpinner" StyleClass="btn btn_iata_success" />
+                                <apex:commandButton onclick="closeUserListModal();" value="{!$Label.ISSP_Cancel}" 
+                                   status="loadStatusSpinner"
+                                   rerender="pgBlock, loadStatusSpinner" StyleClass="btn btn-primary"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel id="iataIepRequestAccess" >
+                        <div class="modal fade" id="iataIepRequestAccessModal">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <br/>
+                                <b>{!$Label.ANG_ISSP_Request_Access_IATA_EasyPay}</b>
+                                <br/>
+                              </div>
+                              <div class="modal-body">
+                                <apex:outputText escape="false" value="{!$Label.ANG_ISSP_IEP_Portal_Request_Access_Msg}"/>
+                                <br/>
+                              </div>
+                              <div class="modal-footer">
+                                <apex:commandButton 
+                                  action="{!activateUsers}"
+                                  onclick="closeIataIepRequestAccessModal();" value="{!$Label.LAQ_Close}" 
+                                  oncomplete="onComplete();"
+                                  status="loadStatusSpinner"
+                                  rerender="pgBlock, loadStatusSpinner" StyleClass="btn btn-primary"/>
                               </div>
                             </div>
                           </div>
@@ -316,8 +449,51 @@
                </div>
            </apex:define>
           </div><!-- end  div class="panel panel-primary"-->
-      <c:ISSP_CustomFooter communityName="{!communityName}" />
+
+      <c:ISSP_CustomFooter communityName="{!communityName}" />      
+
+      <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+      <div class="loadingBox overlay"> </div>
+
+      <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
+
+      <style>
+          .overlay {
+              display: none;
+              height: 100%;
+              left: 0;
+              position: fixed;
+              top: 0;
+              opacity: 0.3;
+              -moz-opacity: 0.3;
+              width: 100%;
+              -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+              filter: alpha(opacity=30);
+              background: #000;
+              -khtml-opacity: 0.3;
+              z-index: 1000;
+          }
+          .loader {
+              background: url('/img/loading32.gif') scroll no-repeat 0 0;
+              width: 32px;
+              height: 32px;
+              position: relative;
+              left: 50%;
+          }
+      </style>
+
+      <script type="text/javascript">
+          function startLoading(){
+              $('#load_scrl').css('top', $(document).scrollTop() - 200);
+              $('.loadingBox').show();
+          }
+          function endLoading(){
+               $('.loadingBox').hide();
+          }
+      </script>
+
   </div><!-- end container-->  
+  
         </body>
     </html>
 </apex:page>

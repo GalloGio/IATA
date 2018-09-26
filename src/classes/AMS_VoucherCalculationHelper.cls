@@ -63,7 +63,7 @@ public without sharing class AMS_VoucherCalculationHelper {
 
 		for(AMS_Voucher_Information__c vInfo: vouchersInfo){
 
-			totalSum += vInfo.AmountLastYearSales__c * vInfo.Exchange_Rate__c;
+			totalSum += vInfo.AmountLastYearSales__c / vInfo.Exchange_Rate__c;
 
 		}
 

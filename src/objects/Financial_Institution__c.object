@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>SARA</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -123,6 +120,32 @@
         <type>AutoNumber</type>
     </fields>
     <fields>
+        <fullName>First_Call_Letter_required__c</fullName>
+        <description>States if financial securities under this Financial institution require First Call Letter</description>
+        <externalId>false</externalId>
+        <label>First Call Letter required</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Institution_Status_Image__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(Institution_Status__c,&quot;&quot;), &quot;&quot;, IF(ISPICKVAL(Institution_Status__c , &quot;Inactive&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNr&quot;,&quot;Inactive&quot;,30,30), 
@@ -139,51 +162,61 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <fullName>Institution_Status__c</fullName>
         <externalId>false</externalId>
         <label>Institution Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Institution_Type__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>
         <label>Institution Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Bank</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Insurance Company</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mutual Guarantee Society</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Bank</fullName>
+                    <default>true</default>
+                    <label>Bank</label>
+                </value>
+                <value>
+                    <fullName>Insurance Company</fullName>
+                    <default>false</default>
+                    <label>Insurance Company</label>
+                </value>
+                <value>
+                    <fullName>IATA Agent</fullName>
+                    <default>false</default>
+                    <label>IATA Agent</label>
+                </value>
+                <value>
+                    <fullName>Mutual Guarantee Society</fullName>
+                    <default>false</default>
+                    <label>Mutual Guarantee Society</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Phone__c</fullName>
@@ -199,33 +232,40 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <label>Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Africa &amp; Middle East</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia &amp; Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China &amp; North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>Asia &amp; Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia &amp; Pacific</label>
+                </value>
+                <value>
+                    <fullName>China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>China &amp; North Asia</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Related_IATA_agent_account__c</fullName>
@@ -441,4 +481,5 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <errorConditionFormula>CONTAINS(Name , &apos;&quot;&apos;)</errorConditionFormula>
         <errorMessage>Please remove the double quotes &quot; from the name</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -28,7 +28,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         system.debug('prepere starting....');
         String body = vfIECEBC_Template.getTemplateHtml(c.EBC_Design__c, true, gaCode, gaName);
         IECEBC_ETTemplateCreate.updateEmailTemplate(templateExternalId, c.Subject__c, body, 'HTML');
-        String noreply = 'noreply@ebroadcast.iata.org'; //IEC_Settings__c.getInstance().EBC_Send_From_Email__c;  //'ebroadcast@iata.org';'noreply@ebroadcast.iata.org';
+        String noreply = IEC_Settings__c.getInstance().EBC_Send_From_Email__c;  //'ebroadcast@iata.org';'noreply@ebroadcast.iata.org';
         String senderExternalId = IECEBC_ETSenderProfileCreate.createSenderProfile(senderProfileCustomerKey, senderProfileCustomerKey, c.From_Name__c, noreply);
         String sendClassificationId = IECEBC_ETSendClassificationCreate.createSendClassification(senderProfileCustomerKey, senderProfileCustomerKey, senderExternalId);
         

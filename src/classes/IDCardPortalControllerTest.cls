@@ -101,6 +101,8 @@ public class IDCardPortalControllerTest {
     public static TestMethod void TestNext() {
         testData = new IDCardTestData();
 
+        Test.startTest();
+        
         List<ID_Card_Application__c> idCardAppToInsert = new List<ID_Card_Application__c>();
         ID_Card_Application__c idCardApplicationClone = testData.IDCards_IDCardApplications[1].clone();
         idCardAppToInsert.add(testData.IDCards_IDCardApplications[1]);
@@ -120,7 +122,7 @@ public class IDCardPortalControllerTest {
         idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[1], relatedContact[0]));
         idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(idCardApplicationClone, relatedContact[1]));
         idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[3], relatedContact[2]));
-        idCardToInsert[2].Card_Status__c = IDCardUtil.CARDSTATUS_PRINTED_DELIVERED;
+        idCardToInsert[2].Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
         insert idCardToInsert;
 
         // Test page without cookies
@@ -157,5 +159,7 @@ public class IDCardPortalControllerTest {
             iDCardPortalController_NoCookies.admPayments();
         } catch (Exception e) {
         }
+
+        Test.stopTest();
     }
 }

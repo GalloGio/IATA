@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Error saved from each batch in MassCaseCreationBatch</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -90,6 +87,23 @@
         <unique>false</unique>
     </fields>
     <label>BatchError</label>
+    <listViews>
+        <fullName>one_batch</fullName>
+        <columns>NAME</columns>
+        <columns>AccountInfo__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>BatchID__c</columns>
+        <columns>ErrorMsg__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>BatchID__c</field>
+            <operation>equals</operation>
+            <value>B-0000008917</value>
+        </filters>
+        <label>one batch</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>BatchError Name</label>
         <type>Text</type>
@@ -97,4 +111,5 @@
     <pluralLabel>BatchErrors</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

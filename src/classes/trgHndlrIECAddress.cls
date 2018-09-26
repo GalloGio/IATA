@@ -54,6 +54,12 @@ public with sharing class trgHndlrIECAddress {
      */
     public static void OnAfterUpdate(List<IECAddress__c> newRecords, Map<Id, IECAddress__c> newRecordsMap)
     {
+        List<Location__c> locs = [SELECT Id, Type__c from Location__c
+        where Address__c in:newRecords AND Type__c = 'Sold To'
+        AND Account__r.ACLI_SAP_Id__c <> null AND Account__r.ACLI_Status__c = 'Active company'];
+
+        if (locs.size() > 0) newRecords[0].addError('You can not update IEC Addresses associated with Sold-To locations for ACLI accounts');
+
 /* Commented by Samy Saied for using the new Location model instead of only iecaddress
         List<String> lstAddressIds = new List<String>();
         List<Contact> ContactstoUpdate = new List<Contact>();

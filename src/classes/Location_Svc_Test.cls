@@ -26,12 +26,13 @@ private class Location_Svc_Test {
 		
 		Account accountHQ1 = new Account(Name = 'Test HQ 1', Sector__c = 'Test', Category__c = 'Test', VAT_Number__c = '123'
 		                               , BillingStreet ='Billing Street 1', BillingCity= 'Billing City 1', BillingPostalCode ='H0H0H0'
-		                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id);
+		                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id
+		                               , IATA_ISO_Shipping_Country__c = countryCanada.Id);
 		Account accountHQ2 = new Account(Name = 'Test HQ 2', Sector__c = 'Test', Category__c = 'Test', VAT_Number__c = '123'
 		                               , BillingStreet ='Billing Street 1', BillingCity= 'Billing City 1', BillingPostalCode ='H0H0H0'
 		                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id
 		                               , ShippingStreet ='Shipping Street 1', ShippingCity = 'Shipping City 1', ShippingPostalCode ='H0H0H0'
-		                               , IATA_ISO_Shipping_State__c = stateQuebec.Id);
+		                               , IATA_ISO_Shipping_State__c = stateQuebec.Id, IATA_ISO_Shipping_Country__c = countryCanada.Id);
 		Account accountHQ3 = new Account(Name = 'Test HQ 3', Sector__c = 'Test', Category__c = 'Test', VAT_Number__c = '123'
 		                               , BillingStreet ='Billing Street 3', BillingCity= 'Billing City 3', BillingPostalCode ='H0H0H0'
 		                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id);
@@ -43,7 +44,7 @@ private class Location_Svc_Test {
 		                                   , BillingStreet ='Billing Street 2', BillingCity= 'Billing City 2', BillingPostalCode ='H0H0H0'
 		                                   , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateOntario.Id
 		                                   , ShippingStreet ='Shipping Street 2', ShippingCity = 'Shipping City 2', ShippingPostalCode ='H0H0H0'
-		                                   , IATA_ISO_Shipping_State__c = stateOntario.Id);
+		                                   , IATA_ISO_Shipping_State__c = stateOntario.Id, IATA_ISO_Shipping_Country__c = countryCanada.Id);
 		insert accountBranch1;
 	
 		List<Contact> lstContact = new List<Contact>();
@@ -331,7 +332,9 @@ private class Location_Svc_Test {
 				if (a.Name != 'Test HQ 4')
 					for (Contact c : a.Contacts)
 						lstContactId.add(c.Id);
+
 			lstResult = Location_Svc.initializeDefaultLocations(lstContactId);
+
 			for (Integer i1 = 0; i1 < lstResult.size(); i1++)
 				system.assert(lstResult[i1] == null, 'Something wrong: ' + lstResult[i1]);
 			String data = '';

@@ -133,7 +133,11 @@
         <description>APJC - send notification to meeting owner that Legal has rejected the agenda</description>
         <protected>false</protected>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>alvarengam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -148,7 +152,11 @@
         <description>APJC - send notification to meeting owner that Legal has rejected the minutes</description>
         <protected>false</protected>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>alvarengam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -189,11 +197,15 @@
             <type>group</type>
         </recipients>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>alvarengam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>quesadara@iata.org</recipient>
+            <recipient>tan-torrj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -212,11 +224,15 @@
             <type>group</type>
         </recipients>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>alvarengam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>quesadara@iata.org</recipient>
+            <recipient>tan-torrj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -270,7 +286,7 @@
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
         </criteriaItems>
         <criteriaItems>
             <field>User.Profile_Name__c</field>
@@ -278,7 +294,7 @@
             <value>System Administrator</value>
         </criteriaItems>
         <description>Notification that Legal has rejected the Agenda. Used for IDFS ISS.
-ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -295,7 +311,7 @@ ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
         </criteriaItems>
         <criteriaItems>
             <field>User.Profile_Name__c</field>
@@ -303,7 +319,7 @@ ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
             <value>System Administrator</value>
         </criteriaItems>
         <description>Notification that Legal has rejected the minutes. Used for IDFS ISS.
-ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -320,7 +336,7 @@ ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
         </criteriaItems>
         <criteriaItems>
             <field>User.Profile_Name__c</field>
@@ -328,7 +344,7 @@ ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
             <value>System Administrator</value>
         </criteriaItems>
         <description>Notification that Legal has signed off the Agenda. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -345,7 +361,7 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
         </criteriaItems>
         <criteriaItems>
             <field>User.Profile_Name__c</field>
@@ -353,7 +369,7 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
             <value>System Administrator</value>
         </criteriaItems>
         <description>Notification that Legal has signed off the Minutes. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -374,7 +390,7 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
         </criteriaItems>
         <criteriaItems>
             <field>LocalGovernance_Meeting__c.Date_Legal_Signed_off_Agenda__c</field>
@@ -386,7 +402,7 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
             <value>System Administrator</value>
         </criteriaItems>
         <description>Request for legal to sign off agenda. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -407,7 +423,7 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
         </criteriaItems>
         <criteriaItems>
             <field>LocalGovernance_Meeting__c.Date_Legal_Signed_Off_the_Minutes__c</field>
@@ -419,7 +435,7 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
             <value>System Administrator</value>
         </criteriaItems>
         <description>Request for legal to sign off minutes. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

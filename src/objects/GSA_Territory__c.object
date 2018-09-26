@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -114,7 +111,7 @@ AMS_GDP_Key = AIMS ID + Airline Code</inlineHelpText>
         <label>AMS GDP Key</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -237,6 +234,19 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_Numeric_Country_Code__c</fullName>
+        <description>Lookup on field &quot;state numeric code&quot; at Account level</description>
+        <externalId>false</externalId>
+        <formula>Related_Account__r.state_numeric_code__c</formula>
+        <inlineHelpText>Lookup on field &quot;state numeric code&quot; at Account level</inlineHelpText>
+        <label>IATA Numeric Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -365,4 +375,5 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
     <pluralLabel>GSA Territories</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

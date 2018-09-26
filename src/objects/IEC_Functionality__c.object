@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Set / Unset IEC Functionalities</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Audience__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Audience to choose the functionality setting, choose one of:
+  userId=&lt;reg expr&gt;
+  userName=&lt;reg expr&gt;
+  userEmail=&lt;reg expr&gt;
+  userType=&lt;reg expr&gt;
+  profileId=&lt;reg expr&gt;
+  organizationId=&lt;reg expr&gt;
+  cookie=&lt;cookie name&gt;
+  all=&lt;true | false&gt;</inlineHelpText>
+        <label>Audience</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Functionality_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Functionality Name</label>
+        <length>100</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Functionality_Value__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Additional setting for the Functionality.</inlineHelpText>
+        <label>Functionality Value</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to true to Activate the Functionality.</inlineHelpText>
+        <label>Is Active?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Order of evaluation of the rule assignment.</inlineHelpText>
+        <label>Order</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>IEC Functionality</label>
+    <visibility>Public</visibility>
+</CustomObject>

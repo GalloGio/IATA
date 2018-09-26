@@ -30,13 +30,25 @@ public class IDCard_CheckoutConfirmationTest{
     
     public static void InitIDCard_CheckoutConfirmationTest() {
      	
+        RecordType recordType =[SELECT Id,DeveloperName,SObjectType FROM RecordType WHERE SObjectType = 'ID_Card_Application__c' 
+            AND IsActive = true AND DeveloperName = 'Mass_Order_Application'];
         testData = new IDCardTestData();
         testData.IDCards_IDCardApplications[2].IDCard_Prefered_Language__c = 'fr';
         testData.IDCards_IDCardApplications[2].IDCard_Expedite_Delivery_Fee__c = 135;
+        testData.IDCards_IDCardApplications[2].RecordTypeId = recordType.Id;
+
+        testData.IDCards_IDCardApplications[3].RecordTypeId = recordType.Id;
+
+        testData.IDCards_IDCardApplications[5].RecordTypeId = recordType.Id;
+
+        testData.IDCards_IDCardApplications[6].RecordTypeId = recordType.Id;
+
+        Test.startTest();
         insert testData.IDCards_IDCardApplications[2];
         insert testData.IDCards_IDCardApplications[3];
         insert testData.IDCards_IDCardApplications[5];
         insert testData.IDCards_IDCardApplications[6];
+        Test.stopTest();
         
         ID_Card_Application__c testData_IDCardApplication1 = [Select Name from ID_Card_Application__c where Id =: testData.IDCards_IDCardApplications[2].Id];
         
@@ -48,17 +60,38 @@ public class IDCard_CheckoutConfirmationTest{
               
         // TestPage with cookies
         Cookie languageCookies = new Cookie('idcard_portal_lang','en_US',null,-1,false);
-        controllerPage = Page.IDCard_Checkout;        
+
+        controllerPage = Page.IDCard_CheckoutConfirmation;        
         controllerPage.setCookies(new Cookie[]{languageCookies});      
-        controllerPage.getParameters().put('orderNumber', testData_IDCardApplication1.Name);
-        controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('true'));
-        controllerPage.getParameters().put('ccAuthReply_amount','358');
-        controllerPage.getParameters().put('orderCurrency', 'CAD');
+        controllerPage.getParameters().put('req_reference_number', testData_IDCardApplication1.Name);
+        controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('false'));
+        controllerPage.getParameters().put(IDCardUtil.ISFOC, IDCardUtil.EncryptEncodeParameter('13.31'));
+        controllerPage.getParameters().put('auth_amount','358');
+        controllerPage.getParameters().put('req_currency', 'CAD');
         controllerPage.getParameters().put('decision', 'accept');
-        controllerPage.getParameters().put('reasonCode', '101');
+        controllerPage.getParameters().put('reason_Code', '100');
         controllerPage.getParameters().put('card_accountNumber', '');
-        controllerPage.getParameters().put('requestID', '');
-        controllerPage.getParameters().put('ccAuthReply_authorizedDateTime', '2012-09-07T102740Z');
+        controllerPage.getParameters().put('transaction_id', '');
+        controllerPage.getParameters().put('auth_time', '2012-09-07T102740Z');
+
+        Test.setCurrentPage (controllerPage);       
+        iDCard_CheckoutConfirmation = new IDCard_CheckoutConfirmation();    
+        nextPage = iDCard_CheckoutConfirmation.interpretDecision();
+        iDCard_CheckoutConfirmation.refreshCaseNumber();
+        nextPage = iDCard_CheckoutConfirmation.terminate();
+
+        controllerPage = Page.IDCard_CheckoutConfirmation;        
+        controllerPage.setCookies(new Cookie[]{languageCookies});      
+        controllerPage.getParameters().put('req_reference_number', testData_IDCardApplication1.Name);
+        controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('false'));
+        controllerPage.getParameters().put(IDCardUtil.ISFOC, IDCardUtil.EncryptEncodeParameter('13.31'));
+        controllerPage.getParameters().put('auth_amount','358');
+        controllerPage.getParameters().put('req_currency', 'CAD');
+        controllerPage.getParameters().put('decision', 'accept');
+        controllerPage.getParameters().put('reason_Code', '101');
+        controllerPage.getParameters().put('card_accountNumber', '');
+        controllerPage.getParameters().put('transaction_id', '');
+        controllerPage.getParameters().put('auth_time', '2012-09-07T102740Z');
         
         Test.setCurrentPage (controllerPage);       
         iDCard_CheckoutConfirmation = new IDCard_CheckoutConfirmation();    
@@ -66,17 +99,18 @@ public class IDCard_CheckoutConfirmationTest{
         iDCard_CheckoutConfirmation.refreshCaseNumber();
         nextPage = iDCard_CheckoutConfirmation.terminate();
      
-        controllerPage = Page.IDCard_Checkout;        
+        controllerPage = Page.IDCard_CheckoutConfirmation;        
         controllerPage.setCookies(new Cookie[]{languageCookies});      
-        controllerPage.getParameters().put('orderNumber', testData_IDCardApplication1.Name);
-        controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('false'));
-        controllerPage.getParameters().put('ccAuthReply_amount','358');
-        controllerPage.getParameters().put('orderCurrency', 'CAD');
+        controllerPage.getParameters().put('req_reference_number', testData_IDCardApplication1.Name);
+        controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('true'));
+        controllerPage.getParameters().put(IDCardUtil.ISFOC, IDCardUtil.EncryptEncodeParameter('0.00.'));
+        controllerPage.getParameters().put('auth_amount','358');
+        controllerPage.getParameters().put('req_currency', 'CAD');
         controllerPage.getParameters().put('decision', 'accept');
-        controllerPage.getParameters().put('reasonCode', '100');
+        controllerPage.getParameters().put('reason_Code', '100');
         controllerPage.getParameters().put('card_accountNumber', '');
-        controllerPage.getParameters().put('requestID', '');
-        controllerPage.getParameters().put('ccAuthReply_authorizedDateTime', '2012-09-07T102740Z');
+        controllerPage.getParameters().put('transaction_id', '');
+        controllerPage.getParameters().put('auth_time', '2012-09-07T102740Z');
         
         Test.setCurrentPage (controllerPage);       
         iDCard_CheckoutConfirmation = new IDCard_CheckoutConfirmation();    
@@ -84,17 +118,17 @@ public class IDCard_CheckoutConfirmationTest{
         iDCard_CheckoutConfirmation.refreshCaseNumber();
         nextPage = iDCard_CheckoutConfirmation.terminate();
         
-        controllerPage = Page.IDCard_Checkout;        
+        controllerPage = Page.IDCard_CheckoutConfirmation;        
         controllerPage.setCookies(new Cookie[]{languageCookies});      
-        controllerPage.getParameters().put('orderNumber', testData_IDCardApplication1.Name);
+        controllerPage.getParameters().put('req_reference_number', testData_IDCardApplication1.Name);
         controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('false'));
-        controllerPage.getParameters().put('ccAuthReply_amount','358');
-        controllerPage.getParameters().put('orderCurrency', 'CAD');
+        controllerPage.getParameters().put('auth_amount','358');
+        controllerPage.getParameters().put('req_currency', 'CAD');
         controllerPage.getParameters().put('decision', 'accept');
-        controllerPage.getParameters().put('reasonCode', '101');
+        controllerPage.getParameters().put('reason_Code', '101');
         controllerPage.getParameters().put('card_accountNumber', '');
-        controllerPage.getParameters().put('requestID', '');
-        controllerPage.getParameters().put('ccAuthReply_authorizedDateTime', '2012-09-07T102740Z');
+        controllerPage.getParameters().put('transaction_id', '');
+        controllerPage.getParameters().put('auth_time', '2012-09-07T102740Z');
         
         Test.setCurrentPage (controllerPage);       
         iDCard_CheckoutConfirmation = new IDCard_CheckoutConfirmation();    
@@ -102,17 +136,17 @@ public class IDCard_CheckoutConfirmationTest{
         iDCard_CheckoutConfirmation.refreshCaseNumber();
         nextPage = iDCard_CheckoutConfirmation.terminate();
         
-        controllerPage = Page.IDCard_Checkout;        
+        controllerPage = Page.IDCard_CheckoutConfirmation;        
         controllerPage.setCookies(new Cookie[]{languageCookies});      
-        controllerPage.getParameters().put('orderNumber', testData_IDCardApplication1.Name);
+        controllerPage.getParameters().put('req_reference_number', testData_IDCardApplication1.Name);
         controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('false'));
-        controllerPage.getParameters().put('ccAuthReply_amount','358');
-        controllerPage.getParameters().put('orderCurrency', 'CAD');
+        controllerPage.getParameters().put('auth_amount','358');
+        controllerPage.getParameters().put('req_currency', 'CAD');
         controllerPage.getParameters().put('decision', 'accept');
-        controllerPage.getParameters().put('reasonCode', '102');
+        controllerPage.getParameters().put('reason_Code', '102');
         controllerPage.getParameters().put('card_accountNumber', '');
-        controllerPage.getParameters().put('requestID', '');
-        controllerPage.getParameters().put('ccAuthReply_authorizedDateTime', '2012-09-07T102740Z');
+        controllerPage.getParameters().put('transaction_id', '');
+        controllerPage.getParameters().put('auth_time', '2012-09-07T102740Z');
         
         Test.setCurrentPage (controllerPage);       
         iDCard_CheckoutConfirmation = new IDCard_CheckoutConfirmation();    
@@ -120,17 +154,17 @@ public class IDCard_CheckoutConfirmationTest{
         iDCard_CheckoutConfirmation.refreshCaseNumber();
         nextPage = iDCard_CheckoutConfirmation.terminate();
         
-        controllerPage = Page.IDCard_Checkout;        
+        controllerPage = Page.IDCard_CheckoutConfirmation;        
         controllerPage.setCookies(new Cookie[]{languageCookies});      
-        controllerPage.getParameters().put('orderNumber', testData_IDCardApplication1.Name);
+        controllerPage.getParameters().put('req_reference_number', testData_IDCardApplication1.Name);
         controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('false'));
-        controllerPage.getParameters().put('ccAuthReply_amount','358');
-        controllerPage.getParameters().put('orderCurrency', 'CAD');
+        controllerPage.getParameters().put('auth_amount','358');
+        controllerPage.getParameters().put('req_currency', 'CAD');
         controllerPage.getParameters().put('decision', 'accept');
-        controllerPage.getParameters().put('reasonCode', '200');
+        controllerPage.getParameters().put('reason_Code', '200');
         controllerPage.getParameters().put('card_accountNumber', '');
-        controllerPage.getParameters().put('requestID', '');
-        controllerPage.getParameters().put('ccAuthReply_authorizedDateTime', '2012-09-07T102740Z');
+        controllerPage.getParameters().put('transaction_id', '');
+        controllerPage.getParameters().put('auth_time', '2012-09-07T102740Z');
         
         Test.setCurrentPage (controllerPage);       
         iDCard_CheckoutConfirmation = new IDCard_CheckoutConfirmation();    
@@ -138,17 +172,17 @@ public class IDCard_CheckoutConfirmationTest{
         iDCard_CheckoutConfirmation.refreshCaseNumber();
         nextPage = iDCard_CheckoutConfirmation.terminate();
         
-        controllerPage = Page.IDCard_Checkout;        
+        controllerPage = Page.IDCard_CheckoutConfirmation;        
         controllerPage.setCookies(new Cookie[]{languageCookies});      
-        controllerPage.getParameters().put('orderNumber', testData_IDCardApplication1.Name);
+        controllerPage.getParameters().put('req_reference_number', testData_IDCardApplication1.Name);
         controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('false'));
-        controllerPage.getParameters().put('ccAuthReply_amount','358');
-        controllerPage.getParameters().put('orderCurrency', 'CAD');
+        controllerPage.getParameters().put('auth_amount','358');
+        controllerPage.getParameters().put('req_currency', 'CAD');
         controllerPage.getParameters().put('decision', 'accept');
-        controllerPage.getParameters().put('reasonCode', '201');
+        controllerPage.getParameters().put('reason_Code', '201');
         controllerPage.getParameters().put('card_accountNumber', '');
-        controllerPage.getParameters().put('requestID', '');
-        controllerPage.getParameters().put('ccAuthReply_authorizedDateTime', '2012-09-07T102740Z');
+        controllerPage.getParameters().put('transaction_id', '');
+        controllerPage.getParameters().put('auth_time', '2012-09-07T102740Z');
         
         Test.setCurrentPage (controllerPage);       
         iDCard_CheckoutConfirmation = new IDCard_CheckoutConfirmation();    
@@ -156,17 +190,17 @@ public class IDCard_CheckoutConfirmationTest{
         iDCard_CheckoutConfirmation.refreshCaseNumber();
         nextPage = iDCard_CheckoutConfirmation.terminate();
         
-        controllerPage = Page.IDCard_Checkout;        
+        controllerPage = Page.IDCard_CheckoutConfirmation;        
         controllerPage.setCookies(new Cookie[]{languageCookies});      
-        controllerPage.getParameters().put('orderNumber', testData_IDCardApplication1.Name);
+        controllerPage.getParameters().put('req_reference_number', testData_IDCardApplication1.Name);
         controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('false'));
-        controllerPage.getParameters().put('ccAuthReply_amount','358');
-        controllerPage.getParameters().put('orderCurrency', 'CAD');
+        controllerPage.getParameters().put('auth_amount','358');
+        controllerPage.getParameters().put('req_currency', 'CAD');
         controllerPage.getParameters().put('decision', 'accept');
-        controllerPage.getParameters().put('reasonCode', '203');
+        controllerPage.getParameters().put('reason_Code', '203');
         controllerPage.getParameters().put('card_accountNumber', '');
-        controllerPage.getParameters().put('requestID', '');
-        controllerPage.getParameters().put('ccAuthReply_authorizedDateTime', '2012-09-07T102740Z');
+        controllerPage.getParameters().put('transaction_id', '');
+        controllerPage.getParameters().put('auth_time', '2012-09-07T102740Z');
         
         Test.setCurrentPage (controllerPage);       
         iDCard_CheckoutConfirmation = new IDCard_CheckoutConfirmation();    
@@ -174,17 +208,17 @@ public class IDCard_CheckoutConfirmationTest{
         iDCard_CheckoutConfirmation.refreshCaseNumber();
         nextPage = iDCard_CheckoutConfirmation.terminate();
         
-        controllerPage = Page.IDCard_Checkout;        
+        controllerPage = Page.IDCard_CheckoutConfirmation;        
         controllerPage.setCookies(new Cookie[]{languageCookies});      
-        controllerPage.getParameters().put('orderNumber', testData_IDCardApplication1.Name);
+        controllerPage.getParameters().put('req_reference_number', testData_IDCardApplication1.Name);
         controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('false'));
-        controllerPage.getParameters().put('ccAuthReply_amount','358');
-        controllerPage.getParameters().put('orderCurrency', 'CAD');
+        controllerPage.getParameters().put('auth_amount','358');
+        controllerPage.getParameters().put('req_currency', 'CAD');
         controllerPage.getParameters().put('decision', 'accept');
-        controllerPage.getParameters().put('reasonCode', '211');
+        controllerPage.getParameters().put('reason_Code', '211');
         controllerPage.getParameters().put('card_accountNumber', '');
-        controllerPage.getParameters().put('requestID', '');
-        controllerPage.getParameters().put('ccAuthReply_authorizedDateTime', '2012-09-07T102740Z');
+        controllerPage.getParameters().put('transaction_id', '');
+        controllerPage.getParameters().put('auth_time', '2012-09-07T102740Z');
         
         Test.setCurrentPage (controllerPage);       
         iDCard_CheckoutConfirmation = new IDCard_CheckoutConfirmation();    
@@ -192,17 +226,17 @@ public class IDCard_CheckoutConfirmationTest{
         iDCard_CheckoutConfirmation.refreshCaseNumber();
         nextPage = iDCard_CheckoutConfirmation.terminate();
         
-        controllerPage = Page.IDCard_Checkout;        
+        controllerPage = Page.IDCard_CheckoutConfirmation;        
         controllerPage.setCookies(new Cookie[]{languageCookies});      
-        controllerPage.getParameters().put('orderNumber', testData_IDCardApplication1.Name);
+        controllerPage.getParameters().put('req_reference_number', testData_IDCardApplication1.Name);
         controllerPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE, IDCardUtil.EncryptEncodeParameter('false'));
-        controllerPage.getParameters().put('ccAuthReply_amount','358');
-        controllerPage.getParameters().put('orderCurrency', 'CAD');
+        controllerPage.getParameters().put('auth_amount','358');
+        controllerPage.getParameters().put('req_currency', 'CAD');
         controllerPage.getParameters().put('decision', 'accept');
-        controllerPage.getParameters().put('reasonCode', '400');
+        controllerPage.getParameters().put('reason_Code', '400');
         controllerPage.getParameters().put('card_accountNumber', '');
-        controllerPage.getParameters().put('requestID', '');
-        controllerPage.getParameters().put('ccAuthReply_authorizedDateTime', '2012-09-07T102740Z');
+        controllerPage.getParameters().put('transaction_id', '');
+        controllerPage.getParameters().put('auth_time', '2012-09-07T102740Z');
         
         Test.setCurrentPage (controllerPage);       
         iDCard_CheckoutConfirmation = new IDCard_CheckoutConfirmation();    
@@ -222,6 +256,5 @@ public class IDCard_CheckoutConfirmationTest{
     
     public static TestMethod void TestProcess(){
         InitIDCard_CheckoutConfirmationTest();    
-        
     }    
 }

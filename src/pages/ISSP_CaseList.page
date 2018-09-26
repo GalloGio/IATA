@@ -71,7 +71,7 @@
             <apex:repeat value="{!fields}" var="f">
                   <apex:column >
                     <apex:facet name="header">
-                       <apex:commandLink action="{!refresh}" >{!IF(f.FieldPath == 'ContactId', $Label.ISSP_ContactName, IF(f.FieldPath == 'Country_concerned_by_the_query__c', $Label.ISSP_CountryConcerned, f.label))}
+                       <apex:commandLink action="{!refresh}" >{!IF(f.FieldPath == 'OwnerId', $Label.ISSP_Owner_Name,IF(f.FieldPath == 'ContactId', $Label.ISSP_ContactName, IF(f.FieldPath == 'BSP_s_concerned__c',$Label.ISSP_BSP_Concerned,IF(f.FieldPath == 'Country_concerned_by_the_query__c', $Label.ISSP_CountryConcerned, f.label))))}
                    
                          <apex:outputPanel rendered="{!AND(sortExpression==f.FieldPath, sortDirection='ASC')}">&#9650;</apex:outputPanel>
                          <apex:outputPanel rendered="{!AND(sortExpression==f.FieldPath, sortDirection='DESC')}">&#9660;</apex:outputPanel>
@@ -79,10 +79,22 @@
                         
                        </apex:commandLink>
                     </apex:facet>
-                     <apex:outputpanel rendered="{!IF(f.label!='Account ID' && f.label!='Contact ID' && f.label!='Case Number',true,false)}"> <!-- && f.label!='Account Name' -->
+
+                      <!-- basto1p -->
+                     <apex:outputpanel rendered="{!IF(f.label!='Account ID' && f.fieldPath!='Portal_Case_Status__c' && f.label!='Contact ID' && f.label!='Case Number' && f.Label!='Owner ID' ,true,false)}"> <!-- && f.label!='Account Name' -->
                         <apex:outputfield value="{!item[f.fieldPath]}" />
                      </apex:outputpanel>
-                    
+
+                     <apex:outputpanel rendered="{!IF( f.Label=='Owner ID' ,true,false)}"> <!-- && f.label!='Account Name' -->
+                        <apex:outputfield value="{!item.Owner.Name}" />
+                    </apex:outputpanel>
+
+                      <!-- basto1p -->
+                      <apex:outputpanel rendered="{!IF(f.fieldPath=='Portal_Case_Status__c',true,false)}">
+                          <apex:outputfield value="{!item[f.fieldPath]}" rendered="{!IF(mapFieldsValue['Status'+item.Status]=='NO_FIELD_MAP',true,false)}"/>
+                          <apex:outputpanel rendered="{!IF(mapFieldsValue['Status'+item.Status]!='NO_FIELD_MAP',true,false)}"> {!mapFieldsValue['Status'+item.Status]} </apex:outputpanel>
+                      </apex:outputpanel>
+
                      <apex:outputpanel rendered="{!IF(f.label=='Account ID',true,false)}"> 
                      <apex:outputLink value="/apex/ISSP_Account?Id={!item.AccountId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.Account.name}</apex:outputLink>
                      </apex:outputpanel>
@@ -91,7 +103,8 @@
                      	<apex:outputLink value="/apex/ISSP_Contact?Id={!item.ContactId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.Contact.name}</apex:outputLink>
                     </apex:outputpanel>
                     <apex:outputpanel rendered="{!IF(AND(f.label=='Contact ID', OR(isPWCProfile, isDPCUser)),true,false)}"> 
-                     	<apex:outputField value="{!item[f.fieldPath]}" />
+                        <apex:outputLink value="/apex/ISSP_Contact?Id={!item.ContactId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.Contact.name}</apex:outputLink>
+                       <!-- <apex:outputField value="{!item[f.fieldPath]}" /> -->
                     </apex:outputpanel>
                   </apex:column>
             </apex:repeat>

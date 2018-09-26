@@ -197,26 +197,26 @@ margin-top:50px;
     <apex:pageMessages />
   <div class="row"><!-- row 1 -->
       <!--<apex:pageBlockSection showHeader="false" columns="2" id="block1">-->
-       <div class="col-md-12">
-       <h5 class="blueback">{!$Label.IDCard_CaseDetails}</h5>
-       
-           <p>
-              <apex:outputText value="{!$Label.ISSP_Subject}: " /> 
-              <apex:outputField value="{!tmpCase.subject}"  id="Subject"/>
-        
-    </p>
-         <p >
-              <apex:outputText value="{!$Label.IDCard_Description}: " rendered="{!showDescription}" />
-              <apex:outputField value="{!tmpCase.Description}" id="Description" rendered="{!showDescription}"/>
-           </p>
-       
-        </div>
-     <div class="col-md-12">
-           
-               <h5 class="blueback">{!$Label.ISSP_Email_Comment}</h5>
-           <apex:inputTextarea rows="7" StyleClass="form-control" value="{!inputComment}" id="Comment"/>
-  </div>
-      </div><!-- end row -->
+    <div class="col-md-12">
+        <h5 class="blueback">{!$Label.IDCard_CaseDetails}</h5>
+        <p>
+            <apex:outputText value="{!$Label.ISSP_Subject}: " /> 
+            <apex:outputField value="{!tmpCase.subject}"  id="Subject"/>
+        </p>
+        <p >
+            <apex:outputText value="{!$Label.IDCard_Description}: " rendered="{!showDescription}" />
+            <apex:outputField value="{!tmpCase.Description}" id="Description" rendered="{!showDescription}"/>
+        </p>
+    </div>
+    <div class="col-md-12">
+        <apex:outputText value="{!$Label.ISSP_CCOthers}: " />
+        <apex:outputText value="{!additionalCC}" id="aditionalCC" style="word-break: break-all;display: block;"/>
+    </div>
+    <div class="col-md-12">
+        <h5 class="blueback">{!$Label.ISSP_Email_Comment}</h5>
+        <apex:inputTextarea rows="7" StyleClass="form-control" value="{!inputComment}" id="Comment"/>
+    </div>
+  </div><!-- end row -->
        <div class="row">
        <hr />
           <div class="col-md-3">
@@ -227,7 +227,6 @@ margin-top:50px;
               <apex:commandButton action="/apex/ISSP_Case?caseid={!tmpCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger"/> 
           </div>
     </div>  
-    
      
 
   </apex:form>

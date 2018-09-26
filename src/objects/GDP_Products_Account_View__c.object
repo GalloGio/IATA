@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -55,6 +51,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -79,7 +76,7 @@
         <label>AMS GDP Key</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -96,9 +93,25 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Accreditation_Model__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Accreditation_Class__r.Accreditation_Model__r.Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>L = GoLite | Cashless
+S = GoStandard | Cash
+G = GoGlobal | Multicountry
+T = Pre-NewGen | Legacy</inlineHelpText>
+        <label>Accreditation Model</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Accredited_By__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_Accreditation_Class__r.Endorsed_Accredited_By__r.Definition__c</formula>
+        <formula>Related_Accreditation_Class__r.Endorsed_Accredited_By_Formula__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Accredited By</label>
         <required>false</required>
@@ -142,7 +155,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <label>Agency Code Uniqueness Validation</label>
         <length>41</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -173,9 +186,9 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <fullName>Agency_Status_Code_Interpreted__c</fullName>
         <description>Agency Status Code for non-Member  0 or 9</description>
         <externalId>false</externalId>
-        <formula>if(Value(Related_Accreditation_Class__r.Status__r.Code__c)&gt;3,
-9,
-0)</formula>
+        <formula>IF( WebStar_ID__c = &apos;&apos;, 
+    if(Value(Related_Accreditation_Class__r.Status__r.Code__c)&gt;3, 9, 0),
+    if(Value(Related_Accreditation_Class__r.Status__r.Code__c)&gt;3, 7, 0))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Agency Status Code Interpreted</label>
         <precision>18</precision>
@@ -216,7 +229,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <label>Airline Code</label>
         <length>3</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -239,7 +252,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <label>BSP/CASS Code</label>
         <length>4</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -250,7 +263,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <label>CASS Number Xref</label>
         <length>4</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -262,6 +275,46 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <length>4</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CA_FoP_Status__c</fullName>
+        <description>Status of CASH Form of Payment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status of CASH Form of Payment</inlineHelpText>
+        <label>CA FoP Status</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_FoP_Status__c</fullName>
+        <description>Status of CREDIT CARD Form of Payment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status of CREDIT CARD Form of Payment</inlineHelpText>
+        <label>CC FoP Status</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cash_Conditions_Override__c</fullName>
+        <description>Formula on Related Accreditation (Cash_Conditions_Override__c)</description>
+        <externalId>false</externalId>
+        <formula>IF(Is_NewGen_Agency__c == &apos;Y&apos;, IF(Related_Accreditation_Class__r.Cash_Conditions_Override__c,&quot;Y&quot;,&quot;N&quot;),&apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>If Checked, RHC equals Financial Security Amount Provided.</inlineHelpText>
+        <label>Cash Conditions Override</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -280,7 +333,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     <fields>
         <fullName>City__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_City__c</formula>
+        <formula>Related_GDP_Address__r.Address_City_Uppercase__c</formula>
         <label>City</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -291,7 +344,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     <fields>
         <fullName>Country_ISO_Code__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_ISO_Country_Code__c</formula>
+        <formula>Related_GDP_Address__r.Address_IATA_Custom_ISO_Country_Code__c</formula>
         <label>Country ISO Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -302,7 +355,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     <fields>
         <fullName>Country_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_Country_Name__c</formula>
+        <formula>Related_GDP_Address__r.Address_Country_Name_Uppercase__c</formula>
         <label>Country Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -323,6 +376,62 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Due_Diligence_Status_Code__c</fullName>
+        <description>Agency&apos;s AML Compliance</description>
+        <externalId>false</externalId>
+        <formula>CASE( Due_Diligence_Status__c ,
+&quot;Cleared&quot;,&quot;C&quot;,
+&quot;In Progress&quot;, &quot;I&quot;,
+&quot;Sanctioned. Please contact compliance&quot;, &quot;S&quot;,
+&quot;&quot;
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Agency&apos;s AML Compliance
+C =Cleared
+I = In Progress
+S = Sanctioned</inlineHelpText>
+        <label>Due Diligence Status Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Due_Diligence_Status__c</fullName>
+        <description>Agency&apos;s AML Compliance
+Mapped to &quot; Due_Diligence_Status__c&quot; on AMS Account for Replication.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Agency&apos;s AML Compliance
+Mapped to &quot; Due_Diligence_Status__c&quot; on AMS Account for Replication.</inlineHelpText>
+        <label>Due Diligence Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Cleared</fullName>
+                    <default>false</default>
+                    <label>Cleared</label>
+                </value>
+                <value>
+                    <fullName>Sanctioned. Please contact compliance</fullName>
+                    <default>false</default>
+                    <label>Sanctioned. Please contact compliance</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>EBC_Agency_Name__c</fullName>
         <description>IF Trading Name is NOT NULL, use Trading Name for Agency Merge Field
 IF Trading Name is NULL, use Legal Name for Agency Merge Field</description>
@@ -337,6 +446,34 @@ IF Trading Name is NULL, use Legal Name for Agency Merge Field</inlineHelpText>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EP_FoP_Status__c</fullName>
+        <description>Status of EASYPAY Form of Payment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status of EASYPAY Form of Payment</inlineHelpText>
+        <label>EP FoP Status</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EasyPay_Account_Status__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Status of the EasyPay Account of the Agency 
+Mapped to &quot;ANG_IEP_Status_FF__c&quot; on AMS Account for Replication.</description>
+        <externalId>false</externalId>
+        <label>EasyPay Account Status</label>
+        <referenceTo>GDP_Reference_Table__c</referenceTo>
+        <relationshipLabel>GDP Products - Accounts View (EasyPay Account Status Code)</relationshipLabel>
+        <relationshipName>GDP_Products_Accounts_View5</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Email_Address__c</fullName>
@@ -397,7 +534,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
 + &apos;:&apos; 
 + Legal_Name_1__c + Legal_Name_2__c + Legal_Name_3__c 
 + &apos;:&apos; 
-+ Id</formula>
++ Agency_Code__c + Id</formula>
         <inlineHelpText>Key string used for sorting in GSS and MDP file generation. This field is for system use only.</inlineHelpText>
         <label>GSS_MDP Sort Key Formula</label>
         <required>false</required>
@@ -426,9 +563,23 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Is_NewGen_Agency__c</fullName>
+        <description>Indicates if Agency falls under Reso 812 (NewGen ISS) or not.</description>
+        <externalId>false</externalId>
+        <formula>IF(OR(Related_Accreditation_Class_Code__c == &apos;P&apos;,Related_Accreditation_Class_Code__c == &apos;V&apos;), IF(Related_Accreditation_Class__r.Is_NewGen_Agency__c ,&quot;Y&quot;,&quot;N&quot;),&apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Indicates if Agency falls under Reso 812 (NewGen ISS) or not.</inlineHelpText>
+        <label>Is NewGen Agency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Json_WS_Complex__c</fullName>
@@ -479,6 +630,17 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Legal_Name_1_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Legal_Name_1__c)</formula>
+        <label>Legal Name 1 Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Legal_Name_1__c</fullName>
         <externalId>false</externalId>
         <label>Legal Name 1</label>
@@ -490,12 +652,35 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Legal_Name_2_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Legal_Name_2__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Legal Name 2 Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Legal_Name_2__c</fullName>
         <externalId>false</externalId>
         <label>Legal Name 2</label>
         <length>32</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legal_Name_3_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Legal_Name_3__c)</formula>
+        <label>Legal Name 3 Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -513,8 +698,10 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
     </fields>
     <fields>
         <fullName>Legal_Name__c</fullName>
+        <description>Concatenation of Fields Legal Name Upper 1+2+3</description>
         <externalId>false</externalId>
-        <formula>TRIM(Legal_Name_1__c + &apos; &apos; + Legal_Name_2__c + &apos; &apos; + Legal_Name_3__c)</formula>
+        <formula>TRIM(Legal_Name_1_Upper__c + &apos; &apos; + Legal_Name_2_Upper__c + &apos; &apos; + Legal_Name_3_Upper__c)</formula>
+        <inlineHelpText>Concatenation of Fields Legal Name Upper 1+2+3</inlineHelpText>
         <label>Legal Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -538,6 +725,20 @@ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(Related_GDP_Address__r.Address_Type__c, &apos;Location&apos;) , Related_GDP_Address__r.Address__c, &apos;&apos;)</formula>
         <label>Location Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Type_Code_Interpreted__c</fullName>
+        <description>Converts HE to HO and AE to BR</description>
+        <externalId>false</externalId>
+        <formula>IF( Location_Type__r.Code__c = &apos;HE&apos; , &apos;HO&apos;,  IF(Location_Type__r.Code__c = &apos;AE&apos;, &apos;BR&apos;, Location_Type__r.Code__c) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Converts HE to HO and AE to BR</inlineHelpText>
+        <label>Location Type Code Interpreted</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -591,10 +792,34 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Manager_First_Name_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Manager_First_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Manager First Name Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Manager_First_Name__c</fullName>
         <externalId>false</externalId>
         <label>Manager First Name</label>
         <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manager_Last_Name_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Manager_Last_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Manager Last Name Upper</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -607,10 +832,76 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <label>Manager Last Name</label>
         <length>20</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Now_Date__c</fullName>
+        <description>Date Auto-Populated Formula used to validate EBC Daily Master Sync</description>
+        <externalId>false</externalId>
+        <formula>Now()</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Date Auto-Populated Formula used to validate EBC Daily Master Sync</inlineHelpText>
+        <label>Now Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>PCI_Compliance__c</fullName>
+        <description>Indicator on the Agency Compliance to PCI DSS Rules. 
+Mapped to &quot; Is_PCI_compliant__c&quot; on AMS Account for Replication.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Mapped to &quot;Is_PCI_compliant__c&quot; on AMS Account for Replication.
+Y = Yes
+N = No
+C = Corporate Cards Only
+X = No Usage of Cards</inlineHelpText>
+        <label>PCI Compliance</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Y</fullName>
+                    <default>false</default>
+                    <label>Y</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>N</label>
+                </value>
+                <value>
+                    <fullName>X</fullName>
+                    <default>false</default>
+                    <label>X</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>PCI_compliance_expiry_date__c</fullName>
+        <description>Mapped to &quot;ANG_PCI_compliance_expiry_date__c&quot; on AMS Account for Replication.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Mapped to &quot;ANG_PCI_compliance_expiry_date__c&quot; on AMS Account for Replication.</inlineHelpText>
+        <label>PCI Compliance Expiry Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Parent_Account_AIMS_ID__c</fullName>
@@ -618,7 +909,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <label>Parent Account: AIMS ID</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -629,7 +920,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <label>Parent Account: WebStar ID</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -655,7 +946,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <label>Passenger And Cargo</label>
         <length>1</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -720,12 +1011,13 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <fullName>Related_Accreditation_Class__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Related Accreditation Class</label>
+        <inlineHelpText>Link to GDP Accreditation</inlineHelpText>
+        <label>Related Accreditation</label>
         <referenceTo>Accreditation__c</referenceTo>
         <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -738,7 +1030,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_View</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -758,6 +1050,57 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Remittance_Frequency_1__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Settlement Frequency on BSP
+Mapped to &quot;Remittance_frequency__c&quot; on AMS Account for Replication (Split if more than 1 value)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Settlement Frequency on BSP 
+Mapped to &quot;Remittance_frequency__c&quot; on AMS Account for Replication (Split if more than 1 value)</inlineHelpText>
+        <label>Remittance Frequency 1</label>
+        <referenceTo>GDP_Reference_Table__c</referenceTo>
+        <relationshipLabel>GDP Products - Accounts View (Remittance Frequency 1 Code)</relationshipLabel>
+        <relationshipName>GDP_Products_Accounts_View3</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Remittance_Frequency_2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Settlement Frequency on BSP
+Mapped to &quot;Remittance_frequency__c&quot; on AMS Account for Replication (Split if more than 1 value)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Settlement Frequency on BSP
+Mapped to &quot;Remittance_frequency__c&quot; on AMS Account for Replication (Split if more than 1 value)</inlineHelpText>
+        <label>Remittance Frequency 2</label>
+        <referenceTo>GDP_Reference_Table__c</referenceTo>
+        <relationshipLabel>GDP Products - Accounts View (Remittance Frequency 2 Code)</relationshipLabel>
+        <relationshipName>GDP_Products_Accounts_View4</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Risk_Status_Formula__c</fullName>
+        <description>Formula on Related Accreditation (Risk_Status__c)</description>
+        <externalId>false</externalId>
+        <formula>IF(TEXT(Related_Accreditation_Class__r.Risk_Status__c )=&quot;Not Applicable&quot;,&quot;X&quot;,TEXT(Related_Accreditation_Class__r.Risk_Status__c ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>A = Risk Status A
+B = Risk Status B
+C = Risk Status C
+X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpText>
+        <label>Risk Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>State_Province_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Related_GDP_Address__r.Address_State_Code__c</formula>
@@ -771,7 +1114,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
     <fields>
         <fullName>State_Province__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_State_Name__c</formula>
+        <formula>Related_GDP_Address__r.Address_State_Name_Uppercase__c</formula>
         <label>State/Province</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -796,7 +1139,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <label>TTY</label>
         <length>20</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -824,10 +1167,34 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Ticketing_Agent_First_Name_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Ticketing_Agent_First_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Ticketing Agent First Name Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Ticketing_Agent_First_Name__c</fullName>
         <externalId>false</externalId>
         <label>Ticketing Agent First Name</label>
         <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ticketing_Agent_Last_Name_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Ticketing_Agent_Last_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Ticketing Agent Last Name Upper</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -839,6 +1206,17 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <externalId>false</externalId>
         <label>Ticketing Agent Last Name</label>
         <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trading_Name_1_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Trading_Name_1__c)</formula>
+        <label>Trading Name 1 Upper</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -857,6 +1235,18 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Trading_Name_2_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Trading_Name_2__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Trading Name 2 Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Trading_Name_2__c</fullName>
         <externalId>false</externalId>
         <label>Trading Name 2</label>
@@ -869,8 +1259,10 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
     </fields>
     <fields>
         <fullName>Trading_Name__c</fullName>
+        <description>Concatenation of Fields Trading Name Upper 1+2</description>
         <externalId>false</externalId>
-        <formula>TRIM(Trading_Name_1__c + &apos; &apos; + Trading_Name_2__c)</formula>
+        <formula>TRIM(Trading_Name_1_Upper__c + &apos; &apos; + Trading_Name_2_Upper__c)</formula>
+        <inlineHelpText>Concatenation of Fields Trading Name Upper 1+2</inlineHelpText>
         <label>Trading Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -896,7 +1288,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <label>Website</label>
         <length>100</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -972,98 +1364,46 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
     </fields>
     <label>GDP Products - Account View</label>
     <listViews>
-        <fullName>Agencies_USA</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Code__c</columns>
-        <columns>Country_ISO_Code__c</columns>
-        <columns>Agency_Status__c</columns>
-        <columns>Location_Type__c</columns>
-        <columns>State_Province_Code__c</columns>
-        <columns>Accredited_By__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Country_ISO_Code__c</field>
-            <operation>equals</operation>
-            <value>CA</value>
-        </filters>
-        <filters>
-            <field>Agency_Status_Code__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>0</value>
-        </filters>
-        <label>Agencies USA</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Agency_by_Country</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Code__c</columns>
-        <columns>Sub_Continent__c</columns>
-        <columns>Country_ISO_Code__c</columns>
-        <columns>Agency_Status__c</columns>
-        <columns>Agency_Status_Code__c</columns>
-        <columns>State_Province_Code__c</columns>
-        <columns>Email_Address__c</columns>
-        <columns>Accreditation_Class__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Country_ISO_Code__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <filters>
-            <field>Agency_Status_Code__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>4</value>
-        </filters>
-        <label>Agencies by Country</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All</fullName>
-        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <fullName>All_No_Criteria</fullName>
         <columns>NAME</columns>
         <columns>Agency_Code__c</columns>
-        <columns>Incorporation_Type__c</columns>
-        <columns>Agency_Status_Code__c</columns>
-        <columns>Agency_Status__c</columns>
+        <columns>Accreditation_Class__c</columns>
         <columns>Location_Type__c</columns>
+        <columns>Parent_GDP_Account_View__c</columns>
+        <columns>Agency_Status__c</columns>
+        <columns>Agency_Status_Code__c</columns>
+        <columns>Agency_Status_Code_Interpreted__c</columns>
+        <columns>Incorporation_Type__c</columns>
+        <columns>Sub_Continent__c</columns>
+        <columns>Accredited_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All - No Criteria</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Location_Type_HE_AE</fullName>
+        <columns>NAME</columns>
+        <columns>Agency_Code__c</columns>
+        <columns>Accreditation_Class__c</columns>
+        <columns>Location_Type__c</columns>
+        <columns>Location_Type_Code_Interpreted__c</columns>
+        <columns>Agency_Status__c</columns>
+        <columns>Agency_Status_Code__c</columns>
+        <columns>Agency_Status_Code_Interpreted__c</columns>
+        <columns>Country_Name__c</columns>
+        <columns>Sub_Continent__c</columns>
         <columns>Parent_GDP_Account_View__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Related_Accreditation_Class__c</field>
-            <operation>notEqual</operation>
+            <field>Location_Type__c</field>
+            <operation>equals</operation>
+            <value>Associate Entity,Head Entity</value>
         </filters>
-        <filters>
-            <field>AIMS_ID__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <filters>
-            <field>WebStar_ID__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>All- Clean</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_AIMS</fullName>
-        <columns>Agency_Code__c</columns>
-        <columns>NAME</columns>
-        <columns>City__c</columns>
-        <columns>Country_Name__c</columns>
-        <columns>Location_Type__c</columns>
-        <columns>Agency_Status__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>AIMS_ID__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>All AIMS</label>
+        <label>Location Type HE/AE</label>
         <language>en_US</language>
     </listViews>
     <nameField>
-        <label>Legal Name</label>
+        <label>Name</label>
         <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
@@ -1074,6 +1414,40 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <active>true</active>
         <description>Used for GDP Live Applications</description>
         <label>GDP</label>
+        <picklistValues>
+            <picklist>Due_Diligence_Status__c</picklist>
+            <values>
+                <fullName>Cleared</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned%2E Please contact compliance</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PCI_Compliance__c</picklist>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts>
         <customTabListAdditionalFields>Agency_Status_Code__c</customTabListAdditionalFields>
@@ -1085,4 +1459,5 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <searchResultsAdditionalFields>Accreditation_Class__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

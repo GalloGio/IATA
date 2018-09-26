@@ -12,6 +12,9 @@ public class UserProvisioningUtils {
     public static final String PARAM_NEXT_RECON_OFFSET = 'nextReconOffset';
     public static final String PARAM_USERPAYLOAD = 'userPayload';
     public static final String PARAM_UPASTATUS = 'UPAStatus';
+    public static final String PARAM_CALLPARAMS = 'CallParams';
+
+    public static final String PARAM_ISACTIVE = 'IsActive';
 
     private static final Integer MAX_LOG_LEN = 1300;
 
@@ -28,7 +31,7 @@ public class UserProvisioningUtils {
 
     public void init(String uprId) {
         this.uprId = uprId;
-        this.upr = [SELECT connectedAppId, UserProvConfigId, salesforceUserId, UserProvAccountId, Operation FROM UserProvisioningRequest WHERE id = :uprId LIMIT 1];
+        this.upr = [SELECT connectedAppId, UserProvConfigId, salesforceUserId, UserProvAccountId, Operation, isactive__c FROM UserProvisioningRequest WHERE id = :uprId LIMIT 1];
         if(!Test.isRunningTest()){
         	this.upc = [SELECT namedCredentialId, reconFilter FROM UserProvisioningConfig where id = :upr.UserProvConfigId LIMIT 1];
         	this.namedCredential = [SELECT developerName FROM NamedCredential where id = :upc.namedCredentialId LIMIT 1];
@@ -145,4 +148,20 @@ public class UserProvisioningUtils {
         String s2 = s + e + ', StackTrace:' + e.getStackTraceString();
         log(s2);
     }    
+
+    //Mconde
+    public void addExternalResponse(SCIMCreateUserResponse respObj){
+        if(uprId != null && respObj != null){
+
+            if(respObj.active != null && respObj.active.equalsIgnoreCase('false')){
+                UserProvisioningRequest updUPR = new UserProvisioningRequest();
+                updUPR.id = uprId;
+                updUPR.isActive__c = false;
+                update updUPR;
+            }
+
+
+        }
+
+    }
 }

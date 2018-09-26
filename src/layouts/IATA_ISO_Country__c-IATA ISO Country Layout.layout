@@ -31,6 +31,10 @@
                 <behavior>Edit</behavior>
                 <field>DDS_Enabled__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>fred_icaomemberstate__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -52,6 +56,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ISS_Office_Location__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AMS_Default_State__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -77,6 +85,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BSP_Domestic_Only__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSP_Country_free_text__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -225,6 +237,33 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>NewGen</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Enable_NewGen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_GDI_Enabled__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Portal_Service__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_EasyPay_Opt_Out_Date__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>IFAP service levels</label>
         <layoutColumns>
             <layoutItems>
@@ -256,6 +295,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IEC_Zip_Postal_Code_required__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Non_Compliant__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -357,6 +400,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>ICCS_Product_Country__c.Country__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Product__c</fields>
         <relatedList>Non_Compliant_Country__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
@@ -372,6 +419,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>ISO_Code__c</fields>
+        <fields>IEC_Valid_SAP__c</fields>
         <relatedList>IATA_ISO_State__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -380,6 +429,10 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Operation__c.Country__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

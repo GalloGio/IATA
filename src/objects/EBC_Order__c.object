@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Hold the ebroadcast orders by Billing Account used during the payment process and once the payment is confirmed useful to apply the fullfilment</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -103,25 +100,30 @@
         <externalId>false</externalId>
         <inlineHelpText>As long as the payment is not done there is no fulfillment, the status is pending and after the payment the status is changed to Payment.</inlineHelpText>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Pending</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Payment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pending Bank Transfer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>true</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Payment</fullName>
+                    <default>false</default>
+                    <label>Payment</label>
+                </value>
+                <value>
+                    <fullName>Pending Bank Transfer</fullName>
+                    <default>false</default>
+                    <label>Pending Bank Transfer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>eBroadcast_Payment_Campaign_Option__c</fullName>
@@ -131,25 +133,30 @@ This is only relevant for campaign payment.</description>
         <inlineHelpText>Define how we are paying for a campaign. 
 This is only relevant for campaign payment.</inlineHelpText>
         <label>eBroadcast Payment Campaign Option</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Exact Amount</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Email Package</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Prepaid Rate Plan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Exact Amount</fullName>
+                    <default>false</default>
+                    <label>Exact Amount</label>
+                </value>
+                <value>
+                    <fullName>Email Package</fullName>
+                    <default>false</default>
+                    <label>Email Package</label>
+                </value>
+                <value>
+                    <fullName>Prepaid Rate Plan</fullName>
+                    <default>false</default>
+                    <label>Prepaid Rate Plan</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>eBroadcast_Payment_Campaign__c</fullName>
@@ -222,37 +229,45 @@ This should be set by calling Payment for renewal.</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>The target of this payment, i.e. is this payment for paying a campaign, subscribing to a new rate plan, purchasing a new email block, purchasing add-on, or subscription renewal.</inlineHelpText>
         <label>eBroadcast Payment Target</label>
-        <picklist>
-            <picklistValues>
-                <fullName>campaign</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>rateplan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>email</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>addon reporting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>addon storage</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>renewal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>campaign</fullName>
+                    <default>false</default>
+                    <label>campaign</label>
+                </value>
+                <value>
+                    <fullName>rateplan</fullName>
+                    <default>false</default>
+                    <label>rateplan</label>
+                </value>
+                <value>
+                    <fullName>email</fullName>
+                    <default>false</default>
+                    <label>email</label>
+                </value>
+                <value>
+                    <fullName>addon reporting</fullName>
+                    <default>false</default>
+                    <label>addon reporting</label>
+                </value>
+                <value>
+                    <fullName>addon storage</fullName>
+                    <default>false</default>
+                    <label>addon storage</label>
+                </value>
+                <value>
+                    <fullName>renewal</fullName>
+                    <default>false</default>
+                    <label>renewal</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>eBroadcast_Payment_Token__c</fullName>
@@ -275,4 +290,5 @@ This should be set by calling Payment for renewal.</inlineHelpText>
     <pluralLabel>EBC Orders</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

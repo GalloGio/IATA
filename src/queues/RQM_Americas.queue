@@ -3,6 +3,24 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>RQM - Americas</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>A_P_Business_Delivery_Manager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>A_P_Business_Delivery_Staff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>Africa_ME_Business_Delivery_Manager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>Africa_ME_Business_Delivery_Staff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>Americas_Business_Delivery_Manager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>Americas_Business_Delivery_Staff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>China_N_Asia_Business_Delivery_Manager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>China_N_Asia_Business_Delivery_Staff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>Distribution_Business_Delivery_HO</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>MAD_Hub_Business_Delivery_Manager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>MAD_Hub_Business_Delivery_Staff</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Operational_Improvements__c</sobjectType>
     </queueSobject>

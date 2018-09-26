@@ -62,6 +62,12 @@
                     <apex:outputField value="{!objective.Name}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
                     <apex:inputField value="{!objective.Name}"  rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true" style="width: 80%;" />
       					</apex:column>
+
+                <apex:column headerValue="Division">
+                    <apex:outputField value="{!objective.Division__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
+                    <apex:inputField value="{!objective.Division__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" style="width: 80%;" />
+                </apex:column>
+                
       					<apex:column headerValue="Description">
                     <!-- <apex:outputField value="{!objective.Details__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/> -->
                     <apex:inputField value="{!objective.Details__c}"  rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true" style="width: 80%;" />
@@ -78,14 +84,17 @@
       					<apex:column headerValue="Overall Status" styleClass="table-column-10pc">
                     <apex:outputField value="{!objective.Status__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
                     <apex:inputField value="{!objective.Status__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true" style="width: 80%;" />
+                    <div style = "display:none;">
+                    <apex:inputField id="accid" value="{!objective.Account__c}" required="true"/>
+                    </div>
                 </apex:column>
 
       					<apex:column headerValue="Account Issue or Priority">
-                    <apex:outputField value="{!objective.Account_Issue_or_Priority__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
+                    <apex:outputText value="{!objective.Account_Issue_or_Priority__r.Name}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
                     <apex:inputField value="{!objective.Account_Issue_or_Priority__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" style="width: 80%;" />
                 </apex:column>
 
-      					<apex:column headerValue="Benefits to the Account">
+      					<apex:column headerValue="Comment">
                     <!-- <apex:outputField value="{!objective.Benefits_to_Account__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/> -->
                     <apex:inputField value="{!objective.Benefits_to_Account__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" style="width: 80%;" />
                     <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==objective.Id))}" >
@@ -135,8 +144,6 @@
         $(document).ready(function(){
           enableShowMoreOrLess();
         });
-
-
       </script>
     </apex:outputPanel>
     </body>

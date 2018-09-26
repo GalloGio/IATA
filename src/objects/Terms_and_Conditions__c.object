@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>This object is used to store Attachments holding the terms and conditions on IEC Checkout page</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -110,21 +107,25 @@
         <externalId>false</externalId>
         <inlineHelpText>Status of the T&amp;Cs. Can only be modified when it&apos;s Draft.</inlineHelpText>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Draft</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Final</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>true</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>Final</fullName>
+                    <default>false</default>
+                    <label>Final</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Unique_Product_Version__c</fullName>
@@ -196,4 +197,5 @@
         <errorConditionFormula>ISNEW()==false &amp;&amp; ISPICKVAL(PRIORVALUE(Status__c), &apos;Final&apos;) &amp;&amp;  ISCHANGED(Is_Current__c)==false</errorConditionFormula>
         <errorMessage>The T&amp;Cs cannot be edit when the status is Final</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

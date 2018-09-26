@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Specific set of strategies tied to each account that the sales manager needs to executive.  Each strategy lists specific revenue goals and products to be sold to a particular division or department.  Tasks and milestones are also attached to each strategy.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -152,36 +149,44 @@
         <fullName>Strategy_Status__c</fullName>
         <externalId>false</externalId>
         <label>Strategy Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Investigation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Opportunity Created</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Won - Achieved Rev. Goals</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Won - Partial Achievement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lost - No Opportunity</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>true</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>Investigation</fullName>
+                    <default>false</default>
+                    <label>Investigation</label>
+                </value>
+                <value>
+                    <fullName>Opportunity Created</fullName>
+                    <default>false</default>
+                    <label>Opportunity Created</label>
+                </value>
+                <value>
+                    <fullName>Won - Achieved Rev. Goals</fullName>
+                    <default>false</default>
+                    <label>Won - Achieved Rev. Goals</label>
+                </value>
+                <value>
+                    <fullName>Won - Partial Achievement</fullName>
+                    <default>false</default>
+                    <label>Won - Partial Achievement</label>
+                </value>
+                <value>
+                    <fullName>Lost - No Opportunity</fullName>
+                    <default>false</default>
+                    <label>Lost - No Opportunity</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Strategy</label>
     <listViews>
@@ -196,4 +201,5 @@
     <pluralLabel>Strategies</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

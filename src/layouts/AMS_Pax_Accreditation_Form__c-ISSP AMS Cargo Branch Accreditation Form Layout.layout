@@ -48,6 +48,10 @@
                 <behavior>Edit</behavior>
                 <field>ISSP_AMS_VAT_number__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_IsNewGenAgency__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

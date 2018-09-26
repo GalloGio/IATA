@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -51,8 +47,9 @@
 Dedicated to the eBroadcast application.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -63,24 +60,30 @@ Dedicated to the eBroadcast application.</description>
         <externalId>false</externalId>
         <inlineHelpText>This field will separate filters between agency and agents.</inlineHelpText>
         <label>Audience</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agency</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Custom</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agency</fullName>
+                    <default>true</default>
+                    <label>Agency</label>
+                </value>
+                <value>
+                    <fullName>Agent</fullName>
+                    <default>false</default>
+                    <label>Agent</label>
+                </value>
+                <value>
+                    <fullName>Custom</fullName>
+                    <default>false</default>
+                    <label>Custom</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Data_Source_Label_Field__c</fullName>
@@ -90,6 +93,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Data Source Label Field</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -102,6 +106,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Data Source Object</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -114,6 +119,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Data Source Value Field</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -124,6 +130,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Data Source Where Clause</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -134,29 +141,36 @@ Dedicated to the eBroadcast application.</description>
         <externalId>false</externalId>
         <inlineHelpText>This field is used to select the type of UI (Checkbox, Date, Picklist, Text) to enter values for filters.</inlineHelpText>
         <label>Data Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Picklist</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Checkbox</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Date</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Text</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Picklist</fullName>
+                    <default>false</default>
+                    <label>Picklist</label>
+                </value>
+                <value>
+                    <fullName>Checkbox</fullName>
+                    <default>false</default>
+                    <label>Checkbox</label>
+                </value>
+                <value>
+                    <fullName>Date</fullName>
+                    <default>false</default>
+                    <label>Date</label>
+                </value>
+                <value>
+                    <fullName>Text</fullName>
+                    <default>false</default>
+                    <label>Text</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Filter_Description__c</fullName>
@@ -166,6 +180,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Filter Description</label>
         <length>50</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -178,6 +193,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Filter Field</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -190,6 +206,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Filter Related List Field</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -202,6 +219,7 @@ Dedicated to the eBroadcast application.</description>
         <label>Filter Related List</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -212,22 +230,50 @@ Dedicated to the eBroadcast application.</description>
         <externalId>false</externalId>
         <inlineHelpText>This field will separate filters by Geo-Selection and Refinement.</inlineHelpText>
         <label>Search Level</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Geo-Selection</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Refinement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Geo-Selection</fullName>
+                    <default>true</default>
+                    <label>Geo-Selection</label>
+                </value>
+                <value>
+                    <fullName>Refinement</fullName>
+                    <default>false</default>
+                    <label>Refinement</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>EBC Application Filter</label>
+    <listViews>
+        <fullName>Agency_Filters</fullName>
+        <columns>NAME</columns>
+        <columns>Audience__c</columns>
+        <columns>Search_Level__c</columns>
+        <columns>Filter_Description__c</columns>
+        <columns>Data_Type__c</columns>
+        <columns>Data_Source_Label_Field__c</columns>
+        <columns>Data_Source_Value_Field__c</columns>
+        <columns>Data_Source_Object__c</columns>
+        <columns>Data_Source_Where_Clause__c</columns>
+        <columns>Filter_RelatedList_Field__c</columns>
+        <columns>Filter_RelatedList__c</columns>
+        <columns>Filter_Field__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Audience__c</field>
+            <operation>equals</operation>
+            <value>Agency</value>
+        </filters>
+        <label>01 - Agency Filters</label>
+        <language>en_US</language>
+    </listViews>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -235,20 +281,67 @@ Dedicated to the eBroadcast application.</description>
         <columns>Search_Level__c</columns>
         <columns>Filter_Description__c</columns>
         <columns>Data_Type__c</columns>
+        <columns>Filter_Field__c</columns>
         <columns>Data_Source_Object__c</columns>
         <columns>Data_Source_Where_Clause__c</columns>
         <columns>Data_Source_Label_Field__c</columns>
         <columns>Data_Source_Value_Field__c</columns>
         <columns>Filter_RelatedList__c</columns>
         <columns>Filter_RelatedList_Field__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>00 - All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X02_Agent_Filters</fullName>
+        <columns>NAME</columns>
+        <columns>Audience__c</columns>
+        <columns>Search_Level__c</columns>
+        <columns>Filter_Description__c</columns>
+        <columns>Data_Type__c</columns>
+        <columns>Data_Source_Label_Field__c</columns>
+        <columns>Data_Source_Value_Field__c</columns>
+        <columns>Data_Source_Object__c</columns>
+        <columns>Data_Source_Where_Clause__c</columns>
+        <columns>Filter_RelatedList_Field__c</columns>
+        <columns>Filter_RelatedList__c</columns>
         <columns>Filter_Field__c</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <filters>
+            <field>Audience__c</field>
+            <operation>equals</operation>
+            <value>Agent</value>
+        </filters>
+        <label>02 - Agent Filters</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X03_Custom_Filters</fullName>
+        <columns>NAME</columns>
+        <columns>Audience__c</columns>
+        <columns>Search_Level__c</columns>
+        <columns>Filter_Description__c</columns>
+        <columns>Data_Type__c</columns>
+        <columns>Data_Source_Label_Field__c</columns>
+        <columns>Data_Source_Value_Field__c</columns>
+        <columns>Data_Source_Object__c</columns>
+        <columns>Data_Source_Where_Clause__c</columns>
+        <columns>Filter_RelatedList_Field__c</columns>
+        <columns>Filter_RelatedList__c</columns>
+        <columns>Filter_Field__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Audience__c</field>
+            <operation>equals</operation>
+            <value>Custom</value>
+        </filters>
+        <label>03 - Custom Filters</label>
         <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>FT-{0000}</displayFormat>
         <label>EBC Application Filter Name</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>EBC Application Filters</pluralLabel>
@@ -262,4 +355,5 @@ Dedicated to the eBroadcast application.</description>
         <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,12 +46,60 @@
     <description>SARA</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ANG_ConvertedAmount__c</fullName>
+        <description>Shows the FS amount converted to the Account&apos;s currency (located on the RHC Information object)</description>
+        <externalId>false</externalId>
+        <label>Converted Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Financial_Security_Currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Reception_Case__r.Financial_Security_Currency__c)</formula>
+        <label>Financial Security Currency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Minimum_Financial_Security__c</fullName>
+        <externalId>false</externalId>
+        <formula>Reception_Case__r.Financial_Security_Amount__c</formula>
+        <label>Financial Security Amount (Minimum)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_isToUpdateRHC__c</fullName>
+        <description>Technical field to help control the rhc record update on financial security triggerhandler</description>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;) &amp;&amp; ISPICKVAL(Account__r.ANG_Accreditation_Model__c,&apos;Cash&apos;)</formula>
+        <label>Update RHC</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <fields>
         <fullName>Account_Case_BSP_Country__c</fullName>
         <description>Country value that is transmitted to the automatically created renewal case.</description>
@@ -194,6 +238,18 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>First_Call_Letter_required1__c</fullName>
+        <description>Takes the value from the Financial Institution through a WF</description>
+        <externalId>false</externalId>
+        <label>First Call Letter required</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>First_Call_Letter_required__c</fullName>
         <externalId>false</externalId>
         <formula>IF(OR(
@@ -251,41 +307,50 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
         <description>SARA</description>
         <externalId>false</externalId>
         <label>Request Reason</label>
-        <picklist>
-            <picklistValues>
-                <fullName>New Application</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ACC change</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Review</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Default</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Previous Security Update</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Irregularities</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Associate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New Application</fullName>
+                    <default>false</default>
+                    <label>New Application</label>
+                </value>
+                <value>
+                    <fullName>ACC change</fullName>
+                    <default>false</default>
+                    <label>ACC change</label>
+                </value>
+                <value>
+                    <fullName>Financial Review</fullName>
+                    <default>false</default>
+                    <label>Financial Review</label>
+                </value>
+                <value>
+                    <fullName>Default</fullName>
+                    <default>false</default>
+                    <label>Default</label>
+                </value>
+                <value>
+                    <fullName>Previous Security Update</fullName>
+                    <default>false</default>
+                    <label>Previous Security Update</label>
+                </value>
+                <value>
+                    <fullName>Irregularities</fullName>
+                    <default>false</default>
+                    <label>Irregularities</label>
+                </value>
+                <value>
+                    <fullName>CASS Associate</fullName>
+                    <default>false</default>
+                    <label>CASS Associate</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Reception_Case__c</fullName>
@@ -314,33 +379,40 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <label>Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Africa &amp; Middle East</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia &amp; Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China &amp; North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>Asia &amp; Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia &amp; Pacific</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>China &amp; North Asia</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Release_Case__c</fullName>
@@ -371,37 +443,45 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
         <description>SARA</description>
         <externalId>false</externalId>
         <label>Release Reason</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Renewal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Voluntary Relinquishment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Favorable Financial Situation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Security Update</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Encashment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Termination</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Renewal</fullName>
+                    <default>false</default>
+                    <label>Renewal</label>
+                </value>
+                <value>
+                    <fullName>Voluntary Relinquishment</fullName>
+                    <default>false</default>
+                    <label>Voluntary Relinquishment</label>
+                </value>
+                <value>
+                    <fullName>Favorable Financial Situation</fullName>
+                    <default>false</default>
+                    <label>Favorable Financial Situation</label>
+                </value>
+                <value>
+                    <fullName>Security Update</fullName>
+                    <default>false</default>
+                    <label>Security Update</label>
+                </value>
+                <value>
+                    <fullName>Encashment</fullName>
+                    <default>false</default>
+                    <label>Encashment</label>
+                </value>
+                <value>
+                    <fullName>Termination</fullName>
+                    <default>false</default>
+                    <label>Termination</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Remarks__c</fullName>
@@ -442,163 +522,220 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
         <description>SARA - status of the financial security</description>
         <externalId>false</externalId>
         <label>Security Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Close to Expiry Date</fullName>
-                <color>#F3D904</color>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <color>#B6E32E</color>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Expired</fullName>
-                <color>#CC0000</color>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Released</fullName>
-                <color>#2F5D85</color>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Encashed</fullName>
-                <color>#0B6FCE</color>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not Active yet</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Encashment in progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Close to Expiry Date</fullName>
+                    <color>#F3D904</color>
+                    <default>false</default>
+                    <label>Close to Expiry Date</label>
+                </value>
+                <value>
+                    <fullName>Active</fullName>
+                    <color>#B6E32E</color>
+                    <default>true</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Expired</fullName>
+                    <color>#CC0000</color>
+                    <default>false</default>
+                    <label>Expired</label>
+                </value>
+                <value>
+                    <fullName>Released</fullName>
+                    <color>#2F5D85</color>
+                    <default>false</default>
+                    <label>Released</label>
+                </value>
+                <value>
+                    <fullName>Encashed</fullName>
+                    <color>#0B6FCE</color>
+                    <default>false</default>
+                    <label>Encashed</label>
+                </value>
+                <value>
+                    <fullName>Not Active yet</fullName>
+                    <default>false</default>
+                    <label>Not Active yet</label>
+                </value>
+                <value>
+                    <fullName>Encashment in progress</fullName>
+                    <default>false</default>
+                    <label>Encashment in progress</label>
+                </value>
+                <value>
+                    <fullName>Inactive_Addendum</fullName>
+                    <default>false</default>
+                    <label>Inactive_Addendum</label>
+                </value>
+                <value>
+                    <fullName>Pending to be Released</fullName>
+                    <default>false</default>
+                    <label>Pending to be Released</label>
+                </value>
+                <value>
+                    <fullName>Pending Validation</fullName>
+                    <default>false</default>
+                    <label>Pending Validation</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Security_Type__c</fullName>
         <description>SARA - Security type</description>
         <externalId>false</externalId>
         <label>Security Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Bank Guarantee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CCG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cross Border Guarantee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CWA Mutual Fund</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DIP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Guarantee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GDI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Hong Kong Trust Fund</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Insurance Bond</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ireland Trust Fund</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Joint Bank Guarantee (India)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Letter Of Credit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Letter Of Undertaking</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MCBG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MCPG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Others</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>OTOC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Parent Company Guarantee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recapitalization</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Standby Letter Of Credit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Statement Of Assignment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Surety Bond</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TAANZ Bonding Scheme</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Time Deposit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Time Deposit Pledge</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Transit Account</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Bank Guarantee</fullName>
+                    <default>false</default>
+                    <label>Bank Guarantee</label>
+                </value>
+                <value>
+                    <fullName>CCG</fullName>
+                    <default>false</default>
+                    <label>CCG</label>
+                </value>
+                <value>
+                    <fullName>Cross Border Guarantee</fullName>
+                    <default>false</default>
+                    <label>Cross Border Guarantee</label>
+                </value>
+                <value>
+                    <fullName>CWA Mutual Fund</fullName>
+                    <default>false</default>
+                    <label>CWA Mutual Fund</label>
+                </value>
+                <value>
+                    <fullName>DIP</fullName>
+                    <default>false</default>
+                    <label>DIP</label>
+                </value>
+                <value>
+                    <fullName>Financial Guarantee</fullName>
+                    <default>false</default>
+                    <label>Financial Guarantee</label>
+                </value>
+                <value>
+                    <fullName>GDI</fullName>
+                    <default>false</default>
+                    <label>GDI</label>
+                </value>
+                <value>
+                    <fullName>Hong Kong Trust Fund</fullName>
+                    <default>false</default>
+                    <label>Hong Kong Trust Fund</label>
+                </value>
+                <value>
+                    <fullName>Insurance Bond</fullName>
+                    <default>false</default>
+                    <label>Insurance Bond</label>
+                </value>
+                <value>
+                    <fullName>Ireland Trust Fund</fullName>
+                    <default>false</default>
+                    <label>Ireland Trust Fund</label>
+                </value>
+                <value>
+                    <fullName>Joint Bank Guarantee (India)</fullName>
+                    <default>false</default>
+                    <label>Joint Bank Guarantee (India)</label>
+                </value>
+                <value>
+                    <fullName>Letter Of Credit</fullName>
+                    <default>false</default>
+                    <label>Letter Of Credit</label>
+                </value>
+                <value>
+                    <fullName>Letter Of Undertaking</fullName>
+                    <default>false</default>
+                    <label>Letter Of Undertaking</label>
+                </value>
+                <value>
+                    <fullName>Manifestacion de Bienes</fullName>
+                    <default>false</default>
+                    <label>Manifestacion de Bienes</label>
+                </value>
+                <value>
+                    <fullName>MCBG</fullName>
+                    <default>false</default>
+                    <label>MCBG</label>
+                </value>
+                <value>
+                    <fullName>MCPG</fullName>
+                    <default>false</default>
+                    <label>MCPG</label>
+                </value>
+                <value>
+                    <fullName>Others</fullName>
+                    <default>false</default>
+                    <label>Others</label>
+                </value>
+                <value>
+                    <fullName>OTOC</fullName>
+                    <default>false</default>
+                    <label>OTOC</label>
+                </value>
+                <value>
+                    <fullName>Parent Company Guarantee</fullName>
+                    <default>false</default>
+                    <label>Parent Company Guarantee</label>
+                </value>
+                <value>
+                    <fullName>Recapitalization</fullName>
+                    <default>false</default>
+                    <label>Recapitalization</label>
+                </value>
+                <value>
+                    <fullName>Standby Letter Of Credit</fullName>
+                    <default>false</default>
+                    <label>Standby Letter Of Credit</label>
+                </value>
+                <value>
+                    <fullName>Statement Of Assignment</fullName>
+                    <default>false</default>
+                    <label>Statement Of Assignment</label>
+                </value>
+                <value>
+                    <fullName>Surety Bond</fullName>
+                    <default>false</default>
+                    <label>Surety Bond</label>
+                </value>
+                <value>
+                    <fullName>TAANZ Bonding Scheme</fullName>
+                    <default>false</default>
+                    <label>TAANZ Bonding Scheme</label>
+                </value>
+                <value>
+                    <fullName>Time Deposit</fullName>
+                    <default>false</default>
+                    <label>Time Deposit</label>
+                </value>
+                <value>
+                    <fullName>Time Deposit Pledge</fullName>
+                    <default>false</default>
+                    <label>Time Deposit Pledge</label>
+                </value>
+                <value>
+                    <fullName>Transit Account</fullName>
+                    <default>false</default>
+                    <label>Transit Account</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Source__c</fullName>
@@ -619,7 +756,7 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
         <externalId>false</externalId>
         <formula>IF( ISPICKVAL( Security_Status__c , &quot;Active&quot;), IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpe&quot;,&quot;Active&quot;,30,30), 
 
-IF(or( ISPICKVAL( Security_Status__c , &quot;Released&quot;), ISPICKVAL( Security_Status__c , &quot;Encashed&quot;),ISPICKVAL( Security_Status__c , &quot;Not Active Yet&quot;) ),
+IF(or( ISPICKVAL( Security_Status__c , &quot;Released&quot;), ISPICKVAL( Security_Status__c , &quot;Encashed&quot;),ISPICKVAL( Security_Status__c , &quot;Not Active Yet&quot;),ISPICKVAL( Security_Status__c , &quot;Inactive_Addendum&quot;) ),
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpf&quot;,&quot;Released&quot;,30,30),
 
 IF( ISPICKVAL( Security_Status__c , &quot;Expired&quot;),  
@@ -628,9 +765,15 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpg&quot;,&quot;Expir
 IF( ISPICKVAL( Security_Status__c , &quot;Encashment in progress&quot;),  
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004RhqP&quot;,&quot;Encashment in progress&quot;,30,30),
 
+IF( ISPICKVAL( Security_Status__c , &quot;Pending to be Released&quot;),  
+IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DJop&quot;,&quot;Pending to be Released&quot;,30,30),
+
+IF( ISPICKVAL( Security_Status__c , &quot;Pending Validation&quot;),  
+IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DJop&quot;,&quot;Pending to be Released&quot;,30,30),
+
 IF(ISPICKVAL( Security_Status__c , &quot;Close to Expiry Date&quot;), 
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Requested&quot;,30,30), &quot;error&quot;
-)))))</formula>
+)))))))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status image</label>
         <required>false</required>
@@ -638,6 +781,16 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Two_months_passed_expiry__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used for flagging FS with first call letter required when two months of expiry date have passed. This info goes to the account and then to the case.</description>
+        <externalId>false</externalId>
+        <label>Two months passed expiry</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Unlimited_Security__c</fullName>
@@ -2103,9 +2256,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         </filters>
         <label>Financial Securities Actives - BSP FR</label>
         <language>en_US</language>
-        <sharedTo>
-            <roleAndSubordinatesInternal>StaffFrance</roleAndSubordinatesInternal>
-        </sharedTo>
+        <sharedTo/>
     </listViews>
     <listViews>
         <fullName>N_ASIA_Active_Securities</fullName>
@@ -2328,7 +2479,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
     <validationRules>
         <fullName>Check_Financial_institution_status</fullName>
         <active>true</active>
-        <errorConditionFormula>ISPICKVAL(Financial_Institution__r.Institution_Status__c, &quot;Inactive&quot;)</errorConditionFormula>
+        <errorConditionFormula>AND(OR(ISNEW(),ISCHANGED(Financial_Institution__c)), ISPICKVAL(Financial_Institution__r.Institution_Status__c, &quot;Inactive&quot;))</errorConditionFormula>
         <errorDisplayField>Financial_Institution__c</errorDisplayField>
         <errorMessage>Financial institution is not active. Please request agent to submit a financial security from alternative provider.</errorMessage>
     </validationRules>
@@ -2399,7 +2550,7 @@ NOT( ISPICKVAL( Region__c , &quot;China &amp; North Asia&quot;) )
         <fullName>SARA_Security_must_be_linked_to_HO</fullName>
         <active>true</active>
         <description>check that the financial security is linked to the HO account of the agent (except for cross border guarantees).</description>
-        <errorConditionFormula>AND(NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HO&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;AO&quot;)) , ISNEW(),  not(ispickval(Security_Type__c , &quot;Cross Border Guarantee&quot;)))</errorConditionFormula>
+        <errorConditionFormula>AND(NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HO&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HE&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;AO&quot;)) , ISNEW(),  not(ispickval(Security_Type__c , &quot;Cross Border Guarantee&quot;)))</errorConditionFormula>
         <errorDisplayField>Account__c</errorDisplayField>
         <errorMessage>The financial security must be linked to the HO/AO account of the agent, never to a branch. Please classify the security accordingly or contact your administrator if any doubts.</errorMessage>
     </validationRules>
@@ -2448,11 +2599,24 @@ NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit Pledge&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Transit Account&quot;) ),
 NOT( ISPICKVAL( Security_Type__c , &quot;Financial Guarantee&quot;) ),
-NOT( ISPICKVAL( Security_Type__c , &quot;GDI&quot;) )
+NOT( ISPICKVAL( Security_Type__c , &quot;GDI&quot;) ),
+NOT( ISPICKVAL( Security_Type__c , &quot;Manifestacion de Bienes&quot;) )
 )</errorConditionFormula>
         <errorDisplayField>Security_Type__c</errorDisplayField>
         <errorMessage>Invalid Security Type</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Amend_FS</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Addendum</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/flow/ANG_FS_AddendumFlow?FSToCloneId={!Financial_Security__c.Id}&amp;retURL=/{!Financial_Security__c.AccountId__c}</url>
+    </webLinks>
     <webLinks>
         <fullName>Create_PDF_letter</fullName>
         <availability>online</availability>

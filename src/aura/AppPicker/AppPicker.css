@@ -175,3 +175,7 @@
     position:relative;
     left:1em;
 }
+
+.THIS .terms{
+    min-width:390px;
+}

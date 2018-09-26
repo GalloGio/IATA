@@ -152,14 +152,20 @@ public with sharing class ISSP_Homepage {
 
         }
         myNotificationsList = [Select Notificatin_color__c,n.Type__c, n.Subject__c, n.Message__c, n.Id, n.Due_date__c, n.CreatedDate,Critical_notification__c, Number_of_views__c From Notification__c n where Contact__c=:con.Id and Archive__c=false order by Critical_notification__c DESC, CreatedDate  DESC];
-        appsGrantedList = [Select p.Application_Name__c, p.PortalServiceTranslatedName__c, p.Portal_Application__r.Description__c,p.Portal_Application__r.Service_Description__c,p.Portal_Application__r.Requestable__c,p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c From Portal_Application_Right__c p where p.Contact__c =: user.ContactId and p.My_Apps__c = true and (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested') and p.Portal_Application__r.Hide_on_Homepage__c = false ORDER BY p.Right__c DESC,p.Portal_Application__r.Name];
-        externalLinksList = [Select  p.Name,p.Description__c,p.Service_Description__c, p.Visible__c, p.Requestable__c, p.Application_icon__c, p.Application_URL__c,New_Window__c, p.VisibleCNS__c From Portal_Applications__c p where p.Visible__c = true and p.Requestable__c = false];
+
+        //appsGrantedList = [Select p.Application_Name__c, p.PortalServiceTranslatedName__c, p.Portal_Application__r.Description__c,p.Portal_Application__r.Service_Description__c,p.Portal_Application__r.Requestable__c,p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c From Portal_Application_Right__c p where p.Contact__c =: user.ContactId and p.My_Apps__c = true and (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested') and p.Portal_Application__r.Hide_on_Homepage__c = false ORDER BY p.Right__c DESC,p.Portal_Application__r.Name];
+
+        appsGrantedList = new List<Portal_Application_Right__c>([Select p.Application_Name__c, p.PortalServiceTranslatedName__c ,p.Portal_Application__r.Description__c, p.Portal_Application__r.Requestable__c, p.Application_icon_del__c, p.Portal_Application__r.New_Window__c, p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c,p.Technical_Provisioning_Status__c, p.Case_creation_record_Type__c, p.Portal_Application__r.Service_Description__c, p.Portal_Application__r.Service_Description_Label__c, p.IsSCIMIFG__c
+            From Portal_Application_Right__c p 
+            where p.Contact__c =: user.ContactId and (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested') and p.Portal_Application__r.Hide_on_Homepage__c = false ORDER BY p.Right__c DESC,p.Portal_Application__r.Name]);   
+
+        externalLinksList = [Select  p.Name,p.Description__c,p.Service_Description__c, p.Service_Description_Label__c,  p.Visible__c, p.Requestable__c, p.Application_icon__c, p.Application_URL__c,New_Window__c, p.VisibleCNS__c From Portal_Applications__c p where p.Visible__c = true and p.Requestable__c = false];
         appsPendingApprovalsList = [Select p.Application_icon_del__c, p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__r.New_Window__c, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c From Portal_Application_Right__c p where p.Contact__r.AccountId =: topParentId  and p.Right__c = 'Access Requested'];
         set<Id> appIdSet = new set<Id>();
         for(Portal_Application_Right__c par:appsGrantedList){
             appIdSet.add(par.Portal_Application__c);
         }
-        newAppsList = [Select  p.Description__c,p.Service_Description__c,p.Visible__c, p.Requestable__c, p.Application_icon__c,
+        newAppsList = [Select  p.Description__c,p.Service_Description__c,p.Service_Description_Label__c,p.Visible__c, p.Requestable__c, p.Application_icon__c,
                         p.Application_URL__c, p.Confirm_Box__c, p.Confirm_Text__c
                         From Portal_Applications__c p
                         where p.Visible__c = true and p.Requestable__c = true

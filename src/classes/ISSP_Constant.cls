@@ -115,7 +115,7 @@ Constant Class
         'GloballSalesAgent' => new set<string>{'IATA_GSA'},
         'Agency' => new set<string>{'IATA_Agency'},
         'NonIATAAgent' => new set<string>{'Others', 'Standard_Account'},
-        'OtherCompany' => new set<string>{'Others', 'Standard_Account'},
+        'OtherCompany' => new set<string>{'Others', 'Standard_Account','TIP_Payment_Provider'},
         'TIESS' => new set<string>{'Others', 'IATA_Agency', 'IATA', 'Standard_Account'},
         'GeneralPublic' => new set<string>{'Standard_Account'}
     };
@@ -148,6 +148,7 @@ Constant Class
     // Case RecordType Names map
     public static final Map<String,String> caseTypeMap = new Map<String,String>{
         'DPC Service Request'   => 'DPCSR',
+        'Inter DPCs'   => 'DPCSR',
             'IATA Service Request'  => 'IATASR',
             'IATA Financial Review' => 'IFAP',
             'Application Change Request (DPC Systems - locked)' => 'ACR',

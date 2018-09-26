@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>true</sorted>
+    <standardValue>
+        <fullName>Accreditation</fullName>
+        <default>false</default>
+        <label>Accreditation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Adjustments</fullName>
+        <default>false</default>
+        <label>Adjustments</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Advertising</fullName>
+        <default>false</default>
+        <label>Advertising</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airport IS</fullName>
+        <default>false</default>
+        <label>Airport IS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airsat</fullName>
+        <default>false</default>
+        <label>Airsat</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Application Charges</fullName>
+        <default>false</default>
+        <label>Application Charges</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Approach</fullName>
+        <default>false</default>
+        <label>Approach</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assessment</fullName>
+        <default>false</default>
+        <label>Assessment</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ATC/ATS Licence Fee</fullName>
+        <default>false</default>
+        <label>ATC/ATS Licence Fee</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Aviation Fuel</fullName>
+        <default>false</default>
+        <label>Aviation Fuel</label>
+    </standardValue>
+    <standardValue>
+        <fullName>BIITCO BSP</fullName>
+        <default>false</default>
+        <label>BIITCO BSP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>BSP</fullName>
+        <default>false</default>
+        <label>BSP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cargo IS</fullName>
+        <default>false</default>
+        <label>CargoIS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>CASS</fullName>
+        <default>false</default>
+        <label>CASS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>CDA</fullName>
+        <default>false</default>
+        <label>CDA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Communication Charges</fullName>
+        <default>false</default>
+        <label>Communication Charges</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Consulting</fullName>
+        <default>false</default>
+        <label>Consulting</label>
+    </standardValue>
+    <standardValue>
+        <fullName>DDS</fullName>
+        <default>false</default>
+        <label>DDS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Deposit</fullName>
+        <default>false</default>
+        <label>Deposit</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E&amp;F Services</fullName>
+        <default>false</default>
+        <label>E&amp;F Services</label>
+    </standardValue>
+    <standardValue>
+        <fullName>En-Route</fullName>
+        <default>false</default>
+        <label>En-Route</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Events</fullName>
+        <default>false</default>
+        <label>Events</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Fees</fullName>
+        <default>false</default>
+        <label>Fees</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FF Miles</fullName>
+        <default>false</default>
+        <label>FF Miles</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Financial Charges</fullName>
+        <default>false</default>
+        <label>Financial Charges</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FSS (FDS Division)</fullName>
+        <default>false</default>
+        <label>FSS (FDS Division)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FSS-Fraud (FDS Division)</fullName>
+        <default>false</default>
+        <label>FSS-Fraud (FDS Division)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FSS-Tools (FDS Division)</fullName>
+        <default>false</default>
+        <label>FSS-Tools (FDS Division)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>GAP</fullName>
+        <default>false</default>
+        <label>GAP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP</fullName>
+        <default>false</default>
+        <label>GDP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>GDS</fullName>
+        <default>false</default>
+        <label>GDS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ICCS</fullName>
+        <default>false</default>
+        <label>ICCS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ID Cards/TIDS</fullName>
+        <default>false</default>
+        <label>ID Cards/TIDS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IFG (FDS Division)</fullName>
+        <default>false</default>
+        <label>IFG (FDS Division)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interest</fullName>
+        <default>false</default>
+        <label>Interest</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Legal</fullName>
+        <default>false</default>
+        <label>Legal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Lighting</fullName>
+        <default>false</default>
+        <label>Lighting</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Market IS</fullName>
+        <default>false</default>
+        <label>Market IS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Meetings and Conferen</fullName>
+        <default>false</default>
+        <label>Meetings and Conferen</label>
+    </standardValue>
+    <standardValue>
+        <fullName>MER (MER Division)</fullName>
+        <default>false</default>
+        <label>MER (MER Division)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Meteorology</fullName>
+        <default>false</default>
+        <label>Meteorology</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Misc</fullName>
+        <default>false</default>
+        <label>Misc</label>
+    </standardValue>
+    <standardValue>
+        <fullName>No SIS compliant</fullName>
+        <default>false</default>
+        <label>No SIS compliant</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Oceanic</fullName>
+        <default>false</default>
+        <label>Oceanic</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Over-flight</fullName>
+        <default>false</default>
+        <label>Over-flight</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Parking</fullName>
+        <default>false</default>
+        <label>Parking</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Passenger Services</fullName>
+        <default>false</default>
+        <label>Passenger Services</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pax IS</fullName>
+        <default>false</default>
+        <label>Pax IS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>PBI (FDS Division)</fullName>
+        <default>false</default>
+        <label>PBI (FDS Division)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Penalty</fullName>
+        <default>false</default>
+        <label>Penalty</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Publication</fullName>
+        <default>false</default>
+        <label>Publication</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Publications – Cargo</fullName>
+        <default>false</default>
+        <label>Publications – Cargo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Publications - PAX</fullName>
+        <default>false</default>
+        <label>Publications - PAX</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Runway Charges</fullName>
+        <default>false</default>
+        <label>Runway Charges</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Security</fullName>
+        <default>false</default>
+        <label>Security</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SFO (SFO Division)</fullName>
+        <default>false</default>
+        <label>SFO (SFO Division)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Strategic Partnerships</fullName>
+        <default>false</default>
+        <label>Strategic Partnerships</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TACT</fullName>
+        <default>false</default>
+        <label>TACT</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Taxes</fullName>
+        <default>false</default>
+        <label>Taxes</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TIESS</fullName>
+        <default>false</default>
+        <label>TIESS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Timatic</fullName>
+        <default>false</default>
+        <label>Timatic</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training</fullName>
+        <default>false</default>
+        <label>Training</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training: Classroom</fullName>
+        <default>false</default>
+        <label>Training: Classroom</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training: In Company</fullName>
+        <default>false</default>
+        <label>Training: In Company</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training: RTC Partnerships</fullName>
+        <default>false</default>
+        <label>Training: RTC Partnerships</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training: Self Study</fullName>
+        <default>false</default>
+        <label>Training: Self Study</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Weblink</fullName>
+        <default>false</default>
+        <label>Weblink</label>
+    </standardValue>
+</StandardValueSet>

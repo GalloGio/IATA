@@ -12,6 +12,15 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>ipinfo_call_enabled__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Enable or disable the ipinfo call to get IP location</description>
+        <externalId>false</externalId>
+        <label>ipinfo call enabled</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>OneId Global Settings</label>
     <visibility>Protected</visibility>
 </CustomObject>

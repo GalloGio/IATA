@@ -35,6 +35,7 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>AM_Involved__c</fullName>
+        <description>Who are involved in an account milestone</description>
         <externalId>false</externalId>
         <label>Involved</label>
         <required>false</required>
@@ -42,6 +43,7 @@
     </fields>
     <fields>
         <fullName>AM_Responsible__c</fullName>
+        <description>Who is responsible for an account plan milestone</description>
         <externalId>false</externalId>
         <label>Responsible</label>
         <required>false</required>
@@ -49,6 +51,7 @@
     </fields>
     <fields>
         <fullName>AM_Support_Required_from_Account__c</fullName>
+        <description>Support an account plan milestone requires</description>
         <externalId>false</externalId>
         <label>Support Required from Account</label>
         <required>false</required>
@@ -56,6 +59,7 @@
     </fields>
     <fields>
         <fullName>Bridge__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Bridge</label>
         <required>false</required>
@@ -65,35 +69,43 @@
         <fullName>Call_TIme__c</fullName>
         <externalId>false</externalId>
         <label>Call Time (Min)</label>
-        <picklist>
-            <picklistValues>
-                <fullName>0</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>10</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>20</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>30</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>true</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                    <label>10</label>
+                </value>
+                <value>
+                    <fullName>20</fullName>
+                    <default>false</default>
+                    <label>20</label>
+                </value>
+                <value>
+                    <fullName>30</fullName>
+                    <default>false</default>
+                    <label>30</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Communication_Sent_Date__c</fullName>
@@ -107,40 +119,60 @@
         <description>To be used in tasks automatically created for DPC cases (DPC Create Communication Task workflow).</description>
         <externalId>false</externalId>
         <label>Communication Sent</label>
-        <picklist>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Data_Quality_Score__c =100, &quot;Key Event/Task Details Captured&quot;,&quot;Missing: &quot;&amp;IF( LEN( Subject ) &lt; 3,&quot;Quality Subject Description, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN(WhoId)=0,&quot;Contact/Lead Reference, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN(WhatId)=0,&quot;Account/Opportunity Reference&quot;,&quot;&quot;))</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( LEN(  Subject  ) &lt; 3, 0,30) + IF( LEN(  WhoId ) = 0, 0,40) + IF( LEN(  WhatId ) = 0, 0,30)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Identifying_Members__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Identifying Members</label>
         <required>false</required>
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Involved__c</fullName>
-        <externalId>false</externalId>
-        <label>Involved</label>
-        <required>false</required>
-        <type>TextArea</type>
-    </fields>
-    <fields>
         <fullName>Issuer__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Issuer</label>
         <required>false</required>
@@ -148,6 +180,7 @@
     </fields>
     <fields>
         <fullName>Members__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Members</label>
         <required>false</required>
@@ -155,6 +188,7 @@
     </fields>
     <fields>
         <fullName>Objectives__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Objectives</label>
         <required>false</required>
@@ -162,6 +196,7 @@
     </fields>
     <fields>
         <fullName>Participants__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Participants</label>
         <required>false</required>
@@ -169,6 +204,7 @@
     </fields>
     <fields>
         <fullName>Recipient__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Recipient</label>
         <required>false</required>
@@ -176,20 +212,15 @@
     </fields>
     <fields>
         <fullName>Responses__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Responses</label>
         <required>false</required>
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Responsible__c</fullName>
-        <externalId>false</externalId>
-        <label>Responsible</label>
-        <required>false</required>
-        <type>TextArea</type>
-    </fields>
-    <fields>
         <fullName>Result_Summary__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Result Summary</label>
         <required>false</required>
@@ -197,15 +228,16 @@
     </fields>
     <fields>
         <fullName>Sender__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Sender</label>
         <required>false</required>
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Support_Required_from_Account__c</fullName>
+        <fullName>Subject__c</fullName>
         <externalId>false</externalId>
-        <label>Support Required from Account</label>
+        <label>Subject</label>
         <required>false</required>
         <type>TextArea</type>
     </fields>
@@ -223,6 +255,7 @@
     </fields>
     <fields>
         <fullName>Title__c</fullName>
+        <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>
         <label>Title</label>
         <required>false</required>
@@ -313,7 +346,6 @@
         <label>Today&apos;s Tasks</label>
     </listViews>
     <searchLayouts>
-        <listViewButtons>Close_Task</listViewButtons>
         <searchResultsAdditionalFields>TASK.SUBJECT</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>TASK.CREATED_DATE</searchResultsAdditionalFields>

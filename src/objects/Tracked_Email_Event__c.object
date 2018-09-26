@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -56,11 +53,32 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Attachment__c</fullName>
+        <externalId>false</externalId>
+        <label>Attachment</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Unique_Field__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>Event Unique Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Parent__c</fullName>
         <externalId>false</externalId>
         <label>Tracked Email</label>
         <referenceTo>Tracked_Email__c</referenceTo>
-        <relationshipLabel>Tracked Email Events</relationshipLabel>
+        <relationshipLabel>Tracked Email Events History</relationshipLabel>
         <relationshipName>Tracked_Email_Events</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
@@ -69,43 +87,71 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>Recipient_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipient Address</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recipient_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipient Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>processed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>delivered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>open</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>opened</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>signed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>audit_trail_ready</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>signed_document_ready</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>processed</fullName>
+                    <default>false</default>
+                    <label>processed</label>
+                </value>
+                <value>
+                    <fullName>delivered</fullName>
+                    <default>false</default>
+                    <label>delivered</label>
+                </value>
+                <value>
+                    <fullName>open</fullName>
+                    <default>false</default>
+                    <label>open</label>
+                </value>
+                <value>
+                    <fullName>opened</fullName>
+                    <default>false</default>
+                    <label>opened</label>
+                </value>
+                <value>
+                    <fullName>signed</fullName>
+                    <default>false</default>
+                    <label>signed</label>
+                </value>
+                <value>
+                    <fullName>audit_trail_ready</fullName>
+                    <default>false</default>
+                    <label>audit_trail_ready</label>
+                </value>
+                <value>
+                    <fullName>signed_document_ready</fullName>
+                    <default>false</default>
+                    <label>signed_document_ready</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Timestamp__c</fullName>
@@ -114,6 +160,17 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Tracked_Email_Event_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tracked Email Event Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>Tracked Email Event</label>
     <nameField>
@@ -124,4 +181,5 @@
     <pluralLabel>Tracked Email Events</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

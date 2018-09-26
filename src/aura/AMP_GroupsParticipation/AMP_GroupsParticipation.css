@@ -1,9 +1,26 @@
 .THIS td, .THIS th{
   white-space: normal !important;
+  word-wrap: break-word !important;
 }
 .THIS .dontIndent {
   padding-left: 0.5em !important;
 }
 .THIS .underGroup {
     background-color: rgb(160, 195, 248);
+}
+
+.THIS .blue-icon {
+    display: inline;
+    margin-left: 1em;
+}
+
+.THIS .blue-icon > .slds-icon {
+    fill: blue;
+}
+
+@media (max-width: 1200px) {
+    .THIS td {
+        white-space: normal !important;
+    }
+
 }

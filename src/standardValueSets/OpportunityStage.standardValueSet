@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Ordered - not delivered</fullName>
+        <default>false</default>
+        <label>Ordered - not delivered</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>95</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending</fullName>
+        <default>false</default>
+        <label>Pending</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>50</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed</fullName>
+        <default>false</default>
+        <label>Closed</label>
+        <closed>true</closed>
+        <forecastCategory>Closed</forecastCategory>
+        <probability>100</probability>
+        <won>true</won>
+    </standardValue>
+    <standardValue>
+        <fullName>Needs Assessment</fullName>
+        <default>false</default>
+        <description>3. Needs assessment</description>
+        <label>Needs Assessment</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>20</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>Presentation Proposal</fullName>
+        <default>false</default>
+        <label>Presentation Proposal</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>20</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>Decision Pending</fullName>
+        <default>false</default>
+        <label>Decision Pending</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>35</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>Contract Preparation</fullName>
+        <default>false</default>
+        <label>Contract Preparation</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>80</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed / Sold</fullName>
+        <default>false</default>
+        <label>Closed / Sold</label>
+        <closed>true</closed>
+        <forecastCategory>Closed</forecastCategory>
+        <probability>100</probability>
+        <won>true</won>
+    </standardValue>
+    <standardValue>
+        <fullName>1. Prospect</fullName>
+        <default>false</default>
+        <label>1. Prospect</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>5</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>2. Qualified Prospect</fullName>
+        <default>false</default>
+        <label>2. Qualified Prospect</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>10</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>3. Needs Assessment</fullName>
+        <default>false</default>
+        <label>3. Needs Assessment</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>20</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>4. Needs confirmed/Proposal stage</fullName>
+        <default>false</default>
+        <label>4. Needs confirmed/Proposal stage</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>25</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>5. Decision pending</fullName>
+        <default>false</default>
+        <label>5. Decision pending</label>
+        <closed>false</closed>
+        <forecastCategory>BestCase</forecastCategory>
+        <probability>35</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>6. Contract stage</fullName>
+        <default>false</default>
+        <label>6. Contract stage</label>
+        <closed>false</closed>
+        <forecastCategory>Forecast</forecastCategory>
+        <probability>75</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>7. Closed Sales / Sold</fullName>
+        <default>false</default>
+        <label>7. Closed Sales / Sold</label>
+        <closed>true</closed>
+        <forecastCategory>Closed</forecastCategory>
+        <probability>100</probability>
+        <won>true</won>
+    </standardValue>
+    <standardValue>
+        <fullName>y. Pending</fullName>
+        <default>false</default>
+        <label>y. Pending</label>
+        <closed>true</closed>
+        <forecastCategory>Omitted</forecastCategory>
+        <probability>0</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>z. Lost</fullName>
+        <default>false</default>
+        <description>This field now replaces &apos;sales process aborted&apos;.</description>
+        <label>z. Lost</label>
+        <closed>true</closed>
+        <forecastCategory>Omitted</forecastCategory>
+        <probability>0</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>Analysis</fullName>
+        <default>false</default>
+        <description>1.Receive Application informaiton
+2. Establish school Potential
+3. Quality norms respected</description>
+        <label>Analysis</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>50</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>CP - Application Audit</fullName>
+        <default>false</default>
+        <description>1. PM to approve lesson plan, instructor qualification
+2. Visit of the premises
+3. Final decision on Authorization</description>
+        <label>CP - Application Audit</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>60</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>CP - Authorization</fullName>
+        <default>false</default>
+        <description>school has past the test!</description>
+        <label>CP - Authorization</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>100</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - 4. Needs confirmed proposal stage</fullName>
+        <default>false</default>
+        <description>GDP Sales Process</description>
+        <label>GDP - 4. Needs confirmed proposal stage</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>0</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - 3. Needs assessment</fullName>
+        <default>false</default>
+        <description>Global Data Products Sales Process</description>
+        <label>GDP - 3. Needs assessment</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>0</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - 5. Decision pending</fullName>
+        <default>false</default>
+        <description>Global Data Products Sales Process</description>
+        <label>GDP - 5. Decision pending</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>0</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - 6. Contract stage</fullName>
+        <default>false</default>
+        <description>Global Data Process Sales Process</description>
+        <label>GDP - 6. Contract stage</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>60</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - p. Renewal pending</fullName>
+        <default>false</default>
+        <description>Global Data Products Sales Process</description>
+        <label>GDP - p. Renewal pending</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>90</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - r. Renewed</fullName>
+        <default>false</default>
+        <description>Global Data Products - Sales Process</description>
+        <label>GDP - r. Renewed</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>100</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - lr. Lost renewal</fullName>
+        <default>false</default>
+        <description>Global Data Products - Sales process</description>
+        <label>GDP - lr. Lost renewal</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>0</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - 7. Sold</fullName>
+        <default>false</default>
+        <description>Global Data Products Sales Process</description>
+        <label>GDP - 7. Sold</label>
+        <closed>true</closed>
+        <forecastCategory>Closed</forecastCategory>
+        <probability>100</probability>
+        <won>true</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - y.Pending</fullName>
+        <default>false</default>
+        <label>GDP - y.Pending</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>0</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - z.Lost</fullName>
+        <default>false</default>
+        <label>GDP - z.Lost</label>
+        <closed>true</closed>
+        <forecastCategory>Omitted</forecastCategory>
+        <probability>0</probability>
+        <won>false</won>
+    </standardValue>
+    <standardValue>
+        <fullName>GDP - fr. Future renewal</fullName>
+        <default>false</default>
+        <label>GDP - fr. Future renewal</label>
+        <closed>false</closed>
+        <forecastCategory>Pipeline</forecastCategory>
+        <probability>70</probability>
+        <won>false</won>
+    </standardValue>
+</StandardValueSet>

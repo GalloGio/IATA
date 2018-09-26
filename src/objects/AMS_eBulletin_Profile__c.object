@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -48,10 +44,11 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>AMS eBulletin Profile</description>
-    <enableActivities>false</enableActivities>
+    <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -63,6 +60,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Agency Changes</inlineHelpText>
         <label>Agency Changes</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -73,6 +71,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Defaults</inlineHelpText>
         <label>Defaults</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -83,6 +82,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Irregularities</inlineHelpText>
         <label>Irregularities</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -93,6 +93,7 @@
         <externalId>false</externalId>
         <inlineHelpText>New Application Processes</inlineHelpText>
         <label>New Application Processes</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -101,6 +102,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Agency_Info_Reinstatements</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -111,6 +113,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Reviews</inlineHelpText>
         <label>Reviews</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -121,6 +124,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Termination &amp; Closures</inlineHelpText>
         <label>Termination &amp; Closures</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -131,6 +135,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Geographic Area 1 - North, Central, South America &amp; Environs</inlineHelpText>
         <label>Area 1</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -141,6 +146,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Geographic Area 2 - Europe, Middle East, Africa</inlineHelpText>
         <label>Area 2</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -151,6 +157,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Geographic Area 3 -  Far East, Australia, New Zealand, Pacific Islands</inlineHelpText>
         <label>Area 3</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -159,6 +166,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>CNS</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -169,6 +177,7 @@
         <inlineHelpText>Countries List</inlineHelpText>
         <label>Countries</label>
         <length>32768</length>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -179,16 +188,20 @@
         <externalId>false</externalId>
         <inlineHelpText>Countries</inlineHelpText>
         <label>Countries - Not Used</label>
-        <picklist>
-            <picklistValues>
-                <fullName>-- Select Countries --</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>-- Select Countries --</fullName>
+                    <default>false</default>
+                    <label>-- Select Countries --</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -197,21 +210,26 @@
         <externalId>false</externalId>
         <inlineHelpText>Daily Frequency</inlineHelpText>
         <label>Daily Frequency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Once a day</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5 times a day</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Once a day</fullName>
+                    <default>true</default>
+                    <label>Once a day</label>
+                </value>
+                <value>
+                    <fullName>5 times a day</fullName>
+                    <default>false</default>
+                    <label>5 times a day</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Last_NotificationBatch_Run__c</fullName>
@@ -219,6 +237,7 @@
         <externalId>false</externalId>
         <label>Last Notification Batch Run</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -227,6 +246,7 @@
         <externalId>false</externalId>
         <label>Last Run</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -236,6 +256,7 @@
         <description>Opt in</description>
         <externalId>false</externalId>
         <label>Opt in</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -246,6 +267,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Opt out from Bulletin</inlineHelpText>
         <label>Opt out from Bulletin</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -256,6 +278,7 @@
         <externalId>false</externalId>
         <inlineHelpText>CASS Associates</inlineHelpText>
         <label>CASS Associates, Import, Courier Agents</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -266,6 +289,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Cargo</inlineHelpText>
         <label>Cargo</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -276,6 +300,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Domestic (China, Indonesia)</inlineHelpText>
         <label>Domestic (China, Indonesia)</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -286,6 +311,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Passenger</inlineHelpText>
         <label>Passenger</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -298,6 +324,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -309,6 +336,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Suspend Subscription</inlineHelpText>
         <label>Suspend Subscription</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -316,16 +344,20 @@
         <fullName>TimeZone__c</fullName>
         <externalId>false</externalId>
         <label>TimeZone</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>User__c</fullName>
@@ -337,6 +369,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>AMS_eBulletin_Profiles</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -377,9 +410,11 @@
     </listViews>
     <nameField>
         <label>AMS eBulletin Profile Name</label>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>AMS eBulletin Profiles</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Daily</fullName>
         <active>true</active>
@@ -587,4 +622,5 @@ Program_Domestic__c == false
 )</errorConditionFormula>
         <errorMessage>WEEKLY Bulletin - Please select a Program</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

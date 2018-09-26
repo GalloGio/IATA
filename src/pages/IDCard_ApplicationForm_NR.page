@@ -209,7 +209,7 @@
         }
         var popupStatus = 0;
         
-        $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN").click(function() {
+        $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN,#AssistTravelersSpecialNeeds-EN,#Notionsessent\\'lentarifetbillet-FR,#Adv\\.SkillsJourneyPriceTicket-EN,#ServingtheTravelCustomer-EN,#SocialMediaforTravelIndustry-EN,#Acc\\.Fin\\.Mgmtforagencies-EN").click(function() {
             
             //Aligning our box in the middle
             var windowWidth = document.documentElement.clientWidth;
@@ -256,7 +256,26 @@
             }
             if ($(this).is("#TravelAgencyFees-EN")) {
                 $("#popup_Content").html("{!travelAgencyFees_Description}");
-            }                    
+            }
+            //RN-INC419676
+            if ($(this).is("#AssistTravelersSpecialNeeds-EN")) {
+                $("#popup_Content").html("{!assisttravelersspecialneeds_Description}");
+            }       
+            if ($(this).is("#Notionsessent\\'lentarifetbillet-FR")) {
+                $("#popup_Content").html("{!notionsessentlentarifetbillet_Description}");
+            } 
+            if ($(this).is("#Adv\\.SkillsJourneyPriceTicket-EN")) {
+                $("#popup_Content").html("{!advskillsjourneypriceticket_Description}");
+            }
+            if ($(this).is("#ServingtheTravelCustomer-EN")) {
+                $("#popup_Content").html("{!servingthetravelcustomer_Description}");
+            }
+            if ($(this).is("#SocialMediaforTravelIndustry-EN")) {
+                $("#popup_Content").html("{!socialmediafortravelindustry_Description}");
+            }
+            if ($(this).is("#Acc\\.Fin\\.Mgmtforagencies-EN")) {
+                $("#popup_Content").html("{!accfinmgmtforagencies_Description}");
+            }          
             
             //centering
             $("#popupLogin").css({
@@ -738,7 +757,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                                 <apex:column headerValue="{!$Label.IDCard_Description}">
                                     <apex:outputText value="{!d.Description}" />
                                 </apex:column>
-                            </apex:pageBlockTable>
+                            </apex:pageBlockTable> 
                             
                             
                         </apex:pageBlockSection>
@@ -939,7 +958,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                             <table id="expediteTable">
                                 <tr>
                                     <td style="width: 170px">
-                                        <span class="labelCol">{!$Label.IDCard_Expedite_Delivery}</span>
+                                        <span class="labelCol">{!$Label.IDCard_Expedite_Delivery}</span>                                          
                                     </td>
                                     <td>
                                         <apex:inputField id="chckExpedite" value="{!IDCardApplicationNR.IDCard_Expedite_Delivery__c}">
@@ -947,10 +966,10 @@ rendered="{!isEmployee}" accept="application/pdf" />
                                         </apex:inputField>
                                         &nbsp;&nbsp; 
                                         <apex:outputText id="lblExpedite" value="{!expediteFees} {!IDCardApplicationNR.CurrencyIsoCode}" label="" rendered="{!IsExpediteAvailable}" />
-                                    </td>
+                                    </td>                                     
                                 </tr>
                             </table>
-                            
+                                  <span>{!$Label.IDCard_Expedite_Note}</span>                             
                         </apex:actionRegion>
                         <script> 
                         var tableStyle = document.getElementById('expediteTable').style;                                

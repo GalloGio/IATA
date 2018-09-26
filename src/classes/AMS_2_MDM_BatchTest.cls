@@ -21,16 +21,20 @@ private class AMS_2_MDM_BatchTest {
       
 
       List<Account> agencylist = new List<Account>();
-      Account a1 = new Account(Name='Test1 Agency',IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, IATACode__c = '12345678');
-      Account a2 = new Account(Name='Test2 Agency',IATA_ISO_Country__c = isoc2.id, Sent_to_external_system__c = true, IATACode__c = '12345678');
-      Account a3 = new Account(Name='Test3 Agency',IATA_ISO_Country__c = isoc3.id, Sent_to_external_system__c = true, IATACode__c = '12345678');
+      Account a1 = new Account(Name='Test1 Agency',IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, IATACode__c = '12345678', Location_Class__c = 'P');
+      Account a2 = new Account(Name='Test2 Agency',IATA_ISO_Country__c = isoc2.id, Sent_to_external_system__c = true, IATACode__c = '12345678', Location_Class__c = 'P');
+      Account a3 = new Account(Name='Test3 Agency',IATA_ISO_Country__c = isoc3.id, Sent_to_external_system__c = true, IATACode__c = '12345678', Location_Class__c = 'P');
       agencylist.add(a1);
       agencylist.add(a2);
       agencylist.add(a3);
       insert agencylist;
 
-      AMS_ChangeCodes__c cc = new AMS_ChangeCodes__c(Name = 'test', Change_Code__c = 'TST', Billable__c = true, Integration_RecId__c='C');
+      AMS_ChangeCodes__c cc = new AMS_ChangeCodes__c(Name = 'test', Change_Code__c = 'TST', Billable__c = true, Integration_RecId__c='C', Billable_Location_Class__c = 'P');
       insert cc;
+
+      AMS_Change_Codes_Billable_Setup__c ccbs =  new AMS_Change_Codes_Billable_Setup__c(Name = 'TST', Change_Code__c = 'TST', 
+          Country_To_Exclude__c = 'TS', Location_Class_To_Exclude__c = 'P');
+      insert ccbs;      
 
       List<Agency_Applied_Change_code__c> aacclist = new List<Agency_Applied_Change_code__c>();
       Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = a1.Id, Change_Code__c = 'TST',  Sent_to_external_system__c = false);
@@ -78,7 +82,10 @@ private class AMS_2_MDM_BatchTest {
       countryString = string.join(tmp1Country,'\',\'');
       countryString = '\'' + countryString + '\'';
 
-      sQuery = 'SELECT Change_Code__c, Account__c, Account__r.IATACode__c, Account__r.Location_Class__c, Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c ' +
+
+      sQuery = 'SELECT Change_Code__c, Account__c, Account__r.IATACode__c, Account__r.Location_Class__c, ' +
+                        'Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c, ' +
+                        'Account__r.IATA_ISO_Country__r.Iso_code__c, OSCAR__c ' +
                     'FROM Agency_Applied_Change_code__c ' +
                         'where Change_Code__c <> null ' +
                         'and Account__r.IATACode__c <> null ' +
@@ -119,7 +126,7 @@ private class AMS_2_MDM_BatchTest {
                         and Account__r.Sent_to_External_System__c = true 
                         and Change_Code__c = 'TST'
                         and Account__r.IATA_ISO_Country__r.name = 'Test1' ];
-        System.assertEquals(i2, 0);
+        System.assertEquals(i2, 1);
   }
 
   static testmethod void test_area2() {

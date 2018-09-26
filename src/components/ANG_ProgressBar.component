@@ -1,0 +1,189 @@
+<apex:component controller="ANG_ProgressBar">
+  <apex:attribute name="helperParam" type="ANG_ProgressBarHelper" description="Helper" assignTo="{! helper}" />
+
+  <style>
+  /*
+	*, *:after, *:before {
+	  margin: 0;
+	  padding: 0;
+	  box-sizing: border-box;
+	  font-family: "Open Sans";
+	  font-weight: bold; 
+	}
+	*/
+	/* Form ANG_progress */
+	.ANG_progress {
+	  width:  95%;
+	  margin: 20px auto;
+	  text-align: center;
+	  height: auto;
+	}
+	.ANG_progress .circle,
+	.ANG_progress .bar {
+	  margin-top: 10px;
+	  display: inline-block;
+	  background: #fff;
+	  width: 40px; height: 40px;
+	  border-radius: 40px;
+	  border: 1px solid #848489;	 
+	}
+	.ANG_progress .circle.done {
+	  margin-top: 10px;
+	  display: inline-block;
+	  background: #fff;
+	  width: 40px; height: 40px;
+	  border-radius: 40px;
+	  border: 2px solid #58d152;	  
+	}	
+	.ANG_progress .circle.inProgress {
+	  margin-top: 10px;
+	  display: inline-block;
+	  background: #fff;
+	  width: 40px; height: 40px;
+	  border-radius: 40px;
+	  border: 2px solid #f2a635;	  
+	}	
+
+	.ANG_progress .bar {
+	  position: relative;
+	  width: 80px;
+	  height: 6px;
+	  margin: 0 1px 32px 1px;
+	  border-left: none;
+	  border-right: none;
+	  border-radius: 0;
+	}
+	.ANG_progress .circle .label {
+	  display: inline-block;
+	  width: 32px;
+	  height: 32px;
+	  line-height: 32px;
+	  border-radius: 32px;
+	  
+	  color: #b5b5ba;
+	  font-size: 17px;
+	}
+	.ANG_progress .circle .title {
+	  color: #b5b5ba;
+	  font-size: 13px;
+	  line-height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+	}
+	.centerInProgress {
+	  top: 5px !important;
+	  margin-left: -2px !important;
+	}		
+	.centerOk {
+	  top: 5px !important;
+	  margin-left: -3px !important;
+	}	
+	.centerError {
+	  top: 5px !important;
+	  margin-left: -2px !important;
+	}		
+
+	/* Done / Active */
+	.ANG_progress .bar.done {
+	  background: #d3d1d1;
+	}
+	/*.ANG_progress .circle.done {
+	  background: #d3d1d1;
+	}*/
+	.ANG_progress .circle.inProgress .label {
+	  margin-top: 2px;
+	  color: #FFF;
+	  background: #f2a635;
+	}
+	.ANG_progress .circle.inProgress .title {
+	  color: #444;
+	  white-space:nowrap;
+	}	
+	.ANG_progress .circle.done .label {
+	  margin-top: 2px;
+	  color: #FFF;
+	  background: #58d152;
+	}
+	.ANG_progress .circle.done .title {
+	  color: #444;
+	  white-space:nowrap;
+	}
+	.ANG_progress .circle.error .label {
+	  margin-top: 2px;
+	  color: #FFF;
+	  background: #c81a1a;
+	}	
+	.ANG_progress .circle.error .title {
+	  color: #444;
+	  white-space:nowrap;
+	}
+
+	.ANG_progress .circle.notDone .label {
+	  margin-top: 2px;
+	  color: #FFF;
+	}	
+	.ANG_progress .circle.notDone .title {
+	  color: #444;
+	  white-space:nowrap;
+	}
+
+
+	.ANG_progress .circle.active .label {
+	  color: #FFF;
+	  background: #0c95be;
+	}
+	.ANG_progress .circle.active .title {
+	  color: #0c95be;
+	  white-space:nowrap;
+	}
+  </style>
+
+  <div class="row">
+	<div class="ANG_progress">
+	  <apex:repeat value="{! helper.progressNodes}" var="node">
+
+	  	<apex:outputPanel rendered="{! node.status == 'inProgress'}">
+	  	  <apex:outputPanel rendered="{! node.nodeNumber != 1}">
+	  	  	<span class="bar inProgress"></span>
+	  	  </apex:outputPanel>  	
+		  <div class="circle inProgress">
+		  	<span class="label"><i class="glyphicon glyphicon-play centerInProgress"></i></span>
+		    <span class="title">{! node.title}</span>
+		  </div>
+	  	</apex:outputPanel>
+
+	  	<apex:outputPanel rendered="{! node.status == 'done'}">
+	  	  <apex:outputPanel rendered="{! node.nodeNumber != 1}">
+	  	  	<span class="bar done"></span>
+	  	  </apex:outputPanel>  	
+		  <div class="circle done">
+		  	<span class="label"><i class="glyphicon glyphicon-ok centerOk"></i></span>
+		    <span class="title">{! node.title}</span>
+		  </div>
+	  	</apex:outputPanel>
+
+	  	<apex:outputPanel rendered="{! node.status == 'error'}">
+	  	  <apex:outputPanel rendered="{! node.nodeNumber != 1}">
+	  	  	<span class="bar done"></span>
+	  	  </apex:outputPanel>
+		  <div class="circle error">
+		  	<span class="label"><i class="glyphicon glyphicon-remove centerError"></i></span>
+		    <span class="title">{! node.title}</span>
+		  </div>
+	  	</apex:outputPanel>
+
+	  	<apex:outputPanel rendered="{! node.status == 'notDone'}">
+	  	  <apex:outputPanel rendered="{! node.nodeNumber != 1}">
+	  	  	<span class="bar notDone"></span>
+	  	  </apex:outputPanel>
+		  <div class="circle notDone">
+		  	<span class="label"></span>
+		    <span class="title">{! node.title}</span>
+		  </div>
+	  	</apex:outputPanel>
+
+	  </apex:repeat>
+	</div>
+  </div>	
+</apex:component>

@@ -125,9 +125,9 @@ window.onload = function HighlightBar() {
         var mainvar = getUrlParameter('MainNav');
         var mid = getUrlParameter('mid');
         var subvar = getUrlParameter('subNav');
-        var menuid=mid.substr(0,2)
+        var menuid = mid && mid.substr(0,2);
 
-     $("#searchbox").css("display", (menuid=="M2") ? "none" : "");    /* hides the search box if for resources & docs*/
+     $("#searchbox").css("display", (menuid=="M2" || mid=="M4S1") ? "none" : "");    /* hides the search box if for resources & docs*/
 
 
      $("#"+mid).parentsUntil("nav").addClass("in active-issp");
@@ -140,7 +140,6 @@ window.onload = function HighlightBar() {
      $("#casebreadcrumbs").text("{!$Label.ISSP_Company_Administration}");
      $("#casebreadcrumbs2").text("{!$Label.ISSP_Company_Cases}");
      $("#casebreadcrumbs3").text(" {!$Label.ISSP_PageDescription_ISSP_CaseList_adminview}");
-
     }
         };
 
@@ -189,13 +188,19 @@ $(".topmenu").hover(function(){
       .panel-primary{
       min-height:314px;
       }
+      
+       .bankDetails {
+        	min-height: 142px;
+      	}
       }
 
    body{
-      font-family:Arial, Helvetica, sans-serif;
-      background-image: url("https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002oQOE&amp;oid=00D2000000008TF&amp;lastMod=1432543398000");
+      font-family:Arial, Helvetica, sans-serif; 
+      /*background-image: url("https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002oQOE&amp;oid=00D2000000008TF&amp;lastMod=1432543398000");*/
+      background-image: url("{!$Label.ISSP_Portal_BackgroundImage}");
       background-repeat: no-repeat;
-      background-size:200%;
+      /*background-size:200%;*/
+      background-size: {!$Label.ISSP_Portal_BackgroundImage_size};
       }
       div.container{
       background-color:white;
@@ -628,7 +633,7 @@ background-color:#428bca;
       -->
       <apex:form id="LselectLanguage" rendered="{!communityName!='CNS'}">
       	<apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);"> 
-              <apex:selectOption itemValue="-- Language --" itemLabel="Language"/>
+              <apex:selectOption itemValue="-- Language --" itemLabel="Language" itemDisabled="true"/>
               <apex:selectOptions value="{!languages}"/>
         </apex:selectList>
       </apex:form>
@@ -726,7 +731,18 @@ background-color:#428bca;
                {!$Label.ISSP_Manage_Services}
                 </a>
         </li>
-
+         <li>
+    <a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6" style="display:{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','none')}">
+               {!$Label.ISSP_Local_Groups_Industry}
+                </a>
+        </li>
+        <!-- * FM 31-07-2017 - AMSU-26 -->
+        <li>
+    <a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7" style="display:{!if(isCargoDGR,'','none')}"  >
+                <!--{-- ! $Label.ISSP_Manage_Services } - CREATE LABEL -->  
+                Trained Staff Certification 
+                </a>
+        </li>
     <!-- INC262760
     <li>
     <a href="/00O/o?MainNav=Queries&subNav=MyQueries&mid=M4S4&admin=true" id="M4S4" style="display:{!if($Profile.Name == 'ISS Portal DPC','','none')}">

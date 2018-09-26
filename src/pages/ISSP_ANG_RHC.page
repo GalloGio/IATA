@@ -1,0 +1,642 @@
+<apex:page controller="ISSP_ANG_RHC" cache="false" 
+           sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" 
+           standardStylesheets="false">
+  <html>
+
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <c:ISSP_Header></c:ISSP_Header>
+    <c:iss_ap_css />
+  </head>
+
+  <body>
+    <style>
+      .section-header {
+        background-color: rgb(43, 120, 228);
+        color: white;
+        line-height: 1.42857143;
+        padding: 8px;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+      }
+
+      .section-header>i {
+        color: black;
+        margin-right: 5px;
+      }
+
+      .section-body {
+        margin: 8px;
+      }
+
+      .table {
+        width: 95%;
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
+
+      main {
+        background-color: white;
+      }
+
+      td>img {
+        padding-bottom: 7px;
+        padding-left: 5px;
+      }
+
+      i.check {
+        color: green;
+      }
+
+      i.wrong {
+        color: red;
+      }
+
+      #gaugeSection {
+        padding-left: 0;
+        text-align: center;
+        font-size: 14px;
+      }
+
+      #gaugeSection > strong {
+        margin-left: 15px;
+      }
+
+      .tableFormat {
+        padding-left : 5px !important;
+        padding-right : 15px !important;
+        padding-bottom: 2px !important;
+        padding-top :  2px !important;
+        vertical-align: middle !important;
+      }
+
+      .last-updated {
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: rgb(121, 118, 111);
+        font-size: 12px;
+      }
+
+      .borderless > thead > tr > th,
+      .borderless > tbody > tr > th,
+      .borderless > tfoot > tr > th,
+      .borderless > thead > tr > td,
+      .borderless > tbody > tr > td,
+      .borderless > tfoot > tr > td {
+        border-top: none;
+      }      
+
+      div.customTable {
+        width: 100%;
+      }
+
+      div.customTable>div:nth-child(2n-1) {
+        padding-top: 5px;
+        width: 50%;
+        float: left;
+      }
+
+      div.customTable>div:nth-child(2n) {
+        padding-top: 5px;
+        width: 50%;
+        float: left;
+      }      
+
+      div.customTable2 {
+        width: 100%;
+      }
+
+      div.customTable2>div:nth-child(2n-1) {
+        padding-top: 5px;
+        width: 30%;
+        float: left;
+      }
+
+      div.customTable2>div:nth-child(2n) {
+        padding-top: 5px;
+        width: 70%;
+        float: left;
+      }      
+
+      div.customTable3 {
+        width: 100%;
+      }
+
+      input + label {
+        font-weight:normal;
+      } 
+
+      @media (max-width: 992px) {
+        .fa-money {
+          font-size: 200px;
+        }
+        .fa-credit-card-alt {
+          font-size: 167px;
+        }
+        .fa-credit-card {
+          font-size: 198px;
+        }
+        #gaugeSection > strong {
+          margin-left: 25px;
+          font-size: 20px;
+        }
+        .last-updated {
+          font-size: 13px;
+        }
+      }
+
+      /* The Modal (background) */
+      .modal-ErrorHandling {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1; /* Sit on top */
+          padding-top: 100px; /* Location of the box */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+
+      /* Modal Content */
+      #modal-content-ErrorHandling {
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 40%;
+      }
+
+      /* The Close Button */
+      #closeModal-ErrorHandling {
+          color: #aaaaaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+      }
+
+      #closeModal-ErrorHandling:hover,
+      #closeModal-ErrorHandling:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+      }
+
+    </style>
+    <main class="container">
+      <c:ISSP_CustomNavigation />
+      <apex:form id="mainFrm">
+      <div class="row">
+        <!--
+                LEFT SECTION
+        -->
+        <section name="left-side" class="col-md-8 col-sm-12">
+
+          <!--
+                RHC SECTION
+          -->
+
+          <section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
+            <header class="col-xs-12">
+              <div class="section-header">
+                <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
+                <!--i class="fa fa-line-chart" aria-hidden="true"></--> 
+                <strong>{!$Label.ISSP_RHC_HUB}</strong>
+              </div>
+            </header>
+            <apex:outputPanel layout="block" id="rhcInfoPanel" styleClass="row" style="margin-right: 15px;">
+              <section id="remittance-holding-table" class="col-md-8 col-sm-12">
+                <table class="table borderless" style="margin-left: 13px;">
+                  <tr style="display: {!IF(isCashless,'none','table-row')}">
+                    <td>
+                      {!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
+                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_RHCAmountTooltip}" />
+                    </td>
+                    <td>
+                      {!rhcInfo.CurrencyIsoCode} 
+                      <apex:outputText value="{0, number, ###,##0.##}">
+                        <apex:param value="{!rhcInfo.ANG_RHC_Amount__c}"/>
+                      </apex:outputText>
+                    </td>
+                  </tr>
+                  <tr style="display: {!IF(isCashless,'none','table-row')}">
+                    <td>
+                      {!$Label.ISSP_RHC_HUB_Current_Usage}
+                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_HUB_Current_UsageTooltip}" />
+                    </td>
+                    <td>
+                      {!rhcInfo.CurrencyIsoCode}
+                      <apex:outputText value="{0, number, ###,##0.##}">
+                        <apex:param value="{!rhcInfo.ANG_ConsumedRHC__c}"/>
+                      </apex:outputText>
+                    </td>
+                  </tr>
+                  <tr style="display: table-row;">
+                    <td>
+                      {!$Label.ISSP_RHC_HUB_Curr_Financial_Security}
+                    </td>
+                    <td style="text-align: left !important;">
+                      {!rhcInfo.CurrencyIsoCode}
+                      <apex:outputText value="{0, number, ###,##0.##}">
+                        <apex:param value="{!rhcInfo.ANG_Financial_Security__c}"/>
+                      </apex:outputText>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr style="display: {!IF(isCashless,'none','table-row')}">
+                    <td>
+                      {!$ObjectType.Account.fields.Remittance_frequency__c.label}
+                    </td>
+                    <td>{!contact.Account.Remittance_frequency__c}</td>
+                  </tr>
+                </table>
+              </section>
+              <section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(isCashless,'none','block')}">
+                <canvas id="percentageUsageGauge"></canvas>
+                <br/>
+                <span>
+                  <strong>
+                    <apex:outputText value="{!$Label.ISSP_RHC_HUB_Percentage_Usage} : {0, number, 0}%">
+                      <apex:param value="{!rhcInfo.ANG_ConsumedRHC_Percent__c}"/>
+                    </apex:outputText>
+                  </strong>
+                </span>
+                <span class="last-updated">
+                  <strong>{!$Label.ISSP_RHC_HUB_Last_Updated}</strong>
+                  <apex:outputText value="{0, date, EEE, d MMM yyyy}">
+                    <apex:param value="{!rhcInfo.ANG_ConsumedRHC_Last_Update__c}" />
+                  </apex:outputText>
+                </span>
+              </section>
+            </apex:outputPanel>
+
+            <div class="row" style="display: {!IF(isCashless,'none','block')}">
+              <div class="col-col-xs-12 col-md-8 col-md-offset-2">
+                <button id="requestRME" onclick="requestBalanceUpdate();return false;" class="btn btn-block btn_iata_primary">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
+              </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+              <!-- Modal content -->
+              <div id="modal-content-ErrorHandling" class="modal-content">
+                <span id="closeModal-ErrorHandling" class="closeModal">&times;</span>
+                <p>There was an error in updating your balance. Please try again and if the issue persists contact <b><a href="/ISSP_FAQ2Case">customer support.</a></b></p>
+              </div>
+
+            </div>
+            </div>
+
+            <div class="row" style="display: {!IF(isCashless,'none','block')}">
+              <div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
+                <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
+                <apex:outputText escape="false" value="{!$Label.ANG_ISSP_RHC_Request_ICE}" rendered="{!NOT(hasRightAccessIceService)}"></apex:outputText>
+                <!--apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">ANG_ISSP_RHC_Request_ICE Request access to {!$Label.ISSP_Account_Statements}</apex:outputLink-->
+              </div>            
+            </div>
+
+          </section>
+
+          <!-- Risk Event History -->
+
+          <!--section name="right-side" class="col-md-6 col-sm-12" -->
+
+          <section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')};">
+
+            <header class="col-xs-12">
+              <div class="section-header">
+                <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskEventsHistory.png')}"/>
+                <!--i class="fa fa-line-chart" aria-hidden="true"></i-->
+                <strong>{!$Label.ISSP_RHC_HUB_RH}</strong>
+              </div>
+            </header>
+
+            <body class="col-xs-12">
+              <table class="table" style="margin-left: 15px;">
+                <tr>
+                  <td>
+                    <div class="customTable2">
+                      <div>
+                        <strong>{!$Label.ISSP_ANG_RHC_Risk_Event_Status}</strong>
+                      </div>
+                      <div>  
+                        <apex:outputPanel layout="block" styleClass="text-normal">
+                            <apex:selectRadio value="{!riskStatusFilter}" layout="pageDirection" id="riskStatusFilter" onchange="riskStatusFilterChange();">
+                              <apex:selectOption itemValue="Active" itemLabel="{!$Label.ISSP_AMS_eBulletin_Enabled}"/>
+                              <apex:selectOption itemValue="Expired" itemLabel="{!$Label.Warning_Expired}"/>
+                              <apex:selectOption itemValue="Inactive" itemLabel="{!$Label.ISSP_AMS_eBulletin_Disabled}"/>
+                              <apex:selectOption itemValue="All" itemLabel="{!$Label.ISSP_All}"/>
+                            </apex:selectRadio>
+                        </apex:outputPanel>
+                        <apex:actionFunction action="{!refreshRiskEventsTable}" name="riskStatusFilterChange" rerender="refreshRiskEventsTableId">
+                        </apex:actionFunction>                  
+                      </div>
+                    </div>                
+                    <div class="customTable3" id='bla'>
+                      <apex:outputPanel id="refreshRiskEventsTableId">
+                        <apex:pageBlock >
+                        
+                          <table id="riskHistoryTable" class="table table-striped " cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="tableFormat">{!$Label.ANG_ISSP_REH_RiskDescription}</th>
+                                    <th class="tableFormat" style="display:{!IF(isAll,'','none')}">{!$Label.ISSP_Status}</th>
+                                    <th class="tableFormat">{!$ObjectType.ANG_Agency_Risk_Event__c.fields.ANG_Issued_Date__c.Label}</th>
+                                    <th class="tableFormat">{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4}</th>
+                                    <th class="tableFormat">{!$Label.IDCard_IATA_Code_Of_Location}</th>
+                                    <th class="tableFormat">{!$Label.ISSP_CaseNumber}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <apex:repeat value="{! riskEventList}" var="riskEvent">
+                                <tr>                            
+                                  <td class="tableFormat">{! riskEvent.description}</td>
+                                  <td class="tableFormat" style="display:{!IF(isAll,'','none')}">{! riskEvent.status}</td>
+                                  <td class="tableFormat">
+                                    <apex:outputText value="{0, date, d MMM yyyy}">
+                                      <apex:param value="{! riskEvent.dateAssigned}" />
+                                    </apex:outputText>
+                                  </td>
+                                  <td class="tableFormat">
+                                    <apex:outputText value="{0, date, d MMM yyyy}">
+                                      <apex:param value="{! riskEvent.dateExpired}" />
+                                    </apex:outputText>
+                                  </td>
+                                  <td class="tableFormat">{! riskEvent.iataCode}</td>
+                                  <td class="tableFormat">
+                                    <apex:outputText escape="false" value="{! riskEvent.caseNumberLink}"></apex:outputText>
+                                  </td>
+                                </tr>                            
+                              </apex:repeat>
+                            </tbody>
+                          </table>
+                          <script type="text/javascript">
+                            $('#riskHistoryTable').dataTable( {
+                              "pageLength": 5,
+                              "lengthMenu": [ 5, 10, 25, 50 ],
+                              "searching": false
+                            } );                      
+                          </script>
+                        </apex:pageBlock>
+                      </apex:outputPanel>                
+                    </div>                  
+                  </td>
+                </tr>
+              </table>
+            </body>
+          </section>
+
+          <div style="display: {!IF(isCashless,'block','none')}; min-height: 350px;">
+            <c:AFP_Component wrapperClass="{!afpWrapper}"/>
+          </div>
+
+        </section> <!-- Left -->
+
+        <section name="right-side" class="col-md-4 col-sm-12">
+          <!-- Available forms of payment-->
+
+          <div style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
+            <c:AFP_Component wrapperClass="{!afpWrapper}"/>
+          </div>
+
+          <!-- Risk Profile-->
+
+          <section name="risk-profile" class="row" style="margin-right: 0px; margin-left: 0px; min-height: 350px;">
+
+            <table class="table" style="width: 100%">
+              <tr>
+                <th class="section-header">
+                  <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskProfile.png')}"/>
+                  <strong>{!$Label.ISSP_RHC_HUB_RP}</strong>
+                  <!--i class="fa fa-user-md" aria-hidden="true"></i> {!$Label.ISSP_RHC_HUB_RP}-->
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <div class="customTable">
+                    <div>
+                      <strong> {!$ObjectType.Account.fields.ANG_Accreditation_Model__c.Label} </strong>
+                      <a href="#"
+                        data-toggle="modal" data-target="#ModalProductComparison">
+                        <apex:image value="/img/msg_icons/info16.png"
+                          html-data-html="true" html-data-placement="right"
+                          html-data-toggle="tooltip"
+                          title="{!$Label.ISSP_AMS_Compare_Accreditation_Types_RHC}" />
+                      </a>
+                    </div>
+                    <div>
+                      {! accreditationType}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr style="display: {!IF(isCashless,'none','table-row')}">
+                <td>
+                  <div class="customTable">
+
+                    <div>
+                      <strong> {!$ObjectType.Account.fields.ANG_RiskStatus__c.Label} </strong>
+                      <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_RiskStatusTooltip}" />
+                    </div>
+                    <div>
+                      {! riskStatus}
+                    </div>
+
+                    <!--div style="padding-left: 30px" class="customTable">
+                      {!$Label.ANG_ISSP_RP_Cash_Conditions}
+                    </div>
+                    <div>
+                      {! cashConditions}
+                    </div-->
+
+                    <div style="padding-left: 30px" class="customTable">
+                      {!$Label.ANG_ISSP_RP_Financial_Review}                    
+                    </div>
+                    <div>
+                      {! financialReviewResult}
+                    </div>
+
+                    <div style="padding-left: 30px" class="customTable">
+                      {!$Label.ANG_ISSP_RP_Risk_History} 
+                    </div>
+                    <div>
+                      {! riskHistoryAssessment}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </section>
+        </section> <!-- right -->        
+
+      </div>
+
+      <div class="modal fade" id="ModalProductComparison" role="dialog">
+        <div class="modal-dialog modal-lg" style="width: 1100px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">{!$Label.ISSP_AMS_Compare_Accreditation_Types}</h4>
+          </div>
+          <div class="modal-body">
+            <c:ANG_ProductComparison helperParam="{! helper}"/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{! $Label.LAQ_Close}</button>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      </apex:form>
+
+      <c:ISSP_CustomFooter />
+    </main>
+
+    <script src="../../soap/ajax/41.0/connection.js" type="text/javascript" ></script>
+    <script src="../../soap/ajax/41.0/apex.js" type="text/javascript" ></script>
+
+    <script src="{!URLFOR($Resource.gaugeJS)}"></script>
+    <script src="{!URLFOR($Resource.DataTablesBootstrap)}"></script>
+    <script src="{!URLFOR($Resource.JqueryDataTables)}"></script>  
+    <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.DataTablesBootstrapCSS,'dataTables.bootstrap.min.css')}" />
+    <script>
+    sforce.connection.sessionId='{!GETSESSIONID()}';
+
+    var accountId = '{!accountId}';
+
+    function requestBalanceUpdate() {
+        
+
+          var $button = $("#requestRME");
+          
+          var requestText = $button.text();
+          $button.text('...').attr("disabled", "disabled");
+        
+        var result = null;
+        
+    try {
+            result = sforce.apex.execute("ANG_RME_Alert_Service","requestBalanceUpdate",{accountId: accountId}); 
+            console.info(result[0]);
+    }catch(err) {
+      console.info(err);
+            //alert(err);
+        }
+        
+      if(result == null || result[0].isSuccess != "true"){
+      modal.style.display = "block";
+          //alert(result[0].description);
+      }else{
+    window.location.reload();
+      }
+
+      $button.text(requestText).removeAttr('disabled');
+    }
+
+    function gaugeScript() {
+        "use strict";
+        var opts = {
+          angle: 0, // The span of the gauge arc
+          lineWidth: 0.47, // The line thickness
+          radiusScale: 1, // Relative radius
+          pointer: {
+            length: 0.6, // // Relative to gauge radius
+            strokeWidth: 0.024, // The thickness
+            color: '#000000' // Fill color
+          },
+          limitMax: true,     // If false, max value increases automatically if value > maxValue
+          limitMin: true,     // If true, the min value of the gauge will be fixed
+          colorStart: '#6FADCF',   // Colors
+          colorStop: '#8FC0DA',    // just experiment with them
+          strokeColor: '#E0E0E0',  // to see which ones work best for you
+          generateGradient: true,
+          highDpiSupport: true,     // High resolution support
+          staticZones: [
+            {strokeStyle: "#30B32D", min: 0, max: 50}, // Green
+            {strokeStyle: "#FFA500", min: 50, max: 75}, // Orange
+            {strokeStyle: "#F03E3E", min: 75, max: 100}  // Red
+          ],
+          staticLabels: {
+            font: "11px Arial",  // Specifies font
+            labels: [0, 50, 75, 100],  // Print labels at these values
+            color: "#000000",  // Optional: Label text color
+            fractionDigits: 0  // Optional: Numerical precision. 0=round off.
+          },
+        };
+        var target = document.getElementById('percentageUsageGauge'); // your canvas element
+        createGauge();
+
+        var windowWidth;
+        $( window ).resize(function() {
+          windowWidth = $( window ).width();
+          if (windowWidth <= 992) {
+            opts.staticLabels.font = '15px Arial';
+            createGauge(windowWidth);
+            target.style.marginLeft = ((target.parentElement.offsetWidth - target.width) / 2) + 'px';
+          } else if (windowWidth > 992) {
+            opts.staticLabels.font = '11px Arial';
+            createGauge(windowWidth);
+          }
+        });
+
+        function setGaugeSize(windowWidth) {
+          var canvasParentWidth = target.parentElement.offsetWidth;
+          if (windowWidth > 992) {
+            target.width = canvasParentWidth;
+            target.height = canvasParentWidth * 0.5 ;
+            target.style.marginLeft = '0px';
+            target.parentElement.style.paddingTop = ((document.getElementById('remittance-holding-table').offsetHeight - target.parentElement.offsetHeight) /2) + 'px';
+          } else {
+            target.width = canvasParentWidth - 50;
+            target.height = target.width * 0.5;
+            target.style.marginLeft = ((canvasParentWidth - target.width) / 2) + 'px';
+            target.parentElement.style.paddingTop = '0px';
+          }
+        }
+
+        function createGauge(windowWidth) {
+          setGaugeSize(windowWidth || $( window ).width());
+          target.style.width = target.width + 'px';
+          target.style.height = (target.height + 10) + 'px';
+          var gauge = new Gauge(target).setOptions(opts);
+          gauge.maxValue = 100;
+          gauge.setMinValue(0);
+          gauge.animationSpeed = 32;
+          gauge.set({!rhcInfo.ANG_ConsumedRHC_Percent__c});
+        }
+
+      }
+      
+      gaugeScript();
+    </script>
+
+    <script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("requestRME");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("closeModal-ErrorHandling");
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+
+  </body>
+  </html>
+</apex:page>

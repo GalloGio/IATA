@@ -116,6 +116,15 @@ This Custom Setting recovers the Collumns used In the EBulletin Reports
 			}
 			set;}
 
+	//reset variables for each ebulletin profile when daily notifications are sent
+	public static void resetVariables() {
+
+		ccNameSectionMap = new Map<String,String>();
+		ccNameDescrMap = new Map<String,String>();
+		ccNamePerSectionMap = new Map<String,List<String>>();
+		
+	}
+
 	public class AMS_EBulletinCCExtraction  implements CustomSetting {
 
 		private AMSEBulletinCCExtration__c eBulletinCCExtration;

@@ -7,7 +7,7 @@
                     <div id="street" class="{!IF(MOD(rowNum, 3) == 0,'street1', IF(MOD(rowNum, 3) == 1,'street2', 'street3'))}">
                         <apex:outputText value="{0}-{1} {2}">
                         	<apex:param value="{!LEFT(voucher.Voucher_Information__r.Account__r.IATACode__c, 2)}"/>
-                        	<apex:param value="{!RIGHT(LEFT(voucher.Voucher_Information__r.Account__r.IATACode__c, 3), 2)}"/>
+                        	<apex:param value="{!RIGHT(LEFT(voucher.Voucher_Information__r.Account__r.IATACode__c, 3), 1)}"/>
                         	<apex:param value="{!RIGHT(LEFT(voucher.Voucher_Information__r.Account__r.IATACode__c, 7), 4)}"/>
                         </apex:outputText>                           
                     </div>

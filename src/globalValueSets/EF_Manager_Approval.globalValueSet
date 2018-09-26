@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Not Started</fullName>
+        <default>true</default>
+        <label>Not Started</label>
+    </customValue>
+    <customValue>
+        <fullName>In Progress</fullName>
+        <default>false</default>
+        <label>In Progress</label>
+    </customValue>
+    <customValue>
+        <fullName>Approved</fullName>
+        <default>false</default>
+        <label>Approved</label>
+    </customValue>
+    <customValue>
+        <fullName>Rejected</fullName>
+        <default>false</default>
+        <label>Rejected</label>
+    </customValue>
+    <customValue>
+        <fullName>Recalled</fullName>
+        <default>false</default>
+        <label>Recalled</label>
+    </customValue>
+    <description>For E&amp;F Approval Processes on Contract, Billing Agreement, Material Line Item, Location Currency and Location Codes.</description>
+    <masterLabel>E&amp;F Manager Approval</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

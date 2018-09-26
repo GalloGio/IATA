@@ -19,7 +19,7 @@ global class ISSP_Switch_IFAP_CaseContact{
       
         for(Case ifapcase : ifapOpenCases) {
             ifapCase.ContactId = newifapcon.Id;
-            update ifapCase;
         }
+        update ifapOpenCases;
     }
 }

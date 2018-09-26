@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -56,6 +53,17 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ANG_IATA_EasyPay_Opt_out__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Opt-out from IATA EasyPay</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Opt-out from IATA EasyPay?</inlineHelpText>
+        <label>IATA EasyPay Opt-out</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <fields>
         <fullName>BSP_Country__c</fullName>
         <externalId>false</externalId>
@@ -197,69 +205,84 @@
         <fullName>Services_Rendered_Status__c</fullName>
         <externalId>false</externalId>
         <label>Service Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>true</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Services_Rendered_Type__c</fullName>
         <externalId>false</externalId>
         <label>Service</label>
-        <picklist>
-            <picklistValues>
-                <fullName>CASS Participation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSP Participation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSP via IBCS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Export via GSSA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Export Direct Participation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Import Direct Participation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Import via GHA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CASS Participation</fullName>
+                    <default>false</default>
+                    <label>CASS Participation</label>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                    <label>Marketing</label>
+                </value>
+                <value>
+                    <fullName>BSP Participation</fullName>
+                    <default>false</default>
+                    <label>BSP Participation</label>
+                </value>
+                <value>
+                    <fullName>Sales</fullName>
+                    <default>false</default>
+                    <label>Sales</label>
+                </value>
+                <value>
+                    <fullName>BSP via IBCS</fullName>
+                    <default>false</default>
+                    <label>BSP via IBCS</label>
+                </value>
+                <value>
+                    <fullName>CASS Export via GSSA</fullName>
+                    <default>false</default>
+                    <label>CASS Export via GSSA</label>
+                </value>
+                <value>
+                    <fullName>CASS Export Direct Participation</fullName>
+                    <default>false</default>
+                    <label>CASS Export Direct Participation</label>
+                </value>
+                <value>
+                    <fullName>CASS Import Direct Participation</fullName>
+                    <default>false</default>
+                    <label>CASS Import Direct Participation</label>
+                </value>
+                <value>
+                    <fullName>CASS Import via GHA</fullName>
+                    <default>false</default>
+                    <label>CASS Import via GHA</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Services_Rendered_to_Airline__c</fullName>
@@ -299,6 +322,30 @@
         <type>Lookup</type>
     </fields>
     <label>Services Rendered</label>
+    <listViews>
+        <fullName>ZZ_BSP_Participation_Search_by_Airline</fullName>
+        <columns>NAME</columns>
+        <columns>Services_Rendered_Type__c</columns>
+        <columns>Services_Rendered_By__c</columns>
+        <columns>Services_Rendered_to_Airline__c</columns>
+        <columns>Services_Rendered_Status__c</columns>
+        <columns>BSP_Country__c</columns>
+        <columns>CASS_Country__c</columns>
+        <columns>Pax_Cargo__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Services_Rendered_Type__c</field>
+            <operation>equals</operation>
+            <value>CASS Participation,BSP Participation</value>
+        </filters>
+        <filters>
+            <field>Services_Rendered_to_Airline__c</field>
+            <operation>equals</operation>
+            <value>Air France</value>
+        </filters>
+        <label>ZZ-BSP Participation - Search by Airline</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Service Name</label>
         <trackHistory>false</trackHistory>
@@ -328,4 +375,5 @@
         <searchResultsAdditionalFields>ISO_Country_formula__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

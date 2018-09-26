@@ -1,0 +1,49 @@
+<messaging:emailTemplate replyTo="{!$Label.Email_To_Case_Replier}"  
+            subject="New Case {!relatedTo.CaseNumber} open {!relatedTo.Case_Thread_ID__c}" 
+            recipientType="User" relatedToType="Case"  language="{!IF(relatedTo.RecordType =='Cases - IFG', 'EN', CASE(relatedTo.Contact.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN'))}">
+<messaging:emailHeader name="CaseId">
+    {!relatedTo.Id}
+ </messaging:emailHeader>
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="{!if(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000')}"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/>--><BR/>
+<p />
+{!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact.Salutation} {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
+<BR/>
+
+Thank you for your enquiry. One of our IFG Support Team will respond to you shortly.
+
+<BR/>
+<BR/>
+You have been allocated the following:<BR/>
+Case number: # {!relatedTo.CaseNumber}<BR/>
+Case description: {!relatedTo.Description}<BR/>
+<BR/>
+<BR/>
+Please quote this case number as a reference if you wish to contact us regarding your enquiry.
+<BR/>
+
+{!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
+<BR/>
+IATA Financial Gateway (IFG) Support Team<BR/>
+
+<p>
+<!--The URL of the following image is the one of PROD-->
+<!--<apex:image value="https://iata--transform--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000VVJN" width="176" height="89" />-->
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<apex:image value="{!IF(relatedTo.CNSCase__c, '', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000')}" style="float:left"/>
+</a>
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000005l72v&oid=00D2000000008TF&lastMod=1500298199000" style="float:left;"/>
+
+</p>
+
+<apex:image value="{!IF(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000')}" />
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF"/>-->
+<BR/>
+</span>
+</div>
+{!relatedTo.Case_Thread_ID__c}
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

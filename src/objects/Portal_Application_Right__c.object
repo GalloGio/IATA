@@ -23,10 +23,6 @@
         <type>Visualforce</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -56,6 +52,7 @@
     <description>Link object between contact and Portal Application</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -90,8 +87,25 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ANG_Portal_Service_Role__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>ISSP Access to Service List View</label>
     </fieldSets>
+    <fields>
+        <fullName>ANG_Portal_Service_Role__c</fullName>
+        <description>Selected service portal role</description>
+        <externalId>false</externalId>
+        <label>Portal Service Role</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Access_Status_Reason__c</fullName>
         <externalId>false</externalId>
@@ -145,6 +159,18 @@
         <formula>Contact__r.AccountId</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Application_Name_Text_Field__c</fullName>
+        <description>Application name to be used in roll-up fields.</description>
+        <externalId>false</externalId>
+        <label>Application Name Text Field</label>
+        <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -310,6 +336,26 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Enable_Notifications__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Activates the notification service for current application</description>
+        <externalId>false</externalId>
+        <label>Enable Notifications</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Favourite_Service__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox used to know which services are the users favourites</description>
+        <externalId>false</externalId>
+        <label>Favourite Service</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>IATA_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__r.IATA_Code__c</formula>
@@ -346,26 +392,41 @@
         <externalId>false</externalId>
         <inlineHelpText>Please choose at least one invoice type to give rights</inlineHelpText>
         <label>Invoice Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Cass Invoices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Invoices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Cass Invoices</fullName>
+                    <default>false</default>
+                    <label>Cass Invoices</label>
+                </value>
+                <value>
+                    <fullName>Passenger Invoices</fullName>
+                    <default>false</default>
+                    <label>Passenger Invoices</label>
+                </value>
+                <value>
+                    <fullName>Invoices</fullName>
+                    <default>false</default>
+                    <label>Invoices</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>IsSCIMIFG__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Portal_Application__r.Provisioning_Type__c, &apos;SCIM&apos;), true, false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IsSCIMIFG</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Kavi_user__c</fullName>
@@ -396,6 +457,18 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>New_Role_Requested__c</fullName>
+        <description>When the portal user has a role in the service and requests another role, this field is used to store the requested role</description>
+        <externalId>false</externalId>
+        <label>New Role Requested</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Notification_Template__c</fullName>
@@ -457,9 +530,16 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Standards Setting Workspace&quot;, $Label.ISSP_KAVI,
 &quot;ICE – IATA Customer E-Statement&quot;,&quot;ICE - IATA Customer E-statement&quot;,
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
+&quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
+&quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
+&quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
 &quot;IFACP Endorsement &amp; Changes&quot;, $Label.ISSP_IFACP_Endorsement_Changes,
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
-Name
+&quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
+&quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
+&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;ICCS&quot;, &quot;ICCS&quot;,
+Application_Name__c
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>
         <label>PortalServiceTranslatedName</label>
@@ -497,25 +577,30 @@ Name
         <fullName>Right__c</fullName>
         <externalId>false</externalId>
         <label>Right</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Access Requested</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Access Granted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Access Denied</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Access Requested</fullName>
+                    <default>true</default>
+                    <label>Access Requested</label>
+                </value>
+                <value>
+                    <fullName>Access Granted</fullName>
+                    <default>false</default>
+                    <label>Access Granted</label>
+                </value>
+                <value>
+                    <fullName>Access Denied</fullName>
+                    <default>false</default>
+                    <label>Access Denied</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>TD_Record__c</fullName>
@@ -530,6 +615,51 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Technical_Provisioning_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Technical Provisioning Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Access Requested</fullName>
+                    <default>true</default>
+                    <label>Access Requested</label>
+                </value>
+                <value>
+                    <fullName>IATA Access Granted</fullName>
+                    <default>false</default>
+                    <label>IATA Access Granted</label>
+                </value>
+                <value>
+                    <fullName>Fail</fullName>
+                    <default>false</default>
+                    <label>Fail</label>
+                </value>
+                <value>
+                    <fullName>External Access Granted</fullName>
+                    <default>false</default>
+                    <label>External Access Granted</label>
+                </value>
+                <value>
+                    <fullName>External Access Denied</fullName>
+                    <default>false</default>
+                    <label>External Access Denied</label>
+                </value>
+                <value>
+                    <fullName>IATA Access Denied</fullName>
+                    <default>false</default>
+                    <label>IATA Access Denied</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Terms_Acceptance_Date__c</fullName>
         <description>When the user accepted terms and conditions</description>
         <externalId>false</externalId>
@@ -540,6 +670,19 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Terms_Acceptance_Version__c</fullName>
+        <description>Service Terms and Condition version that the user accepted</description>
+        <externalId>false</externalId>
+        <label>Terms Acceptance Version</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Terms_Acceptance__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Indicates if terms and conditions have been accepted</description>
@@ -548,6 +691,19 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Top_Account__c</fullName>
+        <description>Id of the Top Account in the account hierarchy.</description>
+        <externalId>false</externalId>
+        <formula>IF(Contact__r.Account.Top_Parent__r.Id  &lt;&gt;  null, Contact__r.Account.Top_Parent__r.Id, Account__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Top Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>allowAssignFinContactFlowChange__c</fullName>
@@ -566,6 +722,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
         <columns>Right__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Restricted_App__c</field>
@@ -603,6 +760,26 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IFG_Services_Access</fullName>
+        <columns>Application_Name__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Right__c</columns>
+        <columns>Technical_Provisioning_Status__c</columns>
+        <columns>NAME</columns>
+        <columns>IATA_Code__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Account_Name__c</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Application_Name__c</field>
+            <operation>contains</operation>
+            <value>IFG</value>
+        </filters>
+        <label>IFG Services Access</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Pending_approvals</fullName>
@@ -705,6 +882,25 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
                 <default>true</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Technical_Provisioning_Status__c</picklist>
+            <values>
+                <fullName>Access Requested</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Access Denied</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Access Granted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Application_rigth</fullName>
@@ -729,6 +925,33 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
             </values>
             <values>
                 <fullName>Access Granted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Technical_Provisioning_Status__c</picklist>
+            <values>
+                <fullName>Access Requested</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>External Access Denied</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>External Access Granted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Access Denied</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Access Granted</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -763,6 +986,25 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Technical_Provisioning_Status__c</picklist>
+            <values>
+                <fullName>Access Requested</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Access Denied</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Access Granted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts>
         <customTabListAdditionalFields>Application_icon_del__c</customTabListAdditionalFields>
@@ -790,6 +1032,25 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
 )</errorConditionFormula>
         <errorDisplayField>Contact__c</errorDisplayField>
         <errorMessage>The user&apos;s portal status must be validated before granting access to any application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Internal_grant_access_by_accred_type</fullName>
+        <active>true</active>
+        <description>Services with the field ANG_Restrict_internal_selection__c = true can&apos;t be added or modified.</description>
+        <errorConditionFormula>AND(
+Portal_Application__r.ANG_Lock_access_to_accreditation_type__c,
+Text(Right__c) = &apos;Access Granted&apos;,
+NOT(CONTAINS(
+(
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Cash&apos;),&apos;Cash&apos;,NULL)+
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Cashless&apos;),&apos;Cashless&apos;,NULL)+
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Multicountry&apos;),&apos;Multicountry&apos;,NULL)
+), 
+TEXT(Contact__r.Account.ANG_Accreditation_Model__c)
+)),
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
+)</errorConditionFormula>
+        <errorMessage>Access cannot be granted since the Agency&apos;s accreditation type for this contact does not match the portal service (Restrict by Accreditation Type).</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>MR_cannot_be_approved_by_admin</fullName>
@@ -821,6 +1082,30 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
         <errorMessage>Please click on &apos;Cancel&apos; and use the &apos;Assign Financial Assessment Contact&apos; button on the Contact in order to Grant or Deny IFAP access.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Restrict_IEP_request</fullName>
+        <active>true</active>
+        <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
+        <errorConditionFormula>and(
+Text(Right__c) = &apos;Access Requested&apos;,
+CONTAINS(Application_Name__c, &apos;IATA EasyPay&apos;),
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
+$Profile.Name != &apos;ISS Portal Agency Delegated Admin User&apos;,
+$Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
+)</errorConditionFormula>
+        <errorMessage>Access to an IATA EasyPay portal service cannot be requested internally. Please ask the user to request access from the CS Portal, or the portal admin to add this user to the service.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Restrict_internal_selection</fullName>
+        <active>true</active>
+        <description>Services with the field ANG_Restrict_internal_selection__c = true can&apos;t be added or modified.</description>
+        <errorConditionFormula>AND(
+Portal_Application__r.ANG_Restrict_internal_selection__c = true,
+Text(Right__c) = &apos;Access Granted&apos;,
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
+)</errorConditionFormula>
+        <errorMessage>Access to this portal service cannot be assigned internally. Please ask the portal user to request access, or their Portal Admin to add the user to this service.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>SIS_cannot_be_approved_by_admin</fullName>
         <active>false</active>
         <errorConditionFormula>AND(
@@ -847,7 +1132,9 @@ Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.SIS__c
 OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;), ISPICKVAL(Right__c, &apos;Access Requested&apos;)), 
 $User.Profile_Name__c != &apos;IATA Portal Integration Profile&apos;, 
 $User.Profile_Name__c != &apos;Developer&apos;, 
-$User.Profile_Name__c != &apos;System Administrator&apos; 
+NOT(CONTAINS($Profile.Name,&quot;System Administrator&quot;)),
+NOT(CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;)),
+NOT(CONTAINS($Profile.Name,&quot;System administrator&quot;))
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by a request coming from the external service.</errorMessage>
     </validationRules>
@@ -857,11 +1144,12 @@ $User.Profile_Name__c != &apos;System Administrator&apos;
         <errorConditionFormula>AND(
  OR (ISCHANGED(Right__c) , ISNEW() ),
  Application_Name__c = &apos;Treasury Dashboard&apos;,
- OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)),
+ OR(AND(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)),NOT(ISPICKVAL(PRIORVALUE(Right__c),&apos;Access Requested&apos;))), 
   $User.TD_Team__c = false
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by IATA ‘Treasury Dashboard’ team.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Add_User_to_this_service</fullName>
         <availability>online</availability>

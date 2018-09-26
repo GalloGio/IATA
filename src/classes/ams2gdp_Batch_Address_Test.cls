@@ -52,13 +52,13 @@ private class ams2gdp_Batch_Address_Test
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_Address(false));
+ 			Database.executeBatch(new ams2gdp_Batch_Address(false, true));
 		Test.stopTest();
 	}
 
 	@isTest static void negativeTestBatchAddress()
 	{
-		ams2gdp_Batch_Address batch = new ams2gdp_Batch_Address(false);
+		ams2gdp_Batch_Address batch = new ams2gdp_Batch_Address(false, false);
 			batch.throwException = true; 
 
 		Test.startTest(); 

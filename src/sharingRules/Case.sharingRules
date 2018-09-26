@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
+        <fullName>Acca_Portal_User</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Acca Portal User</label>
+        <sharedTo>
+            <portalRole>AccountingCentreofChinaAviationACCAPartnerUser</portalRole>
+        </sharedTo>
+        <criteriaItems>
+            <field>DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>IBSPs,IBSPs-D,IBSP1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>DPC Service Request,Application Change Request (DPC Systems - locked),Application Change Request (DPC Systems) - ACCA</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>DPC_Accelya_Maestro</fullName>
         <accessLevel>Edit</accessLevel>
         <label>DPC Accelya Maestro</label>
@@ -47,12 +65,12 @@
         <criteriaItems>
             <field>DPC_Software__c</field>
             <operation>equals</operation>
-            <value>CASSlink</value>
+            <value>CASSlink,PASS</value>
         </criteriaItems>
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Application Change Request (DPC Systems - locked),DPC Service Request</value>
+            <value>DPC Service Request,Application Change Request (DPC Systems - locked)</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -253,6 +271,32 @@
             <value>ISS Portal PwC,ISS Portal PwC for IATA user</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SIDRA</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>share all sidra cases with integration user</description>
+        <label>SIDRA</label>
+        <sharedTo>
+            <group>SIDRA_All_Cases</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA Lite,SIDRA</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Case_Sharing_Rule_with_IFG_Support_Team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Share cases between IFG Team</description>
+        <label>Case Sharing Rule with IFG Support Team</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IFG_Team</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>IFG_Team</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
     <sharingOwnerRules>
         <fullName>CentralBilling</fullName>
         <accessLevel>Edit</accessLevel>
@@ -317,6 +361,29 @@
         </sharedTo>
         <sharedFrom>
             <group>IATAYMQCustomerCare</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>IATA_Training</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>IATA Training  support agent sharing rules</description>
+        <label>IATA Training</label>
+        <sharedTo>
+            <group>IATA_Training</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>IATA_Training</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>IATA_iiNet</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>IATA iiNet</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>iiNet_Business_Team</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>iiNet_Business_Team</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>

@@ -315,7 +315,7 @@ Test.startTest();
 
     } //*** end of "test_Order_Header"
 
-    @isTest(SeeAllData = true)
+    @isTest
     static void test_Order_Header2()
     {
         //-- Generate Test Data 

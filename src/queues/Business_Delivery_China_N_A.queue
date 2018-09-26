@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>guoj@iata.org</email>
+    <email>wangj@iata.org</email>
     <name>Business Delivery - China &amp; N.A</name>
+    <queueMembers>
+        <users>
+            <user>wangf@iata.org</user>
+            <user>wangj@iata.org</user>
+            <user>liyp@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

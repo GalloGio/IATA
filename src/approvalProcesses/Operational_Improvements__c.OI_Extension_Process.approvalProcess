@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>true</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Name</field>
+        <field>Owner</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <label>RPM Approval Extension Action</label>
+        <name>RPM_Approval_Extension_Action</name>
+    </approvalStep>
+    <description>Approval process for &apos;Submit for Extension&apos; button</description>
+    <emailTemplate>Quality/Request_Extension_Approval_for_OI</emailTemplate>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <criteriaItems>
+            <field>Operational_Improvements__c.Approval_process_selector__c</field>
+            <operation>equals</operation>
+            <value>OI Extension Process</value>
+        </criteriaItems>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>OI_Extension_Approved_by_RPM</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>OI_Update_Extension_Approval_date</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>OI_Extension_Rejected_by_RPM</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>OI_Update_Extension_Rejection_date</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>OI_Submitted_for_extension</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+    <label>OI Extension Process</label>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

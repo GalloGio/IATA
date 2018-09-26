@@ -1,5 +1,17 @@
 public without sharing class LightningConnectedAppHelper {
 
+    //One_Id_User_Applications__c field Action Options
+    public static final string OID_USER_APP_ACTION_ADD='Add';
+    public static final string OID_USER_APP_ACTION_REMOVE='Remove';
+    
+    //One_Id_User_Applications__c field Status Options
+    public static final string OID_USER_APP_STATUS_STARTED='Started';
+    public static final string OID_USER_APP_STATUS_REQUESTED='Requested';
+    public static final string OID_USER_APP_STATUS_FAILED='Failed';
+    public static final string OID_USER_APP_STATUS_COMPLETED='Completed';
+    public static final string OID_USER_APP_STATUS_DELETED='Deleted';
+
+    
 	//Get List of connected apps
     @AuraEnabled
     public Static List <String> ConnectedAppsList () {
@@ -52,6 +64,55 @@ public without sharing class LightningConnectedAppHelper {
     }
 
     @AuraEnabled
+    public static String getAutomaticRole (String connectedapp) {
+    	String automaticRole = '';
+        
+        if(connectedApp == 'FRED'){
+            User usr = [select AccountId from User where Id =: UserInfo.getUserId()];
+            
+            list<PermissionSetAssignment> fredUsers = [SELECT AssigneeId, PermissionSet.Name FROM PermissionSetAssignment WHERE PermissionSet.Name in ('FRED_Primary_User', 'FRED_SSO') AND Assignee.AccountId =: usr.AccountId];
+
+            set<Id> primariesIds = new set<Id>();
+            set<Id> secondariesIds = new set<Id>();
+            
+            for(PermissionSetAssignment psa : fredUsers) {
+                if(psa.PermissionSet.Name == 'FRED_Primary_User'){
+	                primariesIds.add(psa.AssigneeId);
+                }
+                else{
+	                secondariesIds.add(psa.AssigneeId);
+                }
+            }
+
+			// Remove from the secondaries set, the users identified as primary users (they should have both permission sets assigned)
+			secondariesIds.removeAll(primariesIds);
+
+            if(primariesIds.isEmpty()){
+                automaticRole = 'Primary User';
+            }
+            else{
+                // Load  FRED limit and compare to account number
+                List<RecordType> recordTypes = [SELECT Id FROM RecordType WHERE SObjectType = 'One_Id_Service_Provider_Config__c' AND DeveloperName = 'Service_Provider'];
+    
+                One_Id_Service_Provider_Config__c config;
+    
+                if(! recordTypes.isEmpty()){
+                    config = [select Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: connectedapp AND RecordTypeId =: recordTypes[0].Id LIMIT 1];
+                }
+                else{
+                    config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: connectedapp LIMIT 1];
+                }
+                
+                if(secondariesIds.size() < config.Max_Number_Of_Secondary_User__c){
+                    automaticRole = 'Secondary User';
+                }
+            }
+        }
+        
+        return automaticRole;
+    }
+    
+    @AuraEnabled
     public static void submit (String connectedapp, String role) {
         Savepoint sp = null;
         List<Id> permissionsetToAssign = new List<Id>();
@@ -88,7 +149,7 @@ public without sharing class LightningConnectedAppHelper {
                     anUserApp.Identity_User__c = UserInfo.getUserId();
                     anUserApp.One_Id_App_Bundle__c = app.One_Id_Service_Provider_Config__r.Service_Bundle__r.id;
                     anUserApp.One_Id_Service_Provider_Config__c = app.One_Id_Service_Provider_Config__r.id;
-                    anUserApp.Provisioning_Status__c = 'Started';
+                    anUserApp.Provisioning_Status__c = OID_USER_APP_STATUS_STARTED;
                     if(String.isNotBlank(role))
                     	anUserApp.Selected_Role__c = role;
                     
@@ -203,6 +264,24 @@ public without sharing class LightningConnectedAppHelper {
 
         return termsText;
     }
+
+    @AuraEnabled
+    public static Boolean getAppRoleSelectibility (String connectedapp) {
+        Boolean isRoleSelectable = true;
+
+        try {
+            List<One_Id_Service_Provider_Config__c> bundles = OneIdProvisioningDAO.getAppRoleSelectibilityForAppPicker(connectedapp);
+            if(! bundles.isEmpty()) {
+                isRoleSelectable = bundles.get(0).Is_Role_Selectable__c;
+            }
+        } catch(Exception err) {
+            System.debug(err);
+        }
+
+        return isRoleSelectable;
+    }    
+    
+    
 /*
     //@future
     public static void assignpermissionset (String permissionsetid, String connectedappprovisioning) {
@@ -387,5 +466,59 @@ public without sharing class LightningConnectedAppHelper {
         HTTPResponse httpResponse = new Http().send(httpRequest);
     }
 */
+
+    public static void resetSCIMProvisioning(Set<id> oneIdUserApps ){
+
+        Set<String> permissionsetNamesToRemove = new Set<String>();
+        Set<Id> usersList = new Set<Id>();
+        Map<String, Id> mapPerm = new Map<String, Id>();
+
+        if(oneIdUserApps.isEmpty()) return;
+
+        List<One_Id_User_Applications__c> workToProcess = [select id,Action__c, Application__c,Application__r.Connected_App_Provisioning_Name__c, Application__r.PermissionSet_SSO__c, Application__r.PermissionSet_Provisioning__c, Identity_User__c,One_Id_App_Bundle__c,One_Id_Service_Provider_Config__c,Provisioning_Status__c
+                from One_Id_User_Applications__c where id = :oneIdUserApps] ;
+
+        for(One_Id_User_Applications__c anUap : workToProcess){
+            permissionsetNamesToRemove.add(anUap.Application__r.PermissionSet_Provisioning__c);
+            permissionsetNamesToRemove.add(anUap.Application__r.PermissionSet_SSO__c);
+            usersList.add(anUap.Identity_User__c);
+        }
+
+        List<PermissionSet> listOfPermS = [SELECT id, name FROM PermissionSet WHERE name = :permissionsetNamesToRemove];
+
+        for(PermissionSet ap : listOfPermS){
+            mapPerm.put(ap.name, ap.id);
+        }
+
+        List<PermissionSetAssignment> toDelete = [SELECT AssigneeId,Id,PermissionSetId FROM PermissionSetAssignment where AssigneeId in :usersList and PermissionSetId in :mapPerm.values()];
+
+        delete toDelete;
+
+        //delete workToProcess;
+        LightningConnectedAppHelper.deleteSObjects(oneIdUserApps);
+
+        /*
+        List<One_Id_User_Applications__c> workToDelete = [select id,Action__c, Application__c,Application__r.Connected_App_Provisioning_Name__c, Application__r.PermissionSet_SSO__c, Application__r.PermissionSet_Provisioning__c, Identity_User__c,One_Id_App_Bundle__c,One_Id_Service_Provider_Config__c,Provisioning_Status__c
+                from One_Id_User_Applications__c where Identity_User__c = :usersList and Application__r.PermissionSet_SSO__c in :permissionsetNamesToRemove and Application__r.PermissionSet_Provisioning__c in :permissionsetNamesToRemove] ;
+
+        if(!workToDelete.isEmpty()) delete workToDelete;
+        */
+    }
+
+    @future
+    public static void deleteSObjects(Set<id> oneIdUserApps){
+
+        if(oneIdUserApps.isEmpty()) return;
+
+
+        List<One_Id_User_Applications__c> listOne = new List<One_Id_User_Applications__c>();
+        for(id anId : oneIdUserApps){
+            One_Id_User_Applications__c anObj = new One_Id_User_Applications__c();
+            anObj.id = anId;
+            listOne.add(anObj);
+        }
+
+        delete listOne;
+    }
 
 }

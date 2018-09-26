@@ -27,11 +27,44 @@
         <externalId>false</externalId>
         <label>Iso Code</label>
         <length>2</length>
-        <required>true</required>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <description>Contains the region where chat button is allowed (Europe, Africa &amp; Middle East, Americas, China &amp; North Asia, Asia &amp; Pacific)</description>
+        <externalId>false</externalId>
+        <label>Region</label>
+        <length>150</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sector__c</fullName>
+        <description>Account Sector allowed to show the chat button</description>
+        <externalId>false</externalId>
+        <label>Sector</label>
+        <length>150</length>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <label>LiveAgent Countries Per Button</label>
+    <listViews>
+        <fullName>Allowed_Countries_Per_Button</fullName>
+        <columns>NAME</columns>
+        <columns>Button_Name__c</columns>
+        <columns>Country__c</columns>
+        <columns>Iso_Code__c</columns>
+        <columns>Region__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Allowed Countries Per Button</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

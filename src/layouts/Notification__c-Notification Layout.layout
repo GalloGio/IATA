@@ -38,6 +38,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Alert_Contact_By_Push_Notification__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Critical_notification__c</field>
             </layoutItems>
         </layoutColumns>

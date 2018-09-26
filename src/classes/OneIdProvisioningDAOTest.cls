@@ -11,10 +11,10 @@ private class OneIdProvisioningDAOTest {
 
 		Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
         
-        One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle', License_Upgrade_Required__c= true,Profile_Id__c='a1', Description__c='qualquer',Is_Active__c = true, Portal_Visible__c = true, RecordTypeid = recTypeId, App_Picture_Url__c='oi');
+        One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle', License_Upgrade_Required__c= true,Profile_Id__c='a1', Description__c='qualquer',Is_Active__c = true, Portal_Visible__c = true, RecordTypeid = recTypeId, App_Picture_Url__c='oi',Customer_Type_Activation__c = 'Airline');
         insert oi;
 
-        One_Id_Service_Provider_Config__c rr = new One_Id_Service_Provider_Config__c (Service_Provider_Name__c = 'Copa', Service_Bundle__c=oi.id);
+        One_Id_Service_Provider_Config__c rr = new One_Id_Service_Provider_Config__c (Service_Provider_Name__c = 'Copa', Service_Bundle__c=oi.id,Customer_Type_Activation__c = 'Airline');
         insert rr;
 
         One_Id_App_Config_Detail__c r = new One_Id_App_Config_Detail__c (One_Id_Service_Provider_Config__c=rr.id);
@@ -46,7 +46,11 @@ private class OneIdProvisioningDAOTest {
 
         OneIdProvisioningDAO.getAppPermissionSetListForSSO();
         
-        Test.stopTest();   
+        List<String> aa = new List<String>();
+        aa.add('vm1');
+        OneIdProvisioningDAO.getAppPermissionSetListForISSP(aa);
+
+        Test.stopTest();
 
     }
 

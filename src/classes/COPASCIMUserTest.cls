@@ -29,7 +29,7 @@ private class COPASCIMUserTest {
         // act
         SCIMUser obj = SCIMUser.parse(json);        
         
-        COPASCIMUser test = new COPASCIMUser(obj.username, obj.name.familyName,obj.name.givenName, obj.externalid, UserInfo.getUserEmail(), '');
+        COPASCIMUser test = new COPASCIMUser(obj.username, obj.name.familyName,obj.name.givenName, obj.externalid, UserInfo.getUserEmail());
         
     }
     

@@ -2,8 +2,8 @@
   applyBodyTag="false" applyHtmlTag="false" extensions="AmazonFinancialCtrl" id="thePage" action="{!checkRedirect}"   >
 
     <html>
-     
- <c:ISSP_Header ></c:ISSP_Header>
+      
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>  
  <body>
 
     <style>
@@ -51,8 +51,7 @@
 
 
     <div class="container">
-    <c:ISSP_CustomNavigation />
-        
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <apex:outputPanel rendered="{!IFAPCases.size > 1}" >
             <h3 class="form-control" >{!$Label.ISSP_IFAP_IATAFinancialAssessment}</h3>
         </apex:outputPanel>

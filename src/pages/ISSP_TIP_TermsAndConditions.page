@@ -1,0 +1,64 @@
+<apex:page controller="ISSP_TIP_Home_Controller" showHeader="false" standardStylesheets="false" sidebar="false" >
+
+<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
+
+<style>
+  p {
+    font-size: small;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+</style>
+<script type="text/javascript"> 
+       $(document).ready(function() {
+            //change message CSS
+            $('.warningM3').addClass('alert alert-warning');  
+            $('.warningM3').removeClass('warningM3');
+       });
+</script>
+
+<div class="container">
+
+  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+
+  <div class="row">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+      <div class="panel panel-primary">
+
+        <div class="panel-heading">
+          TERMS OF USE FOR TRANSPARENCY IN PAYMENTS
+        </div>
+
+        <div class="panel-body">
+          <apex:form id="formLogin" forceSSL="true">
+          <apex:PageMessages id="msgs"/>    
+           <!--  <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
+              <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                <p><apex:outputText value="{!er}" escape="false" /></p>
+              </apex:repeat>
+            </div>
+ -->
+            <div class="input-group ">
+            <p>As part of your enlistment process as a provider of Alternative Transfer Method, you will be requested to acknowledge Terms &amp; Conditions related to TIP.</p>
+            <p>These Terms &amp; Conditions will be communicated to you by the IATA TIP team.</p>
+              <apex:inputCheckbox value="{!acceptedTaC}"/>
+              {!$Label.ISSP_Registration_acceptGeneralConditions}
+            </div>
+            <hr />
+            <div class="form-group">
+              <apex:commandButton styleclass="btn_iata btn-sm btn-block btn_iata_cancel" action="{!rejectTerms}" value="{!$Label.ISSP_Back}" id="back"/>
+              <apex:commandButton styleclass="btn_iata btn-sm btn-block btn_iata_success" action="{!acceptTerms}" value="{!$Label.ISSP_Next}" id="next"/>
+            </div>
+          </apex:form>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
+</div>
+</apex:page>

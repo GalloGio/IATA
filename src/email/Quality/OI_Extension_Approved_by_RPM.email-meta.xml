@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to inform RQM about OI Extension approved by RPM</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>OI Extension Approved by RPM</name>
+    <style>freeForm</style>
+    <subject>OI Extension Approved by RPM: {!Operational_Improvements__c.Name}, Region: {!Operational_Improvements__c.Region__c}</subject>
+    <textOnly>Dear all,
+
+Operational Improvement - {!Operational_Improvements__c.Name} - extension has been Accepted by RPM and the overall deadline has been extended.
+
+Related Internal Case
+Number: {!Operational_Improvements__c.Related_Case_Number__c}
+Description: {!Operational_Improvements__c.Description__c}
+Region: {!Operational_Improvements__c.Region__c}
+OI Type: {!Operational_Improvements__c.OI_Type__c}
+
+
+Please click the below link to review it:
+{!Operational_Improvements__c.Link}
+
+Thank you and best regards,
+{!Operational_Improvements__c.OwnerFullName}</textOnly>
+    <type>html</type>
+</EmailTemplate>

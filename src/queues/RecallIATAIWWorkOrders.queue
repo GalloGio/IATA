@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>stiernagls@iata.org</email>
     <name>Recall (IATA IW Work Orders)</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAIWProjectTeam</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>IATAInvoiceWorksA</role>
+            <role>IATAIWCallCentreA</role>
+            <role>RecallUSA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Work_Order__c</sobjectType>
     </queueSobject>

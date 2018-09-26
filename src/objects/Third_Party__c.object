@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Used as an object with references to third party contacts for an IATA office.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -79,24 +76,29 @@
         <fullName>Contact_Group__c</fullName>
         <externalId>false</externalId>
         <label>Contact Group</label>
-        <picklist>
-            <picklistValues>
-                <fullName>RPSI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CC ACQUIRER</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BANK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>RPSI</fullName>
+                    <default>false</default>
+                    <label>RPSI</label>
+                </value>
+                <value>
+                    <fullName>CC ACQUIRER</fullName>
+                    <default>false</default>
+                    <label>CC ACQUIRER</label>
+                </value>
+                <value>
+                    <fullName>BANK</fullName>
+                    <default>false</default>
+                    <label>BANK</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Contact_Name__c</fullName>
@@ -130,78 +132,95 @@
         <fullName>Contact_Priority__c</fullName>
         <externalId>false</externalId>
         <label>Contact Priority</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1 - Prime</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2 - Alternate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 - Prime</fullName>
+                    <default>false</default>
+                    <label>1 - Prime</label>
+                </value>
+                <value>
+                    <fullName>2 - Alternate</fullName>
+                    <default>false</default>
+                    <label>2 - Alternate</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Contact_Role__c</fullName>
         <externalId>false</externalId>
         <label>Contact Role</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Business</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operational</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Technical</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Business</fullName>
+                    <default>false</default>
+                    <label>Business</label>
+                </value>
+                <value>
+                    <fullName>Operational</fullName>
+                    <default>false</default>
+                    <label>Operational</label>
+                </value>
+                <value>
+                    <fullName>Technical</fullName>
+                    <default>false</default>
+                    <label>Technical</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Contact_Scope__c</fullName>
         <externalId>false</externalId>
         <label>Contact Scope</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Africa</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asiapac</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Global</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Scan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Africa</fullName>
+                    <default>false</default>
+                    <label>Africa</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>Asiapac</fullName>
+                    <default>false</default>
+                    <label>Asiapac</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
+                <value>
+                    <fullName>Scan</fullName>
+                    <default>false</default>
+                    <label>Scan</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Contact_Title__c</fullName>
@@ -217,52 +236,64 @@
         <fullName>Third_Party_Type__c</fullName>
         <externalId>false</externalId>
         <label>Third Party Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Air Connect</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Direct Web Sales</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSPlink RET&apos;s</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CC Acquirer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Clearing Bank</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Global Distribution System</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Weblink Sales</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Local Data Processing Centre</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PALMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ticketing System Provider</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Air Connect</fullName>
+                    <default>false</default>
+                    <label>Air Connect</label>
+                </value>
+                <value>
+                    <fullName>Airline Direct Web Sales</fullName>
+                    <default>false</default>
+                    <label>Airline Direct Web Sales</label>
+                </value>
+                <value>
+                    <fullName>BSPlink RET&apos;s</fullName>
+                    <default>false</default>
+                    <label>BSPlink RET&apos;s</label>
+                </value>
+                <value>
+                    <fullName>CC Acquirer</fullName>
+                    <default>false</default>
+                    <label>CC Acquirer</label>
+                </value>
+                <value>
+                    <fullName>Clearing Bank</fullName>
+                    <default>false</default>
+                    <label>Clearing Bank</label>
+                </value>
+                <value>
+                    <fullName>Global Distribution System</fullName>
+                    <default>false</default>
+                    <label>Global Distribution System</label>
+                </value>
+                <value>
+                    <fullName>IATA Weblink Sales</fullName>
+                    <default>false</default>
+                    <label>IATA Weblink Sales</label>
+                </value>
+                <value>
+                    <fullName>Local Data Processing Centre</fullName>
+                    <default>false</default>
+                    <label>Local Data Processing Centre</label>
+                </value>
+                <value>
+                    <fullName>PALMS</fullName>
+                    <default>false</default>
+                    <label>PALMS</label>
+                </value>
+                <value>
+                    <fullName>Ticketing System Provider</fullName>
+                    <default>false</default>
+                    <label>Ticketing System Provider</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Third_Party_of_IATA_Office__c</fullName>
@@ -285,4 +316,5 @@
     <pluralLabel>Third Parties</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

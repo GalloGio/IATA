@@ -53,17 +53,52 @@
             });
         }
 
+		//IEC limit input street
+		function checkLength(addressStreet) {
+			console.log('entrou');
+			console.log(addressStreet);
+			if(addressStreet) {			
+				if(addressStreet.val().length >= 70) {					
+					if(!document.getElementById('addressStreetMSG')) {
+						var errDiv = '<div class="formError" id="addressStreetMSG" style="width: 180px; opacity: 0.87; position: absolute; top: 0px; left: 16.4px; right: initial; margin-top: -50px; display: none;">'+
+										'<div class="formErrorContent"></div>'+
+										'<div class="formErrorArrow">'+
+											'<div class="line10"><!-- --></div>'+
+											'<div class="line9"><!-- --></div>'+
+											'<div class="line8"><!-- --></div>'+
+											'<div class="line7"><!-- --></div>'+
+											'<div class="line6"><!-- --></div>'+
+											'<div class="line5"><!-- --></div>'+
+											'<div class="line4"><!-- --></div>'+
+											'<div class="line3"><!-- --></div>'+
+											'<div class="line2"><!-- --></div>'+
+											'<div class="line1"><!-- --></div>'+
+										'</div>'+
+									'</div>';
+						$(document.body).prepend(errDiv);
+					}
+					var elem = $('#addressStreetMSG').detach();
+					elem.insertBefore(addressStreet);
+					$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_LimitCharacters}');						
+					$('#addressStreetMSG').show();
+				} else if($('#addressStreetMSG').css('display') != 'none'){
+					$('#addressStreetMSG').hide();
+				}
+			}
+		}
+
         $(document).ready(function(){
-           
+
         }); 
 
     </script>
 
     <script>                                          
         //on Document ready
-        $(document).ready(function(){
+       // $(document).ready(function(){        	
+        	
 
-        });
+        //});
         //billToautocomplete
         var doAutoComplete = function(fieldName,hidenField){
             $("#" + fieldName).autocomplete({
@@ -103,6 +138,7 @@
             display: none;
         }
     </style>
+    <apex:stylesheet value="{!URLFOR($Resource.ValidationEngine, 'css/validationEngine.jquery.css')}" />
 </head>
 
 
@@ -120,6 +156,21 @@
                 </apex:outputPanel>
             </div>
         </div>
+        <div class="formError" id="addressStreetMSG" style="width: 180px; opacity: 0.87; position: absolute; top: 0px; left: 16.4px; right: initial; margin-top: -50px; display: none;">
+			<div class="formErrorContent"></div>
+			<div class="formErrorArrow">
+				<div class="line10"><!-- --></div>
+				<div class="line9"><!-- --></div>
+				<div class="line8"><!-- --></div>
+				<div class="line7"><!-- --></div>
+				<div class="line6"><!-- --></div>
+				<div class="line5"><!-- --></div>
+				<div class="line4"><!-- --></div>
+				<div class="line3"><!-- --></div>
+				<div class="line2"><!-- --></div>	
+				<div class="line1"><!-- --></div>
+			</div>
+		</div>
 
         <!-- Order View Mode -->
         <div class="row">
@@ -138,6 +189,12 @@
                             <apex:commandButton action="{!cancel}" value="{! labels['btnCancelChange']}" rendered="{! isInlineEditing || isEdit}" />
                             <!--apex:commandButton action="{!createSalesOrder}" status="runStatus" reRender="messagesContainer, SAPOrderNumber" rendered="{!showButtonCreateSalesOrder}" value="{! labels['btnCreateOrder']}"/-->
                             <!--apex:commandButton action="{!createSalesContract}" status="runStatus" reRender="orderItemContainer" rendered="{!showButtonCreateSalesOrder}" value="{! labels['btnCreateContract']}"/-->
+
+<!--
+    Id: {!vfOrder.Id}<br />
+    AcceptedPaymentMethods: {!vfOrder.Accepted_Payment_Methods__c}<br />
+-->
+
                             <apex:actionStatus id="runStatus">
                                 <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
                             </apex:actionStatus>
@@ -794,7 +851,7 @@
                                                 <div class="row">
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblStreet']}" /></div>
                                                     <div class="col-md-7"><div class="requiredBlock"></div>
-                                                        <input type="text" value="{!street}" id="billToautocomplete" name="billToautocomplete"/>
+                                                        <input type="text" value="{!street}" id="billToautocomplete" name="billToautocomplete" maxlength="70" onkeyup="checkLength($(this));" onblur="$('#addressStreetMSG').hide();"/>
                                                         <input type="hidden" id="hiddenBillToautocomplete" name="hiddenBillToautocomplete"/>
                                                         <apex:actionStatus id="autoCompBillToLoading" >
                                                             <apex:facet name="start" >
@@ -1040,7 +1097,7 @@
                                                     <div class="row">
                                                         <div class="col-md-5"><apex:outputLabel value="{! labels['lblStreet']}" /></div>
                                                         <div class="col-md-7"><div class="requiredBlock"></div>
-                                                            <input type="text" value="{!shipStreet}" id="shipToautocomplete" name="autoCompShipToLoading"/>
+                                                            <input type="text" value="{!shipStreet}" id="shipToautocomplete" name="autoCompShipToLoading" maxlength="70" onkeyup="checkLength($(this));" onblur="$('#addressStreetMSG').hide();"/>
                                                             <input type="hidden"  id="hiddenShipToautocomplete" name="hiddenShipToautocomplete"/>
                                                             <apex:actionStatus id="autoCompShipToLoading" >
                                                                 <apex:facet name="start" >

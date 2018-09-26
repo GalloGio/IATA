@@ -68,10 +68,11 @@ global class AMS_BSPLinkIntegration {
 			}
 		}
 		
-		if(bCaseToUpd && (sProcess=='Deactivation' || sProcess=='Reactivation')){
+		if(bCaseToUpd && (sProcess=='Deactivation' || sProcess=='Reactivation' || sProcess=='DeactivationUndo')){
 			for(Case c:lsCase){
 				if(sProcess=='Deactivation') c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 				if(sProcess=='Reactivation') c.Open_TKT_System__c = system.now();
+				if(sProcess=='DeactivationUndo') c.Open_TKT_System__c = system.now();
 			}
 			update lsCase;
 		}
@@ -92,8 +93,14 @@ global class AMS_BSPLinkIntegration {
 	
 	private static list<response> ProcessRequest(String sProcess, List<Id> objectIds, string sTypeOfRemoval, id CaseId){
 		list<response> oReturn = new list<Response>();
+		List<Id> caseIds = new List<Id>();
+		caseIds.add(CaseId);
+		list<Agency_Authorization__c> lsToRemove = new list<Agency_Authorization__c>();
 		
-		list<Agency_Authorization__c> lsToRemove = RetrieveBSPLinkAuthToRemove(objectIds.clone(), sTypeOfRemoval);
+		if (sTypeOfRemoval.equalsIgnoreCase('FromSidra'))
+			lsToRemove = RetrieveBSPLinkAuthToRemove(caseIds, sTypeOfRemoval);
+		else
+			lsToRemove = RetrieveBSPLinkAuthToRemove(objectIds.clone(), sTypeOfRemoval);
 		
 		if(lsToRemove.isEmpty()){
 			response r = new response();
@@ -367,7 +374,13 @@ global class AMS_BSPLinkIntegration {
     //In case an agency is without authorization because of errors in creating them previously, it creates it (status: not-set)
     static list<Agency_Authorization__c> RetrieveBSPLinkAuthToRemove(list<id> objectIds, string sType){
 		Set<Id> setAccntToRemove = new Set<Id>();
-		if(sType == 'Hierarchy'){
+		if (sType.equalsIgnoreCase('FromSidra')) {
+			if (objectIds.size() == 1) {
+				id sidraCaseID = objectIds.get(0);
+				for (AMS_Process_Detail__c apd : [SELECT Id, Account__c FROM AMS_Process_Detail__c where Case__c =: sidraCaseID])
+					setAccntToRemove.add(apd.Account__c);
+			}
+		}else if(sType == 'Hierarchy'){
 			if(objectIds.size()==1){
 				setAccntToRemove.add(objectIds.get(0));
 				id theHOId = AMS_BSPLinkIntegration.RetrieveHOId(objectIds.get(0));
@@ -408,6 +421,53 @@ global class AMS_BSPLinkIntegration {
 		*/
 		return lsToReturn;
 	}
+
+	//method invoked after the SIDRA Lite process to save the result in an attachment 
+	webservice static void SaveResponseInAttchment(String caseId, String process, String message, String isSuccess) {
+		
+		String result = 'Error';
+
+		if (isSuccess.equals('Y'))
+			result = 'Success';
+
+		Attachment att = new Attachment();
+		att.ParentID = caseId;
+		att.Name = process + '_' +  Datetime.now().format('yyyyMMdd_HHmm') + '_' + result + '.pdf';
+		att.Body = Blob.toPdf(message);
+		att.ContentType = 'application/pdf';
+
+		insert att;
+
+    }
+
+    //method invoked after the SIDRA Lite process to save the result in an attachment 
+	webservice static void SaveResponseInAttachmentFromOscar(List<Id> oscarIds, String process, String message, String isSuccess) {
+		
+		String caseId = '';
+		List<Case> cases = new List<Case>();
+		cases = [SELECT Id FROM Case WHERE OSCAR__c IN :oscarIds AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) LIMIT 1];
+
+		if(cases.isEmpty()) {
+			return;
+		}
+
+		caseId = cases.get(0).Id;
+
+		String result = 'Error';
+
+		if (isSuccess.equals('Y'))
+			result = 'Success';
+
+		Attachment att = new Attachment();
+		att.ParentID = caseId;
+		att.Name = process + '_' +  Datetime.now().format('yyyyMMdd_HHmm') + '_' + result + '.pdf';
+		att.Body = Blob.toPdf(message);
+		att.ContentType = 'application/pdf';
+
+		insert att;
+
+    }
+
     
     /***********************************************
     ********** REQUEST AND RESPONSE FORMAT**********

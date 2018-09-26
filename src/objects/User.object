@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>FreezeUserAction</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>SmsHighlightAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>UpdateBannerPhotoAction</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -60,176 +60,331 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
+    <fieldSets>
+        <fullName>TrackingHistory</fullName>
+        <description>used for tracking purposes</description>
+        <displayedFields>
+            <field>ToU_accepted__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Date_ToU_accepted__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Title</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>TrackingHistory</label>
+    </fieldSets>
+    <fields>
+        <fullName>AMP_Digest_Daily_or_Weekly__c</fullName>
+        <description>option to receive the Chatter topic digest either daily or weekly</description>
+        <externalId>false</externalId>
+        <label>AMP Digest Daily or Weekly</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                    <label>Weekly</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>AMP_Digest_Topics__c</fullName>
+        <description>A csv list of the topics the user wants an email digest on, for AMP</description>
+        <externalId>false</externalId>
+        <label>AMP Digest Topics</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ANG_Accreditation_Model__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact.Account.ANG_Accreditation_Model__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Accreditation Type</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact.Account.Category__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Category</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Customer_Country_ISO__c</fullName>
+        <description>2-letter ISO Code of the IATA ISO Country related to the contact’s Account (Agency)</description>
+        <externalId>false</externalId>
+        <formula>Contact.Account.Country_ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Customer Country ISO</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Is_Accredited_Agent__c</fullName>
+        <description>Determine if the Agency is accredited</description>
+        <externalId>false</externalId>
+        <formula>AND( 
+Contact.Account.RecordType.Name=&apos;Agency&apos;,
+OR(
+ISPICKVAL(Contact.Account.Status__c, &apos;Approved&apos;),
+ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;),
+ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;) 
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Accredited Agent</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Sector__c</fullName>
+        <description>Sector for the contact’s Agency</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact.Account.Sector__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sector</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Air_Transport_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>Air Transport Expertise</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Aircraft Recovery</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Air Navigation Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport Development</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Dangerous Goods</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Econometrics</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Engineering and Maintenance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Environment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Facilitation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fleet Planning</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Flight Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Flight Simulation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fuel Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Government Relations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ground Handling</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Industry Taxation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>InFlight Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Infrastructure</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Interline Tariffs</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Live Animal Regulations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Meteorological</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Navigation Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ramp Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Schedules</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Settlement Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Software/IT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Special Cargoes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Telecommunications</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Unit Load Devices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Aircraft Recovery</fullName>
+                    <default>false</default>
+                    <label>Aircraft Recovery</label>
+                </value>
+                <value>
+                    <fullName>Air Navigation Services</fullName>
+                    <default>false</default>
+                    <label>Air Navigation Services</label>
+                </value>
+                <value>
+                    <fullName>Airport Development</fullName>
+                    <default>false</default>
+                    <label>Airport Development</label>
+                </value>
+                <value>
+                    <fullName>Airport Operations</fullName>
+                    <default>false</default>
+                    <label>Airport Operations</label>
+                </value>
+                <value>
+                    <fullName>Airport Services</fullName>
+                    <default>false</default>
+                    <label>Airport Services</label>
+                </value>
+                <value>
+                    <fullName>Cargo Operations</fullName>
+                    <default>false</default>
+                    <label>Cargo Operations</label>
+                </value>
+                <value>
+                    <fullName>Cargo Services</fullName>
+                    <default>false</default>
+                    <label>Cargo Services</label>
+                </value>
+                <value>
+                    <fullName>Dangerous Goods</fullName>
+                    <default>false</default>
+                    <label>Dangerous Goods</label>
+                </value>
+                <value>
+                    <fullName>Econometrics</fullName>
+                    <default>false</default>
+                    <label>Econometrics</label>
+                </value>
+                <value>
+                    <fullName>Engineering and Maintenance</fullName>
+                    <default>false</default>
+                    <label>Engineering and Maintenance</label>
+                </value>
+                <value>
+                    <fullName>Environment</fullName>
+                    <default>false</default>
+                    <label>Environment</label>
+                </value>
+                <value>
+                    <fullName>Facilitation</fullName>
+                    <default>false</default>
+                    <label>Facilitation</label>
+                </value>
+                <value>
+                    <fullName>Financial Services</fullName>
+                    <default>false</default>
+                    <label>Financial Services</label>
+                </value>
+                <value>
+                    <fullName>Fleet Planning</fullName>
+                    <default>false</default>
+                    <label>Fleet Planning</label>
+                </value>
+                <value>
+                    <fullName>Flight Operations</fullName>
+                    <default>false</default>
+                    <label>Flight Operations</label>
+                </value>
+                <value>
+                    <fullName>Flight Simulation</fullName>
+                    <default>false</default>
+                    <label>Flight Simulation</label>
+                </value>
+                <value>
+                    <fullName>Fuel Services</fullName>
+                    <default>false</default>
+                    <label>Fuel Services</label>
+                </value>
+                <value>
+                    <fullName>Government Relations</fullName>
+                    <default>false</default>
+                    <label>Government Relations</label>
+                </value>
+                <value>
+                    <fullName>Ground Handling</fullName>
+                    <default>false</default>
+                    <label>Ground Handling</label>
+                </value>
+                <value>
+                    <fullName>Industry Taxation</fullName>
+                    <default>false</default>
+                    <label>Industry Taxation</label>
+                </value>
+                <value>
+                    <fullName>InFlight Services</fullName>
+                    <default>false</default>
+                    <label>InFlight Services</label>
+                </value>
+                <value>
+                    <fullName>Infrastructure</fullName>
+                    <default>false</default>
+                    <label>Infrastructure</label>
+                </value>
+                <value>
+                    <fullName>Interline Tariffs</fullName>
+                    <default>false</default>
+                    <label>Interline Tariffs</label>
+                </value>
+                <value>
+                    <fullName>Live Animal Regulations</fullName>
+                    <default>false</default>
+                    <label>Live Animal Regulations</label>
+                </value>
+                <value>
+                    <fullName>Meteorological</fullName>
+                    <default>false</default>
+                    <label>Meteorological</label>
+                </value>
+                <value>
+                    <fullName>Navigation Services</fullName>
+                    <default>false</default>
+                    <label>Navigation Services</label>
+                </value>
+                <value>
+                    <fullName>Passenger Operations</fullName>
+                    <default>false</default>
+                    <label>Passenger Operations</label>
+                </value>
+                <value>
+                    <fullName>Passenger Services</fullName>
+                    <default>false</default>
+                    <label>Passenger Services</label>
+                </value>
+                <value>
+                    <fullName>Ramp Services</fullName>
+                    <default>false</default>
+                    <label>Ramp Services</label>
+                </value>
+                <value>
+                    <fullName>Revenue Accounting</fullName>
+                    <default>false</default>
+                    <label>Revenue Accounting</label>
+                </value>
+                <value>
+                    <fullName>Safety</fullName>
+                    <default>false</default>
+                    <label>Safety</label>
+                </value>
+                <value>
+                    <fullName>Safety Operations</fullName>
+                    <default>false</default>
+                    <label>Safety Operations</label>
+                </value>
+                <value>
+                    <fullName>Schedules</fullName>
+                    <default>false</default>
+                    <label>Schedules</label>
+                </value>
+                <value>
+                    <fullName>Security</fullName>
+                    <default>false</default>
+                    <label>Security</label>
+                </value>
+                <value>
+                    <fullName>Settlement Services</fullName>
+                    <default>false</default>
+                    <label>Settlement Services</label>
+                </value>
+                <value>
+                    <fullName>Software/IT</fullName>
+                    <default>false</default>
+                    <label>Software/IT</label>
+                </value>
+                <value>
+                    <fullName>Special Cargoes</fullName>
+                    <default>false</default>
+                    <label>Special Cargoes</label>
+                </value>
+                <value>
+                    <fullName>Telecommunications</fullName>
+                    <default>false</default>
+                    <label>Telecommunications</label>
+                </value>
+                <value>
+                    <fullName>Travel Services</fullName>
+                    <default>false</default>
+                    <label>Travel Services</label>
+                </value>
+                <value>
+                    <fullName>Unit Load Devices</fullName>
+                    <default>false</default>
+                    <label>Unit Load Devices</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -248,36 +403,44 @@
         <description>Area in which user works:  Americas, AsiaPac, EMEA</description>
         <externalId>false</externalId>
         <label>Area</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Alternate Channels</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AsiaPac</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MEA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Alternate Channels</fullName>
+                    <default>false</default>
+                    <label>Alternate Channels</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>AsiaPac</fullName>
+                    <default>false</default>
+                    <label>AsiaPac</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>MEA</fullName>
+                    <default>false</default>
+                    <label>MEA</label>
+                </value>
+                <value>
+                    <fullName>North Asia</fullName>
+                    <default>false</default>
+                    <label>North Asia</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ByPassValidationRule__c</fullName>
@@ -365,6 +528,15 @@
         <formula>Contact.Account.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Account Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Account_Record_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.RecordType.DeveloperName</formula>
+        <label>Contact Account Record Type</label>
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
@@ -490,11 +662,25 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
     <fields>
         <fullName>EF_User_Role__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_User_Role</globalPicklist>
         <label>E&amp;F User Role</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_User_Role</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>EmailForSSO__c</fullName>
+        <description>This is a copy of the standard email field. Required for the connected app configuration.</description>
+        <externalId>false</externalId>
+        <formula>Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>EmailForSSO</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Employee_Number_PPD__c</fullName>
@@ -518,159 +704,207 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Federation_ID__c</fullName>
+        <description>Shows the federation Id to the permission set manage external users</description>
+        <externalId>false</externalId>
+        <formula>FederationIdentifier</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Federation ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Functional_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>Functional Expertise</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Accounting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Administration</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Branding</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Business Analysis</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Business Development</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Business Intelligence</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Business Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Channel Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Communications</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Consultancy</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Service</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Distribution</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Finance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Graphics</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Human Resources</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Information Technology</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Legal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>People Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Printing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Product Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Project Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Public Relations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sourcing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Telesales</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Accounting</fullName>
+                    <default>false</default>
+                    <label>Accounting</label>
+                </value>
+                <value>
+                    <fullName>Administration</fullName>
+                    <default>false</default>
+                    <label>Administration</label>
+                </value>
+                <value>
+                    <fullName>Branding</fullName>
+                    <default>false</default>
+                    <label>Branding</label>
+                </value>
+                <value>
+                    <fullName>Business Analysis</fullName>
+                    <default>false</default>
+                    <label>Business Analysis</label>
+                </value>
+                <value>
+                    <fullName>Business Development</fullName>
+                    <default>false</default>
+                    <label>Business Development</label>
+                </value>
+                <value>
+                    <fullName>Business Intelligence</fullName>
+                    <default>false</default>
+                    <label>Business Intelligence</label>
+                </value>
+                <value>
+                    <fullName>Business Operations</fullName>
+                    <default>false</default>
+                    <label>Business Operations</label>
+                </value>
+                <value>
+                    <fullName>Channel Management</fullName>
+                    <default>false</default>
+                    <label>Channel Management</label>
+                </value>
+                <value>
+                    <fullName>Communications</fullName>
+                    <default>false</default>
+                    <label>Communications</label>
+                </value>
+                <value>
+                    <fullName>Consultancy</fullName>
+                    <default>false</default>
+                    <label>Consultancy</label>
+                </value>
+                <value>
+                    <fullName>Customer Service</fullName>
+                    <default>false</default>
+                    <label>Customer Service</label>
+                </value>
+                <value>
+                    <fullName>Distribution</fullName>
+                    <default>false</default>
+                    <label>Distribution</label>
+                </value>
+                <value>
+                    <fullName>Finance</fullName>
+                    <default>false</default>
+                    <label>Finance</label>
+                </value>
+                <value>
+                    <fullName>Graphics</fullName>
+                    <default>false</default>
+                    <label>Graphics</label>
+                </value>
+                <value>
+                    <fullName>Human Resources</fullName>
+                    <default>false</default>
+                    <label>Human Resources</label>
+                </value>
+                <value>
+                    <fullName>Information Technology</fullName>
+                    <default>false</default>
+                    <label>Information Technology</label>
+                </value>
+                <value>
+                    <fullName>Legal</fullName>
+                    <default>false</default>
+                    <label>Legal</label>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                    <label>Marketing</label>
+                </value>
+                <value>
+                    <fullName>People Management</fullName>
+                    <default>false</default>
+                    <label>People Management</label>
+                </value>
+                <value>
+                    <fullName>Printing</fullName>
+                    <default>false</default>
+                    <label>Printing</label>
+                </value>
+                <value>
+                    <fullName>Product Management</fullName>
+                    <default>false</default>
+                    <label>Product Management</label>
+                </value>
+                <value>
+                    <fullName>Project Management</fullName>
+                    <default>false</default>
+                    <label>Project Management</label>
+                </value>
+                <value>
+                    <fullName>Public Relations</fullName>
+                    <default>false</default>
+                    <label>Public Relations</label>
+                </value>
+                <value>
+                    <fullName>Sales</fullName>
+                    <default>false</default>
+                    <label>Sales</label>
+                </value>
+                <value>
+                    <fullName>Sourcing</fullName>
+                    <default>false</default>
+                    <label>Sourcing</label>
+                </value>
+                <value>
+                    <fullName>Telesales</fullName>
+                    <default>false</default>
+                    <label>Telesales</label>
+                </value>
+                <value>
+                    <fullName>Training</fullName>
+                    <default>false</default>
+                    <label>Training</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>IDFS_Region__c</fullName>
         <externalId>false</externalId>
         <label>IDFS Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Africa &amp; MENA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia &amp;  Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China &amp; North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Central</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Africa &amp; MENA</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; MENA</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>Asia &amp;  Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia &amp;  Pacific</label>
+                </value>
+                <value>
+                    <fullName>China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>China &amp; North Asia</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>Central</fullName>
+                    <default>false</default>
+                    <label>Central</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>IFAP_Close_from_any_Status__c</fullName>
@@ -679,6 +913,14 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <externalId>false</externalId>
         <label>IFAP Close from any Status</label>
         <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IFG_Account_Member__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.IFG_Member__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IFG Account Member</label>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -709,112 +951,416 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_TIP_User__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Contact.Account.Category__c, &apos;Payment Provider&apos;)
+&amp;&amp; ISPICKVAL(Contact.Account.Sector__c , &apos;Financial Institution&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is TIP User</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>LOB_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>LOB Expertise</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Advertising</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Audit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Business Intelligence</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Consulting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Distribution &amp; Financial Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Environment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Events</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Facillitation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fuel</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Infrastructure</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Insurance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Medical</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Member Relations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Promotional</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Publishing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Regulatory Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Standards Development</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Tariff Expertise</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Taxation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>User Charges</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Advertising</fullName>
+                    <default>false</default>
+                    <label>Advertising</label>
+                </value>
+                <value>
+                    <fullName>Audit</fullName>
+                    <default>false</default>
+                    <label>Audit</label>
+                </value>
+                <value>
+                    <fullName>Business Intelligence</fullName>
+                    <default>false</default>
+                    <label>Business Intelligence</label>
+                </value>
+                <value>
+                    <fullName>Consulting</fullName>
+                    <default>false</default>
+                    <label>Consulting</label>
+                </value>
+                <value>
+                    <fullName>Distribution &amp; Financial Services</fullName>
+                    <default>false</default>
+                    <label>Distribution &amp; Financial Services</label>
+                </value>
+                <value>
+                    <fullName>Environment</fullName>
+                    <default>false</default>
+                    <label>Environment</label>
+                </value>
+                <value>
+                    <fullName>Events</fullName>
+                    <default>false</default>
+                    <label>Events</label>
+                </value>
+                <value>
+                    <fullName>Facillitation</fullName>
+                    <default>false</default>
+                    <label>Facillitation</label>
+                </value>
+                <value>
+                    <fullName>Fuel</fullName>
+                    <default>false</default>
+                    <label>Fuel</label>
+                </value>
+                <value>
+                    <fullName>Infrastructure</fullName>
+                    <default>false</default>
+                    <label>Infrastructure</label>
+                </value>
+                <value>
+                    <fullName>Insurance</fullName>
+                    <default>false</default>
+                    <label>Insurance</label>
+                </value>
+                <value>
+                    <fullName>Medical</fullName>
+                    <default>false</default>
+                    <label>Medical</label>
+                </value>
+                <value>
+                    <fullName>Member Relations</fullName>
+                    <default>false</default>
+                    <label>Member Relations</label>
+                </value>
+                <value>
+                    <fullName>Operations</fullName>
+                    <default>false</default>
+                    <label>Operations</label>
+                </value>
+                <value>
+                    <fullName>Promotional</fullName>
+                    <default>false</default>
+                    <label>Promotional</label>
+                </value>
+                <value>
+                    <fullName>Publishing</fullName>
+                    <default>false</default>
+                    <label>Publishing</label>
+                </value>
+                <value>
+                    <fullName>Regulatory Services</fullName>
+                    <default>false</default>
+                    <label>Regulatory Services</label>
+                </value>
+                <value>
+                    <fullName>Safety</fullName>
+                    <default>false</default>
+                    <label>Safety</label>
+                </value>
+                <value>
+                    <fullName>Security</fullName>
+                    <default>false</default>
+                    <label>Security</label>
+                </value>
+                <value>
+                    <fullName>Standards Development</fullName>
+                    <default>false</default>
+                    <label>Standards Development</label>
+                </value>
+                <value>
+                    <fullName>Tariff Expertise</fullName>
+                    <default>false</default>
+                    <label>Tariff Expertise</label>
+                </value>
+                <value>
+                    <fullName>Taxation</fullName>
+                    <default>false</default>
+                    <label>Taxation</label>
+                </value>
+                <value>
+                    <fullName>Training</fullName>
+                    <default>false</default>
+                    <label>Training</label>
+                </value>
+                <value>
+                    <fullName>User Charges</fullName>
+                    <default>false</default>
+                    <label>User Charges</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LVA_Language_Skills__c</fullName>
+        <description>Agent&apos;s languages to display on Live Agent Chat</description>
+        <externalId>false</externalId>
+        <label>Spoken Languages</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Albanian</fullName>
+                    <default>false</default>
+                    <label>Albanian</label>
+                </value>
+                <value>
+                    <fullName>ar</fullName>
+                    <default>false</default>
+                    <label>Arabic</label>
+                </value>
+                <value>
+                    <fullName>Azerbaycani</fullName>
+                    <default>false</default>
+                    <label>Azerbaycani</label>
+                </value>
+                <value>
+                    <fullName>Bengali</fullName>
+                    <default>false</default>
+                    <label>Bengali</label>
+                </value>
+                <value>
+                    <fullName>Bulgarian</fullName>
+                    <default>false</default>
+                    <label>Bulgarian</label>
+                </value>
+                <value>
+                    <fullName>Burmese</fullName>
+                    <default>false</default>
+                    <label>Burmese</label>
+                </value>
+                <value>
+                    <fullName>zh_CN</fullName>
+                    <default>false</default>
+                    <label>Chinese</label>
+                </value>
+                <value>
+                    <fullName>Czech</fullName>
+                    <default>false</default>
+                    <label>Czech</label>
+                </value>
+                <value>
+                    <fullName>Dari</fullName>
+                    <default>false</default>
+                    <label>Dari</label>
+                </value>
+                <value>
+                    <fullName>Dutch</fullName>
+                    <default>false</default>
+                    <label>Dutch</label>
+                </value>
+                <value>
+                    <fullName>en_US</fullName>
+                    <default>false</default>
+                    <label>English</label>
+                </value>
+                <value>
+                    <fullName>Filipino</fullName>
+                    <default>false</default>
+                    <label>Filipino</label>
+                </value>
+                <value>
+                    <fullName>Finnish</fullName>
+                    <default>false</default>
+                    <label>Finnish</label>
+                </value>
+                <value>
+                    <fullName>fr</fullName>
+                    <default>false</default>
+                    <label>French</label>
+                </value>
+                <value>
+                    <fullName>de</fullName>
+                    <default>false</default>
+                    <label>German</label>
+                </value>
+                <value>
+                    <fullName>Greek</fullName>
+                    <default>false</default>
+                    <label>Greek</label>
+                </value>
+                <value>
+                    <fullName>Gujarati</fullName>
+                    <default>false</default>
+                    <label>Gujarati</label>
+                </value>
+                <value>
+                    <fullName>Hebrew</fullName>
+                    <default>false</default>
+                    <label>Hebrew</label>
+                </value>
+                <value>
+                    <fullName>Hindi</fullName>
+                    <default>false</default>
+                    <label>Hindi</label>
+                </value>
+                <value>
+                    <fullName>Hungarian</fullName>
+                    <default>false</default>
+                    <label>Hungarian</label>
+                </value>
+                <value>
+                    <fullName>in</fullName>
+                    <default>false</default>
+                    <label>Indonesian</label>
+                </value>
+                <value>
+                    <fullName>it</fullName>
+                    <default>false</default>
+                    <label>Italian</label>
+                </value>
+                <value>
+                    <fullName>ja</fullName>
+                    <default>false</default>
+                    <label>Japanese</label>
+                </value>
+                <value>
+                    <fullName>Kannada</fullName>
+                    <default>false</default>
+                    <label>Kannada</label>
+                </value>
+                <value>
+                    <fullName>Ko</fullName>
+                    <default>false</default>
+                    <label>Korean</label>
+                </value>
+                <value>
+                    <fullName>Kurdish</fullName>
+                    <default>false</default>
+                    <label>Kurdish</label>
+                </value>
+                <value>
+                    <fullName>Malay</fullName>
+                    <default>false</default>
+                    <label>Malay</label>
+                </value>
+                <value>
+                    <fullName>Marathi</fullName>
+                    <default>false</default>
+                    <label>Marathi</label>
+                </value>
+                <value>
+                    <fullName>Nepali</fullName>
+                    <default>false</default>
+                    <label>Nepali</label>
+                </value>
+                <value>
+                    <fullName>Odia</fullName>
+                    <default>false</default>
+                    <label>Odia</label>
+                </value>
+                <value>
+                    <fullName>Pashto</fullName>
+                    <default>false</default>
+                    <label>Pashto</label>
+                </value>
+                <value>
+                    <fullName>Persian</fullName>
+                    <default>false</default>
+                    <label>Persian</label>
+                </value>
+                <value>
+                    <fullName>Polish</fullName>
+                    <default>false</default>
+                    <label>Polish</label>
+                </value>
+                <value>
+                    <fullName>pt_BR</fullName>
+                    <default>false</default>
+                    <label>pt_BR</label>
+                </value>
+                <value>
+                    <fullName>Punjapi</fullName>
+                    <default>false</default>
+                    <label>Punjapi</label>
+                </value>
+                <value>
+                    <fullName>Romanian</fullName>
+                    <default>false</default>
+                    <label>Romanian</label>
+                </value>
+                <value>
+                    <fullName>ru</fullName>
+                    <default>false</default>
+                    <label>Russian</label>
+                </value>
+                <value>
+                    <fullName>Serbo-croatian</fullName>
+                    <default>false</default>
+                    <label>Serbo-croatian</label>
+                </value>
+                <value>
+                    <fullName>Slovak</fullName>
+                    <default>false</default>
+                    <label>Slovak</label>
+                </value>
+                <value>
+                    <fullName>Slovenian</fullName>
+                    <default>false</default>
+                    <label>Slovenian</label>
+                </value>
+                <value>
+                    <fullName>es</fullName>
+                    <default>false</default>
+                    <label>Spanish</label>
+                </value>
+                <value>
+                    <fullName>Tamil</fullName>
+                    <default>false</default>
+                    <label>Tamil</label>
+                </value>
+                <value>
+                    <fullName>Telugu</fullName>
+                    <default>false</default>
+                    <label>Telugu</label>
+                </value>
+                <value>
+                    <fullName>th</fullName>
+                    <default>false</default>
+                    <label>Thai</label>
+                </value>
+                <value>
+                    <fullName>tr</fullName>
+                    <default>false</default>
+                    <label>Turkish</label>
+                </value>
+                <value>
+                    <fullName>Ukranian</fullName>
+                    <default>false</default>
+                    <label>Ukranian</label>
+                </value>
+                <value>
+                    <fullName>Urdu</fullName>
+                    <default>false</default>
+                    <label>Urdu</label>
+                </value>
+                <value>
+                    <fullName>Uzbek</fullName>
+                    <default>false</default>
+                    <label>Uzbek</label>
+                </value>
+                <value>
+                    <fullName>vi</fullName>
+                    <default>false</default>
+                    <label>Vietnamese</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LVA_Show_photo_on_chat__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Show photo on chat</description>
+        <externalId>false</externalId>
+        <label>Show photo on chat</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>License_Cost_Center__c</fullName>
@@ -872,380 +1418,474 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <fullName>Office_Location__c</fullName>
         <externalId>false</externalId>
         <label>Office Location</label>
-        <picklist>
-            <picklistValues>
-                <fullName>ABJ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ADD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AKL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Alternate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AMD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AMM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ATH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BEG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BEY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BJS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BKK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BLR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BOG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BOM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BRU</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BUD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BUE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BUH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CCS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CCU</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>COK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DAR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DEL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DUB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FRA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GUA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GVA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HEL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HKG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HRE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HYD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IEV</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IST</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>JED</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>JKT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>JNB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KIN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KUL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>KWI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LIM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LIS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LJU</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LLW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LON</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LPB</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LUN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MAA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MAD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MEX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MGA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MIA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MLA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MNL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MOW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MRU</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MVD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NBO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NIC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NYC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PAR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PHX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>POS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PRG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PTY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ROM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SAL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SAO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SCL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SDQ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SEL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SHJ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SIN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SJO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SOF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>STO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SYD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TGU</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TLV</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TPE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TUN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TYO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>UIO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>VIE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WAS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WAW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>YMQ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ZAG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ZRH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ABJ</fullName>
+                    <default>false</default>
+                    <label>ABJ</label>
+                </value>
+                <value>
+                    <fullName>ADD</fullName>
+                    <default>false</default>
+                    <label>ADD</label>
+                </value>
+                <value>
+                    <fullName>AKL</fullName>
+                    <default>false</default>
+                    <label>AKL</label>
+                </value>
+                <value>
+                    <fullName>Alternate</fullName>
+                    <default>false</default>
+                    <label>Alternate</label>
+                </value>
+                <value>
+                    <fullName>AMD</fullName>
+                    <default>false</default>
+                    <label>AMD</label>
+                </value>
+                <value>
+                    <fullName>AMM</fullName>
+                    <default>false</default>
+                    <label>AMM</label>
+                </value>
+                <value>
+                    <fullName>AMS</fullName>
+                    <default>false</default>
+                    <label>AMS</label>
+                </value>
+                <value>
+                    <fullName>ATH</fullName>
+                    <default>false</default>
+                    <label>ATH</label>
+                </value>
+                <value>
+                    <fullName>BEG</fullName>
+                    <default>false</default>
+                    <label>BEG</label>
+                </value>
+                <value>
+                    <fullName>BEY</fullName>
+                    <default>false</default>
+                    <label>BEY</label>
+                </value>
+                <value>
+                    <fullName>BJS</fullName>
+                    <default>false</default>
+                    <label>BJS</label>
+                </value>
+                <value>
+                    <fullName>BKK</fullName>
+                    <default>false</default>
+                    <label>BKK</label>
+                </value>
+                <value>
+                    <fullName>BLR</fullName>
+                    <default>false</default>
+                    <label>BLR</label>
+                </value>
+                <value>
+                    <fullName>BOG</fullName>
+                    <default>false</default>
+                    <label>BOG</label>
+                </value>
+                <value>
+                    <fullName>BOM</fullName>
+                    <default>false</default>
+                    <label>BOM</label>
+                </value>
+                <value>
+                    <fullName>BRU</fullName>
+                    <default>false</default>
+                    <label>BRU</label>
+                </value>
+                <value>
+                    <fullName>BUD</fullName>
+                    <default>false</default>
+                    <label>BUD</label>
+                </value>
+                <value>
+                    <fullName>BUE</fullName>
+                    <default>false</default>
+                    <label>BUE</label>
+                </value>
+                <value>
+                    <fullName>BUH</fullName>
+                    <default>false</default>
+                    <label>BUH</label>
+                </value>
+                <value>
+                    <fullName>CAI</fullName>
+                    <default>false</default>
+                    <label>CAI</label>
+                </value>
+                <value>
+                    <fullName>CAS</fullName>
+                    <default>false</default>
+                    <label>CAS</label>
+                </value>
+                <value>
+                    <fullName>CCS</fullName>
+                    <default>false</default>
+                    <label>CCS</label>
+                </value>
+                <value>
+                    <fullName>CCU</fullName>
+                    <default>false</default>
+                    <label>CCU</label>
+                </value>
+                <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
+                </value>
+                <value>
+                    <fullName>COK</fullName>
+                    <default>false</default>
+                    <label>COK</label>
+                </value>
+                <value>
+                    <fullName>DAR</fullName>
+                    <default>false</default>
+                    <label>DAR</label>
+                </value>
+                <value>
+                    <fullName>DEL</fullName>
+                    <default>false</default>
+                    <label>DEL</label>
+                </value>
+                <value>
+                    <fullName>DUB</fullName>
+                    <default>false</default>
+                    <label>DUB</label>
+                </value>
+                <value>
+                    <fullName>FRA</fullName>
+                    <default>false</default>
+                    <label>FRA</label>
+                </value>
+                <value>
+                    <fullName>GUA</fullName>
+                    <default>false</default>
+                    <label>GUA</label>
+                </value>
+                <value>
+                    <fullName>GVA</fullName>
+                    <default>false</default>
+                    <label>GVA</label>
+                </value>
+                <value>
+                    <fullName>HEL</fullName>
+                    <default>false</default>
+                    <label>HEL</label>
+                </value>
+                <value>
+                    <fullName>HKG</fullName>
+                    <default>false</default>
+                    <label>HKG</label>
+                </value>
+                <value>
+                    <fullName>HRE</fullName>
+                    <default>false</default>
+                    <label>HRE</label>
+                </value>
+                <value>
+                    <fullName>HYD</fullName>
+                    <default>false</default>
+                    <label>HYD</label>
+                </value>
+                <value>
+                    <fullName>IEV</fullName>
+                    <default>false</default>
+                    <label>IEV</label>
+                </value>
+                <value>
+                    <fullName>IST</fullName>
+                    <default>false</default>
+                    <label>IST</label>
+                </value>
+                <value>
+                    <fullName>JED</fullName>
+                    <default>false</default>
+                    <label>JED</label>
+                </value>
+                <value>
+                    <fullName>JKT</fullName>
+                    <default>false</default>
+                    <label>JKT</label>
+                </value>
+                <value>
+                    <fullName>JNB</fullName>
+                    <default>false</default>
+                    <label>JNB</label>
+                </value>
+                <value>
+                    <fullName>KIN</fullName>
+                    <default>false</default>
+                    <label>KIN</label>
+                </value>
+                <value>
+                    <fullName>KUL</fullName>
+                    <default>false</default>
+                    <label>KUL</label>
+                </value>
+                <value>
+                    <fullName>KWI</fullName>
+                    <default>false</default>
+                    <label>KWI</label>
+                </value>
+                <value>
+                    <fullName>LIM</fullName>
+                    <default>false</default>
+                    <label>LIM</label>
+                </value>
+                <value>
+                    <fullName>LIS</fullName>
+                    <default>false</default>
+                    <label>LIS</label>
+                </value>
+                <value>
+                    <fullName>LJU</fullName>
+                    <default>false</default>
+                    <label>LJU</label>
+                </value>
+                <value>
+                    <fullName>LLW</fullName>
+                    <default>false</default>
+                    <label>LLW</label>
+                </value>
+                <value>
+                    <fullName>LON</fullName>
+                    <default>false</default>
+                    <label>LON</label>
+                </value>
+                <value>
+                    <fullName>LPB</fullName>
+                    <default>false</default>
+                    <label>LPB</label>
+                </value>
+                <value>
+                    <fullName>LUN</fullName>
+                    <default>false</default>
+                    <label>LUN</label>
+                </value>
+                <value>
+                    <fullName>MAA</fullName>
+                    <default>false</default>
+                    <label>MAA</label>
+                </value>
+                <value>
+                    <fullName>MAD</fullName>
+                    <default>false</default>
+                    <label>MAD</label>
+                </value>
+                <value>
+                    <fullName>MEX</fullName>
+                    <default>false</default>
+                    <label>MEX</label>
+                </value>
+                <value>
+                    <fullName>MGA</fullName>
+                    <default>false</default>
+                    <label>MGA</label>
+                </value>
+                <value>
+                    <fullName>MIA</fullName>
+                    <default>false</default>
+                    <label>MIA</label>
+                </value>
+                <value>
+                    <fullName>MLA</fullName>
+                    <default>false</default>
+                    <label>MLA</label>
+                </value>
+                <value>
+                    <fullName>MNL</fullName>
+                    <default>false</default>
+                    <label>MNL</label>
+                </value>
+                <value>
+                    <fullName>MOW</fullName>
+                    <default>false</default>
+                    <label>MOW</label>
+                </value>
+                <value>
+                    <fullName>MRU</fullName>
+                    <default>false</default>
+                    <label>MRU</label>
+                </value>
+                <value>
+                    <fullName>MVD</fullName>
+                    <default>false</default>
+                    <label>MVD</label>
+                </value>
+                <value>
+                    <fullName>NBO</fullName>
+                    <default>false</default>
+                    <label>NBO</label>
+                </value>
+                <value>
+                    <fullName>NIC</fullName>
+                    <default>false</default>
+                    <label>NIC</label>
+                </value>
+                <value>
+                    <fullName>NYC</fullName>
+                    <default>false</default>
+                    <label>NYC</label>
+                </value>
+                <value>
+                    <fullName>PAR</fullName>
+                    <default>false</default>
+                    <label>PAR</label>
+                </value>
+                <value>
+                    <fullName>PHX</fullName>
+                    <default>false</default>
+                    <label>PHX</label>
+                </value>
+                <value>
+                    <fullName>POS</fullName>
+                    <default>false</default>
+                    <label>POS</label>
+                </value>
+                <value>
+                    <fullName>PRG</fullName>
+                    <default>false</default>
+                    <label>PRG</label>
+                </value>
+                <value>
+                    <fullName>PTY</fullName>
+                    <default>false</default>
+                    <label>PTY</label>
+                </value>
+                <value>
+                    <fullName>ROM</fullName>
+                    <default>false</default>
+                    <label>ROM</label>
+                </value>
+                <value>
+                    <fullName>SAL</fullName>
+                    <default>false</default>
+                    <label>SAL</label>
+                </value>
+                <value>
+                    <fullName>SAO</fullName>
+                    <default>false</default>
+                    <label>SAO</label>
+                </value>
+                <value>
+                    <fullName>SCL</fullName>
+                    <default>false</default>
+                    <label>SCL</label>
+                </value>
+                <value>
+                    <fullName>SDQ</fullName>
+                    <default>false</default>
+                    <label>SDQ</label>
+                </value>
+                <value>
+                    <fullName>SEL</fullName>
+                    <default>false</default>
+                    <label>SEL</label>
+                </value>
+                <value>
+                    <fullName>SHJ</fullName>
+                    <default>false</default>
+                    <label>SHJ</label>
+                </value>
+                <value>
+                    <fullName>SIN</fullName>
+                    <default>false</default>
+                    <label>SIN</label>
+                </value>
+                <value>
+                    <fullName>SJO</fullName>
+                    <default>false</default>
+                    <label>SJO</label>
+                </value>
+                <value>
+                    <fullName>SOF</fullName>
+                    <default>false</default>
+                    <label>SOF</label>
+                </value>
+                <value>
+                    <fullName>STO</fullName>
+                    <default>false</default>
+                    <label>STO</label>
+                </value>
+                <value>
+                    <fullName>SYD</fullName>
+                    <default>false</default>
+                    <label>SYD</label>
+                </value>
+                <value>
+                    <fullName>TGU</fullName>
+                    <default>false</default>
+                    <label>TGU</label>
+                </value>
+                <value>
+                    <fullName>TLV</fullName>
+                    <default>false</default>
+                    <label>TLV</label>
+                </value>
+                <value>
+                    <fullName>TPE</fullName>
+                    <default>false</default>
+                    <label>TPE</label>
+                </value>
+                <value>
+                    <fullName>TUN</fullName>
+                    <default>false</default>
+                    <label>TUN</label>
+                </value>
+                <value>
+                    <fullName>TYO</fullName>
+                    <default>false</default>
+                    <label>TYO</label>
+                </value>
+                <value>
+                    <fullName>UIO</fullName>
+                    <default>false</default>
+                    <label>UIO</label>
+                </value>
+                <value>
+                    <fullName>VIE</fullName>
+                    <default>false</default>
+                    <label>VIE</label>
+                </value>
+                <value>
+                    <fullName>WAS</fullName>
+                    <default>false</default>
+                    <label>WAS</label>
+                </value>
+                <value>
+                    <fullName>WAW</fullName>
+                    <default>false</default>
+                    <label>WAW</label>
+                </value>
+                <value>
+                    <fullName>YMQ</fullName>
+                    <default>false</default>
+                    <label>YMQ</label>
+                </value>
+                <value>
+                    <fullName>ZAG</fullName>
+                    <default>false</default>
+                    <label>ZAG</label>
+                </value>
+                <value>
+                    <fullName>ZRH</fullName>
+                    <default>false</default>
+                    <label>ZRH</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>PPD_Country__c</fullName>
@@ -1307,24 +1947,29 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <externalId>false</externalId>
         <inlineHelpText>Fill only in this field if you are part of the Rapid Response Team!</inlineHelpText>
         <label>Part of Rapid Response Team</label>
-        <picklist>
-            <picklistValues>
-                <fullName>YMQ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GVA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SIN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>YMQ</fullName>
+                    <default>false</default>
+                    <label>YMQ</label>
+                </value>
+                <value>
+                    <fullName>GVA</fullName>
+                    <default>false</default>
+                    <label>GVA</label>
+                </value>
+                <value>
+                    <fullName>SIN</fullName>
+                    <default>false</default>
+                    <label>SIN</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Portal_App_Role__c</fullName>
@@ -1467,28 +2112,34 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <fullName>Segment_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>Segment Expertise</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Passenger</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport &amp; Civil Aviation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel &amp; Tourism</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Passenger</fullName>
+                    <default>false</default>
+                    <label>Passenger</label>
+                </value>
+                <value>
+                    <fullName>Cargo</fullName>
+                    <default>false</default>
+                    <label>Cargo</label>
+                </value>
+                <value>
+                    <fullName>Airport &amp; Civil Aviation</fullName>
+                    <default>false</default>
+                    <label>Airport &amp; Civil Aviation</label>
+                </value>
+                <value>
+                    <fullName>Travel &amp; Tourism</fullName>
+                    <default>false</default>
+                    <label>Travel &amp; Tourism</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -1534,25 +2185,13 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ZMG__Zoomerang_Security_Token__c</fullName>
+        <fullName>dgai__active_user_settings__c</fullName>
+        <defaultValue>false</defaultValue>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
-        <label>Zoomerang Security Token</label>
-        <length>500</length>
+        <label>active user settings</label>
         <trackFeedHistory>false</trackFeedHistory>
-        <type>LongTextArea</type>
-        <visibleLines>2</visibleLines>
-    </fields>
-    <fields>
-        <fullName>ZMG__Zoomerang_User_ID__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Zoomerang User ID</label>
-        <length>100</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>isSISUser__c</fullName>
@@ -1572,6 +2211,70 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>pi__Can_View_Not_Assigned_Prospects__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Can View Not Assigned Prospects</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>pi__Pardot_Api_Key__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Pardot Api Key</label>
+        <length>100</length>
+        <maskChar>X</maskChar>
+        <maskType>all</maskType>
+        <required>false</required>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>pi__Pardot_Api_Version__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Pardot Api Version</label>
+        <length>1</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>pi__Pardot_User_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Pardot User Id</label>
+        <length>100</length>
+        <maskChar>X</maskChar>
+        <maskType>all</maskType>
+        <required>false</required>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>pi__Pardot_User_Key__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Pardot User Key</label>
+        <length>100</length>
+        <maskChar>X</maskChar>
+        <maskType>all</maskType>
+        <required>false</required>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>pi__Pardot_User_Role__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Pardot User Role</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>rpm__c</fullName>
         <externalId>false</externalId>
         <label>RPM</label>
@@ -1580,6 +2283,25 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <trackFeedHistory>false</trackFeedHistory>
         <type>Hierarchy</type>
     </fields>
+    <listViews>
+        <fullName>AI_Users</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>contains</operation>
+            <value>AI</value>
+        </filters>
+        <label>AI Pilot Users</label>
+        <language>en_US</language>
+    </listViews>
     <listViews>
         <fullName>ActiveUsersTIESS</fullName>
         <columns>FULL_NAME</columns>
@@ -1651,7 +2373,7 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <filters>
             <field>FULL_NAME</field>
             <operation>contains</operation>
-            <value>Jiang</value>
+            <value>Weydath</value>
         </filters>
         <label>User with name</label>
         <language>en_US</language>
@@ -2277,6 +2999,44 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Identity_Users</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>License_Cost_Center__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Identity</value>
+        </filters>
+        <label>Identity Users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Kavi_Users</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Kavi_Internal_User__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Kavi internal users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Knowledge_Users</fullName>
         <columns>FULL_NAME</columns>
         <columns>CORE.USERS.USERNAME</columns>
@@ -2414,6 +3174,30 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <value>P</value>
         </filters>
         <label>Partner community users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Read_Only_Dev</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>MARKETING_USER</columns>
+        <columns>CORE.USERS.DIVISION</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>License_Cost_Center__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>equals</operation>
+            <value>Dev - Read Only</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Read Only Dev</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -2690,40 +3474,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>TD</fullName>
-        <columns>FULL_NAME</columns>
-        <columns>CORE.USERS.DIVISION</columns>
-        <columns>CORE.USERS.ACTIVE</columns>
-        <columns>CORE.USERS.LAST_LOGIN</columns>
-        <columns>CORE.USER_ROLE.NAME</columns>
-        <columns>CORE.PROFILE.NAME</columns>
-        <columns>CREATED_BY_NAME</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.NAME</columns>
-        <columns>License_Cost_Center__c</columns>
-        <columns>CORE.USERS.USERNAME</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>CORE.USERS.EMAIL</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CORE.USERS.ACTIVE</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>CORE.PROFILE.NAME</field>
-            <operation>notContain</operation>
-            <value>Portal</value>
-        </filters>
-        <filters>
-            <field>CORE.USERS.LAST_LOGIN</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>TD</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>TTBS_Users</fullName>
         <columns>FULL_NAME</columns>
         <columns>CORE.USERS.ALIAS</columns>
@@ -2748,8 +3498,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
     <searchLayouts>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CORE.USER_ROLE.NAME</lookupDialogsAdditionalFields>
-        <lookupFilterFields>FULL_NAME</lookupFilterFields>
-        <lookupFilterFields>CORE.USER_ROLE.NAME</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CORE.USER_ROLE.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CORE.USERS.PHONE</lookupPhoneDialogsAdditionalFields>
@@ -2776,17 +3524,11 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <active>true</active>
         <description>User license cost center format validation - first 3 Alphabets (Capitals), next 3 numeric, next 2 Alphabets (Capitals) and last 2 numeric</description>
         <errorConditionFormula>AND(
-	ISPICKVAL(UserType, &apos;Standard&apos;),
-	IsActive,
-	NOT(
-		OR(
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{3}[0-9]{3}[A-Z]{2}[0-9]{2}&quot;),
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{4}[0-9]{2}[A-Z]{2}[0-9]{2}&quot;),
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{2}&quot;),
-			REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{4}[A-Z]{2}[0-9]{2}&quot;)
-		)
-	)
-)</errorConditionFormula>
+    ISPICKVAL(UserType, &apos;Standard&apos;),
+    IsActive,
+    NOT(REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[A-Z0-9]{4}[A-Z]{2}[0-9]{2}&quot;)
+        )
+    )</errorConditionFormula>
         <errorDisplayField>License_Cost_Center__c</errorDisplayField>
         <errorMessage>The format for cost center is - &lt;2/4 Alphabets(Uppercase)&gt;&lt;2/4 Numeric&gt;&lt;2/4 Alphabets(Uppercase)&gt;&lt;2 Numeric&gt;, with a total of 10 characters. For example, ISF005CH01, XSMW01JO01.</errorMessage>
     </validationRules>

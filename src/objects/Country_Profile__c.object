@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -47,8 +43,10 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used by the ICCS Currency Center project. Stores ICCS-related information on countries.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -58,97 +56,121 @@
     <fields>
         <fullName>AC_Airport__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Airport (landing, take-off, lighting...)</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>AC_Catering__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Catering</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>AC_Crew_Accommodation__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Crew Accommodation</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>AC_Fuel__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Fuel</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>AC_Ground_Handling__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Ground Handling (pax, cargo, cleaning..)</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>AC_Ground_Transport__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Ground Transport (crew and pax)</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>AC_Line_Maintenance__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Line Maintenance (fueling, engineering)</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>AC_Pax_Accommodation__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Pax Accommodation</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
@@ -166,23 +188,27 @@
         <fullName>Acceptability_Of_Currency__c</fullName>
         <externalId>false</externalId>
         <label>Acceptability of Currency (Reso 024d)</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Restricted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not Restricted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Restricted</fullName>
+                    <default>false</default>
+                    <label>Restricted</label>
+                </value>
+                <value>
+                    <fullName>Not Restricted</fullName>
+                    <default>false</default>
+                    <label>Not Restricted</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Actual_Amount_Blocked__c</fullName>
@@ -282,24 +308,30 @@
     <fields>
         <fullName>BSP_Currency_1__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Currency 1</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BSP_Currency_2__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Currency 2</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BSP_Currency__c</fullName>
@@ -328,23 +360,27 @@
         <fullName>BSP_ICCS_Availability__c</fullName>
         <externalId>false</externalId>
         <label>ICCS Availability</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BSP_Launch_Date__c</fullName>
@@ -360,149 +396,180 @@
         <fullName>BSP_Payment_Card_Profile_Acceptance__c</fullName>
         <externalId>false</externalId>
         <label>Payment Card Profile: Acceptance</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BSP_Settlement_Frequency_1__c</fullName>
         <externalId>false</externalId>
         <label>Settlement Frequency 1</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 3 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 5 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 10 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                    <label>Weekly</label>
+                </value>
+                <value>
+                    <fullName>Fortnightly</fullName>
+                    <default>false</default>
+                    <label>Fortnightly</label>
+                </value>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+                <value>
+                    <fullName>Each 3 D</fullName>
+                    <default>false</default>
+                    <label>Each 3 D</label>
+                </value>
+                <value>
+                    <fullName>Each 5 D</fullName>
+                    <default>false</default>
+                    <label>Each 5 D</label>
+                </value>
+                <value>
+                    <fullName>Each 10 D</fullName>
+                    <default>false</default>
+                    <label>Each 10 D</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>BSP_Settlement_Frequency_2__c</fullName>
         <externalId>false</externalId>
         <label>Settlement Frequency 2</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 3 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 5 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 10 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                    <label>Weekly</label>
+                </value>
+                <value>
+                    <fullName>Fortnightly</fullName>
+                    <default>false</default>
+                    <label>Fortnightly</label>
+                </value>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+                <value>
+                    <fullName>Each 3 D</fullName>
+                    <default>false</default>
+                    <label>Each 3 D</label>
+                </value>
+                <value>
+                    <fullName>Each 5 D</fullName>
+                    <default>false</default>
+                    <label>Each 5 D</label>
+                </value>
+                <value>
+                    <fullName>Each 10 D</fullName>
+                    <default>false</default>
+                    <label>Each 10 D</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>BSP_Settlement_Frequency__c</fullName>
         <externalId>false</externalId>
         <label>Settlement Frequency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 3 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 5 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 10 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                    <label>Weekly</label>
+                </value>
+                <value>
+                    <fullName>Fortnightly</fullName>
+                    <default>false</default>
+                    <label>Fortnightly</label>
+                </value>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+                <value>
+                    <fullName>Each 3 D</fullName>
+                    <default>false</default>
+                    <label>Each 3 D</label>
+                </value>
+                <value>
+                    <fullName>Each 5 D</fullName>
+                    <default>false</default>
+                    <label>Each 5 D</label>
+                </value>
+                <value>
+                    <fullName>Each 10 D</fullName>
+                    <default>false</default>
+                    <label>Each 10 D</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -569,24 +636,30 @@
     <fields>
         <fullName>CASS_Currency_1__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Currency 1</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>CASS_Currency_2__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Currency 2</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>CASS_Currency__c</fullName>
@@ -615,23 +688,27 @@
         <fullName>CASS_ICCS_Availability__c</fullName>
         <externalId>false</externalId>
         <label>ICCS Availability</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>CASS_Launch_Date__c</fullName>
@@ -647,129 +724,156 @@
         <fullName>CASS_Settlement_Frequency_1__c</fullName>
         <externalId>false</externalId>
         <label>Settlement Frequency 1</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 3 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 5 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 10 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                    <label>Weekly</label>
+                </value>
+                <value>
+                    <fullName>Fortnightly</fullName>
+                    <default>false</default>
+                    <label>Fortnightly</label>
+                </value>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+                <value>
+                    <fullName>Each 3 D</fullName>
+                    <default>false</default>
+                    <label>Each 3 D</label>
+                </value>
+                <value>
+                    <fullName>Each 5 D</fullName>
+                    <default>false</default>
+                    <label>Each 5 D</label>
+                </value>
+                <value>
+                    <fullName>Each 10 D</fullName>
+                    <default>false</default>
+                    <label>Each 10 D</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>CASS_Settlement_Frequency_2__c</fullName>
         <externalId>false</externalId>
         <label>Settlement Frequency 2</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 3 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 5 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 10 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                    <label>Weekly</label>
+                </value>
+                <value>
+                    <fullName>Fortnightly</fullName>
+                    <default>false</default>
+                    <label>Fortnightly</label>
+                </value>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+                <value>
+                    <fullName>Each 3 D</fullName>
+                    <default>false</default>
+                    <label>Each 3 D</label>
+                </value>
+                <value>
+                    <fullName>Each 5 D</fullName>
+                    <default>false</default>
+                    <label>Each 5 D</label>
+                </value>
+                <value>
+                    <fullName>Each 10 D</fullName>
+                    <default>false</default>
+                    <label>Each 10 D</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>CASS_Settlement_Frequency__c</fullName>
         <externalId>false</externalId>
         <label>Settlement Frequency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 3 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 5 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Each 10 D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                    <label>Weekly</label>
+                </value>
+                <value>
+                    <fullName>Fortnightly</fullName>
+                    <default>false</default>
+                    <label>Fortnightly</label>
+                </value>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+                <value>
+                    <fullName>Each 3 D</fullName>
+                    <default>false</default>
+                    <label>Each 3 D</label>
+                </value>
+                <value>
+                    <fullName>Each 5 D</fullName>
+                    <default>false</default>
+                    <label>Each 5 D</label>
+                </value>
+                <value>
+                    <fullName>Each 10 D</fullName>
+                    <default>false</default>
+                    <label>Each 10 D</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -808,13 +912,16 @@
     <fields>
         <fullName>Clearing_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>Clearing Currency</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
@@ -896,27 +1003,32 @@
         <fullName>Devaluation_Risk__c</fullName>
         <externalId>false</externalId>
         <label>Devaluation Risk</label>
-        <picklist>
-            <picklistValues>
-                <fullName>High</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Documentation_Forms__c</fullName>
@@ -1271,13 +1383,16 @@
     <fields>
         <fullName>International_Fares_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>Currency_Center_Currency_Codes</globalPicklist>
         <label>International Fares Currency (Reso 024a)</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Issue_Started__c</fullName>
@@ -1293,31 +1408,37 @@
         <fullName>Listed_In__c</fullName>
         <externalId>false</externalId>
         <label>Listed In</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Draft</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Blocked Funds</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Watch List</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>All others</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>true</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>Blocked Funds</fullName>
+                    <default>false</default>
+                    <label>Blocked Funds</label>
+                </value>
+                <value>
+                    <fullName>Watch List</fullName>
+                    <default>false</default>
+                    <label>Watch List</label>
+                </value>
+                <value>
+                    <fullName>All others</fullName>
+                    <default>false</default>
+                    <label>All others</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Local_BAR__c</fullName>
@@ -1457,23 +1578,27 @@
         <fullName>Publish_News__c</fullName>
         <externalId>false</externalId>
         <label>Publish News?</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Quotas_or_Restrictions__c</fullName>
@@ -1502,22 +1627,26 @@
         <fullName>Send_Notifications__c</fullName>
         <externalId>false</externalId>
         <label>Send Notifications ?</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Sovereign_Credit_Rating__c</fullName>
@@ -1747,4 +1876,5 @@
     <pluralLabel>Country Profiles</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

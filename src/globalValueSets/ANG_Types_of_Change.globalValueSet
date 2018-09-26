@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Legal name</fullName>
+        <default>false</default>
+        <label>Legal name</label>
+    </customValue>
+    <customValue>
+        <fullName>Legal status</fullName>
+        <default>false</default>
+        <label>Legal status</label>
+    </customValue>
+    <customValue>
+        <fullName>Minor shareholding</fullName>
+        <default>false</default>
+        <label>Minor shareholding</label>
+    </customValue>
+    <customValue>
+        <fullName>Major shareholding</fullName>
+        <default>false</default>
+        <label>Major shareholding</label>
+    </customValue>
+    <customValue>
+        <fullName>Ownership</fullName>
+        <default>false</default>
+        <label>Ownership</label>
+    </customValue>
+    <customValue>
+        <fullName>Location type</fullName>
+        <default>false</default>
+        <label>Location type</label>
+    </customValue>
+    <customValue>
+        <fullName>Location</fullName>
+        <default>false</default>
+        <label>Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Hierarchy</fullName>
+        <default>false</default>
+        <label>Hierarchy</label>
+    </customValue>
+    <customValue>
+        <fullName>VMFR</fullName>
+        <default>false</default>
+        <label>VMFR</label>
+    </customValue>
+    <customValue>
+        <fullName>Accreditation type</fullName>
+        <default>false</default>
+        <label>Accreditation type</label>
+    </customValue>
+    <customValue>
+        <fullName>Location type to different legal entity</fullName>
+        <default>false</default>
+        <label>Location type to different legal entity</label>
+    </customValue>
+    <customValue>
+        <fullName>Trade name</fullName>
+        <default>false</default>
+        <label>Trade name</label>
+    </customValue>
+    <masterLabel>ANG Types of Change</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

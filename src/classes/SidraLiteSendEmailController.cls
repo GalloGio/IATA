@@ -14,6 +14,8 @@ public with sharing class SidraLiteSendEmailController {
 
     public static final APXTConga4__Conga_Merge_Query__c QUERY_PARENT_CASE = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'Parent Case'];
     public static final APXTConga4__Conga_Merge_Query__c QUERY_ACCOUNT = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'Parent Account'];
+    public static final APXTConga4__Conga_Merge_Query__c QUERY_FOP = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'Forms Of Payment'];
+    public static final APXTConga4__Conga_Merge_Query__c QUERY_RHC = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'RHC Information'];
 
     public SidraLiteSendEmailController(ApexPages.StandardController controller) {
         Id caseId = ApexPages.currentPage().getParameters().get('id');
@@ -32,12 +34,12 @@ public with sharing class SidraLiteSendEmailController {
             return;
         }
 
-        list<Case> listCase = [Select Id, CaseNumber, Parent.CaseNumber, Subject, Parent.Subject, Contact.Id, Contact.Name, Parent.Id, Parent.Contact.Id, Parent.Contact.Name, Recordtype.Name, BSPCountry__c,
+        list<Case> listCase = [Select Id, CaseNumber, Parent.CaseNumber, Subject, Parent.Subject, Contact.Id, Contact.Name, Parent.Id, Parent.Contact.Id, Parent.Contact.Name, Recordtype.Name, Recordtype.DeveloperName, BSPCountry__c,
             Activate_Agent_in_Systems__c, Confirm_IRR_Withdrawal_to_AG__c, Confirm_Reinstatement_to_AG__c, Deactivate_Agent_in_Systems__c,
             Inform_Agent_DEF__c, Inform_Airlines_Locally_Default__c, Inform_Airlines_REI_DEFWD__c, Issue_Declaration_of_Default_to_Agent__c,
             NOI_sent__c, NOT_Sent__c, Notify_TER_to_AG__c, Open_TKT_System__c, Shut_Down_TKT_System_GDS_and_BSPlink__c,
-            Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_TER__c,
-            SIDRA_Lite_Reason__c, Region__c, Account.Type
+            Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_TER__c, Update_AIMS_REI_DEFWITH__c, 
+            SIDRA_Lite_Reason__c, Region__c, Account.Type,CNSCase__c, Case_Group__c
             from Case where id = :caseId];
         if (listCase.isEmpty()) {
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'No case found with id ' + caseId));
@@ -107,6 +109,7 @@ public with sharing class SidraLiteSendEmailController {
             this.cse.Open_TKT_System__c = this.dummyCase.Open_TKT_System__c;
             this.cse.Inform_Airlines_REI_DEFWD__c = this.dummyCase.Inform_Airlines_REI_DEFWD__c;
             this.cse.Ticketing_Authority_Re_assigned__c = this.dummyCase.Ticketing_Authority_Re_assigned__c;
+            this.cse.Update_AIMS_REI_DEFWITH__c = this.dummyCase.Update_AIMS_REI_DEFWITH__c;
         }
         if (this.selectedType=='REI') {
             this.cse.Confirm_Reinstatement_to_AG__c = this.dummyCase.Confirm_Reinstatement_to_AG__c;
@@ -114,6 +117,7 @@ public with sharing class SidraLiteSendEmailController {
             this.cse.Open_TKT_System__c = this.dummyCase.Open_TKT_System__c;
             this.cse.Inform_Airlines_REI_DEFWD__c = this.dummyCase.Inform_Airlines_REI_DEFWD__c;
             this.cse.Ticketing_Authority_Re_assigned__c = this.dummyCase.Ticketing_Authority_Re_assigned__c;
+            this.cse.Update_AIMS_REI_DEFWITH__c = this.dummyCase.Update_AIMS_REI_DEFWITH__c;
         }
         if (this.selectedType=='NOT') {
             this.cse.NOT_Sent__c = this.dummyCase.NOT_Sent__c;
@@ -155,7 +159,7 @@ public with sharing class SidraLiteSendEmailController {
 
     private String getURLCongaMerge() {
         // get 'From Email' using predefined custom setting 'RecordTypeEmail'
-        String fromEmail = IDFS_Util.getRecordTypeEmail(cse.Recordtype.Name, cse.BSPCountry__c);
+        String fromEmail = IDFS_Util.getRecordTypeEmail(cse.Recordtype.DeveloperName, cse.BSPCountry__c, cse.Case_Group__c);
         list<OrgWideEmailAddress> listadd = [
             Select Id, DisplayName, Address
             From OrgWideEmailAddress
@@ -176,6 +180,10 @@ public with sharing class SidraLiteSendEmailController {
         list<String> listQueries = new list<String>();
         listQueries.add('[PARENTACCOUNT]' + formatID15(QUERY_ACCOUNT.id) + '?pv0=' + formatID15(this.cse.AccountId));
         listQueries.add('[PARENTCASE]' + formatID15(QUERY_PARENT_CASE.id) + '?pv0=' + formatID15(this.cse.Parent.Id));
+
+        listQueries.add('[ANGRHCINFO]' + formatID15(QUERY_RHC.id) + '?pv0=' + formatID15(this.cse.AccountId));
+        listQueries.add('[FORMSOFPAYMENT]' + formatID15(QUERY_FOP.id) + '?pv0=' + formatID15(this.cse.AccountId));
+                
 
         // return conga url
         if (this.selectedCustomize == 'true') {

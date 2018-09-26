@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -60,61 +57,74 @@
         <fullName>Agent_Type__c</fullName>
         <externalId>false</externalId>
         <label>Agent Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>All</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Cargo Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Passenger Sales Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Domestic Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Associate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>All</fullName>
+                    <default>false</default>
+                    <label>All</label>
+                </value>
+                <value>
+                    <fullName>IATA Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>IATA Cargo Agent</label>
+                </value>
+                <value>
+                    <fullName>IATA Passenger Sales Agent</fullName>
+                    <default>false</default>
+                    <label>IATA Passenger Sales Agent</label>
+                </value>
+                <value>
+                    <fullName>Domestic Agent</fullName>
+                    <default>false</default>
+                    <label>Domestic Agent</label>
+                </value>
+                <value>
+                    <fullName>CASS Associate</fullName>
+                    <default>false</default>
+                    <label>CASS Associate</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Agent_Types__c</fullName>
         <externalId>false</externalId>
         <label>Agent Type(s)</label>
-        <picklist>
-            <picklistValues>
-                <fullName>IATA Cargo Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Passenger Sales Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Domestic Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Associate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IATA Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>IATA Cargo Agent</label>
+                </value>
+                <value>
+                    <fullName>IATA Passenger Sales Agent</fullName>
+                    <default>false</default>
+                    <label>IATA Passenger Sales Agent</label>
+                </value>
+                <value>
+                    <fullName>Domestic Agent</fullName>
+                    <default>false</default>
+                    <label>Domestic Agent</label>
+                </value>
+                <value>
+                    <fullName>CASS Associate</fullName>
+                    <default>false</default>
+                    <label>CASS Associate</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -179,29 +189,35 @@
         <fullName>FA_Result__c</fullName>
         <externalId>false</externalId>
         <label>FA Result</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Satisfactory - New Financial Security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Satisfactory - Update Financial Security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Unsatisfactory - New Financial Security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Unsatisfactory - Update Financial Security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Satisfactory - New Financial Security</fullName>
+                    <default>false</default>
+                    <label>Satisfactory - New Financial Security</label>
+                </value>
+                <value>
+                    <fullName>Satisfactory - Update Financial Security</fullName>
+                    <default>false</default>
+                    <label>Satisfactory - Update Financial Security</label>
+                </value>
+                <value>
+                    <fullName>Unsatisfactory - New Financial Security</fullName>
+                    <default>false</default>
+                    <label>Unsatisfactory - New Financial Security</label>
+                </value>
+                <value>
+                    <fullName>Unsatisfactory - Update Financial Security</fullName>
+                    <default>false</default>
+                    <label>Unsatisfactory - Update Financial Security</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Greeting_Line__c</fullName>
@@ -242,69 +258,84 @@
         <fullName>Review_Type__c</fullName>
         <externalId>false</externalId>
         <label>Review Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>All</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Adhoc</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change in Ownership</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Re-instatements</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>All</fullName>
+                    <default>false</default>
+                    <label>All</label>
+                </value>
+                <value>
+                    <fullName>Annual</fullName>
+                    <default>false</default>
+                    <label>Annual</label>
+                </value>
+                <value>
+                    <fullName>New</fullName>
+                    <default>false</default>
+                    <label>New</label>
+                </value>
+                <value>
+                    <fullName>Adhoc</fullName>
+                    <default>false</default>
+                    <label>Adhoc</label>
+                </value>
+                <value>
+                    <fullName>Change in Ownership</fullName>
+                    <default>false</default>
+                    <label>Change in Ownership</label>
+                </value>
+                <value>
+                    <fullName>Re-instatements</fullName>
+                    <default>false</default>
+                    <label>Re-instatements</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Review_Types__c</fullName>
         <externalId>false</externalId>
         <label>Review Type(s)</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Adhoc</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change in Ownership</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Re-instatements</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Annual</fullName>
+                    <default>false</default>
+                    <label>Annual</label>
+                </value>
+                <value>
+                    <fullName>New</fullName>
+                    <default>false</default>
+                    <label>New</label>
+                </value>
+                <value>
+                    <fullName>Adhoc</fullName>
+                    <default>false</default>
+                    <label>Adhoc</label>
+                </value>
+                <value>
+                    <fullName>Change in Ownership</fullName>
+                    <default>false</default>
+                    <label>Change in Ownership</label>
+                </value>
+                <value>
+                    <fullName>Re-instatements</fullName>
+                    <default>false</default>
+                    <label>Re-instatements</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -330,94 +361,115 @@
         <fullName>Template_Language__c</fullName>
         <externalId>false</externalId>
         <label>Template Language</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Chinese (Simplified)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>English</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>French</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Italian</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Japanese</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Korean</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Portuguese</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Russian</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Spanish</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Chinese (Simplified)</fullName>
+                    <default>false</default>
+                    <label>Chinese (Simplified)</label>
+                </value>
+                <value>
+                    <fullName>English</fullName>
+                    <default>false</default>
+                    <label>English</label>
+                </value>
+                <value>
+                    <fullName>French</fullName>
+                    <default>false</default>
+                    <label>French</label>
+                </value>
+                <value>
+                    <fullName>Italian</fullName>
+                    <default>false</default>
+                    <label>Italian</label>
+                </value>
+                <value>
+                    <fullName>Japanese</fullName>
+                    <default>false</default>
+                    <label>Japanese</label>
+                </value>
+                <value>
+                    <fullName>Korean</fullName>
+                    <default>false</default>
+                    <label>Korean</label>
+                </value>
+                <value>
+                    <fullName>Portuguese</fullName>
+                    <default>false</default>
+                    <label>Portuguese</label>
+                </value>
+                <value>
+                    <fullName>Russian</fullName>
+                    <default>false</default>
+                    <label>Russian</label>
+                </value>
+                <value>
+                    <fullName>Spanish</fullName>
+                    <default>false</default>
+                    <label>Spanish</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Template_Type__c</fullName>
         <description>Type of the email template</description>
         <externalId>false</externalId>
         <label>Template Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Confirmation Email</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Confirmation Email Cheque</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FA - Financial Assessment</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FS - Financial Security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FSM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mass Confirmation Email</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mass Confirmation Email Cheque</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Renewal Notice</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Confirmation Email</fullName>
+                    <default>false</default>
+                    <label>Confirmation Email</label>
+                </value>
+                <value>
+                    <fullName>Confirmation Email Cheque</fullName>
+                    <default>false</default>
+                    <label>Confirmation Email Cheque</label>
+                </value>
+                <value>
+                    <fullName>FA - Financial Assessment</fullName>
+                    <default>true</default>
+                    <label>FA - Financial Assessment</label>
+                </value>
+                <value>
+                    <fullName>FS - Financial Security</fullName>
+                    <default>false</default>
+                    <label>FS - Financial Security</label>
+                </value>
+                <value>
+                    <fullName>FSM</fullName>
+                    <default>false</default>
+                    <label>FSM</label>
+                </value>
+                <value>
+                    <fullName>Mass Confirmation Email</fullName>
+                    <default>false</default>
+                    <label>Mass Confirmation Email</label>
+                </value>
+                <value>
+                    <fullName>Mass Confirmation Email Cheque</fullName>
+                    <default>false</default>
+                    <label>Mass Confirmation Email Cheque</label>
+                </value>
+                <value>
+                    <fullName>Renewal Notice</fullName>
+                    <default>false</default>
+                    <label>Renewal Notice</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Text_1__c</fullName>
@@ -623,6 +675,7 @@
         <columns>NAME</columns>
         <columns>Template_Language__c</columns>
         <columns>Template_Type__c</columns>
+        <columns>OBJECT_ID</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -1187,4 +1240,5 @@
         <errorDisplayField>Agent_Type__c</errorDisplayField>
         <errorMessage>Please select IATA ISO Country.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

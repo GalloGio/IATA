@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -102,4 +99,5 @@
         <errorConditionFormula>AND( IF( Internal_user__c = &apos;&apos;, true, false), IF( External_email_address__c = &apos;&apos;, true, false) )</errorConditionFormula>
         <errorMessage>Both fields cannot be empty</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

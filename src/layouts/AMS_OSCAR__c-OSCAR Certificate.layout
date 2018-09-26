@@ -66,10 +66,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Certificate_Quantity__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Proof_of_payment_received__c</field>
             </layoutItems>
             <layoutItems>

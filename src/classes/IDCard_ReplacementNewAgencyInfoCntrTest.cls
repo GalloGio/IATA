@@ -34,6 +34,29 @@ public class IDCard_ReplacementNewAgencyInfoCntrTest{
        	String applicationId = '';
         
         insert testData.IDCards_IDCardApplications[3];
+        List<RecordType> rtid = [select id from RecordType where developername= 'IATA_Agency' limit 1];
+        Account account1 = new Account();
+        account1.Name = 'Test account 1';
+        account1.IATACode__c = '3791852';
+        account1.Type = 'IATA Cargo Agent';
+        account1.BillingCity = 'Lisboa';
+        account1.BillingCountry = 'Portugal';
+        account1.BillingStreet = 'some street';
+        account1.Location_Type__c = 'HO';
+        account1.Location_Class__c = 'C';
+        account1.Purge_Flag__c = false;
+        account1.RecordType = rtid[0];
+        insert account1;
+
+        Contact cont = new Contact();
+            cont.FirstName = 'testFirst';
+            cont.LastName = 'testLast';
+            cont.Title = 'not-CEO';
+            cont.Email = 'cont@testAccount.com';
+            cont.AccountId = account1.Id;
+            cont.VER_Number_2__c = '1111111';
+            // cont.Function__c = 'testFunction';
+            insert cont;
         
         
         // Test page without cookies
@@ -64,6 +87,9 @@ public class IDCard_ReplacementNewAgencyInfoCntrTest{
         nextPage = iDCard_ReplacementNewAgencyInfoCntlr.Verify();
         nextPage = iDCard_ReplacementNewAgencyInfoCntlr.Confirm();
         nextPage = iDCard_ReplacementNewAgencyInfoCntlr.back();
+        iDCard_ReplacementNewAgencyInfoCntlr.showPopup();
+        iDCard_ReplacementNewAgencyInfoCntlr.closePopup();
+        iDCard_ReplacementNewAgencyInfoCntlr.refresh();
         
         // Set Page parameters and call Replace and Renew function                 
         controllerPage.setCookies(new Cookie[]{languageCookies});   

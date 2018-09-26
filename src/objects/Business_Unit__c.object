@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Used for SFDC license management. Set up by Salesforce Premier Support?</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -94,25 +91,30 @@
         <fullName>Division__c</fullName>
         <externalId>false</externalId>
         <label>Division</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Corporate Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IDFS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MACS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Corporate Services</fullName>
+                    <default>false</default>
+                    <label>Corporate Services</label>
+                </value>
+                <value>
+                    <fullName>IDFS</fullName>
+                    <default>false</default>
+                    <label>IDFS</label>
+                </value>
+                <value>
+                    <fullName>MACS</fullName>
+                    <default>false</default>
+                    <label>MACS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Used_Licenses__c</fullName>
@@ -160,4 +162,5 @@
     <pluralLabel>Business Units</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

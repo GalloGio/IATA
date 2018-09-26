@@ -4,14 +4,15 @@
   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
   <aura:attribute name="Groups" type="LocalGovernance__c[]" access="private"/>
   <aura:attribute name="Participants" type="Participant__c[]" access="private"/>
-  <aura:attribute name="ParticipantWrappers" type="Object[]" access="private"/>
+  <aura:attribute name="ParticipantWrappers" type="AMP_WrapperParticipant[]" access="private"/>
+  <aura:attribute name="representativesFound" type="Boolean" default="false" />
 
   <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
 
 	<h3 class="slds-section__title">Core Relationship with IATA</h3>
-    
+
     <div class="slds-grid slds-wrap">
-    	
+
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label">IATA Membership Status</label>
@@ -19,9 +20,9 @@
                 	<!--<force:outputField value="{!v.account.Membership_status__c}" />-->
                     <ui:outputText value="{!v.account.Membership_status__c}" />
                 </div>
-            </div>            
+            </div>
         </div>
-        
+
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label">Admission Date</label>
@@ -29,9 +30,9 @@
                 	<!--<force:outputField value="{!v.account.Admission_Date__c}" />-->
                     <ui:outputDate value="{!v.account.Admission_Date__c}" />
                 </div>
-            </div>            
-        </div>  
-    	
+            </div>
+        </div>
+
         <div class="slds-col--padded slds-size--1-of-1 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label">IATA Membership History</label>
@@ -39,9 +40,9 @@
                 	<!--<force:outputField value="{!v.account.IATA_Membership_History__c}" />-->
                     <ui:outputText value="{!v.account.IATA_Membership_History__c}"/>
                 </div>
-            </div>            
+            </div>
         </div>
-    	
+
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label">Total BSP Participations</label>
@@ -49,9 +50,9 @@
                 	<!--<force:outputField value="{!v.account.Airline_BSP_Participations__c}" />-->
                     <ui:outputText value="{!v.account.Airline_BSP_Participations__c}" />
                 </div>
-            </div>            
+            </div>
         </div>
-        
+
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label">Total CASS Participations</label>
@@ -59,12 +60,12 @@
                 	<!--<force:outputField value="{!v.account.Airline_CASS_Participations__c}" />-->
                     <ui:outputText value="{!v.account.Airline_CASS_Participations__c}" />
                 </div>
-            </div>            
+            </div>
         </div>
-        
+
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
         </div>
-    	
+
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label">MITA Member</label>
@@ -72,13 +73,13 @@
                 	<!--<force:outputField value="{!v.account.MITA_Member__c}" />-->
                     <ui:outputCheckbox value="{!v.account.MITA_Member__c}"/>
                 </div>
-            </div>            
+            </div>
         </div>
-        
+
     </div>
-    
-    
-    
+
+
+
     <div class="slds-card slds-m-bottom--x-large">
 
         <div class="slds-card__header slds-grid">
@@ -91,7 +92,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="slds-card__body">
             <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
                 <thead>
@@ -104,29 +105,43 @@
                         <th style="width: 9%;"><span>Title</span></th>
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     <aura:iteration items="{!v.ParticipantWrappers}" var="participant" indexVar="index">
                         <tr>
-                            <td  style="white-space: normal;"><a href="{!'/'+participant.GroupId}" target="_blank">{!participant.GroupName}</a></td>
-                            <td  style="white-space: normal;"><ui:outputText value="{!participant.Role}" /></td>
-                            <td  style="white-space: normal;"><ui:outputText value="{!participant.Salutation}" /></td>
-                            <td  style="white-space: normal;"><ui:outputText value="{!participant.FirstName}" /></td>
-                            <td  style="white-space: normal;"><ui:outputText value="{!participant.LastName}" /></td>
-                            <td  style="white-space: normal;"><ui:outputText value="{!participant.Title}" /></td>
+                            <td><a href="{!'/'+participant.GroupId}" target="_blank">{!participant.GroupName}</a></td>
+                            <td><ui:outputText value="{!participant.Role}" /></td>
+                            <td><ui:outputText value="{!participant.Salutation}" /></td>
+                            <td><ui:outputText value="{!participant.FirstName}" /></td>
+                            <td><ui:outputText value="{!participant.LastName}" /></td>
+                            <td>
+                                <ui:outputText value="{!participant.Title}" />
+                                <aura:if isTrue="{!participant.Representing != null}">
+                                    <div class="slds-media__figure blue-icon">
+                                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#info'}" class="slds-icon slds-icon--small" />
+                                    </div>
+                                </aura:if>
+                            </td>
                         </tr>
                     </aura:iteration>
                 </tbody>
             </table>
+            <aura:if isTrue="{!v.representativesFound}">
+                <div class="slds-media__figure blue-icon">
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#info'}" class="slds-icon slds-icon--small" />
+                </div>
+                This participant represents the account on that specific group.
+            </aura:if>
+
         </div>
-        
+
     </div>
 
-    	
-   	<h3 class="slds-section__title">Relationship with External Entities</h3>        
-    
+
+   	<h3 class="slds-section__title">Relationship with External Entities</h3>
+
     <div class="slds-grid slds-wrap">
-        
+
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
                 <label class="slds-form-element__label">SITA Member</label>
@@ -134,9 +149,9 @@
                 	<!--<force:outputField value="{!v.account.Membership_SITA__c}" />-->
                     <ui:outputCheckbox value="{!v.account.Membership_SITA__c}"/>
                 </div>
-            </div>            
+            </div>
         </div>
-        
+
     </div>
 
 </aura:component>

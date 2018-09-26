@@ -25,22 +25,48 @@ private class CaseBeforeTriggerTest {
 
         BusinessHours bHourObj = new BusinessHours();
         bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
-
+        List<Account> accounts = new List<Account>();
         Account a = new Account( name ='IFAP ACCT',
-                                 industry = 'pluto',
+                                 industry = 'Travel Agent',
                                  IATA_ISO_Country__c=isoCountry.id,
                                  recordtypeID = hqrt,
-                                 IATACode__c ='1234567',
-                                 Site_Index__c = '1234567',
+                                 IATACode__c ='1234',
+                                 Site_Index__c = '1234',  
                                  Type = 'IATA Cargo Agent',
                                  billingCountry = 'ss',Location_Type__c = 'AO',
                                  category__c = 'IATA Cargo Agent',
                                  sector__c = 'Cargo Agent');
-        insert a;
+        accounts.add(a);
+        //lstMatchedAccounts
+        Account b = new Account( name ='IFAP ACCT1',
+                                 industry = 'Travel Agent',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='0123456',
+                                 Site_Index__c = '1234',
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        accounts.add(b);
+
+        Account c = new Account( name ='test',
+                                 industry = 'Travel Agent',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='1234',
+                                 Site_Index__c = '1234',  
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        accounts.add(c);
+        insert accounts;
          
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'test',
                                  phone = '123',
-                                 accountid = a.id,
+                                 accountid = accounts[0].id,
                                  Financial_Assessment_Contact__c = true);
         insert con;
                                 
@@ -97,32 +123,238 @@ private class CaseBeforeTriggerTest {
         update cas1;
 
         Case cas3 = new Case(recordtypeID = AmericacaseRecordTypeID,
-                          Status = 'Assessment Performed',
+                          Status = 'Action Needed',
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
-                          IATAcode__c = '1234567',
+                          IATAcode__c = '12345 SS',
                           parentid = cas.id,
                           Country_concerned__c = 'Italy',
                           contactid = con.id,
                           AccountId = a.id
         );
         insert cas3; 
+        cas3.IATAcode__c = '1234567';
+        update cas3;
 
         Case cas4 = new Case(recordtypeID = AmericacaseRecordTypeID,
-                          Status = 'Assessment Performed',
+                          Status = 'Action Needed',
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
-                          IATAcode__c = '0123456789',
+                          IATAcode__c = '01234567 SS',
                           parentid = cas.id,
                           Country_concerned__c = 'Italy',
                           contactid = con.id,
                           AccountId = a.id
         );
-        insert cas4; 
+        insert cas4;
+        cas4.IATAcode__c = '0123456789';
+        update cas4;
+
+        Case cas5 = new Case(recordtypeID = AmericacaseRecordTypeID,
+                          Status = 'Action Needed',
+                          Origin = 'asd',
+                          Region__c = 'Americas',
+                          BSPCountry__c = 'Anguilla',
+                          IATAcode__c = '1234 SS',
+                          parentid = cas.id,
+                          Country_concerned__c = 'Italy',
+                          contactid = con.id,
+                          AccountId = a.id
+        );
+        insert cas5; 
+    }
+    
+    @isTest static void testISSP_Case_3() {
+        ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+        
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
+        insert isoCountry; 
+
+        Account a = new Account( name ='IFAP ACCT',
+                                 industry = 'pluto',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='1234567',
+                                 Site_Index__c = '1234567',
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        insert a;
+
+        Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'test',
+                                 phone = '123',
+                                 accountid = a.id,
+                                 User_Portal_Status__c = 'Approved Admin',
+                                 Financial_Assessment_Contact__c = true);
+        insert con;
+
+        Case_Reason_Service__c CRS = new Case_Reason_Service__c(
+                    Name = 'BSP Direct - Member',
+                    Provider_Required__c = false,
+                    Service__c = 'BSP Participation');
+        insert CRS;
+
+        ID recordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IDFS Airline Participation Process');
+        Case c = new Case(
+                    Subject = 'test 1',
+                    Status = 'Draft',
+                    AccountId = a.id,
+                    ContactId = con.id,
+                    Region__c = 'Europe',
+                    RecordTypeId = recordTypeId,
+                    CaseArea__c = 'Airline Joining',
+                    Reason1__c = 'BSP Direct - Member');
+        insert c;
+    }
+
+/*
+    @isTest static void unitTestPortal() {
+        ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+        ID PortalsharingRTID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
+        Id RT_ICC_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Invoicing Collection Cases');
+        ID RecId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
+        
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
+        insert isoCountry;
+
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+        
+        Product_Category__c PC = new Product_Category__c(
+                Name = 'test',
+                Active__c = true,
+                Short_Description__c = 'test test');
+        insert PC;
+        
+        BusinessHours bHourObj = new BusinessHours();
+        bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
+
+        Account a = new Account( name ='IFAP ACCT',
+                                 industry = 'pluto',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='1234567',
+                                 Site_Index__c = '1234567',
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        insert a;
+        
+        Account aICH = new Account( name ='ICH ACCT',
+                                 industry = 'pluto',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='1834567',
+                                 Site_Index__c = '1834567',
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        insert aICH;
+         
+        Contact con =new contact(lastname = 'pluto' ,
+                                 phone = '123',
+                                 accountid = a.id,
+                                 User_Portal_Status__c = 'Approved Admin',
+                                 Financial_Assessment_Contact__c = true);
+        insert con;
+        
+        Contact conICH =new contact(lastname = 'ICH Help Desk' ,
+                                 phone = '321',
+                                 accountid = aICH.id,
+                                 Financial_Assessment_Contact__c = true);
+        insert conICH;
+                           
+        EmailTemplate__c template = new EmailTemplate__c( 
+                        Template_Language__c = 'English', 
+                        IATA_ISO_Country__c = isoCountry.Id, 
+                        Agent_Type__c='All');
+        insert template;
+        
+        test.startTest();
+        
+        // Insert correctly a case
+        Case cas = new Case(recordtypeID = PortalsharingRTID,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          IFAP_Area__c = 'asda',
+                          Case_Creator_Email__c = 'gianluigi.test@gmail.com',
+                          Accelya_Request_Type__c = 'General Queries',
+                          Country_concerned__c = 'Italy',
+                          contactid = con.id,
+                          AccountId = a.id                         
+        );
+        insert cas; 
+        // Insert correctly a case
+        Case cas1 = new Case(recordtypeID = RT_ICC_Id,
+                          Status = 'Open',
+                          Casearea__c = 'Collection', 
+                          Reason1__c = 'Debt Recovery',
+                          contactid = con.id,
+                          AccountId = a.id,
+                          BusinessHoursId = bHourObj.id                      
+        );
+        insert cas1; 
+
+        Case cas2 = new Case(recordtypeID = RecId,
+                          Status = 'Open',
+                          Origin = 'asd',
+                          DPC_Software__c = 'Multicarta',
+                          parentid = cas.id,
+                          Country_concerned__c = 'Italy',
+                          contactid = conICH.id,
+                          AccountId = aICH.id
+        );
+        insert cas2; 
+        
+        update cas2;
+        string prodCat = PC.id;
+        Case cas3 = new Case(recordtypeID = NCRecordTypeID,
+                          Status = 'Open',
+                          Region__c = 'Americas',
+                          BSPCountry__c = 'Anguilla',
+                          CaseArea__c = 'Accreditation Products',
+                          Reason1__c = 'PAX/CARGO Certificate',
+                          Product_Category_ID__c = prodCat,
+                          IATACodeProduct__c = '38222693',
+                          QuantityProduct__c = '2',
+                          contactid = con.id,
+                          AccountId = a.id
+        );
+        insert cas3; 
+        
+        cas3.ownerid = testUser.id;
+        cas3.status = 'closed';
+        System.runAs(testUser) {
+          update cas3;
+        }
+        
 
     }
+	*/
+    //*********************************
 
     @isTest static void unitTest2() {
         ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
@@ -163,6 +395,7 @@ private class CaseBeforeTriggerTest {
         insert a;
          
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'test',
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true);
@@ -261,6 +494,8 @@ private class CaseBeforeTriggerTest {
         //RecordType RT_ICCS = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_ICCS_Process'];
         //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
         Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
+        ID PortalsharingRTID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
+        ID sisHelpDeskCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(Label.Cases_SIS_Help_Desk);
         Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
         insert cs;
@@ -360,6 +595,27 @@ private class CaseBeforeTriggerTest {
         system.assertEquals(true,exceptionRaised);
         
         test.stopTest();
+        List <Case> lcs = new List<Case>();
+        Case cs3 = new Case(RecordTypeId = sisHelpDeskCaseRecordTypeID, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICH', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', Type='General Question');  
+        lcs.add(cs3);
+
+        Case cs4 = new Case(RecordTypeId = sisHelpDeskCaseRecordTypeID, Subject = 'test', Origin = 'Email', CaseArea__c = 'SIS', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', Type='aa');  
+        lcs.add(cs4);
+
+         Case cs5 = new Case(RecordTypeId = PortalsharingRTID, Subject = 'test', Origin = 'Email', CaseArea__c = 'SIS', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
+        lcs.add(cs5);
+        try{insert lcs;}catch(Exception e){exceptionRaised = true;}
+        system.assertEquals(true,exceptionRaised);
+
+        ID caseRecordType = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Application');
+        Case cs6 = new Case(RecordTypeId = caseRecordType, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', ID_Card_Status__c = IDCardUtil.CASECARDSTATUS_APPROVED);
+        insert cs6;
+
+
     }
     
     @istest static void test1() {
@@ -419,8 +675,7 @@ private class CaseBeforeTriggerTest {
         //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
         Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
         Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', 
-                        Accelerated_Function__c = true);  
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
         insert cs;
         
         List<Case> lstCases = [SELECT Id FROM Case];
@@ -703,7 +958,6 @@ private class CaseBeforeTriggerTest {
         
         test.stopTest();
     }
-//insert a SAAM case, AirlineCodingRTId case, RT_ICCS_ASP_Id case
 
     @istest static void testSingle1() {
     
@@ -763,6 +1017,102 @@ private class CaseBeforeTriggerTest {
         insert cas1; 
         
         test.stopTest();
+    }
+    
+    @istest static void testInsertSeda() {
+    
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+        
+        Id RT_SEDA = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+        insert country;
+        
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
+        insert a;
+        
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
+        insert c;
+        
+        //////////////////////////
+        test.startTest();
+        
+        // Insert correctly a case
+        Case cas = new Case(recordtypeID = RT_SEDA,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          Casearea__c = 'FDS - Create Authorized Signatories Package',
+                          IFAP_Area__c = 'asda',
+                          Country_concerned__c = 'Italy',
+                          contactid = c.id,
+                          AccountId = a.id,
+                          CS_Contact_Result__c = 'Agent closed',
+                          Demand_by_Email_Fax__c = DateTime.now()
+        );
+        insert cas;
+        test.stopTest();
+        
+        Case resultCase = [Select Id, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
+        System.assertEquals(UserInfo.getUserId(),resultCase.CS_Rep_Contact_Customer__c);
+    }
+    
+    @istest static void testUpdateSeda() {
+    
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+        
+        Id RT_SEDA = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+        insert country;
+        
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
+        insert a;
+        
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
+        insert c;
+        
+        // Insert correctly a case
+        Case cas = new Case(recordtypeID = RT_SEDA,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          Casearea__c = 'FDS - Create Authorized Signatories Package',
+                          IFAP_Area__c = 'asda',
+                          Country_concerned__c = 'Italy',
+                          contactid = c.id,
+                          AccountId = a.id,
+                          CS_Contact_Result__c = 'Agent closed',
+                          Demand_by_Email_Fax__c = null
+        );
+        insert cas;
+        
+        Case resultCase = [Select Id, Demand_by_Email_Fax__c, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
+        System.assertEquals(null,resultCase.CS_Rep_Contact_Customer__c);
+        
+        test.startTest();
+        cas.Demand_by_Email_Fax__c = DateTime.now();
+        update cas;
+        test.stopTest();
+        
+        resultCase = [Select Id, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
+        System.assertEquals(UserInfo.getUserId(),resultCase.CS_Rep_Contact_Customer__c);
     }
 
     @isTest static void trgICCS_ASP_CaseTest() {
@@ -1062,7 +1412,7 @@ private class CaseBeforeTriggerTest {
         List<Case> cases = new List<Case>();
         
         // SMALLAMOUNT
-        cases.add(new Case( ContactId = con.Id,
+        Case cas01 = new Case( ContactId = con.Id,
                             AccountId = con.accountId,
                             Subject = 'TestCase Sidra Small Amount ' + c,
                             Origin = 'Web',
@@ -1073,11 +1423,11 @@ private class CaseBeforeTriggerTest {
                             CurrencyExchangeRateUSD__c = 1,
                             BSP_CASS__c = 'BSP',
                             SIDRA_exchange_rate_updated__c = true
-        ));
-        
+        );
+        insert cas01;
         
         // MINORPOLICY
-        cases.add(new Case( ContactId = con.Id,
+        Case cas02 = new Case( ContactId = con.Id,
                             AccountId = con.accountId,
                             Subject = 'TestCase Sidra Small Amount ' + c,
                             Origin = 'Web',
@@ -1088,11 +1438,11 @@ private class CaseBeforeTriggerTest {
                             CurrencyExchangeRateUSD__c = 1,
                             BSP_CASS__c = 'BSP',
                             SIDRA_exchange_rate_updated__c = true
-        ));
-        
+        );
+        insert cas02;
         
         // MINORPOLICY
-        cases.add(new Case( ContactId = con.Id,
+        /*Case cas03 = new Case( ContactId = con.Id,
                             AccountId = con.accountId,
                             Subject = 'TestCase Sidra Small Amount ' + c,
                             Origin = 'Web',
@@ -1103,10 +1453,8 @@ private class CaseBeforeTriggerTest {
                             CurrencyExchangeRateUSD__c = 1,
                             BSP_CASS__c = 'BSP',
                             SIDRA_exchange_rate_updated__c = true
-        ));
-        
-        
-        insert cases;
+        );
+        insert cas03;
         
         Case rei = new Case( ContactId = con.Id,
                             AccountId = con.accountId,
@@ -1122,7 +1470,7 @@ private class CaseBeforeTriggerTest {
                             Update_AIMS_REI_DEFWITH__c = Datetime.now(),
                             REI_ApprovalRejectin__c = 'Approved',
                             DEF_Withdrawal_Approval_Rejection__c = '');
-        insert rei;
+        insert rei;*/
         
         Test.StartTest();
         
@@ -1168,9 +1516,9 @@ private class CaseBeforeTriggerTest {
         string sIndustry = 'Cargo Agent';
         string sType = 'IATA Cargo Agent';
         if(math.mod(i,2)==0)
-          listAccount.add( new Account( Name = 'account' + i, AIMS_ID__c = String.ValueOf(i), Industry='Travel Agent', Type = 'IATA Passenger Sales Agent', Location_Type__c = 'HO', IATA_ISO_Country__c = lsIso[i].ID) );
+          listAccount.add( new Account( Name = 'account' + i, AIMS_ID__c = String.ValueOf(i), Industry='Travel Agent', Type = 'IATA Passenger Sales Agent', Location_Type__c = 'HO', IATA_ISO_Country__c = lsIso[i].ID, Reason_for_creation__c = 'test') );
         else
-          listAccount.add( new Account( Name = 'account' + i, AIMS_ID__c = String.ValueOf(i), Industry='Cargo Agent', Type = 'IATA Cargo Agent', Location_Type__c = 'HO', IATA_ISO_Country__c = lsIso[i].ID) );
+          listAccount.add( new Account( Name = 'account' + i, AIMS_ID__c = String.ValueOf(i), Industry='Cargo Agent', Type = 'IATA Cargo Agent', Location_Type__c = 'HO', IATA_ISO_Country__c = lsIso[i].ID, Reason_for_creation__c = 'test'));
       }
       
       insert listAccount;
@@ -1181,7 +1529,7 @@ private class CaseBeforeTriggerTest {
     private static list<Contact> CreateContacts(list<Account> lsAccnt) {
       list<Contact> listcontact = new list<Contact>();
       for(integer i=0; i<lsAccnt.size(); i++)
-        listcontact.add( new Contact( LastName = 'TestName ' + i, AccountId = lsAccnt[i].Id, Financial_Assessment_Contact__c = true) );
+        listcontact.add( new Contact( FirstName = 'Name', LastName = 'TestName ' + i, AccountId = lsAccnt[i].Id, Financial_Assessment_Contact__c = true, Email='test.preprod@test.org') );
       return listcontact;
     }
 
@@ -1553,8 +1901,9 @@ private class CaseBeforeTriggerTest {
         FSMCase.ownerid = testUser.id;
         FSMCase.status = 'Closed';
       }
-      
-      update lsCaseFSM;
+      System.runAs(testUser) {
+          update lsCaseFSM;
+      }
       
       list<Case> lsNCCase = new list<Case>();
       
@@ -1731,8 +2080,9 @@ private class CaseBeforeTriggerTest {
         FSMCase.ownerid = testUser.id;
         FSMCase.Status = 'Closed';
       }
-      
-      update lsCaseFSM;
+      System.runAs(testUser) {
+          update lsCaseFSM;
+      }
       
       try{
         update lsNCCase;
@@ -1780,7 +2130,7 @@ private class CaseBeforeTriggerTest {
        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'); 
          
        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
-            insert isoCountry;
+       insert isoCountry;
             
        Account a = new Account( name ='IFAP ACCT',
                     industry = 'pluto',
@@ -1792,6 +2142,7 @@ private class CaseBeforeTriggerTest {
        insert a;
        
        Contact con =new contact(lastname = 'pluto' ,
+                    firstname = 'test',
                     phone = '123',
                     accountid = a.id,
                     Financial_Assessment_Contact__c = true);
@@ -1800,7 +2151,6 @@ private class CaseBeforeTriggerTest {
        date dead = date.today().addDays(40);
        
        Case c = new Case(recordtypeID = IFAPcaseRecordTypeID,
-                 Status = 'Assessment Performed',
                  Origin = 'asd',
                  IFAP_Area__c = 'asda',
                  Financial_Review_Type__c ='bla',
@@ -1809,7 +2159,7 @@ private class CaseBeforeTriggerTest {
                  contactid = con.id,
                  AccountId = a.id,
                  Assessment_Performed_Date__c = date.today(),
-                 Financial_Review_Result__c = 'very good'                                
+                 Financial_Review_Result__c = 'Satisfactory - No Action'                                
                  );
        
        insert c;
@@ -1822,6 +2172,434 @@ private class CaseBeforeTriggerTest {
       
    }
 
+   /*@isTest static void testProcessISSTrigger() {
+
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'Canada',ISO_Code__c ='CA',AIMS_Area_ID__c= '1',CurrencyIsoCode = 'CAD' );
+        insert isoCountry;
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+
+        // create test account
+        Account account = new Account(IATACode__c = '1234567');    // 7 digits
+        account.Name = 'Test account';
+        account.BillingCity = 'Montreal';
+        account.BillingCountry = 'Canada';
+        account.BillingStreet = 'some street';
+        account.Type = 'IATA Passenger Sales Agent';
+        account.Location_Type__c = 'HO';
+
+        insert account;
+
+        Contact contact = new Contact();
+        contact.FirstName = 'Dummy';
+        contact.LastName = 'Contact';
+        contact.Type_of_Contact__c = 'IFAP Contact';
+        contact.AccountId = account.Id;
+        contact.Email = 'some@email.org';
+        contact.Financial_Assessment_Contact__c = true;
+        insert contact;
+
+        Case caseParent = new case();
+        caseParent.ContactId = contact.Id;
+        caseParent.AccountId = account.Id;
+        caseParent.Subject = 'Test Case 1';
+        caseParent.Description = 'Test Case 1';
+        caseParent.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        caseParent.Status = 'Agent Notified (Mail)';
+        caseParent.Origin = 'Agent Financial Review Notification';
+        caseParent.FA_Letter_Sent__c = false;
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.Financial_Review_Type__c = 'Annual';
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.Deadline_Date__c = Date.today().addDays(30);
+        insert caseParent;
 
 
-}
+        /////////////////////////////////////////
+        // create child case of type Process ISS
+
+        Case caseChild = new case(); 
+        caseChild.ContactId = contact.Id;
+        caseChild.AccountId = account.Id;
+        caseChild.Subject = 'Test Case 1';
+        caseChild.Description = 'Test Case 1';
+        caseChild.Subject = 'Test Case child';
+        caseChild.Description = 'Test Case child';
+        caseChild.ParentId = caseParent.Id;
+        caseChild.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+
+        Case caseChild3 = new case(); 
+        caseChild3.ContactId = contact.Id;
+        caseChild3.AccountId = account.Id;
+        caseChild3.Subject = 'Test Case 1';
+        caseChild3.Description = 'Test Case 1';
+        caseChild3.CaseArea__c = 'Accreditation Process';
+        caseChild3.Reason1__c = 'FA/ FS Non-Compliance';
+        caseChild3.Origin = 'Internal Case';
+        caseChild3.ParentId = caseParent.Id;
+        caseChild3.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+        
+        Test.startTest();
+
+        // should throw error
+        try {
+            insert caseChild;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        caseParent.FA_Letter_Sent__c = true;
+        update caseParent;
+
+        // should not throw error
+        try {
+            insert caseChild;
+            system.assert(true);
+        } catch (Exception ex) {
+            system.assert(false);
+        }
+
+        caseParent.FS_Letter_Sent__c = false;
+        caseParent.Status = 'Financial Security Requested';
+        update caseParent;
+
+        // should throw error
+        try {
+            update caseChild;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        caseParent.FS_Letter_Sent__c = true;
+        caseParent.Status = 'Financial Security Requested';
+        update caseParent;
+
+        // should not throw error
+        try {
+            update caseChild;
+            system.assert(true);
+        } catch (Exception ex) {
+            system.assert(false);
+        }
+
+        caseParent.Status = 'Financial Security Requested';   
+        caseParent.firstFSnonComplianceDate__c = null;
+        //caseParent.FS_Deadline_Date__c = date.newinstance(2017,06,30);
+        update caseParent;
+        try{
+            insert caseChild3;
+        }catch(Exception ex) {}
+        Test.stopTest();
+    }*/
+
+    @isTest static void testProcessISSTrigger2() {
+
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'Canada',ISO_Code__c ='CA',AIMS_Area_ID__c= '1',CurrencyIsoCode = 'CAD' );
+        insert isoCountry;
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+
+        // create test account
+        Account account = new Account(IATACode__c = '1234567');    // 7 digits
+        account.Name = 'Test account';
+        account.BillingCity = 'Montreal';
+        account.BillingCountry = 'Canada';
+        account.BillingStreet = 'some street';
+        account.Type = 'IATA Passenger Sales Agent';
+        account.Location_Type__c = 'HO';
+
+        insert account;
+
+        Contact contact = new Contact();
+        contact.FirstName = 'Dummy';
+        contact.LastName = 'Contact';
+        contact.Type_of_Contact__c = 'IFAP Contact';
+        contact.AccountId = account.Id;
+        contact.Email = 'some@email.org';
+        contact.Financial_Assessment_Contact__c = true;
+        insert contact;
+
+        Case caseParent = new case();
+        caseParent.ContactId = contact.Id;
+        caseParent.AccountId = account.Id;
+        caseParent.Subject = 'Test Case 1';
+        caseParent.Description = 'Test Case 1';
+        caseParent.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        caseParent.Status = 'Agent Notified (Mail)';
+        caseParent.Origin = 'Agent Financial Review Notification';
+        caseParent.FA_Letter_Sent__c = false;
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.Financial_Review_Type__c = 'Annual';
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.Deadline_Date__c = Date.today().addDays(30);
+        insert caseParent;
+
+
+        /////////////////////////////////////////
+        // create child case of type Process ISS
+
+        Case caseChild = new case(); 
+        caseChild.ContactId = contact.Id;
+        caseChild.AccountId = account.Id;
+        caseChild.Subject = 'Test Case 1';
+        caseChild.Description = 'Test Case 1';
+        caseChild.Subject = 'Test Case child';
+        caseChild.Description = 'Test Case child';
+        caseChild.ParentId = caseParent.Id;
+        caseChild.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+
+        Case caseChild2 = new case(); 
+        caseChild2.ContactId = contact.Id;
+        caseChild2.AccountId = account.Id;
+        caseChild2.Subject = 'Test Case 1';
+        caseChild2.Description = 'Test Case 1';
+        caseChild2.Status = 'Open';
+        caseChild2.Reason1__c = 'FA/ FS Non-Compliance';
+        caseChild2.ParentId = caseParent.Id;
+        caseChild2.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+
+        Test.startTest();
+        
+        caseParent.Status = 'Agent to be Notified';
+        update caseParent;
+        try{
+          insert caseChild2;
+        }catch (Exception ex) {}
+        Test.stopTest();
+    }
+
+    @isTest static void testProcessISSTrigger3() {
+
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'Canada',ISO_Code__c ='CA',AIMS_Area_ID__c= '1',CurrencyIsoCode = 'CAD' );
+        insert isoCountry;
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+
+        // create test account
+        Account account = new Account(IATACode__c = '1234567');    // 7 digits
+        account.Name = 'Test account';
+        account.BillingCity = 'Montreal';
+        account.BillingCountry = 'Canada';
+        account.BillingStreet = 'some street';
+        account.Type = 'IATA Passenger Sales Agent';
+        account.Location_Type__c = 'HO';
+
+        insert account;
+
+        Contact contact = new Contact();
+        contact.FirstName = 'Dummy';
+        contact.LastName = 'Contact';
+        contact.Type_of_Contact__c = 'IFAP Contact';
+        contact.AccountId = account.Id;
+        contact.Email = 'some@email.org';
+        contact.Financial_Assessment_Contact__c = true;
+        insert contact;
+
+        Case caseParent = new case();
+        caseParent.ContactId = contact.Id;
+        caseParent.AccountId = account.Id;
+        caseParent.Subject = 'Test Case 1';
+        caseParent.Description = 'Test Case 1';
+        caseParent.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        caseParent.Status = 'Agent Notified (Mail)';
+        caseParent.Origin = 'Agent Financial Review Notification';
+        caseParent.FA_Letter_Sent__c = false;
+        caseParent.FS_Letter_Sent__c = true;
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.Financial_Review_Type__c = 'Annual';
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.firstFAnonComplianceDate__c = date.today();
+        caseParent.firstFSnonComplianceDate__c = date.today();
+        caseParent.secondFSnonComplianceDate__c = null;
+        caseParent.Deadline_Date__c = date.today().adddays(31);
+        caseParent.FA_Second_Deadline_Date__c = date.today().adddays(61);
+        caseParent.FS_Deadline_Date__c = date.today().adddays(31);
+        caseParent.FS_Second_Deadline_Date__c = date.today().adddays(61);
+        insert caseParent;
+
+        Case caseChild3 = new case(); 
+        caseChild3.ContactId = contact.Id;
+        caseChild3.AccountId = account.Id;
+        caseChild3.Subject = 'Test Case 1';
+        caseChild3.Description = 'Test Case 1';
+        caseChild3.CaseArea__c = 'Accreditation Process';
+        caseChild3.Reason1__c = 'FA/ FS Non-Compliance';
+        caseChild3.Origin = 'Internal Case';
+        caseChild3.ParentId = caseParent.Id;
+        caseChild3.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+        
+        Case caseChild = new case(); 
+        caseChild.ContactId = contact.Id;
+        caseChild.AccountId = account.Id;
+        caseChild.Subject = 'Test Case 1';
+        caseChild.Description = 'Test Case 1';
+        caseChild.CaseArea__c = 'Accreditation Process';
+        caseChild.Reason1__c = 'FA/ FS Non-Compliance';
+        caseChild.Origin = 'Internal Case';
+        caseChild.ParentId = caseParent.Id;
+        caseChild.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+
+        Test.startTest();
+
+        try{
+            insert caseChild3;
+        }catch(Exception ex) {}
+
+        caseParent.firstFAnonComplianceDate__c = null;
+        caseParent.Deadline_Date__c = null;
+        caseParent.FA_Second_Deadline_Date__c = null;
+        update caseParent;
+        try{
+            insert caseChild;
+        }catch(Exception ex) {}
+
+        Test.stopTest();
+    }
+
+    @isTest static void testProcessISSTrigger4() {
+
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'Canada',ISO_Code__c ='CA',AIMS_Area_ID__c= '1',CurrencyIsoCode = 'CAD' );
+        insert isoCountry;
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+
+        // create test account
+        Account account = new Account(IATACode__c = '1234567');    // 7 digits
+        account.Name = 'Test account';
+        account.BillingCity = 'Montreal';
+        account.BillingCountry = 'Canada';
+        account.BillingStreet = 'some street';
+        account.Type = 'IATA Passenger Sales Agent';
+        account.Location_Type__c = 'HO';
+
+        insert account;
+
+        Contact contact = new Contact();
+        contact.FirstName = 'Dummy';
+        contact.LastName = 'Contact';
+        contact.Type_of_Contact__c = 'IFAP Contact';
+        contact.AccountId = account.Id;
+        contact.Email = 'some@email.org';
+        contact.Financial_Assessment_Contact__c = true;
+        insert contact;
+
+        Case caseParent = new case();
+        caseParent.ContactId = contact.Id;
+        caseParent.AccountId = account.Id;
+        caseParent.Subject = 'Test Case 1';
+        caseParent.Description = 'Test Case 1';
+        caseParent.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        caseParent.Status = 'Financial Security Requested';
+        caseParent.Origin = 'Agent Financial Review Notification';
+        caseParent.FA_Letter_Sent__c = false;
+        caseParent.FS_Letter_Sent__c = true;
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.Financial_Review_Type__c = 'Annual';
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.firstFSnonComplianceDate__c = date.today();
+        caseParent.secondFSnonComplianceDate__c = null;
+        caseParent.FS_Deadline_Date__c = date.newinstance(2017,03,20);
+        caseParent.FS_Second_Deadline_Date__c = date.newinstance(2017,04,20);
+        insert caseParent;
+
+        Case caseChild3 = new case(); 
+        caseChild3.ContactId = contact.Id;
+        caseChild3.AccountId = account.Id;
+        caseChild3.Subject = 'Test Case 1';
+        caseChild3.Description = 'Test Case 1';
+        caseChild3.CaseArea__c = 'Accreditation Process';
+        caseChild3.Reason1__c = 'FA/ FS Non-Compliance';
+        caseChild3.Origin = 'Internal Case';
+        caseChild3.ParentId = caseParent.Id;
+        caseChild3.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+
+        Test.startTest();
+
+        try{
+            insert caseChild3;
+        }catch(Exception ex) {}
+
+        Test.stopTest();
+    }
+
+    @isTest static void testProcessISSTrigger5() {
+
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'Canada',ISO_Code__c ='CA',AIMS_Area_ID__c= '1',CurrencyIsoCode = 'CAD' );
+        insert isoCountry;
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+
+        // create test account
+        Account account = new Account(IATACode__c = '1234567');    // 7 digits
+        account.Name = 'Test account';
+        account.BillingCity = 'Montreal';
+        account.BillingCountry = 'Canada';
+        account.BillingStreet = 'some street';
+        account.Type = 'IATA Passenger Sales Agent';
+        account.Location_Type__c = 'HO';
+        insert account;
+
+        Contact contact = new Contact();
+        contact.FirstName = 'Dummy';
+        contact.LastName = 'Contact';
+        contact.Type_of_Contact__c = 'IFAP Contact';
+        contact.AccountId = account.Id;
+        contact.Email = 'some@email.org';
+        contact.Financial_Assessment_Contact__c = true;
+        insert contact;
+
+        Case caseParent = new case();
+        caseParent.ContactId = contact.Id;
+        caseParent.AccountId = account.Id;
+        caseParent.Subject = 'Test Case 1';
+        caseParent.Description = 'Test Case 1';
+        caseParent.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        caseParent.Status = 'Financial Security';
+        caseParent.Origin = 'Agent Financial Review Notification';
+        caseParent.FA_Letter_Sent__c = false;
+        caseParent.FS_Letter_Sent__c = true;
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.Financial_Review_Type__c = 'Annual';
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.firstFAnonComplianceDate__c = date.today();
+        caseParent.secondFAnonComplianceDate__c = null;
+        caseParent.Deadline_Date__c = date.newinstance(2020,06,29);
+        caseParent.FA_Second_Deadline_Date__c = date.newinstance(2020,06,30);
+        insert caseParent;
+
+        Case caseChild3 = new case(); 
+        caseChild3.ContactId = contact.Id;
+        caseChild3.AccountId = account.Id;
+        caseChild3.Subject = 'Test Case 1';
+        caseChild3.Description = 'Test Case 1';
+        caseChild3.CaseArea__c = 'Accreditation Process';
+        caseChild3.Reason1__c = 'FA/ FS Non-Compliance';
+        caseChild3.Origin = 'Internal Case';
+        caseChild3.ParentId = caseParent.Id;
+        caseChild3.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+
+        Case caseChild2 = new case(); 
+        caseChild2.ContactId = contact.Id;
+        caseChild2.AccountId = account.Id;
+        caseChild2.Subject = 'Test Case 1';
+        caseChild2.Description = 'Test Case 1';
+        caseChild2.CaseArea__c = 'Accreditation Process';
+        caseChild2.Reason1__c = 'FA/ FS Non-Compliance';
+        caseChild2.Origin = 'Internal Case';
+        caseChild2.ParentId = caseParent.Id;
+        caseChild2.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+
+        Test.startTest();
+        caseParent.Deadline_Date__c = date.newinstance(2017,04,29);
+        caseParent.FA_Second_Deadline_Date__c = date.newinstance(2017,04,29);
+        update caseParent;
+        try{
+            insert caseChild3;
+        }catch(Exception ex) {}
+
+        caseParent.secondFAnonComplianceDate__c = date.today();
+        update caseParent;
+        try{
+            insert caseChild2;
+        }catch(Exception ex) {}
+
+        Test.stopTest();
+    }
+  }

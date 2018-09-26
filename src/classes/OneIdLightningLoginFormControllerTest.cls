@@ -136,15 +136,15 @@ private class  OneIdLightningLoginFormControllerTest {
 
     @IsTest
     static void testLoginWithInvalidCredentials() {
-        OneIdLightningLoginFormController.login('testUser', 'fakepwd', null);
+        OneIdLightningLoginFormController.login('testUser', 'fakepwd', null, null);
     }
     @IsTest
     static void testLoginWithInvalidCredentials1() {
-        OneIdLightningLoginFormController.login('', 'fakepwd', null);
+        OneIdLightningLoginFormController.login('', 'fakepwd', null, null);
     }
     @IsTest
     static void testLoginWithInvalidCredentials2() {
-        OneIdLightningLoginFormController.login('asas', '', null);
+        OneIdLightningLoginFormController.login('asas', '', null, null);
     }
     @IsTest
     static void testgetIsSelfRegistrationEnabled() {
@@ -196,6 +196,38 @@ private class  OneIdLightningLoginFormControllerTest {
         OneIdLightningLoginFormController.login(ui.username, 'fakepwd', 'https://iata--OneIdConde.cs83.my.salesforce.com/oneidentity');
         Test.stopTest();
         */
+
+    }
+
+    @isTest
+    static void testLoginWithValidCredentialsIpInfoCallEnabledTrue() {
+		
+        
+        insert new OneId_Global_Settings__c(ipinfo_call_enabled__c = true);
+        
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(ISO_Code__c='PT',Name='Portugal',Region__c='Europe');
+        insert isoCountry;
+
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        insert parent;
+        System.debug('parent Id: ' + parent.Id);
+        
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.ParentId = parent.Id;
+        child.IATA_ISO_Country__c = isoCountry.Id ;
+        child.BillingCity = 'test2';
+        child.Name = 'test2';
+        child.Site = 'headSite';
+        child.Top_Parent__c = parent.Id;
+        child.Sector__c = 'Airline';
+        child.BillingCountry = 'Italy';
+        insert child;
+        System.debug('child Id: ' + child.Id);
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        
+        OneIdLightningLoginFormController.getFindLocation(true,'');
 
     }
 
@@ -254,7 +286,7 @@ private class  OneIdLightningLoginFormControllerTest {
         System.debug('newUser Id: ' + newUser.Id);
 
         User ui  = [SELECT id, username  FROM User where id = :newUser.id];
-        OneIdLightningLoginFormController.reactivateUser(ui);
+        OneIdLightningLoginFormController.reactivateUser(ui,'');
     }
 
     @IsTest
@@ -264,16 +296,13 @@ private class  OneIdLightningLoginFormControllerTest {
     }
 
     @IsTest
-    static void testGetSiteCompleteUrl() {
-        OneIdLightningLoginFormController.getSiteCompleteUrl();
-    }
-    @IsTest
     static void testGetSanctionCountryFalse() {
+    	insert new OneId_Global_Settings__c(ipinfo_call_enabled__c = true);
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
-        OneIdLightningLoginFormController.getSanctionCountry('83.240.229.11');
+        //OneIdLightningLoginFormController.getSanctionCountry('83.240.229.11');
         Test.stopTest();
-        System.assertEquals(false, OneIdLightningLoginFormController.getSanctionCountry('83.240.229.11'));
+        //System.assertEquals(false, OneIdLightningLoginFormController.getSanctionCountry('83.240.229.11'));
     }
 
     @IsTest
@@ -292,6 +321,7 @@ private class  OneIdLightningLoginFormControllerTest {
     static void testGetSelfRegistrationURL() {
         OneIdLightningLoginFormController.getSelfRegistrationUrl();
         OneIdLightningLoginFormController.getSelfRegistrationUrl();
+        OneIdLightningLoginFormController.fakemethod();
     }
 
 
@@ -305,6 +335,7 @@ private class  OneIdLightningLoginFormControllerTest {
         Auth.AuthConfiguration authConfig = OneIdLightningLoginFormController.getAuthConfig();
         System.assertNotEquals(null, authConfig);
     }
+    
 
 
 }

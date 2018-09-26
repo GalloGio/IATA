@@ -1,4 +1,4 @@
-@isTest(SeeAllData=true)
+@isTest
 
 private class ISSP_ContentPage_Test {
 	public static testMethod void test_method_one() {
@@ -58,9 +58,27 @@ private class ISSP_ContentPage_Test {
         Test.startTest() ;
         system.runAs(newUser2){
 			Apexpages.currentPage().getParameters().put('title','lemon');
-            ISSP_ctrl_ContentPage controller = new ISSP_ctrl_ContentPage();
-          	controller.Init();
-			String s = controller.communityName;
+			ISSP_CS__c cs = new ISSP_CS__c(Name = 'Host', Value__c = 'portal.iata.org');
+            database.insert(cs);
+			ISSP_ctrl_ContentPage controller = new ISSP_ctrl_ContentPage();
+      controller.search = 'test';
+      controller.selectedValPub = 'test';
+      controller.selectedValCat = 'test';      
+    	controller.Init();      
+      Integer pN = controller.pageNumber;
+      Integer pS = controller.pageSize;
+      Integer tP = controller.getTotalPages();
+      Boolean hN = controller.hasNext;
+      Boolean hP = controller.hasPrevious;
+      String s = controller.communityName;
+			String csHost = controller.csHost;
+      controller.currentPage();
+      controller.previous();
+      controller.next();
+      controller.first();
+      controller.last();
+      controller.navigateToPage();
+      List<Integer> pNB = controller.getPageNumberButtons();
          	//controller.runQuery();
          	//String mySoql = controller.debugSoql;
          	//controller.toggleSort();

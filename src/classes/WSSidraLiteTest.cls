@@ -167,9 +167,21 @@ public class WSSidraLiteTest {
     }
 
     @isTest
-    public static void testCreateDummyInvoicing_Passenger() {
+    public static void testCreateDummyInvoicing_PassengerAnnualFees() {
         Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
-        invoicingCase.Reason1__c = 'Annual Fees';
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert invoicingCase;
+
+        Test.startTest();
+        WSSidraLite.sidraLiteAction(invoicingCase.Id);
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testCreateDummyInvoicing_PassengerAdminCharges() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ADMIN_CHARGES;
         invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
         insert invoicingCase;
 
@@ -179,9 +191,26 @@ public class WSSidraLiteTest {
     }
 
     @isTest
-    public static void testCreateDummyInvoicing_Cargo() {
+    public static void testCreateDummyInvoicing_CargoAnnualFees() {
         Case invoicingCase = SidraLiteManagerTest.createInvoicingCargo();
-        invoicingCase.Reason1__c = 'Annual Fees';
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert invoicingCase;
+
+        //set account category to CASS Associate
+        Account acc = [Select Status__c from Account where id = :invoicingCase.accountId];
+        acc.Category__c = 'CASS Associate';
+        update acc;
+
+        Test.startTest();
+        WSSidraLite.sidraLiteAction(invoicingCase.Id);
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testCreateDummyInvoicing_CargoAdminCharges() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingCargo();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ADMIN_CHARGES;
         invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
         insert invoicingCase;
 
@@ -196,9 +225,21 @@ public class WSSidraLiteTest {
     }
 
     @isTest
-    public static void testCreateDummyInvoicing_Agent() {
+    public static void testCreateDummyInvoicing_AgentAnnualFees() {
         Case invoicingCase = SidraLiteManagerTest.createInvoicingAgent();
-        invoicingCase.Reason1__c = 'Annual Fees';
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert invoicingCase;
+
+        Test.startTest();
+        WSSidraLite.sidraLiteAction(invoicingCase.Id);
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testCreateDummyInvoicing_AgentAdminCharges() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingAgent();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ADMIN_CHARGES;
         invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
         insert invoicingCase;
 
@@ -208,9 +249,26 @@ public class WSSidraLiteTest {
     }
 
     @isTest
-    public static void testCreateDummyInvoicing_InactiveAccount() {
+    public static void testCreateDummyInvoicing_InactiveAccountAnnualFees() {
         Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
-        invoicingCase.Reason1__c = 'Annual Fees';
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert invoicingCase;
+
+        //set account as inactive
+        Account acc = [Select Status__c from Account where id = :invoicingCase.accountId];
+        acc.Status__c = 'Cash basis/no commission';
+        update acc;
+
+        Test.startTest();
+        WSSidraLite.sidraLiteAction(invoicingCase.Id);
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testCreateDummyInvoicing_InactiveAccountAdminCharges() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ADMIN_CHARGES;
         invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
         insert invoicingCase;
 
@@ -614,7 +672,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoReason() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c( RPM_Approval__c = 'Authorize Disapproval');
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c( Validation_Status__c = AMS_Utils.FAILED, RPM_Approval__c = 'Authorize Disapproval', Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -634,7 +696,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoValidReason() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c( RPM_Approval__c = 'Authorize Disapproval');
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+
+        AMS_Oscar__c oscar = new AMS_Oscar__c( Validation_Status__c = AMS_Utils.FAILED, RPM_Approval__c = 'Authorize Disapproval',Account__c=Account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -656,13 +722,18 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoOSCARReason() {
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
         AMS_Oscar__c oscar = new AMS_Oscar__c(
             Step6__c = '',
             Step9__c = '',
             Step11__c = '',
             Step12__c = '',
             Step14__c = '',
-            RPM_Approval__c = '');
+            RPM_Approval__c = '',
+            Account__c = account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -684,9 +755,14 @@ public class WSSidraLiteTest {
     public static void testCreateCaseOSCAR_OK1() {
         insert new AMS_Trigger_Execution_Manager__c(All__c = true);
 
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
         AMS_Oscar__c oscar = new AMS_Oscar__c();
         oscar.Status__c = oscarCase.Status;
+        oscar.Account__c = account.Id;
         insert oscar;
 
         oscarCase.Reason1__c = OSCARValidReasons.get(0);
@@ -703,7 +779,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK2() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -721,7 +801,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK3() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -739,7 +823,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK4() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -757,7 +845,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK5() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -775,7 +867,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK6() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -783,6 +879,7 @@ public class WSSidraLiteTest {
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;
 
+        oscar.Validation_Status__c = AMS_Utils.FAILED;
         oscar.RPM_Approval__c = 'Authorize Disapproval';
         update oscar;
 
@@ -1405,8 +1502,9 @@ public class WSSidraLiteTest {
     }
 
     @isTest
-    public static void testThrowPopUpMessageInvoicing() {
+    public static void testThrowPopUpMessageInvoicing_AnnualFees() {
         Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
         insert invoicingCase;
 
         Test.startTest();
@@ -1414,6 +1512,22 @@ public class WSSidraLiteTest {
             WSSidraLite.throwPopUpMessage(invoicingCase);
             System.assert(false, 'Expected Exception for Ivoicing collection');
         } catch (SidraLiteUtil.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testThrowPopUpMessageInvoicing_AdminCharges() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ADMIN_CHARGES;
+        insert invoicingCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.throwPopUpMessage(invoicingCase);
+            System.assert(false, 'Expected Exception for Ivoicing collection');
+        } catch (WSSidraLite.ShowConfirmationException e) {
             System.assert(true);
         }
         Test.stopTest();
@@ -1469,10 +1583,10 @@ public class WSSidraLiteTest {
         Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
         insert ifapCase;
 
+        Test.startTest();
         Case childCase = createSIDRALite(ifapCase);
         insert childCase;
-
-        Test.startTest();
+        
         try {
             WSSidraLite.updateSidraLiteAndParent(ifapCase, childCase);
         } catch (SidraLiteHelperForIFAP.SidraLiteException e) {
@@ -1499,8 +1613,277 @@ public class WSSidraLiteTest {
     }
 
     @isTest
-    public static void testupdateSidraLiteAndParentInvoicing() {
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees1() {
         Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+        
+        invoicingCase.New_IFAP_Deadline_date__c = null;
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(false, 'Exception expected');
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees2() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+        
+        invoicingCase.New_IFAP_Deadline_date__c = Date.Today();
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(false, 'Exception expected');
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees3() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+        
+        invoicingCase.New_IFAP_Deadline_date__c = Date.Today().addDays(-1);
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(true);
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(false, 'Exception not expected');
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees4() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+        
+        invoicingCase.Termination_date_manual_entry__c = Date.today();
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(false, 'Exception expected');
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees5() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+        
+        invoicingCase.Termination_date_manual_entry__c = Date.today().addDays(-1);
+        invoicingCase.Propose_Default__c = Date.today();
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(true);
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(false, 'Exception not expected');
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees6() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+        
+        invoicingCase.Termination_date_manual_entry__c = Date.today().addDays(-1);
+        invoicingCase.Propose_Default__c = null;
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(true);
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(false, 'Exception expected');
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees7() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingAgent();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+
+        invoicingCase.Termination_date_manual_entry__c = null;
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(false, 'Exception expected');
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees8() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingCargo();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+
+        invoicingCase.Termination_date_manual_entry__c = null;
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(false, 'Exception expected');
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees9() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingCargo();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+
+        invoicingCase.Termination_date_manual_entry__c = Date.today();
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(false, 'Exception expected');
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees10() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingCargo();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        childCase.Propose_Default__c = Date.today();
+        insert childCase;
+
+        invoicingCase.Termination_date_manual_entry__c = Date.today().adddays(-1);
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(false, 'Exception expected');
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AnnualFees11() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingCargo();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ANNUAL_FEES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        childCase.Propose_Default__c = null;
+        insert childCase;
+
+        invoicingCase.Termination_date_manual_entry__c = Date.today().adddays(-1);
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(true);
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(false, 'Exception not expected');
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AdminCharges1() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ADMIN_CHARGES;
         insert invoicingCase;
 
         Case childCase = createSIDRALite(invoicingCase);
@@ -1509,8 +1892,83 @@ public class WSSidraLiteTest {
         Test.startTest();
         try {
             WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
-        } catch (SidraLiteUtil.SidraLiteException e) {
+            System.assert(false, 'Exception expected');
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
             System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AdminCharges2() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ADMIN_CHARGES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+
+        invoicingCase.Termination_date_manual_entry__c = Date.today();
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(false, 'Exception expected');
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AdminCharges3() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ADMIN_CHARGES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        childCase.Propose_Default__c = Date.today();
+        insert childCase;
+
+        invoicingCase.Termination_date_manual_entry__c = Date.today().adddays(-1);
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(false, 'Exception expected');
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing_AdminCharges4() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = SidraLiteHelperForInvoicing.ADMIN_CHARGES;
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        childCase.Propose_Default__c = null;
+        insert childCase;
+
+        invoicingCase.Termination_date_manual_entry__c = Date.today().adddays(-1);
+        update invoicingCase;
+        invoicingCase = WSSidraLite.queryCase(invoicingCase.Id);
+        childCase = invoicingCase.cases[0];
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+            System.assert(true);
+        } catch (SidraLiteHelperForInvoicing.SidraLiteException e) {
+            System.assert(false, 'Exception not expected');
         }
         Test.stopTest();
     }
@@ -1565,6 +2023,7 @@ public class WSSidraLiteTest {
         Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
         insert ifapCase;
 
+        Test.startTest();
         Case sidraLiteCase = createSIDRALite(ifapCase);
         insert sidraLiteCase;
         
@@ -1572,7 +2031,7 @@ public class WSSidraLiteTest {
         account.Status__c = new list<string>(SidraLiteUtil.ACCOUNT_INACTIVE_STATUS)[0];
         update account;
 
-        Test.startTest();
+       
         list<CaseComment> result = WSSidraLite.newCaseComments(sidraLiteCase, account);
         System.assert(result.size()==1, 'Expected 1 case comment');
         Test.stopTest();
@@ -1583,6 +2042,7 @@ public class WSSidraLiteTest {
         Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
         insert ifapCase;
 
+        Test.startTest();
         Case sidraLiteCase1 = createSIDRALite(ifapCase);
         Case sidraLiteCase2 = createSIDRALite(ifapCase);
         insert new list<Case>{sidraLiteCase1, sidraLiteCase2};
@@ -1594,7 +2054,7 @@ public class WSSidraLiteTest {
         account.Status__c = new list<string>(SidraLiteUtil.ACCOUNT_INACTIVE_STATUS)[0];
         update account;
 
-        Test.startTest();
+        
         list<CaseComment> result = WSSidraLite.newCaseComments(sidraLiteCase1, account);
         System.assert(result.size()==2, 'Expected 2 case comments');
         Test.stopTest();
@@ -1646,6 +2106,56 @@ public class WSSidraLiteTest {
         try {
             WSSidraLite.insertCommentsWhenNotUpdate(saamCase, saamCase);
             System.assert(false,'Exception expected');
+        } catch (Exception e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest //SidraLiteHelperForSAAM.updateSidraLiteAndParent
+    public static void testCreateDummyInvoicing_Passenger2() {
+        Case saamCase = SidraLiteManagerTest.createSAAMPassenger();
+        saamCase.Reason1__c = 'Other';
+        saamCase.SAAM_Deadline_Date__c = Date.Today().addDays(-1);
+        saamCase.New_IFAP_Deadline_date__c = Date.Today().addDays(-1);
+        saamCase.firstFSnonComplianceDate__c = Date.Today().addDays(-1);
+        saamCase.FS_Second_Deadline_Date__c = Date.Today().addDays(-1);
+        saamCase.FS_Third_Deadline_Date__c = null;
+        insert saamCase;
+
+        Case childCase = createSIDRALite(saamCase);
+        childcase.Termination_date_manual_entry__c = Date.today();
+        insert childCase;
+
+        Test.startTest();
+        try {
+            list<Case> lsttest = SidraLiteHelperForSAAM.updateSidraLiteAndParent(saamCase, childCase);
+            //System.assert(false,'No exception thrown for SIDRA Lite update with invalid new IFAP deadline date');
+        } catch (Exception e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest //SidraLiteHelperForSAAM.updateSidraLiteAndParent
+    public static void testCreateDummyInvoicing_Passenger3() {
+        Case saamCase = SidraLiteManagerTest.createSAAMPassenger();
+        saamCase.Reason1__c = 'Other';
+        saamCase.SAAM_Deadline_Date__c = Date.Today().addDays(-1);
+        saamCase.New_IFAP_Deadline_date__c = Date.Today().addDays(-1);
+        saamCase.firstFSnonComplianceDate__c = Date.Today().addDays(-1);
+        saamCase.FS_Second_Deadline_Date__c = Date.Today().addDays(-1);
+        saamCase.FS_Third_Deadline_Date__c = Date.Today().addDays(-1);
+        insert saamCase;
+
+        Case childCase = createSIDRALite(saamCase);
+        childcase.Termination_date_manual_entry__c = Date.today();
+        insert childCase;
+
+        Test.startTest();
+        try {
+            list<Case> lsttest = SidraLiteHelperForSAAM.updateSidraLiteAndParent(saamCase, childCase);
+            //System.assert(false,'No exception thrown for SIDRA Lite update with invalid new IFAP deadline date');
         } catch (Exception e) {
             System.assert(true);
         }

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -90,28 +87,34 @@
         <fullName>SAP_Account_type__c</fullName>
         <externalId>false</externalId>
         <label>Invoice Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Cass Invoices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Invoices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>e-Commerce</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Cass Invoices</fullName>
+                    <default>false</default>
+                    <label>Cass Invoices</label>
+                </value>
+                <value>
+                    <fullName>Passenger Invoices</fullName>
+                    <default>false</default>
+                    <label>Passenger Invoices</label>
+                </value>
+                <value>
+                    <fullName>Invoices</fullName>
+                    <default>false</default>
+                    <label>Invoices</label>
+                </value>
+                <value>
+                    <fullName>e-Commerce</fullName>
+                    <default>false</default>
+                    <label>e-Commerce</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>SAP_ID__c</fullName>
@@ -166,4 +169,5 @@
     <pluralLabel>SAP Accounts</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

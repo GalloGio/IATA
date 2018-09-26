@@ -5,13 +5,17 @@ private class AMP_CoreRelationshipExtensionTest {
 		// TODO: run this as a test User
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
 		User testUser = New User(
-
 			Alias = 'standt', Email='standarduser@testorg.com',
 			EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
 			LocaleSidKey='en_US', ProfileId = testProfile.Id,
 			TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
 			License_Cost_Center__c = 'ISF005CH01'
 		);
+		insert testUser;
+
+		PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Reg_Div_Group_Owners'];
+		PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = testUser.Id);
+		insert psa;
 
 		System.runAs(testUser) {
 			// Create a new ISO Country
@@ -73,7 +77,7 @@ private class AMP_CoreRelationshipExtensionTest {
 
 			List<LocalGovernance__c> lsGroups = AMP_CoreRelationshipExtension.getGroups();
 
-			List<AMP_CoreRelationshipExtension.Participant> lsParticipants = AMP_CoreRelationshipExtension.getParticipantWrappers(a.Id);
+			List<AMP_WrapperParticipant> lsParticipants = AMP_CoreRelationshipExtension.getParticipantWrappers(a.Id);
 			
 			// there are actually 2 participant wrappers since once has the place holder 'not this time'
 			System.assertEquals(2, lsParticipants.size(), 'There should be 2 Participant');

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_PCI Compliant reminder renewal AR</name>
+    <style>freeForm</style>
+    <subject>(PCI DSS)  إشعار تذكيري بإثبات الامتثال لمعايير أمن البيانات في قطاع بطاقات الدفع</subject>
+    <textOnly>الأعزاء {!Case.Contact}،
+
+كود &quot;الاياتا&quot;: {!Case.IATA_Code__c},
+
+
+
+نودّ في هذا الإشعار تذكيركم لُطفاً بأنّ إثبات الامتثال لمعايير أمن البيانات في قطاع بطاقات الدفع (PCI DSS) لم يستلم بعد من وكالتكم. كما نودّ التأكيد بأنّ الموعد النهائي لإرسال المستندات هو{!Case.CreatedDate+30}.
+
+
+اذا قمتم بارسال الوثائق المطلوبه, يرجى عدم الرد على هذا البريد الالكتروني
+
+
+إذا أرتم معرفة معلومات أكثر حول كيفية الامتثال لمعايير أمن البيانات في قطاع بطاقات الدفع (PCI DSS)، يُرجى زيارة الصفحة التالية في موقعنا على الإنترنت:
+
+http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+إذا احتجتم إلى أي معلومات أخرى من «إياتا» (IATA) فلا تتردّدوا في تسجيل استفسار جديد عبر بوابة العملاء: www.iata.org/cs.
+
+
+مع أطيب التحيات،
+
+
+Agency ManagementInternational Air Transport Association
+
+-----------------------------------------------------------------------------
+
+
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

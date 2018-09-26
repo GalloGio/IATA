@@ -101,6 +101,18 @@ public with sharing class TestDataGenerator
         return results;
     }
 
+    public static List<Zuora.zObject> generatePaymentMethodDetails(String paymentId){
+        List<Zuora.zObject> results = new List<Zuora.zObject>(); 
+
+        Zuora.zObject obj = new Zuora.zObject('PaymentMethod');
+        obj.setValue('Id',paymentId);
+        obj.setValue('LastTransactionStatus', 'Approved');
+        obj.setValue('LastTransactionDateTime', System.today());
+
+        results.add(obj);     
+        return results;
+    }
+
     public static List<Zuora.zObject> generatePaymentMethods(String accountId, Integer nb)
     {
         List<Zuora.zObject> results = new List<Zuora.zObject>(); 
@@ -349,8 +361,10 @@ public with sharing class TestDataGenerator
         String name = (String) zObject.getValue('Name');
         String startDate = (String) zObject.getValue('EffectiveStartDate');
         String endDate = (String) zObject.getValue('EffectiveEndDate');
+        String idValue = (String) zObject.getValue('Id');
 
-        if(String.isBlank(name) || String.isBlank(startDate) || String.isBlank(endDate))
+        if(String.isBlank(name) || String.isBlank(startDate) || String.isBlank(endDate)
+            || String.isBlank(idValue))
             return false;
         else
             return true;
@@ -946,7 +960,8 @@ public with sharing class TestDataGenerator
                 Product_Segment__c              = Utility.getRandomPicklistValue('Product2','Product_Segment__c'),
                 Sales_Channel__c                = Utility.getRandomPicklistValue('Product2','Sales_Channel__c'),
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
-                Sales_Notification__c           = true
+                Sales_Notification__c           = true,
+                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House'
             ));
         }
 
@@ -990,7 +1005,8 @@ public with sharing class TestDataGenerator
                 Product_Segment__c              = Utility.getRandomPicklistValue('Product2','Product_Segment__c'),
                 Sales_Channel__c                = Utility.getRandomPicklistValue('Product2','Sales_Channel__c'),
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
-                Sales_Notification__c           = true
+                Sales_Notification__c           = true,
+                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House'
             ));
         }
 
@@ -1034,7 +1050,8 @@ public with sharing class TestDataGenerator
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
                 Sales_Notification__c           = true,
                 File_Path__c                    = 'OneTimeWebDownload/9648-53/Visio-Quote_Business_Process.pdf',
-                Days_available_for_download_1__c= 1
+                Days_available_for_download_1__c= 1,
+                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House'
             ));
         }
 
@@ -1167,7 +1184,16 @@ public with sharing class TestDataGenerator
             Create Apex settings to use in various triggers/classes
     ****************************************************************************************************/
     public static void generateApexSetting() {
+/*
         delete [SELECT Id FROM Apex_Setting__c];
+*/
+        // Ecommerce Enhancements R1
+        List<Apex_Setting__c> listCSold = [SELECT Id FROM Apex_Setting__c];
+
+        if (listCSold.isEmpty() == false) {
+            delete listCSold;
+        }
+
         List<Apex_Setting__c> listCS = new List<Apex_Setting__c>();
         listCS.add(new Apex_Setting__c(Name='Products email notification admin', Text_1__c='test@test.com'));
         listCS.add(new Apex_Setting__c(Name='PRODUCT_LIST_PAGE_SIZE_LIMIT', Number_1__c=12));

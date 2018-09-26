@@ -54,11 +54,23 @@
             <type>role</type>
         </recipients>
         <recipients>
-            <recipient>abulkheirk@iata.org</recipient>
+            <recipient>astridgec@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>astridgec@iata.org</recipient>
+            <recipient>auragh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bertolusj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>debonol2@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>deghelderc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -71,6 +83,10 @@
         </recipients>
         <recipients>
             <recipient>kikanor@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>krishnanh@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -91,6 +107,10 @@
         </recipients>
         <recipients>
             <recipient>wangw@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wyattj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -125,11 +145,27 @@
             <type>role</type>
         </recipients>
         <recipients>
-            <recipient>abulkheirk@iata.org</recipient>
+            <recipient>astridgec@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>astridgec@iata.org</recipient>
+            <recipient>auragh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bertolusj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>debonol2@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>deghelderc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>greenwayt@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -142,6 +178,10 @@
         </recipients>
         <recipients>
             <recipient>kikanor@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>krishnanh@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -176,7 +216,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Opportunity_Notification_to_Ben_Barrocas</template>
+        <template>All/Opportunity_Notification_to_Ben_Barrocas</template>
     </alerts>
     <alerts>
         <fullName>Opportunity_owner_Change</fullName>

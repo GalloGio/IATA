@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>IEC - Contain releases (versions of renewal) for event subscriptions</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -61,56 +58,69 @@
         <description>IEC - Type of customer to query subscribed customers for renewal</description>
         <externalId>false</externalId>
         <label>Customer Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Accredited Training Center (ATC)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accredited Training Schools (ATS)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Employee (commercial purposes)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Employees (work related reason)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Training &amp; Development Institute</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Member Airline</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non-member</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Agents (Genric)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Agents (Gold)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Agents (Platinum)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Strategic Partners</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Accredited Training Center (ATC)</fullName>
+                    <default>false</default>
+                    <label>Accredited Training Center (ATC)</label>
+                </value>
+                <value>
+                    <fullName>Accredited Training Schools (ATS)</fullName>
+                    <default>false</default>
+                    <label>Accredited Training Schools (ATS)</label>
+                </value>
+                <value>
+                    <fullName>IATA Employee (commercial purposes)</fullName>
+                    <default>false</default>
+                    <label>IATA Employee (commercial purposes)</label>
+                </value>
+                <value>
+                    <fullName>IATA Employees (work related reason)</fullName>
+                    <default>false</default>
+                    <label>IATA Employees (work related reason)</label>
+                </value>
+                <value>
+                    <fullName>IATA Training &amp; Development Institute</fullName>
+                    <default>false</default>
+                    <label>IATA Training &amp; Development Institute</label>
+                </value>
+                <value>
+                    <fullName>Member Airline</fullName>
+                    <default>false</default>
+                    <label>Member Airline</label>
+                </value>
+                <value>
+                    <fullName>Non-member</fullName>
+                    <default>false</default>
+                    <label>Non-member</label>
+                </value>
+                <value>
+                    <fullName>Sales Agents (Genric)</fullName>
+                    <default>false</default>
+                    <label>Sales Agents (Genric)</label>
+                </value>
+                <value>
+                    <fullName>Sales Agents (Gold)</fullName>
+                    <default>false</default>
+                    <label>Sales Agents (Gold)</label>
+                </value>
+                <value>
+                    <fullName>Sales Agents (Platinum)</fullName>
+                    <default>false</default>
+                    <label>Sales Agents (Platinum)</label>
+                </value>
+                <value>
+                    <fullName>Strategic Partners</fullName>
+                    <default>false</default>
+                    <label>Strategic Partners</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -415,6 +425,7 @@
 )</errorConditionFormula>
         <errorMessage>Please wait!  A process is running for release.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>New</fullName>
         <availability>online</availability>

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -60,6 +57,15 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Alert Contact By Email</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Alert_Contact_By_Push_Notification__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Alert contacts with a push notification on NewGen mobile app</description>
+        <externalId>false</externalId>
+        <label>Alert Contact By Push Notification</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -121,23 +127,33 @@
         <fullName>Notificatin_color__c</fullName>
         <externalId>false</externalId>
         <label>Notificatin color</label>
-        <picklist>
-            <controllingField>Type__c</controllingField>
-            <picklistValues>
-                <fullName>#007FFF</fullName>
-                <default>false</default>
-                <controllingFieldValues>Information</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>#FF5E4D</fullName>
-                <default>false</default>
-                <controllingFieldValues>Action</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>Type__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>#007FFF</fullName>
+                    <default>false</default>
+                    <label>#007FFF</label>
+                </value>
+                <value>
+                    <fullName>#FF5E4D</fullName>
+                    <default>false</default>
+                    <label>#FF5E4D</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Action</controllingFieldValue>
+                <valueName>#FF5E4D</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Information</controllingFieldValue>
+                <valueName>#007FFF</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Notification_Campagne_Name__c</fullName>
@@ -174,20 +190,24 @@
         <fullName>Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Action</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Information</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Action</fullName>
+                    <default>false</default>
+                    <label>Action</label>
+                </value>
+                <value>
+                    <fullName>Information</fullName>
+                    <default>false</default>
+                    <label>Information</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Notification</label>
     <nameField>
@@ -198,4 +218,5 @@
     <pluralLabel>Notifications</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

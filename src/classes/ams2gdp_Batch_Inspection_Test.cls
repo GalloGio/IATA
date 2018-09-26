@@ -7,7 +7,7 @@ private class ams2gdp_Batch_Inspection_Test
 	{
 		// Generate Test Data
 		List<GDP_Reference_Table__c> tables = ams2gdp_TestDataGenerator.generateReferenceTables(nb, true);
-		List<AMS_Inspection__c> inspections = ams2gdp_TestDataGenerator.generateAMS_Inspections(nb,true); 
+		List<Account> accs = ams2gdp_TestDataGenerator.generateAccounts(nb,true); 
 
 		
 	}
@@ -19,9 +19,9 @@ private class ams2gdp_Batch_Inspection_Test
 		Test.stopTest();
 
 		Set<String> accountIds = new Set<String>();
-		for(AMS_Inspection__c inspection : [SELECT Account__c FROM AMS_Inspection__c])
+		for(Account acc : [SELECT Id FROM Account])
 		{
-			accountIds.add(inspection.Account__c);
+			accountIds.add(acc.id);
 		}
 
 		// Validate new records of Accreditation__c are created 
@@ -30,7 +30,7 @@ private class ams2gdp_Batch_Inspection_Test
 
 	@isTest static void positiveTest2InspectionBatch() 
 	{
-		List<AMS_Inspection__c> inspections = [SELECT Id FROM AMS_Inspection__c]; 
+		List<Account> accs = [SELECT Id FROM Account]; 
 
 		upsert new AMS_GDP_Batch__c(
 			Batch_Name__c='Job 2: Accreditation', 
@@ -38,18 +38,18 @@ private class ams2gdp_Batch_Inspection_Test
 			Last_Sync_End_Date__c=Datetime.now(),
 			Total_Failed_Records__c = 1,
 			Total_Records_Processed__c = nb,
-			Failed_Records__c = inspections[0].Id
+			Failed_Records__c = accs[0].Id
 		) Batch_Name__c; 
 
 
 		Test.startTest(); 
- 			Database.executeBatch(new ams2gdp_Batch_Inspection(false));
+ 			Database.executeBatch(new ams2gdp_Batch_Inspection(false, true));
 		Test.stopTest();
 	}
 
 	@isTest static void negativeTestInspectionBatch()
 	{
-		ams2gdp_Batch_Inspection batch = new ams2gdp_Batch_Inspection(false);
+		ams2gdp_Batch_Inspection batch = new ams2gdp_Batch_Inspection(false, false);
 			batch.throwException = true; 
 
 		Test.startTest(); 

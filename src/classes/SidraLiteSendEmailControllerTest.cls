@@ -1,6 +1,17 @@
 @isTest
 public class SidraLiteSendEmailControllerTest {
 
+    @TestSetup
+    public static void loadData() {
+        RecordTypeEmail__c rt = new RecordTypeEmail__c();
+        rt.Name = 'Name';
+        rt.Record_Type_Developer_Name__c = 'SIDRA_Lite';
+        rt.Country_Name__c = 'Default';
+        rt.Case_Group__c = 'Default';
+        rt.Email__c = 'noreply@iata.org';
+        insert rt;
+    }
+
     public static Case getSidraCase() {
         APXTConga4__Conga_Merge_Query__c cm1 = new APXTConga4__Conga_Merge_Query__c();
         cm1.APXTConga4__Name__c = 'Parent Case';
@@ -8,7 +19,13 @@ public class SidraLiteSendEmailControllerTest {
         APXTConga4__Conga_Merge_Query__c cm2 = new APXTConga4__Conga_Merge_Query__c();
         cm2.APXTConga4__Name__c = 'Parent Account';
         insert cm2;
-
+        APXTConga4__Conga_Merge_Query__c cm3 = new APXTConga4__Conga_Merge_Query__c();
+        cm3.APXTConga4__Name__c = 'Forms Of Payment';
+        insert cm3;
+        APXTConga4__Conga_Merge_Query__c cm4 = new APXTConga4__Conga_Merge_Query__c();
+        cm4.APXTConga4__Name__c = 'RHC Information';
+        insert cm4;
+        
         Account account = new Account(
             Name = 'test account',
             Sector__c = 'Travel Agent',
@@ -38,6 +55,14 @@ public class SidraLiteSendEmailControllerTest {
         cm2.APXTConga4__Name__c = 'Parent Account';
         insert cm2;
 
+        APXTConga4__Conga_Merge_Query__c cm3 = new APXTConga4__Conga_Merge_Query__c();
+        cm3.APXTConga4__Name__c = 'Forms Of Payment';
+        insert cm3;
+
+        APXTConga4__Conga_Merge_Query__c cm4 = new APXTConga4__Conga_Merge_Query__c();
+        cm4.APXTConga4__Name__c = 'RHC Information';
+        insert cm4;
+        
         Account acc = new Account(Name='test');
         insert acc;
 

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Set IEC Trace settings for specific user/profile/org. Due to the amount of logging information generated, activate on user by user basis and only for a short period of time.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Is_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to true to enable the trace, set to false to disable it.</inlineHelpText>
+        <label>Is Enabled?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Timestamp_Format__c</fullName>
+        <defaultValue>&quot;yyyy-MM-dd HH:mm:ss.SSS z&quot;</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Format logged into the Timestamp field of the Trace object. Default value is the recommended.</inlineHelpText>
+        <label>Timestamp Format</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trace_Debug__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to true to activate tracing for Debug messages.</inlineHelpText>
+        <label>Trace Debug?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Trace_Error__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to true to activate tracing for Error messages.</inlineHelpText>
+        <label>Trace Error?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Trace_Info__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to true to activate tracing for Info messages.</inlineHelpText>
+        <label>Trace Info?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Trace_Warning__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to true to activate tracing for Warning messages.</inlineHelpText>
+        <label>Trace Warning?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>IEC Trace Setting</label>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -109,4 +109,20 @@ public without sharing class ISSP_Utilities {
 		return isCNS;
 
       }
+
+	public static boolean isIFGUser(){
+
+		boolean isIFG = false;
+		User u = DAL_ISSP.getUser(UserInfo.getUserId());
+
+		if((u.contact.IFG_Production__c != null && u.contact.IFG_Production__c>0 )||
+				(u.contact.IFG_PreProduction__c != null && u.contact.IFG_PreProduction__c>0 )
+		){
+			isIFG = true;
+			System.debug('basto1p - IS IFG USER');
+		}
+
+		return isIFG;
+
+	}
 }

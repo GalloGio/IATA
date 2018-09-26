@@ -22,6 +22,7 @@ global class ISSP_WS_CreateNotification {
         WebService Boolean emailAlert;
         WebService Boolean criticalNotification;
         WebService String campaignName;
+        WebService String replaceStr;     
     }
     
     global class languageMessage {
@@ -58,6 +59,8 @@ global class ISSP_WS_CreateNotification {
     	description = description + 'Email Alert: ' + inputMessage.emailAlert + '\n';
     	description = description + 'Critical Notification: ' + inputMessage.criticalNotification + '\n';
     	newLog.Input_Description__c = description;
+    	
+    	Map<String, String> replaceMap = parseReplaceStr(inputMessage.replaceStr);
     	
     	//Contact segmentation
     	List <Contact> contactList = new List<Contact>(); // final list of contacts
@@ -235,11 +238,18 @@ global class ISSP_WS_CreateNotification {
 	    	}
 	    	else{
 	    		String serviceId = serviceList[0].Id;
-	    		List <Portal_Application_Right__c> appRightList = 
-	    											[SELECT Id, Contact__c
+				List <Portal_Application_Right__c> appRightList;
+	    		if(serviceName == ISSP_ICCS_Utils.ICCS_PORTAL_APPLICATION_NAME){
+		    		appRightList = [SELECT Id, Contact__c
+									FROM Portal_Application_Right__c WHERE
+									Id in : ISSP_ICCS_Utils.getReportNotificationRecipients(inputMessage.templateName, replaceMap.get('%SF_ACCOUNT_ID%'))];
+	    		}
+	    		else{
+	    			appRightList = [SELECT Id, Contact__c
 	    											FROM Portal_Application_Right__c WHERE
 	    											Right__c = 'Access Granted'
 	    											AND Portal_Application__c = :serviceId];
+	    		}
 				system.debug('appRightList: ' + appRightList);
 				if (appRightList.isEmpty()){
 					errorCode = 'A004';
@@ -286,6 +296,9 @@ global class ISSP_WS_CreateNotification {
     	
     	//Getting contacts for user list
     	List<String> listOfUsers = inputMessage.listOfUsers;
+    	if(listOfUsers == null){
+    		listOfUsers = new List<String>();
+    	}
     	system.debug('listOfUsers: ' + listOfUsers);
     	system.debug('listOfUsers size: ' + listOfUsers.size());
     	Set <String> emailList = new Set <String>();
@@ -397,6 +410,29 @@ global class ISSP_WS_CreateNotification {
     	system.debug('templateName: ' + templateName);
     	if (templateName != null && templateName != ''){
     		system.debug('templateName not null');
+    		
+    		if(serviceName == ISSP_ICCS_Utils.ICCS_PORTAL_APPLICATION_NAME){
+				// Add "ICCS_" as it's how ICCS Notification Templates Identifier__c values start with
+    			templateName = 'ICCS_' + templateName;
+    			List<Notification_template__c> notificationTemplates = [select Name, Identifier__c from Notification_template__c where Identifier__c =: templateName  or Identifier__c =: ISSP_ICCS_Utils.ICCS_DEFAULT_REPORT_NOTIFICATION_TEMPLATE];
+    			
+				// If there is only one entry, it means that only the default report notification template was found and that there is no dedicated notification template for the ICCS report type.
+				// The notification template to use is then the default one.
+    			if(notificationTemplates.size() == 1){
+	    			System.debug('Size = 1');
+    				templateName = notificationTemplates[0].Name;
+    			}
+				// Otherwise, it means that there is a dedicated notification template for the ICCS report type
+    			else{
+    				for(Notification_template__c notificationTemplate : notificationTemplates){
+    					if(notificationTemplate.Identifier__c == templateName){
+    						templateName = notificationTemplate.Name;
+    						break;
+    					}
+    				}
+    			}
+    		}
+    		
     		List <Notification_template__c> templateList = 
     				[Select n.Subject__c, n.Name, n.Message__c, n.Language__c,Type__c,Notification_color__c,Alert_Contact_By_Email__c,
                 	Expire_in_days__c, CriticalNotification__c,
@@ -418,16 +454,21 @@ global class ISSP_WS_CreateNotification {
 	            Notification_template__c nt = templateList[0];
 	            for (Contact thisContact : contactList){
 	            	system.debug('CREATING NOTIFICATION FOR THIS CONTACT: ' + thisContact);
-	            	if(notificationTemplateTranslateMap.get(nt.Id).get(contactLanguageMap.get(thisContact.Id)) != null){
-	            		system.debug('FOUND A TRANSLATION');
-	            		nt = notificationTemplateTranslateMap.get(nt.Id).get(contactLanguageMap.get(thisContact.Id));
+	            	if(notificationTemplateTranslateMap.containsKey(nt.Name) &&
+	            		notificationTemplateTranslateMap.get(nt.Name).containsKey(contactLanguageMap.get(thisContact.Id))
+	            	){
+	            		system.debug('ALEX FOUND A TRANSLATION');
+	            		nt = notificationTemplateTranslateMap.get(nt.Name).get(contactLanguageMap.get(thisContact.Id));
 	            	}
 	            	if (nt.Expire_in_days__c != null){
 	            		expirationDate = system.Now() + nt.Expire_in_days__c;
 	            	}
+
+	            	String notificationMsg = replacePlaceholdersMsg(nt.Message__c, replaceMap);
+
 	            	Notification__c newNotification = new Notification__c();
 	            	newNotification.Contact__c = thisContact.Id;
-	            	newNotification.Message__c = nt.Message__c;
+	            	newNotification.Message__c = notificationMsg;
                     newNotification.Alert_Contact_By_Email__c = nt.Alert_Contact_By_Email__c;
                     newNotification.Subject__c = nt.Subject__c;
                     newNotification.Type__c = nt.Type__c;
@@ -488,7 +529,7 @@ global class ISSP_WS_CreateNotification {
     		Map <String, String> languageMessage = new Map <String, String> ();
 	    	List<languageMessage> languageList = inputMessage.languageMessageList;
 	    	system.debug('languageList: ' + languageList);
-	    	if (languageList.isEmpty()){
+	    	if (languageList == null || languageList.isEmpty()){
 	    		errorCode = 'A008';
 	    		errorMessage = ISSP_Int_Error__c.getValues('A008').Error_Message__c;
 	    		
@@ -582,6 +623,9 @@ global class ISSP_WS_CreateNotification {
 	    					newNotification.Message__c = languageMessage.get('en_US');
 			                newNotification.Subject__c = languageSubject.get('en_US');
 	    				}
+
+						newNotification.Message__c = replacePlaceholdersMsg(newNotification.Message__c, replaceMap);
+
 	    				newNotificationList.add(newNotification);
 	    			}
 	    			try{
@@ -616,4 +660,30 @@ global class ISSP_WS_CreateNotification {
 	    return retResponse;
     }
     
+    private static Map<String, String> parseReplaceStr(String replaceStr) {
+    	if(replaceStr == null || replaceStr == '') {
+    		return new Map<String, String>();
+    	} else {
+    		Map<String, String> replaceMap = new Map<String, String>();
+
+    		List<String> aux1 = replaceStr.split('\\|');
+
+    		for(String s : aux1) {
+    			List<String> aux2 = s.split('!');
+    			if(aux2.size() == 2)
+    				replaceMap.put(aux2[0], aux2[1]);
+    		}
+
+    		return replaceMap;
+    	}
+    }
+
+    private static String replacePlaceholdersMsg(String msg, Map<String, String> replaceMap) {
+    	if(msg != null && replaceMap != null) {
+	    	for(String key : replaceMap.keySet()) {
+	    		msg = msg.replace(key, replaceMap.get(key));
+			}
+		}
+		return msg;
+    }
 }

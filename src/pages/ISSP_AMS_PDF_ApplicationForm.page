@@ -65,7 +65,7 @@
                     </tr>
                     <tr>
                         <td class="label">{!$Label.ISSP_AMS_Step1_Approval_Sought}</td>
-                        <td colspan="2"><apex:outputText value="{!CASE(newCase.Reason1__c, 'New HO', $Label.ISSP_AMS_OPTION_PAX_HO, 'New BR / IP', $Label.ISSP_AMS_OPTION_PAX_BRANCH,$Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD)}"/></td>
+                        <td colspan="2"><apex:outputText value="{!CASE(newCase.Reason1__c, 'New HO', $Label.ISSP_AMS_OPTION_PAX_HO, 'New BR / IP', $Label.ISSP_AMS_OPTION_PAX_BRANCH, 'New SA / CHV – New Code', $Label.ISSP_AMS_OPTION_PAX_SA, $Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD)}"/></td>
                     </tr>
                     <tr>
                         <td class="label">{!$Label.ISSP_CountryConcerned}</td>
@@ -471,13 +471,13 @@
                                             <td>{!$Label.ISSP_AMS_Contact_Info}</td>
                                             <td>{!$Label.ISSP_AMS_Additional_Data}</td>
                                             <td>{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</td>
-                                            <td>{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}</td>
-                                            <td><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Authorised_Sig}"/></td>
+                                            <td><apex:outputText escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></td>
+                                            <td><!--<apex:outputText escape="false" value="{!$Label.ISSP_AMS_Authorised_Sig}"/></td>
                                             <td style="display:{!IF(amsOfficeType != 'HO','none','')}"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Fin_Contact}"/></td>
                                             <td style="display:{!IF(amsOfficeType != 'HO','none','')}">
                                                 <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Portal_Admin}"/>
                                             </td>                                   
-
+                                            <td style="display:{!IF(amsOfficeType != 'HO','none','')}"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Invoicing_Contact}"/>-->{!$Label.ISSP_AMS_Roles_and_Responsibilities}</td>
                                         </tr>
                                         <apex:repeat value="{!List_AgencyContacts}" var="agencycon" >
                                             <tr>
@@ -510,16 +510,35 @@
                                                     <apex:outputText rendered="{!agencycon.Agency_role__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
                                                     <!-- <apex:inputCheckbox value="{!agencycon.Agency_role__c}" disabled="true"/> -->
                                                 </td>
-                                                <td class="checkbox-td">
+                                                <td class="checkbox-td"><!--
                                                     <apex:outputText rendered="{!agencycon.Authorised_signatory__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
-                                                    <!-- <apex:inputCheckbox value="{!agencycon.Authorised_signatory__c}" disabled="true"/> -->
                                                 </td>
                                                 <td style="display:{!IF(amsOfficeType != 'HO','none','')}" class="checkbox-td">
                                                     <apex:outputText rendered="{!agencycon.Financial_Assessment_Contact__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
-                                                    <!-- <apex:inputCheckbox value="{!agencycon.Financial_Assessment_Contact__c}" disabled="true"/> -->
                                                 </td>
                                                 <td style="display:{!IF(amsOfficeType != 'HO','none','')}" class="checkbox-td">
                                                     <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
+                                                </td>
+                                                <td style="display:{!IF(amsOfficeType != 'HO','none','')}" class="checkbox-td">
+                                                    <apex:outputText rendered="{!agencycon.Invoicing_Contact__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>-->
+                                                    <table style="border: 0;">
+                                                        <tr>
+                                                            <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Authorised_signatory__c,'','un')}checked.gif"/></td>
+                                                            <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Authorised_Sig}"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Financial_Assessment_Contact__c,'','un')}checked.gif"/></td>
+                                                            <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Fin_Contact}"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.id == newForm.ISSP_AMS_Portal_admin__c,'','un')}checked.gif"/></td>
+                                                            <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Portal_Admin}"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Invoicing_Contact__c,'','un')}checked.gif"/></td>
+                                                            <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Invoicing_Contact}"/></td>
+                                                        </tr>                                                    
+                                                    </table>
                                                 </td>
                                             </tr>
                                         </apex:repeat>
@@ -686,7 +705,6 @@
                 </apex:pageBlock>
             </div>
 
-
             <!-- ************************* T&C ************************* -->
             <div>
                 <table class="aptable">
@@ -697,12 +715,74 @@
                     </tr>
                     <tr>
                         <td>
-                            <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}"/>       
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}"/>      
+                            <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}"/>
+                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}"/>
                             <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs3}"/>
                         </td>
                     </tr>
                 </table>
+            </div>
+
+            <!-- Signatures -->
+            <div style="display:{!IF(isPartnership,'','none')}">
+                <apex:repeat value="{!List_AgencyContacts}" var="agencyContact">
+                    <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
+                        <table border="0" cellpadding="3">
+                            <tr>
+                              <th colspan="2">{!$Label.ISSP_AMS_Partner}</th>
+                            </tr>
+                            <tr>
+                              <td style="padding-bottom:15px">{!$Label.IFAP_name}</td>
+                              <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                            </tr>
+                            <tr>
+                              <td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td>
+                              <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                            </tr>
+                            <tr>
+                              <td>{!$Label.ISSP_Country}</td>
+                              <td>________________________</td>
+                            </tr>
+                            <tr>
+                              <td>{!$Label.ISSP_Date}</td>
+                              <td>________________________</td>
+                            </tr>
+                            <tr>
+                              <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
+                              <td>________________________</td>
+                            </tr>
+                        </table>
+                    </div>
+                </apex:repeat>
+                <apex:repeat value="{!List_AgencyCompanies}" var="agencyCompany">
+                    <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
+                        <table border="0" cellpadding="3">
+                            <tr>
+                              <th colspan="2">{!$Label.ISSP_AMS_Partner}</th>
+                            </tr>
+                            <tr>
+                              <td style="padding-bottom:15px">{!$Label.IFAP_name}</td>
+                              <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                            </tr>
+                            <tr>
+                              <td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td>
+                              <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
+                            </tr>
+                            <tr>
+                              <td>{!$Label.ISSP_Country}</td>
+                              <td>________________________</td>
+                            </tr>
+                            <tr>
+                              <td>{!$Label.ISSP_Date}</td>
+                              <td>________________________</td>
+                            </tr>
+                            <tr>
+                              <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
+                              <td>________________________</td>
+                            </tr>
+                        </table>
+                    </div>
+                </apex:repeat>
             </div>
         </div>  
     </html>

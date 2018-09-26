@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
-    <tab>standard-Chatter</tab>
-    <tab>standard-Account</tab>
-    <tab>standard-Contact</tab>
-    <tab>standard-Case</tab>
-    <tab>standard-Knowledge</tab>
-    <tab>standard-report</tab>
-    <tab>standard-Dashboard</tab>
-    <tab>My_Status</tab>
-    <tab>Quality__c</tab>
-    <tab>Operational_Improvements__c</tab>
-    <tab>AmazonFile__c</tab>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <tabs>standard-Chatter</tabs>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Case</tabs>
+    <tabs>standard-Knowledge</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>standard-Dashboard</tabs>
+    <tabs>My_Status</tabs>
+    <tabs>Quality__c</tabs>
+    <tabs>Operational_Improvements__c</tabs>
+    <tabs>AmazonFile__c</tabs>
+    <tabs>AMS_Account_Role__c</tabs>
 </CustomApplication>

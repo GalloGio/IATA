@@ -66,7 +66,10 @@ public class vfIECEBC_OptOut {
         ee.Source_Campaign__c = campaignId;
         ee.Other_Reason__c = String.join(userReasons, '\n');
         
-        ee.Type__c = 'OPTOUT';
+        //don't trigger the workflow - EBC Unsubscribe - in the context of a portal user
+        if(!Test.isRunningTest())
+            ee.Type__c = 'OPTOUT';
+
         if (sender != 'all') {
             List<Zuora__CustomerAccount__c> bAccount = new List<Zuora__CustomerAccount__c>([SELECT id, Name from Zuora__CustomerAccount__c where id = :billingAccountId]);
             if(bAccount != null){
@@ -76,7 +79,6 @@ public class vfIECEBC_OptOut {
             }
             ee.Unsubscribe_From__c = billingAccountId;
         }
-        
         insert ee;
         
         PageReference pr = Page.IECEBC_PublicConfirmation;

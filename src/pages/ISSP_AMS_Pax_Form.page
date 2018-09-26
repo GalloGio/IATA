@@ -327,6 +327,7 @@
             $j(".email__c").parent().parent().siblings('.col-lg-5').find("label").html('{!$Label.ISSP_Office_Email}');
             $j("[id$=BillingAddress]").parent().css('text-align', 'right');
             $j("[id$=HOEmail]").parent().css('text-align', 'right');
+            $j(".email__c").wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
             
       });
     }
@@ -593,6 +594,21 @@
     function setPortalAdmin(f) {
         var adminid = document.getElementById(f).value;
         $j( "#" + adminid ).prop( "checked", true );
+
+        setInvoiceContact();
+    }
+
+    function setInvoiceContact() {
+        var invcontactid = document.getElementById('{!$Component.AMSForm.InvoicingContactId}').value;
+        if (invcontactid == '') {
+            invcontactid = document.getElementById('{!$Component.AMSForm.PortalAdminId}').value;
+        }
+        
+        if (invcontactid != '') {
+            $j( "#radio" + invcontactid ).prop( "checked", true );
+            document.getElementById('{!$Component.AMSForm.InvoicingContactId}').value = invcontactid;
+        }
+        
     }
 
     function confirmContactDelete(conid, conname, contype) {
@@ -692,6 +708,8 @@
             <apex:actionFunction name="accountUpdatedToggleOff" action="{!accountUpdatedToggleOff}" status="WaitingStatus" reRender="updateAgency"/>
             <!-- <apex:actionFunction name="resetSaleSaved" action"{!}" status="WaitingStatus" reRender="newSalesForm"/> -->
             <apex:inputHidden value="{!newForm.ISSP_AMS_Portal_admin__c}" id="PortalAdminId" />
+            <apex:inputHidden value="{!newForm.ISSP_AMS_Invoicing_Contact__c}" id="InvoicingContactId" />
+
             <apex:pageBlock id="AMSBlock">
             <div class="alert alert-info" role="alert">
                 {!$Label.ISSP_AMS_Step3_Save_Anytime}
@@ -1071,7 +1089,7 @@
                                <apex:column ><span class="glyphicon glyphicon-plus" onclick="toggleContactDetails(this)" id="tog{!agencycon.Id}"/></apex:column>
                             <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!agencycon.First_name__c}"/> 
                             <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}"/>
-                            <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}"/>
+                            <!--<apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}"/>-->
                             <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!agencycon.Email__c}"/>
                             <apex:column headerValue="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}" value="{!agencycon.Agency_owner__c}" id="ownerTitle" style="text-align:center"/>
                             <apex:column id="roleTitle" value="{!agencycon.Agency_role__c}" style="text-align:center">
@@ -1085,8 +1103,14 @@
                                </apex:column>
                             <apex:column style="text-align:center" rendered="{!amsOfficeType=='HO'}">
                                 <apex:facet name="header"><apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Portal_Admin}"><apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpPortalAdmin}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip"/></apex:outputText></apex:facet>
-                                <input type="radio" name="portaladmin" id="{!agencycon.id}" VALUE="{!agencycon.id}" onclick="updateFieldValue(this,'{!$Component.PortalAdminId}');"/>
+                                <input type="radio" name="portaladmin" id="{!agencycon.id}" VALUE="{!agencycon.id}" onclick="updateFieldValue(this,'{!$Component.PortalAdminId}');setInvoiceContact();"/>
                             </apex:column>
+
+                            <apex:column style="text-align:center" rendered="{!amsOfficeType=='HO'}">
+                                <apex:facet name="header"><apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Invoicing_Contact}"></apex:outputText></apex:facet>
+                                <input type="radio" name="invoicingcontact" id="radio{!agencycon.id}" VALUE="{!agencycon.id}" onclick="updateFieldValue(this,'{!$Component.InvoicingContactId}');"/>
+                            </apex:column>
+
                             <apex:column >
                                 <apex:actionStatus id="actEditContact" >
                                     <apex:facet name="start" > 
@@ -1110,6 +1134,7 @@
                                                                                 <div class="contact-detail"><span style="font-weight:bold">{!txtLocalAgencyDetailsFirstNameLocal}&nbsp;</span>{!agencycon.Local_First_name__c}</div>
                                                                                 <div class="contact-detail"><span style="font-weight:bold">{!txtLocalAgencyDetailsLastNameLocal}&nbsp;</span>{!agencycon.Local_Last_Name__c}</div>
                                                                             </apex:outputText>
+                                                                            <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Phone.Label}&nbsp;</span>{!agencycon.Phone__c}</div>
                                                                             <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.MobilePhone.Label}&nbsp;</span>{!agencycon.Mobile__c}</div>
                                                                             <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.FAX.Label}&nbsp;</span>{!agencycon.FAX__c}</div>
                                                                              <div class="contact-detail"><div style="font-weight:bold;float:left">{!$Label.ISSP_Address}&nbsp;</div><div style="margin-left:60px;">{!agencycon.AddressStreet__c}<br/>{!agencycon.AddressPostcode__c}&nbsp;{!agencycon.AddressCity__c}<br/>{!agencycon.AddressCountry__c}</div></div>

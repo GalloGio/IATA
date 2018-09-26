@@ -5,7 +5,7 @@
            standardStylesheets="true"
            applyBodyTag="false"
            applyHtmlTag="false"
-           >
+           action="{!securityCheck}">
     
     <html> 
         <c:ISSP_Header ></c:ISSP_Header>

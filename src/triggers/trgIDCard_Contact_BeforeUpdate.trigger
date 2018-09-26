@@ -42,7 +42,7 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert)
         Set<ID> ids = Trigger.newMap.keySet();
 
         ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
-        List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Printed/Delivered' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
+        List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Valid ID Card' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
 
 
         for (Contact CurrentContact : standardContacts) {

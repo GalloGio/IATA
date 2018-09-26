@@ -255,6 +255,10 @@
                 <behavior>Readonly</behavior>
                 <field>CreatedDate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Case_Thread_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

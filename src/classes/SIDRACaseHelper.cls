@@ -23,7 +23,9 @@ public with sharing class SIDRACaseHelper {
 	public static void doAfterInsert(map<Id,Case> newCases) {
 		map<Id,Case> mapSidra = getSidraCases(newCases.values());
 
+		ANG_RiskEventGenerator.skip = true;
 		updateRelatedObjects(mapSidra);
+		ANG_RiskEventGenerator.skip = false;
 	}
 
     /**

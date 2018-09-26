@@ -22,6 +22,14 @@
                 <behavior>Edit</behavior>
                 <field>numeric_code__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Valid_for_GDP__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ISO_CODE_STANDARD__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -71,17 +79,20 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Area__c</fields>
-        <fields>Area_Code__c</fields>
         <fields>Country_Code__c</fields>
+        <fields>ProgramCode__c</fields>
+        <fields>Prefix__c</fields>
+        <fields>Area_Code__c</fields>
         <fields>Min_Range__c</fields>
         <fields>Max_Range__c</fields>
-        <fields>Prefix__c</fields>
-        <fields>ProgramCode__c</fields>
         <fields>UPDATEDBY_USER</fields>
         <fields>LAST_UPDATE</fields>
         <relatedList>Code_Range__c.IATA_ISO_State__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

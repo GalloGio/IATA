@@ -3,6 +3,22 @@
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Notification message</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>50</height>
+                <page>AMS_InspectionNotification</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
@@ -13,7 +29,7 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Airline__c</field>
             </layoutItems>
             <layoutItems>
@@ -27,6 +43,22 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BSPLink_or_CASSLink_activation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AMS_GDP_Sort_By__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Previous_status_code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Valid_Code_For_GDP_Replication__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -43,8 +75,8 @@
                 <field>Account__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Accreditation_Endorsement_organisation__c</field>
+                <behavior>Edit</behavior>
+                <field>Agency__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -53,6 +85,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OSCAR__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accreditation_Endorsement_organisation__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -112,8 +148,13 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>CREATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
         <fields>NAME</fields>
+        <fields>ISO_Country__c</fields>
         <relatedList>AMS_Territory__c.Appointment__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

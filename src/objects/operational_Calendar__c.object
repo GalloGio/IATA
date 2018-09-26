@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,12 +46,94 @@
     <description>used to host information on the ISS / ICH / ICCS calendars</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Agent_Correction_Cut_Off__c</fullName>
+        <description>Deadline for the agent to make corrections</description>
+        <externalId>false</externalId>
+        <label>Agent Correction Cut-Off</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Airline_Billing_HOT__c</fullName>
+        <externalId>false</externalId>
+        <label>Airline Billing &amp; HOT</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Airline_Correction_Response_Cut_Off__c</fullName>
+        <description>Deadline for the airlines to respond to the agents submitted corrections</description>
+        <externalId>false</externalId>
+        <label>Airline Correction Response Cut-Off</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Airline_Input_Upload_Cut_Off__c</fullName>
+        <description>Deadline for the airline to upload CASS billing to the agent</description>
+        <externalId>false</externalId>
+        <label>Airline Input Upload Cut-Off</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Availability__c</fullName>
+        <description>Date of when the billing BSP/CASS is available to the agent to pay</description>
+        <externalId>false</externalId>
+        <label>Billing Availability</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>CASS_reports_Availability__c</fullName>
+        <description>Date of CASS initial reports availability uploaded by the airlines</description>
+        <externalId>false</externalId>
+        <label>CASS reports Availability</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EP_Settlement_date__c</fullName>
+        <externalId>false</externalId>
+        <label>EP Settlement date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ExternalId__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Used to allow updates from external systems: Mulesoft + IRIS</description>
+        <externalId>true</externalId>
+        <label>ExternalId</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
     <fields>
         <fullName>First_Day__c</fullName>
         <description>first day of the period</description>
@@ -137,30 +215,36 @@
         <fullName>Operation_Type__c</fullName>
         <externalId>false</externalId>
         <label>Operation Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>BSP International</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSP Domestic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Export</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Import</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>BSP International</fullName>
+                    <default>false</default>
+                    <label>BSP International</label>
+                </value>
+                <value>
+                    <fullName>BSP Domestic</fullName>
+                    <default>false</default>
+                    <label>BSP Domestic</label>
+                </value>
+                <value>
+                    <fullName>CASS Export</fullName>
+                    <default>false</default>
+                    <label>CASS Export</label>
+                </value>
+                <value>
+                    <fullName>CASS Import</fullName>
+                    <default>false</default>
+                    <label>CASS Import</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Period_Code__c</fullName>
@@ -217,6 +301,7 @@
         <columns>Remittance_Day__c</columns>
         <columns>Settlement_Day__c</columns>
         <columns>Operation_Currency__c</columns>
+        <columns>frequency_code__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -277,4 +362,5 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

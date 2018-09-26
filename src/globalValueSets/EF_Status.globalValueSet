@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Active</fullName>
+        <default>false</default>
+        <label>Active</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive</fullName>
+        <default>false</default>
+        <label>Inactive</label>
+    </customValue>
+    <description>A generic Status field to be used to indicate Active/Inactive for E&amp;F fields.</description>
+    <masterLabel>E&amp;F Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -56,16 +53,116 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_Create_Process_Case__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If an alert match this config, should it create a process case? (Creation is done by the ANG_RHCAlertTriggerHandler)</description>
+        <externalId>false</externalId>
+        <label>Create Process Case</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Direction__c</fullName>
+        <description>The direction to match with the Risk Alert inserted. Risk Alert must match Percentage and Direction to trigger actions</description>
+        <externalId>false</externalId>
+        <label>Direction</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>UP</fullName>
+                    <default>false</default>
+                    <label>UP</label>
+                </value>
+                <value>
+                    <fullName>DOWN</fullName>
+                    <default>false</default>
+                    <label>DOWN</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_EmailTemplate_Legacy__c</fullName>
+        <description>API name of the Email Template that will be sent to contacts when the risk alert is inserted. Legacy Notification is sent to all portal admins.</description>
+        <externalId>false</externalId>
+        <label>Email Template - Legacy</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_EmailTemplate_NG__c</fullName>
+        <description>API name of the Email Template that will be sent to contacts when the risk alert is inserted. Newgen Notification is sent to contact with access to the RHC Information portal service</description>
+        <externalId>false</externalId>
+        <label>Email Template - Newgen</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Minimum_RHC_Amount__c</fullName>
+        <description>Defines a minimum RHC amount to be used in the RHC Amount calculation.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Minimum RHC Amount</inlineHelpText>
+        <label>Minimum RHC Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Percentage__c</fullName>
+        <description>The percentage to match with the Risk Alert inserted. Risk Alert must match Percentage and Direction to trigger actions</description>
+        <externalId>false</externalId>
+        <label>Percentage</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_PortalNotificationTemplate__c</fullName>
+        <description>Name of the notification template that will be created for the risk alert. If empty, no notification will be created. (Notifications are created for all contacts that have access to the RHC Information portal service)</description>
+        <externalId>false</externalId>
+        <label>Portal Notification Template</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Country_Class_Check__c</fullName>
         <caseSensitive>false</caseSensitive>
         <description>Secure country/class uniqueness (workflow on creation/update)</description>
         <externalId>false</externalId>
         <label>Country Class Check</label>
-        <length>25</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Disabled__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>When this is true, no Push Notifications will be sent from the selected country [NewGen APP]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When this is true, no Push Notifications will be sent from the selected country [NewGen APP]</inlineHelpText>
+        <label>Disabled</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
@@ -108,84 +205,104 @@ X-Handling Agents and Shipping Lines
 J-Joint Vent</description>
         <externalId>false</externalId>
         <label>Location Class</label>
-        <picklist>
-            <picklistValues>
-                <fullName>A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>G</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>K</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>M</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>O</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>S</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>V</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>X</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>J</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>D</label>
+                </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                    <label>E</label>
+                </value>
+                <value>
+                    <fullName>G</fullName>
+                    <default>false</default>
+                    <label>G</label>
+                </value>
+                <value>
+                    <fullName>I</fullName>
+                    <default>false</default>
+                    <label>I</label>
+                </value>
+                <value>
+                    <fullName>K</fullName>
+                    <default>false</default>
+                    <label>K</label>
+                </value>
+                <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                    <label>M</label>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                    <label>N</label>
+                </value>
+                <value>
+                    <fullName>O</fullName>
+                    <default>false</default>
+                    <label>O</label>
+                </value>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                    <label>P</label>
+                </value>
+                <value>
+                    <fullName>Q</fullName>
+                    <default>false</default>
+                    <label>Q</label>
+                </value>
+                <value>
+                    <fullName>R</fullName>
+                    <default>false</default>
+                    <label>R</label>
+                </value>
+                <value>
+                    <fullName>S</fullName>
+                    <default>false</default>
+                    <label>S</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>T</label>
+                </value>
+                <value>
+                    <fullName>V</fullName>
+                    <default>false</default>
+                    <label>V</label>
+                </value>
+                <value>
+                    <fullName>X</fullName>
+                    <default>false</default>
+                    <label>X</label>
+                </value>
+                <value>
+                    <fullName>J</fullName>
+                    <default>false</default>
+                    <label>J</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Minimum_DGR_BR__c</fullName>
@@ -236,6 +353,39 @@ J-Joint Vent</description>
         <unique>false</unique>
     </fields>
     <label>AMS Country Specific Attribute</label>
+    <listViews>
+        <fullName>Minimum_RHC_Amount</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ANG_Minimum_RHC_Amount__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>AMS_Country_Specific_Attribute__c.Minimum_RHC_Amount</value>
+        </filters>
+        <label>Minimum RHC Amount</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>RHC_Risk_Alerts</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ANG_Percentage__c</columns>
+        <columns>ANG_Direction__c</columns>
+        <columns>ANG_Create_Process_Case__c</columns>
+        <columns>ANG_EmailTemplate_Legacy__c</columns>
+        <columns>ANG_EmailTemplate_NG__c</columns>
+        <columns>ANG_PortalNotificationTemplate__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>AMS_Country_Specific_Attribute__c.RHC_Risk_Alert</value>
+        </filters>
+        <label>RHC Risk Alerts</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>ACSA-{00000000}</displayFormat>
         <label>AMS Country Specific Attribute Name</label>
@@ -246,6 +396,17 @@ J-Joint Vent</description>
         <fullName>DEF_LFC</fullName>
         <active>true</active>
         <label>DEF LFC</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
@@ -327,6 +488,17 @@ J-Joint Vent</description>
         <active>true</active>
         <label>DGR Minimum Requirements</label>
         <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -406,6 +578,17 @@ J-Joint Vent</description>
         <fullName>IRRS_LFC</fullName>
         <active>true</active>
         <label>IRRS LFC</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
@@ -487,6 +670,17 @@ J-Joint Vent</description>
         <active>true</active>
         <label>IRR CPE</label>
         <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -566,6 +760,291 @@ J-Joint Vent</description>
         <fullName>Irregularity_Threshold</fullName>
         <active>true</active>
         <label>Irregularity Threshold</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Minimum_RHC_Amount</fullName>
+        <active>true</active>
+        <description>Record type to associate the Minimum RHC amount page layout.</description>
+        <label>Minimum RHC Amount</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Push_Notification</fullName>
+        <active>true</active>
+        <label>Push Notification</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>RHC_Risk_Alert</fullName>
+        <active>true</active>
+        <label>RHC Risk Alert</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
@@ -655,4 +1134,15 @@ OR(
 )</errorConditionFormula>
         <errorMessage>Please inform the location class and threshold</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Risk_Alert_Required_Fields</fullName>
+        <active>true</active>
+        <errorConditionFormula>RecordType.DeveloperName = &apos;RHC_Risk_Alert&apos; &amp;&amp;
+OR(
+  ISBLANK(TEXT(ANG_Direction__c)),
+  ISBLANK(ANG_Percentage__c)
+)</errorConditionFormula>
+        <errorMessage>For Risk Alert attributes you must fill both Direction AND Percentage</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

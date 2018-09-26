@@ -13,6 +13,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public Boolean DocUploaded {get; set;}
   public decimal expediteFees {get; private set;}
 
+  public Boolean IsExpediteDelivery;
   private String accountType;
   private Boolean newContactRequired;
   private String part;
@@ -48,6 +49,14 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public String repricingExchangeReissue_Description {get; set;}
   public String travelAgencyFees_Description {get; set;}
 
+  //RN-INC419676
+  public String assisttravelersspecialneeds_Description {get; set;}
+  public String notionsessentlentarifetbillet_Description {get; set;}
+  public String advskillsjourneypriceticket_Description {get; set;}
+  public String servingthetravelcustomer_Description {get; set;}
+  public String socialmediafortravelindustry_Description {get; set;}
+  public String accfinmgmtforagencies_Description {get; set;}
+
   private ID_Card__c[] idCardTemp;
   private Contact associatedContact {get; set;}
   private ID_Card__c associatedIDCard {get; set;}
@@ -71,6 +80,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     IsCroppingToolDisplayed = false;
     IsViewerDisplayed = false;
     lastNameHasChanged = false;
+    IsExpediteDelivery = false;
     isContractor = false;
     isEmployee = false;
     detailledFees = new Map<String, decimal>();
@@ -85,11 +95,19 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     introduccionAlBSPlink_Description = Label.IDCard_IntroduccionAlBSPlink_Description;
     introduccionAlSistemaBSPyLenguajeBSP_Description = Label.IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description;
     losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description = Label.IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description;
-    socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description;
+    socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description; 
 
     fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing_Description;
     repricingExchangeReissue_Description = Label.IDCard_RepricingExchangeReissue_Description;
     travelAgencyFees_Description = Label.IDCard_Travel_Agency_Fees_Description;
+
+    //RN-INC419676
+    assisttravelersspecialneeds_Description = Label.Assist_Travelers_Special_Needs_Description; 
+    notionsessentlentarifetbillet_Description = Label.Notions_Essentl_Tarif_Billet_Description;
+    advskillsjourneypriceticket_Description = Label.Adv_Skills_Journey_Price_Ticket_Description;
+    servingthetravelcustomer_Description = Label.Serving_The_Travel_Customer_Description;
+    socialmediafortravelindustry_Description = Label.Social_Media_Travel_Industry_Description;
+    accfinmgmtforagencies_Description = Label.Acc_Fin_Mgmt_Agencies_Description;
 
     initialize();
 
@@ -251,7 +269,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
         throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
       } else
       {
-        if (listPriceTables[0].Expedite__c != null )
+        if (listPriceTables[0].Expedite__c != null )         
           return true;
         return false;
       }
@@ -266,9 +284,10 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
       where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
       if (listPriceTables == null || listPriceTables.size() == 0) {
         throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
-      } else
+      }else  if(listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c == true){
+          IsExpediteDelivery = true;
+      }
         return listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c;
-
     }
   }
 
@@ -706,6 +725,9 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
         if (isValid) {
           IDCardApplicationNR.IDCard_Prefered_Language__c = Language;
+          if(IsExpediteDelivery){
+            IDCardApplicationNR.IDCard_Expedite_Delivery__c = true;
+          }
           update IDCardApplicationNR;
 
           //upgrade for payment: according to record type will redirect to payment or not.
@@ -1339,9 +1361,9 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     docDesc1 = 'desc';
     docDesc2 = 'desc';
     docDesc3 = 'desc';
-    this.document1 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
-    this.document2 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
-    this.document3 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
+    this.document1 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
+    this.document2 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
+    this.document3 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
     this.upload();
     this.back();
     this.GetAssociatedContact('aaa');

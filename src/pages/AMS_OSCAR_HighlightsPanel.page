@@ -118,7 +118,7 @@
 
     <apex:pageBlock rendered="{!IF(oscarID != null, true, false)}">
         
-        <apex:pageMessages/>
+        <apex:pageMessages />
 
         <apex:pageBlockButtons location="bottom">
             <apex:commandButton value="Save" action="{!saveStatus}" id="saveButton" style="display: none;"/><!--RefreshPrimaryTab('{!theOscar.Id}')-->
@@ -158,6 +158,9 @@
                     <apex:outputText value="{0,date,yyyy/MM/dd HH:mm:ss}" label="OSCAR received">
                         <apex:param value="{!theOSCAR.CreatedDate}"/>
                     </apex:outputText>
+
+                    <apex:outputText value="{!theOSCAR.Account__r.Key_Customer__c}" escape="false"/>
+
 <!--
                     <apex:outputText label="Received from"> <a href="#" onClick="openSubtab('{!submitter.Id}','{!submitter.Name}', 'true')">{!submitter.Name}</a></apex:outputText>
     -->                

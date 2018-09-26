@@ -3,6 +3,20 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases - Eastern Caribbean</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IATAEasternCaribbean</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAmericasAgencyManagement</publicGroup>
+            <publicGroup>IDFSAmericasCustomerService</publicGroup>
+            <publicGroup>IDFSAmericasRS</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>MADHubCSManagerA</role>
+            <role>MADHubCSstaffA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

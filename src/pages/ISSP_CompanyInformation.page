@@ -42,26 +42,36 @@
                         <apex:form id="companyProfile">
                         <div class="panel-body form-horizontal" style="padding-top: 0px;" >
                             <div class="row">
+                            <apex:outPutPanel layout="block" rendered="{!isLegalNamePopulated}">
                                 <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.Legal_name__c.Label}</label>
                                 <div class="col-lg-7">
-                                    {!con.Account.Name}
+                                    {!con.Account.Top_Parent__r.Legal_name__c}
+                                </div>
+                            </apex:outPutPanel>
+                            </div>
+                            <div class="row">
+                                <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Name_on_AOC__c.Label}</label>
+                                <div class="col-lg-7">
+                                    {!con.Account.Top_Parent__r.Name_on_AOC__c}
                                 </div>
                             </div>
-                            <div class="row form-group">
-                                 <div class="col-lg-5">
-                                <label class="lbl" style="padding-left:10px">{!$ObjectType.Account.fields.TradeName__c.Label}</label>
-                                </div>
-                                <div class="col-lg-7">
-                                <apex:inputField styleclass="form-control editMode editModeTradeName latinonly" value="{!con.Account.TradeName__c}"/>
-                                <div class="hiddenerror" style="display: none;">
-                    				<p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_EnterValidString} </p>
-                  				</div>
-                               	<span class="saveMode saveModeTradeName" style="line-height: 24px;">
-                                	<apex:outputField value="{!con.Account.TradeName__c}"/>
-                                    <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent, NOT(bBlockTradeNameChange))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
+                            <apex:outputText rendered="{!isIATAAgencyAcct}">
+                                <div class="row form-group">
+                                     <div class="col-lg-5">
+                                    <label class="lbl" style="padding-left:10px">{!$ObjectType.Account.fields.TradeName__c.Label}</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                    <apex:inputField styleclass="form-control editMode editModeTradeName latinonly" value="{!con.Account.TradeName__c}"/>
+                                    <div class="hiddenerror" style="display: none;">
+                        				<p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_EnterValidString} </p>
+                      				</div>
+                                   	<span class="saveMode saveModeTradeName" style="line-height: 24px;">
+                                 	<apex:outputField value="{!con.Account.TradeName__c}"/>
+                                    <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!canChangeTradeName}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
                                     </span>
                             	</div>
                             </div>
+                            </apex:outputText>
                             <!-- end row -->
                            
                                 <apex:outputText rendered="{!isIATAAirlineAcct}">
@@ -105,7 +115,7 @@
                             </div>
                             <!-- end row -->
                             <div class="row">
-                                <apex:outputPanel rendered="{!con.Account.Category__c!= null}" layout="block">
+                                <apex:outputPanel rendered="{!AND(!isCNSAccount, con.Account.Category__c!= null)}" layout="block">
                                     <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Category__c.Label}</label>
                                     <div class="col-lg-7">
                                         {!con.Account.Category__c}
@@ -128,6 +138,20 @@
                                   </div>
                                  </apex:outputText>
                             
+                                                      
+                            <div class="row form-group">
+                            <apex:outputPanel rendered="{!IF(showIEPStatus,true,false)}" >
+                                <div class="col-lg-5" style="padding-left:28px">                                
+                                    <label class="lbl">{!$ObjectType.Account.fields.ANG_IEP_Status_FF__c.Label}</label>
+                                </div>
+                                <div class="col-lg-7">                                                                        
+                                    <span class="saveMode">                                        
+                                        <apex:outputText value="{!con.Account.ANG_IEP_Status_FF__c}"/>
+                                    </span>                                    
+                                </div>
+                                </apex:outputPanel>
+                            </div>
+                            
                             <apex:outputText rendered="{!isIATAAirlineAcct}">
                                 <div class="row">
                                 <apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.Membership_status__c.Label}" />
@@ -137,7 +161,7 @@
                              </div>
                         </apex:outputText>
                         
-                        <div class="form-group row">
+                        <apex:outputPanel layout="block" styleclass="form-group row" rendered="{!NOT(PermissionForStandardAccount)}">
                             <div class="lbl col-lg-5">
                                 <label class="lbl" for="exampleInputEmail1"><apex:outputText escape="false" value="{!IF(isIATAAgencyAcct,'*', '&nbsp;')}" styleClass="required"/>{!$Label.ISSP_Registration_BusinessPhone}</label>
                            	</div>
@@ -153,7 +177,7 @@
                                         <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModePhone').hide();$('.phone .selected-flag').show();$('.editModePhone').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
-                         </div>
+                         </apex:outputPanel>
                          
                             <div class="row form-group">
                                 <div class="col-md-5" style="padding-left:28px">
@@ -164,7 +188,7 @@
                                     <apex:inputField id="businessfaxinput" styleclass="form-control editMode editModeFax col-lg-8" value="{!con.Account.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"/>
                                     <span class="saveMode saveModeFax">
                                         <apex:outputField value="{!con.Account.Fax}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeFax').hide();$('.fax .selected-flag').show();$('.editModeFax').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeFax').hide();$('.fax .selected-flag').show();$('.editModeFax').show();$('.editModeBtn').show()" rendered="{!OR(AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent),PermissionForStandardAccount)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                             </div>
@@ -178,7 +202,7 @@
                                     <apex:inputField id="businessemailinput" styleclass="form-control editMode editModeEmail col-lg-8" value="{!con.Account.Email__c}"/>
                                     <span class="saveMode saveModeEmail">
                                         <apex:outputField value="{!con.Account.Email__c}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeEmail').hide();$('.editModeEmail').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeEmail').hide();$('.editModeEmail').show();$('.editModeBtn').show()" rendered="{!OR(AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent),PermissionForStandardAccount)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                             </div>
@@ -192,7 +216,7 @@
                                     <apex:inputField id="businesswebsiteinput" styleclass="form-control editMode editModeWebSite col-lg-8" value="{!con.Account.WebSite}"/>
                                     <span class="saveMode saveModeWebSite">
                                         <apex:outputField value="{!con.Account.WebSite}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeWebSite').hide();$('.editModeWebSite').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeWebSite').hide();$('.editModeWebSite').show();$('.editModeBtn').show()" rendered="{!OR(AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent),PermissionForStandardAccount)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                             </div>
@@ -206,15 +230,28 @@
                 </div>
                             <!-- end row -->
                             <div class="row">
-                                <label class="lbl col-lg-5" style="padding-left:28px">{!$label.ISSP_CompanyAddressInformation}</label>
-                                <div class="col-lg-7">
-                                    {!con.Account.BillingStreet}<br/>
-                                    {!con.Account.BillingCity} 
-                                    {!con.Account.BillingPostalCode}<br/>
-                                    {!con.Account.BillingState}<br/>
-                                    
-                                     {!con.Account.BillingCountry}<br/>
-                                    
+                                <div class="col-md-5" style="padding-left:28px">
+                                    <label class="lbl">{!$label.ISSP_CompanyAddressInformation}</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <apex:inputHidden id="BillingStreet" value="{!con.Account.BillingStreet}" />
+                                    <apex:inputField styleclass="BillingAddressinput editModeBillingAddress form-control editMode col-lg-8" value="{!con.Account.BillingStreet}" html-placeholder="{!$ObjectType.Account.fields.BillingStreet.label}" rendered="{!PermissionForStandardAccount}"/>
+                                    <apex:inputHidden id="BillingCity" value="{!con.Account.BillingCity}" />
+                                    <apex:inputField styleclass="BillingAddressinput editModeBillingAddress form-control editMode col-lg-8" value="{!con.Account.BillingCity}" html-placeholder="{!$ObjectType.Account.fields.BillingCity.label}" rendered="{!PermissionForStandardAccount}"/>
+                                    <apex:inputHidden id="BillingPostalCode" value="{!con.Account.BillingPostalCode}" />
+                                    <apex:inputField styleclass="BillingAddressinput editModeBillingAddress form-control editMode col-lg-8" value="{!con.Account.BillingPostalCode}" html-placeholder="{!$ObjectType.Account.fields.BillingPostalCode.label}" rendered="{!PermissionForStandardAccount}"/>
+                                    <apex:inputHidden id="BillingState" value="{!con.Account.BillingState}" />
+                                    <apex:inputField styleclass="BillingAddressinput editModeBillingAddress form-control editMode col-lg-8" value="{!con.Account.BillingState}" html-placeholder="{!$ObjectType.Account.fields.BillingState.label}" rendered="{!PermissionForStandardAccount}"/>
+                                    <apex:inputHidden id="BillingCountry" value="{!con.Account.BillingCountry}" />
+                                    <apex:inputField styleclass="BillingAddressinput editModeBillingAddress form-control editMode col-lg-8" value="{!con.Account.BillingCountry}" html-placeholder="{!$ObjectType.Account.fields.BillingCountry.label}" rendered="{!PermissionForStandardAccount}"/>
+                                    <span class="saveMode saveModeBillingAddress">
+                                        <apex:outputField value="{!con.Account.BillingStreet}"/>&nbsp;
+                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeBillingAddress').hide();$('.editModeBillingAddress').show();$('.editModeBtn').show()" rendered="{!PermissionForStandardAccount}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span><br/>
+                                        <apex:outputField value="{!con.Account.BillingCity}"/><br/>
+                                        <apex:outputField value="{!con.Account.BillingPostalCode}"/><br/>
+                                        <apex:outputField value="{!con.Account.BillingState}"/><br/>
+                                        <apex:outputField value="{!con.Account.BillingCountry}"/><br/>
+                                    </span>
                                 </div>
                             </div>
                             <!-- end row --> 
@@ -248,7 +285,7 @@
                              <div class="row">
            						<div class="col-md-12 col-md-offset-9"  style="clear: both; ">
                						<apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtn" onClick="if(!validateCompanyProfile())return false;" action="{!saveAccount}" value="{!$Label.site.save}" id="loginButton" reRender="companyProfile"/>
-                					<button type="button" class="btn_iata btn-danger btn_cancel editModeBtn" onClick="clearErrorMessages();$('.saveMode').show();$('.editMode').hide();$('.editModeBtn').hide();$('.alert').hide();$('.selected-flag').hide();" >{!$Label.site.cancel}</button>
+                                    <apex:commandButton styleclass="btn_iata btn-danger btn_cancel editModeBtn" onClick="clearErrorMessages();$('.saveMode').show();$('.editMode').hide();$('.editModeBtn').hide();$('.alert').hide();$('.selected-flag').hide();" action="{!cancelAccount}" value="{!$Label.site.cancel}" id="cancelButton" reRender="companyProfile"/>
             					</div>
          					</div>
                              
@@ -346,13 +383,13 @@
                              
                           <hr />
                           </apex:outputText>
-                           <apex:outputText rendered="{!if(OpenDebts!='',true,false)}">
+                           <apex:outputText rendered="{!AND(OpenDebts!='',!PermissionForStandardAccount)}">
                            <b><apex:outputText escape="false" value="{!$Label.ISSP_outstanding_invoices}"/> </b>
                           </apex:outputText>
                           
                           <hr />
-                             
-                          <apex:outputText rendered="{!if(FinSubmission!='',true,false)}">
+
+                          <apex:outputText rendered="{!AND(FinSubmission!='',!PermissionForStandardAccount, NOT(flagCashOptedOutFinReview))}">   
                           <div class="row">
                                 <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Fin_statements_submission_deadline__c.Label}" />
                                 <div class="col-md-7">
@@ -360,7 +397,7 @@
                                 </div>
                              </div>
                           </apex:outputText> 
-                     <apex:outputPanel rendered="{!ifapName != ''}">
+                     <apex:outputPanel rendered="{!AND(ifapName!='', !PermissionForStandardAccount)}">
                         <div class="row">
                             <label class="lbl col-lg-4 ">{!$Label.ISSP_IFAP_Name}</label>
                             <div class="col-lg-8">{!ifapName}</div>
@@ -387,7 +424,7 @@
 
                         <!-- Account email domain validation  -->
                         <apex:outputPanel layout="block" styleclass="panel-body form-horizontal" style="padding-top: 0px;" rendered="{! AND (bIsAdmin, AccountDomainValidRT) }">
-                          <apex:form>
+                          <apex:form >
                             <div style="padding-top:15px;" >
                                 <div class="row">
                                     <div class="lbl col-lg-12" style="padding-bottom:5px;">{! $Label.ISSP_CompanyInformation_EMADOMVAL_Title }</div>
@@ -522,7 +559,7 @@
                                 </div>
                                 <span class="saveModeBR saveModeTradeNameBR" style="line-height: 24px;">
                                 	<apex:outputField value="{!branchOffice.TradeName__c}"/>
-                                    <apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeTradeNameBR').hide();$('.editModeTradeNameBR').show();$('.editModeBtnBR').show();" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgentBR, NOT(bBlockTradeNameChangeBR))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
+                                    <apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeTradeNameBR').hide();$('.editModeTradeNameBR').show();$('.editModeBtnBR').show();" rendered="{!canChangeTradeNameBR}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
                                     </span>
                             	</div>
                             </div>
@@ -716,7 +753,8 @@
                </div>
             <div class="ol-md-3 col-md-offset-10 "  style="clear: both; ">
                		<apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtnBR" onClick="if(!validateCompanyProfileBR())return false;" action="{!saveAccountBR}" value="{!$Label.site.save}" id="loginButton" reRender="branchOffice"/>
-                	<button type="button" class="btn_iata btn-danger btn_cancel editModeBtnBR" onClick="clearErrorMessagesBR();$('.saveModeBR').show();$('.editModeBR').hide();$('.editModeBtnBR').hide();$('.alert').hide();$('.phoneBR .selected-flag').hide();$('.faxBR .selected-flag').hide();" >{!$Label.site.cancel}</button>
+                	
+                    <apex:commandButton styleclass="btn_iata btn-danger btn_cancel editModeBtnBR" onClick="clearErrorMessagesBR();$('.saveModeBR').show();$('.editModeBR').hide();$('.editModeBtnBR').hide();$('.alert').hide();$('.phoneBR .selected-flag').hide();$('.faxBR .selected-flag').hide();" action="{!getBranchOffice}" value="{!$Label.site.cancel}" id="cancelButtonBR" reRender="branchOffice"/>
             	</div>
                 </apex:outputPanel>
             </div>

@@ -242,6 +242,13 @@ public with sharing class AMS_AccreditationContactHelper
         con.RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact');
         con.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
         con.list_Dangerous_Goods_Awareness__c = ac.list_Dangerous_Goods_Awareness__c;
+        con.Authorized_Signatory__c = ac.Authorised_signatory__c;
+        con.Designated_Portal_Admin__c = ac.Portal_administrator__c;
+        con.Invoicing_Contact__c = ac.Invoicing_Contact__c;
+        if (ac.AddressStreet__c != null) con.OtherStreet =  ac.AddressStreet__c;
+        if (ac.AddressCity__c != null) con.OtherCity =  ac.AddressCity__c;
+        if (ac.AddressPostcode__c != null) con.OtherPostalCode =  ac.AddressPostcode__c;
+        if (ac.AddressCountry__c != null) con.OtherCountry =  ac.AddressCountry__c;
         return con;
     }
 
@@ -331,7 +338,7 @@ public with sharing class AMS_AccreditationContactHelper
             accreditationContact.Job_Title__c = role.Position__c;
             accreditationContact.Agency_role__c = role.IsManager__c;
 
-            accreditationContact.Company__c = role.Owner_Account__c;
+            //accreditationContact.Company__c = role.Owner_Account__c;
             if(role.Hours__c != null)
                 accreditationContact.Time_devoted_to_Agency_business__c = Double.valueOf(role.Hours__c);
             accreditationContact.RecordTypeId = AMS_Utils.AccreditationContactPersonRT;

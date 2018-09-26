@@ -113,7 +113,7 @@
                                                         <label><span>Zip file name preview</span></label>                                                     
                                                     </td>
                                                     <td>
-                                                        <apex:outputText value="{!if(sNamePrefixOption == 'Date', sDate + '_', if(sNamePrefixOption == 'Custom', sNamePrefix + '_', '')) + 'PASW' + if(sNameSuffixOption == 'Date', '_' + sDate, if(sNameSuffixOption == 'Custom', '_' + sNameSuffix, '')) + 'AM.ZIP'}" />
+                                                        <apex:outputText value="{!if(sNamePrefixOption == 'Date', sDate , if(sNamePrefixOption == 'Custom', sNamePrefix , '')) + 'PASW' + if(sNameSuffixOption == 'Date', sDate, if(sNameSuffixOption == 'Custom', sNameSuffix, '')) + 'AM.ZIP'}" />
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -121,7 +121,7 @@
                                                         <label><span>Data file name preview</span></label>                                                      
                                                     </td>
                                                     <td>
-                                                        <apex:outputText value="{!if(sApplyOption != 'Zip file and Data file', 'PASW.AM', if(sNamePrefixOption == 'Date', sDate + '_', if(sNamePrefixOption == 'Custom', sNamePrefix + '_', '')) + 'PASW' + if(sNameSuffixOption == 'Date', '_' + sDate, if(sNameSuffixOption == 'Custom', '_' + sNameSuffix, '')) + '.AM')}" />
+                                                        <apex:outputText value="{!if(sApplyOption != 'Zip file and Data file', 'PASW.AM', if(sNamePrefixOption == 'Date', sDate , if(sNamePrefixOption == 'Custom', sNamePrefix , '')) + 'PASW' + if(sNameSuffixOption == 'Date', sDate, if(sNameSuffixOption == 'Custom', sNameSuffix, '')) + '.AM')}" />
                                                     </td>
                                                 </tr>
                                             </table>

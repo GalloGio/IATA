@@ -2,6 +2,13 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <name>MACS Sales - YMQ</name>
+    <queueMembers>
+        <roles>
+            <role>DirectSalesAlternateChannelsA</role>
+            <role>SalesAssistantDirectorAmericasA</role>
+            <role>SalesManagersAmericasA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Lead</sobjectType>
     </queueSobject>

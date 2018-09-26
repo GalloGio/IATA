@@ -15,6 +15,19 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Contact_Sharing_Rule_with_IFG_Support_Team</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Contact Sharing Rule with IFG Support Team</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IFG_Team</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Record_Sharing_Criteria_AUX__c</field>
+            <operation>contains</operation>
+            <value>IFG Active Users</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>IDCardReadOnly</fullName>
         <accessLevel>Read</accessLevel>
         <label>IDCardReadOnly</label>
@@ -62,6 +75,32 @@
             <field>RecordTypeId</field>
             <operation>equals</operation>
             <value>IDFS ACCA Contact,GDP Contact,MACS Sales,Senior,IATA Service Provider Contact,IATA SIS Contact,IATA Standard Contact,IATA TTBS Contact,New contact for iss portal</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SIS_visibility</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>SIS visibility</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SISCustomerSupport</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Email</field>
+            <operation>contains</operation>
+            <value>@</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Standard_Contacts</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Standard Contacts</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard</value>
         </criteriaItems>
     </sharingCriteriaRules>
 </SharingRules>

@@ -1,2 +1,26 @@
-.THIS {
+.THIS .footerIcon{
+	font-size: 1.58em;
+
+	border: 1px solid #bbb;
+	border-radius: 50%;
+
+	position: relative;
+	left: 50%;
+	height: 64px;
+	width: 64px;
+	margin-left: -32px;
+}
+
+.THIS .footerIcon .icon{
+	display: block;
+	text-align: center;
+	line-height: 62px;
+}
+
+.THIS .footerIconSubtitle{
+	font-family: "Arial", sans-serif;
+	margin-top: 10px;
+	font-size: 0.65rem;
+	letter-spacing: 0.08rem;
+	text-align: center;
 }

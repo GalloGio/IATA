@@ -5,6 +5,7 @@ public class ISSP_AddComment {
   public Case tmpCase {get; set;}
   public Case CaseNumber {get; set;}
   public string inputComment {get; set;}
+  private E2CPFieldAccess e2cpFieldaccess;
 
   //CNS
   public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -13,7 +14,8 @@ public class ISSP_AddComment {
 
   public ISSP_AddComment() {
     CaseId  = ApexPages.currentPage().getParameters().get('Caseid');
-    List<Case> Case_lst = new List<Case>([select RecordType.Name, Id , description , subject, CaseNumber, New_interaction__c From Case where Id = : CaseId]);
+    List<Case> Case_lst = new List<Case>([select RecordType.Name, Id , description , subject, CaseNumber, New_interaction__c, E2CP__AdditionalCC__c From Case where Id = : CaseId]);
+    this.e2cpFieldAccess = new E2CPFieldAccess(caseId);
 
     if (Case_lst != null && Case_lst.size() > 0) {
       tmpCase = Case_Lst[0];
@@ -55,6 +57,13 @@ public class ISSP_AddComment {
     p.setRedirect(true);
     return p;
     return null;
+  }
+  
+  public String getAdditionalCC() {
+    if (this.e2cpFieldAccess==null) {
+      return '';
+    }
+    return this.e2cpFieldAccess.getAdditionalCC();
   }
 
 }

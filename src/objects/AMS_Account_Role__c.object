@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,12 +46,153 @@
     <description>Object that represents a connection between an Account another entity. This other entity can be a Person, a Contact or another Account. This will replace the Agency Employee and Agency Ownership + Owner structure.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>AMS_Oscar_Savepoint_fields</fullName>
+        <description>Determine which fields should be saved on serialized object</description>
+        <displayedFields>
+            <field>Id</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Account__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Contact__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Duty__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Earning__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Employee_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Employee_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Hours__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Inconsistent_Contact_Info__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>isManager__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>isTicketingAgent__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_synchronization__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Legacy_External_ID__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Legacy_System__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Owner_Account__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Owner_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Owner_Sequence__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Percentage__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Position__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Registration_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>SIMPLEX__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Stage__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Start_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Termination_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Title__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Unique_Identifier__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Valid__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>AMS Oscar Savepoint fields</label>
+    </fieldSets>
     <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -67,7 +204,7 @@
         <relationshipLabel>Owners</relationshipLabel>
         <relationshipName>AMS_Account_Roles1</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -124,61 +261,98 @@
         <relationshipLabel>AMS Account Roles</relationshipLabel>
         <relationshipName>AMS_Account_Roles</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot; &quot;</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(Account__r.RecordTypeId =&quot;012w0000000QBMW&quot;,ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),OR(ISPICKVAL(Account__r.Status__c,&quot;Changes processed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Listed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Review&quot;),ISPICKVAL(Account__r.Status__c,&quot;Under review&quot;),ISPICKVAL(Account__r.Status__c,&quot;approved&quot;)),OR(CONTAINS(Account__r.Country_ISO_Code__c,&quot;IS&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;NO&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;FI&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;SE&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;DK&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;GL&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;BM&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;CA&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;PM&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;HK&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;MO&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;SG&quot;))),
+
+IF(Percentage__c = 1 ,100,20),2)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Duty__c</fullName>
         <externalId>false</externalId>
         <label>Duty</label>
-        <picklist>
-            <picklistValues>
-                <fullName>A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>X</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Y</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>I</fullName>
+                    <default>false</default>
+                    <label>I</label>
+                </value>
+                <value>
+                    <fullName>X</fullName>
+                    <default>false</default>
+                    <label>X</label>
+                </value>
+                <value>
+                    <fullName>Y</fullName>
+                    <default>false</default>
+                    <label>Y</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Earning__c</fullName>
         <externalId>false</externalId>
         <label>Earning</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Employee_Name__c</fullName>
@@ -186,7 +360,7 @@
         <label>Employee Name</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -195,25 +369,30 @@
         <fullName>Employee_type__c</fullName>
         <externalId>false</externalId>
         <label>Employee type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>CL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CL</fullName>
+                    <default>false</default>
+                    <label>CL</label>
+                </value>
+                <value>
+                    <fullName>IE</fullName>
+                    <default>false</default>
+                    <label>IE</label>
+                </value>
+                <value>
+                    <fullName>RG</fullName>
+                    <default>false</default>
+                    <label>RG</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
@@ -229,37 +408,45 @@
         <fullName>Hours__c</fullName>
         <externalId>false</externalId>
         <label>Hours</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Inconsistent_Contact_Info__c</fullName>
@@ -294,33 +481,40 @@
         <fullName>Legacy_System__c</fullName>
         <externalId>false</externalId>
         <label>Legacy System</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AIMS2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AIMS3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WEBSTAR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AIMS2</fullName>
+                    <default>false</default>
+                    <label>AIMS2</label>
+                </value>
+                <value>
+                    <fullName>AIMS3</fullName>
+                    <default>false</default>
+                    <label>AIMS3</label>
+                </value>
+                <value>
+                    <fullName>WEBSTAR</fullName>
+                    <default>false</default>
+                    <label>WEBSTAR</label>
+                </value>
+                <value>
+                    <fullName>CAIMS</fullName>
+                    <default>false</default>
+                    <label>CAIMS</label>
+                </value>
+                <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Owner_Account__c</fullName>
@@ -333,7 +527,7 @@
         <relationshipLabel>AMS Account Roles</relationshipLabel>
         <relationshipName>AMS_Account_Roles</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -343,7 +537,7 @@
         <label>Owner Name</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -362,6 +556,24 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Owner_Type__c</fullName>
+        <description>field created for AMP reporting</description>
+        <externalId>false</externalId>
+        <formula>IF
+(
+TEXT(Owner_Account__r.Membership_status__c)= &apos;&apos;,
+TEXT(Owner_Account__r.Sector__c), 
+TEXT(Owner_Account__r.Membership_status__c)
+)</formula>
+        <inlineHelpText>field created for AMP reporting</inlineHelpText>
+        <label>Owner Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Percentage__c</fullName>
         <description>Percentage of the Account that this Entity owns</description>
         <externalId>false</externalId>
@@ -370,7 +582,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
     </fields>
@@ -391,84 +603,102 @@
         <fullName>Position__c</fullName>
         <externalId>false</externalId>
         <label>Position</label>
-        <picklist>
-            <picklistValues>
-                <fullName>0</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>B</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>F</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>G</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>H</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>L</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>M</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>O</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>S</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>B</fullName>
+                    <default>false</default>
+                    <label>B</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>D</label>
+                </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                    <label>E</label>
+                </value>
+                <value>
+                    <fullName>F</fullName>
+                    <default>false</default>
+                    <label>F</label>
+                </value>
+                <value>
+                    <fullName>G</fullName>
+                    <default>false</default>
+                    <label>G</label>
+                </value>
+                <value>
+                    <fullName>H</fullName>
+                    <default>false</default>
+                    <label>H</label>
+                </value>
+                <value>
+                    <fullName>I</fullName>
+                    <default>false</default>
+                    <label>I</label>
+                </value>
+                <value>
+                    <fullName>L</fullName>
+                    <default>false</default>
+                    <label>L</label>
+                </value>
+                <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                    <label>M</label>
+                </value>
+                <value>
+                    <fullName>O</fullName>
+                    <default>false</default>
+                    <label>O</label>
+                </value>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                    <label>P</label>
+                </value>
+                <value>
+                    <fullName>R</fullName>
+                    <default>false</default>
+                    <label>R</label>
+                </value>
+                <value>
+                    <fullName>S</fullName>
+                    <default>false</default>
+                    <label>S</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Registration_Date__c</fullName>
         <externalId>false</externalId>
         <label>Registration Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -486,68 +716,117 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Sort_Order__c</fullName>
+        <description>Field to determine the sort order on the related list of owners</description>
+        <externalId>false</externalId>
+        <formula>IF( Active__c , 1000000 + 100 * Percentage__c , 
+VALUE(
+RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
+&amp;RIGHT(LEFT(TEXT( Termination_Date__c ), 7),2)
+&amp;RIGHT(LEFT(TEXT( Termination_Date__c ), 10),2))
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sort Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Stage__c</fullName>
         <externalId>false</externalId>
         <label>Stage</label>
-        <picklist>
-            <picklistValues>
-                <fullName>0</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>7</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>8</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Start_date__c</fullName>
         <externalId>false</externalId>
         <label>Start date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subsidiary_Type__c</fullName>
+        <description>field created for AMP reporting</description>
+        <externalId>false</externalId>
+        <formula>IF
+(
+TEXT(Account__r.Membership_status__c)= &apos;&apos;,
+TEXT(Account__r.Sector__c), 
+TEXT(Account__r.Membership_status__c)
+)</formula>
+        <inlineHelpText>field created for AMP reporting</inlineHelpText>
+        <label>Subsidiary Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Termination_Date__c</fullName>
         <externalId>false</externalId>
         <label>Termination Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -557,6 +836,18 @@
         <externalId>false</externalId>
         <label>Title</label>
         <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unified_Owner_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(and(or(isblank(Owner_Name__c),(Owner_Name__c=&apos;-&apos;),(Owner_Name__c=&apos;- -&apos;), (Owner_Name__c=&apos;_&apos;)),RecordType.DeveloperName=&apos;Ownership&apos;), Owner_Account__r.Name, Owner_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unified Owner Name - GDP</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -579,7 +870,7 @@
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>
         <label>Valid</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -619,28 +910,55 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
         <fullName>TD</fullName>
         <columns>NAME</columns>
         <columns>Termination_Date__c</columns>
         <columns>Active__c</columns>
         <columns>RECORDTYPE</columns>
+        <columns>Owner_Name__c</columns>
+        <columns>Owner_Sequence__c</columns>
+        <columns>Percentage__c</columns>
+        <columns>Legacy_System__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Account__c</field>
             <operation>equals</operation>
-            <value>SENZER INTERNATIONAL TRAVEL</value>
+            <value>FIRST REISEBUERO GUETTLER GMBH &amp; CO. KG</value>
         </filters>
         <label>TD</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_Search_By_Owner_Name</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Unified_Owner_Name__c</columns>
+        <columns>Owner_Name__c</columns>
+        <columns>Employee_Name__c</columns>
+        <columns>Owner_Account__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Unified_Owner_Name__c</field>
+            <operation>equals</operation>
+            <value>Agency Company</value>
+        </filters>
+        <label>ZZ-Search By Unified Owner Name - GDP</label>
         <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>AAR-{00000000}</displayFormat>
         <label>AMS Account Role Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS Account Roles</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Employee</fullName>
         <active>true</active>
@@ -1065,6 +1383,11 @@
     </recordTypes>
     <searchLayouts>
         <listViewButtons>Assign_New_Financial_Assessment_Contact</listViewButtons>
+        <searchResultsAdditionalFields>Owner_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Owner_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Percentage__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
@@ -1087,6 +1410,7 @@ ISBLANK(Owner_Account__c), ISBLANK(Person__c), ISBLANK(Legacy_External_ID__c),IS
 )))</errorConditionFormula>
         <errorMessage>For Ownership Account Role please fill the Account, Person or Owner Account.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Assign_New_Financial_Assessment_Contact</fullName>
         <availability>online</availability>

@@ -403,6 +403,8 @@ private class IEC_ShippingControllerTest {
             
             update products;
 
+			TestDataGenerator.generatePaymentThreshold();
+
             System.runAs(usr)
             {
                 Test.setCurrentPage(Page.IEC_Shipping); 

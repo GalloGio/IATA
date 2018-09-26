@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -69,24 +66,29 @@
         <fullName>Stat_Type__c</fullName>
         <externalId>false</externalId>
         <label>Stat Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>View</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Satisfied</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>UnSatisfied</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>View</fullName>
+                    <default>false</default>
+                    <label>View</label>
+                </value>
+                <value>
+                    <fullName>Satisfied</fullName>
+                    <default>false</default>
+                    <label>Satisfied</label>
+                </value>
+                <value>
+                    <fullName>UnSatisfied</fullName>
+                    <default>false</default>
+                    <label>UnSatisfied</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Sub_Topic_English__c</fullName>
@@ -155,4 +157,5 @@
     <pluralLabel>ArticlesStatistics</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

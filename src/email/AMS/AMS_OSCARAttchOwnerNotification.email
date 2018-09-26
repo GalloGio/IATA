@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[Dear&nbsp;{!Case.OwnerFullName},<div><br></div><div>{!$User.FirstName}&nbsp;<span style="font-size: 12pt;">{!$User.LastName}</span><span style="font-size: 12pt;">&nbsp;has added a new attachment to a case you own (</span><a href="{!Case.Link}" style="font-size: 12pt;">{!Case.CaseNumber}</a><span style="font-size: 12pt;">)</span></div><div><br></div><div>Case Subject: {!Case.Subject}</div><div>Case area:&nbsp;{!Case.CaseArea__c}</div><div>Case reason:&nbsp;{!Case.Reason1__c}</div><div>File Identifier: {!FileIdentifier}</div><div><br></div><div>IATA System</div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

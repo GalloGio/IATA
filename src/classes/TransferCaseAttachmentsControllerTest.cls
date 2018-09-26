@@ -43,6 +43,7 @@ private class TransferCaseAttachmentsControllerTest {
         insert a;
         
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'Name',
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true,
@@ -58,7 +59,7 @@ private class TransferCaseAttachmentsControllerTest {
         Case c1 = new Case(recordtypeID = chinaRTID,
                           Region__c = 'China & North Asia',
                           BSPCountry__c = 'China',
-                          Status = 'Financial Security Requested',
+                          Status = 'Action Needed',
                           FS_Submitted_Date__c = date.today(),
                           FS_Deadline_Date__c = twoweeksAgo,
                           Origin = 'asd',
@@ -71,14 +72,14 @@ private class TransferCaseAttachmentsControllerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c1');
         insert c1;
         
         // create a child case to the first case
         Case c2 = new Case(recordtypeID = IFAPcaseRecordTypeID,
                           ParentId = c1.Id,
-                          Status = 'Financial Security Requested',
+                          Status = 'Action Needed',
                           Financial_Review_Result__c = 'Satisfactory - New Financial Security',
                           Financial_Review_Type__c = 'Annual',
                           BSPCountry__c = 'Viet Nam',
@@ -102,7 +103,7 @@ private class TransferCaseAttachmentsControllerTest {
                           ParentId = c2.Id,
                           Region__c = 'Europe (Americas Countries)',
                           BSPCountry__c = 'Turkey',
-                          Status = 'Financial Security Requested',
+                          Status = 'Action Needed',
                           FS_Submitted_Date__c = date.today(),
                           FS_Deadline_Date__c = twoweeksAgo,
                           Origin = 'asd',
@@ -115,7 +116,7 @@ private class TransferCaseAttachmentsControllerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c3');
         //insert c3;
         
@@ -123,7 +124,7 @@ private class TransferCaseAttachmentsControllerTest {
                           ParentId = c2.Id,
                           Region__c = 'Europe',
                           BSPCountry__c = 'France',
-                          Status = 'Financial Security Requested',
+                          Status = 'Action Needed',
                           FS_Submitted_Date__c = date.today(),
                           FS_Deadline_Date__c = twoweeksAgo,
                           Origin = 'asd',
@@ -136,7 +137,7 @@ private class TransferCaseAttachmentsControllerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c4');
         //insert c4;
         
@@ -144,7 +145,7 @@ private class TransferCaseAttachmentsControllerTest {
         Case c5 = new Case(recordtypeID = europeRTId,
                           Region__c = 'Europe',
                           BSPCountry__c = 'France',
-                          Status = 'Financial Security Requested',
+                          Status = 'Action Needed',
                           FS_Submitted_Date__c = date.today(),
                           FS_Deadline_Date__c = twoweeksAgo,
                           Origin = 'asd',
@@ -157,7 +158,7 @@ private class TransferCaseAttachmentsControllerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c4');
         //insert c5;
         list<Case> lstCasesToInsert = new list<Case>{c3, c4, c5};

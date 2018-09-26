@@ -4,31 +4,39 @@
     <div class="process process-6-steps">
         <ol class="list steps">
             <li class="step step-1{!IF(currentStepNumber == 1, ' active', '')}">
-                <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 1 <= campaign.Maximum_Allowed_Step__c, true, false)}" value="{!URLFOR($Page.IECEBC_Campaign)}?id={!campaign.id}">Setup</apex:outputLink>
-                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && campaign.Maximum_Allowed_Step__c != null && 1 <= campaign.Maximum_Allowed_Step__c, false, true)}">Setup</apex:outputText>
+                <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 1 <= campaign.Maximum_Allowed_Step__c ||  currentStepNumber == 7, true, false)}" value="{!URLFOR($Page.IECEBC_Campaign)}?id={!campaign.id}">Setup</apex:outputLink>
+                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && campaign.Maximum_Allowed_Step__c != null && 1 <= campaign.Maximum_Allowed_Step__c ||  currentStepNumber == 7, false, true)}">Setup</apex:outputText>
             </li>
             <li class="step step-2{!IF(currentStepNumber == 2, ' active', '')}">
-                <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 2 <= campaign.Maximum_Allowed_Step__c, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignRecipients)}?id={!campaign.id}">Recipients</apex:outputLink>
-                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 2 <= campaign.Maximum_Allowed_Step__c, false, true)}">Recipients</apex:outputText>
+                <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 2 <= campaign.Maximum_Allowed_Step__c ||  currentStepNumber == 7, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignRecipients)}?id={!campaign.id}">Recipients</apex:outputLink>
+                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 2 <= campaign.Maximum_Allowed_Step__c ||  currentStepNumber == 7, false, true)}">Recipients</apex:outputText>
             </li>
             <li class="step step-3{!IF(currentStepNumber == 3, ' active', '')}">
-                <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 3 <= campaign.Maximum_Allowed_Step__c, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignTemplate)}?id={!campaign.id}">Template</apex:outputLink>
-                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 3 <= campaign.Maximum_Allowed_Step__c, false, true)}">Template</apex:outputText>
+                <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 3 <= campaign.Maximum_Allowed_Step__c ||  currentStepNumber == 7, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignTemplate)}?id={!campaign.id}">Template</apex:outputLink>
+                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 3 <= campaign.Maximum_Allowed_Step__c ||  currentStepNumber == 7, false, true)}">Template</apex:outputText>
             </li>
             <li class="step step-4{!IF(currentStepNumber == 4, ' active', '')}">
-                <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 4 <= campaign.Maximum_Allowed_Step__c, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignDesign)}?id={!campaign.id}">Design</apex:outputLink>
-                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 4 <= campaign.Maximum_Allowed_Step__c, false, true)}">Design</apex:outputText>
+                <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 4 <= campaign.Maximum_Allowed_Step__c ||  currentStepNumber == 7, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignDesign)}?id={!campaign.id}">Design</apex:outputLink>
+                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 4 <= campaign.Maximum_Allowed_Step__c ||  currentStepNumber == 7, false, true)}">Design</apex:outputText>
             </li>
             <li class="step step-5{!IF(currentStepNumber == 5, ' active', '')}">
-                <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 5 <= campaign.Maximum_Allowed_Step__c, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignSchedule)}?id={!campaign.id}">Summary &amp; schedule</apex:outputLink>
-                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 5 <= campaign.Maximum_Allowed_Step__c, false, true)}">Summary &amp; schedule</apex:outputText>
+                <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 5 <= campaign.Maximum_Allowed_Step__c ||  currentStepNumber == 7, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignSchedule)}?id={!campaign.id}">Summary &amp; schedule</apex:outputLink>
+                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 5 <= campaign.Maximum_Allowed_Step__c ||  currentStepNumber == 7, false, true)}">Summary &amp; schedule</apex:outputText>
             </li>
-            <apex:outputText rendered="{!campaign.Status__c == 'DRAFT'}">
-            <li class="step step-6{!IF(currentStepNumber == 6, ' active', '')}">
-                    <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 6 <= campaign.Maximum_Allowed_Step__c, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignConfirm)}?id={!campaign.id}">Payment</apex:outputLink>
-                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 6 <= campaign.Maximum_Allowed_Step__c, false, true)}">Payment</apex:outputText>
+            <apex:outputText rendered="{!campaign.Status__c == 'DRAFT' || campaign.Status__c == null}">
+            <li class="step step-6{!IF(currentStepNumber == 6 || currentStepNumber == 7, ' active', '')}">
+                    <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 7 <= campaign.Maximum_Allowed_Step__c, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignConfirm)}?id={!campaign.id}">Payment</apex:outputLink>
+                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 7 <= campaign.Maximum_Allowed_Step__c, false, true)}">Payment</apex:outputText>
             </li>
             </apex:outputText>
+            
+            <!--
+            <apex:outputText rendered="{currentStepNumber == 7}">
+            <li class="step step-6{!IF(currentStepNumber == 7, ' active', '')}">
+                    <apex:outputLink rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 7 = campaign.Maximum_Allowed_Step__c, true, false)}" value="{!URLFOR($Page.IECEBC_CampaignConfirm)}?id={!campaign.id}">Payment....</apex:outputLink>
+                <apex:outputText rendered="{!IF(campaign.Maximum_Allowed_Step__c != null && 7 = campaign.Maximum_Allowed_Step__c, false, true)}">Payment....</apex:outputText>
+            </li>
+            </apex:outputText>-->
         </ol>
     </div>
     

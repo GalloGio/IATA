@@ -32,6 +32,14 @@ private class IEC_LoginControllerTest {
 
 	        //Cover register
 	        loginController.register();
+        
+        	//Cover redirect to iecWebDownload after login
+        	pageRef.getParameters().put(IECConstants.PARAM_RETURN_URL, 'iecWebDownload');
+        	loginController.login();
+        
+        	//Cover redirect to IEC_ViewQuotes after login
+        	pageRef.getParameters().put(IECConstants.PARAM_RETURN_URL, 'IEC_ViewQuotes');
+        	loginController.login();
 
 	        //Cover reset password
 	        try{

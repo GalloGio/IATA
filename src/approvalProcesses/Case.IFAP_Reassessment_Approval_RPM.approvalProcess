@@ -34,7 +34,7 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>larranagad@iata.org</name>
+                <name>martinyuks@iata.org</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
@@ -60,6 +60,14 @@
                 <name>praban@iata.org</name>
                 <type>user</type>
             </approver>
+            <approver>
+                <name>thamoh@iata.org</name>
+                <type>user</type>
+            </approver>
+            <approver>
+                <name>wongsf@iata.org</name>
+                <type>user</type>
+            </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
@@ -80,7 +88,7 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>xusj@iata.org</name>
+                <name>xuj@iata.org</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>

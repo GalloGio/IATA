@@ -1,0 +1,11 @@
+<aura:documentation>
+	<aura:description>
+    	<p>This component is a search box for accounts. It receives the fields to query, the fields to match the seatch with and the field labels to display on the search.</p>
+        <p>The component throws the OneId_ItemSelected_EVT with information of the action performed: create new, account selected (with the account selected) or no account selected</p>
+        <!-- 
+			TODO:
+				- receive the map of name and label
+				- use a datatable
+         -->
+    </aura:description>
+</aura:documentation>

@@ -19,16 +19,31 @@ global class OneIdProvisioningDaemon implements Messaging.InboundEmailHandler {
     private void processEverything(){
 
         //1) get One_Id_User_Applications__c Started
-        List<One_Id_User_Applications__c> workToProcess = [select id,Application__c,Application__r.Connected_App_Provisioning_Name__c, Application__r.PermissionSet_Provisioning__c, Identity_User__c,One_Id_App_Bundle__c,One_Id_Service_Provider_Config__c,Provisioning_Status__c
+        List<One_Id_User_Applications__c> workToProcess = [select id,Action__c, Application__c,Application__r.Connected_App_Provisioning_Name__c, Application__r.PermissionSet_SSO__c, Application__r.PermissionSet_Provisioning__c, Identity_User__c,One_Id_App_Bundle__c,One_Id_Service_Provider_Config__c,Provisioning_Status__c
                 from One_Id_User_Applications__c where Provisioning_Status__c = 'Started' limit 100] ;
 
         List<Id> usrList = new List<Id>();
         List<Id> permissionsetToAssign = new List<Id>();
 
-        if(!workToProcess.isEmpty()){
+        List<One_Id_User_Applications__c> workToProcessAdd = new List<One_Id_User_Applications__c>();
+        List<One_Id_User_Applications__c> workToProcessRemove = new List<One_Id_User_Applications__c>();
+
+        for(One_Id_User_Applications__c workItem : workToProcess){
+            if(workItem.action__c != null){
+                if(workItem.action__c.equals('Add')){
+                    workToProcessAdd.add(workItem);
+                }else{
+                    workToProcessRemove.add(workItem);
+                }
+
+            }
+
+        }
+
+        if(!workToProcessAdd.isEmpty()){
             Set<String> permissionsetToAssignNames = new Set<String>();
 
-            for(One_Id_User_Applications__c anUap : workToProcess){
+            for(One_Id_User_Applications__c anUap : workToProcessAdd){
                 permissionsetToAssignNames.add(anUap.Application__r.PermissionSet_Provisioning__c);
             }
 
@@ -40,7 +55,7 @@ global class OneIdProvisioningDaemon implements Messaging.InboundEmailHandler {
                 mapPerm.put(ap.name, ap.id);
             }
             if(!mapPerm.isEmpty()){
-                for(One_Id_User_Applications__c anUap : workToProcess){
+                for(One_Id_User_Applications__c anUap : workToProcessAdd){
                     if(mapPerm.containsKey(anUap.Application__r.PermissionSet_Provisioning__c)) {
                         usrList.add(anUap.Identity_User__c);
                         permissionsetToAssign.add(mapPerm.get(anUap.Application__r.PermissionSet_Provisioning__c));
@@ -49,7 +64,7 @@ global class OneIdProvisioningDaemon implements Messaging.InboundEmailHandler {
                 }
 
                 if(!usrList.isEmpty()){
-                    update workToProcess;
+                    update workToProcessAdd;
                     LightningConnectedAppHelper.massAssignPermissionSets(usrList, permissionsetToAssign);
 
                 }
@@ -57,5 +72,15 @@ global class OneIdProvisioningDaemon implements Messaging.InboundEmailHandler {
 
         }
 
+        //Remove
+        if(!workToProcessRemove.isEmpty()){
+            Set<Id> listOfIds = new Set<id>();
+            for(One_Id_User_Applications__c anUap : workToProcessRemove){
+                listOfIds.add(anUap.id);
+            }
+
+            if(!listOfIds.isEmpty())
+                LightningConnectedAppHelper.resetSCIMProvisioning(listOfIds);
+        }
     }
 }

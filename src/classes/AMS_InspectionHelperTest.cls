@@ -2,51 +2,51 @@
 private class AMS_InspectionHelperTest {
 
     @isTest static void test_setStatusCodeOnAccountForDOM(){
-    	Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
-    	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-		List<Account> agencylist = new List<Account>();
-		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
-		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234568',Name='Test2 Agency',Short_Name__c='Test2 Agency');
-		Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234569',Name='Test3 Agency',Short_Name__c='Test3 Agency');
-		Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234560',Name='Test4 Agency',Short_Name__c='Test4 Agency');
-		Account a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234561',Name='Test5 Agency',Short_Name__c='Test5 Agency');
-                
-        
-		agencylist.add(a1);
-		agencylist.add(a2);
-		agencylist.add(a3);
-		agencylist.add(a4);
-		agencylist.add(a5);
-        
-		insert agencylist;
+        List<Account> agencylist = new List<Account>();
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234568',Name='Test2 Agency',Short_Name__c='Test2 Agency');
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234569',Name='Test3 Agency',Short_Name__c='Test3 Agency');
+        Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234560',Name='Test4 Agency',Short_Name__c='Test4 Agency');
+        Account a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234561',Name='Test5 Agency',Short_Name__c='Test5 Agency');
 
-		AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
-		insert ao;
 
-		Test.startTest();
-		List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
-		AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
-		AMS_Inspection__c ins2 = new AMS_Inspection__c(Account__c=a2.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '1');
-		AMS_Inspection__c ins3 = new AMS_Inspection__c(Account__c=a3.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2');
-		AMS_Inspection__c ins4 = new AMS_Inspection__c(Account__c=a4.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '3');
-		AMS_Inspection__c ins5 = new AMS_Inspection__c(Account__c=a5.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '8');
+        agencylist.add(a1);
+        agencylist.add(a2);
+        agencylist.add(a3);
+        agencylist.add(a4);
+        agencylist.add(a5);
 
-        
-		agencyInspectionList.add(ins1);
-		agencyInspectionList.add(ins2);
-		agencyInspectionList.add(ins3);
-		agencyInspectionList.add(ins4);
-		agencyInspectionList.add(ins5);
-		insert agencyInspectionList;
-		
-		List<AMS_Inspection__c> inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'DOM'];
-		for(AMS_Inspection__c i:inspections)
-		{            
-			if(i.Accreditation_Endorsement_Status_code__c == '0')
-				System.assertEquals('Terminated', i.Account__r.Status__c);
+        insert agencylist;
+
+        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
+        insert ao;
+
+        Test.startTest();
+        List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
+        AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
+        AMS_Inspection__c ins2 = new AMS_Inspection__c(Account__c=a2.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '1');
+        AMS_Inspection__c ins3 = new AMS_Inspection__c(Account__c=a3.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2');
+        AMS_Inspection__c ins4 = new AMS_Inspection__c(Account__c=a4.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '3');
+        AMS_Inspection__c ins5 = new AMS_Inspection__c(Account__c=a5.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '8');
+
+
+        agencyInspectionList.add(ins1);
+        agencyInspectionList.add(ins2);
+        agencyInspectionList.add(ins3);
+        agencyInspectionList.add(ins4);
+        agencyInspectionList.add(ins5);
+        insert agencyInspectionList;
+
+        List<AMS_Inspection__c> inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'DOM'];
+        for(AMS_Inspection__c i:inspections)
+        {
+            if(i.Accreditation_Endorsement_Status_code__c == '0')
+                System.assertEquals('Terminated', i.Account__r.Status__c);
             if(i.Accreditation_Endorsement_Status_code__c == '1')
                 System.assertEquals('Not accreditated', i.Account__r.Status__c);
             if(i.Accreditation_Endorsement_Status_code__c == '2')
@@ -73,20 +73,20 @@ private class AMS_InspectionHelperTest {
         ins4.Accreditation_Endorsement_Status_code__c='6';
         ins5.Accreditation_Endorsement_Status_code__c='9';
 
-            
+
         List<SObject> updateAll = new List<SObject>();
         updateAll.add(ins1);
         updateAll.add(ins2);
         updateAll.add(ins3);
         updateAll.add(ins4);
         updateAll.add(ins5);
-                
-		update updateAll;
-                
-        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'DOM'];
+
+        update updateAll;
+
+        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'DOM'];
         for(AMS_Inspection__c i:inspections)
         {
-            
+
             if(i.Accreditation_Endorsement_Status_code__c == '0')
                 System.assertEquals('Terminated', i.Account__r.Status__c);
             if(i.Accreditation_Endorsement_Status_code__c == '4')
@@ -103,27 +103,27 @@ private class AMS_InspectionHelperTest {
                 System.assertEquals('Approved', i.Account__r.Status__c);
         }
     }
-	
-	@isTest static void test_setStatusCodeOnAccount() {
-		Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
-		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+
+    @isTest static void test_setStatusCodeOnAccount() {
+        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
-        
-		List<Account> agencylist = new List<Account>();
-	    Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
-	    Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234568',Name='Test2 Agency',Short_Name__c='Test2 Agency');
-	    Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234569',Name='Test3 Agency',Short_Name__c='Test3 Agency');
-	    Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234560',Name='Test4 Agency',Short_Name__c='Test4 Agency');
-	    Account a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234561',Name='Test5 Agency',Short_Name__c='Test5 Agency');
-	    
-        
-		agencylist.add(a1);
-	    agencylist.add(a2);
-	    agencylist.add(a3);
-	    agencylist.add(a4);
-	    agencylist.add(a5);
-        
+
+        List<Account> agencylist = new List<Account>();
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234568',Name='Test2 Agency',Short_Name__c='Test2 Agency');
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234569',Name='Test3 Agency',Short_Name__c='Test3 Agency');
+        Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234560',Name='Test4 Agency',Short_Name__c='Test4 Agency');
+        Account a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234561',Name='Test5 Agency',Short_Name__c='Test5 Agency');
+
+
+        agencylist.add(a1);
+        agencylist.add(a2);
+        agencylist.add(a3);
+        agencylist.add(a4);
+        agencylist.add(a5);
+
         insert agencylist;
 
         AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'IATA');
@@ -137,32 +137,20 @@ private class AMS_InspectionHelperTest {
         AMS_Inspection__c ins4 = new AMS_Inspection__c(Account__c=a4.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '6');
         AMS_Inspection__c ins5 = new AMS_Inspection__c(Account__c=a5.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '7');
 
-        
+
         agencyInspectionList.add(ins1);
         agencyInspectionList.add(ins2);
         agencyInspectionList.add(ins3);
         agencyInspectionList.add(ins4);
         agencyInspectionList.add(ins5);
-        
+
         insert agencyInspectionList;
 
-        List<AMS_Inspection__c> inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATA'];
+        List<AMS_Inspection__c> inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'IATA'];
         for(AMS_Inspection__c i:inspections)
-        {            
-        	if(i.Accreditation_Endorsement_Status_code__c == '0')
-        		System.assertEquals('Terminated', i.Account__r.Status__c);
-        	if(i.Accreditation_Endorsement_Status_code__c == '4')
-        		System.assertEquals('Listed', i.Account__r.Status__c);
-        	if(i.Accreditation_Endorsement_Status_code__c == '5')
-        		System.assertEquals('Cash basis/no commission', i.Account__r.Status__c);
-        	if(i.Accreditation_Endorsement_Status_code__c == '6')
-        		System.assertEquals('Cash basis/with commission', i.Account__r.Status__c);
-        	if(i.Accreditation_Endorsement_Status_code__c == '7')
-        		System.assertEquals('Under review', i.Account__r.Status__c);
-        	if(i.Accreditation_Endorsement_Status_code__c == '8')
-        		System.assertEquals('Changes processed', i.Account__r.Status__c);
-        	if(i.Accreditation_Endorsement_Status_code__c == '9')
-        		System.assertEquals('Approved', i.Account__r.Status__c);
+        {
+            // IATA appointment is not synchronized with the account!
+            System.assertEquals(null, i.Account__r.Status__c);
         }
 
         ins1.Accreditation_Endorsement_Status_code__c='0';
@@ -171,82 +159,70 @@ private class AMS_InspectionHelperTest {
         ins4.Accreditation_Endorsement_Status_code__c='6';
         ins5.Accreditation_Endorsement_Status_code__c='7';
 
-        	
+
         List<SObject> updateAll = new List<SObject>();
         updateAll.add(ins1);
         updateAll.add(ins2);
         updateAll.add(ins3);
         updateAll.add(ins4);
         updateAll.add(ins5);
-        		
+
         update updateAll;
-                
-        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATA'];
+
+        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'IATA'];
         for(AMS_Inspection__c i:inspections)
         {
-	    	if(i.Accreditation_Endorsement_Status_code__c == '0')
-	    		System.assertEquals('Terminated', i.Account__r.Status__c);
-	    	if(i.Accreditation_Endorsement_Status_code__c == '4')
-	    		System.assertEquals('Listed', i.Account__r.Status__c);
-	    	if(i.Accreditation_Endorsement_Status_code__c == '5')
-	    		System.assertEquals('Cash basis/no commission', i.Account__r.Status__c);
-	    	if(i.Accreditation_Endorsement_Status_code__c == '6')
-	    		System.assertEquals('Cash basis/with commission', i.Account__r.Status__c);
-	    	if(i.Accreditation_Endorsement_Status_code__c == '7')
-	    		System.assertEquals('Under review', i.Account__r.Status__c);
-	    	if(i.Accreditation_Endorsement_Status_code__c == '8')
-	    		System.assertEquals('Changes processed', i.Account__r.Status__c);
-	    	if(i.Accreditation_Endorsement_Status_code__c == '9')
-	    		System.assertEquals('Approved', i.Account__r.Status__c);
-	    }
+            // IATA appointment is not synchronized with the account!
+            System.assertEquals(null, i.Account__r.Status__c);
+        }
 
-		agencylist = new List<Account>();
+        agencylist = new List<Account>();
         a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt, IATACode__c='2234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
         a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='2234568',Name='Test2 Agency',Short_Name__c='Test2 Agency');
         a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='2234569',Name='Test3 Agency',Short_Name__c='Test3 Agency');
         a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='2234560',Name='Test4 Agency',Short_Name__c='Test4 Agency');
         a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='2234561',Name='Test5 Agency',Short_Name__c='Test5 Agency');
-				
-		agencylist.add(a1);
+
+        agencylist.add(a1);
         agencylist.add(a2);
         agencylist.add(a3);
         agencylist.add(a4);
         agencylist.add(a5);
-        		
+
         insert agencylist;
 
         ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'IATAN');
         insert ao;
 
         agencyInspectionList = new List<AMS_Inspection__c>();
-        
-		ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
-		ins2 = new AMS_Inspection__c(Account__c=a2.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '4');
-		ins3 = new AMS_Inspection__c(Account__c=a3.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '5');
-		ins4 = new AMS_Inspection__c(Account__c=a4.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '6');
-		ins5 = new AMS_Inspection__c(Account__c=a5.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '7');
-        
+
+        ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
+        ins2 = new AMS_Inspection__c(Account__c=a2.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '4');
+        ins3 = new AMS_Inspection__c(Account__c=a3.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '5');
+        ins4 = new AMS_Inspection__c(Account__c=a4.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '6');
+        ins5 = new AMS_Inspection__c(Account__c=a5.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '7');
+
         agencyInspectionList.add(ins1);
         agencyInspectionList.add(ins2);
         agencyInspectionList.add(ins3);
         agencyInspectionList.add(ins4);
         agencyInspectionList.add(ins5);
-        
+
         insert agencyInspectionList;
 
-		inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATAN'];
+        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__c IN :agencyList];
         for(AMS_Inspection__c i:inspections)
         {
-        	if(i.Accreditation_Endorsement_Status_code__c == '0')
-        		System.assertEquals('Terminated', i.Account__r.Status__c);
-        	if(i.Accreditation_Endorsement_Status_code__c == '4')
-        		System.assertEquals('Listed', i.Account__r.Status__c);
-        	if(i.Accreditation_Endorsement_Status_code__c == '5')
-        		System.assertEquals('ARC registered', i.Account__r.Status__c);
-        	if(i.Accreditation_Endorsement_Status_code__c == '6')
-        		System.assertEquals('Review', i.Account__r.Status__c);
-        	if(i.Accreditation_Endorsement_Status_code__c == '7')
-        		System.assertEquals('Endorsed', i.Account__r.Status__c);
+            if(i.Accreditation_Endorsement_Status_code__c == '0')
+                System.assertEquals(AMS_Utils.getIATANReadableStatus('0'), i.Account__r.Status__c);
+            if(i.Accreditation_Endorsement_Status_code__c == '4')
+                System.assertEquals(AMS_Utils.getIATANReadableStatus('4'), i.Account__r.Status__c);
+            if(i.Accreditation_Endorsement_Status_code__c == '5')
+                System.assertEquals(AMS_Utils.getIATANReadableStatus('5'), i.Account__r.Status__c);
+            if(i.Accreditation_Endorsement_Status_code__c == '6')
+                System.assertEquals(AMS_Utils.getIATANReadableStatus('6'), i.Account__r.Status__c);
+            if(i.Accreditation_Endorsement_Status_code__c == '7')
+                System.assertEquals(AMS_Utils.getIATANReadableStatus('7'), i.Account__r.Status__c);
         }
 
         ins1.Accreditation_Endorsement_Status_code__c='9';
@@ -254,73 +230,73 @@ private class AMS_InspectionHelperTest {
         ins3.Accreditation_Endorsement_Status_code__c='5';
         ins4.Accreditation_Endorsement_Status_code__c='6';
         ins5.Accreditation_Endorsement_Status_code__c='7';
-        
-		updateAll = new List<SObject>();
-        
-		updateAll.add(ins1);
+
+        updateAll = new List<SObject>();
+
+        updateAll.add(ins1);
         updateAll.add(ins2);
         updateAll.add(ins3);
         updateAll.add(ins4);
         updateAll.add(ins5);
         update updateAll;
-                
-        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where  insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATAN'];
+
+        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where  insp.Account__c IN :agencyList];
         for(AMS_Inspection__c i:inspections)
         {
-            	if(i.Accreditation_Endorsement_Status_code__c == '0')
-            		System.assertEquals('Terminated', i.Account__r.Status__c);
-            	if(i.Accreditation_Endorsement_Status_code__c == '4')
-            		System.assertEquals('Listed', i.Account__r.Status__c);
-            	if(i.Accreditation_Endorsement_Status_code__c == '5')
-            		System.assertEquals('ARC registered', i.Account__r.Status__c);
-            	if(i.Accreditation_Endorsement_Status_code__c == '6')
-            		System.assertEquals('Review', i.Account__r.Status__c);
-            	if(i.Accreditation_Endorsement_Status_code__c == '7')
-            		System.assertEquals('Endorsed', i.Account__r.Status__c);
-            }
-    
-            Boolean isFalse = AMS_InspectionHelper.compareAmsInspectionRecords_IgnoringLastSyncDate(ins1,ins1);
+            if(i.Accreditation_Endorsement_Status_code__c == '0')
+               System.assertEquals(AMS_Utils.getIATANReadableStatus('0'), i.Account__r.Status__c);
+            if(i.Accreditation_Endorsement_Status_code__c == '4')
+               System.assertEquals(AMS_Utils.getIATANReadableStatus('4'), i.Account__r.Status__c);
+            if(i.Accreditation_Endorsement_Status_code__c == '5')
+               System.assertEquals(AMS_Utils.getIATANReadableStatus('5'), i.Account__r.Status__c);
+            if(i.Accreditation_Endorsement_Status_code__c == '6')
+               System.assertEquals(AMS_Utils.getIATANReadableStatus('6'), i.Account__r.Status__c);
+            if(i.Accreditation_Endorsement_Status_code__c == '7')
+               System.assertEquals(AMS_Utils.getIATANReadableStatus('7'), i.Account__r.Status__c);
+        }
 
-            System.assertEquals(isFalse,false);
+        Boolean isFalse = AMS_InspectionHelper.compareAmsInspectionRecords_IgnoringLastSyncDate(ins1,ins1);
 
-            Boolean isTrue = AMS_InspectionHelper.compareAmsInspectionRecords_IgnoringLastSyncDate(ins1,ins2);
+        System.assertEquals(isFalse,false);
 
-            System.assertEquals(isTrue,true);
-            
-            Test.stopTest();
-	}
-	
-	
-	@isTest static void test_SetStatusCodeToZeroUpdatesRecertExpiryDate(){
-    	Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
-    	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        Boolean isTrue = AMS_InspectionHelper.compareAmsInspectionRecords_IgnoringLastSyncDate(ins1,ins2);
+
+        System.assertEquals(isTrue,true);
+
+        Test.stopTest();
+    }
+
+
+    @isTest static void test_SetStatusCodeToZeroUpdatesRecertExpiryDate(){
+        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-		List<Account> agencylist = new List<Account>();
-		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
-		agencylist.add(a1);
-		insert agencylist;
+        List<Account> agencylist = new List<Account>();
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
+        agencylist.add(a1);
+        insert agencylist;
 
-		AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
-		insert ao;
+        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
+        insert ao;
 
-		Test.startTest();
-		List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
-		AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '7', Date_Organisation_Status_attained__c=System.today());        
-		agencyInspectionList.add(ins1);
-		insert agencyInspectionList;
-		
-		a1 = [select Expiry_Date__c from Account where id = :a1.Id];
-		System.assertEquals(null, a1.Expiry_Date__c);
-		
-        ins1.Accreditation_Endorsement_Status_code__c='0';            
-        List<SObject> updateAll = new List<SObject>();
-        updateAll.add(ins1);        
-		update updateAll;
-        
+        Test.startTest();
+        List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
+        AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '7', Date_Organisation_Status_attained__c=System.today());
+        agencyInspectionList.add(ins1);
+        insert agencyInspectionList;
+
         a1 = [select Expiry_Date__c from Account where id = :a1.Id];
-		System.assertEquals(System.today(), a1.Expiry_Date__c);        
+        System.assertEquals(null, a1.Expiry_Date__c);
+
+        ins1.Accreditation_Endorsement_Status_code__c='0';
+        List<SObject> updateAll = new List<SObject>();
+        updateAll.add(ins1);
+        update updateAll;
+
+        //a1 = [select Expiry_Date__c from Account where id = :a1.Id];
+        //System.assertEquals(System.today(), a1.Expiry_Date__c);
     }
 
     @isTest static void test_1To1RelationshipAppointmentMSO(){
@@ -342,7 +318,7 @@ private class AMS_InspectionHelperTest {
         agencylist.add(a1);
         insert agencylist;
 
-        
+
         Test.startTest();
         List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
         AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=a1.id,Airline__c=airline.id);
@@ -357,6 +333,60 @@ private class AMS_InspectionHelperTest {
             System.assertEquals(expectedExceptionThrown, true);
         }
 
-             
+
+    }
+
+
+    @isTest static void test_checkActiveAppointments(){
+        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry ;
+
+        List<Account> agencylist = new List<Account>();
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c = '1234567',Name = 'Test1 Agency',Short_Name__c = 'Test1 Agency', Location_Class__c = 'G');
+        agencylist.add(a1);
+        insert agencylist;
+
+        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
+        insert ao;
+
+        Test.startTest();
+        List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
+        AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2', Date_Organisation_Status_attained__c=System.today());
+        agencyInspectionList.add(ins1);
+        AMS_Inspection__c ins2 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2', Date_Organisation_Status_attained__c=System.today());
+        agencyInspectionList.add(ins2);
+        insert agencyInspectionList;
+
+        /*
+        list<Task> acctTasks = [SELECT Id FROM Task WHERE WhatId = :a1.Id];
+        System.assertEquals(0, acctTasks.size());
+        */
+
+        ins1.Accreditation_Endorsement_Status_code__c='0';
+        update ins1;
+        /*
+        acctTasks = [SELECT Id FROM Task WHERE WhatId = :a1.Id];
+        System.assertEquals(0, acctTasks.size());
+        */
+
+        ApexPages.StandardController stdController = new ApexPages.StandardController(ins2);
+        AMS_InspectionNotificationController ctrl = new AMS_InspectionNotificationController(stdController);
+        ctrl.setNotificationMessage();
+        system.assertEquals(false, ctrl.hasNoActiveInspections);
+
+        ins2.Accreditation_Endorsement_Status_code__c='0';
+        update ins2;
+
+        /*
+        acctTasks = [SELECT Id FROM Task WHERE WhatId = :a1.Id];
+        System.assertEquals(1, acctTasks.size());
+        */
+
+        stdController = new ApexPages.StandardController(ins2);
+        ctrl = new AMS_InspectionNotificationController(stdController);
+        ctrl.setNotificationMessage();
+        system.assertEquals(true, ctrl.hasNoActiveInspections);
     }
 }

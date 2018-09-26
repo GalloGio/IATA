@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Active</fullName>
+        <default>false</default>
+        <label>Active</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive</fullName>
+        <default>true</default>
+        <label>Inactive</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive_Withdrawn</fullName>
+        <default>false</default>
+        <label>Inactive_Withdrawn</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive_Revoked</fullName>
+        <default>false</default>
+        <label>Inactive_Revoked</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive_Migrated</fullName>
+        <default>false</default>
+        <label>Inactive_Migrated</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive_CHO</fullName>
+        <default>false</default>
+        <label>Inactive_CHO</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive_TER</fullName>
+        <default>false</default>
+        <label>Inactive_TER</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive_Cashless</fullName>
+        <default>false</default>
+        <label>Inactive_Cashless</label>
+    </customValue>
+    <masterLabel>Risk Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

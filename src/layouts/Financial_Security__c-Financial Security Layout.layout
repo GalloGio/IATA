@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>Amend_FS</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -41,7 +42,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>First_Call_Letter_required__c</field>
+                <field>First_Call_Letter_required1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Minimum_Financial_Security__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -80,6 +85,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Minimumrelease__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Financial_Security_Currency__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

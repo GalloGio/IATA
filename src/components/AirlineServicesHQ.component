@@ -13,6 +13,10 @@
                  <apex:outputText value="{!service.ISO_Country_formula__c}"/>
             </apex:column>
             <apex:column >
+                <apex:facet name="header">IATA EasyPay Opt-out</apex:facet>
+                 <apex:outputField value="{!service.ANG_IATA_EasyPay_Opt_out__c}"/>
+            </apex:column>            
+            <apex:column >
                     <apex:facet name="header">Consumer</apex:facet>
                     <!--<apex:outputText value="{!service.Services_Rendered_to_Airline__r.Name}"/>-->
                     <apex:outputLink value="/{!service.Services_Rendered_to_Airline__c}" target="_top">{!service.Services_Rendered_to_Airline__r.Name}</apex:outputLink>

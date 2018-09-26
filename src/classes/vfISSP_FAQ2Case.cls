@@ -1,27 +1,89 @@
+/*
+    Class that exposes contact support functionalities for Portal and NewGen APP (mobile), like Live Chat, Call Information and Case Creation.
+    Used in ICE service and NewGen APP (mobile)
+*/
 //TRANSFORM 02/03/15 ==> includes new functionality algorithm  provided by Elliot ,
 /**
  * Last update by Nurit and Niv 11/16/2014
  */
-public without sharing class vfISSP_FAQ2Case
+@RestResource(urlMapping='/newgenapp/v1/contactSupport/*')
+global class vfISSP_FAQ2Case
 {
+    public class ButtonsInfoType{
+        public Integer Order { get; set; }
+        public String Category { get; set; }
+        public String Name { get; set; }
+        public String ButtonId { get; set; }
+        public String DeploymentId { get; set; }
+        public String Language { get; set; }
+    }
+
     /* Buttons State */
     public static final String OnlyCancel   = 'OnlyCancel';
     public static final String CancelAndCreateACase   = 'CancelAndCreateACase';
     public static final String CancelAndSubmit   = 'CancelAndSubmit';
+    public static final Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
+	public static final String IFG_TOPIC ='IATA_Financial_Gateway_IFG__c';
+
+    //basto1p
+    public static final String DEFAUL_CASE_LANG_CODE='en';
+    public static final String BUTTON_NOT_ALLOWED='BUTTON_NOT_ALLOWED';
+    public static final String BUT_CAT_PORTAL='BUT_CAT_1_PORTAL';
+    public static final String BUT_CAT_COUNTRY='BUT_CAT_2_COUNTRY';
+    public static final String BUT_CAT_ENGLISH='BUT_CAT_3_ENGLISH';
+    public static final String BUT_CAT_EMERGENCY='BUT_CAT_4_EMERGENCY';
+    public static final String BUT_CAT_ALL='BUT_CAT_ALL';
+
+    public static final String LVA_CALL_US_GEN='LVA_CallUs_GEN';
+
+	public static final Integer LVA_INTRO_VID_COOKIE_DEACTIVATED=-1;
+
+    //Intro videos mode can be a popo up or a dialog modal window
+    public static final String LVA_INTRO_VIDEO_MODE_POP_UP='LVA_INTRO_VIDEO_MODE_POP_UP';
+    public static final String LVA_INTRO_VIDEO_MODE_DIALOG='LVA_INTRO_VIDEO_MODE_DIALOG';
+
+    //basto1p - live agent v2 - config parameters
+    public static final String LVA_CFG_INTRO_VIDEO_URL='LVA_CFG_INTRO_VIDEO_URL';
+    public static final String LVA_CFG_INTRO_VIDEO_SECTORS='LVA_CFG_INTRO_VIDEO_SECTORS';
+    public static final String LVA_CFG_INTRO_VIDEO_MODE='LVA_CFG_INTRO_VIDEO_MODE';
+    public static final String LVA_CFG_INTRO_VIDEO_DISPLAY_TIMES='LVA_CFG_INTRO_VIDEO_DISPLAY_TIMES';
+
+
+    public static final String LVA_CFG_FAQS_COUNTRIES_NOT_ALLOWED='LVA_CFG_FAQS_COUNTRIES_NOT_ALLOWED';
+
+    //Emergency button enable for account (settins)
+    public static final String LVA_CFG_ACCOUNT_EMERG_FIELD_NAME='LVA_CFG_ACCOUNT_EMERG_FIELD_NAME';
+    public static final String LVA_CFG_ACCOUNT_EMERG_FIELD_VALUE='LVA_CFG_ACCOUNT_EMERG_FIELD_VALUE';
+    public static final String LVA_CFG_ACCOUNT_EMERG_CHECK_HIERARCHY='LVA_CFG_ACCOUNT_EMERG_CHECK_HIERARCHY';
+    public static final String LVA_CFG_ACCOUNT_EMERG_TOPIC_FILTER_AND='LVA_CFG_ACCOUNT_EMERG_TOPIC_FILTER_AND';
+
+    //basto1p - live agent v2 cookies prefixs
+    public static final String LVA_COOK_INTRO_VIDEO='LVA_COOK_INTRO_VIDEO';
+
+	public LiveAgentButtonSettings__c butttonToShow {get; set;}
+
+
+    //specific buttons
+    public static final String SPC_BUTT_EMERGENCY='Emergency';
 
     public String currentButtonsToShow {get; set;}
     public boolean SHowButtons {get; set;}
     public String recordToCreate {get; set;}
     public list<SelectOption> lst_selectTopics {get;set;}
     public list<SelectOption> lst_selectsubTopics {get;set;}
+    public list<SelectOption> lst_selectAreasOfConcern {get;set;}
+
     public String topic { get; set; }
+    public String topicLabel { get; set; }
     public String subtopic { get; set; }
+    public String areaOfConcern { get; set; }
     public String concernedCountry { get; set; }
     public String selectedCountry { get; set; }
     public clsDataCategoryContainer DataCategoryContainer {get;set;}
     public list<ArticleViewLine> articleViewLines { get; set; }
     //public FAQ__kav selectedArtical { get; set; }
     public ArticleModalView SelectedArticleModalView {get; set;}
+    public Id parentAccountId {get;set;} //TF - SP9-C5
 
     public boolean isAgencyUser {get;set;} //TF - SP9-C5
     public boolean isGSAUser {get;set;} //TF - SP9-C5
@@ -30,6 +92,7 @@ public without sharing class vfISSP_FAQ2Case
     public String myTopic {get;set;} //TF - SP9-C5
     public boolean isPWCProfile {get;set;}
     public boolean isDPCUser {get;set;}
+    public boolean isIFG {get;set;}
     public static boolean isComplain {get;set;}//Indecates if the user clicked the "I wish to complain button"
     // compliments
     public static boolean isCompliment {get;set;}//Indicates if the user clicked the "Share a compliment button"
@@ -75,13 +138,459 @@ public without sharing class vfISSP_FAQ2Case
 
     public list<String> errorMessage {get; set;}
 
+    public String iataCode {get;set;}
     //CNS
-    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String communityName{ 
+        get {
+            if(callApexPagesParameters){
+                return ApexPages.currentPage().getParameters().get('CommunityName'); 
+            }
+            else{
+                return '';
+            }
+        }
+        set;
+    }
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
+    //basto1p live agent v2
+    private static Map<String,LVA_Configs__mdt> LVAConfigs;
+    private Map <String,LiveAgentButtonSettings__c> livAgConfButtonsMapBySectAndIsoC;
+    private Map <String,String> livAgentCsButtonNameVsCategoryMap;
+    public Map<String,buttonsInfoType> csButtonsList {
+        get{
+            //order by order number
+            //csButtonsList.sort();
+
+            return csButtonsList;
+        }
+
+        set;}
+    public String csButtonsListJson {
+        get{
+
+            return JSON.serialize(csButtonsList);
+        }
+        set;}
+    public String callUsFinalString {get; set;}
+    // Map < Phone number, Available hours >
+    public Map <String, String> callUsMap { get; set; }
+
+    public Boolean isToShowFAQs {
+        get{
+            Boolean resVal=false;
+            Boolean isItDefaultTopic=(topic.compareTo(Env.SelectOptionDefaultValue) == 0);
+
+            if (isCompliment1){
+                resVal=false;
+            }
+            else if ( isItDefaultTopic || String.isBlank(topic)){
+                resVal=false;
+            }
+            else if (!isItDefaultTopic){
+                resVal=true;
+            }
+
+            //basto1p - Live agent V2
+            if (!areFAQsAllowedForCurrentCountry()){
+                resVal=false;
+            }
+
+            system.debug('basto1p - isToShowFAQs='+resVal+'; isTopicDefault='+isTopicDefault+'; topic='+topic);
+            return resVal;
+        }
+    set;}
+
+
+	private static Boolean isCNSInitialized = false;
+	public static Boolean isCNS {
+		get{
+			if (!isCNSInitialized) {
+				isCNS=ISSP_Utilities.isCNS();
+				isCNSInitialized=true;
+                System.debug('basto1p - isCNS INITIALIZED.');
+			}
+//isCNS=true;//basto1p - test only
+            System.debug('basto1p - isCNS='+isCNS);
+			return isCNS;
+		}
+		set;
+	}
+
+
+	//basto1p live agent v2 intro video handle
+    public Boolean isIntrovideoAlreadyShowed {
+        get {
+            String cookieNameStr=LVA_COOK_INTRO_VIDEO+UserInfo.getUserId()+livAgentIntroVidUrl;
+            Integer CookieValCount=0;
+			Boolean retVal=false;
+
+            //get cookie with format username_getLivAgConfig(LVA_CFG_INTRO_VIDEO_URL)
+            Cookie introVideoCookie = ApexPages.currentPage().getCookies().get(cookieNameStr);
+
+            // If this is the first time the user is accessing the page,
+            // create a new cookie with name 'counter', an initial value of '1',
+            // path 'null', maxAge '-1', and isSecure 'false'.
+            if (introVideoCookie == null) {
+                introVideoCookie = new Cookie(cookieNameStr,'1',null,-1,false);
+            }
+			else{ // If this isn't the first time the user is accessing the page
+				CookieValCount = Integer.valueOf(introVideoCookie.getValue());
+//introVideoCookie = new Cookie(cookieNameStr, '0', null, -1, false);//basto1p - for tests
+				if (CookieValCount != LVA_INTRO_VID_COOKIE_DEACTIVATED) {
+					// create a new cookie, incrementing the value of the original count by 1
+					introVideoCookie = new Cookie(cookieNameStr, String.valueOf(CookieValCount + 1), null, -1, false);
+				}
+            }
+
+            // Set the new cookie for the page
+            ApexPages.currentPage().setCookies(new Cookie[]{introVideoCookie});
+			if (
+				(CookieValCount>Integer.valueOf(getLivAgConfig(LVA_CFG_INTRO_VIDEO_DISPLAY_TIMES)))
+			  ||(CookieValCount == LVA_INTRO_VID_COOKIE_DEACTIVATED)
+			){
+				retVal=true;
+			}
+
+			System.debug('basto1p - isIntrovideoAlreadyShowed retVal='+retVal+'; CookieValCount='+CookieValCount);
+            return retVal;
+        }
+        set;
+    }
+    public String livAgentIntroVidUrl{
+        get{
+            String retVal='';
+
+            String sectorsList='';
+            String videoUrl='';
+            integer i=1;
+            do {
+                sectorsList=getLivAgConfig(LVA_CFG_INTRO_VIDEO_SECTORS+i);
+                videoUrl=getLivAgConfig(LVA_CFG_INTRO_VIDEO_URL+i);
+                if (sectorsList!=null && sectorsList.containsIgnoreCase(this.Sector)){
+                    retVal=videoUrl;
+                    break;
+                }
+                i=i+1;
+                System.debug('basto1p - sectorsList='+sectorsList);
+            }
+            while (videoUrl!=null);//when there is no video url it means the list is over
+
+            return retVal;
+        }
+        set;
+    }
+    public String livAgentIntroVidMode{
+        get{
+            return getLivAgConfig(LVA_CFG_INTRO_VIDEO_MODE);
+        }
+        set;
+    }
+    public Boolean livAgentIntroVidIsAllowed{
+        get{
+            if (isCNS || (String.isBlank(livAgentIntroVidUrl))) {
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        set;
+    }
+
+    public String weLoveToHelpLabel{
+        get{
+            // there is a bug in sdalesforce: if using the character ' in label the parameter is not replaced
+            String resultVal=String.format(Label.LVA_ReachOutUs, new List<String>{UserInfo.getFirstName()});
+
+            //String resultVal=Label.LVA_ReachOutUs+' '+UserInfo.getName();
+            return resultVal;
+        }
+        set;
+    }
+
+    // Added for NewGen APP - when a REST is called, there's no ApexPages Parameters and because of that
+    // this was getting NullPointerException. 
+    public Boolean callApexPagesParameters {
+        get {
+            // by default, call every Apex Pages Parameters
+            return callApexPagesParameters == null ? true : callApexPagesParameters;
+        }
+        set;
+    }
+
+
+	public void livAgentIntroVidCloseAndDontRemenber(){
+		String cookieNameStr=LVA_COOK_INTRO_VIDEO+UserInfo.getUserId()+livAgentIntroVidUrl;
+
+		Cookie introVideoCookie = new Cookie(cookieNameStr,
+											 String.valueOf(LVA_INTRO_VID_COOKIE_DEACTIVATED),
+											 null, -1, false);
+		// Set the new cookie for the page
+		ApexPages.currentPage().setCookies(new Cookie[]{introVideoCookie});
+	}
 
     public vfISSP_FAQ2Case()
     {
+        //basto1p - live agent v2
+        this.resetLiveAgentVars();
+    }
 
+    global class CustomerSupporWrapperGet {
+        global Map <String, String> topicsMap { get; set; }
+        global Map <String, String> subTopicsMap { get; set; }
+        global Map <String, String> countryMap { get; set; }
+
+        global CustomerSupporWrapperGet(){
+            topicsMap = new Map <String, String>();
+            subTopicsMap = new Map <String, String>();
+            countryMap = new Map <String, String>();
+        }
+    }
+
+    /**
+    *    Get method for NewGenAPP mobile to have topic, subtopic and countries picklists
+    **/
+    @HttpGet
+    global static CustomerSupporWrapperGet doGet(){
+        CustomerSupporWrapperGet customerSupport = new CustomerSupporWrapperGet();
+
+        vfISSP_FAQ2Case faq2Case = new vfISSP_FAQ2Case();
+        faq2Case.pageLoad();
+        // after page load, all the countries should be now in countryList list.
+        if(faq2Case.countryList != null){
+            for (SelectOption countrySelectOpt : faq2Case.countryList){
+                // discard default values
+                if(countrySelectOpt.getValue() == ''){
+                    continue;
+                }
+                // create country map with calculated selectOption
+                customerSupport.countryMap.put(countrySelectOpt.getValue(), countrySelectOpt.getLabel());
+            }
+        }
+        // after page load, all the topics should be now in lst_selectTopics list.
+        if(faq2Case.lst_selectTopics != null){
+            for (SelectOption topicSelectOpt : faq2Case.lst_selectTopics){
+                // discard default values
+                if(topicSelectOpt.getLabel() == Env.SelectOptionDefaultValue){
+                    continue;
+                }
+                // create topics map with calculated selectOption
+                customerSupport.topicsMap.put(topicSelectOpt.getValue(), topicSelectOpt.getLabel());
+
+                faq2Case.topic = topicSelectOpt.getValue();
+
+                // calculate sub topic for each topic 
+
+                faq2Case.lst_selectsubTopics = new list<SelectOption>();
+                Integer index = Integer.valueOf(faq2Case.topic.trim());
+
+                clsDataCategory selectDataCategory = faq2Case.DataCategoryContainer.lst_DataCategories[index];
+
+                if (selectDataCategory.lst_childs.size() > 0){
+                    for(Integer cIndex = 0; cIndex < selectDataCategory.lst_childs.size(); cIndex++){
+                        clsDataCategory.CategoryChildWrapper childCat = selectDataCategory.lst_childs[cIndex];
+                        faq2Case.lst_selectsubTopics.add(new SelectOption(childCat.CategoryName, childCat.CategoryLabel));
+                    }
+
+                    faq2Case.subtopic = selectDataCategory.CategoryName;
+                }
+                else{
+                    faq2Case.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
+                    faq2Case.subtopic = selectDataCategory.CategoryName;
+                }
+
+                faq2Case.setSubTopicByPermissions();
+
+                if(faq2Case.lst_selectsubTopics != null){
+                    for (SelectOption subTopicSelectOpt : faq2Case.lst_selectsubTopics){
+                        // discard default values
+                        if(subTopicSelectOpt.getLabel() == Env.SelectOptionDefaultValue){
+                            continue;
+                        }
+                        // create subtopics map with calculated selectOption
+                        customerSupport.subTopicsMap.put(topicSelectOpt.getValue() + '#' + subTopicSelectOpt.getValue(), subTopicSelectOpt.getLabel());
+                    }
+                }
+
+            }
+        }
+
+        return customerSupport;
+    }
+
+    global class CustomerSupporWrapperPost {
+        global Map <String, buttonsInfoType> csButtonsMap { get; set; }
+        global Map <String, String> callUsMap { get; set; }
+        global String region { get; set; }
+        global Case newCase { get; set; }
+
+        global CustomerSupporWrapperPost(){
+            csButtonsMap = new Map <String, buttonsInfoType>();
+            callUsMap = new Map <String, String>();
+            region = '';
+        }
+    }
+
+    /**
+    *    Post method for NewGenAPP mobile to have the live agent button and phone contact information 
+    *       according to selected topic, subtopic and country
+    *    If subject and description fields have value, it means that the user is trying to create a case
+    **/
+    @HttpPost
+    global static CustomerSupporWrapperPost doPost(String topicCode, String subTopicCode, String countryIsoCode, 
+                                String aditionalRecipients, String subject, String description, String origin){
+        CustomerSupporWrapperPost customerSupport = new CustomerSupporWrapperPost();
+
+        vfISSP_FAQ2Case faq2Case = new vfISSP_FAQ2Case();
+        // bypass any apex page parametes calls, otherwise will get NullPointerException
+        faq2Case.callApexPagesParameters = false;
+        faq2Case.pageLoad();
+        // set choosen topic, subtopic and country
+        faq2Case.topic = topicCode;
+        faq2Case.refreshTopicPickList();
+        faq2Case.subtopic = subTopicCode;
+        faq2Case.refreshSubTopicPickList();
+        faq2Case.newCase.IFAP_Country_ISO__c = countryIsoCode;
+        // calculate buttons and phone contact information
+        faq2Case.setLiveAgentButtonsNames();
+
+        customerSupport.csButtonsMap = faq2Case.csButtonsList;
+        customerSupport.callUsMap = faq2Case.callUsMap;
+        customerSupport.region = faq2Case.region;
+
+        if(!String.isEmpty(subject) && !String.isEmpty(description)){
+            faq2Case.newCase.subject = subject;
+            faq2Case.newCase.description = description;
+            for (sectionRecordWrapper section : faq2Case.fullList) {
+                for (fieldRecordWrapper thisField : section.fieldList) {
+                    if (thisField.fieldType == 'ccothers') {
+                        thisField.fieldValueEntered = aditionalRecipients;
+                    }
+                }
+            }
+            faq2Case.newCase.Origin = origin;
+            
+            faq2Case.save();
+
+            faq2Case.newCase = [SELECT  Id, Status, CaseNumber, Area_of_Concern__c, BSPCountry__c, Case_Language__c, Country_concerned_by_the_query__c,
+                                    Description, IFAP_Country_ISO__c, Origin, Subject, SubTopic__c, Topic__c
+                                FROM    Case 
+                                WHERE   Id =: faq2Case.newCase.Id];
+        }
+
+        customerSupport.newCase = faq2Case.newCase;
+
+        return customerSupport;
+    }
+
+    /*******************************************************************************************************
+    * @description Loads all live agent configurations from LVA_Configs__mdt metadata type
+    *
+    * @return {void} Sets value of static variable map LVAConfigs with all configured values
+    *
+    * @example
+    * this.loadLVAConfigurations();
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2017-10-03   paulo.bastos@rightitservices.com  Creation
+    ********************************************************************************************************/
+    public static void loadLVAConfigurations() {
+        if (LVAConfigs==null || LVAConfigs.size()<1) {
+
+            LVAConfigs=new Map<String,LVA_Configs__mdt>();
+
+            List<LVA_Configs__mdt> ConfigsList=[SELECT DeveloperName, MasterLabel, Value__c, ValueLong__c
+                    FROM LVA_Configs__mdt
+            ORDER BY MasterLabel ASC];
+
+            //Get defaults from custom setting
+            for(LVA_Configs__mdt ItemAux : ConfigsList)
+            {
+                LVAConfigs.put(ItemAux.DeveloperName,ItemAux);
+            }
+
+            System.debug('basto1p - LVAConfigs='+LVAConfigs);
+        }
+    }
+    /*******************************************************************************************************
+    * @description gets a live agent given configuration parameter value from LVA_Configs__mdt metadata type
+    *
+    * @param {String} Name of configuration parameter to get
+    *
+    * @return {String} Value of given configuration parameter
+    *
+    * @example
+    * this.getLivAgConfig(LVA_CFG_INTRO_VIDEO_URL);
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2017-10-03   paulo.bastos@rightitservices.com  Creation
+    ********************************************************************************************************/
+    public static string getLivAgConfig(String key){
+        loadLVAConfigurations();
+
+        if (LVAConfigs.containsKey(key)) {
+            String retVal;
+
+            retVal=LVAConfigs.get(key).Value__c;
+            if (String.isBlank(retVal)){
+                retVal=LVAConfigs.get(key).ValueLong__c;
+            }
+            return retVal;
+        }
+        else {
+            System.debug('basto1p - Configuration KEY NOT FOUND:'+key);
+            return null;
+        }
+    }
+
+    /*******************************************************************************************************
+    * @description Checks if FAQs items will are NOT allowed to be displayed in Case Portal User Interface
+    *              Based in list of not allowed countries in configuration parameter existent in
+    *              LVA_Configs.LVA_CFG_FAQS_COUNTRIES_NOT_ALLOWED
+    *
+    * @return {Boolean} True if FAQs are allowed, false if not
+    *
+    * @example
+    * areFAQsAllowedForCurrentCountry();
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2017-11-16   paulo.bastos@rightitservices.com  Creation
+    ********************************************************************************************************/
+    private static Boolean areFAQsAllowedForCurrentCountry(){
+        Boolean resVal=true;
+        //basto1p - LiveAgentv2 - only generates articles view if faqs area available for that country
+        Id currentUserId=UserInfo.getUserId();
+        String listCountriesFAQsNotAvailable=getLivAgConfig(LVA_CFG_FAQS_COUNTRIES_NOT_ALLOWED);
+        String currentUserCountry=UserInfo.getLocale().substring(0, 2);
+        List<LoginHistory> loginHistoryList;
+
+        loginHistoryList=[SELECT CountryIso, UserId, LoginTime
+        FROM LoginHistory
+                WHERE UserId=:currentUserId
+                ORDER BY LoginTime DESC
+                LIMIT 1];
+        if (loginHistoryList.size()>0){
+                currentUserCountry=loginHistoryList[0].CountryIso;
+        }
+
+        System.debug('basto1p - isToShowFAQs.currentUserCountry='+currentUserCountry);
+        System.debug('basto1p - isToShowFAQs.UserInfo.getLocale()=='+UserInfo.getLocale());
+        if (String.isBlank(currentUserCountry)){
+            resVal=false;
+        }
+        else if(listCountriesFAQsNotAvailable!=null&&
+                listCountriesFAQsNotAvailable.containsIgnoreCase(currentUserCountry)){
+            resVal=false;
+        }
+
+        return resVal;
     }
 
     public PageReference pageLoad() {
@@ -93,12 +602,14 @@ public without sharing class vfISSP_FAQ2Case
         isGSAOnly = false;
         isPWCProfile = false;
         isDPCUser = false;
-
+        isIFG = false;
+        isToShowFAQs = false;
         //Page SHOW Buttons in side Bar booleans , According to Record types
         isSISHelpDesk       = false ;
         isIATAServiceRequest= false ;
         isPWCServiceRequest = false ;
         isDPCServiceRequest = false ;
+        callUsMap = new Map <String, String>();
 
         //isComplain = false;
         newCase.Description = '';
@@ -134,8 +645,14 @@ public without sharing class vfISSP_FAQ2Case
         Contact con = DAL_ISSP.getContact(user.ContactId);
         Sector      = con.Account.Sector__c != null ? con.Account.Sector__c : '';
         AccountISOCountry = con.Account.IATA_ISO_Country__r.ISO_Code__c != null ? con.Account.IATA_ISO_Country__r.ISO_Code__c : '';
+        this.parentAccountId = con.AccountId;
 
-        myTopic = ApexPages.currentPage().getParameters().get('topic');
+        //Call for the new method that arrange the fields according to the Custom settings
+        GenerateFieldsBySettings();
+
+        if(ApexPages.currentPage() != null){
+            myTopic = ApexPages.currentPage().getParameters().get('topic');
+        }
         this.currentButtonsToShow = OnlyCancel;
         SHowButtons = false ;
         labelSubTopic = Label.ISSP_F2CSubTopic;
@@ -154,6 +671,386 @@ public without sharing class vfISSP_FAQ2Case
         //this.DataCategoryContainer.print();
         initTopicsList();
         return null;
+    }
+
+
+    /*******************************************************************************************************
+    * @description Sets chat buttons names according with:
+    *                 a) subtopic selected (must be listed in Custom Setting
+    *              ISSP FAQ2CaseLiveAgentTopics),
+    *                 b) Account sector (field sector from user's account)
+    *                 c) Country code (must be in list LiveAgent_Countries_Per_Button__c)
+    *
+    *
+    * @return {Void} Updates this class list of buttons to display in visualsource page
+    *                variable: livAgConfButtonsToDisplay
+    *
+    * @example
+    * this.setLiveAgentButtonsNames();
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2017-09-04   paulo.bastos@rightitservices.com  Creation
+    ********************************************************************************************************/
+    public void setLiveAgentButtonsNames(){
+		System.debug('basto1p - BEGIN setLiveAgentButtonsNames');
+
+        String mapKey;
+
+        System.debug('basto1p - setLiveAgentButtonsNames - this.newCase.IFAP_Country_ISO__c='+this.newCase.IFAP_Country_ISO__c);
+
+        //get info for button CallUs
+        this.getAndSetCallUsString();
+
+        //reset Lists
+        this.resetLiveAgentVars();
+
+        //basto1p live agent v2
+        if (!String.isBlank(this.newCase.IFAP_Country_ISO__c) ){
+
+            //////////////////////////////////////////////////////////////////////
+            // get all configured live agent buttons for user sector
+            // and portal and selected country languages
+            // and set this.livAgConfButtonsMapBySectAndIsoC
+            //////////////////////////////////////////////////////////////////////
+            Map <String, LiveAgentButtonSettings__c> liveAgentConfList = LiveAgentButtonSettings__c.getAll();
+            System.debug('basto1p - list custom setting mapp content: ' + liveAgentConfList.values());
+            try {
+
+                this.livAgConfButtonsMapBySectAndIsoC = new Map<String, LiveAgentButtonSettings__c>();
+                String spcButtNameToAdd = '';
+                String keyToAdd = '';
+                String sectorToAdd = '';
+                String regionToAdd = '';
+                String languageToAdd = '';
+
+                //Fill live agent configuration button map where map key is composed by sector and language in iso format
+                for (LiveAgentButtonSettings__c butItem : liveAgentConfList.values()) {
+
+                    Set<String> itemSectors = new Set<String>(butItem.sectors__c.split(','));
+                    regionToAdd = butItem.Region__c;
+                    if (regionToAdd == null) {
+                        regionToAdd = '';
+                    }
+                    else{
+                        regionToAdd=regionToAdd.toLowerCase().trim();
+                    }
+
+                    languageToAdd=butItem.Language__c;
+                    if (languageToAdd == null) {
+                        languageToAdd = '';
+                    }
+                    else{
+                        languageToAdd=languageToAdd.toLowerCase().trim().substring(0, 2);
+                    }
+
+                    //add specific buttons here
+                    if (butItem.Name == SPC_BUTT_EMERGENCY) {
+                        spcButtNameToAdd = SPC_BUTT_EMERGENCY;
+                    } else {
+                        spcButtNameToAdd = '';
+                    }
+
+                    //decompose in sectores cofigured for this row
+                    for (String itemSector : itemSectors) {
+
+                        sectorToAdd=itemSector;
+                        if (sectorToAdd == null) {
+                            sectorToAdd = '';
+                        }
+                        else{
+                            sectorToAdd=sectorToAdd.trim();
+                        }
+
+                        keyToAdd = spcButtNameToAdd +
+                                sectorToAdd +
+                                languageToAdd +
+                                regionToAdd;
+                        System.debug('basto1p - keyToAdd=' + keyToAdd);
+                        this.livAgConfButtonsMapBySectAndIsoC.put(keyToAdd, butItem);
+                    }
+                }
+            } catch (Exception e) {
+                System.debug('basto1p - setLiveAgentButtonsNames Error getting buttons config: ' + e);
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,
+                                '{!$Label.LiveAgentCustomSettingNotFound} ' + e));
+            }
+            System.debug('basto1p - setLiveAgentButtonsNames MY CONFIG MAPP this.livAgConfButtonsMapBySectAndIsoC=' +
+                    this.livAgConfButtonsMapBySectAndIsoC);
+            //////////////////////////////////////////////////////////////////////
+
+
+            /////////////////////////////////////////////////////////////////////
+            // For each existent buttons category validates:
+            //    1) if button is allowed
+            //    2) and get the button name to use for the category in this
+            //       given context (sector, case country, topic subtopic)
+            /////////////////////////////////////////////////////////////////////
+            Set<String> languagesConfigured = new Set<String>();
+            String languageToConfigure='';
+
+            //Default Button name based in default language define: DEFAUL_CASE_LANG_CODE
+            languageToConfigure=DEFAUL_CASE_LANG_CODE.toLowerCase();
+            mapKey = this.Sector + languageToConfigure;
+            this.getButtonNameFromConfigAndAddToList(mapKey, BUT_CAT_ENGLISH);
+            mapKey = mapKey + this.region.toLowerCase();//checks also if there is a button with region defined
+            //(to support region not be mandatory in custom setting LiveAgentButtonSettings)
+            this.getButtonNameFromConfigAndAddToList(mapKey, BUT_CAT_ENGLISH);
+            //update list of configured lagunage
+            languagesConfigured.add(languageToConfigure);
+
+            //Button names based on current user LANGUAGE in PORTAL
+            //get user salesforce current language (when changing portal language user settings language is also updated)
+            languageToConfigure=UserInfo.getLanguage().trim().substring(0, 2).toLowerCase();
+            mapKey = this.Sector + languageToConfigure;
+            this.getButtonNameFromConfigAndAddToList(mapKey, BUT_CAT_PORTAL);
+            mapKey = mapKey + this.region.toLowerCase();//checks also if there is a button with region defined
+            //(to support region not be mandatory in custom setting LiveAgentButtonSettings)
+            this.getButtonNameFromConfigAndAddToList(mapKey, BUT_CAT_PORTAL);
+            //update list of configured lagunage
+            languagesConfigured.add(languageToConfigure);
+
+
+
+            //Get country language based in country selected in case
+            //(will the language to configure by default)
+            languageToConfigure = newCase.IFAP_Country_ISO__c.toLowerCase();
+            String choseenCountrySuppLangs ='';
+
+            //if there is a mapping in iso country Object to its languages,
+            //use that otherwise use country iso code for language code above
+            List<IATA_ISO_Country__c> countryAux =
+            [SELECT LVA_CountryLanguage__c FROM IATA_ISO_Country__c
+                    WHERE (    ISO_Code__c =:languageToConfigure
+                            OR ISO_Code__c =:languageToConfigure.toUpperCase() )
+            ];
+            if (    countryAux.size() > 0 &&
+                    String.isNotBlank(countryAux[0].LVA_CountryLanguage__c)) {
+                choseenCountrySuppLangs = countryAux[0].LVA_CountryLanguage__c;
+
+                List<String> slectCountryLangList = new List<String>();
+                slectCountryLangList.addAll(choseenCountrySuppLangs.split(','));
+
+                System.debug('basto1p - slectCountryLangList='+slectCountryLangList);
+
+                Boolean caseLangSelected=false;
+                for(String langSupportedStr: slectCountryLangList){
+                    langSupportedStr=langSupportedStr.trim().substring(0, 2).toLowerCase();
+
+                    //if country language was not yet configured use it
+                    if (!languagesConfigured.contains(langSupportedStr)
+                        && caseLangSelected==false
+                    ){
+                        //language to use is the one not existent yet
+                        languageToConfigure=langSupportedStr;
+                        //update list of configured language
+                        languagesConfigured.add(languageToConfigure);
+                        caseLangSelected=true;
+
+                        System.debug('basto1p - languageToConfigure='+languageToConfigure);
+                    }
+                }
+            }
+
+            //Button name based in COUNTRY and iso language code SLECTED in portal case
+            mapKey = this.Sector + languageToConfigure;
+            this.getButtonNameFromConfigAndAddToList(mapKey, BUT_CAT_COUNTRY);
+            mapKey = mapKey + this.region.toLowerCase();//checks also if there is a button with region defined
+            //(to support region not be mandatory in custom setting LiveAgentButtonSettings)
+            this.getButtonNameFromConfigAndAddToList(mapKey, BUT_CAT_COUNTRY);
+
+
+            //////////////////////////////////////////////////////////////////////
+            // Check emergency enabled conditions
+            // and add specific button name EMergency
+            //////////////////////////////////////////////////////////////////////
+
+            //Specific button key (emergency) - Language is allways english (DEFAUL_CASE_LANG_CODE) for this button
+            mapKey = SPC_BUTT_EMERGENCY + this.Sector + DEFAUL_CASE_LANG_CODE;//choseenCountryLang
+            this.getButtonNameFromConfigAndAddToList(mapKey, BUT_CAT_EMERGENCY);
+            mapKey = mapKey + this.region.toLowerCase();//checks also if there is a button with region defined
+            //(to support region not be mandatory in custom setting LiveAgentButtonSettings)
+            this.getButtonNameFromConfigAndAddToList(mapKey, BUT_CAT_EMERGENCY);
+
+            System.debug('basto1p - setLiveAgentButtonsNames Buttons added to list.');
+            //////////////////////////////////////////////////////////////////////
+
+        }
+        System.debug('basto1p - Final buttons - setLiveAgentButtonsNames - this.csButtonsList='+this.csButtonsList);
+    }
+
+    /*******************************************************************************************************
+    * @description Gets button name from configured buttons map (this.livAgConfButtonsMapBySectAndIsoC)
+    *              and add it to buttons list to be displayed in visualsource page (this.csButtonsList)
+    *              It uses map this.livAgentCsButtonNameVsCategoryMap check for duplicate buttons (avoid duplicated buttons)
+    *              It also checks if given button is allowed to be displayed by calling this.isLiveAgentButtonAllowed func.
+    *
+    * @param {string} butMapConfigKey - This as a string composed by buttonName+Language+Region
+    *                                   (that is a unique way of identify the button)
+    * @param {string} buttonCategory - Button category/group/type this parameter is used to
+    *                 identify group of buttons in user interface if needed, and also to allow doing
+    *                 different validations in code (if/when it is redequired different validations
+    *                 for different groups of buttons.
+    *
+    *
+    * @example
+    * this.getButtonNameFromConfigAndAddToList('AirlineEnglishptEurope','BUT_CAT_PORTAL'');
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2017-09-07   paulo.bastos@rightitservices.com  Creation
+    ********************************************************************************************************/
+    public void getButtonNameFromConfigAndAddToList(String butMapConfigKey,String buttonCategory){
+        String csButtonNameAux;
+        LiveAgentButtonSettings__c csButtonSettObj;
+
+        System.debug('basto1p - BEGIN getButtonNameFromConfigAndAddToList - butMapConfigKey='+butMapConfigKey+'; buttonCategory='+buttonCategory );
+        if (this.livAgConfButtonsMapBySectAndIsoC.containsKey(butMapConfigKey)){
+
+            csButtonSettObj=this.livAgConfButtonsMapBySectAndIsoC.get(butMapConfigKey);
+            csButtonNameAux=csButtonSettObj.Name;
+
+            //check if already added to List
+            if (this.livAgentCsButtonNameVsCategoryMap.containsKey(csButtonNameAux)){
+                System.debug('basto1p - getButtonNameFromConfigAndAddToList button ALREADY IN LIST Will not be added to list of buttons to display: '
+                        +'buttonCategory='+buttonCategory
+                        +'; csButtonNameAux='+csButtonNameAux);
+            }
+            else{
+                //check if button is allowed
+                //Category to check
+                String butCategoryToCheckTopics;
+                //For specific buttons an exception shall be added here
+                //to search subtopics only allowed for his specific button category
+                if (buttonCategory==BUT_CAT_EMERGENCY){
+                    butCategoryToCheckTopics=buttonCategory;
+                }
+                //For normal buttons the topic must exist on "ISSP FAQ2CaseLiveAgentTopics" custtom setting
+                else{
+                    butCategoryToCheckTopics='';
+                }
+                if ( this.isLiveAgentButtonAllowed(this.livAgConfButtonsMapBySectAndIsoC.get(butMapConfigKey)
+                                                    ,butCategoryToCheckTopics) ){
+                    System.debug('basto1p - button allowed isLiveAgentButtonAllowed = TRUE, ADDED TO LISTS');
+                    this.livAgentCsButtonNameVsCategoryMap.put(csButtonNameAux,buttonCategory);
+
+                    ButtonsInfoType butInfoAux=new ButtonsInfoType();
+                    butInfoAux.Name=csButtonNameAux;
+                    butInfoAux.Category=buttonCategory;
+                    butInfoAux.ButtonId=csButtonSettObj.ButtonId__c;
+                    butInfoAux.DeploymentId=csButtonSettObj.DeploymentId__c;
+                    butInfoAux.Language=csButtonSettObj.Language__c;
+
+                    if (buttonCategory==BUT_CAT_PORTAL){
+                        butInfoAux.Order=1;
+                    }
+                    else if(buttonCategory==BUT_CAT_COUNTRY){
+                        butInfoAux.Order=2;
+                    }
+                    else if(buttonCategory==BUT_CAT_ENGLISH){
+                        butInfoAux.Order=3;
+                    }
+                    else if(buttonCategory==BUT_CAT_EMERGENCY){
+                        butInfoAux.Order=4;
+                    }
+
+                    this.csButtonsList.put(buttonCategory,butInfoAux);
+                }
+                else{
+                    //log not found button
+                    System.debug('basto1p - button not ALLOWED getButtonNameFromConfigAndAddToList.csButtonNameAux='+csButtonNameAux);
+                }
+            }
+        }
+        else{
+            //log not found button configuration
+            System.debug('basto1p - button NOT CONFIGURED for given sector and country language setLiveAgentButtonsNames.mapKey='+butMapConfigKey);
+        }
+    }
+
+
+    /*******************************************************************************************************
+    * @description Gets and sets "Call Us" user interface modal dialog content string (using phone number
+    *              and Available hours) according with configuration in metadata type LVA_CallUsConfig__mdt
+    *              based on User's Account Sector, and case concerned country field chosen.
+    *              Sets also  variable with that string value.
+    *
+    * @return {String} retVal - Returns the string to be displayed in the modal window "Call US"
+    *                           containing the phone number and available hours string, according with
+    *                           users account sector and case country selected.
+    *
+    *
+    * @example
+    * this.getAndSetCallUsString();
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2017-09-29   paulo.bastos@rightitservices.com  Creation
+    ********************************************************************************************************/
+    public String getAndSetCallUsString(){
+        String retVal=Label.LVA_CallUsNoConfigAvailable;
+        List<LVA_CallUsConfig__mdt> ListOfCallUsconfigs=new List<LVA_CallUsConfig__mdt>();
+
+        // Check configration for user account sector and country selected for case
+        if (newCase.IFAP_Country_ISO__c!=null) {
+            ListOfCallUsconfigs = [SELECT DeveloperName,IsoCountry__c, Sector__c,PhoneNumber__c,AvailableHours__c
+                    FROM LVA_CallUsConfig__mdt
+                    WHERE Sector__c=:sector
+                    AND (IsoCountry__c=:newCase.IFAP_Country_ISO__c.toLowerCase()
+                         OR IsoCountry__c=:newCase.IFAP_Country_ISO__c.toUpperCase())
+                    ];
+        }
+
+        // if nothing found for previous search
+        //Check configration for user account sector only
+        if (ListOfCallUsconfigs.size()==0){
+            ListOfCallUsconfigs=[SELECT DeveloperName,IsoCountry__c, Sector__c,PhoneNumber__c,AvailableHours__c
+                    FROM LVA_CallUsConfig__mdt
+                    WHERE Sector__c=:sector AND (IsoCountry__c='' OR IsoCountry__c=null)];
+        }
+
+        // if nothing found for previous searchs
+        // Check generic configuration
+        if (ListOfCallUsconfigs.size()==0){
+            ListOfCallUsconfigs=[SELECT DeveloperName,IsoCountry__c, Sector__c,PhoneNumber__c,AvailableHours__c
+                    FROM LVA_CallUsConfig__mdt
+                    WHERE DeveloperName=:LVA_CALL_US_GEN];
+        }
+
+        if (ListOfCallUsconfigs.size()>0){
+            retVal=createCallUsString(ListOfCallUsconfigs[0]);
+        }
+
+        this.callUsFinalString=retVal;
+
+        return retVal;
+    }
+
+    /*******************************************************************************************************
+    * @description Constructs modal window "Call Us" string to be displayed.
+    *
+    * @return {String} retVal - Returns the string to be displayed in the modal window "Call US",
+    *                           containing the phone number and available hours, according with
+    *                           given configuration item (from LVA_CallUsConfig__mdt).
+    *
+    *
+    * @example
+    * this.getAndSetCallUsString();
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2017-09-29   paulo.bastos@rightitservices.com  Creation
+    ********************************************************************************************************/
+    public String createCallUsString(LVA_CallUsConfig__mdt item){
+	callUsMap.put(item.PhoneNumber__c, item.AvailableHours__c);
+        String retVal=Label.LVA_CallUsThruPhoneNum+' <b>'+item.PhoneNumber__c +'</b>'+
+                '<br/>'+Label.LVA_CallUsAvailableHours+' <b>'+item.AvailableHours__c+'</b>';
+
+        return retVal;
     }
 
     public Case newCase
@@ -217,10 +1114,12 @@ public without sharing class vfISSP_FAQ2Case
            return null;
         }
     }
+    /* basto1p removed and replaced by the one below
     public Set<String>topicsToShowButton {
         get{
             if (topicsToShowButton == null){
-                List<ISSP_FAQ2CaseLiveAgentTopics__c> topics = [SELECT value__c FROM ISSP_FAQ2CaseLiveAgentTopics__c];
+                List<ISSP_FAQ2CaseLiveAgentTopics__c> topics =
+                    [SELECT value__c FROM ISSP_FAQ2CaseLiveAgentTopics__c];
                 topicsToShowButton = new Set<String>();
                 for (ISSP_FAQ2CaseLiveAgentTopics__c topic :topics){
                     topicsToShowButton.add(topic.value__c);
@@ -230,13 +1129,211 @@ public without sharing class vfISSP_FAQ2Case
         }
         set;
     }
+    */
+    /*******************************************************************************************************
+   * @description Gets list of subtopics for which a button from a given category is allowed to be shown,
+   *              If no button category is given it will return the list of all topics allowed for all buttons
+   *
+   * @param {string} buttonCategory - Category of button
+   *
+   *
+   * @example
+   * this.getTopicsToShowButtonFromACategory('BUT_CAT_EMERGENCY');
+   *
+   * @history
+   * -----------------------------------------------------------------------------------------------
+   * Date         Created by                        Description
+   * 2017-09-18   paulo.bastos@rightitservices.com  Creation
+   ********************************************************************************************************/
+    public Set<String> getTopicsToShowButtonFromACategory(String buttonCategory) {
+        Set<String> topicsToShowButtonFromACategory;
+        List<ISSP_FAQ2CaseLiveAgentTopics__c> topicsAux= new List<ISSP_FAQ2CaseLiveAgentTopics__c>();
+
+        if (String.isBlank(buttonCategory)) {
+            String searchSubtopicsForAllButtons='%'+BUT_CAT_ALL+'%';
+            topicsAux =
+            [SELECT value__c FROM ISSP_FAQ2CaseLiveAgentTopics__c
+                    WHERE
+                    (LVA_ButtomCategories__c ='')
+                OR  (LVA_ButtomCategories__c LIKE :searchSubtopicsForAllButtons)
+            ];
+        }
+        else
+        {
+            String searchText='%'+buttonCategory+'%';
+            topicsAux =
+            [SELECT value__c FROM ISSP_FAQ2CaseLiveAgentTopics__c
+                    WHERE
+            (LVA_ButtomCategories__c LIKE :searchText)
+            ];
+        }
+
+        topicsToShowButtonFromACategory = new Set<String>();
+        for (ISSP_FAQ2CaseLiveAgentTopics__c topic :topicsAux){
+            topicsToShowButtonFromACategory.add(topic.value__c);
+        }
+        return topicsToShowButtonFromACategory;
+    }
+
     public Boolean showButton {
         get{
-            //in the future if more chat buttons are required we need a dynamic way to pass the button name - for the moment we don't know the rules
-            return topicsToShowButton.contains(subtopic) && isAllowedCode('AirlineEnglish') && isAllowedSector('AirlineEnglish');
+            Boolean resVal=false;
+
+            //basto1p live agente v2
+            if  (this.csButtonsList.size()>0){
+                resVal=true;
+            }
+
+            return resVal;
         }
         set;
     }
+
+    public Boolean isComplainLayout{
+        get{
+            System.debug('basto1p - isComplainLayout='+isComplain1);
+            return isComplain1;
+        }
+        set;
+    }
+
+    public Boolean showChatButtons {
+        get{
+            Boolean resVal=false;
+
+            //basto1p live agente v2
+            if  (showButton){
+                resVal=true;
+            }
+
+            //Dont show chat btton if is CNS
+            if (isCNS){
+                resVal=false;
+            }
+            return resVal;
+        }
+        set;
+    }
+
+
+    /*******************************************************************************************************
+    * @description Checks primary conditions needed for a chat buttons to display
+    *              based in:
+    *                 a) subtopic selected (must be listed in Custom Setting
+    *              ISSP FAQ2CaseLiveAgentTopics),
+    *                 b) Country code (must be in list LiveAgent_Countries_Per_Button__c)
+    *
+    * @param {LiveAgentButtonSettings__c} ButtonItemConfig - Butom item with configuration details from
+    *                                                        LiveAgentButtonSettings custtom setting
+    *
+    * @return {Boolean} resVal - Returns true if there is any live agent button in list to be displayed
+    *
+    * @example
+    * this.isLiveAgentButtonAllowed(ButtonItemConfig);
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2017-09-04   paulo.bastos@rightitservices.com  Creation
+    ********************************************************************************************************/
+    private Boolean isLiveAgentButtonAllowed(LiveAgentButtonSettings__c ButtonItemConfig, String butCategory){
+		System.debug('basto1p - BEGIN isLiveAgentButtonAllowed butCategory='+butCategory);
+
+        Boolean allowedSubTopic=false;
+		Boolean resVal=false;
+
+
+        Set<String> listofAllowedTopics=getTopicsToShowButtonFromACategory(butCategory);
+/*
+for (string topicver:listofAllowedTopics){
+    system.debug('basto1p - isLiveAgentButtonAllowed topicver='+topicver);
+}
+*/
+        system.debug('basto1p - isLiveAgentButtonAllowed listofAllowedTopics='+listofAllowedTopics);
+        system.debug('basto1p - isLiveAgentButtonAllowed subtopic='+subtopic);
+
+
+        //Check if subtopic is allowed
+        allowedSubTopic=listofAllowedTopics.contains(subtopic);
+
+        system.debug('basto1p - isLiveAgentButtonAllowed allowedSubTopic='+allowedSubTopic);
+
+        //Specific Exceptions for subtopic not allowed
+        if (       ( (allowedSubTopic!=true)
+                    &&(Boolean.valueOf(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_TOPIC_FILTER_AND))==false)
+                    )
+                || ( (allowedSubTopic==true)
+                        &&(Boolean.valueOf(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_TOPIC_FILTER_AND))==true) )
+        ){
+
+            //////////////////////////////////////////////////////////////////////
+            // Check emergency enabled conditions
+            // and add specific button name Emergency
+            //////////////////////////////////////////////////////////////////////
+            if (butCategory==BUT_CAT_EMERGENCY){
+                //Check 24/7 (emergency) service/feature is enable for this user account (key account)
+                ID uContactId = [SELECT ContactId FROM User WHERE id =: Userinfo.getUserid()].contactId;
+                ID uAccId = [SELECT AccountId FROM Contact WHERE id =: uContactId].AccountId;
+
+                do {
+                    //Account accObj = [SELECT ID_Card_KeyAccount_features__c FROM Account WHERE id =:uAccId];
+                    SObject accObj = Database.query('SELECT id, ParentId, ' + getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_NAME) +
+                            ' FROM Account WHERE id =\'' + uAccId + '\'');
+
+                    System.debug('basto1p - accObj=' + accObj);
+                    String fieldValue = '';
+                    if (accObj != null) {
+                        fieldValue = String.valueOf(accObj.get(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_NAME)));
+                    }
+                    System.debug('basto1p - fieldValue=' + fieldValue);
+
+                    if (!String.isBlank(fieldValue) &&
+                            fieldValue.contains(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_VALUE))) {
+                        allowedSubTopic = true;
+                    } else {
+                        allowedSubTopic = false;
+                    }
+
+                    System.debug('basto1p - setLiveAgentButtonsNames ' +
+                            getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_FIELD_NAME) + '=' +
+                            fieldValue);
+
+                    uAccId=(Id)accObj.get('ParentId');
+                }
+                while (    !String.isBlank(uAccId)
+                        && (allowedSubTopic!=true)
+                        && Boolean.valueOf(getLivAgConfig(LVA_CFG_ACCOUNT_EMERG_CHECK_HIERARCHY))==true);
+            }
+        }
+
+        system.debug('basto1p - isLiveAgentButtonAllowed AFTER PROCESS EXCEOPTIONS to role allowedSubTopic='+allowedSubTopic);
+
+	    resVal =   allowedSubTopic
+			&& isAllowedCode(ButtonItemConfig.Name);
+
+	    system.debug('basto1p - isLiveAgentButtonAllowed ButtonName='+ButtonItemConfig.Name+'resVal='+resVal);
+
+	    return resVal;
+    }
+
+/*******************************************************************************************************
+* @description Resets live agent settings and configuration variables
+*
+* @example
+* this.resetLiveAgentVars();
+*
+* @history
+* -----------------------------------------------------------------------------------------------
+* Date         Created by                        Description
+* 2017-09-13   paulo.bastos@rightitservices.com  Creation
+********************************************************************************************************/
+    private void resetLiveAgentVars(){
+        //basto1p - live agent v2
+        this.csButtonsList=new Map <String,buttonsInfoType>();
+        this.livAgentCsButtonNameVsCategoryMap=new Map <String, String>();
+    }
+
+
     private List<IATA_ISO_Country__c> countries{
         get{
             if (countries == null){
@@ -251,8 +1348,18 @@ public without sharing class vfISSP_FAQ2Case
     }
 
     private void resetCase() {
+        //basto1p - live agent v2
+        this.isToShowFAQs=false;
+
         this.newCase = new Case();
         this.newCase1 = new Case();
+        
+        isIFG = false;
+        areaOfConcern = Env.SelectOptionDefaultValue ;
+        this.lst_selectareasOfConcern = new list<SelectOption>();
+        this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
+
+        this.resetLiveAgentVars();
     }
 
     private void addDecsription() {
@@ -263,10 +1370,17 @@ public without sharing class vfISSP_FAQ2Case
         {
              Integer index = Integer.valueOf(topic.trim());
              clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+             
+             String areaOfConcernStr='';
+             if (isIFG && areaOfConcern!='' && areaOfConcern!=null && !areaOfConcern.contains('-- None --')){
+                areaOfConcernStr='\n'+Label.ISSP_Area_of_Concern+' - '+areaOfConcern+'\n';
+             }
+            
              addDecsription = Label.ISSP_F2CTopic + ' - '
                               + selectDataCategory.CategoryLabel + '\n'
                               + labelSubTopic + ' - '
-                              + selectDataCategory.getLabelByNameCategory(subtopic);
+                              + selectDataCategory.getLabelByNameCategory(subtopic)
+                              + areaOfConcernStr;
         }else {
              addDecsription = Label.ISSP_F2CTopic + ' - '
                               + 'COMPLIMENT' + '\n'
@@ -287,28 +1401,80 @@ public without sharing class vfISSP_FAQ2Case
         }
         // end compliment
     }
-	    public Boolean isAllowedCode(String btnName) {
 
-        List<LiveAgent_Countries_Per_Button__c> aCountries = [SELECT Iso_Code__c FROM LiveAgent_Countries_Per_Button__c WHERE Button_Name__c = :btnName];
-        Set<String> aCodes = new Set<String>();
-        for (LiveAgent_Countries_Per_Button__c aCountry :aCountries){
-            aCodes.add(aCountry.Iso_Code__c);
+
+    /*******************************************************************************************************
+    * @description Checks if given chat button (butName) is allowed to be displayed in user interface
+    *              by evaluating the following context:
+    *                 1) current user account sector (this.sector)
+    *                 2) current case selected country related region (this.region)
+    *                 3) current case selected country (newCase1.IFAP_Country_ISO__c)
+    *
+    * @param {string} butName - Name of chat button to check if it is allowed
+    *
+    * @return {Boolean} resVal - true if allowed false if not
+    *
+    * @example
+    * this.isAllowedCode('AirlineEnglishptEurope');
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * ????-??-??   ???????                           Creation
+    * 2017-09-07   paulo.bastos@rightitservices.com  Update for live agent v2
+    ********************************************************************************************************/
+    public Boolean isAllowedCode(String butName) {
+        Boolean result=false;
+
+        System.debug('basto1p - BEGIN isAllowedCode butName='+butName+'; this.sector='+this.sector+'; this.region='+this.region);
+
+        //This query controlls when a specific chat button is shown
+        /*
+          Configuration is made related with allowing access of given chatt buttons
+          For a given button name:
+            1) if is configured Iso_Code__c, button is allowed for that country code
+            2) if is configured only Region__c, button is allowed for all countries from that region
+            3) if is configured only Sector__c, button is allowed for all users from that sector
+               (independently of Region__c or Iso_Code__c)
+            4) if is configured combination of Region__c and Sector__c, button is allowed for
+               all countries from that region but only for users from that sector
+        */
+        List<LiveAgent_Countries_Per_Button__c> aCountries =
+            [SELECT Iso_Code__c
+            FROM LiveAgent_Countries_Per_Button__c
+            WHERE
+            (   Button_Name__c = :butName
+             AND Iso_Code__c =:newCase.IFAP_Country_ISO__c
+            )
+            OR
+            (    Button_Name__c = :butName
+             AND Sector__c=:this.sector
+             AND Region__c=:this.region)
+            OR
+            (    Button_Name__c = :butName
+             AND Sector__c=:this.sector
+             AND Region__c = ''
+//             AND Iso_Code__c = ''
+             )
+            OR
+            (    Button_Name__c = :butName
+             AND Region__c=:this.region
+             AND Sector__c = '')
+            ];
+
+        System.debug('basto1p - isAllowedCode QUERY RESULT:'+aCountries);
+
+        if (aCountries.size()>0){
+            result=true;
         }
-        return aCodes.contains(newCase.IFAP_Country_ISO__c);
+
+        System.debug('basto1p - END isAllowedCode btnName='+butName
+                +'; newCase.IFAP_Country_ISO__c='+newCase.IFAP_Country_ISO__c
+                +'; result='+result);
+
+        return result;
     }
 
-    public Boolean isAllowedSector(string btnName) {
-
-        LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
-        try{
-            labs = LiveAgentButtonSettings__c.getAll().get(btnName);
-        }catch(Exception e){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
-            return false;
-        }
-        Set<String> aSectors =  new Set<String>(labs.sectors__c.split(','));
-        return aSectors.contains(sector);
-    }
 
     /*
         Actions
@@ -460,11 +1626,31 @@ public without sharing class vfISSP_FAQ2Case
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
         return new Pagereference(String.isNotBlank(retURL) ? retURL : '/ISSP_Homepage?mid=M0S1'+commParam);
     }
+    //basto1p - live agent v2 cancel submit form
+    public PageReference cancel()
+    {
+        string retURL = ApexPages.currentPage().getParameters().get('retURL');
+        return new Pagereference(String.isNotBlank(retURL) ? retURL : '/ISSP_FAQ2Case?mid=M0S1'+commParam);
+    }
 
     public PageReference save()
     {
-
+        if (areaOfConcern!=null) {
+            areaOfConcern = areaOfConcern.trim();
+            if (areaOfConcern.contains('-- None --') || areaOfConcern.contains('-- Select --')) {
+                areaOfConcern = '';
+            }
+            system.debug('basto1p - areaOfConcern=' + areaOfConcern.contains('-- None --') + ', isIFG=' + isIFG);
+            system.debug('basto1p - newCase.areaOfConcern=' + newCase.Area_of_Concern__c);
+        }
+        else
+        {
+            areaOfConcern = '';
+        }
+    this.errorMessage = new list<String>();
+        System.debug('basto1p - FAQ2Case.save isIFG='+isIFG);
         if( ((subtopic == null ||subtopic == '' ||subtopic == '-- Select --' || subTopic == topic))||//added &&iscompliment to bypass error message
+            ((areaOfConcern == null || areaOfConcern == '') && isIFG==true && this.lst_selectareasOfConcern.size()>1) ||
             (newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')||
             (newCase.Subject == null ||newCase.Subject == '')||
             (newCase.Description == null ||newCase.Description == '')){
@@ -472,6 +1658,9 @@ public without sharing class vfISSP_FAQ2Case
             string ErrFields = '';
             if((subtopic == null ||subtopic == ''||subtopic == '-- Select --'|| subTopic == topic)&&isCompliment1!= true){
                ErrFields += System.Label.ISSP_I_wish_to_complain_about +'xx, '+isCompliment1;
+            }
+            if((areaOfConcern == null || areaOfConcern == '') && isIFG==true && this.lst_selectareasOfConcern.size()>1){
+               ErrFields += System.Label.ISSP_Area_of_Concern;
             }
             if((newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')){
                ErrFields += System.Label.Country_concerned_by_the_query +', ';
@@ -483,6 +1672,7 @@ public without sharing class vfISSP_FAQ2Case
                 ErrFields += System.Label.IDCard_Description+', ';
             }
             if(ErrFields != ''){
+                system.debug('basto1p - ErrFields NOT EMPTY!!!');
                 errorMessage = new list<string>();
                 String errorString = ErrFields+' '+system.Label.ISSP_Should_be_mandatory;
                 errorMessage.add(errorString);
@@ -492,9 +1682,20 @@ public without sharing class vfISSP_FAQ2Case
             }
         }
 
+        newCase.Area_of_Concern__c=areaOfConcern;
+        
         addDecsription();
         setRecordType(); //TF - SP11
-
+        
+        // find CC contacts
+        list<Contact> listCCContacts = new list<Contact>();
+        try {
+            listCCContacts = validateCCOthers();
+        } catch (CCOthersException e) {
+            this.errorMessage.add(e.getMessage());
+            return null;
+        }
+        
         //ASsign new CAse Record Type
         if(AssignNewCaseRecordType() != null){
             newCase.RecordTypeId = AssignNewCaseRecordType();
@@ -508,11 +1709,11 @@ public without sharing class vfISSP_FAQ2Case
             cnsTopicMap.put(ct.Topic__c, ct);
         }
 
-        Boolean isCNS = ISSP_Utilities.isCNS();
         if(isCNS || cnsTopicMap.containsKey(newCase.Topic__c.replace(' ', ''))) {
             newCase.CNSCase__c = true;
             newCase.Groups__c = 'CNS Team'; // important field to be used on E2C premium
         }
+        newCase.Case_Language__c = null;
 
         system.debug('wwe newCase: ' + newCase );
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && isCompliment1!= true){
@@ -530,6 +1731,7 @@ public without sharing class vfISSP_FAQ2Case
         else{
             system.debug('wwe newCase2: ' + newCase );
             Database.insert(newCase);
+            addCaseTeamContacts(newCase, listCCContacts);
             return new Pagereference('/ISSP_Case?caseId='+newCase.Id + commParam);
         }
     }
@@ -538,6 +1740,7 @@ public without sharing class vfISSP_FAQ2Case
 
     public PageReference saveAttach()
     {system.debug('wwewwe IFAP_Country_ISO__c: ' + newCase.IFAP_Country_ISO__c );
+         this.errorMessage = new list<String>();
          if( ((subtopic == null ||subtopic == '' ||subtopic == '-- Select --' || subTopic == topic)||
             (newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')||
             (newCase.Subject == null ||newCase.Subject == '')||
@@ -580,7 +1783,15 @@ public without sharing class vfISSP_FAQ2Case
             cnsTopicMap.put(ct.Topic__c, ct);
         }
 
-        Boolean isCNS = ISSP_Utilities.isCNS();
+        // find CC contacts
+        list<Contact> listCCContacts = new list<Contact>();
+        try {
+            listCCContacts = validateCCOthers();
+        } catch (CCOthersException e) {
+            this.errorMessage.add(e.getMessage());
+            return null;
+        }
+
         if(isCNS || cnsTopicMap.containsKey(newCase.Topic__c.replace(' ', ''))) {
             newCase.CNSCase__c = true;
             newCase.Groups__c = 'CNS Team'; // important field to be used on E2C premium
@@ -590,6 +1801,7 @@ public without sharing class vfISSP_FAQ2Case
         if(AssignNewCaseRecordType() != null){
             newCase.RecordTypeId = AssignNewCaseRecordType();
         }
+        newCase.Case_Language__c = null;
 
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && isCompliment1!= true){
             errorMessage = new list<string>();
@@ -606,9 +1818,81 @@ public without sharing class vfISSP_FAQ2Case
         }
         else{
             Database.insert(newCase);
+            addCaseTeamContacts(newCase, listCCContacts);
             //return new Pagereference('/p/attach/NoteAttach?pid=' + newCase.Id + '&retURL=%2FISSP_Case?caseId='+ newCase.Id);
             return new Pagereference('/apex/ISSP_AddAttachment?caseid=' + newCase.Id + commParam);
         }
+    }
+
+    /**
+        Check cc input box, all emails inside must be in a valid contact
+        Otherwise throw an error
+    **/
+    public class CCOthersException extends Exception {}
+    private list<Contact> validateCCOthers() {
+        // get ccother value entered by user
+        String additionalCCField = '';
+        for (sectionRecordWrapper section : this.fullList) {
+            for (fieldRecordWrapper thisField : section.fieldList) {
+                if (thisField.fieldType == 'ccothers' && thisField.fieldValueEntered!=null) {
+                    additionalCCField = thisField.fieldValueEntered;
+                }
+            }
+        }
+        // separate input string in a list of emails
+        list<String> listEmail = new list<String>();
+        for (String ccemail: additionalCCField.replace(';',',').split(',')) {
+            ccemail = ccemail.trim();
+            if (ccemail!='') {
+                listEmail.add(ccemail);
+            }
+        }
+        list<Contact> listContact = [SELECT Id, Email FROM Contact WHERE email IN :listEmail];
+        
+        // Check that all emails were found
+        list<String> listWrongEmails = new list<String>();
+        for (String email: listEmail) {
+            if (!isEmailInContactList(email, listContact)) {
+                listWrongEmails.add(email);
+            }
+        }
+        if (!listWrongEmails.isEmpty()) {
+            throw new CCOthersException(Label.ISSP_CCOther_Wrong_Emails.replace('{0}',String.valueOf(listWrongEmails)));
+        }
+        return listContact;
+    }
+
+    /**
+        Check if input email is one of the input contacts
+    **/
+    private Boolean isEmailInContactList(String email, list<Contact> listContact) {
+        for (Contact contact: listContact) {
+            if (email == contact.Email) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+        Add Team Roles to input case, one per each contact
+    **/
+    private void addCaseTeamContacts(Case cse, list<Contact> listContact) {
+        if (listContact.isEmpty()) return;
+        list<CaseTeamMember > listCaseTeam = new list<CaseTeamMember>();
+        list<String> listEmail = new list<String>();
+        for (Contact contact: listContact) {
+            listCaseTeam.add(new CaseTeamMember(
+                ParentId = cse.Id,
+                MemberId = contact.Id,
+                TeamRoleId = PARTNER_USER_ROLE
+            ));
+            listEmail.add(contact.Email);
+        }
+        insert listCaseTeam;
+        // update case.E2CP__AdditionalCC__c field with helper class to ignore permissions
+        String stringEmails = String.join(listEmail,',');
+        new E2CPFieldAccess(cse.Id).setAdditionalCC(stringEmails);
     }
 
     public   PageReference IwishtoComplain()
@@ -670,7 +1954,6 @@ public without sharing class vfISSP_FAQ2Case
         errorMessage = new list<string>();
         create();
 
-        Boolean isCNS = ISSP_Utilities.isCNS();
         if(isCNS ) {
             List<IATA_ISO_Country__c> lsIsoCountries = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1];
             if(!lsIsoCountries.isEmpty()) {
@@ -684,9 +1967,12 @@ public without sharing class vfISSP_FAQ2Case
 
     public void refreshTopicPickList()
     {
+        System.debug('basto1p - refreshTopicPickList myTopic='+myTopic);
         system.debug('JK22 isComplain refreshTopicPickList START: ' + isComplain);
         resetCase();
-        this.currentButtonsToShow = OnlyCancel;
+        if (this.currentButtonsToShow!=CancelAndSubmit) {
+            this.currentButtonsToShow = OnlyCancel;
+        }
         system.debug('Kerensen refreshTopicPickList: After  resetCase(); '+topic+'     Env.SelectOptionDefaultValue===>'+Env.SelectOptionDefaultValue  );
         if (topic.compareTo(Env.SelectOptionDefaultValue) == 0)
         {system.debug('Kerensen refreshTopicPickList: IN If '  );
@@ -702,6 +1988,7 @@ public without sharing class vfISSP_FAQ2Case
             system.debug('TOPIC: ' + topic);
             Integer index = Integer.valueOf(topic.trim());
             system.debug('INTEGER: ' + index);
+            isToShowFAQs = true;
 
             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
@@ -727,33 +2014,43 @@ public without sharing class vfISSP_FAQ2Case
         system.debug('SFI2 CALL setSubTopicByPermissions ' + topic + ' isTopicDefault ' + isTopicDefault);
         if(isTopicDefault != true) //INC263231
             setSubTopicByPermissions();
+        
         system.debug('JK22 isComplain refreshTopicPickList END: ' + isComplain);
     }
 
-   public void refreshSubTopicPickList()     {
+   public void refreshSubTopicPickList(){
 
         resetCase();
+       System.debug('basto1p - refreshSubTopicPickList myTopic='+myTopic);
         system.debug('TOPIC: ' + topic);
         Integer index = Integer.valueOf(topic.trim());
         system.debug('INTEGER: ' + index);
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
         system.debug('JK subtopic: ' + subtopic);
+
+        // if strings are equals (subtopic empty)
         if (subtopic.compareTo(Env.SelectOptionDefaultValue) == 0)
         {
             subtopic = selectDataCategory.CategoryName;
-            this.currentButtonsToShow = CancelAndSubmit;
+            if (this.currentButtonsToShow!=CancelAndCreateACase) {
+                this.currentButtonsToShow = CancelAndSubmit;
+            }
             system.debug('JK1 this.currentButtonsToShow: ' + this.currentButtonsToShow);
         }
         else
         {
             if(isComplain != true){
-                this.currentButtonsToShow = CancelAndCreateACase;
+                if (this.currentButtonsToShow!=CancelAndSubmit){
+                    this.currentButtonsToShow = CancelAndCreateACase;
+                }
+
                 system.debug('JK2 this.currentButtonsToShow: ' + this.currentButtonsToShow);
             }else{
                 this.currentButtonsToShow = CancelAndSubmit;
-                system.debug('JK2 this.currentButtonsToShow: ' + this.currentButtonsToShow);
+                system.debug('JK3 this.currentButtonsToShow: ' + this.currentButtonsToShow);
             }
         }
+
         articleViewLines = buildArticleViewLines(selectDataCategory.topCategoryName, subtopic, Userinfo.getLanguage());
         system.debug('JK this.currentButtonsToShow: ' + this.currentButtonsToShow);
 
@@ -762,9 +2059,61 @@ public without sharing class vfISSP_FAQ2Case
             if(!lsIsoCountries.isEmpty()) {
                 this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
                 this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+                
+                //this.setLiveAgentButtonsNames(); /* Change to this if live agent becomes available for CNS */
+                this.getAndSetCallUsString();
             }
         }
+
+       system.debug('basto1p before setIsIFG CategoryName='+selectDataCategory.CategoryName);
+        //Set Areas of Concern Pick List
+       setIsIFG(selectDataCategory.CategoryName);
+
+       //basto1p Live Agent v2 (set topic label name)
+       this.topicLabel=selectDataCategory.CategoryName;
+
+       if (isIFG){
+           List<IFG_AreasOfConcernMapp__mdt> SubTopicAreasOfConcernMappList;
+           SubTopicAreasOfConcernMappList=[SELECT SubTopic__c, MasterLabel FROM IFG_AreasOfConcernMapp__mdt ORDER BY SubTopic__c ASC, MasterLabel ASC];
+           
+           this.lst_selectareasOfConcern = new list<SelectOption>();
+           this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
+           
+           for (IFG_AreasOfConcernMapp__mdt AreasOfConcernItem : SubTopicAreasOfConcernMappList){
+               system.debug('subtopic='+subtopic+'; AreasOfConcernItem.SubTopic='+AreasOfConcernItem.SubTopic__c);
+               if (subtopic.Contains(AreasOfConcernItem.SubTopic__c)){
+                   system.debug('ADDED subtopic='+subtopic+'; AreasOfConcernItem.SubTopic='+AreasOfConcernItem.MasterLabel);
+                   this.lst_selectareasOfConcern.add(new SelectOption(AreasOfConcernItem.MasterLabel, AreasOfConcernItem.MasterLabel));
+               }
+           }
+           /*
+           this.lst_selectareasOfConcern.add(new SelectOption('SLB', 'Benfica'));
+           this.lst_selectareasOfConcern.add(new SelectOption('SLB2', 'Benfica2'));
+           */
+       }
+       else
+       {
+           this.lst_selectareasOfConcern = new list<SelectOption>();
+           this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
+       }
     }
+    
+    public void refreshAreasOfConcernPickList(){
+        system.debug('basto1p - TOPIC: ' + topic);
+        system.debug('basto1p - SUB-TOPIC: ' + subtopic);
+        
+    }
+    public void setIsIFG(String categoryName){
+        system.debug('basto1p - setIsIFG categoryName='+categoryName);
+        if (categoryName==IFG_TOPIC) {
+            isIFG=true;
+        }
+        else {
+            isIFG=false;
+        }
+        system.debug('basto1p - isIFG='+isIFG);
+    }
+    
     /*
      * End Actions
     */
@@ -934,62 +2283,74 @@ public without sharing class vfISSP_FAQ2Case
      */
     public static list<ArticleViewLine> buildArticleViewLines(String headCat, String childCat, String lang)
     {
-        String[] childCatList = String.isNotEmpty(childCat) ? new String[] {childCat} : null;
-        //List<String> childCatList = String.isNotEmpty(childCat) ? new List<String> {childCat} : null;
-        List<FAQ__kav> articalList = getArticalsByCat(headCat, childCatList);
-        Map<ID, FAQ__kav> artical2ParentIdMap = new Map<ID, FAQ__kav>();
-        Map<Id, FAQ__kav> parentIdToMyLanguageArticle_Map = new Map<Id, FAQ__kav>();
-        Set<Id> parentVotIdsSet= new Set<Id>();
-
-        // Iterating over all articles(for specific category) and creating a map between the articles and their parent's Id
-        for(FAQ__kav oneArtical : articalList)
-        {
-            artical2ParentIdMap.put(oneArtical.KnowledgeArticleId, oneArtical);
-        }
-
-        // Top 5 articles
-        list<FAQ__VoteStat> voteStatList = getArticleVoteStatByIds(artical2ParentIdMap.keySet(), ENV.ArticleChannel.AllChannels);//todo chanel
-
-        // Create a set Id with all top 5 articles
-        for(FAQ__VoteStat article : voteStatList)
-        {
-            parentVotIdsSet.add(article.ParentId);
-        }
-
-        // From the Top 5 articles create a list with articles in my language
-        List<FAQ__kav> myLanguageArticle_List = [SELECT Id, UrlName, Summary, Title, Language,
-         Answer__c ,
-         KnowledgeArticleId,
-                                                    PublishStatus, ArticleNumber, LastPublishedDate
-                                                    FROM FAQ__kav
-                                                    WHERE KnowledgeArticleId IN :parentVotIdsSet AND Language =: lang AND PublishStatus = 'Online'];
-
-        // Create a map with the parent Id of each article in 'myLanguageArticle_List'
-        for (FAQ__kav otherlanguageArticle : myLanguageArticle_List) {
-            parentIdToMyLanguageArticle_Map.put(otherlanguageArticle.KnowledgeArticleId, otherlanguageArticle);
-
-        }
-
+        //basto1p - LiveAgentv2 - only generates articles view if faqs area available for that country
         list<ArticleViewLine> articleViewLines = new list<ArticleViewLine>();
+        if (areFAQsAllowedForCurrentCountry()) {
+            String[] childCatList = String.isNotEmpty(childCat) ? new String[] {childCat} : null;
+            //List<String> childCatList = String.isNotEmpty(childCat) ? new List<String> {childCat} : null;
+            List<FAQ__kav> articalList = getArticalsByCat(headCat, childCatList);
+            Map<ID, FAQ__kav> artical2ParentIdMap = new Map<ID, FAQ__kav>();
+            Map<Id, FAQ__kav> parentIdToMyLanguageArticle_Map = new Map<Id, FAQ__kav>();
+            Set<Id> parentVotIdsSet = new Set<Id>();
 
-        // Iterating over 5 Top voted articles
-        for(FAQ__VoteStat oneVoteStat : voteStatList)
-        {
-            FAQ__kav artical = new FAQ__kav();
+            // Iterating over all articles(for specific category) and creating a map between the articles and their parent's Id
+            for (FAQ__kav oneArtical : articalList)
+            {
+                artical2ParentIdMap.put(oneArtical.KnowledgeArticleId, oneArtical);
+            }
 
-            // If we have the article in other language
-            if (parentIdToMyLanguageArticle_Map.containsKey(oneVoteStat.ParentId)){
-                artical = parentIdToMyLanguageArticle_Map.get(oneVoteStat.ParentId);
+            // Top 5 articles
+            list<FAQ__VoteStat> voteStatList =
+                    getArticleVoteStatByIds(artical2ParentIdMap.keySet(), ENV.ArticleChannel.AllChannels);//todo chanel
+
+            // Create a set Id with all top 5 articles
+            for (FAQ__VoteStat article : voteStatList)
+            {
+                parentVotIdsSet.add(article.ParentId);
             }
-            else {
-                // If we dont have the article in our language then get the article in the english language
-                artical = artical2ParentIdMap.get(oneVoteStat.ParentId);
+
+
+            // From the Top 5 articles create a list with articles in my language
+            /*
+            List<FAQ__kav> myLanguageArticle_List = [SELECT Id, UrlName, Summary, Title, Language,
+                    Answer__c ,
+                    KnowledgeArticleId,
+                    PublishStatus, ArticleNumber, LastPublishedDate
+                    FROM FAQ__kav
+                    WHERE KnowledgeArticleId IN :parentVotIdsSet AND Language =: lang AND PublishStatus = 'Online'];
+            */
+            List<FAQ__kav> myLanguageArticle_List = Database.query('SELECT Id, UrlName, Summary, Title, Language,'+
+                    'Answer__c ,'+
+                    'KnowledgeArticleId,'+
+                    'PublishStatus, ArticleNumber, LastPublishedDate'+
+                    ' FROM FAQ__kav'+
+                    ' WHERE KnowledgeArticleId IN :parentVotIdsSet'+
+                    ' AND Language =: lang '+
+                    ' AND PublishStatus = \'Online\'');
+
+            // Create a map with the parent Id of each article in 'myLanguageArticle_List'
+            for (FAQ__kav otherlanguageArticle : myLanguageArticle_List) {
+                parentIdToMyLanguageArticle_Map.put(otherlanguageArticle.KnowledgeArticleId, otherlanguageArticle);
+
             }
-            system.debug('Adding one');
-            ArticleViewLine viewLine = new ArticleViewLine(artical, oneVoteStat);
-            articleViewLines.add(viewLine);
+
+            // Iterating over 5 Top voted articles
+            for (FAQ__VoteStat oneVoteStat : voteStatList)
+            {
+                FAQ__kav artical = new FAQ__kav();
+
+                // If we have the article in other language
+                if (parentIdToMyLanguageArticle_Map.containsKey(oneVoteStat.ParentId)) {
+                    artical = parentIdToMyLanguageArticle_Map.get(oneVoteStat.ParentId);
+                } else {
+                    // If we dont have the article in our language then get the article in the english language
+                    artical = artical2ParentIdMap.get(oneVoteStat.ParentId);
+                }
+                system.debug('Adding one');
+                ArticleViewLine viewLine = new ArticleViewLine(artical, oneVoteStat);
+                articleViewLines.add(viewLine);
+            }
         }
-
         return articleViewLines;
     }
 
@@ -1037,6 +2398,148 @@ public without sharing class vfISSP_FAQ2Case
                 LIMIT 10000 ];
     }
 
+    /**
+        Return a SelectOption List with all IATA codes in the account hierarchy
+    **/
+    @TestVisible
+    private List<List<SelectOption>> initIATACodeList(Id accountId) {
+         List<List<SelectOption>> IATACodeList = new  List<List<SelectOption>>();
+        try {
+            // find all parents for current account
+            Account currentAccount = [
+                Select id, Name, IATAcode__c,
+                    ParentId,
+                    Parent.ParentId,
+                    Parent.Parent.ParentId,
+                    Parent.Parent.Parent.ParentId,
+                    Parent.Parent.Parent.Parent.ParentId
+                From Account
+                Where id = :accountId ];
+
+            // find the top parent
+            Id parentId = null;
+            if (currentAccount.ParentId == null ) {
+                parentId = currentAccount.Id;
+            } else if (currentAccount.Parent.ParentId == null ) {
+                parentId = currentAccount.ParentId;
+            } else if (currentAccount.Parent.Parent.ParentId == null ) {
+                parentId = currentAccount.Parent.ParentId;
+            } else if (currentAccount.Parent.Parent.Parent.ParentId == null ) {
+                parentId = currentAccount.Parent.Parent.ParentId;
+            } else if (currentAccount.Parent.Parent.Parent.Parent.ParentId == null ) {
+                parentId = currentAccount.Parent.Parent.Parent.ParentId;
+            } else {
+                parentId = currentAccount.Parent.Parent.Parent.Parent.ParentId;
+            }
+            
+            //Hierarchy Lists
+            List<List<Account>> auxAccounts = new List<List<Account>>();
+            List <Account> accountList2 = new List<Account>();
+            List <Account> accountList3 = new List<Account>();
+            List <Account> accountList4 = new List<Account>();
+            List <Account> accountList5 = new List<Account>();
+            List<SelectOption> none = new List<SelectOption>();
+            none.add(new SelectOption('', '--None--'));
+            IATACodeList.add(none);
+            // Get all account in the hierarchy
+            List <Account> accountList1 =
+            [SELECT Id, IATAcode__c, Site, Location_type__c
+                FROM Account
+                WHERE IATAcode__c != null
+                AND (Id = :parentId
+                OR ParentId = :parentId
+                OR Parent.ParentId = :parentId
+                OR Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId)
+                ORDER BY IATAcode__c ASC
+                Limit 1000]; 
+            auxAccounts.add(accountList1);
+            if(accountList1.size() == 1000){
+                accountList2 =
+                [SELECT Id, IATAcode__c, Site, Location_type__c
+                FROM Account
+                WHERE IATAcode__c != null
+                AND (Id = :parentId
+                OR ParentId = :parentId
+                OR Parent.ParentId = :parentId
+                OR Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId)
+                ORDER BY IATAcode__c ASC
+                Limit 1000
+                Offset 1000]; 
+                auxAccounts.add(accountList2);
+            }
+            if(accountList2.size() == 1000){
+                accountList3 =
+                [SELECT Id, IATAcode__c, Site, Location_type__c
+                FROM Account
+                WHERE IATAcode__c != null
+                AND (Id = :parentId
+                OR ParentId = :parentId
+                OR Parent.ParentId = :parentId
+                OR Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId)
+                ORDER BY IATAcode__c ASC
+                Limit 1000
+                Offset 2000]; 
+                auxAccounts.add(accountList3);
+            }
+            if(accountList3.size() == 1000){
+                accountList4 =
+                [SELECT Id, IATAcode__c, Site, Location_type__c
+                FROM Account
+                WHERE IATAcode__c != null
+                AND (Id = :parentId
+                OR ParentId = :parentId
+                OR Parent.ParentId = :parentId
+                OR Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId)
+                ORDER BY IATAcode__c ASC
+                Limit 1000
+                Offset 3000]; 
+                auxAccounts.add(accountList4);
+            }
+            if(accountList4.size() == 1000){
+                accountList5 =
+                [SELECT Id, IATAcode__c, Site, Location_type__c
+                FROM Account
+                WHERE IATAcode__c != null
+                AND (Id = :parentId
+                OR ParentId = :parentId
+                OR Parent.ParentId = :parentId
+                OR Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId)
+                ORDER BY IATAcode__c ASC
+                Limit 1000
+                Offset 4000]; 
+                auxAccounts.add(accountList5);
+            }
+            if(auxAccounts!= null && auxAccounts.size() >0 ){ 
+                for(List<Account> accounts : auxAccounts){
+                    List<SelectOption> optionsAux = new List<SelectOption>();
+                    for(Account acc : accounts){
+                        optionsAux.add(new SelectOption(acc.IATAcode__c, acc.IATAcode__c + ' - ' + acc.Location_type__c)); 
+                    }
+                    if(optionsAux.size() > 0)
+                        IATACodeList.add(optionsAux);
+                }
+            }
+            // current account value as default
+            this.newCase.IATACode__c = currentAccount.IATAcode__c;
+            iataCode = this.newCase.IATACode__c;
+
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        }
+        return IATACodeList;
+        
+    }
+    
     // Get all catagory's articles in the english language
     public static list<FAQ__kav> getArticalsByCat(String cat, list<String> subCatList)
     {
@@ -1124,6 +2627,7 @@ public without sharing class vfISSP_FAQ2Case
                 airlines.add(new SelectOption(thisService.Services_Rendered_to_Airline__r.Site, thisService.Services_Rendered_to_Airline__r.Name));
             }
         }
+        this.setLiveAgentButtonsNames();
     }
     public void getGsaCountryList_2() {
         system.debug('IN getGsaCountryList');
@@ -1178,8 +2682,11 @@ public without sharing class vfISSP_FAQ2Case
             this.topic = '0';
         }
 
-        //Set Origin to be PORTAL
-        newCase.Origin = 'Portal';
+        // NewGenAPP when is called by APP, don't write on Origin field.
+        if(callApexPagesParameters){
+            //Set Origin to be PORTAL
+            newCase.Origin = 'Portal';
+        }
 
 
         Integer index = Integer.valueOf(topic.trim());
@@ -1202,6 +2709,11 @@ public without sharing class vfISSP_FAQ2Case
             newCase.Country_concerned_by_the_query__c = lst_Country[0].Case_BSP_Country__c ;
         }
 
+        system.debug('basto1p topicName: ' + topicName);
+        system.debug('basto1p subtopic: ' + subtopic);
+        system.debug('basto1p parentCase.Compliment__c: ' + isComplain1);
+        system.debug('basto1p varCountry: ' + varCountry);
+        
         //select all matched custom settings
         List <ISSP_FAQ2Case_Record_Type__c> csList = [SELECT RecordType__c, OwnerId__c ,Topic__c ,SubTopic__c ,Complaint__c ,Country_concerned_by_the_query__c ,
                                                              Country_concerned_by_the_query2__c , Country_concerned_by_the_query3__c,
@@ -1218,6 +2730,7 @@ public without sharing class vfISSP_FAQ2Case
 
 
         if(csList != null && csList.size() > 0 ) {
+            system.debug('basto1p: csList NOT EMPTY');
             String userInput_Country = newCase.IFAP_Country_ISO__c ;
 
             //Holds All Topic match Cases
@@ -1235,6 +2748,7 @@ public without sharing class vfISSP_FAQ2Case
 
                 //Collect Topic Match Custom Settings
                 if(cs.Topic__c != null && cs.Topic__c.contains(topicName)){
+                   system.debug('basto1p: ADD TO TopicMatch_Lst'+cs.Topic__c);
                    TopicMatch_Lst.add(cs);
                 }
 
@@ -1260,6 +2774,9 @@ public without sharing class vfISSP_FAQ2Case
                         EmptySubTopicMatch_Lst.add(tcs);
                     }
                 }
+                
+                system.debug('basto1p: TopicMatch_Lst NOT EMPTY');
+                
                 if(SubTopicMatch_Lst != null && SubTopicMatch_Lst.size() > 0)
                 {
                     //Check for country match
@@ -1269,13 +2786,16 @@ public without sharing class vfISSP_FAQ2Case
                     //Topic + NO SubTopic Match Case
                     //Check for country match
                     if(EmptySubTopicMatch_Lst != null && EmptySubTopicMatch_Lst.size() > 0){
+                        system.debug('basto1p: use EmptySubTopicMatch_Lst');
                         FinalMatch_Lst = RetriveMatchCountrySettings(EmptySubTopicMatch_Lst , userInput_Country);
+                        system.debug('basto1p: FinalMatch_Lst='+FinalMatch_Lst);
                     }else{
                         FinalMatch_Lst = RetriveMatchCountrySettings(EmptySubTopicAndSubTopicMatch_Lst , userInput_Country);
                     }
                 }
             }
             else{
+                system.debug('basto1p: NO Topic Match Case');
                 //NO Topic Match Case
                 //Check for country match
                 if(EmptyTopicMatch_Lst != null && EmptyTopicMatch_Lst.size() > 0){
@@ -1286,15 +2806,18 @@ public without sharing class vfISSP_FAQ2Case
 
         if(FinalMatch_Lst != null && FinalMatch_Lst.size() > 0)
         {
+            system.debug('basto1p: FinalMatch_Lst NOT EMPTY');
             ChoosenCS = FinalMatch_Lst[0];
             //Select the choosen Record Type
             String recordType = ChoosenCS.RecordType__c;
-            List <RecordType> recordTypeList = [SELECT Id FROM RecordType WHERE DeveloperName = :recordType AND sObjectType = 'Case'];
+            List <RecordType> recordTypeList = [SELECT Id, Name FROM RecordType WHERE DeveloperName = :recordType AND sObjectType = 'Case'];
 
             if (!recordTypeList.isEmpty()){
                 //Assign RecordType according to custom Settings
                 newCase.RecordTypeId = recordTypeList[0].Id;
 
+                system.debug('basto1p: FinalMatch_Lst recordType='+recordTypeList[0].Name);
+                
                 //Assign owenerId according to custom Settings
                 if (ChoosenCS.OwnerId__c != null && ChoosenCS.OwnerId__c != ''){
                     newCase.OwnerId = ChoosenCS.OwnerId__c;
@@ -1409,10 +2932,16 @@ public without sharing class vfISSP_FAQ2Case
                 || thisField.Type__c == 'Checkbox'
                 || thisField.Type__c == 'AirlineList'
                 || thisField.Type__c == 'GSA_Only_Checkbox'
+                || thisField.Type__c == 'bootstrap-select'
+                || thisField.Type__c == 'ccothers'
                 )
             {
                 fieldRecordWrapper newField = new fieldRecordWrapper(thisField);
-
+                // adding exception to a field
+                if (newField.fieldType == 'bootstrap-select' && newField.fieldValue=='IATAcode__c') {
+                    newField.listOptions = initIATACodeList(this.parentAccountId);
+                }
+                
                 if (thisField.Profile_Id_List__c != '' && thisField.Profile_Id_List__c != null && clickedService == false)
                 {
                     List<String> profileList =  thisField.Profile_Id_List__c.split(';');
@@ -1432,6 +2961,7 @@ public without sharing class vfISSP_FAQ2Case
                 {
                     newField.rendered = true;
                 }
+
                 newSection.fieldList.add(newField);
             }
         }
@@ -1469,6 +2999,8 @@ public without sharing class vfISSP_FAQ2Case
         public Boolean AP_CASE      {get; set;}
         //public Boolean Complaint    {get; set;}
         public Decimal orderNumber  {get; set;}
+        public list<list<SelectOption>> listOptions {get; set;} 
+        public list<SelectOption> listOptionsExtended {get; set;}
 
         public fieldRecordWrapper(ISSP_Case_Fields__c CS){
               this.fieldName    = CS.Label__c ;
@@ -1481,6 +3013,19 @@ public without sharing class vfISSP_FAQ2Case
               this.NOT_FDS      = CS.NOT_FDS__c ;
               this.AP_CASE      = CS.AP_Case__c ;
               //this.Complaint    = CS.Complaint__c ;
+              this.listOptions  = new list<list<SelectOption>>();
+              this.listOptionsExtended  = new list<SelectOption>();
+        }
+        public void addListOptions(list<SelectOption> inputOptions) {
+            Integer maxElems = 1000;
+            for (SelectOption option: inputOptions) {
+                if (this.listOptions.size()<maxElems) {
+                    //this.listOptions.add(option);
+                } else {
+                    //this.listOptionsExtended.add(option);
+                }
+                
+            }
         }
     }
 
@@ -1510,6 +3055,8 @@ public without sharing class vfISSP_FAQ2Case
                 }
             }
         }
+
+        //isSISHelpDesk = true ;//basto1p - AQUI to remove only for test
     }
 
     //Input : RecordTypeName
@@ -1555,13 +3102,13 @@ public without sharing class vfISSP_FAQ2Case
     }
 
     public Id AssignNewCaseRecordType(){
-        if(Clicked_SISHelpDesk = true){
+        if(Clicked_SISHelpDesk == true){
             return getCaseRecordTypeIdByName('Cases_SIS_Help_Desk');
-        }else if(Clicked_IATAServiceRequest = true){
+        }else if(Clicked_IATAServiceRequest == true){
             return getCaseRecordTypeIdByName('IATA_Service_Request');
-        }else if(Clicked_PWCServiceRequest = true){
+        }else if(Clicked_PWCServiceRequest == true){
             return getCaseRecordTypeIdByName('ISS_Portal_PwC');
-        }else if(Clicked_DPCServiceRequest = true ){
+        }else if(Clicked_DPCServiceRequest == true ){
             return getCaseRecordTypeIdByName('DPC_Service_Request');
         }else{
             return null;
@@ -1618,6 +3165,7 @@ public without sharing class vfISSP_FAQ2Case
     private void setTopicByPermissions(){
         //Help Selectoptuion List
         list<SelectOption> tmpselectTopicsList = new list<SelectOption>();
+        boolean isIFGUser = ISSP_Utilities.isIFGUser();
 
         //Select Custom Setting to set permissions
         List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c, ISO_Country__c
@@ -1628,17 +3176,17 @@ public without sharing class vfISSP_FAQ2Case
         system.debug('SFI PermissionList: ' + PermissionList);
         system.debug('SFI PermissionList SIZE: ' + PermissionList.size());
 
-        Boolean isCNS = ISSP_Utilities.isCNS();
-
         if(PermissionList != null && PermissionList.size() > 0){
             for (SelectOption top : this.lst_selectTopics)
             {
                 //set the Topic "English Value"
                 string TopicinEnglish = '';
+                String CategoryNameItem='';
                 if (top.getValue() != '-- Select --')
                 {
                     clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(top.getValue())];
                     TopicinEnglish = ((cdc.CategoryName).replace('__c','')) ;//.replace('_',' ')
+                    CategoryNameItem=cdc.CategoryName;
                 }else{
                     TopicinEnglish ='-- Select --';
                 }
@@ -1664,7 +3212,13 @@ public without sharing class vfISSP_FAQ2Case
                 //If topic has permission add it to the display List
                 if (!FoundExcludePermission)
                 {
-                    tmpselectTopicsList.add(top);
+                    //system.debug('basto1p - TopicinEnglish='+TopicinEnglish);
+                    if(!isIFGUser && CategoryNameItem.equals(IFG_TOPIC)){
+                        continue;
+                    }else{
+                        tmpselectTopicsList.add(top);
+                    }
+
                 }
             }
 
@@ -1727,6 +3281,8 @@ public without sharing class vfISSP_FAQ2Case
     public PageReference copyCountryISO(){
         this.newCase.IFAP_Country_ISO__c = newCase1.IFAP_Country_ISO__c ;
 
+        setLiveAgentButtonsNames();
+
         return null;
     }
 
@@ -1750,6 +3306,4 @@ public without sharing class vfISSP_FAQ2Case
 
         }
     }
-
-
 }

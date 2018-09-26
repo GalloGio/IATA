@@ -46,16 +46,24 @@ public without sharing class AMS_AgencyUpdateHelper {
         List<AMS_Agency_Updates__c> invalidAgencyUpdateToInsert = new List<AMS_Agency_Updates__c>();
         List<AMS_Agency_Updates__c> reEvaluateAgencyUpdate = new List<AMS_Agency_Updates__c>();
         List<AMS_Agency_Updates__c> toRemoveAgencyUpdate = new List<AMS_Agency_Updates__c>();
-        
 
-        Map<Id, Agency_Applied_Change_code__c> mAgencyChangeCode= new Map<Id, Agency_Applied_Change_code__c>(); 
+        //get the change code settings to skip agency update generation
+        Set<String> codesToSkipUpdate = new Set<String>();
+        for(AMS_ChangeCodes__c codeConf :[SELECT Change_Code__c FROM AMS_ChangeCodes__c WHERE Skip_Agency_Update__c = true]){
+            codesToSkipUpdate.add(codeConf.Change_Code__c);
+        }
+
+        Map<Id, Agency_Applied_Change_code__c> mAgencyChangeCode= new Map<Id, Agency_Applied_Change_code__c>();
         Set<Id> agencyIds = new Set<Id>();
         for(SObject obj: updatedRecords){
-            if(obj.getSObjectType() != Schema.Account.getSObjectType()){
-                agencyIds.add((Id)obj.get('Account__c'));//all the fields relating to Agency in every other object as API name Agency__c
+            //only create update if the change code corresponding change code setting is not flagged to skip agency update;
+            if (obj.getSObjectType().getDescribe().getName() == 'Agency_Applied_Change_code__c' && !codesToSKipUpdate.contains((String)obj.get(Schema.Agency_Applied_Change_code__c.Change_Code__c))){
+                if(obj.getSObjectType() != Schema.Account.getSObjectType()){
+                    agencyIds.add((Id)obj.get('Account__c'));//all the fields relating to Agency in every other object as API name Agency__c
+                }
+                else
+                    agencyIds.add(obj.Id);
             }
-            else
-                agencyIds.add(obj.Id);
         }
 
 
@@ -67,7 +75,7 @@ public without sharing class AMS_AgencyUpdateHelper {
 
         List<Account> aulist = [select id,  Name, IATACode__c,BillingStreet,IATA_ISO_Country__c,BillingCity,BillingPostalCode,
                                             Top_Parent__c,Location_Type__c,Status__c,CASS_Number__c,Check_Digit__c,Location_Class__c,
-                (select id,Update_Type__c,Change_Code__c,Account__c from AMS_Agency_Updates__r), 
+                (select id,Update_Type__c,Change_Code__c,Account__c,Status__c from AMS_Agency_Updates__r where Integration_System__c = 'SAP PI' ), 
                 (SELECT Account__c,Account__r.IATACode__c,Active__c,Change_Code__c,For_Integration__c from Agencies_Applied_Change_codes__r WHERE Change_Code__c != null AND For_Integration__c = true)
                 from Account where id in :agencyIds];
 
@@ -92,9 +100,7 @@ public without sharing class AMS_AgencyUpdateHelper {
                     break;
                 }
             }
-            if(bAlreadyUpdated){
-                agenciesAlreadyUpdated.add(au.Id);
-            }
+            if(bAlreadyUpdated) agenciesAlreadyUpdated.add(au.Id);
 
             //Checks if there's a record on update status that needs to be rechecked
             for(AMS_Agency_Updates__c au2: au.AMS_Agency_Updates__r){
@@ -140,7 +146,13 @@ System.debug('sRecIdB: ' + sRecIdB);
                             if(sRecIdA != sRecIdB){
 
                                 String sRecIdRes = AMS_Utils.getRecIdFromIntegrationMatriz( sRecIdA, sRecIdB );
-System.debug('sRecIdRes: ' + sRecIdRes);                                
+System.debug('sRecIdRes: ' + sRecIdRes);
+                                //RB 10-11-2017 - If the determined recId is 'D' check the account status, and if not Terminated, force recId = 'C'
+                                //RB 16-04-2018 this validation should only be applied when checking against an already existing agency update record.
+                                /*if(sRecIdRes == 'D' && au.Status__c != 'Terminated'){
+                                    sRecIdRes = 'C';
+                                }*/
+System.debug('sRecIdRes after D: ' + sRecIdRes);                              
                                 //Check if the agency update record is to delete or not save at all!!
                                 if(sRecIdRes == 'F'){
                                     //remove entry
@@ -186,6 +198,11 @@ System.debug('sRecIdWinner: ' + sRecIdWinner);
                                 sRecIdWinner = sRecIdRes;
 System.debug('sRecIdRes: ' + sRecIdRes);
 System.debug('setToRemoveAgencyUpdate: ' + setToRemoveAgencyUpdate);
+                                //RB 10-11-2017 - If the determined recId is 'D' check the account status, and if not Terminated, force recId = 'C'
+                                if(sRecIdRes == 'D' && au3.Status__c != 'Terminated'){
+                                    sRecIdRes = 'C';
+                                }
+System.debug('sRecIdRes after D: ' + sRecIdRes);
                                 //Check if the agency update record is to delete or not save at all!!
                                 if(sRecIdRes == 'F'){
                                     //remove entry
@@ -349,7 +366,7 @@ System.debug('au3: ' + au3);
             Agency_Applied_Change_code__c agApplCC = mAgencyChangeCode.get(toCreate);
             String sChangeCode = agApplCC == null ? '' : agApplCC.Change_Code__c;
             
-            AMS_Agency_Updates__c aux = new AMS_Agency_Updates__c(Account__c = toCreate, Update_Type__c = 'Update', Change_Code__c = sChangeCode);
+            AMS_Agency_Updates__c aux = new AMS_Agency_Updates__c(Account__c = toCreate, Update_Type__c = 'Update', Change_Code__c = sChangeCode,Integration_System__c='SAP PI');
             agencyUpdateToInsert.add(aux);
         }
 
@@ -360,7 +377,7 @@ System.debug('au3: ' + au3);
             Agency_Applied_Change_code__c agApplCC = mAgencyChangeCode.get(toCreateInvalid);
             String sChangeCode = agApplCC == null ? '' : agApplCC.Change_Code__c;
             
-            AMS_Agency_Updates__c aux = new AMS_Agency_Updates__c(Account__c = toCreateInvalid, Update_Type__c = 'Invalid', Change_Code__c = sChangeCode);
+            AMS_Agency_Updates__c aux = new AMS_Agency_Updates__c(Account__c = toCreateInvalid, Update_Type__c = 'Invalid', Change_Code__c = sChangeCode,Integration_System__c='SAP PI');
             invalidAgencyUpdateToInsert.add(aux);
         }
  
@@ -392,8 +409,7 @@ System.debug('au3: ' + au3);
             insert invalidAgencyUpdateToInsert;    
 
 
-        if(agencyUpdateToUpdate.size() > 0)
-            update agencyUpdateToUpdate;  
+        if(agencyUpdateToUpdate.size() > 0) update agencyUpdateToUpdate;  
 
         return;
     }

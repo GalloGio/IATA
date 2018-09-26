@@ -63,6 +63,9 @@ public without sharing class CustomerAccount_Sel {
     		[SELECT Zuora__BillToId__c, Zuora__SoldToId__c, Account_Contact_ID__c, Zuora__External_Id__c
     			, Zuora__Default_Payment_Method__c, Zuora__Default_Payment_Method__r.Zuora__Type__c
     			, Zuora__Default_Payment_Method__r.Zuora__External_Id__c
+    			/*, Zuora__CreditCard_Expiration__c
+    			, Zuora__Default_Payment_Method__r.Zuora__CreditCardExpirationMonth__c
+				, Zuora__Default_Payment_Method__r.Zuora__CreditCardExpirationYear__c*/
     		FROM Zuora__CustomerAccount__c
     		WHERE Account_Contact_ID__c IN :setAccConId
     		ORDER BY Zuora__AccountNumber__c DESC]) {

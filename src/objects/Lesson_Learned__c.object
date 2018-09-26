@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -88,25 +85,30 @@
         <externalId>false</externalId>
         <inlineHelpText>Used to classify or group this item</inlineHelpText>
         <label>Category</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Release Process Change</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Test Case Add/Update/Del</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Release Task Candidate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Release Process Change</fullName>
+                    <default>false</default>
+                    <label>Release Process Change</label>
+                </value>
+                <value>
+                    <fullName>Test Case Add/Update/Del</fullName>
+                    <default>false</default>
+                    <label>Test Case Add/Update/Del</label>
+                </value>
+                <value>
+                    <fullName>Release Task Candidate</fullName>
+                    <default>false</default>
+                    <label>Release Task Candidate</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Completed_before_in_Release_Number__c</fullName>
@@ -141,29 +143,35 @@
         <externalId>false</externalId>
         <inlineHelpText>Amount of effort required to implement this item</inlineHelpText>
         <label>Level of Effort</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Very High</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>High</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Very High</fullName>
+                    <default>false</default>
+                    <label>Very High</label>
+                </value>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Originating_Release_Number__c</fullName>
@@ -224,29 +232,35 @@
         <externalId>false</externalId>
         <inlineHelpText>Short version status field for use in reporting and list views</inlineHelpText>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Completed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Canceled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>false</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>Canceled</fullName>
+                    <default>false</default>
+                    <label>Canceled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Target_Date__c</fullName>
@@ -284,4 +298,5 @@ ISBLANK(Resolution__c))</errorConditionFormula>
         <errorDisplayField>Resolution__c</errorDisplayField>
         <errorMessage>Resolution is Required if Status Equals &quot;Completed&quot; or &quot;Canceled&quot;</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

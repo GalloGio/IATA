@@ -73,7 +73,6 @@
                             <td width="10%" class="title separator">Currency</td>
                             <td width="12%" class="title separator">Bank Account</td>
                             <td width="12%" class="title separator">Notice of Assignment</td>
-                            <td width="12%" class="title separator">Accelerated Function</td>
                             <!-- <td width="12%" class="title separator">GSA Agreement</td>
                             <td width="12%" class="title separator">Third Party Payment</td>  -->
                             <td width="12%" class="title separator">Split Type</td>
@@ -90,8 +89,7 @@
                                 <td class="separator">{!pa.ICCS_Product_Currency__r.Country__c}</td>
                                 <td class="separator">{!pa.ICCS_Product_Currency__r.Currency__c}</td>                       
                                 <td class="separator">{!pa.Bank_Account_Code__c}</td>
-                                <td class="separator"><apex:outputField value="{!pa.Notice_of_Assignment__c}" /></td>
-                                <td class="separator"><apex:outputField value="{!pa.Accelerated_Function__c}" /></td>
+                                <td class="separator"><apex:outputField value="{!pa.Notice_of_Assignment__c}" /></td>                                
                                 <!-- <td class="separator"><apex:outputField value="{!pa.GSA_Agreement__c}" /></td>
                                 <td class="separator"><apex:outputField value="{!pa.Third_Party_Payment__c}" /></td> -->
                                 <td class="separator"><apex:outputField value="{!pa.Split_Type__c}" /></td>

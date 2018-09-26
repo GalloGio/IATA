@@ -3,6 +3,18 @@
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>ISIS2 Migration</name>
+    <queueMembers>
+        <users>
+            <user>kalasha@iata.org</user>
+            <user>byrnej@iata.org</user>
+            <user>perezj@iata.org</user>
+            <user>murthye@iata.org</user>
+            <user>alsharifr@iata.org</user>
+            <user>ibarrav@iata.org</user>
+            <user>zhangy2@iata.org</user>
+            <user>yoobk1@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

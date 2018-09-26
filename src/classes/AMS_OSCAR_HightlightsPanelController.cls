@@ -52,6 +52,18 @@ public class AMS_OSCAR_HightlightsPanelController {
         try {
             update theOscar;
             this.saveAction = true;
+        } catch(DmlException e) {
+            /*** AMSU-37 ***/
+            String e_message = e.getMessage();
+            if(e_message.contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')) {
+                e_message = e_message.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
+                ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e_message));
+            } else {
+                ApexPages.addMessages(e);
+            }
+
+            System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCAR_HightlightsPanelController - saveStatus] error - ' + e.getMessage());
+            this.theOSCAR = fetchOscarFields(this.oscarId);
         } catch(Exception e) {
             //DML Exceptions are sometimes displayed on the page
             if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
@@ -70,7 +82,9 @@ public class AMS_OSCAR_HightlightsPanelController {
         
         AMS_OSCAR__c toReturn = null;
 
-        List<AMS_OSCAR__c> oscars = [select Id, Account__c,Status__c,Account__r.IATA_ISO_Country__r.Name,Account__r.IATACode__c,Account__r.RecordType.Name,Account__r.Name, 
+        List<AMS_OSCAR__c> oscars = [select Id, Account__c,Status__c,Account__r.IATA_ISO_Country__r.Name,Account__r.IATACode__c,
+                            Account__r.RecordType.Name,Account__r.Name, 
+                            Account__r.Identify_as_Key_Customer__c, Account__r.Key_Customer__c,
                             Owner.Name,CreatedDate from AMS_OSCAR__c where id =: oscarID LIMIT 1];
 
         if(!oscars.isEmpty()) toReturn = oscars.get(0);

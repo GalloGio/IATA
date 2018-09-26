@@ -11,7 +11,6 @@
         <members>Activity</members>
         <members>Asset</members>
         <members>Campaign</members>
-        <members>CampaignMember</members>
         <members>Case</members>
         <members>CaseContactRole</members>
         <members>Contact</members>
@@ -42,5 +41,53 @@
         <members>*</members>
         <name>Workflow</name>
     </types>
-    <version>37.0</version>
+    <types>
+        <members>*</members>
+        <name>CustomPermission</name>
+    </types>
+	<types>
+        <members>AccountContactRole</members>
+		<members>AccountOwnership</members>
+		<members>AccountRating</members>
+		<members>AccountType</members>
+		<members>AssetStatus</members>
+		<members>CampaignMemberStatus</members>
+		<members>CampaignStatus</members>
+		<members>CampaignType</members>
+		<members>CaseContactRole</members>
+		<members>CaseOrigin</members>
+		<members>CasePriority</members>
+		<members>CaseReason</members>
+		<members>CaseStatus</members>
+		<members>CaseType</members>
+		<members>ContactRole</members>
+		<members>ContractContactRole</members>
+		<members>ContractStatus</members>
+		<members>EventSubject</members>
+		<members>EventType</members>
+		<members>FiscalYearPeriodPrefix</members>
+		<members>FiscalYearQuarterName</members>
+		<members>FiscalYearQuarterPrefix</members>
+		<members>IdeaStatus</members>
+		<members>Industry</members>
+		<members>LeadSource</members>
+		<members>LeadStatus</members>
+		<members>OpportunityCompetitor</members>
+		<members>OpportunityStage</members>
+		<members>OpportunityType</members>
+		<members>OrderType</members>
+		<members>PartnerRole</members>
+		<members>Product2Family</members>
+		<members>QuickTextCategory</members>
+		<members>QuickTextChannel</members>
+		<members>SalesTeamRole</members>
+		<members>Salutation</members>
+		<members>SolutionStatus</members>
+		<members>TaskPriority</members>
+		<members>TaskStatus</members>
+		<members>TaskSubject</members>
+		<members>TaskType</members>
+        <name>StandardValueSet</name>
+	</types>
+    <version>43.0</version>
 </Package>

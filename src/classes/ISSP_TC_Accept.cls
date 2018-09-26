@@ -14,6 +14,9 @@ public  class ISSP_TC_Accept {
     public String SurveyName {get; set;}
     public Boolean ShowModal {get; set;}
 
+    //AMSU-142 (AMSU-26)
+    public Boolean isCargoDGR {get; set;}
+
      //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
@@ -23,12 +26,20 @@ public  class ISSP_TC_Accept {
     
     public List<SelectOption> languages {
     get {
-      List<SelectOption> options = new List<selectOption>();
+        List<SelectOption> options = new List<selectOption>();
 
-      for (Preferred_Language_on_ISS_Portal__c l : Preferred_Language_on_ISS_Portal__c.getAll().values())
-        options.add(new SelectOption(l.languageLocalKey__c, l.Language__c));
-      return options;
+        Map<String,String> langMap = new Map<String,String>();
 
+        for(Preferred_Language_on_ISS_Portal__c l : Preferred_Language_on_ISS_Portal__c.getAll().values())
+            langMap.put(l.Language__c,l.languageLocalKey__c);
+
+        List<String> auxList = new List<String>(langMap.keySet());
+        auxList.sort();
+
+        for(String key :auxList)
+            options.add(new SelectOption(langMap.get(key), key));
+
+        return options; 
     }
     set;
     }
@@ -41,7 +52,8 @@ public  class ISSP_TC_Accept {
         ShowModal = true ;
         toAcceptTC = false;
         integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
-        userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
+        //AMSU-142 (AMSU-26) - added accountId      
+        userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId, AccountId
                                 //X2FA_Session__c, TD_User__c
                                 FROM User WHERE Id =:UserInfo.getUserId()];
         if (!userList.isEmpty()){
@@ -73,6 +85,14 @@ public  class ISSP_TC_Accept {
                                                             AND Right__c = 'Access Granted'];
                 if (!bspList.isEmpty()){
                     isBSP = true;
+                }
+            }
+            //AMSU-142 (AMSU-26)
+            isCargoDGR = false;
+            if (userList[0].AccountId != null){
+                Account acc = [Select Location_Class__c from Account where Id = :userList[0].AccountId];
+                if( AMS_Utils.LocationClassDGR.contains(acc.Location_Class__c) ) {
+                    isCargoDGR = true;
                 }
             }
         }

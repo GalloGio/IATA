@@ -21,7 +21,7 @@ public class MITA_PortalTest {
             Airline_Prefix__c = '456');
         insert MyAirline;
 
-        Contact MyContact = new Contact(LastName='My Contact', AccountId=MyAirline.Id, Email='contact@MyAirline.com');
+        Contact MyContact = new Contact(FirstName = 'Name', LastName='My Contact', AccountId=MyAirline.Id, Email='contact@MyAirline.com');
         insert MyContact;
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Airline User (Partner)'];
@@ -42,7 +42,7 @@ public class MITA_PortalTest {
 
         Contacts = new List<Contact>();
         for(Account a : Airlines)
-            Contacts.add(new Contact(LastName='Contact '+a.Name, AccountId=a.Id, MITA_Contact__c = true, Email='contact@'+a.Name.replace(' ','')+'.com'));
+            Contacts.add(new Contact(FirstName = 'Name', LastName='Contact '+a.Name, AccountId=a.Id, MITA_Contact__c = true, Email='contact@'+a.Name.replace(' ','')+'.com'));
         insert Contacts;
 
         Portal_Applications__c app = new Portal_Applications__c(Name = MITA_PortalMyAgreementsCtrl.APP_NAME);

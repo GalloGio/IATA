@@ -23,7 +23,7 @@ global with sharing class IDCard_AdmUserListController extends IDCardAbstractCon
   public Map<string, ContactViewProxy> contMap {get; set;}
   //public Map<string,ContactViewProxy> contMap{get;set;}
 
-  private final string CANCELLED = 'Cancelled';
+  private final string CANCELLED = 'Cancelled ID Card';
 
   public boolean createNewIDCardApp {get; set;}
   public Blob file {get; set;}

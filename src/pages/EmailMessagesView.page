@@ -15,7 +15,7 @@
 
        function getCountryEmail() {
             sforce.connection.sessionId = "{!$Api.Session_ID}";
-            var countryEmail = sforce.apex.execute("IDFS_Util","getRecordTypeEmail",{caseRecordType:"{!cse.RecordType.DeveloperName}", caseBSPCountry:"{!cse.BSPCountry__c}"});
+            var countryEmail = sforce.apex.execute("IDFS_Util","getRecordTypeEmail",{caseRecordType:"{!cse.RecordType.DeveloperName}", caseBSPCountry:"{!cse.BSPCountry__c}", caseGroup:"{!cse.Case_Group__c}"});
             if (countryEmail == '') {
                 countryEmail = sforce.apex.execute("IDFS_Util","getIATACountryEmail",{caseBSPCountry:"{!cse.BSPCountry__c}"});
             }
@@ -140,14 +140,40 @@
                     ServiceConsoleIntegration(retUrl);
                 } else {
                     window.top.location=retUrl;
+            }
         }
-        }
-
 
         function sendTrackedEmail(){
-            window.top.location= ("/apex/sendSingleTrackedEmail?retURL={!cse.Id}&case={!cse.Id}");
+			sendTrackedRedirection("/apex/sendSingleTrackedEmail?case={!cse.Id}&retURL={!cse.Id}");
         }
 
+        function sendTrackedReplyTo(emailId){
+            var id = emailId;
+			sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=ReplyTo");
+        }
+
+        function sendTrackedReplyAll(emailId){
+            var id = emailId;
+			sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=ReplyToAll");
+        }
+        
+        function sendTrackedForward(emailId){
+            var id = emailId;
+			sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=Forward");
+        }
+        
+        function sendTrackedRedirection(redirectURL){
+            if({!$Permission.Can_send_a_tracked_email}){
+                if (sforce.console.isInConsole()) {
+		            ServiceConsoleIntegration(redirectURL + "&isInConsole=true");
+                } else {
+                    window.top.location= redirectURL;
+	            }
+            }
+            else{
+                alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
+            }
+        }
     </script>
 
     <apex:pageMessages />
@@ -204,126 +230,57 @@
                     <th class=" zen-deemphasize" scope="col">Message Date</th>
                     </tr>
 
- <apex:repeat var="msg" value="{!UnifiedList}">
-    <apex:outputPanel rendered="{!NOT(msg.ArchivedEmail)}" > 
-
-
+                    <apex:repeat var="message" value="{!unifiedList}">
                         <tr class="dataRow even ">
-                            <td class="actionColumn">
-                                      <a href ="" onclick="ReplyMethod('{!msg.message.Id}');return false;"  title="Reply" style="color:#015ba7; cursor: pointer;">
+                            <td class="actionColumn" style="display:{!message.displayEmailActions}">
+                                      <a href ="" onclick="ReplyMethod('{!message.emailId}');return false;"  title="Reply" style="color:#015ba7; cursor: pointer;">
                                         <span value="View" class="view">Reply</span>
                                       </a>
                                       <span value="|" class="view"> |</span>
-                                       <a href ="" onclick="ToAllMethod('{!msg.message.Id}');return false;" style="color:#015ba7; cursor: pointer;" title="To All">
+                                       <a href ="" onclick="ToAllMethod('{!message.emailId}');return false;" style="color:#015ba7; cursor: pointer;" title="To All">
                                          <apex:outputText value="To All" />
                                        </a>
                                        <span value="|" class="view"> |</span>
-                                      <a href ="" onclick="DeleteMethod('{!msg.message.Id}');return false;" style="color:#015ba7; cursor: pointer;" title="Delete">
+                                      <a href ="" onclick="DeleteMethod('{!message.emailId}');return false;" style="color:#015ba7; cursor: pointer;" title="Delete">
                                         <apex:outputText value="Del" />
                                       </a>
-
+                            </td>
+                            <td class="actionColumn" style="display:{!message.displayArchivedActions}">
+                                <a class="actionLink actionLink" title="Reply"  target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!message.emailId}&replyToAll=0&retURL=%2F{!aCaseId}">Reply</a>
+                                |
+                                <a class="actionLink actionLink" title="To All" target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!message.emailId}&replyToAll=1&retURL=%2F{!aCaseId}">To All</a>
+                            </td>
+                            <td class="actionColumn" style="display:{!message.displayTrackedActions}">
+                                <a href="" onclick="sendTrackedReplyTo('{!message.emailId}');return false;" title="Reply" style="color:#015ba7; cursor: pointer;">
+                            		<span value="View" class="view">Reply</span>
+                            	</a>
+								<span value="|" class="view"> |</span>
+                            	<a href="" onclick="sendTrackedReplyAll('{!message.emailId}');return false;" title="To All" style="color:#015ba7; cursor: pointer;">
+                            		<span value="View" class="view">To All</span>
+                            	</a>
+								<span value="|" class="view"> |</span>
+                            	<a href="" onclick="sendTrackedForward('{!message.emailId}');return false;" title="Forward" style="color:#015ba7; cursor: pointer;">
+                            		<span value="View" class="view">Forward</span>
+                            	</a>
                             </td>
                             <td class=" dataCell " scope="row">
-                                   <apex:outputText value="{!msg.message.Status}" id="numberStatus" />
-                                   <script>
-                                       var state =document.getElementById("{!$Component.numberStatus}").innerHTML ;
-                                       var CleanState;
-                                        if(state == '0')
-                                         CleanState = 'New';
-                                        if(state =='1')
-                                         CleanState = 'Read';
-                                        if(state =='2')
-                                         CleanState = 'Replied';
-                                        if(state =='3')
-                                         CleanState = 'Sent';
-                                        if(state =='4')
-                                         CleanState = 'Forwarded';
-                                       document.getElementById("{!$Component.numberStatus}").innerHTML =  CleanState;
-                                   </script>
+                                <apex:outputText value="{!message.status}" />
                             </td>
                             <td class=" dataCell "  width="50" >
                                 <div class="bEmailStatus">
-                                    <img width="16" height="13" src="/img/{!IF((msg.message.Incoming ==true),"emailInbound","emailOutbound")}.gif" title="{!IF((msg.message.Incoming ==true),"Inbound","Outbound")}"/>
-                                    <img width="16" height="13" src="/img/emailHasAttach.gif" style="display:{!IF((msg.message.HasAttachment ==true),"","none")}"/>
+                                    <img width="16" height="13" src="{!message.image}" title="{!message.title}"/>
+                                    <img width="16" height="13" src="/img/emailHasAttach.gif" style="display:{!message.displayHasAttachmentImage}"/>
                                 </div>
                             </td>
                             <td class=" dataCell ">
-                                <a style="font-weight: bold; cursor: pointer;" href="{!$Label.SF_Base_URL}/{!msg.message.Id}" target="_blank" onclick="openSubTab('{!msg.message.Id}');return false;">
-                                   {!if((msg.message.Subject==null || msg.message.Subject==''),'No Subject',msg.message.Subject)}</a> <br/>
-                                    <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(msg.message.TextBody,77)}...</font></td>
-                            <td class=" dataCell ">
-                                {!If((msg.message.Incoming==true),msg.message.FromAddress,msg.message.ToAddress)}
-                            </td>
-                            <td class=" dataCell "><apex:outputField value="{!msg.message.MessageDate}"/></td>
-                        </tr>
-
-            </apex:outputPanel> 
-     <apex:outputPanel rendered="{!msg.ArchivedEmail}">
-                     <tr class="dataRow even ">
-                            <td class="actionColumn">
-                                <a class="actionLink actionLink" title="Reply"  target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!msg.message.id}&replyToAll=0&retURL=%2F{!aCaseId}">Reply</a>
-                                |
-                                <a class="actionLink actionLink" title="To All" target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!msg.message.id}&replyToAll=1&retURL=%2F{!aCaseId}">To All</a>
-                            </td>
-                            <td class=" dataCell " scope="row">
-                                 <apex:outputText value="{!originalEmail[msg.message.id].Status}" id="numberStatus2" />
-                                   <script>
-                                       var state = document.getElementById("{!$Component.numberStatus2}").innerHTML ;
-                                       var CleanState;
-                                        if(state == '0')
-                                         CleanState = 'New';
-                                        if(state =='1')
-                                         CleanState = 'Read';
-                                        if(state =='2')
-                                         CleanState = 'Replied';
-                                        if(state =='3')
-                                         CleanState = 'Sent';
-                                        if(state =='4')
-                                         CleanState = 'Forwarded';
-                                        document.getElementById("{!$Component.numberStatus2}").innerHTML =  CleanState + ' [Archived]';
-                                   </script>
+                                <a style="font-weight: bold;"  href="/{!IF(message.isArchived,message.archivedEmailId,message.emailId)}" target="_parent" onclick="openSubTab('{!IF(message.isArchived,message.archivedEmailId,message.emailId)}');return false;">{!message.subject}</a>
+                                <br/> 
+                                <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!message.body}...</font>
                             </td>
                             <td class=" dataCell ">
-                                <div class="bEmailStatus">
-                                    <img width="16" height="13" src="/img/{!IF((originalEmail[msg.message.id].Incoming ==true),"emailInbound","emailOutbound")}.gif" title="{!IF((originalEmail[msg.message.id].Incoming ==true),"Inbound","Outbound")}"/>
-                                    <img width="16" height="13" src="/img/emailHasAttach.gif"/>
-                                </div>
+                                <apex:outputText value="{!message.emailAddress}" />
                             </td>
-                            <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!msg.ArchEmailMessageID }" target="_parent">
-                                    {!if(ISBLANK(originalEmail[msg.message.id].Subject),'No Subject',originalEmail[msg.message.id].Subject)}</a> <br/>
-                                    <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(originalEmail[msg.message.id].TextBody,77)}...</font></td>
-                            <td class=" dataCell ">
-                                {!If((originalEmail[msg.message.id].Incoming==true),originalEmail[msg.message.id].FromAddress,originalEmail[msg.message.id].ToAddress)}
-                            </td>
-                            <td class=" dataCell "><apex:outputField value="{!originalEmail[msg.message.id].MessageDate}"/></td>
-                        </tr>
-</apex:outputPanel>
-</apex:repeat>
-
-                    <!--TRACKED EMAIL -->
-                    <apex:repeat var="trackedEmail" value="{!trackedEmails}">
-                        <tr class="dataRow even ">
-                            <td class="actionColumn">
-                                <a class="actionLink actionLink" title="View"  target="_parent" href="/{!trackedEmail.Id}">View</a>
-                            </td>
-
-                            <td class=" dataCell " scope="row">
-                                 <apex:outputText value="{!trackedEmail.Status__c} [Tracked]" />
-                            </td>
-                            <td class=" dataCell ">
-                                <div class="bEmailStatus">
-                                    <img width="16" height="13" src="/img/emailOutbound.gif" title="Outbound"/>
-                                </div>
-                            </td>
-                            <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!trackedEmail.Id}" target="_parent">
-                                    {!if(ISBLANK(trackedEmail.Subject__c),'No Subject',trackedEmail.Subject__c)}</a> <br/>
-                                    <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(trackedEmail.Html_Body__c,77)}...</font></td>
-                            <td class=" dataCell ">
-                                <apex:outputField value="{!trackedEmail.ToContact__c}" />
-                            </td>
-                            <td class=" dataCell "><apex:outputField value="{!trackedEmail.CreatedDate}"/></td>
+                            <td class=" dataCell "><apex:outputText value=" {!message.MessageDate}"/></td>
                         </tr>
                     </apex:repeat> 
                 </tbody>

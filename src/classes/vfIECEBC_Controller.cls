@@ -549,7 +549,13 @@ public virtual class vfIECEBC_Controller {
 					, Integer creditAmount
                     
  		)
-	{
+	{	system.debug('campaignId :: ' + campaignId);
+		system.debug('paymentPageBase :: ' + paymentPageBase);
+		system.debug('ebcPaymentTarget :: ' + ebcPaymentTarget);
+		system.debug('ebcPaymentCampaignOption :: ' + ebcPaymentCampaignOption);
+		system.debug('subscriptionId :: ' + subscriptionId);
+		system.debug('productRatePlanId :: ' + productRatePlanId);
+		system.debug('creditAmount :: ' + creditAmount);
 		//String theToken = IECEBC_Utility.generatePaymentToken(ebcCampaignId + '-' + paidProductRatePlanId + '-' + campaignPaymentOption);
 		String objectId = (subscriptionId == null) ? '' : subscriptionId;
 		objectId += (productRatePlanId == null) ? '' : productRatePlanId;
@@ -589,10 +595,26 @@ public virtual class vfIECEBC_Controller {
         paymentBillingAccount.Status__c='Pending';
 														
 		upsert paymentBillingAccount;
-		
+
+		system.debug('eBroadcast_Payment_Campaign__c :: ' + paymentBillingAccount.eBroadcast_Payment_Campaign__c);
+
+		List<EBC_Campaign__c> campaignList = new List<EBC_Campaign__c>();
+        EBC_Campaign__c campaign;
+        
+        campaignList = [SELECT Is_Payment_Step__c FROM EBC_Campaign__c WHERE Id =: campaignId Limit 1];
+        system.debug('campaign size is : '+campaignList.Size());
+        if (campaignList.Size()>0) {
+	        campaign = campaignList[0];
+	        system.debug('#### campaign ID : ' + campaign.ID);
+	        campaign.Is_Payment_Step__c = true;
+	        system.debug('#### campaign.Is_Payment_Step__c : ' + campaign.Is_Payment_Step__c);
+	        update campaign;
+    	}
+		system.debug('campaign :: ' + campaign);
 		PageReference paymentPage = paymentPageBase;  
 		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);
-			
+		paymentPage.getParameters().put( 'id', paymentBillingAccount.eBroadcast_Payment_Campaign__c);
+		
 		return paymentPage;
 	} // end of goToRenewalPaymentPage
 	

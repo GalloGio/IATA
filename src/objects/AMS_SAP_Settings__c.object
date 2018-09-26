@@ -153,6 +153,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>RegEx_Special_Chars__c</fullName>
+        <description>clean Special Chars</description>
+        <externalId>false</externalId>
+        <label>RegEx Special Chars</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Sales_Order_Batch_Size__c</fullName>
         <defaultValue>500</defaultValue>
         <description>Sales Order Batch Size</description>
@@ -164,6 +175,18 @@
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Special_Chars_to_Escape_List__c</fullName>
+        <description>List of special chars  to escape, char also need to be setup on the static resource &quot;AMS_SPECIAL_CHARS_MAP&quot;
+ex:&quot;|^&quot;</description>
+        <externalId>false</externalId>
+        <label>Special Chars to Escape List</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>

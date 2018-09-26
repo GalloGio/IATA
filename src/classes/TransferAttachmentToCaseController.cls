@@ -5,6 +5,10 @@ public with sharing class TransferAttachmentToCaseController {
     public list<WrapperAttach> lstAttachments {get; set;}
     public Boolean isTransferDone {get; set;}
     public Boolean SelectAllCheckbox{get;set;}
+    public Double offset{ get{
+        TimeZone tz = UserInfo.getTimeZone();
+        return tz.getOffset(DateTime.now()) / (1000 * 3600 * 24.0);
+        }}
 
     public TransferAttachmentToCaseController (ApexPages.StandardController controller) {
         this.SelectAllCheckbox = false;

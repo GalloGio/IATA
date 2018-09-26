@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>New object to measure KPI&apos;s that are being calculated outside Salesforce</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -60,45 +57,75 @@
         <fullName>Area_Concerned__c</fullName>
         <externalId>false</externalId>
         <label>Area Concerned</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agency Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Suspension</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CPS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Service</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DPC Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoicing &amp; Collection</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Quality</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Remittance &amp; Settlement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Agency Management</fullName>
+                    <default>false</default>
+                    <label>Agency Management</label>
+                </value>
+                <value>
+                    <fullName>Airline Suspension</fullName>
+                    <default>false</default>
+                    <label>Airline Suspension</label>
+                </value>
+                <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
+                </value>
+                <value>
+                    <fullName>CPS</fullName>
+                    <default>false</default>
+                    <label>CPS</label>
+                </value>
+                <value>
+                    <fullName>Customer Service</fullName>
+                    <default>false</default>
+                    <label>Customer Service</label>
+                </value>
+                <value>
+                    <fullName>DPC Management</fullName>
+                    <default>false</default>
+                    <label>DPC Management</label>
+                </value>
+                <value>
+                    <fullName>ICCS</fullName>
+                    <default>false</default>
+                    <label>ICCS</label>
+                </value>
+                <value>
+                    <fullName>ICH</fullName>
+                    <default>false</default>
+                    <label>ICH</label>
+                </value>
+                <value>
+                    <fullName>Invoicing &amp; Collection</fullName>
+                    <default>false</default>
+                    <label>Invoicing &amp; Collection</label>
+                </value>
+                <value>
+                    <fullName>Quality</fullName>
+                    <default>false</default>
+                    <label>Quality</label>
+                </value>
+                <value>
+                    <fullName>Remittance &amp; Settlement</fullName>
+                    <default>false</default>
+                    <label>Remittance &amp; Settlement</label>
+                </value>
+                <value>
+                    <fullName>SIS</fullName>
+                    <default>false</default>
+                    <label>SIS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Definition__c</fullName>
@@ -125,21 +152,25 @@
         <fullName>Value_Type__c</fullName>
         <externalId>false</externalId>
         <label>Value Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Percentage</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Number</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Percentage</fullName>
+                    <default>false</default>
+                    <label>Percentage</label>
+                </value>
+                <value>
+                    <fullName>Number</fullName>
+                    <default>false</default>
+                    <label>Number</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>FDS KPI Reporting</label>
     <listViews>
@@ -165,4 +196,5 @@
     <pluralLabel>FDS KPI Reporting</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

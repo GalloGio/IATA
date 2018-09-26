@@ -1,5 +1,5 @@
 global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugin {
-   
+
     global override Process.PluginDescribeResult buildDescribeCall() { 
         Process.PluginDescribeResult describeResult = new Process.PluginDescribeResult();
         // A Group for the Plugins
@@ -8,14 +8,15 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
         describeResult.Name = 'SCIM: Create User';
 
         describeResult.inputParameters = new List<Process.PluginDescribeResult.InputParameter>{ 
-            new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_USERPAYLOAD, Process.PluginDescribeResult.ParameterType.STRING, true)
+            new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_USERPAYLOAD, Process.PluginDescribeResult.ParameterType.STRING, true),
+            new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_CALLPARAMS, Process.PluginDescribeResult.ParameterType.STRING, false)
         };
  
         return describeResult;
     }
     
     global override Process.PluginResult invoke(Process.PluginRequest request) {
-     
+
         Map<String,Object> result = new Map<String,Object>();
         result.put(UserProvisioningUtils.PARAM_STATUS, 'Failed'); // set default
         
@@ -37,6 +38,12 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
         try { 
             userProvUtils.init(uprId);
             SCIMUsersUtility.endPoint = userProvUtils.getNamedCredential();
+
+            String params = (String)request.inputParameters.get(UserProvisioningUtils.PARAM_CALLPARAMS);
+            if(params != null) SCIMUsersUtility.createParams = (Map<String,String>)JSON.deserialize(params, Map<String, String>.class);
+
+            System.debug(loggingLevel.FINEST, '____ [cls SCIMCreateUserPlugin - invoke] params - ' + params);
+            System.debug(loggingLevel.FINEST, '____ [cls SCIMCreateUserPlugin - invoke] createParams - ' + SCIMUsersUtility.createParams);
             
             Map<String, Object> callResult = SCIMUsersUtility.createUser(userPayload);
             userProvUtils.debug('HTTP call result was ' + callResult);
@@ -47,9 +54,12 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
                 result.put(UserProvisioningUtils.PARAM_STATUS, 'Completed');
 
                 SCIMCreateUserResponse respObj = SCIMCreateUserResponse.parse(responseStr);
+                userProvUtils.debug('SCIMCreateUserResponse result was ' + respObj);
                 result.put(UserProvisioningUtils.PARAM_EXTERNAL_USERID, respObj.id);
                 result.put(UserProvisioningUtils.PARAM_EXTERNAL_USERNAME, respObj.userName);
 
+                //MConde
+                userProvUtils.addExternalResponse(respObj);
 
                 assignDerivedOutputParameters(result, userPayload);
 

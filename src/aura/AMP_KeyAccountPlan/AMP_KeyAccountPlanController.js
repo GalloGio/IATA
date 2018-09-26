@@ -4,6 +4,7 @@
         helper.filterView(component);
         helper.getTasks(component);
         helper.getCanEdit(component);
+        helper.fetchDivisionValues(component);
 
     },
     setActivityId : function(component, event, helper) {
@@ -78,19 +79,38 @@
 
         $A.enqueueAction(action);
     },
+
+    showDeletePopup : function(component, event, helper) {
+        component.set("v.showDeletionCheck", true);
+        //pass the activity attribute passed from the event to a component attribute (AMP_UpdateIssueOrPriority, 
+        //in this event there are two params registered, issue and index)
+        var activity = event.getParam("issue");
+        console.log(JSON.stringify(activity));
+        component.set("v.activityToDelete", activity);
+    },
+
+    hideDeletePopup : function(component, event, helper) {
+        component.set("v.showDeletionCheck", false);
+    },
+
+
     handleDeleteActivity : function(component, event, helper) {
         console.log("handleDeleteActivity");
-        var activity = event.getParam("issue");
+        var activity = component.get("v.activityToDelete");
+        console.log(JSON.stringify(activity));
+        if(activity == null){
+            activity = event.getParam("issue");
+            console.log(JSON.stringify(activity));
+        }
         var activities = component.get("v.activities");
 
         if(activity.Id === undefined) {
 
-            activities.pop(); // the last item of the list is the unsaved, so we can pop()
+            activities.shift(); // the last item of the list is the unsaved, so we can shift()
             component.set("v.activities", activities);
 
         }
         else {
-
             var action = component.get("c.deleteActivity");
             action.setParams({
                 "activity": activity
@@ -112,6 +132,8 @@
             });
             $A.enqueueAction(action);
         }
+        //hide the delete popup
+        component.set("v.showDeletionCheck", false);
     },
     handleShowMilestones : function(component, event, helper) {
 

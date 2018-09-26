@@ -1,12 +1,94 @@
 <table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
 <tr valign="top" height="400" >
 <td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
-<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">Gentile Agente,<o:p></o:p></span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">Secondo quanto previsto dalle Risoluzioni della IATA, tutti gli Agenti Accreditati sia Cargo che Intermediari devono soddisfare i requisiti ed i criteri di Accreditamento contenuti nel “Program Handbook” al fine di poter mantenere l’operatività come Agente IATA.<o:p></o:p></span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">In particolare, secondo le Risoluzioni della IATA, la sua Compagnia deve avere almeno due addetti&nbsp; a tempo completo in possesso&nbsp; di&nbsp; certificato valido di gestione Merci Pericolose ( DGR ) emesso negli ultimi due anni per poter erogare servizi di accettazione, stoccaggio e movimentazione di Merci Pericolose in base a quanto descritto nell´Handbook.<o:p></o:p></span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT"><font face="Arial, sans-serif"><span style="font-size: 10pt;">Dalle informazioni in nostro possesso, i certificati DGR di Merci Pericolose forniti dalla sua Compagnia scadranno il&nbsp;</span><span style="font-size: 13.3333px;">{!AMS_OSCAR__c.Change_effective_as_of__c}</span><span style="font-size: 10pt;">.&nbsp;&nbsp;<o:p></o:p></span></font></span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">Per quanto su esposto, La invitiamo pertanto a volerci inviare copia dei nuovi certificati ottenuti o aggiornati di Merci Pericolose o qualsiasi altro documento equipollente e/o informazione che possa dimostrare che la Sua Compagnia é in regola con quanto sopra esposto.<o:p></o:p></span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i style="font-size: 12pt;"><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">Tale certificato dovrá essere inviato alla IATA attraverso il nostro Portale di Servizio alla Clientela alla pagina web:&nbsp;<b>:&nbsp;</b></span></i><span class="MsoHyperlink" style="font-size: 12pt;"><span lang="EN-US" style="font-size:11.0pt;line-height:
-107%;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-ascii-theme-font:minor-latin;
-mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:
-minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;
-mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA"><a href="http://www.iata.org/cs"><b><i><span lang="FR" style="font-size:10.0pt;
-line-height:107%;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#0070C0;mso-ansi-language:
-FR">http://www.iata.org/cs</span></i></b></a></span><b><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif; color: rgb(0, 112, 192);">&nbsp;</span></i></b></span><i style="font-size: 12pt;"><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;entro il</span></i><font face="Arial, sans-serif"><span style="font-size: 13.3333px; background-color: rgb(255, 255, 0);"><b><i>{!AMS_OSCAR__c.Change_effective_as_of__c}</i></b></span></font><i style="font-size: 12pt;"><span lang="ES" style="font-size: 10pt; font-family: Arial, sans-serif; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: rgb(255, 255, 255);">.</span></i><i><span lang="IT"><font face="Arial, sans-serif"><span style="font-size: 10pt;">La preghiamo di allegare una copia scannerizzata al caso&nbsp;</span><span style="font-size: 13.3333px;">{!AMS_OSCAR__c.Name}</span><span style="font-size: 10pt;">&nbsp;visibile nella portata principale del portale alla sezione “I miei casi aperti”.</span></font></span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">La IATA esaminerá quanto presentato per validarne il contenuto.<o:p></o:p></span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">Certi dell’attenzione che vorrete porre alla presente ed in attesa di ricevere quanto suindicato la invitiamo a volerci dare conferma dell’avvenuta recezione di questo messaggio<o:p></o:p></span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></i></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></i></p><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><i><span lang="IT" style="font-size: 10pt; font-family: Arial, sans-serif;">RingraziandoLa per l’attenzione la salutiamo cordialmente</span></i></p><div style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 12pt; background-color: white; margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="#333399"><b>Agency Management</b></font></span></font></div><div style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 12pt; background-color: white; margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="#333399"><b>International Air Transport Association</b></font></span></font></div><div style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif">-----------------------------------------------------------------------------</font><font face="Arial,sans-serif" color="navy">&nbsp;</font></span></font></div><div style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="navy">In order to obtain information or assistance from IATA, do not hesitate to access at any time our&nbsp;</font><font face="Arial,sans-serif"><a href="http://www.iata.org/cs" target="_blank">Customer Portal</a></font></span></font></div><div style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><br></span></font></div><div style="background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri, sans-serif"><span style="font-size: 14.6667px;">{!AMS_OSCAR__c.Emails_reference_Id__c}</span></font></div>]]></td>
+<![CDATA[<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="500" style="width:375.0pt;mso-cellspacing:0cm;background:white;mso-yfti-tbllook:
+ 1184;mso-padding-alt:0cm 0cm 0cm 0cm">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:225.0pt">
+  <td valign="top" style="padding:0cm 0cm 0cm 0cm;height:225.0pt">
+  <p class="MsoNormal" style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><b><i><span lang="PT" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif;">Code IATA:{!AMS_OSCAR__c.IATACode__c} -
+  {!AMS_OSCAR__c.Notification_days__c} jours d’avis</span></i></b><span lang="PT" style="font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+  <p class="MsoNormal"><b><span lang="PT">&nbsp;</span></b></p>
+  <table class="MsoNormalTable" border="0" cellspacing="5" cellpadding="0" width="550" style="width:412.5pt;mso-cellspacing:3.7pt;mso-yfti-tbllook:1184;mso-padding-alt:
+   3.75pt 3.75pt 3.75pt 3.75pt">
+   <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;
+    height:300.0pt">
+    <td valign="top" style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; padding: 3.75pt; height: 300pt;">
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">Cher Monsieur /
+    Madame,<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">Conformément aux
+    résolutions de l'IATA, tous les agents de fret approuvés / Intermédiaires
+    doivent répondre aux exigences et aux critères énoncés dans le Manuel du
+    Programme.<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">Conformément aux
+    résolutions de l'IATA, il est nécessaire pour votre société d'avoir au
+    moins <b>{!if(AMS_OSCAR__c.Country_ISO_Code__c="CN","trois",if(AMS_OSCAR__c.Location_Type__c="HO","deux","un"))}</b>
+    employés à temps plein titulaires d'un certificat valide de marchandises
+    dangereuses datant de moins de deux ans.<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">Selon nos
+    archives, les certificats de marchandises dangereuses fournies par votre
+    société de <b>{!AMS_OSCAR__c.DGR_First_Name__c}
+    {!AMS_OSCAR__c.DGR_Last_Name__c}, {!AMS_OSCAR__c.DGR_Position__c}</b>
+    prendront fin le <b>{!AMS_OSCAR__c.Change_effective_as_of__c}</b>.&nbsp; Par conséquent, veuillez envoyer des
+    nouvelles copies, ou des mises à jour des certificats marchandises
+    dangereuses, ou toute autre information indiquant que votre entreprise est
+    conforme à nos exigences.<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">Les certificats
+    Web demandées ci-dessus doivent être envoyés à l'IATA <b>via notre Portail Service Client: <u>http://www.iata.org/cs</u></b>
+    au plus tard le <b>{!AMS_OSCAR__c.Change_effective_as_of__c}</b>.
+    Prière de joindre une copie numérisée au cas <b>{!AMS_OSCAR__c.Name}</b> visible sur votre page d'accueil de notre
+    site Web, sous la rubrique «Mes cas récents».<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">L'administrateur
+    des Agences procédera à un examen, et prendra une décision sur la base des
+    données disponibles. PAR CONSÉQUENT, il est dans votre propre intérêt, de
+    donner votre attention immédiate à ce sujet.<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">En comptant sur
+    une réponse prompte de votre part à ce sujet.<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+    text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></i></p>
+    <p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">Bien cordialement</span></i><b><span style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+    color:#333399">Agency Management</span></b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><b><span style="font-family:&quot;Arial&quot;,sans-serif;
+    mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333399">International Air
+    Transport Association</span></b><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="font-family: Arial, sans-serif;">-----------------------------------------------------------------------------</span><span style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+    color:navy">&nbsp;</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="font-family:&quot;Arial&quot;,sans-serif;
+    mso-fareast-font-family:&quot;Times New Roman&quot;;color:navy">In order to obtain
+    information or assistance from IATA, do not hesitate to access at any time
+    our&nbsp;</span><a href="http://www.iata.org/cs" target="_blank"><span style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+    color:blue">Customer Portal</span></a><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p>
+    <p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">{!AMS_OSCAR__c.Emails_reference_Id__c}<span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+    </td>
+   </tr>
+  </tbody></table>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;height:1.5pt">
+  <td valign="top" style="padding:0cm 0cm 0cm 0cm;height:1.5pt"></td>
+ </tr>
+ <tr>
+  <td style="padding:0cm 0cm 0cm 0cm"></td>
+ </tr>
+</tbody></table>
+
+<p class="MsoNormal"><o:p>&nbsp;</o:p></p>]]></td>
 </tr>
 </table>

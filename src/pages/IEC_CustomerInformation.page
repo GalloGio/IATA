@@ -9,10 +9,74 @@
     <![endif]-->
     <!--[if !IE]><!-->
     
-    <html lang="{!language}">
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
+   <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
+   
+   <html lang="{!language}">
+
+   <script type="text/javascript">
+    j$ = jQuery.noConflict(); 
+   function blockme() {
+       j$.blockUI({ css: {
+           border: 'none',
+           padding: '15px',
+           backgroundColor: '#000',
+           '-webkit-border-radius': '10px',
+           '-moz-border-radius': '10px',
+           opacity: .5,
+           color: '#fff'
+           } }); 
+     }
+   </script>
+
     <!--<![endif]-->
         
         <head>
+            <!-- Google Tag Manager -->     
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PWSNSM3');
+            </script>
+            <!-- End Google Tag Manager -->
+            <script>
+                function getDevice() {
+                    if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                        return "Tablet";
+                    } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                        return "Mobile";
+                    } else {
+                        return "Desktop";
+                    }
+                }
+
+                window.dataLayer = window.dataLayer||[];
+                dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}",
+                        "userMemberStatus": "{!userDetails.userMemberStatus}",
+                        "userGender": "{!userDetails.userGender}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "breadcrumb": "Home > {!$Label.PageTitleCustomerInformation}", 
+                        "language": "{!language}"
+                    },
+                    "ecommerce": {!productWrapper}
+                });
+            </script>
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
@@ -22,7 +86,10 @@
         </head>
 
         <body data-media-size="" class="page-checkout" id="page-top">
-            
+            <!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
             <div id="js-breakpoint-finder">
                 <span class="device-xs screen-xsmall"/>
                 <span class="device-sm screen-small"/>
@@ -71,7 +138,7 @@
                                                         <label>
                                                             <span class="input-label">{!$Label.Company_name}</span>
                                                             <apex:inputText id="company_name" value="{!loggedCustomer.sfAccount.Name}" disabled="true" styleClass="company_name user-input text" />
-                                                        </label>
+                                                        </label>                                                    
                                                     </div>
 
                                                     <div class="field-group select inline mandatory {!IF(errors['salutation']!='false', ' error','')}" data-placement="right">
@@ -82,7 +149,7 @@
                                                                 <apex:selectOptions value="{!availableSalutations}"/>
                                                             </apex:selectList>
                                                         </div>
-                                                    </div>  
+                                                    </div>                                                      
 
                                                     <div class="field-group text inline mandatory {!IF(errors['FirstName']!='false', ' error','')}" data-placement="right">
                                                         <label>
@@ -125,14 +192,14 @@
                                                         <label>
                                                             <span class="input-label text">{!$Label.Address_Line_1}</span>
                                                             {!vfOrder.billToAddress}
-                                                            <apex:inputText id="billingAddress1" value="{!vfOrder.billToAddress.street1}" styleClass="billingAddress1 user-input text validate[required]"/>
+                                                            <apex:inputText id="billingAddress1" value="{!vfOrder.billToAddress.street1}" styleClass="billingAddress1 user-input text validate[required,maxSize[70]]"/>
                                                         </label>
                                                     </div>
 
                                                     <apex:outputPanel id="postalCodeBlock" styleClass="field-group text inline mandatory {!IF(errors['postalCode']!='false', ' error','')}" layout="block" html-data-placement="right">
                                                         <label>
                                                             <span class="input-label text">{!$Label.Postal_code}</span>
-                                                            <apex:inputText id="billingPostalCode" value="{!vfOrder.billToAddress.postalCode}" styleClass="billingPostalCode user-input text {!IF(vfOrder.billToAddress.isPostalCodeRequired,'validate[required]','')}"/>
+                                                            <apex:inputText id="billingPostalCode" value="{!vfOrder.billToAddress.postalCode}" html-placeholder="{!IF(unlockZipCode, '', 'N/A')}" disabled="{!IF(unlockZipCode, 'false', 'true')}" styleClass="billingPostalCode user-input text {!IF(vfOrder.billToAddress.isPostalCodeRequired,'validate[required]','')}"/>
                                                         </label>
                                                     </apex:outputPanel>
 
@@ -205,7 +272,7 @@
                                     <div class="footer-actions text-right">
                                         <apex:actionFunction name="saveCustomerInformation" reRender="frmCustomerInfo" action="{!saveCustomerInformation}" status="saveStatus" />
                                             
-                                        <button class="button wide" type="button" onclick="saveCustomerInformation();">
+                                        <button class="button wide" type="button" onclick="saveCustomerInformation();blockme();" oncomplete="j$.unblockUI();">
                                             {!$Label.IDCard_Continue_Button}
                                             <apex:actionStatus id="saveStatus">
                                                 <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
@@ -286,6 +353,11 @@
                     });
 
                     $("form").validationEngine();
+                    $("select[id*='billingCountry']").on("change", function(){
+						$("input[id*='billingAddress1']").val("");
+						$("input[id*='billingPostalCode']").val("");
+						$("input[id*='billingCity']").val("");
+					});
                 });
             </script>
 

@@ -15,13 +15,33 @@ global without sharing class IEC_ShippingController extends IEC_PageController
     public Address_DTO newShipToAddress{get;set;}
 
     public Map<Id, Boolean> mapProduct2Id_Compliance;
+    
+    //TC map to know which countries don't have zip code
+	public Map<String, Boolean> zipCodeApplicableMap {
+		get{
+			return zipCodeApplicableMap != null ? zipCodeApplicableMap : new Map<String, Boolean>();
+		}
+		set;
+	}
 
     public List<SelectOption> availableCountries{get{
-        if(availableCountries == null){
-            availableCountries = ISO_Country_State_Helper.getCountriesSelectOption();
-        }
-        return availableCountries;
-    }set;}
+		if(availableCountries == null){
+			//TC get options and fill map zipCodeApplicable
+			Map<String, Object> countries = ISO_Country_State_Helper.getCountriesOptionsMap();
+			availableCountries = (List<SelectOption>) countries.get('options');
+			zipCodeApplicableMap = (Map<String, Boolean>) countries.get('zipCodeApplicable');
+		}
+		return availableCountries;
+	}set;}
+
+	//TC 
+	public Boolean unlockZipCode {
+		get{
+			return newShipToAddress != null && !String.isBlank(newShipToAddress.countryCode) && 
+				zipCodeApplicableMap.get(newShipToAddress.countryCode) != null && zipCodeApplicableMap.get(newShipToAddress.countryCode);
+		}
+		set;
+	}
 
     public List<SelectOption> newAddressAvailableStates{get;set;}
 
@@ -90,6 +110,68 @@ global without sharing class IEC_ShippingController extends IEC_PageController
     public Map<String,String> discountLabels{get;set;}
 
 
+    //Used for google analytics
+    public String productWrapper {
+        get {
+            Map<String,Object> ecommObj = new Map<String,Object>();
+            Map<String,Object> checkoutObj = new Map<String,Object>();
+            Map<String,Object> actionObj = new Map<String,Object>();
+            Map<String,Object> prodObj = new Map<String,Object>();
+
+            ecommObj.put('checkout', checkoutObj);
+            actionObj.put('step',2);
+            checkoutObj.put('actionField', actionObj);
+            checkoutObj.put('products', new List<Object> {prodObj});
+
+            List<OrderItem_DTO> lstOrderItemsAux = storeCart.getOrderItems();
+            if(lstOrderItemsAux != null && !lstOrderItemsAux.isEmpty()){
+                List<Object> lstOrderItems = new List<Object>();
+                for(OrderItem_DTO orderItemDtoAux : lstOrderItemsAux){
+                    Map<String,Object> orderItemsObjMap = new Map<String,Object>();
+
+                    orderItemsObjMap.put('id', orderItemDtoAux.productNumber);
+                    orderItemsObjMap.put('name', orderItemDtoAux.productName);
+                    orderItemsObjMap.put('category', orderItemDtoAux.productCategory);
+                    orderItemsObjMap.put('price', orderItemDtoAux.unitPrice == null ? 0.00 : orderItemDtoAux.unitPrice);
+                    orderItemsObjMap.put('brand', orderItemDtoAux.productBrand);
+                    orderItemsObjMap.put('quantity', orderItemDtoAux.quantity);
+                    orderItemsObjMap.put('dimension1', orderItemDtoAux.productEdition);
+                    orderItemsObjMap.put('dimension2', orderItemDtoAux.productLanguage);
+                    orderItemsObjMap.put('dimension3', orderItemDtoAux.productInventoryStatus);
+                    orderItemsObjMap.put('dimension4', orderItemDtoAux.productAvailabilityDate);
+                    orderItemsObjMap.put('dimension5', orderItemDtoAux.productMedia);
+                    orderItemsObjMap.put('dimension6', orderItemDtoAux.productEffectiveTo);
+
+                    lstOrderItems.add(orderItemsObjMap);
+                }
+            
+                checkoutObj.put('products', lstOrderItems);
+            }
+
+            return JSON.serialize(ecommObj);
+        }
+        set;
+    }
+
+    public String cartProducts {
+        get {
+
+            cartProducts = '';
+            if(vfOrder.orderItems != null && !vfOrder.orderItems.isEmpty()){
+                List<String> lstProductNames = new List<String>();
+                for(OrderItem_DTO orderItemAux : vfOrder.orderItems){
+                    lstProductNames.add(orderItemAux.productName);
+                }
+                cartProducts = String.join( lstProductNames,' - ');
+            }
+
+            return cartProducts;
+
+        }
+        set;
+    }
+
+
     public IEC_ShippingController() 
     {
         taxFreightCalculateWithError = false;
@@ -120,7 +202,10 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         OrderItem_Sel oiSelector = new OrderItem_Sel();
         List<OrderItem> pendingOrderItems = oiSelector.getOrderItems(sfOrder.Id);
         
-        refreshCookieContent(pendingOrderItems, false);//@todo: revalidate
+        // Ecommerce Enhancements R2 - dont re-add to cart because it's already serialized and user might cancel or
+        //                             click elsewhere (IATA logo) and return to homepage with cart item re-added.
+        //refreshCookieContent(pendingOrderItems, false);//@todo: revalidate
+        IECOrder_Svc.deleteAllCookies();
 
         if (!isShipToError)
         {
@@ -222,7 +307,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         sfOrder.EndDate = sfOrder.EffectiveDate.addDays(Utility.getIntegerSetting('Quote Nb Days Valid'));
         update sfOrder;
 
-        quoteGeneratedMsg = 'Your Quote was successfully registered. <br /> Quote number : ' + sfOrder.OrderNumber;
+        quoteGeneratedMsg = 'Your Quote was successfully registered. <br /> Quote number : ' + sfOrder.OrderNumber + '<br /> You will receive an email with a PDF copy of your Quote. <br /> Please follow the instructions contained in the e-mail to confirm and pay for your Quote.';
         
         quote = sfOrder;//new Order_Sel().getQuoteDetails(sfOrder.Id);
 
@@ -547,6 +632,14 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 
     public void fetchCustomerPaymentMethods()
     {
+        Map<String,String> uiToPaymentMethodMap = new Map<String,String> {
+            'Bank Transfer'         => IECConstants.PaymentThresholdType_BankTransfer,
+            'Credit Card'           => IECConstants.PaymentThresholdType_CreditCard,
+            'IATA Clearing House'   => IECConstants.PaymentThresholdType_ICH
+        };
+        List<String> orderAcceptedPaymentMethods = new List<String>();
+        Set<String> acceptedPaymentMethodSet = new Set<String>();
+
         Set<String> setPaymentMethods = new Set<String>(Utility.getTextSettingToArray('Order Payment Types allowed for CUS',','));
 
         //Check if Bank transfer is allowed
@@ -562,6 +655,28 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         if((!loggedCustomer.canPayByICH()) || (!IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_ICH, sfOrder.Total_Amount__c))) setPaymentMethods.remove(IECConstants.PaymentThresholdType_ICH);
 
     
+        // Ecommerce Enhancements R2
+        if (sfOrder.Accepted_Payment_Methods__c != null) {
+            orderAcceptedPaymentMethods = sfOrder.Accepted_Payment_Methods__c.split(';');
+
+            for (String accepted : orderAcceptedPaymentMethods) {
+                String pm = uiToPaymentMethodMap.get(accepted);
+
+                if (pm != null) {
+                    acceptedPaymentMethodSet.add(pm);
+                }
+            }
+
+            if (acceptedPaymentMethodSet.isEmpty() == false) {
+                setPaymentMethods.retainAll(acceptedPaymentMethodSet);
+            } else {
+                setPaymentMethods.clear();
+            }
+        } else {
+            setPaymentMethods.clear();
+        }
+
+
         if(setPaymentMethods.size() > 0) paymentMethods = new List<String>(setPaymentMethods);
         else addErrorMessage('NO PAYMENT METHOD FOR THIS ORDER');
     }
@@ -679,6 +794,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
   }
 
 
+
     /**************************************************************************************************************
      *  saveNewAddress: method calls when customer create a new Shipping address                                  *
      *  Author: David Daboué                                                                                      *  
@@ -686,14 +802,33 @@ global without sharing class IEC_ShippingController extends IEC_PageController
     public PageReference saveNewAddress()
     {
         showNewAddress = true;
-        
+        Boolean hError = false;
         //-- Validate Address
-        if(!validateAddress(newShipToAddress))
-        {
-            addErrorMessage('You must specify all the required fields for the new address');return null;
+        if(!validateAddress(newShipToAddress)) {
+            addErrorMessage('You must specify all the required fields for the new address');
+            hError = true;
+           // return null;
         }
+        
+        //TC 2017-05-16
+        if(!String.isBlank(newShipToAddress.street1) && newShipToAddress.street1.length() > 70) {
+        	addErrorMessage(Label.IEC_ShippingAddressLimit);
+        	hError = true;
+        	//return null;	
+        }      
+        
+        if(newShipToAddress != null && !String.isBlank(newShipToAddress.street1) && IECUtil.isPostOfficeBox(newShipToAddress.street1)) {
+        	addErrorMessage(Label.IEC_PO_BOX_ERROR);
+        	hError = true;
+        	//return null;
+        }
+        
+        if(hError) {        	
+        	return null;	
+        }
+        
 
-        try{
+        try {
             //-- Validate inputs 
             if(String.isBlank(newShipToAddress.attention)) newShipToAddress.attention = loggedCustomer.sfContact.Name;
 
@@ -1074,8 +1209,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
     }
 
     public PageReference processPayment()
-    {
-        
+    {       
         if(String.isBlank(orderPaymentType))
         { 
           addErrorMessage('You must select a Payment method');
@@ -1125,10 +1259,17 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         //Validate Shipping Informations 
         if(!isShipToValid()) return null;
         
+        //TC 2017-05-10 check if shipping adddess is a post office box
+	    
+	    if(sfOrder != null && !String.isBlank(sfOrder.ShippingStreet) && IECUtil.isPostOfficeBox(sfOrder.ShippingStreet)) {
+	    	addErrorMessage(Label.IEC_PO_BOX_ERROR);
+	    	return null;
+	    }	    
+	    
         //Validate T&C
         if(!isTermsAccepted()) return null;
 
-    //Validate payment method
+    	//Validate payment method
 
         //Validation for the Total amount allowed for Credit card 
         Map<String,IEC_Payment_Threshold__c> paymentMethodThresholdByType = Order_Sel.getPaymentMethodThresholdByType();
@@ -1139,11 +1280,11 @@ global without sharing class IEC_ShippingController extends IEC_PageController
             return null;
         }
 
-    //Valide that customer have at lease on card selected if the payment method is credit card
-    if(sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && (orderCreditCardId == null || orderCreditCardId == '')){
-      addErrorMessage(Label.Credit_card_validation);
-      return null;
-    }
+		//Valide that customer have at lease on card selected if the payment method is credit card
+		if(sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && (orderCreditCardId == null || orderCreditCardId == '')){
+			addErrorMessage(Label.Credit_card_validation);
+		  	return null;
+		}
         
         //Validation for the minimun amount allowed for ICH
         IEC_Payment_Threshold__c thresholdForIch = paymentMethodThresholdByType.get(IECConstants.PaymentThresholdType_ICH);
@@ -1177,7 +1318,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
           addErrorMessage(Label.Bank_transfer_validation_for_auto_renew);
           return null;
         }
-    }
+    }  
 
 
 
@@ -1195,9 +1336,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         PageReference pgRef = new PageReference('/IEC_ConfirmOrder');
             pgRef.setRedirect(true);
         return pgRef;
-    }
-
-    
+    }    
 
 
     /**************************************************************************************************************
@@ -1448,5 +1587,5 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         vfOrder.taxes                = totalTaxes;
         vfOrder.orderTotalAmount     = totalAmount;
     } //*** end of "calculateFreightTaxDTO"
-
+	
 }

@@ -6,20 +6,20 @@ public with sharing class NewParticipantByEmailCtrl {
     public Map<Id,Contact> contacts {get;set;}    //all the contacts found
     public List<Contact> getContactValues(){return contacts.values();}
     public LocalGovernance__c lg {get;set;}
-    
+
     public NewParticipantByEmailCtrl(ApexPages.StandardController controller){
         if(!Test.isRunningTest())   controller.addFields(new List<String>{'Local_Governance__r.Local_governance_type__c', 'Local_Governance__r.Name'});
         p = (Participant__c) controller.getRecord();
-        
+
         try{
             if(p.Local_Governance__c!=null){
-                lg = [SELECT Local_governance_type__c FROM LocalGovernance__c WHERE Id = :p.Local_Governance__c];
+                lg = [SELECT Name, Local_governance_type__c FROM LocalGovernance__c WHERE Id = :p.Local_Governance__c];
                 //p.Local_Group_Type__c = p.Local_Governance__r.Local_governance_type__c;
                 p.Local_Group_Type__c = lg.Local_governance_type__c;
                 changeParticipantRecordType();
              }
         }catch(Exception e){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'The local group specified was not found'));            
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'The local group specified was not found'));
         }
         chooseContact = false;
         String idFromPageStr = ApexPages.currentPage().getParameters().get('retURL').split('/')[1];
@@ -53,17 +53,21 @@ public with sharing class NewParticipantByEmailCtrl {
             p.Contact__c = contacts.values()[0].Id;
  			//p.Head_Quartier__c = calculateMainAccount(contacts.values()[0]);
  			
-            List<Participant__c> ps = [SELECT Id FROM Participant__c WHERE Local_Governance__c= :p.Local_Governance__c AND Contact__c = :p.Contact__c];
+            List<Participant__c> ps = [SELECT Id, Local_Governance__r.RecordType.Name FROM Participant__c WHERE Local_Governance__c= :p.Local_Governance__c AND Contact__c = :p.Contact__c];
             if(ps.size()>0){
+                if(ps[0].Local_Governance__r.RecordType.Name == 'Reg/Div Groups')
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+contacts.values()[0].Id+'" target="_blank">'+contacts.values()[0].Name+'</a> is already a participant for this Reg/Div Group.'));
+                if(ps[0].Local_Governance__r.RecordType.Name == 'Local Groups')
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+contacts.values()[0].Id+'" target="_blank">'+contacts.values()[0].Name+'</a> is already a participant for this Local Group.'));
+                
                 system.debug(LoggingLevel.ERROR,'####### participant duplicate'); 
                 return null;
             }
-    
+
             Database.SaveResult sr = database.insert(p,false);
             if(!sr.isSuccess()){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+contacts.values()[0].Id+'" target="_blank">'+contacts.values()[0].Name+'</a> raised the following error: '+sr.getErrors()[0].getMessage()));
-                system.debug(LoggingLevel.ERROR,'####### errore sul salvataggio: '+sr.getErrors()[0].getMessage()); 
+                system.debug(LoggingLevel.ERROR,'####### errore sul salvataggio: '+sr.getErrors()[0].getMessage());
                 return null;
             }else{
 
@@ -72,11 +76,11 @@ public with sharing class NewParticipantByEmailCtrl {
                 system.debug(LoggingLevel.ERROR,'############### SALVATO, ora ritorno '+returl);
                 return new PageReference(retURL);
             }
-            
+
         //MANY CONTACTS
         }else{
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Several contacts were found with the email '+c.email+'. Please select the one you want to use.'));
-            system.debug(LoggingLevel.ERROR,'####### tanti contatti, bisogna scegliere da tabella'); 
+            system.debug(LoggingLevel.ERROR,'####### tanti contatti, bisogna scegliere da tabella');
             chooseContact = true;
         }
         return null;
@@ -88,34 +92,38 @@ public with sharing class NewParticipantByEmailCtrl {
         p.Contact__c = contactId;
         //p.Head_Quartier__c = calculateMainAccount(contacts.get(contactId));
         
-        List<Participant__c> ps = [SELECT Id FROM Participant__c WHERE Local_Governance__c= :p.Local_Governance__c AND Contact__c = :p.Contact__c];
+        List<Participant__c> ps = [SELECT Id, Local_Governance__r.RecordType.Name FROM Participant__c WHERE Local_Governance__c= :p.Local_Governance__c AND Contact__c = :p.Contact__c];
         if(ps.size()>0){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'This contact is already a participant for this local group.'));
+            if(ps[0].Local_Governance__r.RecordType.Name == 'Reg/Div Groups')
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'This contact is already a participant for this Reg/Div Group.'));
+            if(ps[0].Local_Governance__r.RecordType.Name == 'Local Groups')    
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'This contact is already a participant for this Local Group.'));
+    
             return null;
         }
-        
+
         Database.SaveResult sr = database.insert(p,false);
         if(!sr.isSuccess()){
             chooseContact = false;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+contacts.values()[0].Id+'" target="_blank">'+contacts.values()[0].Name+'</a> raised the following error: '+sr.getErrors()[0].getMessage()));
             return null;
-            
+
         }else{
             String retURL = ApexPages.currentPage().getParameters().get('saveURL');
             if(retURL==null) retURL = '/'+p.Local_Governance__c;
             return new PageReference(retURL);
         }
-        
+
     }
-    
-    
-    
+
+
+
     // NOTE: the contact MUST include the fields c.Account.Parent, c.Account.RecordTypeId and c.Account.Top_Parent__c!!!
     public static Id calculateMainAccount(Contact c){
     	Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
         Id rtBr =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId();
         Id rtAg =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-    
+
  		if(c.Account.RecordTypeId==rtHQ)
  			return c.AccountId;
     	else if(c.Account.RecordTypeId==rtBr)
@@ -136,7 +144,7 @@ public with sharing class NewParticipantByEmailCtrl {
         {
             idGroup = p.Local_Governance__c;
         }
-        lg = [SELECT Local_governance_type__c, RecordTypeId FROM LocalGovernance__c WHERE Id = :idGroup];
+        lg = [SELECT Name, Local_governance_type__c, RecordTypeId FROM LocalGovernance__c WHERE Id = :idGroup];
         RecordType rtGroup = [SELECT Name FROM RecordType WHERE Id = :lg.RecordTypeId];
         RecordType rtParticipantLocal = [SELECT Id FROM RecordType WHERE Name = 'Local Group Participants'];
         RecordType rtParticipantRegDiv = [SELECT Id FROM RecordType WHERE Name = 'Reg/Div Group Participants'];

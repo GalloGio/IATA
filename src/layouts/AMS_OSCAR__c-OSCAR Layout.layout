@@ -292,6 +292,10 @@
                 <behavior>Edit</behavior>
                 <field>Approval_disapproval_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Disapproval_date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

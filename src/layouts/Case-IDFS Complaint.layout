@@ -167,6 +167,10 @@
                 <field>Case_Type__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Type</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Priority</field>
             </layoutItems>
@@ -489,6 +493,14 @@
         <fields>LAST_UPDATE</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>RelatedArticleList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>Owner</fields>
+        <fields>StartTime</fields>
+        <fields>EndTime</fields>
+        <fields>Status</fields>
+        <relatedList>RelatedLiveChatTranscriptList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

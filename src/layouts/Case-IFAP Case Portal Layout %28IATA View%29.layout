@@ -7,6 +7,7 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
+    <customButtons>E2CP__New_Comment</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -201,13 +202,6 @@
                 <field>Reminder_EmailTemplate__c</field>
             </layoutItems>
             <layoutItems>
-                <height>50</height>
-                <page>initialEmail_FAReminder</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Financial_Review_Result__c</field>
             </layoutItems>
@@ -254,6 +248,22 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Financial Review Links</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>80</height>
+                <page>initialEmail_FAReminder</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Financial Security Information</label>
@@ -281,13 +291,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>FS_Letter_Sent__c</field>
-            </layoutItems>
-            <layoutItems>
-                <height>50</height>
-                <page>FSRequest_FSReminder</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -317,6 +320,22 @@
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Financial Security Links</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>80</height>
+                <page>FSRequest_FSReminder</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>

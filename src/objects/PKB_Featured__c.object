@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>allows admins to push articles into the &quot;Featured&quot; section, or, alternatively, by specifying a keyword or keywords, allows admins to push articles to the top of searches for those keywords.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -168,4 +165,5 @@
         <errorDisplayField>Article_Number__c</errorDisplayField>
         <errorMessage>Article Number should be 9 digits (eg: 00001000).</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

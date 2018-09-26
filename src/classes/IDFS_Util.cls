@@ -14,24 +14,34 @@ global class IDFS_Util
         return '';
     }
 
-    webService static String getRecordTypeEmail (String caseRecordType, String caseBSPCountry)
+    public static final String STR_DEFAULT = 'Default';
+    webService static String getRecordTypeEmail (String caseRecordType, String caseBSPCountry, String caseGroup)
     {
         List<RecordTypeEmail__c> lstFromEmails = RecordTypeEmail__c.getAll().values();
 
         map<String, String> mapFromEmailPerRTKey = new map<String, String>();
         for (RecordTypeEmail__c fromEmail : lstFromEmails)
         {
-            if (fromEmail.Record_Type_Developer_Name__c != null && fromEmail.Email__c != null) {
-            	mapFromEmailPerRTKey.put(fromEmail.Record_Type_Developer_Name__c + ' ' + fromEmail.Country_Name__c, fromEmail.Email__c);
+            if (fromEmail.Record_Type_Developer_Name__c != null && fromEmail.Email__c != null
+                && fromEmail.Case_Group__c != null) {
+                String key = fromEmail.Record_Type_Developer_Name__c + ' ' + fromEmail.Country_Name__c + ' ' + fromEmail.Case_Group__c;
+                mapFromEmailPerRTKey.put(key, fromEmail.Email__c);
             }
         }
-
-        if (mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry) != null) {
-            return mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry);
-        } else if (mapFromEmailPerRTKey.get(caseRecordType + ' Default') != null) {
-            return mapFromEmailPerRTKey.get(caseRecordType + ' Default');
-        }
-
+        
+        String email;
+        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry + ' ' + caseGroup);
+        if (email!=null) return email;
+        
+        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry + ' ' + STR_DEFAULT);
+        if (email!=null) return email;
+        
+        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + STR_DEFAULT + ' ' + caseGroup);
+        if (email!=null) return email;
+        
+        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + STR_DEFAULT + ' ' + STR_DEFAULT);
+        if (email!=null) return email;
+        
         return '';
     }
 

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -73,7 +70,7 @@
         <label>AMS GDP Key</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -118,33 +115,40 @@
         <fullName>Phone_Type__c</fullName>
         <externalId>false</externalId>
         <label>Phone Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Fax</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Phone 1</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Phone 2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Toll Free</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Phone 3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Fax</fullName>
+                    <default>false</default>
+                    <label>Fax</label>
+                </value>
+                <value>
+                    <fullName>Phone 1</fullName>
+                    <default>true</default>
+                    <label>Phone 1</label>
+                </value>
+                <value>
+                    <fullName>Phone 2</fullName>
+                    <default>false</default>
+                    <label>Phone 2</label>
+                </value>
+                <value>
+                    <fullName>Toll Free</fullName>
+                    <default>false</default>
+                    <label>Toll Free</label>
+                </value>
+                <value>
+                    <fullName>Phone 3</fullName>
+                    <default>false</default>
+                    <label>Phone 3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Related_Account__c</fullName>
@@ -155,7 +159,7 @@
         <relationshipLabel>GDP Phones</relationshipLabel>
         <relationshipName>GDP_Phones</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -199,12 +203,15 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Related_Account__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
         <columns>Number__c</columns>
-        <columns>ISD_Code__c</columns>
-        <columns>STD_Code__c</columns>
-        <columns>Phone_Type__c</columns>
-        <columns>AIMS_ID__c</columns>
-        <columns>WebStar_ID__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>AMS_GDP_Key__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -274,4 +281,5 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

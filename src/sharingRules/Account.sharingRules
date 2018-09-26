@@ -20,6 +20,80 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Account_Sharing_Rule_with_FRED_business_users_for_AHQ_and_OPE</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>Account Sharing Rule with FRED+ business users for AHQ and OPE</label>
+        <sharedTo>
+            <group>FRED_Business_Team</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Operator,Airline Headquarters</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Account_Sharing_Rule_with_FRED_business_users_for_IMS_and_VER</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>Account Sharing Rule with FRED+ business users for IMS and VER</label>
+        <sharedTo>
+            <group>FRED_Business_Team</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Verifier,ICAO Member State</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Account_Sharing_Rule_with_IFG_Business_Team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>All accounts will be shared with IFG Business Team</description>
+        <label>Account Sharing Rule with IFG Business Team</label>
+        <sharedTo>
+            <role>IFG_Team</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>$&amp;$#.+</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Account_Sharing_Rule_with_IFG_Support_Team</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>None</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Accounts will be shared with IFG Team when a contact from a specific account request access to IFG service</description>
+        <label>Account Sharing Rule with IFG Support Team</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IFG_Team</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Record_Sharing_Criteria_AUX__c</field>
+            <operation>contains</operation>
+            <value>IFG Active Users</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Account_Sharing_Rule_with_the_role_Corporate_Compliance</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
@@ -34,7 +108,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
+            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,IATA Standard Account,Airline Headquarters</value>
         </criteriaItems>
         <criteriaItems>
             <field>Category__c</field>
@@ -86,7 +160,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Airline Branch,Airline Headquarters,General Sales Agent Headquarters</value>
+            <value>Operator,Airline Branch,General Sales Agent Headquarters,Airline Headquarters</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -217,7 +291,7 @@
         <criteriaItems>
             <field>Category__c</field>
             <operation>equals</operation>
-            <value>IATA Regional Office</value>
+            <value>IATA Local office,IATA Regional Office</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -468,6 +542,24 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Payment_Providers</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>Payment Providers</label>
+        <sharedTo>
+            <group>IDFS_excl_GDP</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Payment Provider</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>RW_access_for_IDFS_excl_GDP</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
@@ -532,25 +624,6 @@
         <label>Read Only Country office Access For GDP</label>
         <sharedTo>
             <roleAndSubordinatesInternal>GDP</roleAndSubordinatesInternal>
-        </sharedTo>
-        <criteriaItems>
-            <field>Merged_Account__c</field>
-            <operation>notEqual</operation>
-            <value>Merged</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Read_Only_Country_office_Access_For_SIS</fullName>
-        <accessLevel>Read</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>Edit</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>None</opportunityAccessLevel>
-        </accountSettings>
-        <description>Read-only access to accounts with the RT IATA COuntry Office for SIS users</description>
-        <label>Read Only Country office Access For SIS</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>SISCustomerSupport</roleAndSubordinatesInternal>
         </sharedTo>
         <criteriaItems>
             <field>Merged_Account__c</field>

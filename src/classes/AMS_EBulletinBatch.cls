@@ -4,6 +4,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 	public final String typeEBulletin;	
 	public String networkComponent = '';
 	EmailTemplate emailTemplate; 
+	Map<Id,Boolean> profBouncedMap;
 
 	global AMS_EBulletinBatch(String typeEBulletin) {
 		this.typeEBulletin = typeEBulletin;
@@ -15,7 +16,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		//this.query = 'select ' + fieldsToRecover + ' from AMS_eBulletin_Profile__c ' + filters;
 		
 
-		this.query = AMS_QueryUtils.getAllFieldQuery('AMS_eBulletin_Profile__c',new List<String>{'User__r.email','User__r.name'},
+		this.query = AMS_QueryUtils.getAllFieldQuery('AMS_eBulletin_Profile__c',new List<String>{'User__r.email','User__r.name','User__r.ContactId'},
 										'recordType.name = :typeEBulletin and Opt_out_Bulletin__c = FALSE and Opt_in__c = TRUE', 
 										FALSE);
 
@@ -46,13 +47,56 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
 		List<AMS_eBulletin_Profile__c> profileUpdateDates = new List<AMS_eBulletin_Profile__c>();
 
+
+		//get the value of email bounced for each profile
+		Set<Id> profIds = new Set<Id>();
+
+		for(AMS_eBulletin_Profile__c ebProfile : scope) {
+
+			profIds.add(ebProfile.Id);
+		}
+
+		Map<Id, Id> ebprofContactsMap = new Map<Id, Id>();
+
+		List<AMS_eBulletin_Profile__c> eBprofContacts = new List<AMS_eBulletin_Profile__c>();
+
+		eBprofContacts = [SELECT Id, User__r.ContactId FROM AMS_eBulletin_Profile__c WHERE Id IN :profIds AND User__c != null];
+
+		for(AMS_eBulletin_Profile__c prof : eBprofContacts) {
+
+			ebprofContactsMap.put(prof.User__r.ContactId, prof.Id);
+		}
+
+		Map<Id, Boolean> conBouncedMap = new Map<Id, Boolean>();
+
+		List<Contact> conBounced = new List<Contact>();
+
+		Set<Id> contacts = ebprofContactsMap.keySet();
+
+		conBounced = [SELECT Id, IsEmailBounced FROM Contact WHERE Id IN :contacts];
+
+		for(Contact con : conBounced) {
+
+			conBouncedMap.put(con.Id, con.IsEmailBounced);
+		}
+
+		profBouncedMap = new Map<Id,Boolean>();
+
+		for(Id conId : contacts) {
+
+			profBouncedMap.put(ebprofContactsMap.get(conId), conBouncedMap.get(conId));
+		}
+
+		System.debug('AMS_EBulletinBatch - ebulletin profiles and value of IsEmailBounced (Contact field) : ' + profBouncedMap);
+
+
 		for(AMS_eBulletin_Profile__c eBprof : scope){
 			
-			AMS_EBulletinReportWebservice.recordTypeName =Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBprof.RecordTypeId).Name;
+			AMS_EBulletinReportHelper.recordTypeName =Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBprof.RecordTypeId).Name;
 
 			if(eBprof.Last_NotificationBatch_Run__c == null) eBprof.Last_NotificationBatch_Run__c = Date.today();
 
-			AMS_EBulletinReportWebservice.AMSEBulletinFilters filters = new AMS_EBulletinReportWebservice.AMSEBulletinFilters(eBprof, eBprof.Last_NotificationBatch_Run__c , system.now() );
+			AMS_EBulletinReportHelper.AMSEBulletinFilters filters = new AMS_EBulletinReportHelper.AMSEBulletinFilters(eBprof, eBprof.Last_NotificationBatch_Run__c , system.now() );
 
 
 			//Recover Ebulletin Sections
@@ -72,6 +116,9 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 			system.debug('filters.programsList: ' + programsToRecover);
 			system.debug('filters.fromCCDate: ' + filters.fromCCDate);
 			system.debug('filters.toCCDate: ' + filters.toCCDate);
+
+			Datetime fromCCDate = filters.fromCCDate;
+			Datetime toCCDate = filters.toCCDate;
 			
 			Integer count = 0;
 			if(this.typeEBulletin == 'Daily'){	
@@ -81,12 +128,13 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 				String filtersPublished = 'and Published_on_EBulletin__c = TRUE ';
 				String filtersCountries = 'and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesToRecover ';
 				String filtersLC 		= 'and Account__r.Location_Class__c IN :programsToRecover ';
-				String filtersDates		= 'and Created_Date_To_Show__c > ' + filters.fromCCDate.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')  + ' and Created_Date_To_Show__c < ' + filters.toCCDate.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+				String filtersDates		= 'and Created_Date_To_Show__c > :fromCCDate and Created_Date_To_Show__c < :toCCDate';
 				
 
 				count = Database.countQuery(baseq + filtersCC + filtersPublished + filtersCountries + filtersLC + filtersDates) ;
 
 				system.debug('Count Query: ' + baseq + filtersCC + filtersPublished + filtersCountries + filtersLC + filtersDates);
+
 			}
 			else if (this.typeEBulletin == 'Weekly'){
 				count = 1;
@@ -95,11 +143,20 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
 			system.debug('Change Codes count: ' + count);
 
-			if(count > 0) mailsToSend.add(setEmailContents(eBprof));
+			if(count > 0) {
+
+				Messaging.SingleEmailMessage msg = setEmailContents(eBprof);
+
+				if(msg != null)
+					mailsToSend.add(msg);
+
+			} 
 
 			// Update Dates and Times
 			eBprof.Last_NotificationBatch_Run__c = system.now();
 			profileUpdateDates.add(eBprof);
+
+			AMS_CustomSettingsUtils.resetVariables();
 		}
 
 		if(!Test.isRunningTest())  Messaging.sendEmail(mailsToSend);
@@ -118,6 +175,11 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
 		// Create an Email template
 		//
+
+		//check if the respective email is bounced
+		if(profBouncedMap.get(eBprof.Id) == null || profBouncedMap.get(eBprof.Id))
+			return null;
+
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     	mail.setToAddresses(new List<String>{eBprof.User__r.email});
     	
@@ -136,7 +198,9 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
         mail.setCharset(emailTemplate.Encoding);
         mail.setSubject(emailTemplate.Subject);
-       	mail.saveAsActivity = false;
+    	mail.setTargetObjectId(eBprof.User__r.ContactId);
+        mail.setWhatId(eBprof.Id);
+        mail.setSaveAsActivity(true);
     	
 		return mail;
 	}

@@ -24,6 +24,7 @@ private class TransferAttachmentToCaseControllerTest {
         insert a;
         
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'Name',
                                  phone = '123',
                                  accountid = a.Id,
                                  Financial_Assessment_Contact__c = true,
@@ -39,7 +40,7 @@ private class TransferAttachmentToCaseControllerTest {
         Case c1 = new Case(recordtypeID = chinaRTId,
                           Region__c = 'China & North Asia',
                           BSPCountry__c = 'China',
-                          Status = 'Financial Security Requested',
+                          Status = 'Action Needed',
                           FS_Submitted_Date__c = date.today(),
                           FS_Deadline_Date__c = twoweeksAgo,
                           Origin = 'asd',
@@ -52,7 +53,7 @@ private class TransferAttachmentToCaseControllerTest {
                           Contactid = con.Id,
                           AccountId = a.Id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c1');
         insert c1;
         
@@ -61,7 +62,7 @@ private class TransferAttachmentToCaseControllerTest {
                           ParentId = c1.Id,
                           Region__c = 'Europe (Americas Countries)',
                           BSPCountry__c = 'Turkey',
-                          Status = 'Financial Security Requested',
+                          Status = 'Action Needed',
                           FS_Submitted_Date__c = date.today(),
                           FS_Deadline_Date__c = twoweeksAgo,
                           Origin = 'asd',
@@ -74,14 +75,14 @@ private class TransferAttachmentToCaseControllerTest {
                           Contactid = con.Id,
                           AccountId = a.Id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c2');
         
         Case c3 = new Case(recordtypeID = europeRTId,
                             ParentId = c1.Id,
                             Region__c = 'Europe',
                             BSPCountry__c = 'France',
-                            Status = 'Financial Security Requested',
+                            Status = 'Action Needed',
                             FS_Submitted_Date__c = date.today(),
                             FS_Deadline_Date__c = twoweeksAgo,
                             Origin = 'asd',
@@ -94,7 +95,7 @@ private class TransferAttachmentToCaseControllerTest {
                             Contactid = con.Id,
                             AccountId = a.Id,
                             Assessment_Performed_Date__c = date.today(),
-                            Financial_Review_Result__c = 'very good' ,
+                            Financial_Review_Result__c = 'Satisfactory' ,
                             Subject = 'c3');
 
         //insert cases

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object used to describe the file representation that will be used to generate Txt, Xls and XML files</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -62,101 +59,125 @@
         <externalId>false</externalId>
         <inlineHelpText>Will Allow to segregate the File Production. Selection of option 0 will deactivate the production of the file.</inlineHelpText>
         <label>Atom</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>7</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>8</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>10</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>11</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>12</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>13</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>14</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>15</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>16</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>17</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>18</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>19</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>20</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>255</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>0</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                    <label>9</label>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                    <label>10</label>
+                </value>
+                <value>
+                    <fullName>11</fullName>
+                    <default>false</default>
+                    <label>11</label>
+                </value>
+                <value>
+                    <fullName>12</fullName>
+                    <default>false</default>
+                    <label>12</label>
+                </value>
+                <value>
+                    <fullName>13</fullName>
+                    <default>false</default>
+                    <label>13</label>
+                </value>
+                <value>
+                    <fullName>14</fullName>
+                    <default>false</default>
+                    <label>14</label>
+                </value>
+                <value>
+                    <fullName>15</fullName>
+                    <default>false</default>
+                    <label>15</label>
+                </value>
+                <value>
+                    <fullName>16</fullName>
+                    <default>false</default>
+                    <label>16</label>
+                </value>
+                <value>
+                    <fullName>17</fullName>
+                    <default>false</default>
+                    <label>17</label>
+                </value>
+                <value>
+                    <fullName>18</fullName>
+                    <default>false</default>
+                    <label>18</label>
+                </value>
+                <value>
+                    <fullName>19</fullName>
+                    <default>false</default>
+                    <label>19</label>
+                </value>
+                <value>
+                    <fullName>20</fullName>
+                    <default>false</default>
+                    <label>20</label>
+                </value>
+                <value>
+                    <fullName>255</fullName>
+                    <default>false</default>
+                    <label>255</label>
+                </value>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Class__c</fullName>
@@ -164,33 +185,40 @@
         <externalId>false</externalId>
         <inlineHelpText>Agency Classification</inlineHelpText>
         <label>Class</label>
-        <picklist>
-            <picklistValues>
-                <fullName>D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P,V</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>M,G</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>D</label>
+                </value>
+                <value>
+                    <fullName>P,V</fullName>
+                    <default>false</default>
+                    <label>P,V</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>T</label>
+                </value>
+                <value>
+                    <fullName>M,G,X</fullName>
+                    <default>false</default>
+                    <label>M,G</label>
+                </value>
+                <value>
+                    <fullName>C,R</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Database_Connector__c</fullName>
@@ -371,29 +399,35 @@
         <externalId>false</externalId>
         <inlineHelpText>Is the File Type in which the data is converted, When DATABASE the replication process does carry directly the information to the given database</inlineHelpText>
         <label>File Format</label>
-        <picklist>
-            <picklistValues>
-                <fullName>XML</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>XLSX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TXT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Database</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>XML</fullName>
+                    <default>false</default>
+                    <label>XML</label>
+                </value>
+                <value>
+                    <fullName>XLSX</fullName>
+                    <default>false</default>
+                    <label>XLSX</label>
+                </value>
+                <value>
+                    <fullName>TXT</fullName>
+                    <default>false</default>
+                    <label>TXT</label>
+                </value>
+                <value>
+                    <fullName>Database</fullName>
+                    <default>false</default>
+                    <label>Database</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>File_Naming_Convention__c</fullName>
@@ -414,29 +448,48 @@
         <externalId>false</externalId>
         <inlineHelpText>The Frequency set the logic of when the data from the Rest API is produced</inlineHelpText>
         <label>Frequency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Semi-Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                    <label>Weekly</label>
+                </value>
+                <value>
+                    <fullName>Semi-Monthly</fullName>
+                    <default>false</default>
+                    <label>Semi-Monthly</label>
+                </value>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Full_SFDC_ID__c</fullName>
+        <description>Show the full ID</description>
+        <externalId>false</externalId>
+        <formula>CASESAFEID(Id)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Full SFDC ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Geo_Coverage_Definition__c</fullName>
@@ -471,21 +524,25 @@
         <externalId>false</externalId>
         <inlineHelpText>Delta will refer to the Select of Delta Update Records for updated Account View Records Only for the given period of time, Master is every Account View Records</inlineHelpText>
         <label>Magnitude</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Delta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Master</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Delta</fullName>
+                    <default>false</default>
+                    <label>Delta</label>
+                </value>
+                <value>
+                    <fullName>Master</fullName>
+                    <default>false</default>
+                    <label>Master</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Master_File_Description__c</fullName>
@@ -538,7 +595,7 @@
         <label>Order By</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -549,25 +606,30 @@
         <externalId>false</externalId>
         <inlineHelpText>Used by the Reference Record and Will tell the replication process which payload procedure to consume to get the data</inlineHelpText>
         <label>Payload Procedure</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agency</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Subscription</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IDCard</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agency</fullName>
+                    <default>false</default>
+                    <label>Agency</label>
+                </value>
+                <value>
+                    <fullName>Subscription</fullName>
+                    <default>false</default>
+                    <label>Subscription</label>
+                </value>
+                <value>
+                    <fullName>IDCard</fullName>
+                    <default>false</default>
+                    <label>IDCard</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Product_Type__c</fullName>
@@ -575,33 +637,40 @@
         <externalId>false</externalId>
         <inlineHelpText>Used on the Reference Record To Determine the Family Product Category</inlineHelpText>
         <label>Product Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>GSS</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MDP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACSWS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACEWS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GSS</fullName>
+                    <default>true</default>
+                    <label>GSS</label>
+                </value>
+                <value>
+                    <fullName>MDP</fullName>
+                    <default>false</default>
+                    <label>MDP</label>
+                </value>
+                <value>
+                    <fullName>CAC</fullName>
+                    <default>false</default>
+                    <label>CAC</label>
+                </value>
+                <value>
+                    <fullName>CACSWS</fullName>
+                    <default>false</default>
+                    <label>CACSWS</label>
+                </value>
+                <value>
+                    <fullName>CACEWS</fullName>
+                    <default>false</default>
+                    <label>CACEWS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Reference_Clause__c</fullName>
@@ -610,7 +679,7 @@
         <inlineHelpText>Used on the Reference Record To Limit the Query as clause where inside the REST API</inlineHelpText>
         <label>Reference Clause</label>
         <length>4000</length>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -636,21 +705,25 @@
         <externalId>false</externalId>
         <inlineHelpText>Service Target is used to upsert the data to the right table into the mysql</inlineHelpText>
         <label>Service Target</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Response</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Subscription</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Response</fullName>
+                    <default>false</default>
+                    <label>Response</label>
+                </value>
+                <value>
+                    <fullName>Subscription</fullName>
+                    <default>false</default>
+                    <label>Subscription</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Web_Service_Default_Response__c</fullName>
@@ -659,7 +732,7 @@
         <inlineHelpText>For CAC Web Service Default returned response when the code is not found</inlineHelpText>
         <label>Web Service Default Response</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -677,169 +750,45 @@
     <listViews>
         <fullName>ALL_Reference_File_Specification</fullName>
         <columns>NAME</columns>
-        <columns>Reference__c</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>ALL Reference File Description (Layout)</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Reference__c</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>File_Naming_Convention__c</columns>
-        <columns>Product_Type__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <label>All Non Reference</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_CAC_Non_Reference</fullName>
-        <columns>NAME</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Reference__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
-        <columns>File_Naming_Convention__c</columns>
-        <columns>Description__c</columns>
-        <columns>LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Product_Type__c</field>
-            <operation>contains</operation>
-            <value>CAC,CACSWS</value>
-        </filters>
-        <label>All CAC Non Reference</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_CAC_Non_Reference_DB_Files</fullName>
-        <columns>NAME</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Reference__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
-        <columns>File_Naming_Convention__c</columns>
-        <columns>Description__c</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>Atom__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Atom__c</field>
-            <operation>equals</operation>
-            <value>255</value>
-        </filters>
-        <label>All CAC Non Reference DB &amp; Files</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_GSS_Non_Reference</fullName>
-        <columns>NAME</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Reference__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
-        <columns>File_Naming_Convention__c</columns>
-        <columns>Description__c</columns>
-        <columns>LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Product_Type__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <label>All GSS Non Reference</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_References</fullName>
-        <columns>NAME</columns>
-        <columns>Payload_Procedure__c</columns>
+        <columns>Is_Reference__c</columns>
         <columns>Product_Type__c</columns>
         <columns>Service_Target__c</columns>
-        <columns>Is_Reference__c</columns>
-        <columns>Description__c</columns>
-        <columns>UPDATEDBY_USER</columns>
+        <columns>Payload_Procedure__c</columns>
+        <columns>Maximum_API_Request__c</columns>
+        <columns>Minimum_Digit_Search__c</columns>
+        <columns>Reference__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Is_Reference__c</field>
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>All References</label>
+        <label>00 - ALL REFERENCES</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>CACW_File_Descriptions</fullName>
         <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
         <columns>Reference__c</columns>
         <columns>Class__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
         <columns>File_Format__c</columns>
         <columns>Frequency__c</columns>
         <columns>Magnitude__c</columns>
         <columns>File_Naming_Convention__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>File_Format__c</field>
-            <operation>equals</operation>
-            <value>Database</value>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>CAC</value>
         </filters>
-        <label>CACW_File_Descriptions</label>
+        <label>50 - CAC Web File Descriptions</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>GSS_Non_Reference_File_Descriptions</fullName>
+        <fullName>GSS_File_Naming_Convention</fullName>
         <columns>NAME</columns>
-        <columns>Reference__c</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Order_By__c</columns>
-        <columns>Product_Type__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Service_Target__c</columns>
-        <columns>Master_File_Description__c</columns>
-        <columns>Is_Reference__c</columns>
+        <columns>File_Naming_Convention__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Is_Reference__c</field>
@@ -851,35 +800,13 @@
             <operation>equals</operation>
             <value>GSS</value>
         </filters>
-        <label>GSS_Non_Reference_File_Descriptions</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>GSS_Reference_File_Descriptions</fullName>
-        <columns>NAME</columns>
-        <columns>Reference__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Product_Type__c</columns>
-        <columns>Master_File_Description__c</columns>
-        <columns>Is_Reference__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>Product_Type__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <label>00_GSS_Reference_Layouts</label>
+        <label>80 - GSS File Naming Conventions</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>MDP_File_Descriptions</fullName>
         <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
         <columns>Reference__c</columns>
         <columns>Class__c</columns>
         <columns>Geo_Coverage_Definition__c</columns>
@@ -893,34 +820,7 @@
             <operation>equals</operation>
             <value>MDP</value>
         </filters>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <label>MDP_File_Descriptions</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>MDP_Reference_File_Description</fullName>
-        <columns>NAME</columns>
-        <columns>Reference__c</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>Product_Type__c</field>
-            <operation>equals</operation>
-            <value>MDP</value>
-        </filters>
-        <label>20_MDP_Reference_Layouts</label>
+        <label>60 - MDP File Descriptions</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -931,17 +831,27 @@
         <columns>File_Format__c</columns>
         <columns>Frequency__c</columns>
         <columns>Magnitude__c</columns>
+        <columns>Atom__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>NAME</field>
+            <field>Order_By__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
             <operation>contains</operation>
-            <value>test</value>
+            <value>MITA</value>
         </filters>
-        <label>Test Layouts</label>
+        <label>ZZ-MISC SEARCHES</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>X00_GSS_Files_TXT</fullName>
+        <fullName>X01_GSS_Member_NEWGEN_TXT_Masters</fullName>
         <columns>NAME</columns>
         <columns>Reference__c</columns>
         <columns>Class__c</columns>
@@ -950,8 +860,7 @@
         <columns>Magnitude__c</columns>
         <columns>Product_Type__c</columns>
         <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Master_File_Description__c</columns>
-        <columns>Is_Reference__c</columns>
+        <columns>Order_By__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Is_Reference__c</field>
@@ -962,6 +871,32 @@
             <field>Product_Type__c</field>
             <operation>equals</operation>
             <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member Legacy</value>
+        </filters>
+        <label>01 - GSS Member LEGACY</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X11_GSS_Member_TXT_Masters</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
         </filters>
         <filters>
             <field>File_Format__c</field>
@@ -969,40 +904,40 @@
             <value>TXT</value>
         </filters>
         <filters>
-            <field>Magnitude__c</field>
-            <operation>equals</operation>
-            <value>Master</value>
-        </filters>
-        <filters>
             <field>Reference__c</field>
             <operation>equals</operation>
-            <value>Reference - GSS Member Master</value>
-        </filters>
-        <label>01_GSS_Member_TXT_Masters</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>X02_GSS_3rd_Party_TXT_Masters</fullName>
-        <columns>NAME</columns>
-        <columns>Reference__c</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Product_Type__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Master_File_Description__c</columns>
-        <columns>Is_Reference__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>0</value>
+            <value>Reference - GSS Member NewGen</value>
         </filters>
         <filters>
             <field>Product_Type__c</field>
             <operation>equals</operation>
             <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Master</value>
+        </filters>
+        <label>10 - GSS | TXT | Masters | Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X11_GSS_Non_Member_TXT_Masters</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
         </filters>
         <filters>
             <field>File_Format__c</field>
@@ -1010,35 +945,9 @@
             <value>TXT</value>
         </filters>
         <filters>
-            <field>Magnitude__c</field>
-            <operation>equals</operation>
-            <value>Master</value>
-        </filters>
-        <filters>
             <field>Reference__c</field>
             <operation>equals</operation>
-            <value>Reference - GSS Non Member Master</value>
-        </filters>
-        <label>02_GSS_3rd_Party_TXT_Masters</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>X03_GSS_Member_XLS_Masters</fullName>
-        <columns>NAME</columns>
-        <columns>Reference__c</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Product_Type__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Master_File_Description__c</columns>
-        <columns>Is_Reference__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>0</value>
+            <value>Reference - GSS Non Member</value>
         </filters>
         <filters>
             <field>Product_Type__c</field>
@@ -1046,35 +955,25 @@
             <value>GSS</value>
         </filters>
         <filters>
-            <field>File_Format__c</field>
-            <operation>equals</operation>
-            <value>XLSX</value>
-        </filters>
-        <filters>
             <field>Magnitude__c</field>
             <operation>equals</operation>
             <value>Master</value>
         </filters>
-        <filters>
-            <field>Reference__c</field>
-            <operation>equals</operation>
-            <value>Reference - GSS Member Master</value>
-        </filters>
-        <label>03_GSS_Member_XLS_Masters</label>
+        <label>11 - GSS | TXT | Masters | Non Members</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>X04_GSS_3rd_Party_XLS_Masters</fullName>
+        <fullName>X12_GSS_TXT_Changes_Members</fullName>
         <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
         <columns>Reference__c</columns>
         <columns>Class__c</columns>
         <columns>File_Format__c</columns>
         <columns>Frequency__c</columns>
         <columns>Magnitude__c</columns>
-        <columns>Product_Type__c</columns>
         <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Master_File_Description__c</columns>
-        <columns>Is_Reference__c</columns>
+        <columns>Order_By__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Is_Reference__c</field>
@@ -1082,123 +981,15 @@
             <value>0</value>
         </filters>
         <filters>
-            <field>Product_Type__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <filters>
             <field>File_Format__c</field>
             <operation>equals</operation>
-            <value>XLSX</value>
-        </filters>
-        <filters>
-            <field>Magnitude__c</field>
-            <operation>equals</operation>
-            <value>Master</value>
+            <value>TXT</value>
         </filters>
         <filters>
             <field>Reference__c</field>
             <operation>equals</operation>
-            <value>Reference - GSS Non Member Master</value>
+            <value>Reference - GSS Member NewGen</value>
         </filters>
-        <label>04_GSS_3rd_Party_XLS_Masters</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>X05_GSS_Member_XML_Masters</fullName>
-        <columns>NAME</columns>
-        <columns>Reference__c</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Product_Type__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Master_File_Description__c</columns>
-        <columns>Is_Reference__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Product_Type__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <filters>
-            <field>File_Format__c</field>
-            <operation>equals</operation>
-            <value>XML</value>
-        </filters>
-        <filters>
-            <field>Magnitude__c</field>
-            <operation>equals</operation>
-            <value>Master</value>
-        </filters>
-        <filters>
-            <field>Reference__c</field>
-            <operation>equals</operation>
-            <value>Reference - GSS Member Master</value>
-        </filters>
-        <label>05_GSS_Member_XML_Masters</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>X06_GSS_3rd_Party_XML_Masters</fullName>
-        <columns>NAME</columns>
-        <columns>Reference__c</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Product_Type__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Master_File_Description__c</columns>
-        <columns>Is_Reference__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Is_Reference__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Product_Type__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <filters>
-            <field>File_Format__c</field>
-            <operation>equals</operation>
-            <value>XML</value>
-        </filters>
-        <filters>
-            <field>Magnitude__c</field>
-            <operation>equals</operation>
-            <value>Master</value>
-        </filters>
-        <filters>
-            <field>Reference__c</field>
-            <operation>equals</operation>
-            <value>Reference - GSS Non Member Master</value>
-        </filters>
-        <label>06_GSS_3rd_Party_XML_Masters</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>X07_GSS_Member_TXT_Delta_DOM</fullName>
-        <columns>NAME</columns>
-        <columns>Reference__c</columns>
-        <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
-        <columns>Magnitude__c</columns>
-        <columns>Product_Type__c</columns>
-        <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Master_File_Description__c</columns>
-        <columns>Is_Reference__c</columns>
-        <filterScope>Everything</filterScope>
         <filters>
             <field>Product_Type__c</field>
             <operation>equals</operation>
@@ -1209,12 +1000,369 @@
             <operation>equals</operation>
             <value>Delta</value>
         </filters>
-        <label>07_GSS_Non_Member_XML_Delta_TID</label>
+        <label>12 - GSS | TXT | Changes | Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X13_GSS_TXT_Changes_Non_Members</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>TXT</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Delta</value>
+        </filters>
+        <label>13 - GSS | TXT | Changes | Non-Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X20_GSS_Member_XLSX_Masters</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XLSX</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member NewGen</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Master</value>
+        </filters>
+        <label>20 - GSS | XLS | Masters | Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X21_GSS_Non_Member_XLSX_Masters</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XLSX</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Master</value>
+        </filters>
+        <label>21 - GSS | XLS | Masters | Non Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X22_GSS_XLS_Changes_Members</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XLSX</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member NewGen</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Delta</value>
+        </filters>
+        <label>22 - GSS | XLS | Changes | Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X23_GSS_XLS_Changes_Non_Members</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XLSX</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Delta</value>
+        </filters>
+        <label>23 - GSS | XLS | Changes | Non-Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X30_GSS_Member_XML_Masters</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <columns>Atom__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XML</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Master</value>
+        </filters>
+        <label>30 - GSS | XML | Masters | Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X31_GSS_Non_Member_XML_Masters</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XML</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Master</value>
+        </filters>
+        <label>31 - GSS | XML | Masters | Non Members</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X70_GSS_XML_Changes_ALL</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <columns>Atom__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XML</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>contains</operation>
+            <value>Reference - GSS</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>equals</operation>
+            <value>Delta</value>
+        </filters>
+        <label>70 - GSS | XML | Changes | ALL</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X90_GSS_ATOM_0_ALL</fullName>
+        <columns>NAME</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Order_By__c</columns>
+        <columns>Atom__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Atom__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>90 - GSS | ATOM 0 | ALL</label>
         <language>en_US</language>
     </listViews>
     <nameField>
         <label>GDP File Description Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>GDP File Descriptions</pluralLabel>
@@ -1243,4 +1391,5 @@
         <searchResultsAdditionalFields>Class__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

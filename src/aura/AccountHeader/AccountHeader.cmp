@@ -1,75 +1,121 @@
-<aura:component >
+<aura:component controller="AccountHeaderController">
     <aura:attribute name="account" type="Account"/>
-    
+    <aura:attribute name="SanctionNotice" type="String"/>
+    <aura:attribute name="isEditMode" type="Boolean" default="false"/>
+    <aura:attribute name="canEdit" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:registerEvent name="AccountIdSelected" type="c:AMP_AccountIdSelected"/>
+
     <!-- PAGE HEADER -->
-    <div class="slds-page-header" role="banner">
-        
+    <div class="slds-page-header resizeHeader" role="banner">
+
         <!-- PAGE HEADER TOP ROW -->
-        <div class="slds-grid">
-            
+        <div class="slds-grid  slds-grid_pull-padded ">
+
             <!-- PAGE HEADER / ROW 1 / COLUMN 1 -->
-            <div class="slds-col">
-                
+            <div class="slds-size_1-of-5 slds-col--padded slds-align-middle">
                 <!-- HEADING AREA -->
                 <!-- MEDIA OBJECT = FIGURE + BODY -->
                 <div class="slds-media">
-                    
                     <div class="slds-media__figure">
                         <span class="slds-icon__container slds-icon-standard-account">
                             <aura:if isTrue="{!v.account.Membership_status__c == 'IATA member'}" >
-                                <img src="/resource/AMP_logo" />                            
-                            </aura:if>    
+                                <img src="/resource/AMP_logo" />
+                            </aura:if>
                         </span>
                     </div>
-                    
-                    <div class="slds-media__body">
+
+                    <div class="slds-media__body" >
                         <p class="slds-text-heading--label">Account</p>
-                        <h1 class="slds-text-heading--medium">{!v.account.Name}</h1>
+                        <h1 class="slds-text-heading--small" style="font-size: 1.1rem;">{!v.account.Name}</h1>
                     </div>
-                    
                 </div>
                 <!-- / MEDIA OBJECT -->
                 <!-- HEADING AREA -->
-                
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
-            
+            <div class="slds-size_1-of-5 slds-col--padded slds-align-middle text-align-center">
+                <aura:if isTrue="{!v.account.Due_Diligence_Status__c == 'Sanctioned. Please contact compliance'}" >
+                    <div style="color:#ff0000; font-size: .60rem; font-weight: bold"> {!v.account.Due_Diligence_Status__c}</div>
+                    <aura:set attribute="else">
+                            <span>   </span>
+                    </aura:set>
+                </aura:if>
+            </div>
             <!-- PAGE HEADER / ROW 1 / COLUMN 2 -->
-            <div class="slds-col slds-align-middle">
+            <div class="slds-align-middle">
                 <aura:unescapedHtml value="{!v.account.Company_Logo__c}" />
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
-            
+            <div class="slds-size_1-of-5 slds-col--padded" >
+                <div class="slds-grid" style="flex-direction: column">
+                    <div class="slds-size_1-of-2 slds-col--padded resizeBox">
+                        <aura:renderIf isTrue="{!v.isEditMode}">
+                            <ui:inputTextArea value="{!v.account.SanctionNotice__c}" class="slds-textarea " maxlength="150" cols="50" />
+                        </aura:renderIf>
+
+                        <aura:renderIf isTrue="{!!v.isEditMode}">
+		      				    <div class="slds-form-element__control">
+	                            <span  class="alignText" style="" >    {!v.account.SanctionNotice__c}   </span>
+	                            <aura:renderIf isTrue="{!v.canEdit}">
+		                            <button class="slds-button slds-button_icon slds-float_right slds-button_icon slds-button_icon-small inline-button" onclick="{!c.switchToEditMode}" id="edit2" title="Edit">
+	                                		<c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#edit'}" class="slds-button__icon slds-button__icon_hint" />
+	                                		<span class="slds-assistive-text">Edit</span>
+	                            	</button>
+	                                 </aura:renderIf>
+                             </div>
+                        </aura:renderIf>
+                         </div>
+                    <div class="text-align-center slds-size_1-of-2 slds-col--padded">
+                        <aura:renderIf isTrue="{!v.canEdit}">
+                        <aura:renderIf isTrue="{!v.isEditMode}">
+                            <div class="slds-button-group float-right" role="group">
+                                <button class="slds-button slds-button--neutral" onclick="{!c.cancelEditMode}" id="cancel2" title="Cancel"><c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
+                                    <span class="slds-assistive-text">Cancel</span>
+                                </button>
+                                <button class="slds-button slds-button--neutral" onclick="{!c.save}" id="save2" title="Save" >
+                                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
+                                    <span class="slds-assistive-text">Save</span>
+                                </button>
+                                    <!--<c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon cancel2" />
+                                    <span class="slds-assistive-text">Cancel</span> -->
+                            </div>
+                        </aura:renderIf>
+                        </aura:renderIf>
+                    </div>
+
+                </div>
+            </div>
             <!-- PAGE HEADER / ROW 1 / COLUMN 3 -->
-            <div class="slds-col slds-no-flex slds-align-middle">
-                <div class="slds-button-group" role="group">
+            <div class="slds-col--padded slds-no-flex  slds-size_1-of-5 slds-align-middle">
+                <div class="slds-button-group float-right" role="group">
                     <button class="slds-button slds-button--neutral">
                         <a href="{!'/' + v.account.Id}">Back to Classic View</a>
                     </button>
                 </div>
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 3 -->
-            
+
         </div>
         <!-- / PAGE HEADER TOP ROW -->
-        
+
         <!-- PAGE HEADER DETAIL ROW -->
-        <div class="slds-grid slds-page-header__detail-row">
-            
+        <div class="slds-grid slds-page-header__detail-row resize">
+
             <!-- PAGE HEADER / ROW 2 / COLUMN 1 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
-                        <p class="slds-text-heading--label slds-truncate">Account Record Type</p>
+                        <p class="slds-text-heading--label slds-truncate">Record Type</p>
                     </dt>
                     <dd>
                         <p class="slds-text-body--regular slds-truncate">{!v.account.RecordType.Name}</p>
                     </dd>
                 </dl>
             </div>
-            
+
             <!-- PAGE HEADER / ROW 2 / COLUMN 2 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Verified</p>
@@ -79,9 +125,9 @@
                     </dd>
                 </dl>
             </div>
-            
+
             <!-- PAGE HEADER / ROW 2 / COLUMN 3 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Country</p>
@@ -89,9 +135,9 @@
                     <dd>{!v.account.IATA_ISO_Country__r.Name}</dd>
                 </dl>
             </div>
-            
+
             <!-- PAGE HEADER / ROW 2 / COLUMN 4 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Sector</p>
@@ -99,9 +145,9 @@
                     <dd>{!v.account.Sector__c}</dd>
                 </dl>
             </div>
-            
+
             <!-- PAGE HEADER / ROW 2 / COLUMN 5 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Category</p>
@@ -109,12 +155,40 @@
                     <dd>{!v.account.Category__c}</dd>
                 </dl>
             </div>
-            
+
+            <!-- PAGE HEADER / ROW 2 / COLUMN 6 -->
+            <div class="slds-col--padded ">
+                <dl>
+                    <dt>
+                        <p class="slds-text-heading--label slds-truncate">Airline Business Model</p>
+                    </dt>
+                    <dd>
+
+                        {!v.account.Airline_Model_Type__c}
+                        <!-- <aura:if isTrue="{!v.account.Airline_Business_Model_Detail__c != undefined}">
+                            {!v.account.Airline_Business_Model_Detail__c}
+                            <aura:set attribute="else">
+                            </aura:set>
+                        </aura:if> -->
+                    </dd>
+                </dl>
+            </div>
+
+            <!-- PAGE HEADER / ROW 2 / COLUMN 7 -->
+            <div class="slds-col--padded ">
+                <dl>
+                    <dt>
+                        <p class="slds-text-heading--label slds-truncate">Membership Status</p>
+                    </dt>
+                    <dd>{!v.account.Membership_status__c}</dd>
+                </dl>
+            </div>
+
         </div>
         <!-- / PAGE HEADER DETAIL ROW -->
-        
-        
+
+
     </div>
     <!-- / PAGE HEADER -->
-    
+
 </aura:component>

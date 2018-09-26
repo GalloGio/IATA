@@ -221,7 +221,7 @@ public class AMS_AgencyUpdateHelperTest {
         updateAll.add(a4);
         update updateAll;
         
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c WHERE Integration_System__c = 'SAP PI'];
         System.assertEquals(4, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             //System.assertEquals('Update', au.Update_Type__c);
@@ -483,7 +483,7 @@ public class AMS_AgencyUpdateHelperTest {
         a1.Name='Update Agency 1';
         update a1;
         
-        AMS_Agency_Updates__c agencyUpdate = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        AMS_Agency_Updates__c agencyUpdate = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c WHERE Integration_System__c = 'SAP PI'];
 
         Test.startTest();
         agencyUpdate.Update_Type__c = 'Update_Sent';
@@ -496,6 +496,31 @@ public class AMS_AgencyUpdateHelperTest {
 
 
 
+
+
+    static testMethod void test_agencyUpdate_sentUpdate2() {
+        configureTest();
+
+        AMS_Agency_Updates__c agencyUpdate1 = new AMS_Agency_Updates__c(Update_Type__c = 'Update',  Account__c = a1.id);
+        insert agencyUpdate1;
+        
+        List<Agency_Applied_Change_code__c> aacclist = new List<Agency_Applied_Change_code__c>();
+        Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = a1.Id, Change_Code__c = 'TST',  Sent_to_external_system__c = false);
+        aacclist.add(aacc1);
+        insert aacclist;
+
+        List<SObject> updateAll = new List<SObject>();
+        a1.Name='Update Agency 1';
+        update a1;
+        
+        List<AMS_Agency_Updates__c> agencyUpdate = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+
+        Test.startTest();
+        agencyUpdate[0].Update_Type__c = 'Update_Sent';
+        update agencyUpdate;
+
+        Test.stopTest();
+    }
 
 
     // Increase Code Coverage

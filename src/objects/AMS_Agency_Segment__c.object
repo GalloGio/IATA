@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -84,24 +81,29 @@
         <fullName>Assignation_Type__c</fullName>
         <externalId>false</externalId>
         <label>Assignation Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Geographic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Extended</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Primary Area</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Geographic</fullName>
+                    <default>false</default>
+                    <label>Geographic</label>
+                </value>
+                <value>
+                    <fullName>Extended</fullName>
+                    <default>false</default>
+                    <label>Extended</label>
+                </value>
+                <value>
+                    <fullName>Primary Area</fullName>
+                    <default>false</default>
+                    <label>Primary Area</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Segment__c</fullName>
@@ -126,4 +128,5 @@
     <pluralLabel>Agency Segments (AMS)</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

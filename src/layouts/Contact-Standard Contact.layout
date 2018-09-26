@@ -6,12 +6,9 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SAP_Airline_Request</customButtons>
     <customButtons>SIS_Airline_Request</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
-    <excludeButtons>EnableCustomerPortal</excludeButtons>
-    <excludeButtons>EnablePartnerPortalUser</excludeButtons>
-    <excludeButtons>EnableSelfService</excludeButtons>
+    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -104,7 +101,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Primary_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SIS_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -146,6 +151,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>AMS_isManager__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Shipping_State__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Billing_State__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -274,6 +287,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CNS_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Authorized_Signatory__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -586,7 +603,7 @@
         <fields>Application_Name__c</fields>
         <fields>Application_icon_del__c</fields>
         <fields>Right__c</fields>
-        <fields>Application_Start_Icon__c</fields>
+        <fields>ANG_Portal_Service_Role__c</fields>
         <relatedList>Portal_Application_Right__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -682,7 +699,7 @@
         <fields>LAST_UPDATE</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>Notification__c.Contact__c</relatedList>
-        <sortField>NAME</sortField>
+        <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>

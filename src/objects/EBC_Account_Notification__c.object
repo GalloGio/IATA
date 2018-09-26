@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -53,6 +49,7 @@ Records will be created/deleted automatically by a scheduled job.
 Email will be sent by using workflow.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -118,21 +115,25 @@ This is set based on Zuora__CustomerAccount__c eBroadcast_Product_Access__c (tru
         <inlineHelpText>EBC Subscription Status for this Billing Account.
 This is set based on Billing Account eBroadcast Product Access</inlineHelpText>
         <label>EBC Account Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EBC_Dashboard_URL__c</fullName>
@@ -163,21 +164,25 @@ This is set based on Billing Account eBroadcast Product Access</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>eBroadcast Subscription Type of this user, based on Product Rate Plan&apos;s EBC SubscriptionType</inlineHelpText>
         <label>EBC Subscription Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Pre-Paid</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pay-As-You-Go</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pre-Paid</fullName>
+                    <default>false</default>
+                    <label>Pre-Paid</label>
+                </value>
+                <value>
+                    <fullName>Pay-As-You-Go</fullName>
+                    <default>false</default>
+                    <label>Pay-As-You-Go</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Email_Balance__c</fullName>
@@ -281,21 +286,25 @@ Used for Account Monthly Status and Renewal Notification</description>
         <externalId>false</externalId>
         <inlineHelpText>Notification Type is used to define which email template that will be used to sent.</inlineHelpText>
         <label>Notification Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Account Status</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Renewal Offer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Account Status</fullName>
+                    <default>false</default>
+                    <label>Account Status</label>
+                </value>
+                <value>
+                    <fullName>Renewal Offer</fullName>
+                    <default>false</default>
+                    <label>Renewal Offer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Number_of_Campaigns_Last_Month__c</fullName>
@@ -390,18 +399,10 @@ It is the version of the username seen by the end user.</description>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Billing_Account__c</columns>
-        <columns>Username__c</columns>
         <columns>Email__c</columns>
         <columns>Primary_Contact_Name__c</columns>
-        <columns>EBC_Rate_Plan_Name__c</columns>
-        <columns>Subscription_End_Date__c</columns>
         <columns>Email_Balance__c</columns>
-        <columns>Number_of_Campaigns_Last_Month__c</columns>
-        <columns>Number_of_Email_Recipients_Last_Month__c</columns>
         <columns>Notification_Date__c</columns>
-        <columns>Create_New_Campaign_URL__c</columns>
-        <columns>Manage_My_Account_URL__c</columns>
         <columns>Notification_Type__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
@@ -410,19 +411,15 @@ It is the version of the username seen by the end user.</description>
     <listViews>
         <fullName>Monthly_Status</fullName>
         <columns>NAME</columns>
-        <columns>Billing_Account__c</columns>
         <columns>Username__c</columns>
-        <columns>Email__c</columns>
         <columns>Primary_Contact_Name__c</columns>
-        <columns>EBC_Rate_Plan_Name__c</columns>
-        <columns>Subscription_End_Date__c</columns>
-        <columns>Email_Balance__c</columns>
-        <columns>Number_of_Campaigns_Last_Month__c</columns>
+        <columns>EBC_Account_Status__c</columns>
         <columns>Number_of_Email_Recipients_Last_Month__c</columns>
+        <columns>Number_of_Campaigns_Last_Month__c</columns>
+        <columns>Email_Balance__c</columns>
+        <columns>EBC_Subscription_Type__c</columns>
+        <columns>EBC_Rate_Plan_Name__c</columns>
         <columns>Notification_Date__c</columns>
-        <columns>Create_New_Campaign_URL__c</columns>
-        <columns>Manage_My_Account_URL__c</columns>
-        <columns>Notification_Type__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Notification_Type__c</field>
@@ -491,4 +488,5 @@ It is the version of the username seen by the end user.</description>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

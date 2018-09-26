@@ -25,7 +25,7 @@ private class TopicAssignmentHelperTest {
         insert std_acct;
 
         Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
-        Contact con =new contact(lastname = 'pluto', phone = '123', accountid = acct_hq.id, email = 'asd.arg@wewt.et', RecordTypeId = ContactStd_RT_Id);
+        Contact con =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = acct_hq.id, email = 'asd.arg@wewt.et', RecordTypeId = ContactStd_RT_Id);
         insert con;
 
 

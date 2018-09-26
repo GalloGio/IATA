@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>EBC Campaign Emails generated during the batch process will be used to verify the email used for the campaign</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Add_recipient__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Will add the controller from ebc setup and the client&apos;s email in order to receive the email as a sample</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Will add the controller from ebc setup and the client&apos;s email in order to receive the email as a sample</inlineHelpText>
+        <label>Add recipient</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>EBC_Campaign__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>EBC Campaign</label>
+        <referenceTo>EBC_Campaign__c</referenceTo>
+        <relationshipLabel>EBC Campaign Emails</relationshipLabel>
+        <relationshipName>EBC_Campaign_Emails</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <description>Email used</description>
+        <externalId>true</externalId>
+        <label>Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDP_Products_Account_View__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>GDP Products - Account View</label>
+        <referenceTo>GDP_Products_Account_View__c</referenceTo>
+        <relationshipLabel>EBC Campaign Emails</relationshipLabel>
+        <relationshipName>EBC_Campaign_Emails</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ID_Card__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>ID Card</description>
+        <externalId>false</externalId>
+        <label>ID Card</label>
+        <referenceTo>ID_Card__c</referenceTo>
+        <relationshipLabel>EBC Campaign Emails</relationshipLabel>
+        <relationshipName>EBC_Campaign_Emails</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>SFDC_Id__c</fullName>
+        <description>Text SFDC Id</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Text SFDC Id</inlineHelpText>
+        <label>SFDC Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>EBC Campaign Emails</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>E-{000000000}</displayFormat>
+        <label>EBC Campaign Emails Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>EBC Campaign Emails</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

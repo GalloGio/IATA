@@ -13,10 +13,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -166,124 +162,154 @@
         <description>Field used for solutions that relate to a specific country</description>
         <externalId>false</externalId>
         <label>Country Specific</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Austria</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Belgium &amp; Luxembourg</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bulgaria</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Croatia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cyprus</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Czech Republic &amp; Slovakia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Finland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>France</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Germany</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Greece</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Hungary</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ireland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Israel</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Italy</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Malta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Netherlands</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Nordic &amp; Baltic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Poland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Portugal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Romania &amp; Moldavia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Russia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Serbia &amp; Montenegro</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Slovenia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Spain</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Switzerland &amp; Liechtenstein</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Turkey</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ukraine</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>United Kingdom</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Austria</fullName>
+                    <default>false</default>
+                    <label>Austria</label>
+                </value>
+                <value>
+                    <fullName>Belgium &amp; Luxembourg</fullName>
+                    <default>false</default>
+                    <label>Belgium &amp; Luxembourg</label>
+                </value>
+                <value>
+                    <fullName>Bulgaria</fullName>
+                    <default>false</default>
+                    <label>Bulgaria</label>
+                </value>
+                <value>
+                    <fullName>Croatia</fullName>
+                    <default>false</default>
+                    <label>Croatia</label>
+                </value>
+                <value>
+                    <fullName>Cyprus</fullName>
+                    <default>false</default>
+                    <label>Cyprus</label>
+                </value>
+                <value>
+                    <fullName>Czech Republic &amp; Slovakia</fullName>
+                    <default>false</default>
+                    <label>Czech Republic &amp; Slovakia</label>
+                </value>
+                <value>
+                    <fullName>Finland</fullName>
+                    <default>false</default>
+                    <label>Finland</label>
+                </value>
+                <value>
+                    <fullName>France</fullName>
+                    <default>false</default>
+                    <label>France</label>
+                </value>
+                <value>
+                    <fullName>Germany</fullName>
+                    <default>false</default>
+                    <label>Germany</label>
+                </value>
+                <value>
+                    <fullName>Greece</fullName>
+                    <default>false</default>
+                    <label>Greece</label>
+                </value>
+                <value>
+                    <fullName>Hungary</fullName>
+                    <default>false</default>
+                    <label>Hungary</label>
+                </value>
+                <value>
+                    <fullName>Ireland</fullName>
+                    <default>false</default>
+                    <label>Ireland</label>
+                </value>
+                <value>
+                    <fullName>Israel</fullName>
+                    <default>false</default>
+                    <label>Israel</label>
+                </value>
+                <value>
+                    <fullName>Italy</fullName>
+                    <default>false</default>
+                    <label>Italy</label>
+                </value>
+                <value>
+                    <fullName>Malta</fullName>
+                    <default>false</default>
+                    <label>Malta</label>
+                </value>
+                <value>
+                    <fullName>Netherlands</fullName>
+                    <default>false</default>
+                    <label>Netherlands</label>
+                </value>
+                <value>
+                    <fullName>Nordic &amp; Baltic</fullName>
+                    <default>false</default>
+                    <label>Nordic &amp; Baltic</label>
+                </value>
+                <value>
+                    <fullName>Poland</fullName>
+                    <default>false</default>
+                    <label>Poland</label>
+                </value>
+                <value>
+                    <fullName>Portugal</fullName>
+                    <default>false</default>
+                    <label>Portugal</label>
+                </value>
+                <value>
+                    <fullName>Romania &amp; Moldavia</fullName>
+                    <default>false</default>
+                    <label>Romania &amp; Moldavia</label>
+                </value>
+                <value>
+                    <fullName>Russia</fullName>
+                    <default>false</default>
+                    <label>Russia</label>
+                </value>
+                <value>
+                    <fullName>Serbia &amp; Montenegro</fullName>
+                    <default>false</default>
+                    <label>Serbia &amp; Montenegro</label>
+                </value>
+                <value>
+                    <fullName>Slovenia</fullName>
+                    <default>false</default>
+                    <label>Slovenia</label>
+                </value>
+                <value>
+                    <fullName>Spain</fullName>
+                    <default>false</default>
+                    <label>Spain</label>
+                </value>
+                <value>
+                    <fullName>Switzerland &amp; Liechtenstein</fullName>
+                    <default>false</default>
+                    <label>Switzerland &amp; Liechtenstein</label>
+                </value>
+                <value>
+                    <fullName>Turkey</fullName>
+                    <default>false</default>
+                    <label>Turkey</label>
+                </value>
+                <value>
+                    <fullName>Ukraine</fullName>
+                    <default>false</default>
+                    <label>Ukraine</label>
+                </value>
+                <value>
+                    <fullName>United Kingdom</fullName>
+                    <default>false</default>
+                    <label>United Kingdom</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>CurrencyIsoCode</fullName>
@@ -327,88 +353,108 @@
         <description>Defines the language of the solution</description>
         <externalId>false</externalId>
         <label>Language IATA</label>
-        <picklist>
-            <picklistValues>
-                <fullName>English</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>French</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>German</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Greek</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Italian</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Spanish</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>English</fullName>
+                    <default>false</default>
+                    <label>English</label>
+                </value>
+                <value>
+                    <fullName>French</fullName>
+                    <default>false</default>
+                    <label>French</label>
+                </value>
+                <value>
+                    <fullName>German</fullName>
+                    <default>false</default>
+                    <label>German</label>
+                </value>
+                <value>
+                    <fullName>Greek</fullName>
+                    <default>false</default>
+                    <label>Greek</label>
+                </value>
+                <value>
+                    <fullName>Italian</fullName>
+                    <default>false</default>
+                    <label>Italian</label>
+                </value>
+                <value>
+                    <fullName>Spanish</fullName>
+                    <default>false</default>
+                    <label>Spanish</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Main_Business_Process__c</fullName>
         <description>Definition of the Business Process this solution refers to</description>
         <externalId>false</externalId>
         <label>Main Business Process</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Accreditation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSP Procedures</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSP Reports or Billings</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Product Enquiry</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ticket Stock Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSP system</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSPLink</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS Procedures</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Applications / interfaces</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Accreditation</fullName>
+                    <default>false</default>
+                    <label>Accreditation</label>
+                </value>
+                <value>
+                    <fullName>BSP Procedures</fullName>
+                    <default>false</default>
+                    <label>BSP Procedures</label>
+                </value>
+                <value>
+                    <fullName>BSP Reports or Billings</fullName>
+                    <default>false</default>
+                    <label>BSP Reports or Billings</label>
+                </value>
+                <value>
+                    <fullName>Product Enquiry</fullName>
+                    <default>false</default>
+                    <label>Product Enquiry</label>
+                </value>
+                <value>
+                    <fullName>Ticket Stock Management</fullName>
+                    <default>false</default>
+                    <label>Ticket Stock Management</label>
+                </value>
+                <value>
+                    <fullName>BSP system</fullName>
+                    <default>false</default>
+                    <label>BSP system</label>
+                </value>
+                <value>
+                    <fullName>BSPLink</fullName>
+                    <default>false</default>
+                    <label>BSPLink</label>
+                </value>
+                <value>
+                    <fullName>CASS Procedures</fullName>
+                    <default>false</default>
+                    <label>CASS Procedures</label>
+                </value>
+                <value>
+                    <fullName>Applications / interfaces</fullName>
+                    <default>false</default>
+                    <label>Applications / interfaces</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Need_Clarifications__c</fullName>
@@ -424,32 +470,39 @@
         <externalId>false</externalId>
         <inlineHelpText>This field is used to be able to sort FAQs related to Suspension of an Airline in an easy way for the RRT team</inlineHelpText>
         <label>Originator</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Airlines</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Internally</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passengers</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Airlines</fullName>
+                    <default>false</default>
+                    <label>Airlines</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>Cargo Agent</label>
+                </value>
+                <value>
+                    <fullName>Internally</fullName>
+                    <default>false</default>
+                    <label>Internally</label>
+                </value>
+                <value>
+                    <fullName>Passengers</fullName>
+                    <default>false</default>
+                    <label>Passengers</label>
+                </value>
+                <value>
+                    <fullName>Travel Agent</fullName>
+                    <default>false</default>
+                    <label>Travel Agent</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -468,24 +521,29 @@
         <description>Whenever a solution is ready for translation, the language shall be selected. A work flow rule will then be activated and the translator will be notified.</description>
         <externalId>false</externalId>
         <label>Ready for translation to</label>
-        <picklist>
-            <picklistValues>
-                <fullName>French</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Spanish - Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Spanish - Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>French</fullName>
+                    <default>false</default>
+                    <label>French</label>
+                </value>
+                <value>
+                    <fullName>Spanish - Americas</fullName>
+                    <default>false</default>
+                    <label>Spanish - Americas</label>
+                </value>
+                <value>
+                    <fullName>Spanish - Europe</fullName>
+                    <default>false</default>
+                    <label>Spanish - Europe</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
@@ -493,20 +551,24 @@
         <description>Whenever a solution has been created and is ready for validation by another region this field shall be selected. A work flow rule will then be initiated.</description>
         <externalId>false</externalId>
         <label>Ready for validation by:</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Relates_to_Suspension_of_an_Airline__c</fullName>
@@ -540,64 +602,6 @@
     </fields>
     <fields>
         <fullName>Status</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>Draft</fullName>
-                <default>true</default>
-                <reviewed>false</reviewed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Review 2 - Europe</fullName>
-                <default>false</default>
-                <reviewed>false</reviewed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Review 2 - Americas</fullName>
-                <default>false</default>
-                <reviewed>false</reviewed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ready for translation - French</fullName>
-                <default>false</default>
-                <reviewed>false</reviewed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ready for translation - Spanish Europe</fullName>
-                <default>false</default>
-                <reviewed>false</reviewed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ready for translation - Spanish Americas</fullName>
-                <default>false</default>
-                <reviewed>false</reviewed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Review 3 - Europe</fullName>
-                <default>false</default>
-                <reviewed>false</reviewed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Review 3 - Americas</fullName>
-                <default>false</default>
-                <reviewed>false</reviewed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reviewed</fullName>
-                <default>false</default>
-                <reviewed>true</reviewed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Duplicate</fullName>
-                <default>false</default>
-                <reviewed>false</reviewed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Duplicate - web</fullName>
-                <default>false</default>
-                <reviewed>false</reviewed>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>

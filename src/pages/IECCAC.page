@@ -14,13 +14,13 @@
             vertical-align: middle;
         }
         .features {
-		border-bottom: 1px dashed #1ebec8;
-		}
-		#register .box .informationTable td span {
-		color: black;
-		}
-		
-		
+        border-bottom: 1px dashed #1ebec8;
+        }
+        #register .box .informationTable td span {
+        color: black;
+        }
+        
+        
     </style>
 
 
@@ -114,20 +114,20 @@
                     <!-- code format -->
                     <div class="rightColumn">
 
-						<div class="box register small dark txt24">
-						    <div class="header">
-						        <p>Code Validation Formats</p>
-						    </div>
-						    <div class="content" style="height:183px;">
-						        <h2>Accepted formats are:</h2>
-						        <h3 class="newDim" style="margin-top: 23px;">Passengers Agency</h3>
-						        <p>7 or 8 Digit Numeric Code</p>
-						        <h3 class="newDim" style="margin-top: 23px;">Cargo Agency</h3>
-						        <p>11 or 12 Digit Numeric Code</p>
-						        <h3 class="newDim" style="margin-top: 23px;">Travel Agent ID Card</h3>
-						        <p>10 Digit Verification Number</p>
-						    </div>
-						</div>
+                        <div class="box register small dark txt24">
+                            <div class="header">
+                                <p>Code Validation Formats</p>
+                            </div>
+                            <div class="content" style="height:183px;">
+                                <h2>Accepted formats are:</h2>
+                                <h3 class="newDim" style="margin-top: 23px;">Passenger Agency</h3>
+                                <p>7 or 8 Digit Numeric Code</p>
+                                <h3 class="newDim" style="margin-top: 23px;">Cargo Agency</h3>
+                                <p>11 or 12 Digit Numeric Code</p>
+                                <h3 class="newDim" style="margin-top: 23px;">Travel Agent ID Card</h3>
+                                <p>10 Digit Verification Number</p>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -350,9 +350,9 @@
     </apex:form>
 
 
-	</div>
+    </div>
     <!-- GDP Footer -->
- 	<c:IECGDPFooter />
+    <c:IECGDPFooter />
 </div>
 
 </apex:page>

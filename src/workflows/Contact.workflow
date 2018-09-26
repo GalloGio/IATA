@@ -37,7 +37,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
+        <template>All/EF_Contact_Deactivation_Notification</template>
     </alerts>
     <alerts>
         <fullName>EF_Email_Notification_On_Operator_EF_Contact_Deactivation</fullName>
@@ -50,7 +50,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
+        <template>All/EF_Contact_Deactivation_Notification</template>
     </alerts>
     <alerts>
         <fullName>ISSP_BSPCASS_Payment_contact</fullName>
@@ -186,6 +186,16 @@
         <template>ID_Card_templates/IDCard_RenewalEmail</template>
     </alerts>
     <fieldUpdates>
+        <fullName>Contact_Owner</fullName>
+        <field>OwnerId</field>
+        <lookupValue>administrator@iata.org</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Contact Owner</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Deleting_IS_date_post_30</fullName>
         <description>This rule will delete the IS received date on Contact object after 30 days</description>
         <field>Instant_Survey_Last_feedback_received__c</field>
@@ -309,6 +319,19 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Record</fullName>
+        <description>This field is updated with Record Sharing Criteria values</description>
+        <field>Record_Sharing_Criteria_AUX__c</field>
+        <formula>IF(INCLUDES(Record_Sharing_Criteria__c, &quot;IFG Active Users&quot;),&quot;IFG Active Users;&quot;,&quot;&quot;)
+&amp;
+IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&quot;,&quot;&quot;)</formula>
+        <name>Update Record Sharing Criteria AUX</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
     <rules>
         <fullName>E%26F %3A Notification On Client Contact Deactivation</fullName>
         <actions>
@@ -375,6 +398,16 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Field update with values of field Record Sharing Criteria</fullName>
+        <actions>
+            <name>Update_Record</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>IDCard_RenewalNotice</fullName>
         <actions>
             <name>Renewal_Email_alert</name>
@@ -406,6 +439,24 @@
             <value>True</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ISSP - Change Owner to IATA System</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>User.UserType</field>
+            <operation>notEqual</operation>
+            <value>Standard</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Contact_Owner</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>ISSP - Notification to new Portal user</fullName>

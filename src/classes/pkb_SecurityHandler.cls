@@ -474,7 +474,7 @@ public with sharing class pkb_SecurityHandler {
         String msg = '';
         SObjectType caseObjType = Case.sObjectType;
         // Observed bizarre behavior: if first call is false rest will be false
-        System.runAs(readOnlyUser()) {
+        System.runAs(readOnlyUser2()) {
             //create permission
             try{
                 canCreate(caseObjType);
@@ -501,9 +501,13 @@ public with sharing class pkb_SecurityHandler {
 
     private static User readOnlyUser() {
 
+        Profile p = [select Id, Name from Profile where Name = 'Read Only']; User u = new User( UserName = 'test-user@test-company.com', FirstName = 'Test-First-Name', LastName = 'Test-Last-Name', Alias = 'test', Email = 'test-user@test-company.com', EmailEncodingKey = 'UTF-8', LanguageLocaleKey = 'en_US', LocalesIdKey = 'en_US', License_Cost_Center__c = 'ISF005CH01', TimezonesIdKey = 'America/Los_Angeles', ProfileId = p.Id ); return u; }
+	
+	private static User readOnlyUser2() {
+
         Profile p = [select Id, Name from Profile where Name = 'Read Only'];
         User u = new User(
-            UserName = 'test-user@test-company.com',
+            UserName = 'test-user@testtesttest-company.com',
             FirstName = 'Test-First-Name',
             LastName = 'Test-Last-Name',
             Alias = 'test',

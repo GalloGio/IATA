@@ -11,6 +11,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Location_Classes__c</fullName>
+        <externalId>false</externalId>
+        <label>Location Classes</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Notification_Email__c</fullName>
         <externalId>false</externalId>
         <label>Notification Email</label>
@@ -28,6 +38,17 @@
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>List of Account.Status__c values, separated with semi-colon ;</description>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <label>AMS 2 GDP Settings</label>

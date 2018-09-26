@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,12 +45,24 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Additional_Terms_Custom_Labels__c</fullName>
+        <description>Additional Terms Custom Labels</description>
+        <externalId>false</externalId>
+        <label>Additional Terms Custom Labels</label>
+        <length>10000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
     <fields>
         <fullName>App_Picture_Url__c</fullName>
         <externalId>false</externalId>
@@ -65,6 +73,58 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer_Type_Activation__c</fullName>
+        <description>Display in registration process (account association) available customer type to look for. List is different depending on service provide</description>
+        <externalId>false</externalId>
+        <label>Customer Type Activation</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agency</fullName>
+                    <default>false</default>
+                    <label>Agency</label>
+                </value>
+                <value>
+                    <fullName>Aircraft Operator</fullName>
+                    <default>false</default>
+                    <label>Aircraft Operator</label>
+                </value>
+                <value>
+                    <fullName>Airline</fullName>
+                    <default>false</default>
+                    <label>Airline</label>
+                </value>
+                <value>
+                    <fullName>GeneralPublic</fullName>
+                    <default>false</default>
+                    <label>GeneralPublic</label>
+                </value>
+                <value>
+                    <fullName>GSA</fullName>
+                    <default>false</default>
+                    <label>GSA</label>
+                </value>
+                <value>
+                    <fullName>ICAO Member State</fullName>
+                    <default>false</default>
+                    <label>ICAO Member State</label>
+                </value>
+                <value>
+                    <fullName>OtherCompany</fullName>
+                    <default>false</default>
+                    <label>OtherCompany</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>5</visibleLines>
     </fields>
     <fields>
         <fullName>Description_Custom_Label__c</fullName>
@@ -98,6 +158,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Role_Selectable__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Determines if a user requesting access to the service can select his role</description>
+        <externalId>false</externalId>
+        <label>Is Role Selectable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>License_Upgrade_Required__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -116,6 +186,32 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Max_Number_Of_Primary_User__c</fullName>
+        <description>For FRED Plus, Set the limit of number of primary users that can be created for 1 account</description>
+        <externalId>false</externalId>
+        <label>Max Number Of Primary User</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Max_Number_Of_Secondary_User__c</fullName>
+        <description>For FRED, set the maximum number of secondary users that can be created for 1 account</description>
+        <externalId>false</externalId>
+        <label>Max Number Of Secondary User</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -222,7 +318,9 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Customer_Type_Activation__c</columns>
         <columns>RECORDTYPE</columns>
+        <columns>Is_Role_Selectable__c</columns>
         <columns>Service_Bundle__c</columns>
         <columns>Service_Provider_Name__c</columns>
         <columns>Is_Active__c</columns>
@@ -244,11 +342,73 @@
         <fullName>Service_Bundle</fullName>
         <active>true</active>
         <label>Service Bundle</label>
+        <picklistValues>
+            <picklist>Customer_Type_Activation__c</picklist>
+            <values>
+                <fullName>Agency</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GeneralPublic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICAO Member State</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OtherCompany</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Service_Provider</fullName>
         <active>true</active>
         <label>Service Provider</label>
+        <picklistValues>
+            <picklist>Customer_Type_Activation__c</picklist>
+            <values>
+                <fullName>Agency</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GeneralPublic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICAO Member State</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OtherCompany</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts>
         <lookupDialogsAdditionalFields>RECORDTYPE</lookupDialogsAdditionalFields>
@@ -258,4 +418,5 @@
         <searchFilterFields>NAME</searchFilterFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

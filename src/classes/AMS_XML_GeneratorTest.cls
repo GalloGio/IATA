@@ -31,17 +31,15 @@ private class AMS_XML_GeneratorTest {
         AMS_XML_Fields__c xml8 = new AMS_XML_Fields__c(Name='User.Name',Operation_Type__c='translate',Object__c='User',Field__c='Name');
         AMS_XML_Fields__c xml9 = new AMS_XML_Fields__c(Name='Contact.Name',Operation_Type__c='translate',Object__c='Contact',Field__c='Name');
 
-AMS_XML_Fields__c xml10 = new AMS_XML_Fields__c(Name='iata_iso_state.name',Operation_Type__c='include',Object__c='iata_iso_state__c',Field__c='name');
-AMS_XML_Fields__c xml11 = new AMS_XML_Fields__c(Name='iata_iso_state.iso_code_standard__c',Operation_Type__c='include',Object__c='iata_iso_state__c',Field__c='iso_code_standard__c');
-AMS_XML_Fields__c xml12 = new AMS_XML_Fields__c(Name='Account.organization_last_change_date',Operation_Type__c='include',Object__c='Account',Field__c='organization_last_change_date__c');
-AMS_XML_Fields__c xml13 = new AMS_XML_Fields__c(Name='Account.Location_Type__c',Operation_Type__c='include',Object__c='Account',Field__c='Location_Type__c');
-AMS_XML_Fields__c xml14 = new AMS_XML_Fields__c(Name='Account.Location_Category__c',Operation_Type__c='include',Object__c='Account',Field__c='Location_Category__c');
-AMS_XML_Fields__c xml15 = new AMS_XML_Fields__c(Name='Account.Accreditation_date__c',Operation_Type__c='include',Object__c='Account',Field__c='Accreditation_date__c');
-AMS_XML_Fields__c xml16 = new AMS_XML_Fields__c(Name='Account.Original_Approval_DAte__c',Operation_Type__c='include',Object__c='Account',Field__c='Original_Approval_DAte__c');
-AMS_XML_Fields__c xml17 = new AMS_XML_Fields__c(Name='Account.GDS__c',Operation_Type__c='include',Object__c='Account',Field__c='GDS__c');
-AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Operation_Type__c='include',Object__c='Account',Field__c='GDP_Opt_In__c');
-
-
+        AMS_XML_Fields__c xml10 = new AMS_XML_Fields__c(Name='iata_iso_state.name',Operation_Type__c='include',Object__c='iata_iso_state__c',Field__c='name');
+        AMS_XML_Fields__c xml11 = new AMS_XML_Fields__c(Name='iata_iso_state.iso_code_standard__c',Operation_Type__c='include',Object__c='iata_iso_state__c',Field__c='iso_code_standard__c');
+        AMS_XML_Fields__c xml12 = new AMS_XML_Fields__c(Name='Account.organization_last_change_date',Operation_Type__c='include',Object__c='Account',Field__c='organization_last_change_date__c');
+        AMS_XML_Fields__c xml13 = new AMS_XML_Fields__c(Name='Account.Location_Type__c',Operation_Type__c='include',Object__c='Account',Field__c='Location_Type__c');
+        AMS_XML_Fields__c xml14 = new AMS_XML_Fields__c(Name='Account.Location_Category__c',Operation_Type__c='include',Object__c='Account',Field__c='Location_Category__c');
+        AMS_XML_Fields__c xml15 = new AMS_XML_Fields__c(Name='Account.Accreditation_date__c',Operation_Type__c='include',Object__c='Account',Field__c='Accreditation_date__c');
+        AMS_XML_Fields__c xml16 = new AMS_XML_Fields__c(Name='Account.Original_Approval_DAte__c',Operation_Type__c='include',Object__c='Account',Field__c='Original_Approval_DAte__c');
+        AMS_XML_Fields__c xml17 = new AMS_XML_Fields__c(Name='Account.GDS__c',Operation_Type__c='include',Object__c='Account',Field__c='GDS__c');
+        AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Operation_Type__c='include',Object__c='Account',Field__c='GDP_Opt_In__c');
 
         List<AMS_XML_Fields__c> listofxml = new List<AMS_XML_Fields__c>();
         listofxml.add(xml1);
@@ -64,6 +62,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         listofxml.add(xml18);
 
         insert listofxml;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 1 --> Query issued: ' + Limits.getQueries());
 
         AMS_XML_Tags__c xmltag1 = new AMS_XML_Tags__c(Name='Account',Name__c='Account',Tag__c='account');
         AMS_XML_Tags__c xmltag2 = new AMS_XML_Tags__c(Name='IATA_ISO_State',Name__c='IATA_ISO_State',Tag__c='iso_state');
@@ -71,26 +71,24 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         List<AMS_XML_Tags__c> listofxmltag = new List<AMS_XML_Tags__c>();
         listofxmltag.add(xmltag1);
         insert listofxmltag;
-
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 2 --> Query issued: ' + Limits.getQueries());
 
         prgms = new AMS_Segment__c[]{prog1,prog2,prog3};
         insert prgms;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 3 --> Query issued: ' + Limits.getQueries());
 
         Set<String> sAgIDs = new Set<String>();
 
-
-
-
-        //Country__r.AMS_Settlement_System__r.name bsp,
-        //Country__r.AMS_Settlement_System__r.DPC_System__c dpc
-        //Country__r.AMS_Settlement_System_CASS__r.name bsp,
-        //Country__r.AMS_Settlement_System_CASS__r.DPC_System__c dpc
         List<AMS_Settlement_System__c> settlementSystemList = new List<AMS_Settlement_System__c>();
         AMS_Settlement_System__c sett_dpc = new AMS_Settlement_System__c(name = 'test_dpc', DPC_System__c = 'test_dpc');
         AMS_Settlement_System__c sett_cass = new AMS_Settlement_System__c(name = 'test_cass', DPC_System__c = 'test_cass');
         settlementSystemList.add(sett_dpc);
         settlementSystemList.add(sett_cass);
         insert settlementSystemList;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 4 --> Query issued: ' + Limits.getQueries());
 
         //Countries
         List<IATA_ISO_Country__c> countrylist = new List<IATA_ISO_Country__c>();
@@ -103,6 +101,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         countrylist.add(ctr3);
         countrylist.add(ctr4);
         insert countrylist;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 5 --> Query issued: ' + Limits.getQueries());
 
         List<IATA_ISO_State__c> statelist = new List<IATA_ISO_State__c>();
         IATA_ISO_State__c st1 = new IATA_ISO_State__c(Name='Test1 state',IATA_ISO_Country__c=ctr1.Id, ISO_Code__c='PT50',Iso_code_standard__c='PT50');
@@ -114,10 +114,14 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         statelist.add(st3);
         statelist.add(st4);
         insert statelist;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 6 --> Query issued: ' + Limits.getQueries());
 
 
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
         insert ctry ;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 7 --> Query issued: ' + Limits.getQueries());
 
         Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
 
@@ -139,6 +143,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
 
         ag1.ParentId = ag6.id;
         update ag1;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 8 --> Query issued: ' + Limits.getQueries());
 
         List<Agency_Applied_Change_code__c> aaccList = new List<Agency_Applied_Change_code__c>();
         Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Active__c = true, 
@@ -174,24 +180,9 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         aaccList.add(aacc7);
         aaccList.add(aacc8);
         insert aaccList;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 9 --> Query issued: ' + Limits.getQueries());
             
-        //List<AMS_Agency__c> agencylist = new List<AMS_Agency__c>();
-        //AMS_Agency__c ag1 = new AMS_Agency__c(Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test1 Agency',Account__c=acc1.Id, Legacy_System__c = 'AIMS1');
-        //AMS_Agency__c ag2 = new AMS_Agency__c(Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test2 Agency',Account__c=acc2.Id, Legacy_System__c = 'AIMS1');
-        //AMS_Agency__c ag3 = new AMS_Agency__c(Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test3 Agency',Account__c=acc3.Id, Legacy_System__c = 'AIMS1');
-        //AMS_Agency__c ag4 = new AMS_Agency__c(Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test4 Agency',Account__c=acc4.Id, Legacy_System__c = 'AIMS1');
-        //agencylist.add(ag1);
-        //agencylist.add(ag2);
-        //agencylist.add(ag3);
-        //agencylist.add(ag4);
-        //insert agencylist;
-
-        //ag1.Name='Update Agency 1';
-        //ag2.Name='Update Agency 2';
-        //ag3.Name='Update Agency 3';
-        //ag4.Name='Update Agency 4';
-        //update agencylist;    
-
         sAgIDs.add(ag1.Id);
         sAgIDs.add(ag2.Id);
         sAgIDs.add(ag3.Id);
@@ -207,6 +198,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         affiliationlist.add(aff3);
         affiliationlist.add(aff4);
         insert affiliationlist;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 10 --> Query issued: ' + Limits.getQueries());
 
         List<AMS_Agency_Affiliation__c> agencyAffiliationlist = new List<AMS_Agency_Affiliation__c>();
         AMS_Agency_Affiliation__c agaff1 = new AMS_Agency_Affiliation__c(Account__c=ag1.id, Affiliation__c=aff1.id);
@@ -218,9 +211,9 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         agencyAffiliationlist.add(agaff3);
         agencyAffiliationlist.add(agaff4);
         insert agencyAffiliationlist;
-
         
-
+        system.debug(Logginglevel.ERROR, 'ALEX 11 --> Query issued: ' + Limits.getQueries());
+       
         List<AMS_Address__c> addresslist = new List<AMS_Address__c>();
         AMS_Address__c add1 = new AMS_Address__c(Address_1__c='Test1 Address',Account__c=ag1.Id,Country__c=ctr1.Id,State__c=st1.Id,Address_Type__c='Mailing');
         AMS_Address__c add2 = new AMS_Address__c(Address_1__c='Test2 Address',Account__c=ag2.Id,Country__c=ctr2.Id,State__c=st2.Id,Address_Type__c='Mailing');
@@ -232,7 +225,7 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         addresslist.add(add4);
         insert addresslist;
 
-       
+        system.debug(Logginglevel.ERROR, 'ALEX 12 --> Query issued: ' + Limits.getQueries());
 
         List<AMS_Owner__c> ownerlist = new List<AMS_Owner__c>();
         AMS_Owner__c own1 = new AMS_Owner__c(Name='Test1 owner');
@@ -244,6 +237,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         ownerlist.add(own3);
         ownerlist.add(own4);
         insert ownerlist;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 13 --> Query issued: ' + Limits.getQueries());
 
         List<User> userList = new List<User>();
         User u1 = new User(FirstName='Test1 User',Division='UnitTest',License_Cost_Center__c='AAA000AA00',Username='test1@iata.org.amsdev1', LastName='Test1', Email='test1@iata.org', Alias='Test1', CommunityNickname='Test1', TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ', LanguageLocaleKey='en_US');
@@ -255,19 +250,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         userList.add(u3);
         userList.add(u4);
         insert userList;
-
-
-        //List<AMS_Agency_Ownership__c> agencyOwnershipList = new List<AMS_Agency_Ownership__c>();
-        //AMS_Agency_Ownership__c agOwn1 = new AMS_Agency_Ownership__c(AMS_Agency_Owner__c=own1.Id,Agency__c=ag1.Id);
-        //AMS_Agency_Ownership__c agOwn2 = new AMS_Agency_Ownership__c(AMS_Agency_Owner__c=own2.Id,Agency__c=ag2.Id);
-        //AMS_Agency_Ownership__c agOwn3 = new AMS_Agency_Ownership__c(AMS_Agency_Owner__c=own3.Id,Agency__c=ag3.Id);
-        //AMS_Agency_Ownership__c agOwn4 = new AMS_Agency_Ownership__c(AMS_Agency_Owner__c=own4.Id,Agency__c=ag4.Id);
-        //agencyOwnershipList.add(agOwn1);
-        //agencyOwnershipList.add(agOwn2);
-        //agencyOwnershipList.add(agOwn3);
-        //agencyOwnershipList.add(agOwn4);
-        //insert agencyOwnershipList;
-
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 14 --> Query issued: ' + Limits.getQueries());
         
         List<Contact> contactList = new List<Contact>();
         Contact c1 = new Contact(AccountId=ag1.Id,FirstName='Test1 Contact',LastName='Test1',Preferred_Language__c='English',RecordTypeId=rtIATAStandardContact,Financial_Assessment_Contact__c=true);
@@ -280,6 +264,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         contactList.add(c4);
         insert contactList;
         
+        system.debug(Logginglevel.ERROR, 'ALEX 15 --> Query issued: ' + Limits.getQueries());
+        
         List<AMS_Person__c> personList = new List<AMS_Person__c>();
         AMS_Person__c p1 = new AMS_Person__c(Name='Test1 Person', User__c=u1.Id);//Contact__c=c1.Id,
         AMS_Person__c p2 = new AMS_Person__c(Name='Test2 Person', User__c=u2.Id);//Contact__c=c2.Id,
@@ -291,6 +277,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         personList.add(p4);
         insert personList;  
         
+        system.debug(Logginglevel.ERROR, 'ALEX 16 --> Query issued: ' + Limits.getQueries());
+        
         List<AMS_Account_Role__c> employeeList = new List<AMS_Account_Role__c>();
         AMS_Account_Role__c e1 = new AMS_Account_Role__c(Employee_Name__c='Test1 employee',RecordTypeId=rtAccRoleEmployee,Person__c=p1.Id,Employee_type__c='RG,CL',Account__c=ag1.Id,isManager__c=True,isTicketingAgent__c=True);
         AMS_Account_Role__c e2 = new AMS_Account_Role__c(Employee_Name__c='Test2 employee',RecordTypeId=rtAccRoleEmployee,Person__c=p2.Id,Employee_type__c='RG,CL',Account__c=ag2.Id,isManager__c=True);
@@ -301,6 +289,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         employeeList.add(e3);
         employeeList.add(e4);
         insert employeeList;    
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 17 --> Query issued: ' + Limits.getQueries());
 
         List<AMS_Account_Role__c> ownershipList = new List<AMS_Account_Role__c>();
         AMS_Account_Role__c o1 = new AMS_Account_Role__c(Employee_Name__c='Test1 employee',Owner_Account__c=ag5.id,Percentage__c=100,RecordTypeId=rtAccRoleOwnership,Person__c=p1.Id,Employee_type__c='RG,CL',Account__c=ag1.Id);
@@ -313,15 +303,16 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         ownershipList.add(o4);
         insert ownershipList;
 
-
+        system.debug(Logginglevel.ERROR, 'ALEX 18 --> Query issued: ' + Limits.getQueries());
 
         List< AMS_Agency_Segment__c > agsgts = new List< AMS_Agency_Segment__c >();
         for(Account a:accountList){
              agsgts.add(new AMS_Agency_Segment__c(account__c=a.Id, Segment__c = prog1.Id));
         }
         insert agsgts;
-
         
+        system.debug(Logginglevel.ERROR, 'ALEX 19 --> Query issued: ' + Limits.getQueries());
+       
         List<AMS_Accreditation_Organization__c> accredOrgList = new List<AMS_Accreditation_Organization__c>();
         AMS_Accreditation_Organization__c accredOrg1 = new AMS_Accreditation_Organization__c(Country__c=ctr1.Id,State__c=st1.Id);
         AMS_Accreditation_Organization__c accredOrg2 = new AMS_Accreditation_Organization__c(Country__c=ctr2.Id,State__c=st2.Id);
@@ -332,6 +323,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         accredOrgList.add(accredOrg3);
         accredOrgList.add(accredOrg4);
         insert accredOrgList;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 20 --> Query issued: ' + Limits.getQueries());
 
         List<AMS_Inspection__c> inspectionList = new List<AMS_Inspection__c>();
         AMS_Inspection__c insp1 = new AMS_Inspection__c(Account__c=ag1.Id,Accreditation_Endorsement_organisation__c=accredOrg1.Id,Accreditation_Endorsement_Status_code__c='0');
@@ -343,6 +336,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         inspectionList.add(insp3);
         inspectionList.add(insp4);
         insert inspectionList;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 21 --> Query issued: ' + Limits.getQueries());
             
         List<AMS_Agencies_Hierarchy__c> agenciesHierarchyList = new List<AMS_Agencies_Hierarchy__c>();
         AMS_Agencies_Hierarchy__c agH1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test1 agenciesHierarchy');
@@ -354,6 +349,10 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         agenciesHierarchyList.add(agH3);
         agenciesHierarchyList.add(agH4);
         insert agenciesHierarchyList;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 22 --> Query issued: ' + Limits.getQueries());
+        
+        Test.startTest();
 
         List<AMS_Agencies_relationhip__c> agenciesRelationhipList = new List<AMS_Agencies_relationhip__c>();
         AMS_Agencies_relationhip__c agR1 = new AMS_Agencies_relationhip__c(Hierarchy__c=agH1.Id,Child_Account__c=ag3.Id,Parent_Account__c=ag1.Id);
@@ -365,6 +364,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         agenciesRelationhipList.add(agR3);
         agenciesRelationhipList.add(agR4);
         insert agenciesRelationhipList;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 23 --> Query issued: ' + Limits.getQueries());
 
         List<AMS_Airport__c> airportList = new List<AMS_Airport__c>();
         AMS_Airport__c air1 = new AMS_Airport__c(Name='Test1 airport');
@@ -376,6 +377,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         airportList.add(air3);
         airportList.add(air4);
         insert airportList;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 24 --> Query issued: ' + Limits.getQueries());
 
         List<AMS_Agency_Airport__c> agAirportList = new List<AMS_Agency_Airport__c>();
         AMS_Agency_Airport__c agAir1 = new AMS_Agency_Airport__c(Airport__c=air1.Id,Account__c=ag1.Id);
@@ -387,6 +390,8 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         agAirportList.add(agAir3);
         agAirportList.add(agAir4);
         insert agAirportList;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 25 --> Query issued: ' + Limits.getQueries());
 
         List<AMS_Agency_Profile__c> agProfileList = new List<AMS_Agency_Profile__c>();
         AMS_Agency_Profile__c agProf1 = new AMS_Agency_Profile__c(Account__c=ag1.Id,GR_Code__c='MK',GR_Item__c='BH;CR;GN');
@@ -398,7 +403,11 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         agProfileList.add(agProf3);
         agProfileList.add(agProf4);
         insert agProfileList;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 26 --> Query issued: ' + Limits.getQueries());
 
+        List<AMS_Fields_Translation__c> ltrans = new List<AMS_Fields_Translation__c>();
+        
         AMS_Fields_Translation__c trans1 = new AMS_Fields_Translation__c(Account__c=ag1.id,Field_name__c='Name',Translation__c='name',Language__c='CN');
         AMS_Fields_Translation__c trans2 = new AMS_Fields_Translation__c(Address__c=add1.id,Field_name__c='Address_1__c',Translation__c='teste',Language__c='CN');
         AMS_Fields_Translation__c trans3 = new AMS_Fields_Translation__c(AMSPerson__c=p1.id,Field_name__c='Name',Translation__c='name',Language__c='CN');
@@ -406,15 +415,18 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         AMS_Fields_Translation__c trans5 = new AMS_Fields_Translation__c(IATA_ISO_Country__c=ctr1.id,Field_name__c='Name',Translation__c='name',Language__c='CN');
         AMS_Fields_Translation__c trans6 = new AMS_Fields_Translation__c(User__c=u1.id,Field_name__c='Name',Translation__c='name',Language__c='CN');
         AMS_Fields_Translation__c trans7 = new AMS_Fields_Translation__c(Contact__c=c1.id,Field_name__c='Name',Translation__c='name',Language__c='CN');
-        //AMS_Fields_Translation__c trans8 = new AMS_Fields_Translation__c(AMS_Airport__c=air1.id,Field_name__c='Name',Translation__c='name',Language__c='CN');
-        insert trans1;
-        insert trans2;
-        insert trans3;
-        insert trans4;
-        insert trans5;
-        insert trans6;
-        insert trans7;
-        //insert trans8;
+        
+        ltrans.add(trans1);
+        ltrans.add(trans2);
+        ltrans.add(trans3);
+        ltrans.add(trans4);
+        ltrans.add(trans5);
+        ltrans.add(trans6);
+        ltrans.add(trans7);
+        
+        insert ltrans;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 27 --> Query issued: ' + Limits.getQueries());
 
         String[] r = new String[6];
         r[0]='GroupID';
@@ -426,7 +438,32 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         
         r[5] = ag1.Id;
 
-        Test.startTest();
+/*  NEWGEN-801 */
+
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+        
+        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+        authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+        insert authorizations;
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 28 --> Query issued: ' + Limits.getQueries());
+
+        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+            ANG_AccountId__c =ag1.id,
+            CurrencyIsoCode ='USD',
+            RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+            ANG_Financial_Security__c=0
+        );
+        
+        insert rhcInfo;
+
+/* EOF NEWGEN-801 */
+        
+        system.debug(Logginglevel.ERROR, 'ALEX 29 --> Query issued: ' + Limits.getQueries());        
 
         //AMS_Agency__c agTest1 = (AMS_Agency__c)[SELECT Account__c,Administrator__c,Airline_Code__c,
         //            A_Code__c,BSP_Code__c,CASS_Number__c,Chk_Dgt__c,
@@ -459,6 +496,9 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
                     Email__c,TTY__c,Website,Accreditation_date__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
                     Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
+                    , ANG_Accreditation_Model__c, Remittance_frequency__c,
+                    ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c, 
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
                     FROM Account where id =  :ag1.Id
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
 
@@ -502,7 +542,9 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
                     Email__c,TTY__c,Website,Accreditation_date__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
-                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c, ANG_Accreditation_Model__c, Remittance_frequency__c,
+                    ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c, 
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
                     FROM Account where id in :sAgIDs
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
         
@@ -531,7 +573,7 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
         xmlGen.getObjectData(rootNode, 'iata_iso_state__c', st1, true );
         xmlGen.getObjectData(rootNode, 'iata_iso_state__c', st2, true );
         
-        
+        system.debug(Logginglevel.ERROR, 'ALEX 30 --> Query issued: ' + Limits.getQueries());
 
         //TODO: Parse XML and test the ID's of the Elements against the ID's of the generated records
 

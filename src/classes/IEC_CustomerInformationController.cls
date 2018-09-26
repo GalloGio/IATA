@@ -5,13 +5,38 @@
 global without sharing class IEC_CustomerInformationController extends IEC_PageController
 {
 	public String quoteNumberToConvert{get;set;}
+	
+	//TC map to know which countries don't have zip code
+	public Map<String, Boolean> zipCodeApplicableMap {
+		get{
+            if(zipCodeApplicableMap == null){
+                Map<String, Object> countries = ISO_Country_State_Helper.getCountriesOptionsMap();
+                zipCodeApplicableMap = (Map<String, Boolean>) countries.get('zipCodeApplicable');
+            }
+
+			return zipCodeApplicableMap;
+		}
+		set;
+	}
 
 	public List<SelectOption> availableCountries{get{
 		if(availableCountries == null){
-			availableCountries = ISO_Country_State_Helper.getCountriesSelectOption();
+			//TC get options and fill map zipCodeApplicable
+			Map<String, Object> countries = ISO_Country_State_Helper.getCountriesOptionsMap();
+			availableCountries = (List<SelectOption>) countries.get('options');
+			zipCodeApplicableMap = (Map<String, Boolean>) countries.get('zipCodeApplicable');
 		}
 		return availableCountries;
 	}set;}
+	
+	//TC 
+	public Boolean unlockZipCode {
+		get{
+			return vfOrder != null && vfOrder.billToAddress != null && !String.isBlank(vfOrder.billToAddress.countryCode) && 
+				zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode) != null && zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode);
+		}
+		set;
+	}
 
 	public List<SelectOption> billToAvailableStates{get;set;}
 
@@ -32,6 +57,49 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 	public Map<String, String> errors{get;set;} //FIELD => ERROR MESSAGE
 
 	public Boolean stopProcess { get; set; }
+
+	//Used for google analytics
+	public String productWrapper {
+		get {
+			Map<String,Object> ecommObj = new Map<String,Object>();
+			Map<String,Object> checkoutObj = new Map<String,Object>();
+			Map<String,Object> actionObj = new Map<String,Object>();
+			Map<String,Object> prodObj = new Map<String,Object>();
+
+			ecommObj.put('checkout', checkoutObj);
+			actionObj.put('step',1);
+			checkoutObj.put('actionField', actionObj);
+			checkoutObj.put('products', new List<Object> {prodObj});
+
+			List<OrderItem_DTO> lstOrderItemsAux = storeCart.getOrderItems();
+			if(lstOrderItemsAux != null && !lstOrderItemsAux.isEmpty()){
+	            List<Object> lstOrderItems = new List<Object>();
+            	for(OrderItem_DTO orderItemDtoAux : lstOrderItemsAux){
+            		Map<String,Object> orderItemsObjMap = new Map<String,Object>();
+
+            		orderItemsObjMap.put('id', orderItemDtoAux.productNumber);
+					orderItemsObjMap.put('name', orderItemDtoAux.productName);
+					orderItemsObjMap.put('category', orderItemDtoAux.productCategory);
+					orderItemsObjMap.put('price', orderItemDtoAux.unitPrice == null ? 0.00 : orderItemDtoAux.unitPrice);
+		            orderItemsObjMap.put('brand', orderItemDtoAux.productBrand);
+		            orderItemsObjMap.put('quantity', orderItemDtoAux.quantity);
+		            orderItemsObjMap.put('dimension1', orderItemDtoAux.productEdition);
+		            orderItemsObjMap.put('dimension2', orderItemDtoAux.productLanguage);
+		            orderItemsObjMap.put('dimension3', orderItemDtoAux.productInventoryStatus);
+		            orderItemsObjMap.put('dimension4', orderItemDtoAux.productAvailabilityDate);
+		            orderItemsObjMap.put('dimension5', orderItemDtoAux.productMedia);
+		            orderItemsObjMap.put('dimension6', orderItemDtoAux.productEffectiveTo);
+
+					lstOrderItems.add(orderItemsObjMap);
+            	}
+            
+            	checkoutObj.put('products', lstOrderItems);
+            }
+
+			return JSON.serialize(ecommObj);
+		}
+		set;
+	}
 
 	
 	/**************************************************************************************************************
@@ -76,7 +144,7 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 			quoteNumberToConvert = System.currentPageReference().getParameters().get('id');
 
             //-- Validate quoteNumberToConvert is a valid belongs to the current User 
-            if(IECOrder_Svc.validateQuoteNumberToConvert(quoteNumberToConvert, loggedCustomer.sfUser.Id))
+            if(IECOrder_Svc.validateQuoteNumberToConvert(quoteNumberToConvert, loggedCustomer.sfUser.Id, loggedCustomer.sfContact.Id))
             {
             	List<Order> lstOrders = (List<Order>) new Order_Sel().selectSObjectByField('OrderNumber',new Set<String>{quoteNumberToConvert});
             	if(lstOrders.size() > 0)
@@ -85,6 +153,7 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		}
 
 		sfOrder = IECOrder_Svc.getPenddingOrder(true);
+
 		vfOrder = new Order_DTO(sfOrder);
 		initialOrder = new Order_DTO(sfOrder);
 
@@ -172,6 +241,7 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		}
 
 		billToAvailableStates = ISO_Country_State_Helper.getStatesSelectOption(vfOrder.billToAddress.countryCode);
+		vfOrder.billToAddress.postalCode = '';
 	}
 
 	public void regionChanged()
@@ -242,6 +312,9 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		{
 			errors.put('street1',Label.InputRequiredMessage + ' ' + Label.Address_Line_1);
 			isValid = false;
+		} else if(isStreetAddressToLong(vfOrder.billToAddress.street1, 70)) {
+			errors.put('street1',Label.IEC_BillingAddressLimit);
+			isValid = false;
 		}
 	
 		if(vfOrder.billToAddress.isPostalCodeRequired != null && vfOrder.billToAddress.isPostalCodeRequired && (vfOrder.billToAddress.postalCode == null || vfOrder.billToAddress.postalCode == '')) //String.isBlank(vfOrder.billToAddress.postalCode)
@@ -269,8 +342,13 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		}
 
 		return isValid;
+	}	
+	
+	/* TC 2017-05-17 */
+	public Boolean isStreetAddressToLong(String street, Integer maxSize) {
+		return !String.isBlank(street) && street.length() > maxSize;
 	}
-
+	/* end TC */
 
 	/**************************************************************************************************************
      *  saveCustomerInformation: method calls when customer clicks on "Continue" button to save customer Info     * 
@@ -287,7 +365,7 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 
 			return null;
 		}
-
+		
 		//-- Validate compliance 
 		validateCountryCompliance();
 
@@ -338,12 +416,15 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 				//*** country/state change -> deactivate old location and create a new one
 					billingLocationOld = billingLocation; 
 					billingLocationOld.Active__c = false; 
-					
+
 					//*** create new location -> cancel action on error
+					billingLocation = getNewLocation(billingLocation, billingAddress, vfOrder.billToAddress.email, vfOrder.billToAddress.phone, vfOrder.billToAddress.vatNumber);
+/*
 					billingLocation = new Location__c(Active__c = true, Type__c = IECConstants.BILLTO, Address__c = billingAddress.Id, Address__r = billingAddress
 					                                , Account__c = billingLocation.Account__c, Account__r = billingLocation.Account__r
 					                                , Contact__c = billingLocation.Contact__c, Contact__r = billingLocation.Contact__r
 					                                , Email__c = vfOrder.billToAddress.email, Phone__c = vfOrder.billToAddress.phone , VAT_Number__c = vfOrder.billToAddress.vatNumber);
+*/
 				List<IEC_Error_Log__c> lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{billingLocation}, null, false);
 				if (lstSyncResult[0] != null)
 				{
@@ -490,5 +571,22 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 			WHERE Full_Address__c LIKE :str 
 			LIMIT 10
 		];
+	}
+
+	@testVisible					
+	private static Location__c getNewLocation(Location__c billingLocation, IECAddress__c billingAddress, String email, String phone, String vatNumber) {
+		return new Location__c (
+			Active__c = true,
+			Type__c = IECConstants.BILLTO,
+			Address__c = billingAddress.Id,
+			Address__r = billingAddress,
+			Account__c = billingLocation.Account__c,
+			Account__r = billingLocation.Account__r,
+			Contact__c = billingLocation.Contact__c,
+			Contact__r = billingLocation.Contact__r,
+			Email__c = email,
+			Phone__c = phone,
+			VAT_Number__c = vatNumber
+		);
 	}
 }

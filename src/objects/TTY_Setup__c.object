@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>IDFS bulletin distribution settings to replace SITA</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -172,22 +169,26 @@
         <fullName>Would_you_like_to_keep_your_subscription__c</fullName>
         <externalId>false</externalId>
         <label>Would you like to keep your subscription</label>
-        <picklist>
-            <picklistValues>
-                <fullName>I would like to keep my subscription to AIRS/CAIRS bulletin</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Please cancel my subscription to AIRS/CAIRS bulletin</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>I would like to keep my subscription to AIRS/CAIRS bulletin</fullName>
+                    <default>false</default>
+                    <label>I would like to keep my subscription to AIRS/CAIRS bulletin</label>
+                </value>
+                <value>
+                    <fullName>Please cancel my subscription to AIRS/CAIRS bulletin</fullName>
+                    <default>false</default>
+                    <label>Please cancel my subscription to AIRS/CAIRS bulletin</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>TTY Setup</label>
     <listViews>
@@ -303,4 +304,5 @@
         <searchResultsAdditionalFields>Contact_email__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

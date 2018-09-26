@@ -8,11 +8,90 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
 
-        Account acc1 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
-        insert acc1;
+        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Account acc1 = new Account(RecordTypeId = accountRT, Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+        Account HO1, HO2, BR1, BR2, BR3, BR4, BR5, BR6;
+        boolean isPax = true;
+
+        String SECTORPAX = 'Travel Agent';
+        String CATEGORYPAX = 'IATA Passenger Sales Agent';
+        String LOCCLASSPAX = 'P';
+        
+        String SECTORCASS = 'Cargo Agent';
+        String CATEGORYCASS = 'IATA Cargo Sales Agent';
+        String LOCCLASSCASS = 'C';
+        
+        //Create 2 head offices
+        HO1 = new Account(RecordTypeId = accountRT, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = isoc.id, 
+                         Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), 
+                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = AMS_Utils.ACC_S9_APPROVED,
+                         Reason_for_creation__c = 'Created by customer', Reason__c = '91-ACCREDITED–MEETS–STANDARDS' );
+        HO2 = new Account(RecordTypeId = accountRT, Name = 'Your Travels', IATAcode__c = '2222220', IATA_ISO_Country__c = isoc.id, 
+                         Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), 
+                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = AMS_Utils.ACC_S9_APPROVED,
+                         Reason_for_creation__c = 'Created by customer', Reason__c = '91-ACCREDITED–MEETS–STANDARDS' );
+        
+        //Create a separate Account for the Owners
+        Account OwnersAccount =  new Account(Name = 'General account for owners');
+
+        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
+        idAccountOwner.Text_1__c = '005w000000688eeAAA';
+        insert idAccountOwner;
+
+        List<Account> accs = new List<Account>{acc1, HO1, HO2, OwnersAccount};
+        insert accs;
+        //Create the 6 branches
+        BR1 = new Account(RecordTypeId = accountRT, Name = 'My Travels', IATAcode__c = '1111111', IATA_ISO_Country__c = isoc.id, 
+                         Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED,  
+                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO1.Id,
+                         Reason_for_creation__c = 'Created by customer', Reason__c = '91-ACCREDITED–MEETS–STANDARDS' );
+        BR2 = new Account(RecordTypeId = accountRT, Name = 'My Travels', IATAcode__c = '1111112', IATA_ISO_Country__c = isoc.id, 
+                         Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED, 
+                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO1.Id,
+                         Reason_for_creation__c = 'Created by customer', Reason__c = '91-ACCREDITED–MEETS–STANDARDS' );
+        BR3 = new Account(RecordTypeId = accountRT, Name = 'My Travels', IATAcode__c = '1111113', IATA_ISO_Country__c = isoc.id, 
+                         Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED, 
+                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO1.Id,
+                         Reason_for_creation__c = 'Created by customer', Reason__c = '91-ACCREDITED–MEETS–STANDARDS' );
+        BR4 = new Account(RecordTypeId = accountRT, Name = 'Your Travels', IATAcode__c = '2222221', IATA_ISO_Country__c = isoc.id, 
+                         Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED, 
+                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO2.Id,
+                         Reason_for_creation__c = 'Created by customer', Reason__c = '91-ACCREDITED–MEETS–STANDARDS' );
+        BR5 = new Account(RecordTypeId = accountRT, Name = 'Your Travels', IATAcode__c = '2222222', IATA_ISO_Country__c = isoc.id, 
+                         Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED, 
+                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO2.Id,
+                         Reason_for_creation__c = 'Created by customer', Reason__c = '91-ACCREDITED–MEETS–STANDARDS' );
+        BR6 = new Account(RecordTypeId = accountRT, Name = 'Your Travels', IATAcode__c = '2222223', IATA_ISO_Country__c = isoc.id, 
+                         Sector__c =  (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), Status__c = AMS_Utils.ACC_S9_APPROVED, 
+                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'BR', ParentId = HO2.Id,
+                         Reason_for_creation__c = 'Created by customer', Reason__c = '91-ACCREDITED–MEETS–STANDARDS' );
+            
+        
+        accs = new list<Account>{BR1, BR2, BR3, BR4, BR5, BR6};
+        insert accs;
+
+        //Create the AMS hierarchies for the first group of agencies
+        AMS_Agencies_Hierarchy__c H1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+        AMS_Agencies_Hierarchy__c H2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 2');
+        List<AMS_Agencies_Hierarchy__c> hs = new List<AMS_Agencies_Hierarchy__c>{H1, H2};
+        insert hs;
+        
+        List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = HO1.Id, Child_Account__c = BR1.Id, HO_Flag__c = 'true'));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = HO1.Id, Child_Account__c = BR2.Id, HO_Flag__c = 'true'));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = HO1.Id, Child_Account__c = BR3.Id, HO_Flag__c = 'true'));
+        
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H2.Id, Parent_Account__c = HO2.Id, Child_Account__c = BR4.Id, HO_Flag__c = 'true'));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H2.Id, Parent_Account__c = HO2.Id, Child_Account__c = BR5.Id, HO_Flag__c = 'true'));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H2.Id, Parent_Account__c = HO2.Id, Child_Account__c = BR6.Id, HO_Flag__c = 'true'));
+        
+        insert rels;
         
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc1.Id);
-        insert oscar;
+        AMS_OSCAR__c oscar2 = new AMS_OSCAR__c(Account__c = HO1.Id);
+        
+        list<AMS_OSCAR__c> oscars = new list<AMS_OSCAR__c>{oscar, oscar2};
+        insert oscars;
         
         Case testCase = ISSP_ObjectFactory.createNewCase();
         testCase.BSPCountry__c = 'Hong Kong (SAR), China';
@@ -28,10 +107,28 @@ public with sharing class AMS_AccountRoleCreatorTest {
         testCase.IFAP_Country_ISO__c = 'tq';
         testCase.AccountId = acc1.id;
         testCase.Oscar__c = oscar.Id;
-        insert testCase;
+
+        Case testCase2 = ISSP_ObjectFactory.createNewCase();
+        testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
+        testCase2.Reason1__c = 'Agency';
+        testCase2.Customer_recovery__c = false;
+        //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+        testCase2.BounceEmailCounter__c = 0.0;
+        testCase2.Case_Language__c = 'English';
+        testCase2.Subject = 'Test 006';
+        testCase2.Reopened_case__c = 0.0;
+        //testCase.Continous_Feed_SAF__c = true;
+        testCase2.Account_Concerned__c = acc1.Id;
+        testCase2.IFAP_Country_ISO__c = 'tq';
+        testCase2.AccountId = HO1.id;
+        testCase2.Oscar__c = oscar2.Id;
+        
+        list<Case> testCases = new list<Case>{testCase, testCase2};
+        insert testCases;
         
         AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = acc1.Name);
         insert onlineAccreditation;
+
         
         List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
         acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Company__c = acc1.id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
@@ -52,6 +149,8 @@ public with sharing class AMS_AccountRoleCreatorTest {
         insert p1;
         AMS_Person__c p2 = new AMS_Person__c(Name='do', LastName__c='notDelete', First_Name__c='DontDelete', Email__c='unique123@email.com');
         insert p2;
+
+        upsert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CADM', Change_Code__c = 'CAD');
 
     }
     
@@ -74,10 +173,11 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
         delete roleList;
-                
+        
+        Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
         Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2');
         
-        Account brAccount  = new Account(Name='OwnerAccount', Location_Type__c = 'BR', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141231', AIMS_ID__c = '98765432', Source_System__c = 'AIMS2', Top_Parent__c = ownerAccount.Id);
+        Account brAccount  = new Account(RecordtypeId=accountRT, Name='OwnerAccount', Location_Type__c = 'BR', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141231', AIMS_ID__c = '98765432', Source_System__c = 'AIMS2', Top_Parent__c = ownerAccount.Id);
         
         insert new List<Account>{ownerAccount,brAccount};
 
@@ -89,7 +189,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         // Create an Accreditation Contact record of type Account Ownership and expect a relevant account role to be created
         // Later expect updated values on AC record to match the role record
-        AMS_Accreditation_Contact__c companyOwnershipAC = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = acList.get(0).AMS_Pax_Accreditation_Form__c, Agency_Owner__c = true, Financial_interest__c = 20, Company__c = ownerAccount.id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company'), Last_name__c = 'test', Phone__c = '23432434');
+        AMS_Accreditation_Contact__c companyOwnershipAC = new AMS_Accreditation_Contact__c(First_Name__c = 'Name', AMS_Pax_Accreditation_Form__c = acList.get(0).AMS_Pax_Accreditation_Form__c, Agency_Owner__c = true, Financial_interest__c = 20, Company__c = ownerAccount.id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company'), Last_name__c = 'test', Phone__c = '23432434');
         acList.add(companyOwnershipAC);
         upsert acList;
         
@@ -764,8 +864,8 @@ public with sharing class AMS_AccountRoleCreatorTest {
         insert ownersList;
 
         List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner1.Id, AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, Contact__c = conList.get(0).id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Agency_owner__c = true, Email__c='unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner2.Id,AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, First_name__c='', Last_name__c='Comapny', Job_title__c='', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='company@email.com', Agency_owner__c = true, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner1.Id, AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, Contact__c = conList.get(0).id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Agency_owner__c = true, Email__c='unique2@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner2.Id,AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, First_name__c='2', Last_name__c='Comapny2', Job_title__c='', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='company2@email.com', Agency_owner__c = true, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company')));
         insert acList;
 
         oscar.RecordTypeId = correctionOSCARRecTypeId;
@@ -774,24 +874,116 @@ public with sharing class AMS_AccountRoleCreatorTest {
         oscar.STEP6__c = 'Passed';
         oscar.AMS_Correction_change_code__c = 'COR';
 
+        System.debug('test_RoleCreationForCorrectionProcess aoaList: ' + aoaList);
+        System.debug('test_RoleCreationForCorrectionProcess oscar: ' + oscar);
+
+        update oscar;
+
+        Test.stopTest();
+    }
+
+    @isTest static void test_CORCCCorrectionProcess(){
+        
+        //AMS_OSCAR_TestDataFactory.createOSCARtestDataAccHier();
+        //AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
+        //Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
+
+        Test.startTest();
+        
+        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = [select Id, Account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
+        System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
+
+        AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
+
+        //List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
+        Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
+
+        AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(
+            SAAM_Case__c = c.id,
+            Account_Name__c = 'My Travels',
+            //CASS_Number__c = '126',
+            Location_Class__c = 'C',
+            //IATA_ISO_State__c = [SELECT Id FROM IATA_ISO_State__c LIMIT 1][0].Id,
+            Branch_Office_Country__c = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1][0].Id
+        );
+        insert accre;
+        System.debug('test_CADCCCorrectionProcess accre: ' + accre);
+
+        oscar.RecordTypeId = correctionOSCARRecTypeId;
+        //oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
+
+        oscar.AMS_Online_Accreditation__c = accre.Id;
+        oscar.Type_of_change__c = AMS_Utils.COR;
+        oscar.STEP6__c = 'Passed';
+        oscar.AMS_Correction_change_code__c = 'COR';
+        System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
+
         update oscar;
 
         Test.stopTest();
     }
 
     @isTest static void test_CADCCCorrectionProcess(){
+        
         Test.startTest();
+        
         Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
 
-        AMS_OSCAR__c oscar = [select AMS_Online_Accreditation__c from AMS_OSCAR__c limit 1];
+        AMS_OSCAR__c oscar = [select Id, Account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c limit 1];
 
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
+        Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
+
 
         oscar.RecordTypeId = correctionOSCARRecTypeId;
         oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
         oscar.Type_of_change__c = AMS_Utils.COR;
         oscar.STEP6__c = 'Passed';
         oscar.AMS_Correction_change_code__c = 'CAD';
+
+        update oscar;
+
+        Test.stopTest();
+    }
+
+    @isTest static void test_CADCCCorrectionProcess2(){
+        
+        //AMS_OSCAR_TestDataFactory.createOSCARtestDataAccHier();
+        //AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
+        //Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
+
+        Test.startTest();
+        
+        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = [select Id, Account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
+        System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
+
+        AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
+
+        //List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
+        Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
+
+        AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(
+            SAAM_Case__c = c.id,
+            Account_Name__c = 'My Travels',
+            //CASS_Number__c = '125',
+            Location_Class__c = 'C',
+            //IATA_ISO_State__c = [SELECT Id FROM IATA_ISO_State__c LIMIT 1][0].Id,
+            Branch_Office_Country__c = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1][0].Id
+        );
+        insert accre;
+        System.debug('test_CADCCCorrectionProcess accre: ' + accre);
+
+        oscar.RecordTypeId = correctionOSCARRecTypeId;
+        //oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
+        oscar.AMS_Online_Accreditation__c = accre.Id;
+        oscar.Type_of_change__c = AMS_Utils.COR;
+        oscar.STEP6__c = 'Passed';
+        oscar.AMS_Correction_change_code__c = 'CAD';
+        System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
 
         update oscar;
 

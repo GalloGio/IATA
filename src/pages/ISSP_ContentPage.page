@@ -28,6 +28,22 @@
         .resetButton {
             margin-top: 10px;
         }
+
+        .paginationButt{
+         margin-left: -1px;
+        }
+
+        .paginate_button{
+           color: #000000;
+           text-decoration: none;
+        }
+
+        .buttons{
+            float: right;
+            display: block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
       
         
     </style>
@@ -203,7 +219,7 @@
             });
          
             
-            $('#searchInput_').keyup(function(){
+            $('#searchInput_').keyup(function(){ //remove
                   table.search($(this).val()).draw();
             });
             
@@ -228,11 +244,11 @@
     <body>
         <div class="container">
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-             
+             <apex:form id="mainFrm">
 
 
 
-            <apex:form id="mainFrm">
+            
                 <apex:pagemessages id="errors" />
                 <div class="row">
                     <div class="col-md-12">
@@ -259,23 +275,34 @@
                             
 
                                  <apex:outputpanel id="opp_results" rendered="{!communityName!='CNS'}">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="searchInput_" placeholder="{!$Label.ISSP_Search}"/>
+                                        <div class="col-md-12">
+                                            <div class="form-group">  
+                                             <apex:inputText id="searchInput_" value="{!search}" styleClass ="form-control"/>
+                                            </div>
                                         </div>
-                                     </div>
-                                    <div class="col-md-3" id="leftFilter">
-                                      <apex:commandButton value="{!$Label.PKB2_Reset_Search}" styleClass="resetButton btn btn-danger btn-block" rerender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/>
-                                     </div>
+                                        <div class="col-md-3" id="leftFilter">
+                                            {!$Label.ISSP_Filter_by_Document_Category}
+                                            <apex:selectList id="DocCat" value="{!selectedValCat}" multiselect="false" size="1" styleClass ="form-control">
+                                                <apex:selectOptions value="{!allDocumentCategoryList}"/>
+                                            </apex:selectList>
+                                            {!$Label.ISSP_Filter_by_Country_Publication}
+                                            <apex:selectList id="DocCountPub" value="{!selectedValPub}" multiselect="false" size="1" styleClass ="form-control">
+                                                <apex:selectOptions value="{!allCountriesList}"/>
+                                            </apex:selectList>
+                                        <!--  <apex:commandButton value="{!$Label.PKB2_Reset_Search}" styleClass=" btn btn-danger" rerender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/> -->
+                                          <apex:commandButton value="Apply Filter" action="{!Init}" styleClass="btn btn-success" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors"  oncomplete="loadTableDocs();" />
+                                         </div>      
+                                    <apex:actionFunction name="refreshPageSize" action="{!refreshPageSize}" status="fetchStatus" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/>
                                      <div class="col-md-9" id="resulttable">
                                         <div class="panel panel-default">
                                             <!---------------------DOCUMENTS TABLE------------------------->
                                             <!--<apex:pageblock mode="edit" id="results">-->
-                                                <!--<apex:pageblocktable id="docstable" value="{!ContentVersions}" var="ver" styleclass="table-hover table table-condensed table-responsive"> -->                                                
-                                                   <apex:dataTable id="docstable" value="{!ContentVersions}" var="ver" styleclass="docsTable table-hover table table-condensed table-responsive">  
+                                                <!--<apex:pageblocktable id="docstable" value="{!ContentVersions}" var="ver" styleclass="table-hover table table-condensed table-responsive"> -->  
+                                                              
+                                                <apex:pageblock mode="edit" id="results">                                              
+                                                   <apex:pageblocktable id="docstable" value="{!ContentVersions}" var="ver" styleclass="table table-hover  table-condensed table-responsive">  
                                                     <!----------------------TITLE COLUMN------------------------>
                                                        {!ver}
-                                                       
                                                     <apex:column rendered="{!if(ver.FileType=='LINK','false','true')}">
                                                         <apex:facet name="header">{!$Label.ISSP_Title}</apex:facet>
                                                         <a href="{!csHost}/sfc/servlet.shepherd/version/download/{!ver.id}" target="_document">{!ver.title}</a>
@@ -288,8 +315,7 @@
                                                     
                                                     <!----------------------DESCRIPTION COLUMN------------------------>
                                                     <apex:column >
-                                                        <apex:facet name="header">{!$Label.IDCard_Description}</apex:facet>
-                                                        {!ver.Description}
+                                                        <apex:facet name="header">{!$Label.IDCard_Description}</apex:facet>{!ver.Description}
                                                     </apex:column>
 
                                                     <!----------------------COUNTRY OF PUBLICATION COLUMN------------------------>
@@ -333,15 +359,63 @@
                                                     <apex:column >
                                                         <apex:facet name="header">{!$Label.ISSP_Document_Category}</apex:facet>
                                                         {!ver.Document_Category__c}
-                                                    </apex:column>   
+                                                    </apex:column>     
+                                               </apex:pageblocktable>
+                                              <!-- <div id="totalPages">
+                                                   Showing {!((setCon.PageNumber-1) * setCon.PageSize)+1} - {!IF(setCon.HasNext,((setCon.PageNumber-1) * setCon.PageSize)+11,setCon.ResultSize)}  of {!setCon.ResultSize } entries
+                                                   <apex:selectList value="{!size}" multiselect="false" size="1" onchange="refreshPageSize();">
+                                                    <apex:selectOptions value="{!paginationSizeOptions}"/>
+                                                    </apex:selectList>
+                                               </div> -->
+                                            <div class="bottomNav" style="margin-left: 10px" id="pageSize">
+                                                    <apex:selectList value="{!size}" multiselect="false" size="1" onchange="refreshPageSize();">
+                                                        <apex:selectOptions value="{!paginationSizeOptions}"/>
+                                                    </apex:selectList>
+                                                    <!--<div class="paginator">
+                                                        <span class="left selectorTarget">
+                                                            <apex:outputText id="pageZ">
+                                                               Showing {!((currentPageNumber-1) * size)+1} to {!IF(setCon.HasNext,(currentPageNumber) * size,setCon.ResultSize)}  of {!setCon.ResultSize } entries
+                                                            </apex:outputText>
+                                                        </span>
+                                                    </div>-->
+                                               
+                                                    <apex:outputText id="pageNumber" style="margin-left: 10px" > Showing {!$Label.ISSP_Page}
+                                                   {!currentPageNumber}
+                                                   {!$Label.ISSP_of} {!pageNumberButtons.size}
+                                                    </apex:outputText>    
+                                                                     
+                                               <apex:panelGrid id="buttons" columns="8" styleClass="buttons" >                      
+                                                
+                                                <apex:commandLink styleClass="paginate_button" action="{!previous}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();">Previous</apex:commandlink>
+
+                                                <apex:repeat  value="{!pageNumberButtons}" var="pageN">
+                                                    <apex:commandButton styleClass="paginationButt" action="{!navigateToPage}" value="{!pageN}"  reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" rendered="{!OR(AND(pageN<5, currentPageNumber<=5),pageN==1)}" oncomplete="loadTableDocs();">
+                                                          <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
+                                                    </apex:commandButton>
+                                                     <apex:commandButton styleClass="paginationButt" value="..." rendered="{!AND(pageN>4, currentPageNumber>=4, pageN==currentPageNumber-1)}" disabled="true">
+                                                    </apex:commandButton>
                                                     
-                                                    
-                                               </apex:dataTable>        
-                
-                                               <!-- </apex:pageblocktable>-->
-                                            <!--</apex:pageblock>--> <!--end documents table -->
+                                                    <apex:commandButton  styleClass="paginationButt" action="{!navigateToPage}" rendered="{!OR(AND(pageN>4, pageN==(currentPageNumber-1)),AND(pageN>=5, pageN==(currentPageNumber+1),(currentPageNumber+1)!=pageNumberButtons.size),AND(pageN>=5, pageN==currentPageNumber))}"
+                                                    value="{!pageN}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();">
+                                                         <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
+                                                    </apex:commandButton>    
+                                                    <apex:commandButton styleClass="paginationButt" value="..." rendered="{!and(pageN==pageNumberButtons.size, currentPageNumber!=pageNumberButtons.size-1,currentPageNumber!=pageNumberButtons.size)}" disabled="true">
+                                                    </apex:commandButton>
+
+                                                    <apex:commandButton styleClass="paginationButt" action="{!navigateToPage}" value="{!pageN}"  reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" rendered="{!and(pageN==pageNumberButtons.size, currentPageNumber!=pageNumberButtons.size)}" oncomplete="loadTableDocs();">
+                                                              <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
+                                                    </apex:commandButton>
+                                                </apex:repeat>
+
+                                                 <apex:commandLink styleClass="paginate_button" action="{!next}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();">Next</apex:commandlink>
+                                               </apex:panelGrid>  
+                                               <br style="clear: both;" /> 
+                                                </div>
+                                                                                     
+                                            </apex:pageblock>
                                      </div>
                                    </div> <!--end row -->
+                                   
                                 </apex:outputpanel>
                             
                                 <div class="row"> 

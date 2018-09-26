@@ -1,0 +1,21 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<font class="Apple-style-span" face="arial" size="3" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Dear&nbsp;all,</font> 
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>
+<div><font face="arial">Operational Improvement</font><font size="3" face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">&nbsp;-&nbsp;</span>{!Operational_Improvements__c.Name}<span style="font-size: 12pt;">&nbsp;- extension has been Accepted by RPM</span></font><font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">&nbsp;</font><font size="3" face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">and the overall deadline has been extended.</font></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Related Internal Case&nbsp;</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Number:&nbsp;{!Operational_Improvements__c.Related_Case_Number__c}</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Description:&nbsp;{!Operational_Improvements__c.Description__c}</div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Region:&nbsp;</span><font face="arial">{!Operational_Improvements__c.Region__c}</font></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">OI Type: {!Operational_Improvements__c.OI_Type__c}</div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">&nbsp;</div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Please click the below link to review it:</div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">{!Operational_Improvements__c.Link}</div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font class="Apple-style-span" face="arial"><br></font></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font class="Apple-style-span" face="arial">Thank you and best regards,</font></div><div><font class="Apple-style-span" face="arial">{!Operational_Improvements__c.OwnerFullName}</font></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">&nbsp;</div></div>]]></td>
+</tr>
+</table>

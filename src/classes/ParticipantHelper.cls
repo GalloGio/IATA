@@ -101,4 +101,25 @@ public with sharing class ParticipantHelper {
 		update mapRelatedContactPerIds.values();
 				
 	}
+
+	/*
+	 * Blocks deletion of members to inactive groups
+	 */
+	public static void blockDeletingFromInactiveGroups(list<Participant__c> lstTriggerOld) {
+		// get all the parent Local Groups / Governances Ids in a list
+		list<Id> lstLocalGovernanceIds = new list<Id>();
+		for (Participant__c p : lstTriggerOld) {
+			lstLocalGovernanceIds.add(p.Local_Governance__c);
+		}
+		// get all Local Governances with their type in a map
+		map<Id, LocalGovernance__c> lstLocalGovernancesPerId = new map<Id, LocalGovernance__c>([SELECT Id, Active__c FROM LocalGovernance__c WHERE Id IN :lstLocalGovernanceIds ]);
+
+		for(Participant__c p : lstTriggerOld) {
+			if (lstLocalGovernancesPerId.get(p.Local_Governance__c).Active__c == false) {
+				p.addError('Cannot delete members from inactive groups');
+			}
+		}
+	}
+
+
 }

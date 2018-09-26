@@ -7,7 +7,7 @@ global class AMS_2_MDM_Webservice {
         List<String> result = new List<String>();
 
         //List<AMS_Agency_Updates__c> agencyUpdates = [select Agency__c from AMS_Agency_Updates__c where Update_Type__c = 'Update' AND Agency__c != null]; - #AMSFTS
-        List<AMS_Agency_Updates__c> agencyUpdates = [select Account__c from AMS_Agency_Updates__c where Update_Type__c in ('Update','Create','Delete') AND Account__c != null];
+        List<AMS_Agency_Updates__c> agencyUpdates = [select Account__c from AMS_Agency_Updates__c where Update_Type__c in ('Update','Create','Delete') AND Account__c != null AND Integration_System__c = 'SAP PI'];
         
         for(AMS_Agency_Updates__c au :agencyUpdates){
             result.add(au.Account__c);
@@ -65,8 +65,7 @@ global class AMS_2_MDM_Webservice {
             
             
             System.debug('Requested Agencies from MDM PI - ' + ids);
-
-
+/*
             List<Account> ag = [SELECT Airline_Code__c,A_Code__c,
                     CASS_Number__c,Check_Digit__c,GDS__c,
                     BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
@@ -86,7 +85,33 @@ global class AMS_2_MDM_Webservice {
                     Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                     FROM Account where id in :ids
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
-  
+
+*/
+/**  NEWGEN-801 **/
+            List<Account> ag = [SELECT Airline_Code__c,A_Code__c,
+                    CASS_Number__c,Check_Digit__c,GDS__c,
+                    BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
+                    ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
+                    Company_Type__c,C_Code__c,IATACode__c,Id,Location_Type__c,
+                    Last_Inspection_Date__c,Last_synchronization__c,
+                    License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
+                    N_Code__c,Organization_Last_Change_Date__c,
+                    Original_Approval_DAte__c,VAT_Number_2__c,OwnerId,
+                    Phone_Number__c, Phone, Fax, Primary_address__c,
+                    RecordTypeId,RecordType.name,
+                    STD_Code__c,VAT_Number__c,
+                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
+                    Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
+                    Email__c,TTY__c,Website,Accreditation_date__c,
+                    Abbreviated_name__c, Abbreviated_address__c,Status__c,
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c, ANG_Accreditation_Model__c, Remittance_frequency__c,
+                    ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c, 
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
+                    FROM Account where id in :ids
+                    ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
+
+                    
+ /* EOF NEWGEN-801 */
             AMS_XML_Generator xmlGen = new AMS_XML_Generator();
             Integer inicioCPU = Limits.getCpuTime();
             Integer inicioCPUx = Limits.getLimitCpuTime();
@@ -249,8 +274,7 @@ global class AMS_2_MDM_Webservice {
         r[5]=agencyId;
         
         try{
-            
-
+/*            
             Account ag = [SELECT Airline_Code__c,A_Code__c,
                     CASS_Number__c,Check_Digit__c,GDS__c,
                     BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
@@ -270,8 +294,34 @@ global class AMS_2_MDM_Webservice {
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
                     Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                     FROM Account where id = :agencyId];
-            
- 
+         */   
+ /* NEWGEN-801 */
+
+             Account ag = [SELECT Airline_Code__c,A_Code__c,
+                    CASS_Number__c,Check_Digit__c,GDS__c,
+                    BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
+                    ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
+                    Company_Type__c,C_Code__c,IATACode__c,Id,Location_Type__c,
+                    Last_Inspection_Date__c,Last_synchronization__c,
+                    License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
+                    N_Code__c,Organization_Last_Change_Date__c,
+                    Original_Approval_DAte__c,VAT_Number_2__c,OwnerId,
+                    Phone_Number__c, Phone, Fax, Primary_address__c,
+                    RecordTypeId,RecordType.name,
+                    STD_Code__c,VAT_Number__c,
+                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
+                    Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
+                    Email__c,TTY__c,Website,Accreditation_date__c,
+                    IATA_ISO_Country__r.Region__c,
+                    Abbreviated_name__c, Abbreviated_address__c,Status__c,
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c,
+                    ANG_Accreditation_Model__c, Remittance_frequency__c,
+                    ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c,
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
+                    FROM Account where id = :agencyId];
+
+/* EOF NEWGEN-801 */
+
             sLogRecord += ' - IATACodes: ' + ag.IATACode__c;
                 
             //Check if IATACODE exists! if not end with error

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -74,7 +71,7 @@
         <label>AMS GDP Key</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -92,12 +89,24 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Owner_Name_Upper__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(Name)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Owner Name Upper</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Percent__c</fullName>
         <externalId>false</externalId>
         <label>Percent</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>2</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
@@ -144,14 +153,37 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Percent__c</columns>
         <columns>Owner_ID__c</columns>
         <columns>Related_GDP_Products_Account_View__c</columns>
         <columns>Related_Account__c</columns>
-        <columns>AIMS_ID__c</columns>
-        <columns>WebStar_ID__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>AMS_GDP_Key__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>For_Search</fullName>
+        <columns>NAME</columns>
+        <columns>Owner_ID__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>Related_Account__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Related_Account__c</field>
+            <operation>equals</operation>
+            <value>TAEWOONG LOGISTICS CO LTD</value>
+        </filters>
+        <label>For Search</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -173,4 +205,5 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

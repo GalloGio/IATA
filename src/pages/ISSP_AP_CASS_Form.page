@@ -43,6 +43,7 @@
         }
         thisBox.value = value;
     }
+
     </script>
    
     <!-- Modal -->
@@ -149,7 +150,7 @@
         <p><a href="#nav_seven">7.CASSLink</a></p>
         <p><a href="#nav_eight">8.Commission</a></p>
         <p><a href="#nav_nine">9.Cargo services</a></p>
-        <apex:outputLink value="#nav_ten" rendered="{!OR(apcountryisocode='BR',apcountryisocode='AR',apcountryisocode='MX',apcountryisocode='PH',apcountryisocode='CO')}">10.Additional Info</apex:outputLink>
+        <apex:outputLink value="#nav_ten" rendered="{!OR(apcountryisocode='BR',apcountryisocode='AR',apcountryisocode='MX',apcountryisocode='PH',apcountryisocode='CO', apcountryisocode='IN')}">10.Additional Info</apex:outputLink>
         <div style="border-top: 1px #fff dotted; padding-top: 5px; padding-bottom: 5px;">
             <a data-toggle="modal" data-target="#ModalCountryReqs" href="#">Country Requirements</a>
         </div>
@@ -830,16 +831,96 @@
                         <apex:column >
                         </apex:column>
                     </apex:pageBlockTable>
-                </apex:pageBlockSection>  
-                
+                </apex:pageBlockSection>
+
+                <!-- INDIA - START -->
+                <apex:pageBlockSection title="10. Local VAT Information" columns="1" rendered="{!apcountryisocode='IN'}">                        
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="10. Local VAT Information"/>
+                        </apex:outputpanel>
+                    </apex:facet>
+                    <tr class="aplabel">
+                        <td colspan="2">The Goods and Services Tax, replacing the erstwhile multiple taxes and levies has come into effect from 01 July 2017. This means that all invoices that are issued for transactions commencing from 01 July 2017 will need to bear GST Registration numbers of the Suppliers and Recipients of goods and Services. You need to register of each of your registered locations under the GST Rules that bear a distinct GST Registration number. Therefore please fill in all the below fields including your main office (which you have detailed in Section 2 - Airline Information).</td>
+                    </tr>
+                    <tr class="aplabel">              
+                        <td style="font-size: 120%;" colspan="4">GST Information</td>
+                    </tr>
+                    <apex:commandLink style="margin-right:5px" action="{!showNewGSTNumberFields}" rerender="tstpopup"><span class="glyphicon glyphicon-plus"></span>Add New GST Information</apex:commandLink>
+
+                    <apex:outputPanel id="tstpopup">
+                        <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+                            <apex:pageBlockSection id="contactSection" columns="1">  
+                                <tr class="aplabel">              
+                                    <td style="font-size: 120%;" colspan="4">GST Information</td>
+                                </tr>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="* GST number" style="color:#a31717; font-weight: bold !important;"/>
+                                    <apex:inputText value="{!newGSTInfo.India_Local_VAT_Number__c}">
+                                        <apex:actionSupport event="onkeyup" action="{!checkAllFieldGST}" rerender="saveGSTInfoBtn"/>
+                                    </apex:inputText>
+                                </apex:pageBlockSectionItem>
+                                <tr class="aplabel">              
+                                    <td style="font-size: 120%;" colspan="4">Registered Address for the above mentioned GST Number</td>
+                                </tr>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="* Street Name and Number" style="color:#a31717; font-weight: bold !important;"/>
+                                    <apex:inputText value="{!newGSTInfo.India_Local_VAT_Street__c}">
+                                        <apex:actionSupport event="onkeyup" action="{!checkAllFieldGST}" rerender="saveGSTInfoBtn"/>
+                                    </apex:inputText>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="* City Name" style="color:#a31717; font-weight: bold !important;"/>
+                                    <apex:inputText value="{!newGSTInfo.India_Local_VAT_City__c}">
+                                        <apex:actionSupport event="onkeyup" action="{!checkAllFieldGST}" rerender="saveGSTInfoBtn"/>
+                                    </apex:inputText>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="* State Name" style="color:#a31717; font-weight: bold !important;"/>
+                                    <apex:inputText value="{!newGSTInfo.India_Local_VAT_State_Name__c}">
+                                        <apex:actionSupport event="onkeyup" action="{!checkAllFieldGST}" rerender="saveGSTInfoBtn"/>
+                                    </apex:inputText>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="* State Code (two alpha)" style="color:#a31717; font-weight: bold !important;"/>
+                                    <apex:inputText value="{!newGSTInfo.India_Local_VAT_State_Code__c}" maxlength="2">
+                                        <apex:actionSupport event="onkeyup" action="{!checkAllFieldGST}" rerender="saveGSTInfoBtn"/>
+                                    </apex:inputText>
+                                </apex:pageBlockSectionItem>             
+                            </apex:pageBlockSection>
+                            <br/>
+                            <apex:commandButton value="Cancel" action="{!closePopup}" rerender="tstpopup"/>
+                            <apex:commandButton id="saveGSTInfoBtn" value="Save" action="{!addGSTInfo}" rerender="tstpopup,gstNumberList" disabled="{!NOT(allGSTFieldsFilled)}"/>
+                            <br/><br/>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    
+                    <apex:pageBlockSection id="gstNumberList" columns="1">          
+                        <apex:pageBlockTable value="{!list_GSTNumber}" var="gstNumber" id="gstNumberTable" styleClass="table-hover table table-condensed table-responsive" rendered="{!list_GSTNumber.size!=0}">
+                            <apex:column headerValue="GST number" value="{!gstNumber.India_Local_VAT_Number__c}"/> 
+                            <apex:column headerValue="Street Name and Number" value="{!gstNumber.India_Local_VAT_Street__c}"/>
+                            <apex:column headerValue="City Name" value="{!gstNumber.India_Local_VAT_City__c}"/>
+                            <apex:column headerValue="State Name" value="{!gstNumber.India_Local_VAT_State_Name__c}"/>   
+                            <apex:column headerValue="State Code (two alpha)" value="{!gstNumber.India_Local_VAT_State_Code__c}"/>
+                            <apex:column >
+                                <apex:commandLink action="{!editGSTNumber}" styleClass="glyphicon glyphicon-pencil" rerender="tstpopup">
+                                    <apex:param value="{!gstNumber.Id}" name="recordIdEdit"/>
+                                </apex:commandLink>
+                            </apex:column>
+                            <apex:column >
+                                <apex:commandLink onclick="if(!confirm('{!$Label.ISSP_AMS_CONFIRM_DELETE}')){return false};" styleClass="glyphicon glyphicon-trash" action="{!delGSTNumber}" rerender="gstNumberList">
+                                    <apex:param value="{!gstNumber.Id}" name="recordIdDel"/>
+                                </apex:commandLink>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection> 
+                </apex:pageBlockSection>
             </div>
         </apex:pageBlock>
     </apex:form>
     
         </div>   
-     </div>   
-   
-
+     </div>  
 
     <Script>
         function setFocusOnLoad() {}

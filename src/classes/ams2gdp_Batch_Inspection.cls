@@ -1,4 +1,4 @@
-global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , Database.Stateful 
+global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , Database.Stateful
 {
 	public String query;
 	public List<String> extraIds;
@@ -9,35 +9,50 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 	public Boolean processNextBatch;
 	public Boolean throwException;
 	public String batchName;
-
-	public void init(Boolean runNext, List<String> ids)
+	Set<String> locationsSet;
+	Set<String> statusSet;
+	public Boolean isManual;
+	public void init(Boolean runNext, List<String> ids, Boolean manual)
 	{
-		batchName = 'Job 2: Accreditation'; 
+		batchName = 'Job 2: Accreditation';
 		processNextBatch = runNext;
-		extraIds = ids; 
+		extraIds = ids;
+		isManual = manual==null ? false : manual;		
 
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
-		String fields = ' Id, Name, Account__c, Accreditation_Endorsement_Status_code__c, Date_Organisation_Status_attained__c, Legacy_External_ID__c '
-			+', Account__r.Location_Class__c, Account__r.Check_Digit__c, Account__r.IATACode__c, Account__r.Status__c' 
-			+', Account__r.Organization_Last_Change_Date__c, Account__r.Verification_Date__c,  Account__r.Original_Approval_DAte__c '
-			+', Accreditation_Endorsement_organisation__r.Air_Code__c, Accreditation_Endorsement_organisation__r.Name  '
-			+', Account__r.IATA_ISO_Billing_State__r.ISO_Code__c, Account__r.IATA_ISO_Country__r.ISO_Code__c, Account__r.IATA_ISO_Country__r.AIMS_Area_ID__c,Account__r.CNS_Agency__c' ;
+		String fields = ' Id, Name, Status__c, Date_Organisation_Status_attained__c, AIMS_ID__c, Webstar_ID__c '
+			+', Location_Class__c, Check_Digit__c, IATACode__c '
+			+', Organization_Last_Change_Date__c,  Original_Approval_DAte__c, Accreditation_date__c '
+			+', Main_Accreditation_Organization__c, Verification_Date__c '
+			+', ANG_IsNewGenAgency__c, ANG_Accreditation_Model__c, ANG_RiskStatus__c, ANG_CashCondition__c, Due_Diligence_Status__c'
+			+', IATA_ISO_Billing_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AIMS_Area_ID__c,CNS_Agency__c' ;
 
-		//-- Query conditions 
-		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
-			,	'Account__r.IATACode__c != null'
-			,	'Account__r.Status__c NOT IN (\'Not accreditated\',\'New application pending\',\'Not in operation\',\'On hold\',\'applicant\',\'Unregisterable STP\')'
-			,	'Accreditation_Endorsement_organisation__r.Air_Code__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-			,	'Account__r.CNS_Agency__c = false'
-		}; 
-		
+		//-- Query conditions
+		List<String> conditions = new List<String>{'RecordTypeId= \''+recordTypes.get('Agency')+'\''
+			,	'IATACode__c != null'
+			// ,	'Status__c NOT IN (\'Not accreditated\',\'New application pending\',\'Not in operation\',\'On hold\',\'applicant\',\'Unregisterable STP\')'
+			,	'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+			,	'CNS_Agency__c = false'
+			,	'CNS_Account__c = false'
+		};
+
+		if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
+			statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
+			conditions.add(' Status__c IN :  statusSet');
+		}
+		if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+			locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+			conditions.add(' Location_Class__c IN :  locationsSet');
+		}
+
+
 		if(extraIds!=null && extraIds.size() > 0) {
-			 if(extraIds[0]=='none'){	
+			 if(extraIds[0]=='none'){
 			 conditions.add('Id=null');}
 			 else{
-			//Run batch on specific Ids 
-			List<String> specificIds = new List<String>(); 
+			//Run batch on specific Ids
+			List<String> specificIds = new List<String>();
 			for(String s: extraIds)
 			{
 				if(s.length() >= 15) specificIds.add(s.left(15));
@@ -48,14 +63,14 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
 			if(batchInfo != null)
 			{
-				//Run only on the deltas 
+				//Run only on the deltas
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 
 				if(String.isNotBlank(batchInfo.Failed_Records__c))
 				{
-					// Reprocess failed records 
-					List<String> failedRecordIds = new List<String>(); 
+					// Reprocess failed records
+					List<String> failedRecordIds = new List<String>();
 					for(String s: batchInfo.Failed_Records__c.split(';'))
 					{
 						if(s.length() >= 15)
@@ -72,54 +87,56 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		System.debug('conditions::'+conditions);
 
 		query = String.format('SELECT {0} '
-			+	'FROM AMS_Inspection__c '
+			+	'FROM Account '
 			+ 	'WHERE {1} '
-			+	'ORDER BY Account__c, AMS_GDP_Sort_By__c', 
+			+	'ORDER BY IATACode__c ',
 			new List<String>{fields,String.join(conditions, ' AND ')}
 		);
+
+        system.debug(LOGGINGLEVEL.ERROR, 'LF: QUERY: '+query);
 	}
 
-	global ams2gdp_Batch_Inspection() 
+	global ams2gdp_Batch_Inspection()
 	{
-		init(false, null);
-	}
-	
-	global ams2gdp_Batch_Inspection(Boolean runNext) 
-	{
-		init(runNext,null);
+		init(false, null, null);
 	}
 
-	global ams2gdp_Batch_Inspection(Boolean runNext, List<String> extra) 
+	global ams2gdp_Batch_Inspection(Boolean runNext, Boolean manual)
 	{
-		init(runNext,extra);
+		init(runNext,null, manual);
 	}
 
-	global Database.QueryLocator start(Database.BatchableContext BC) 
+	global ams2gdp_Batch_Inspection(Boolean runNext, List<String> extra, Boolean manual)
+	{
+		init(runNext,extra,manual);
+	}
+
+	global Database.QueryLocator start(Database.BatchableContext BC)
 	{
 		syncStartedDate =Datetime.now();
 		//-- No error when the batch starts
 		errorsCount = 0;
-		totalRecords = 0;	
-		failed_records = new List<String>();	
-
+		totalRecords = 0;
+		failed_records = new List<String>();
+		system.debug(LOGGINGLEVEL.ERROR, 'LF: QUERY: '+query);
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<AMS_Inspection__c> inscpections) 
+   	global void execute(Database.BatchableContext BC, List<Account> accounts)
    	{
    		//-- Total records to be processed
-   		totalRecords += inscpections.size();
+   		totalRecords += accounts.size();
 
-   		// Process Errors 
+   		// Process Errors
 		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
-   		List<Accreditation__c> accreditations_to_save = new List<Accreditation__c>(); 
+   		List<Accreditation__c> accreditations_to_save = new List<Accreditation__c>();
    		try
 		{
-			accreditations_to_save 	= ams2gdp_BusinessLogic.formatInspection2Accreditation(inscpections);
+			accreditations_to_save 	= ams2gdp_BusinessLogic.formatInspection2Accreditation(accounts);
 
 			//-- Raise exception for Unit Tests
-			if(Test.isRunningTest() &&   throwException) insert new Account();			 
+			if(Test.isRunningTest() &&   throwException) insert new Account();
 		}
 		catch(Exception ex)
 		{
@@ -127,7 +144,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		}
 
 		List<Database.UpsertResult> accreditations_save_results = Database.upsert(accreditations_to_save,Accreditation__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
-		
+
 		//Check for Orphan Accreditation
 		for(Accreditation__c ac: accreditations_to_save)
 		{
@@ -137,9 +154,9 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 			}
 		}
 
-		// Process Errors 
-		errors.addAll(ams2gdp_Error.formatUpsertResult(accreditations_to_save, accreditations_save_results, 'Appointment (AMS) => Accreditation', 'AMS_GDP_Key__c'));
-		
+		// Process Errors
+		errors.addAll(ams2gdp_Error.formatUpsertResult(accreditations_to_save, accreditations_save_results, 'Accounts (AMS) => Accreditation', 'AMS_GDP_Key__c'));
+
 
 		//Log the current Errors
 		if(!errors.isEmpty())
@@ -151,28 +168,20 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 
 			for(ams2gdp_Error failed_rec : errors)
 				if(failed_rec.amsRecordId != null){set_failed_records.add(failed_rec.amsRecordId.left(18));}
-			
+
 			failed_records =new List<String>(set_failed_records);
 		}
 
 	}
-	
-	global void finish(Database.BatchableContext BC) 
+
+	global void finish(Database.BatchableContext BC)
 	{
-		//-- Start next batch : 
-		if(processNextBatch) Database.executeBatch(new ams2gdp_Batch_Territory(true));
 
-		//-- Update Last Sync Info 
-		upsert new AMS_GDP_Batch__c(
-			Batch_Name__c=batchName, 
-			Last_Sync_Start_Date__c=syncStartedDate, 
-			Last_Sync_End_Date__c=Datetime.now(),
-			Total_Failed_Records__c = errorsCount,
-			Total_Records_Processed__c = totalRecords,
-			Failed_Records__c = String.join(failed_records, ';').left(32768)
-		) Batch_Name__c; 
-
-		//--Send completion notification 
-		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records); 			
-	}	
+		//-- Start next batch :
+		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Territory(true,isManual));
+		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
+		
+		//--Send completion notification
+		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);
+		}	
 }

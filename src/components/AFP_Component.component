@@ -1,0 +1,97 @@
+<apex:component controller="ANG_AfpController">
+
+  <script type="text/javascript">
+    //$('#iepLink').click(function(){ errorMessageModal(); return false; });
+
+    function errorMessageModal(flag) {
+      if(flag == '-') {
+        showModal('#ModalErrorMessage');
+      }
+    }
+
+    function showModal(modalName) {
+      if (! $(modalName).is(":visible")) {
+        $(modalName).modal('show');  
+      }
+    }
+
+    function hideModal(modalName) {
+      if ($(modalName).is(":visible")) {
+        $(modalName).modal('hide');  
+      }
+    }  
+  </script>
+  <apex:attribute name="wrapperClass" type="ANG_ISSP_AfpWrapper" description="Wrapper" assignTo="{! wrapper}" />
+  <section name="payment-forms" class="row">
+    <header class="col-xs-12" style="margin-bottom: 10px;">
+      <div class="section-header">
+        <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/Payment.png')}"/>
+        <!--i class="fa fa-google-wallet" aria-hidden="true"></i--> 
+        <strong>{!$Label.ISSP_RHC_HUB_AFP}</strong>
+      </div>
+    </header>
+    <div class="col-md-4 col-sm-12 text-center">      
+      <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/Cash.png')}" width="100" height="100"/>
+      <strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
+      <i class="{! wrapper.isCash}" aria-hidden="true" style="color:{!IF(wrapper.isCashFlag,'green','red')};"></i>
+  
+      <!--i class="fa fa-money fa-5x show" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
+      <i class="{! wrapper.isCash}" aria-hidden="true"></i-->
+      <apex:outputPanel rendered="{! AND(wrapper.isCashless, NOT(wrapper.isSearch))}">
+        <apex:outputText escape="false" value="{! wrapper.cashlessMessage}"/>
+      </apex:outputPanel>      
+    </div>
+    <div class="col-md-4 col-sm-12 text-center">
+      <img id="theImage" src="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/IEP.png')}" width="100" height="100"/>
+      <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
+      <i class="{! wrapper.isIEP}" aria-hidden="true" style="color:{!IF(wrapper.isIEPFlag,'green','red')};"></i>
+
+      <!--i class="fa fa-credit-card-alt fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
+      <i class="{! wrapper.isIEP}" aria-hidden="true"></i-->
+      <a style="display:{!IF(wrapper.isSearch,'none','')};" id="iepLink" href="{! wrapper.iepLink}" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{! wrapper.iepLinkLabel}</a>
+    </div>
+    <div class="col-md-4 col-sm-12 text-center">
+      <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/CreditCard.png')}" width="100" height="100"/>
+      <strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Credit_Card}</strong>
+      <i class="{! wrapper.isCreditCard}" aria-hidden="true" style="color:{!IF(wrapper.isCreditCardFlag,'green','red')};"></i>
+
+      <!--i class="fa fa-credit-card fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Credit_Card}</strong>
+      <i class="{! wrapper.isCreditCard}" aria-hidden="true"></i-->
+      <apex:outputPanel rendered="{! AND(NOT(wrapper.isCreditCardFlag), NOT(wrapper.isSearch))}">
+        <apex:outputText escape="false" value="{!wrapper.creditCardMessage}"/>
+      </apex:outputPanel>      
+    </div>
+  </section>
+
+  <div class="modal" id="ModalErrorMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <apex:outputPanel layout="block" styleClass="modal-dialog" id="myErrorModalContent"> 
+      <div class="modal-content"> 
+        <div class="modal-header"> 
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">{!$Label.ANG_ISSP_Open_IATA_EasyPay_Account}</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p>              
+                <apex:outputLabel escape = "false" id="errorMessage" value="{! wrapper.modalErrorMessage}"/>
+              </p>
+            </div>
+          </div>            
+        </div>  
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-12">
+              <a onclick="hideModal('#ModalErrorMessage')" class="btn_iata_cancel btn-block btn">
+                {!$label.ISSP_Cancel}
+              </a>
+            </div>
+          </div>            
+        </div>          
+      </div>
+    </apex:outputPanel>
+  </div>
+
+
+</apex:component>

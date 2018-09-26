@@ -1,0 +1,78 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"></p><p class="MsoNormal" style="font-size: 12pt;"><b style="font-family: Arial, sans-serif; background-color: rgb(255, 255, 255); font-size: 12pt;">{!Account.Name}</b></p><p class="MsoSalutation" style="font-size: 12pt; margin-right: 163.45pt;"><span lang="EN-GB" style="font-family: Arial, sans-serif; background: rgb(255, 255, 255);">{!Account.TradeName__c}</span></p><p class="MsoSalutation" style="font-size: 12pt; margin-right: 163.45pt;"><span lang="EN-GB" style="font-family: Arial, sans-serif; background: rgb(255, 255, 255);">{!Account.BillingStreet}</span></p><p class="MsoSalutation" style="font-size: 12pt; margin-right: 163.45pt;"><span style="background-color: rgb(255, 255, 255);"><span lang="EN-GB" style="font-family: Arial, sans-serif; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">{!Account.BillingCity}&nbsp;</span><span lang="EN-GB" style="font-family: Arial, sans-serif; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">{!Account.BillingPostalCode}</span></span></p><p class="MsoNormal" style="font-size: 12pt; margin-right: 163.45pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial, sans-serif; background: rgb(255, 255, 255);">{!Account.BillingCountry}</span></p><p class="MsoNormal"><span style="background-color: rgb(255, 255, 255);"><b style="font-size: 12pt;"><i><span lang="PT-BR" style="font-family: Arial, sans-serif;">IATA Numeric Code:&nbsp;</span></i></b></span><font face="Arial, sans-serif"><b>{!Account.IATACode__c}</b></font></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><b style="mso-bidi-font-weight:normal"><span lang="PT-BR" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-ansi-language:PT-BR"><o:p>&nbsp;</o:p></span></b></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif">Dear Sir/Madam,<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US">FINANCIAL
+ASSESSMENT OPT OUT - REJECTED<o:p></o:p></span></b></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US">We regret to advise that your request for opt out from
+financial statements evaluation by IATA cannot be accepted at this time as:<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-left:36.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:Arial;
+mso-ansi-language:EN-US"><span style="mso-list:Ignore">-<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><!--[endif]--><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US">Your agency
+is at this time not providing a financial security to IATA.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US">Please note that you are therefore requested to
+provide your financial statements as per provisions of local financial criteria
+for <span style="background:yellow;mso-highlight:yellow"><span style="background-color: rgb(255, 255, 255);">{!Account.BillingCountry}</span></span>.
+<i style="mso-bidi-font-style:normal"><o:p></o:p></i></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+tab-stops:right 184.3pt"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+tab-stops:right 184.3pt"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US">Sincerely,<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+tab-stops:right 184.3pt"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US">IATA Global Delivery Center<o:p></o:p></span></b></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+tab-stops:right 184.3pt"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+tab-stops:right 184.3pt"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+tab-stops:right 184.3pt"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+tab-stops:right 184.3pt"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+tab-stops:right 184.3pt"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph"><b style="mso-bidi-font-weight:normal"><span lang="PT-BR" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-ansi-language:PT-BR"><o:p>&nbsp;</o:p></span></b></p><br><p></p>]]></td>
+</tr>
+</table>

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -80,87 +77,107 @@
         <fullName>Local_Group_Type__c</fullName>
         <externalId>false</externalId>
         <label>Local Group Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>ALWG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>APJC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>APJC / FAG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAPJC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CEC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CGA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ICAP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>JALWG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LCAG-C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LCAG-P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LCAG-P / Credit Card WG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>APJC</fullName>
+                    <default>false</default>
+                    <label>APJC</label>
+                </value>
+                <value>
+                    <fullName>APJC / FAG</fullName>
+                    <default>false</default>
+                    <label>APJC / FAG</label>
+                </value>
+                <value>
+                    <fullName>CAPJC</fullName>
+                    <default>false</default>
+                    <label>CAPJC</label>
+                </value>
+                <value>
+                    <fullName>CCC</fullName>
+                    <default>false</default>
+                    <label>CCC</label>
+                </value>
+                <value>
+                    <fullName>CEC</fullName>
+                    <default>false</default>
+                    <label>CEC</label>
+                </value>
+                <value>
+                    <fullName>CGA</fullName>
+                    <default>false</default>
+                    <label>CGA</label>
+                </value>
+                <value>
+                    <fullName>ICAP</fullName>
+                    <default>false</default>
+                    <label>ICAP</label>
+                </value>
+                <value>
+                    <fullName>JALWG</fullName>
+                    <default>false</default>
+                    <label>JALWG</label>
+                </value>
+                <value>
+                    <fullName>LCAG-C</fullName>
+                    <default>false</default>
+                    <label>LCAG-C</label>
+                </value>
+                <value>
+                    <fullName>LCAG-P</fullName>
+                    <default>false</default>
+                    <label>LCAG-P</label>
+                </value>
+                <value>
+                    <fullName>LCAG-P / Credit Card WG</fullName>
+                    <default>false</default>
+                    <label>LCAG-P / Credit Card WG</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <label>Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Africa &amp; Middle East</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia &amp; Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China &amp; North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>Asia &amp; Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia &amp; Pacific</label>
+                </value>
+                <value>
+                    <fullName>China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>China &amp; North Asia</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Unique_Name__c</fullName>
@@ -197,4 +214,5 @@
         <searchResultsAdditionalFields>Local_Group_Type__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

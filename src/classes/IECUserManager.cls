@@ -65,16 +65,23 @@ public without sharing class IECUserManager {
      * Logs in the user and return a pagereference to where the user should be heading
      */
     public static Pagereference login(String sUsername, String sPassword, String sReturnUrl) {
-        
+
+        System.debug('IECUserManager.login start');
+        System.debug('sUsername: ' + sUsername + ', sReturnUrl: ' + sReturnUrl);
+
      try{   
-        
-    //list<User> userList = Comm_User_Helper.getUserListByNameOrEmail(sUsername);
-    list<User> userList = Comm_User_Helper.getUserListByNameOrEmail2(sUsername);
+
+
+      //list<User> userList = Comm_User_Helper.getUserListByNameOrEmail(sUsername);
+      list<User> userList = Comm_User_Helper.getUserListByNameOrEmail2(sUsername);
        
        if(userList == null || userlist.size() == 0) {
         
         Pagereference pr = Page.IEC_Home;
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Could not find any Contact with username ' + sUsername));
+
+        System.debug('IECUserManager.login end');
+
         return null;
        }
         
@@ -83,6 +90,9 @@ public without sharing class IECUserManager {
                 Pagereference pr = Page.IEC_Home;
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_Frozen_User_Alert_Message)); 
                 reactivateUser(userList[0].UserName);
+
+                System.debug('IECUserManager.login end');
+
                 return null;
        }
 
@@ -103,57 +113,101 @@ public without sharing class IECUserManager {
 
         // check if SalesForce is redirecting the customer to the Change password page
       if(firstLogin ){
-            return pr;
+          System.debug('IECUserManager.login end');
+
+              return pr;
 
         }  
         else if (pr != null) {
-            // get the contact that has just logged in
-            Contact c = null;
-            Id contactId = getContactIdFromUsername(sUsername);
-
-            if (contactId == null) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Could not find any Contact with username ' + sUsername));
-                return pr;
-            }
-
-            // check if user has an anonymous shopping cart (assigned with GUID)
-            IEC_Shopping_Cart__c anonymousCart = IECShoppingCartHelper.getShoppingCartByGUID(IECCookieHelper.getCartGuid());
-            if (anonymousCart != null)
-                system.debug('ALEX - anonymousCart id: ' + anonymousCart.Id);
-
-            // check if user previously had a shopping cart associated to its Contact
-            IEC_Shopping_Cart__c contactCart = IECShoppingCartHelper.getShoppingCartsByContactID(/*c.Id*/(String)contactId);
-            if (contactCart != null) 
-                system.debug('ALEX - contactCart id: ' + contactCart.Id);
-            
-            // if contact has an anonymous cart
-            if (anonymousCart != null) {
-                
-                // if contact didnt have a cart previously
-                if (contactCart == null) {
-                    IECShoppingCartHelper.associateContactWithCart(anonymousCart, /*c.Id*/(String)contactId);
-                }
-                else {
-                    // merge carts !
-                    IECShoppingCartHelper.mergeCarts(contactCart, anonymousCart);
-                }
-                
-                // delete the shopping cookie, since the user is logged in now
-                IECCookieHelper.deleteShoppingCartCookie();
-            }
-        
-            return pr;
+          return notFirstLogin(pr, sUsername, userList[0].ContactId);
         }
         else {
+          System.debug('IECUserManager.login end');
+
             return null;
         }
         
      } catch (exception ex) {
        // String , String sPassword, String sReturnUrl
-       transformationHelper.sendSFDevsAlertMessage('error ' ,   '   sReturnUrl' +    sReturnUrl+ '   sPassword' +    sPassword +  '   sUsername' +    sUsername  +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org'});
+
+       transformationHelper.sendSFDevsAlertMessage('error ' ,   '   sReturnUrl' +    sReturnUrl+ '   sUsername' +    sUsername  +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'sfdcadmin@iata.org'});
+
+            System.debug('IECUserManager.login end');
+
             return null;
         }
     }
+
+
+    @testVisible
+    private static PageReference notFirstLogin(PageReference pr, String sUsername, Id partnerContactId) {
+      // get the contact that has just logged in
+      Contact c = null;
+      Id contactId = getContactIdFromUsername(sUsername);
+
+        if (contactId == null) {
+            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Could not find any Contact with username ' + sUsername));
+
+            if (IEC_Functionality.getInstance().isActive('New Shopping Cart')) {
+              System.debug('IECUserManager.login for New Shopping Cart');
+
+              List<Contact> partnerContactList = [SELECT Id FROM Contact WHERE Email = :sUsername];
+
+              if (partnerContactList.isEmpty() == false) {
+                partnerContactId = partnerContactList[0].Id;
+              }                  
+
+              if (partnerContactId != null) {
+                IEC_Cart storeCart = IEC_Cart.getInstance();
+                List<IEC_Cart.CartItem> cartContent = storeCart.getCartContent();
+
+                Customer_DTO.setLoginEvent(partnerContactId);
+                
+                storeCart.loginUserEvent();
+
+              }
+
+              System.debug('IECUserManager.login after login user event');
+            }
+
+            System.debug('IECUserManager.login end');
+
+            return pr;
+        }
+
+        System.debug('additional cart stuff (original)');
+
+        // check if user has an anonymous shopping cart (assigned with GUID)
+        IEC_Shopping_Cart__c anonymousCart = IECShoppingCartHelper.getShoppingCartByGUID(IECCookieHelper.getCartGuid());
+        if (anonymousCart != null)
+            system.debug('ALEX - anonymousCart id: ' + anonymousCart.Id);
+
+        // check if user previously had a shopping cart associated to its Contact
+        IEC_Shopping_Cart__c contactCart = IECShoppingCartHelper.getShoppingCartsByContactID(/*c.Id*/(String)contactId);
+        if (contactCart != null) 
+            system.debug('ALEX - contactCart id: ' + contactCart.Id);
+        
+        // if contact has an anonymous cart
+        if (anonymousCart != null) {
+            
+            // if contact didnt have a cart previously
+            if (contactCart == null) {
+                IECShoppingCartHelper.associateContactWithCart(anonymousCart, /*c.Id*/(String)contactId);
+            }
+            else {
+                // merge carts !
+                IECShoppingCartHelper.mergeCarts(contactCart, anonymousCart);
+            }
+            
+            // delete the shopping cookie, since the user is logged in now
+            IECCookieHelper.deleteShoppingCartCookie();
+        }
+        
+        System.debug('IECUserManager.login end');
+
+        return pr;
+    }
+
 
 
      public static void reactivateUser(String username){
@@ -425,8 +479,8 @@ public without sharing class IECUserManager {
                                    and Type__c in (:IECConstants.IECAddress_AddressType_Billing, :IECConstants.IECAddress_AddressType_Shipping))];
                     //where contact__c =: contactId];
         }
-        else {
-            return [select Name, Contact__c, Address_Type__c, State__c, Street__c, City__c, Country__c, ZipCode__c 
+        else {system.debug('### address.....');
+           return [select Name, Contact__c, Address_Type__c, State__c, Street__c, City__c, Country__c, ZipCode__c 
                          , ISO_Country__c, ISO_Country_Code__c, ISO_Country_Name__c, ISO_State__c, ISO_State_Code__c, ISO_State_Name__c, ISO_State_Code_SAP__c
                     from IECAddress__c 
                     where Id in (select Address__c
@@ -589,6 +643,7 @@ public without sharing class IECUserManager {
     /**
      * Returns the Contact Id of a User by its username
      */
+    @testVisible
     private static Id getContactIdFromUsername(String username) {
             
         List<User> users = [Select u.ContactId From User u where u.Email = :username];
@@ -598,4 +653,6 @@ public without sharing class IECUserManager {
             
         return users.get(0).ContactId;
     }
+
+      
 }

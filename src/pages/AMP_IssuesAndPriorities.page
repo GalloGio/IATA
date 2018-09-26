@@ -13,9 +13,10 @@
         <apex:outputPanel id="issueTable">
     <apex:pageMessages />
             <apex:pageBlockTable value="{!lsIssuesAndPriorities}" var="i" >
-                <apex:column style="width: 80px;">
-                                        <apex:facet name="header">Actions</apex:facet>
-
+                <apex:column>
+                    <div style="width: 80px;">
+                        <apex:facet name="header">Actions</apex:facet>
+                    </div>                    
                     <apex:commandLink value="Del" action="{!DeleteLine}" rerender="issueTable" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" oncomplete="enableShowMoreOrLess();" rendered="{!IF(OR(AND(isEditMode, IdConcerned==i.Id), NOT(canEdit)), false, true)}"  status="actStatusId">
                                             <apex:param name="IdConcerned" value="{!i.Id}" assignTo="{!IdConcerned}"/>
                                         </apex:commandLink>
@@ -41,13 +42,41 @@
                 <apex:column >
                             <apex:facet name="header">
                     <apex:commandLink action="{! sortByName }"
-                        reRender="issueTable">Item
+                        reRender="issueTable">Name
                                     <apex:outputPanel layout="none" rendered="{!sortOrder == ' Name ASC'}">&nbsp;&#8593;</apex:outputPanel>
                                     <apex:outputPanel layout="none" rendered="{!sortOrder == ' Name DESC'}">&nbsp;&#8595;</apex:outputPanel>
                     </apex:commandLink>
                 </apex:facet>
-                    <apex:outputField value="{!i.Name}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
+                    <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
+                        <apex:outputText value="{!i.Name}" style="display: block;width: 200px;word-wrap: break-word;"/>
+                        <a href="#" class="show-less">[show less]</a>
+                    </apex:outputPanel>
+                    <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
+                        <apex:outputText value="{!LEFT(i.Name,30)}" style="display: block;width: 200px;word-wrap: break-word;"/>
+                        <apex:outputPanel rendered="{!LEN(i.Name)>30}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+                    </apex:outputPanel>
+
                     <apex:inputField value="{!i.Name}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" required="true"/>
+                </apex:column>
+
+                <apex:column >
+                            <apex:facet name="header">
+                    <apex:commandLink action="{! sortByDivision }"
+                        reRender="issueTable">Division
+                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' Division__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' Division__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
+                    </apex:commandLink>
+                </apex:facet>
+                    <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
+                        <apex:outputText value="{!i.Division__c}" style="display: block;width: 200px;word-wrap: break-word;"/>
+                        <a href="#" class="show-less">[show less]</a>
+                    </apex:outputPanel>
+                    <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
+                        <apex:outputText value="{!LEFT(i.Division__c,30)}" style="display: block;width: 200px;word-wrap: break-word;"/>
+                        <apex:outputPanel rendered="{!LEN(i.Division__c)>30}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <apex:inputField value="{!i.Division__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
                 </apex:column>
 
                 <apex:column >
@@ -58,7 +87,16 @@
                                       <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Source_Text__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
                       </apex:commandLink>
                   </apex:facet>
-                  <apex:outputField value="{!i.AM_Source_Text__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
+
+                  <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
+                    <apex:outputText value="{!i.AM_Source_Text__c}" style="display: block;width: 150px;word-wrap: break-word;"/>
+                    <a href="#" class="show-less">[show less]</a>
+                  </apex:outputPanel>
+                  <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
+                    <apex:outputText value="{!LEFT(i.AM_Source_Text__c,25)}" style="display: block;width: 150px;word-wrap: break-word;"/>
+                    <apex:outputPanel rendered="{!LEN(i.AM_Source_Text__c)>25}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+                  </apex:outputPanel>
+
                   <apex:inputField value="{!i.AM_Source_Text__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
                 </apex:column>
                 <!-- <apex:column >
@@ -81,12 +119,12 @@
                     </apex:commandLink>
                 </apex:facet> -->
           <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
-            <apex:outputText value="{!i.Details__c}"   />
+            <apex:outputText value="{!i.Details__c}" style="display: block;width: 250px;word-wrap: break-word;"/>
             <a href="#" class="show-less">[show less]</a>
           </apex:outputPanel>
           <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}">
-            <apex:outputText value="{!LEFT(i.Details__c,100)}" />
-            <apex:outputPanel rendered="{!LEN(i.Details__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+            <apex:outputText value="{!LEFT(i.Details__c,30)}" style="display: block;width: 250px;word-wrap: break-word;"/>
+            <apex:outputPanel rendered="{!LEN(i.Details__c)>30}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
           </apex:outputPanel>
                     <apex:inputTextArea value="{!i.Details__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" rows="4" html-maxlength="2048" styleClass="wide-input"/>
                 </apex:column>
@@ -102,18 +140,6 @@
                     <apex:outputField value="{!i.AM_Level_of_importance__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
                     <apex:inputField value="{!i.AM_Level_of_importance__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" required="true"/>
                 </apex:column>
-                <!-- <apex:column styleClass="narrow-table-column">
-
-                    <apex:facet name="header"  >
-                    <apex:commandLink action="{! sortByCanIATASupport }" styleClass="narrow-table-column"
-                        reRender="issueTable">IATA Remit
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Can_IATA_support_the_airline__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Can_IATA_support_the_airline__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.AM_Can_IATA_support_the_airline__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                    <apex:inputCheckbox value="{!i.AM_Can_IATA_support_the_airline__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
-                </apex:column> -->
                 <apex:column >
 
                     <apex:facet name="header">
@@ -205,14 +231,6 @@
   <apex:includeScript value="{!$Resource.jQuery172}" />
   <script>
     $(document).ready(function(){
-      // $('.long-text-area').each(function() {
-      //   if($(this).text().length > 100 ) {
-      //     var t = $(this).text();
-      //     $(this).append('<span class="show-less">show less</span>');
-      //     $(this).hide().after('<span class="short-text-area">'+t.substring(0,100)+'<span class="show-more">..</span></span>');
-      //
-      //   }
-      // });
       enableShowMoreOrLess();
     });
     function enableShowMoreOrLess() {

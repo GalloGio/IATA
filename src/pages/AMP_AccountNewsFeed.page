@@ -5,7 +5,7 @@
 
 	<head>
 
-	  <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	  <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />	  
 	</head>
 
 	<!-- REQUIRED SLDS WRAPPER -->
@@ -23,6 +23,33 @@
 </apex:outputPanel>
 <!-- JAVASCRIPT -->
 <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+
+<script>
+(function(){
+  if (typeof Object.defineProperty === 'function'){
+    try{Object.defineProperty(Array.prototype,'sortBy',{value:sb}); }catch(e){}
+  }
+  if (!Array.prototype.sortBy) Array.prototype.sortBy = sb;
+
+  function sb(f){
+    for (var i=this.length;i;){
+      var o = this[--i];
+      this[i] = [].concat(f.call(o,o,i),o);
+    }
+    this.sort(function(a,b){
+      for (var i=0,len=a.length;i<len;++i){
+        if (a[i]!=b[i]) return a[i]>b[i]?-1:1;
+      }
+      return 0;
+    });
+    for (var i=this.length;i;){
+      this[--i]=this[i][this[i].length-1];
+    }
+    return this;
+  }
+})();
+</script>
+
 <script>
 var obj = jQuery.parseJSON('{!JSONrssData}');
 var searchTerm = '{!searchTerm}'.replace('+',' ');
@@ -52,6 +79,7 @@ fieldNames.forEach(function(item, index) {
 
 var counter = 0;
 
+obj.sortBy(function(o){ return new Date( o.timeStamp ) });
 obj.forEach(function(item, index) {
 	if(counter<7) {
 

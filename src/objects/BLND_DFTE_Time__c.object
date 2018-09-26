@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -183,28 +180,34 @@
         <fullName>BLND_Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Saved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Submitted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Saved</fullName>
+                    <default>false</default>
+                    <label>Saved</label>
+                </value>
+                <value>
+                    <fullName>Submitted</fullName>
+                    <default>false</default>
+                    <label>Submitted</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BLND_Submitted__c</fullName>
@@ -230,20 +233,24 @@
         <fullName>BLND_Time_Units__c</fullName>
         <externalId>false</externalId>
         <label>Time Units</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Hours</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Minutes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Hours</fullName>
+                    <default>false</default>
+                    <label>Hours</label>
+                </value>
+                <value>
+                    <fullName>Minutes</fullName>
+                    <default>false</default>
+                    <label>Minutes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BLND_Time__c</fullName>
@@ -260,64 +267,79 @@
         <fullName>BLND_Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>No Task Type</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Project Task</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Support</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training &amp; Education</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Practice Development</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Internal Meeting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Performance Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Enterprise Account Support</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>General Administration</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Paid Time Off</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recruiting and Interviewing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Instructing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Tom work</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No Task Type</fullName>
+                    <default>true</default>
+                    <label>No Task Type</label>
+                </value>
+                <value>
+                    <fullName>Project Task</fullName>
+                    <default>false</default>
+                    <label>Project Task</label>
+                </value>
+                <value>
+                    <fullName>Sales Support</fullName>
+                    <default>false</default>
+                    <label>Sales Support</label>
+                </value>
+                <value>
+                    <fullName>Training &amp; Education</fullName>
+                    <default>false</default>
+                    <label>Training &amp; Education</label>
+                </value>
+                <value>
+                    <fullName>Practice Development</fullName>
+                    <default>false</default>
+                    <label>Practice Development</label>
+                </value>
+                <value>
+                    <fullName>Internal Meeting</fullName>
+                    <default>false</default>
+                    <label>Internal Meeting</label>
+                </value>
+                <value>
+                    <fullName>Performance Management</fullName>
+                    <default>false</default>
+                    <label>Performance Management</label>
+                </value>
+                <value>
+                    <fullName>Enterprise Account Support</fullName>
+                    <default>false</default>
+                    <label>Enterprise Account Support</label>
+                </value>
+                <value>
+                    <fullName>General Administration</fullName>
+                    <default>false</default>
+                    <label>General Administration</label>
+                </value>
+                <value>
+                    <fullName>Paid Time Off</fullName>
+                    <default>false</default>
+                    <label>Paid Time Off</label>
+                </value>
+                <value>
+                    <fullName>Recruiting and Interviewing</fullName>
+                    <default>false</default>
+                    <label>Recruiting and Interviewing</label>
+                </value>
+                <value>
+                    <fullName>Instructing</fullName>
+                    <default>false</default>
+                    <label>Instructing</label>
+                </value>
+                <value>
+                    <fullName>Tom work</fullName>
+                    <default>false</default>
+                    <label>Tom work</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>BLND_User_Link__c</fullName>
@@ -349,4 +371,5 @@
     <pluralLabel>DreamTeam Times</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

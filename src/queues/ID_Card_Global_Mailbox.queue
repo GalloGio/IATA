@@ -2,6 +2,15 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>ID Card Global Mailbox</name>
+    <queueMembers>
+        <users>
+            <user>salima@iata.org</user>
+            <user>bojorqueze@iata.org</user>
+            <user>prietoi@iata.org</user>
+            <user>lopezdeleonj@iata.org</user>
+            <user>domines@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

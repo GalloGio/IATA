@@ -45,7 +45,7 @@ IATA Currency Clearance Service (ICCS) Team
 <apex:outputPanel rendered="{!relatedTo.Groups__c = 'AP Team'}">
 <p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
 <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
-Global Airline Participation Team - IATA Geneva
+Global Airline Participation Team - IATA
 <br/>
 </span></b>
 <span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
@@ -63,16 +63,25 @@ Financial and Distribution Services
 </p>
 </apex:outputPanel>
 <p>
-<!--The URL of the following image is the one of PROD-->
-<!--<apex:image value="https://iata--transform--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000VVJN" width="176" height="89" />-->
+
+<apex:outputPanel rendered="{!relatedTo.Groups__c != 'AGM Team'}">
 <a href="http://www.iata.org/customer-portal/Pages/index.aspx">
 <apex:image value="{!IF(relatedTo.CNSCase__c, '', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000')}"/>
 </a>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!relatedTo.Groups__c = 'AGM Team'}">
+<b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+IATA Agency Management
+</span></b>
+<br/>
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000006BIMp&oid=00D2000000008TF&lastMod=1507038116000"/>
+</apex:outputPanel>
+
 </p>
 <br/>
 <br/>
 <apex:image value="{!IF(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000')}"/>
-
 <br/>
 {!relatedTo.E2CP__Case_Thread_Id__c}
 </div>

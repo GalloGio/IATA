@@ -3,6 +3,14 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>chenl@iata.org</email>
     <name>Cases - Taiwan</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAsiaPacificAgencyManagement</publicGroup>
+            <publicGroup>IDFSAsiaPacificCustomerService</publicGroup>
+            <publicGroup>IDFSChinaNAsiaallusers</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

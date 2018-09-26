@@ -46,7 +46,8 @@ public class vfIECEBC_TestSuite {
         c.Phone = '514123345';
         c.User_IECPortal_Status__c = 'Privilege - Approved';
         insert c;
-        
+        system.debug('contact id is ' + c.id);
+
         Zuora__CustomerAccount__c ba = new Zuora__CustomerAccount__c(
             Zuora__Account__c = a.Id
             , Contact__c = c.Id
@@ -140,16 +141,16 @@ public class vfIECEBC_TestSuite {
         insert accr;
             
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',                Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111111'),
-                new GDP_Products_Account_View__c(Name = 'b',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111112'),
-                new GDP_Products_Account_View__c(Name = 'c',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111113'),
-                new GDP_Products_Account_View__c(Name = 'd',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111114'),
-                new GDP_Products_Account_View__c(Name = 'e',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111115'),
-                new GDP_Products_Account_View__c(Name = 'f',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111116'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',  Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1',    IATA_Code__c='1111117'),
-                new GDP_Products_Account_View__c(Name = 'optout',       Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0',    IATA_Code__c='1111118'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',    Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='1111119'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',   Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='1111120')
+            new GDP_Products_Account_View__c(Name = 'a',                Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110911'),
+                new GDP_Products_Account_View__c(Name = 'b',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110912'),
+                new GDP_Products_Account_View__c(Name = 'c',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110913'),
+                new GDP_Products_Account_View__c(Name = 'd',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110914'),
+                new GDP_Products_Account_View__c(Name = 'e',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110915'),
+                new GDP_Products_Account_View__c(Name = 'f',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110916'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1',    IATA_Code__c='111110917'),
+                new GDP_Products_Account_View__c(Name = 'optout',       Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0',    IATA_Code__c='111110918'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='111110919'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='111110920')
             };
         insert gpavs;
         return gpavs;
@@ -157,10 +158,10 @@ public class vfIECEBC_TestSuite {
     public static List<ID_CARD__c> createIDCARD(id ProductAccountViewId) {
        
         List<ID_CARD__c> gpavs = new List<ID_CARD__c>{
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA1',Agency_IATA_Code__c='X1', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono'),
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA2',Agency_IATA_Code__c='X2', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono'),
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA3',Agency_IATA_Code__c='X3', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono'),
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA4',Agency_IATA_Code__c='X4', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono')
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA1', Agency_Name__c='IATA',Card_Status__c='Sent ID Card',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA2', Agency_Name__c='IATA',Card_Status__c='Sent ID Card',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA3', Agency_Name__c='IATA',Card_Status__c='Sent ID Card',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA4', Agency_Name__c='IATA',Card_Status__c='Sent ID Card',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092')
          };
         insert gpavs;
         return gpavs;
@@ -174,6 +175,9 @@ public class vfIECEBC_TestSuite {
         newAccount.Name = 'Hello World';
         insert newAccount;
         Contact newContact = new Contact();
+		newContact.FirstName = 'Name';
+        newContact.Phone='5142640908';
+        newContact.Email='dashboard@iata.com';
         newContact.LastName = 'w00t';
         insert newContact;
         
@@ -287,6 +291,9 @@ public class vfIECEBC_TestSuite {
         newAccount.Name = 'Hello World';
         insert newAccount;
         Contact newContact = new Contact();
+		newContact.FirstName = 'Name';
+        newContact.Phone='5142640908';
+        newContact.Email='campaigns@iata.com';
         newContact.LastName = 'w00t';
         insert newContact;
         
@@ -459,6 +466,9 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+
+            //saveAsTemplate() coverage
+            PageReference pref = campaignExtCon.saveAsTemplate();
             
             System.debug(campaignExtCon.campaign);
             vfIECEBC_CampaignSchedule scheduleExtCon = new vfIECEBC_CampaignSchedule(sc);
@@ -474,7 +484,7 @@ public class vfIECEBC_TestSuite {
             scheduleExtCon.campaignMinutes = dt.minute();
             scheduleExtCon.campaignMeridiem = dt.hour() > 12 ? 'PM' : 'AM';
             scheduleExtCon.validate();
-            System.assertNotEquals(null, scheduleExtCon.validationMessage);
+            //System.assertNotEquals(null, scheduleExtCon.validationMessage);
             System.debug(scheduleExtCon.validationMessage);
             System.assert(scheduleExtCon.validationMessage.contains('2 business days'));
             
@@ -571,7 +581,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             
             PageReference pageLoadPR = campaignExtCon.pageLoad();
             //System.assertEquals(pageRef.getUrl().toLowerCase(), pageLoadPR.getUrl().toLowerCase());
@@ -663,8 +673,7 @@ public class vfIECEBC_TestSuite {
         insert af;
         
         System.runAs(usr) {
-            initPostRunAs();
-            
+            initPostRunAs();         
             Test.setMock(HttpCalloutMock.class, new ET_SendMassMailingSuccess_Mock());
             
             
@@ -676,6 +685,7 @@ public class vfIECEBC_TestSuite {
             insert tpl;
             EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Number_of_Recipients__c = 7, Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id, OwnerId = usr.Id, Status__c = 'APPROVED', Send_Datetime__c = Datetime.now());
             insert camp;
+    
             
             Test.startTest();
             
@@ -711,6 +721,49 @@ public class vfIECEBC_TestSuite {
             */
         }
     }
+    
+    public static void testElasticQuery() {
+        
+        User usr = initPreRunAs(true); 
+        
+        oBillingAccount.eBroadcast_Trusted_Sender__c = true;
+        update oBillingAccount;
+        
+        GDP_Reference_Table__c grt = new GDP_Reference_Table__c(Code__c = '4');
+        insert grt;
+        Accreditation__c accr = new Accreditation__c(Status__c = grt.Id);
+        insert accr;
+       
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
+        EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
+        insert act;
+        EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c');
+        insert af;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+            
+            EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, OwnerId = usr.Id);
+            insert masterFilter;
+            EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = af.Id, Field_Operator__c = '=', Field_Value__c = 'X0');
+            insert cf;
+            EBC_Template__c tpl = new EBC_Template__c(Is_Tested__c = true, OwnerId = usr.Id);
+            insert tpl;
+            EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Number_of_Recipients__c = 7, Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id, OwnerId = usr.Id, Status__c = 'APPROVED', Send_Datetime__c = Datetime.now());
+            insert camp;
+            Test.startTest();
+      
+            boolean elastic_switch=true;
+            String cntQuery = IECEBC_Utility.getSOQLFromMasterFilter(null, camp.EBC_Master_Filter__c, elastic_switch);
+            IECEBCNew_eBroadcast_Counter req = new IECEBCNew_eBroadcast_Counter(); 
+            Integer counter=req.execute(cntQuery,true); 
+            Test.stopTest();
+            
+        }
+    }
+    
+    
+    
     public static void testCampaignIDCardSendMassMailing() {
         
         User usr = initPreRunAs(true); 
@@ -777,6 +830,18 @@ public class vfIECEBC_TestSuite {
             Test.stopTest();
             
         }
+    }
+    /*
+     * Test the Fix ID CARD batch. relation between ID CARD and GDP Product Account View
+     */
+    public static void testFixIDCard() {
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
+        List<ID_CARD__c> gidcard = createIDCARD(null);
+        
+        Test.startTest();
+        SchdlEBCFixIdCardAgencyLink.prepare();
+        SchdlEBCFixIdCardAgencyLink.Schedule(null);
+        Test.stopTest();
     }
     
     public static void testCampaignPayWithCreditTrusted() {
@@ -857,7 +922,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             sc = new ApexPages.StandardController(camp);
             campaignExtCon = new vfIECEBC_Campaign(sc);
             vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
@@ -961,7 +1026,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             sc = new ApexPages.StandardController(camp);
             campaignExtCon = new vfIECEBC_Campaign(sc);
             vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
@@ -1055,7 +1120,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             sc = new ApexPages.StandardController(camp);
             campaignExtCon = new vfIECEBC_Campaign(sc);
             vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
@@ -1216,6 +1281,12 @@ public class vfIECEBC_TestSuite {
         
         PageReference pageRef = Page.IECEBC_CampaignSchedule;
         Test.setCurrentPage(pageRef);
+        IEC_SEttings__c customsetting = [Select eBroadcast_Counter_AWS_API_KEY__c,eBroadcast_Counter_AWS_URL__c,eBroadcast_Counter_Switch__c 
+             From IEC_SEttings__c limit 1];
+        if (customsetting==null) customsetting= new IEC_SEttings__c();
+        customsetting.eBroadcast_Counter_Switch__c=false;
+         
+        upsert customsetting;
         
         User usr = initPreRunAs(true);
         /*
@@ -1299,6 +1370,7 @@ public class vfIECEBC_TestSuite {
             recipientEditCon.validateNewFilter();
             System.assertEquals(3, recipientEditCon.newListStepNumber);
             
+            recipientEditCon.newFilter.Name = 'EBC_TEST_RUN';
             Integer cnt = vfIECEBC_RecipientEdit.getNewFilterCnt(recipientEditCon.getNewFilterJSON());
             System.assert(cnt > 0);
             recipientEditCon.newFilter.Number_of_Recipients__c = cnt;
@@ -1410,6 +1482,111 @@ public class vfIECEBC_TestSuite {
         }
     }
     
+   public static void testCampaignRecipientsExistingListMock() {
+        PageReference pageRef = Page.IECEBC_CampaignRecipients;
+        Test.setCurrentPage(pageRef);
+        
+                     
+        IEC_SEttings__c customsetting = [Select eBroadcast_Counter_AWS_API_KEY__c,eBroadcast_Counter_AWS_URL__c,eBroadcast_Counter_Switch__c 
+             From IEC_SEttings__c limit 1];
+        if (customsetting==null) customsetting= new IEC_SEttings__c();
+        customsetting.eBroadcast_Counter_AWS_API_KEY__c='Sr96oKUqaap4CXicrEMl5NXp6SerQNsAg701Gnf0';
+        customsetting.eBroadcast_Counter_AWS_URL__c='https://rb5luiyoea.execute-api.eu-west-1.amazonaws.com/prod/TestElasticSearchQuery';
+        customsetting.eBroadcast_Counter_Switch__c=true;
+         
+        upsert customsetting;
+         
+        User usr = initPreRunAs(true);
+        
+        List<EBC_Master_Filter__c> existingFilters = new List<EBC_Master_Filter__c>{
+            new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id),
+            new EBC_Master_Filter__c(Audience__c = 'Agency'), // assign to a different account
+            new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id) // Make sure the count result in 1 result as per described in the assertion
+        };
+        insert existingFilters;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Billing_Account__c = oBillingAccount.Id;
+        insert camp;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+            Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new vfIECEBC_TestSuiteMock());
+            //existingFilters[2].Id;
+            
+            Integer lastFilterRecipientCount =vfIECEBC_CampaignRecipient.getCounter(existingFilters[2].Id);
+            lastFilterRecipientCount =vfIECEBC_CampaignRecipient.getExistingFilterCnt(existingFilters[2].Id);
+          
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_CampaignRecipient campaignExtCon = new vfIECEBC_CampaignRecipient(sc);
+            
+            campaignExtCon.getMasterFilters();
+        }
+    }
+    public static void testRecipientsCountExistingListMock() {
+        PageReference pageRef = Page.IECEBC_CampaignRecipients;
+        Test.setCurrentPage(pageRef);
+        IEC_SEttings__c customsetting = [Select eBroadcast_Counter_AWS_API_KEY__c,eBroadcast_Counter_AWS_URL__c,eBroadcast_Counter_Switch__c 
+             From IEC_SEttings__c limit 1];
+        if (customsetting==null) customsetting= new IEC_SEttings__c();
+        customsetting.eBroadcast_Counter_AWS_API_KEY__c='Sr96oKUqaap4CXicrEMl5NXp6SerQNsAg701Gnf0';
+        customsetting.eBroadcast_Counter_AWS_URL__c='https://rb5luiyoea.execute-api.eu-west-1.amazonaws.com/prod/TestElasticSearchQuery';
+        customsetting.eBroadcast_Counter_Switch__c=true;
+         
+        upsert customsetting;
+        User usr = initPreRunAs(true);
+        
+        List<EBC_Master_Filter__c> existingFilters = new List<EBC_Master_Filter__c>{
+            new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id),
+            new EBC_Master_Filter__c(Audience__c = 'Agency'), // assign to a different account
+            new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id) // Make sure the count result in 1 result as per described in the assertion
+        };
+        insert existingFilters;
+        System.currentPageReference().getParameters().put('id', existingFilters[2].Id);
+  
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Billing_Account__c = oBillingAccount.Id;
+        insert camp;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+            Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new vfIECEBC_TestSuiteMock());
+            //existingFilters[2].Id;
+            
+            Integer lastFilterRecipientCount =restIECEBC_RecipientsCount.getCount(existingFilters[2].Id);
+            lastFilterRecipientCount =restIECEBC_RecipientsCount.doGet();
+          
+            restIECEBC_RecipientsCount campaignExtCon = new restIECEBC_RecipientsCount();
+            
+            campaignExtCon.getCount();
+            
+        }
+
+    }
+    class vfIECEBC_TestSuiteMock implements HttpCalloutMock{
+    // Implement this interface method
+     public HTTPResponse respond(HTTPRequest req) {
+        // Create a fake response
+        HttpResponse res = new HttpResponse();
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('{"counter":6}');
+        res.setStatusCode(200);
+        return res;
+    }
+}
     
     /*
     public static void testPageLoadLoginRequired() {

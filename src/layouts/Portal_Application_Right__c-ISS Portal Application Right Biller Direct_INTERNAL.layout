@@ -21,6 +21,10 @@
                 <behavior>Readonly</behavior>
                 <field>Application_Start_URL__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Portal_Service_Role__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

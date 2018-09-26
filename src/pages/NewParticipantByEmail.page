@@ -7,9 +7,9 @@
     }
 </script>
     <apex:form id="formNewParticipant">
-    <apex:sectionHeader title="New Participant" subtitle="{!lg.Local_Governance_type__c} Participant" />
-    
-    <apex:pageBlock title="New Participant" id="ThePageBlock" mode="edit">
+    <apex:sectionHeader subtitle="New Participant - {!lg.Name}" />
+
+    <apex:pageBlock id="ThePageBlock" mode="edit">
         <apex:Pagemessages escape="false"/>
         <apex:pageBlockSection id="sectionNewParticipant" title="Information" >
             <apex:inputField label="Contact Email" value="{!c.Email}" rendered="{!ISNULL(c.Email)}" required="true"/>
@@ -33,7 +33,7 @@
                 <apex:column value="{!cv.Title}" headerValue="Title"/>
                 <apex:column value="{!cv.Account.Name}" headerValue="Account Name"/>
                 <apex:column value="{!cv.Account.IATA_ISO_Country__r.Name}" headerValue="Country"/>
-            </apex:dataTable>            
+            </apex:dataTable>
         </apex:pageBlockSection>
         <style>
             .contactColumns{padding:0.5em;}

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>This Object will contain the records with issues durring the differents synchronixzation batches</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -101,10 +98,44 @@
         <columns>NAME</columns>
         <columns>Job_Name__c</columns>
         <columns>Message__c</columns>
-        <columns>CREATED_DATE</columns>
+        <columns>AMS_Record_Id__c</columns>
+        <columns>GDP_Record_Id__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All Logs with Details</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Search_by_AMS_Record_ID</fullName>
+        <columns>NAME</columns>
+        <columns>Job_Name__c</columns>
+        <columns>Message__c</columns>
+        <columns>AMS_Record_Id__c</columns>
+        <columns>GDP_Record_Id__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>AMS_Record_Id__c</field>
+            <operation>contains</operation>
+            <value>001w000001fasCEAAY</value>
+        </filters>
+        <label>Search by AMS Record ID</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Todays_Logs</fullName>
+        <columns>NAME</columns>
+        <columns>Job_Name__c</columns>
+        <columns>Message__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>12/7/2017 12:00 AM</value>
+        </filters>
+        <label>TODAY&apos;S Logs</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -115,4 +146,5 @@
     <pluralLabel>AMS2GDP Logs</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

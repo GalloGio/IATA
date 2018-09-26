@@ -1,0 +1,397 @@
+<apex:page controller="ISSP_AMS_MSO_Controller"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false" renderAs="{!strRenderAs}" action="{!checkIfUserHasAccessToService}" readOnly="true">
+<html>
+
+<c:ISSP_Header rendered="{!strRenderAs<>'PDF'}"/>
+
+<head>
+	<script type="text/javascript">
+		function handleSearchChange(){
+			handleSearchAF();
+		}
+	</script>
+
+<!--Style to remain in the page, for the PDF rendering-->
+<style>
+.body, div, h4, span, p {
+	font-family: Helvetica, sans-serif;
+}
+.service-header {
+	background-image: url("{!URLFOR($Resource.CurrencyCenter_Style, '/RegionalOutlookNews_banner.jpg')}");
+	background-size:720px;
+	background-repeat: no-repeat;
+	background-position-x: 15px;
+	padding-left: 60px;
+	height: 170px;
+}
+@media (min-width:320px){
+	.service-header{background-size:720px;}
+}
+@media (min-width:768px){
+	.service-header{background-size:720px;}
+}
+@media (min-width:992px){
+	.service-header{background-size:940px;}
+}
+@media (min-width:1200px){
+	.service-header{background-size:1140px;}
+}
+
+.hidden-print {
+	display: {!IF(strRenderAs == 'PDF', 'none','')};
+}
+.page-title {
+	font-family: Helvetica;
+	font-size: 28px;
+	color: #FFFFFF;
+	padding-top: 60px;
+	margin-left: -15px;
+}
+.introduction-text {
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+.btn-blue {
+  background-color: #0075BC;
+  color: #FFFFFF;
+  height: 33px;
+  margin-right: 10px;
+}
+
+.hm-table {
+	margin-top: 12px;
+}
+.hm-table .table>thead>tr>th {
+	background-color: #F5F5F5;
+	/*text-align: center;*/
+	vertical-align: top;
+	text-transform: uppercase;
+	font-family: Helvetica, sans-serif;
+	font-size: 12px;
+	color:#444444;
+}
+.hm-table .table .country-cell {
+	width: 151px;
+	height: 33px;
+	background-color: #F5F5F5;	
+	color: #444444;
+	font-family: Helvetica, sans-serif;
+	font-size: 12px;
+}
+.table-bordered>tbody>tr>td, .table-bordered>thead>tr>th {
+    border: 1px solid #D4D9DB;
+    {!IF(strRenderAs == 'PDF', 'font-size: 11px;','')}
+}
+.hm-table .table>thead>tr>th a, .hm-table .table>thead>tr>th a:hover {
+	color: #444444;
+	text-decoration: none;
+}
+.hm-table .table>thead>tr>th>td {
+	font-family: Helvetica;
+	font-size: 12px;
+}
+
+/* Pagination */
+.paginator {
+	font-size: 12px;
+}
+.firstoff {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: 0 -10px;
+    width: 9px;
+    height: 10px;
+}
+.prevoff {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -10px -10px;
+    margin: 0;
+    padding: 0;
+    width: 9px;
+    height: 10px;
+    color: #999;
+}
+.nextoff {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -17px -10px;
+    width: 9px;
+    height: 10px;
+    color: #999;
+}
+.lastoff {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -27px -10px;
+    width: 9px;
+    height: 10px;
+}
+.first {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: 0 1px;
+    width: 9px;
+    height: 10px;
+}
+.prev {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -10px 1px;
+    margin: 0;
+    padding: 0;
+    width: 9px;
+    height: 10px;
+}
+.next {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -17px 1px;
+    width: 9px;
+    height: 10px;
+}
+.last {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -27px 1px;
+    width: 9px;
+    height: 10px;
+}
+.prevNextLinks {
+	color: #A8A8A8;
+}
+.prevNextLinks a {
+	color: #000000;
+}
+
+/* SORTING */
+.sortAsc, .sortDesc {
+    width: 11px;
+    height: 11px;
+    margin: 0 5px;
+    vertical-align: -2px;
+    background: transparent url('/img/alohaSkin/sortArrows_sprite.png') no-repeat 0 top;
+}
+.sortAsc {
+    background-position: 0 -16px;
+}
+.sortDesc {
+    background-position: 0 top;
+}
+.search-field {
+	margin-top: 7px;
+}
+.excludeLabel {
+	margin-left: 5px;
+	font-weight: normal;
+}
+</style>
+</head>
+
+<body>
+	<div class="container">
+
+		<c:ISSP_CustomNavigation rendered="{!strRenderAs<>'PDF'}"/>
+
+		<apex:form >
+		<apex:actionFunction name="handleSearchAF" rerender="tablePanel, downloadButtons" action="{!refreshMsoGsaList}"/>
+
+		<div class="row">
+      		<div class="col-xs-12 service-header">
+            
+				<div class="row page-title">
+					<div class="col-xs-12 col-md-3">
+						<div class="">{!$Label.ISSP_AMS_MSO_GSA_MSO_Title}</div><!-- ISSP_AMS_MSO_GSA_GSA_Title -->
+					</div>
+					<div class="col-xs-4 col-md-3 hidden-print">
+						<apex:inputText id="searchInput" value="{!searchText}" styleClass="form-control search-field" html-placeholder="{!$Label.ISSP_AMS_MSO_GSA_Search_Placeholder}" onkeyup="handleSearchChange();"/>&nbsp;
+					</div>
+					<div class="col-xs-8 col-md-6 hidden-print">
+						<apex:outputPanel id="downloadButtons">
+							<button class="btn btn-blue" onclick="window.open('/ISSP_AMS_GSA_MSO_CSV?renderAs=csv&data=MSO&exclude={!isExcludingTerminated}&search={!searchText}','_blank');">
+								<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;{!$Label.ISSP_AMS_MSO_GSA_Download_CSV}
+							</button>
+							<button type="button" class="btn btn-blue" onclick="window.open('/ISSP_AMS_MSO?renderAs=pdf&exclude={!isExcludingTerminated}&search={!searchText}','_blank');" >
+								<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>&nbsp;{!$Label.CurrencyCenter_Download_Pdf}
+							</button>
+						</apex:outputPanel>
+						<apex:outputLink styleClass="btn btn-blue" value="/ISSP_AMS_MSO_Request">{!$Label.ISSP_AMS_MSO_GSA_Request_New_MSO}</apex:outputLink>
+					</div>
+				</div>
+			</div>
+
+            <apex:outputPanel id="introPanel" rendered="{!strRenderAs<>'PDF'}" >
+			<div class="col-xs-12 introduction-text">{!$Label.ISSP_AMS_MSO_GSA_MSO_Introduction_Text}</div><!--ISSP_AMS_MSO_GSA_GSA_Introduction_Text-->
+            </apex:outputPanel>
+        </div>
+            
+        <div class="row hm-table" style="width: 300px">
+            <div class="col-xs-12">    
+                <apex:outputPanel id="numbersPanel" >
+                    <apex:outputLabel value="Summary of MSO Codes"  style="font: bold"/>
+                    <table class="table table-bordered">
+
+                        <thead><tr>
+                        <apex:repeat value="{!data}" var="i">
+                            <th>{!i.name}</th>
+                        </apex:repeat>
+                        </tr></thead>
+                        <tbody><tr>
+                        <apex:repeat value="{!data}" var="i">
+                            <td>{!i.data1}</td>
+                        </apex:repeat>
+                        </tr></tbody>
+                    </table>
+                </apex:outputPanel>
+            </div>
+		</div>
+			
+		<div class="row hm-table">
+			<div class="col-xs-12">
+				<apex:outputPanel id="tablePanel">
+					<apex:inputCheckbox value="{!isExcludingTerminated}" id="chkExcludeTerminated" onchange="handleSearchAF();" styleClass="hidden-print" />
+					<apex:outputLabel value="{!$Label.ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments}" for="chkExcludeTerminated" styleClass="excludeLabel hidden-print"/>
+ 
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th class="hidden-print">
+									<!-- empty header for actions column -->
+								</th>
+								<th>
+									<apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_IATA_Code}
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='IATACode__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="IATACode__c" assignTo="{!SortBy}"/>
+									</apex:commandLink>
+								</th>
+                                <!-- FM AMSU-119 th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Account_Name_MSO}
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Name', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Name', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Name',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="Name" assignTo="{!SortBy}"/>
+                                    </apex:commandLink></th>-->
+								<th><apex:commandLink >{!$Label.ISSP_AMS_MSO_GSA_Appointment_Status}</apex:commandLink></th>
+                                <!-- FM AMSU-119 th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Category}
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Category__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Category__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Category__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="Category__c" assignTo="{!SortBy}"/>
+                                    </apex:commandLink></th-->
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Street_Address}
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingStreet', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingStreet', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingStreet',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="BillingStreet" assignTo="{!SortBy}"/>
+									</apex:commandLink></th>
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_City}
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingCity', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingCity', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCity',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="BillingCity" assignTo="{!SortBy}"/>
+									</apex:commandLink></th>
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Country}
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCountry',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="BillingCountry" assignTo="{!SortBy}"/>
+									</apex:commandLink></th>
+                                <!-- FM AMSU-119 -->
+                                <th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Open_Date}
+                                        <apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Accreditation_date__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+                                        <apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Accreditation_date__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+                                        <apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Accreditation_date__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+                                        <apex:param name="SortBy" value="Accreditation_date__c" assignTo="{!SortBy}"/>
+                                    </apex:commandLink></th>
+                                
+                                <th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Close_Date}
+                                        <apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Expiry_Date__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+                                        <apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Expiry_Date__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+                                        <apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Expiry_Date__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+                                        <apex:param name="SortBy" value="Expiry_Date__c" assignTo="{!SortBy}"/>
+                                    </apex:commandLink></th>
+							</tr>
+						</thead>
+						<tbody>
+							<apex:repeat value="{!lstDisplayAccounts}" var="a">
+							<tr>
+								<td class="hidden-print">
+									<div class="btn-group btn-group-xs">
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<span class="glyphicon glyphicon-cog"></span>&nbsp;<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li class="{! IF(a.appointment.Account__r.Status__c == 'Terminated', 'disabled', '') }"><a href="{! IF(a.appointment.Account__r.Status__c == 'Terminated', 'javascript://', '/ISSP_AMS_MSO_Update?msoId=' + a.appointment.Account__r.Id + '&action=correction') }"><span class="glyphicon glyphicon-pencil"></span> &nbsp; {!$Label.ISSP_AMS_MSO_GSA_Edit_MSO_Details}</a></li>
+											<li class="{! IF(a.appointment.Account__r.Status__c == 'Terminated', 'disabled', '') }"><a href="{! IF(a.appointment.Account__r.Status__c == 'Terminated', 'javascript://', '/ISSP_AMS_MSO_Update?msoId=' + a.appointment.Account__r.Id + '&action=termination') }"><span class="glyphicon glyphicon-ban-circle"></span> &nbsp; {!$Label.ISSP_AMS_MSO_GSA_MSO_Terminate_MSO}</a></li>
+										</ul>
+									</div>
+								</td>
+                                <td><a href="{!'/ISSP_AMS_MSO_Update?msoId=' + a.appointment.Account__r.Id + '&action=correction&step=view' }">{!a.appointment.Account__r.IATACode__c}</a> </td>
+                                <!-- FM AMSU-119 <td>{!a.appointment.Account__r.Name}</td> -->
+								<td>
+									<!--{!CASE(a.appointment.Accreditation_Endorsement_Status_code__c, '0', $Label.ISSP_AMS_MSO_GSA_Appointment_Terminated, '9', $Label.ISSP_AMS_MSO_GSA_Appointment_Active, a.appointment.Accreditation_Endorsement_Status_code__c)}-->
+                                    <!--{!a.appointment.Account__r.Status__c}
+                                    <img src="/img/msg_icons/info16.png" title="{! $Label.ISSP_AMS_MSO_GSA_Date_of_Appointment+ ': ' + TEXT(a.appointment.Account__r.Accreditation_date__c)}{!IF(a.appointment.Account__r.Status__c == 'Terminated', '  |  ' + $Label.ISSP_AMS_MSO_GSA_Date_Appointment_Terminated + ': ' + TEXT(a.appointment.Account__r.Expiry_Date__c), '') }" style="float: right;"  class="hidden-print" />  -->
+									{!a.appointment.Account__r.Status__c}
+									</td>
+                                <!-- FM AMSU-119 <td>{!a.appointment.Account__r.Category__c}</td>-->
+								<td>{!a.appointment.Account__r.BillingStreet}</td>
+								<td>{!a.appointment.Account__r.BillingCity}</td>
+								<td>{!a.appointment.Account__r.BillingCountry}</td>
+                                <td>{!TEXT(a.dAccreditation_date)}</td>
+                                <td>{!TEXT(a.dExpiry_Date)}</td>
+							</tr>
+							</apex:repeat>
+						</tbody>
+						<tfoot>
+							<tr class=" hidden-print">
+								<td colspan="9" style="align: center;"> 
+									<div class="row paginator hidden-print">
+										<div class="col-xs-3">
+											Display&nbsp;
+											<apex:selectList value="{!recordsPerPage}" multiselect="false" size="1" onchange="handleSearchChange();">
+												<apex:selectOptions value="{!selectOptionItems}"/>
+		        							</apex:selectList>
+		        							&nbsp;records per page
+										</div>
+										<div class="col-xs-6 text-center prevNextLinks">
+											<span class="prevNext">
+												<apex:outputPanel rendered="{!NOT(hasPrevious)}"><img src="/s.gif" class="firstoff" alt="First Page"/></apex:outputPanel>
+												<apex:commandLink action="{!first}" rendered="{!hasPrevious}"><img src="/s.gif" class="first" title="First Page" alt="First Page"/></apex:commandLink>
+											</span>
+											<span class="prevNext">
+												<apex:outputPanel rendered="{!NOT(hasPrevious)}"><img src="/s.gif" class="prevoff" alt="{!$Label.ISSP_AMS_MSO_GSA_Previous}"/>{!$Label.ISSP_AMS_MSO_GSA_Previous}</apex:outputPanel>
+												<apex:commandLink action="{!previous}" rendered="{!hasPrevious}"><img src="/s.gif" class="prev" title="{!$Label.ISSP_AMS_MSO_GSA_Previous}" alt="{!$Label.ISSP_AMS_MSO_GSA_Previous}"/>{!$Label.ISSP_AMS_MSO_GSA_Previous}</apex:commandLink>
+											</span>
+											<span class="prevNext">
+												<apex:outputPanel rendered="{!NOT(hasNext)}">{!$Label.ISSP_AMS_MSO_GSA_Next}<img src="/s.gif" class="nextoff" alt="{!$Label.ISSP_AMS_MSO_GSA_Next}"/></apex:outputPanel>
+												<apex:commandLink action="{!next}" rendered="{!hasNext}">{!$Label.ISSP_AMS_MSO_GSA_Next}<img src="/s.gif" class="next" alt="{!$Label.ISSP_AMS_MSO_GSA_Next}"/></apex:commandLink>
+											</span>
+											<span class="prevNext">
+												<apex:outputPanel rendered="{!NOT(hasNext)}"><img src="/s.gif" class="lastoff" alt="Last Page"/></apex:outputPanel>
+												<apex:commandLink action="{!last}" rendered="{!hasNext}"><img src="/s.gif" class="last" alt="Last Page"/></apex:commandLink>
+											</span>
+										</div>
+										<div class="col-xs-3 text-right">
+											Page {!pageNumber} of {!totalPages}
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tfoot>
+	              	</table>
+	          	</apex:outputPanel>
+          	</div>
+		</div>
+
+			
+		</apex:form>
+
+		<c:ISSP_CustomFooter rendered="{!strRenderAs<>'PDF'}"/>
+
+	</div>
+</body>
+
+</html>
+
+</apex:page>

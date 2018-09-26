@@ -14,11 +14,11 @@
     </types>
     <types>
         <members>*</members>
-        <name>Queue</name>
+        <name>ApprovalProcess</name>
     </types>
     <types>
         <members>*</members>
-        <name>ApprovalProcess</name>
-    </types>    
-    <version>37.0</version>
+        <name>CustomMetadata</name>
+    </types>
+    <version>43.0</version>
 </Package>

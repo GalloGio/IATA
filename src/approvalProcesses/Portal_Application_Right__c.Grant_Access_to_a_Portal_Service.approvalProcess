@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>creator</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Name</field>
+        <field>Right__c</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>brouwersa@iata.org</name>
+                <type>user</type>
+            </approver>
+            <approver>
+                <name>khattabil@iata.org.prod</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <label>Currency Center Approver</label>
+        <name>Currency_Center_Approver</name>
+    </approvalStep>
+    <description>Approval process to grant access only to Currency Center service</description>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <criteriaItems>
+            <field>Portal_Application_Right__c.Application_Name__c</field>
+            <operation>equals</operation>
+            <value>Currency Center</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>notEqual</operation>
+            <value>Access Granted</value>
+        </criteriaItems>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Currency_Center_Access_Approved</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>Grant_Access</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Reject_Access</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>Currency_Center_Inform_requester</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>Request_Access</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+    <label>Grant Access to a Portal Service</label>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>false</showApprovalHistory>
+</ApprovalProcess>

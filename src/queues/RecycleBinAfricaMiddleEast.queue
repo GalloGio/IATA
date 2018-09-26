@@ -3,6 +3,17 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>csnotificationsame@iata.org</email>
     <name>Recycle Bin Africa &amp; Middle East</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>IDFSAfricaMERegionalOfficeI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+        <users>
+            <user>martinsp@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>AMS_OSCAR__c</sobjectType>
     </queueSobject>

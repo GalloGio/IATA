@@ -6,10 +6,18 @@ public class AMS_OSCAR_SupportPanelTest {
         PageReference pageRef = Page.AMS_OSCAR_SupportPanel;
         Test.setCurrentPage(pageRef);
         
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c(STEP1__c = 'In Progress');
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account acc1 = new Account(RecordTypeId = agencyRT, Name='Test1 Account');
+        insert acc1;
+        
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = acc1.Id);
         insert oscar;
         
         //updating a OSCAR step will create a lifecycle event which is where the history is stored
+        oscar.STEP12__c = 'Passed';
+        oscar.STEP15__c = 'Passed';
+        oscar.STEP25__c = 'Passed';
+        oscar.STEP2__c = 'Passed';
         oscar.STEP1__c = 'Passed';
         update oscar;
 

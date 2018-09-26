@@ -5,6 +5,11 @@
     <aura:attribute name="activeTab" type="String"/>
     <aura:attribute name="oldTab" type="String"/>
 
+    <aura:attribute name="showLeftButton" type="Boolean" default="false"/>
+    <aura:attribute name="showRightButton" type="Boolean" default="false"/>
+    <aura:attribute name="showTabs1" type="Boolean" default="true"/>
+    <aura:attribute name="showTabs2" type="Boolean" default="true"/>
+
     <!-- Account parameter - to be queried at INIT from the database -->
     <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account'}"/>
 
@@ -32,6 +37,7 @@
             <!-- TABS BUTTONS -->
             <div class="slds-tabs--default">
                 <ul class="slds-tabs--default__nav" role="tablist">
+                    <aura:if isTrue="{!v.showTabs1}">
                     <li class="slds-tabs--default__item slds-text-heading--label slds-active" title="Identification" role="presentation" aura:id="Identification">
                         <ui:outputText value="Identification"  click="{!c.changeTab}" class="slds-tabs--default__link" />
                     </li>
@@ -47,6 +53,24 @@
                     <li class="slds-tabs--default__item slds-text-heading--label" title="Products" role="presentation" aura:id="Products and Services">
                         <ui:outputText value="Products and Services"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
+                    <aura:if isTrue="{!v.showRightButton}">
+                        <li class="slds-tabs--default__item slds-text-heading--label slds-active right-button" >
+                        <lightning:button class="slds-button slds-button--neutral menu-button"  onclick="{!c.moveRight}">
+                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#chevronright'}" class="slds-button__icon"  />
+
+                        </lightning:button>
+                        </li>
+                    </aura:if>
+                    </aura:if>
+                    <aura:if isTrue="{!v.showTabs2}">
+                        <aura:if isTrue="{!v.showLeftButton}">
+                            <li class="slds-tabs--default__item slds-text-heading--label slds-active" >
+                                <lightning:button class="slds-button slds-button--neutral menu-button"  onclick="{!c.moveLeft}">
+                                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#chevronleft'}" class="slds-button__icon"  />
+
+                                </lightning:button>
+                            </li>
+                        </aura:if>
                     <li class="slds-tabs--default__item slds-text-heading--label" title="Groups" role="presentation" aura:id="Groups">
                         <ui:outputText value="Groups"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
@@ -56,12 +80,12 @@
                     <li class="slds-tabs--default__item slds-text-heading--label" title="Account Plan" role="presentation" aura:id="Account Plan">
                         <ui:outputText value="Account Plan"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Chatter" role="presentation" aura:id="Chatter">
-                        <ui:outputText value="Chatter"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
-                    </li>
                     <li class="slds-tabs--default__item slds-text-heading--label" title="News" role="presentation" aura:id="News">
                         <ui:outputText value="News"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
+                    <!-- <aura:set attribute="else">
+                    </aura:set> -->
+                </aura:if>
                 </ul>
 
                 <!-- TABS CONTENT -->
@@ -147,14 +171,6 @@
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             <c:AMP_KeyAccountPlan accountId="{!v.accountId}" />
-                        </div>
-                    </div>
-                </aura:if>
-
-                <aura:if isTrue="{!v.activeTab=='Chatter'}">
-                    <div class="slds-grid slds-wrap slds-p-around--medium">
-                        <div class="slds-size--1-of-1">
-                            <c:AMP_Chatter accountId="{!v.accountId}" />
                         </div>
                     </div>
                 </aura:if>

@@ -4,7 +4,7 @@ private class ISSP_HomepageTest {
    
     public static testMethod void testISSP_HomepageTest() {
         
-        User adminUser = ISSP_ObjectFactory.createAdminUser();
+        //User adminUser = ISSP_ObjectFactory.createAdminUser();
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account topacc = ISSP_ObjectFactory.createNewAccount();
@@ -21,27 +21,28 @@ private class ISSP_HomepageTest {
         insert con;
         
         //Contact con2 = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,3);
+        
+        
         Contact con2 = ISSP_ObjectFactory.createNewContact();
         con2.Email = 'test2@test.test';
         con2.AccountId= acc.Id;
         con2.User_Portal_Status__c='Approved User';
         insert con2;
         
-        //Contact con3 = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,4);
         Contact con3 = ISSP_ObjectFactory.createNewContact();
         con3.Email = 'test3@test.test';
         con3.AccountId= acc.Id;
         con3.User_Portal_Status__c='Approved Admin';
         
-        /*
-        insert con3;
+        
+        //insert con3;
         
         FAQ__kav FAQkav;
         Portal_news__kav Portal_newska;
         Content__kav Contentkav;
         How_To__kav howTokav ;  
         Test.startTest() ;
-        system.runAs(adminUser){
+        //system.runAs(adminUser){
             
             
             
@@ -77,7 +78,7 @@ private class ISSP_HomepageTest {
             howTokav.To_display_on_Homepage__c=true;
             insert howTokav;
             
-        }
+        //}
         
         
         
@@ -109,11 +110,11 @@ private class ISSP_HomepageTest {
         }
         
         Test.stopTest();
-        */
+        
         
     }
      public static testMethod void testISSP_HomepageTest2() {
-     /*
+     
         ISSP_Constant.adminIdSet.add(ISSP_Constant.TEST_User_ProfileID);
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
@@ -214,23 +215,23 @@ private class ISSP_HomepageTest {
             String  SurveyName = ctrl.SurveyName;
         }
         Test.stopTest();
-        */
+        
         
      }
-     /*
+     
      public static testMethod void testISSP_ObjectFactory() {
         ISSP_ObjectFactory.FillAllFields = true;
-        list<Account> accList = (list<Account>)ISSP_ObjectFactory.createSObjectList('Account',false,1);
+        //list<Account> accList = (list<Account>)ISSP_ObjectFactory.createSObjectList('Account',false,1);
      }
-     */
+     
      
      public static testMethod void test_addNumberOfViews() {
-     /*
-        Contact contact = new Contact(LastName='test');
+     
+        Contact contact = new Contact(FirstName='Name', LastName='test');
         insert contact;
         Notification__c notification = new Notification__c(Contact__c=contact.Id);
         insert notification;
         ISSP_Homepage.addNumberOfViews(notification.Id);
-        */
+        
      }
 }

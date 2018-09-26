@@ -182,7 +182,7 @@ public class ISO_Country_State_Helper {
 
     	return options;
 	}
-
+	
 	public static List<SelectOption> getStatesSelectOption(String countryCode)
 	{
 		List<SelectOption> options = new List<SelectOption>();
@@ -213,5 +213,21 @@ public class ISO_Country_State_Helper {
 
     	return ret;
 	}
+	
+	/**
+	*	Enhancements 2017-05-10
+	**/
+	public static Map<String, Object> getCountriesOptionsMap() {
+		List<SelectOption> options = new List<SelectOption>();
+		options.add(new SelectOption('',Label.Select_a_Country));
+		Map<String, Boolean> mapZipCodeApplicable = new Map<String, Boolean>();
+		
+		for(IATA_ISO_Country__c c : [SELECT Name, ISO_Code__c, IEC_Zip_Postal_Code_required__c FROM IATA_ISO_Country__c WHERE ISO_Code__c != null and Name != 'All Countries' ORDER BY Name]) {
+			options.add(new SelectOption(c.ISO_Code__c, c.Name));
+			mapZipCodeApplicable.put(c.ISO_Code__c, c.IEC_Zip_Postal_Code_required__c);
+		}
+		
+		return new Map<String, Object> {'options' => options, 'zipCodeApplicable' => mapZipCodeApplicable };
+	}	
 	
 } //*** end of class

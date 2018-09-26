@@ -15,6 +15,10 @@
                 <behavior>Edit</behavior>
                 <field>Description__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Full_SFDC_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -170,7 +174,17 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
+        <fields>NAME</fields>
+        <fields>Description__c</fields>
+        <fields>Frequency__c</fields>
+        <fields>File_Format__c</fields>
+        <fields>Class__c</fields>
+        <fields>Magnitude__c</fields>
+        <fields>Product_Type__c</fields>
+        <fields>File_Naming_Convention__c</fields>
+        <relatedList>GDP_File_Description__c.Reference__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -197,6 +211,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Full_SFDC_ID__c</fields>
         <fields>Production_Date__c</fields>
         <fields>Status__c</fields>
         <fields>Size__c</fields>
@@ -240,6 +255,9 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

@@ -1,0 +1,13 @@
+<aura:component extensible="true" abstract="true" access="global" controller="Base_CTRL">
+	<aura:attribute name="url" type="String" />
+	<aura:attribute name="paramsMap" type="Object" />
+	<aura:attribute name="checked" type="Boolean" default="false"/>	
+    
+	<aura:handler event="c:oneIdURLParams" action="{!c.getParams}"/>
+    <aura:registerEvent name="sendParams" type="c:oneIdURLParams"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.getParams}"/>
+    
+    {!v.body}
+
+</aura:component>

@@ -31,9 +31,14 @@
                 script.type = "text/javascript";
                 script.src = awsUrlPath+filePath + queryString;
                 $("head").append(script); // jQuery version
-                
+                var string = awsUrlPath+filePath + queryString;
+                if(string.includes("//sfdc")){
+                    var removeData = string.replace("//sfdc", "/sfdc"); 
+                    $("#AWSLinkValidity").html(new Date());                   
+                    return removeData;
+                }  
                 $("#AWSLinkValidity").html(new Date());
-                return awsUrlPath+filePath + queryString;
+                return string;  
                 
             }
     

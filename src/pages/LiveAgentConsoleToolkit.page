@@ -1,27 +1,432 @@
-<apex:page >
+<apex:page controller="LVA_ConsoleToolkitController" >
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"/>
-    <apex:includeScript value="/support/console/29.0/integration.js"/>
+    <html>
+    <head>
+        <link rel="stylesheet"
+              href="{!urlfor($Resource.bootstrap,'/bootstrap-3.3.4-dist/css/bootstrap.min.css')}"> </link>
+        <script src="{!urlfor($Resource.bootstrap,'/bootstrap-3.3.4-dist/js/bootstrap.min.js')}"
+                type="text/javascript" > </script>
 
-    <script type="text/javascript">
+        <apex:includeScript value="/support/console/29.0/integration.js"/>
+    </head>
+    <body>
 
-        var lockAlert;
-        var lastStatus;
-        var eventHandler = function (result) {
-            if (lockAlert == false && result.state != lastStatus){
-                alert("Your status has changed to: " + result.state);
-                lastStatus = result.state;
-            }else{
-                lockAlert = false;
+        <div class="container">
+            <div id="PopUpChatConsoleAlertModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header iataBlue">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title modalTitle" id="modalTitle"></h4>
+                        </div>
+                        <div class="modal-body" >
+                            <p id="modalBody"></p>
+                        </div>
+                        <div class="modal-footer" id="modalFooter">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            //LVA_CONSOLE_ALERT_MODE_DIALOG
+            //LVA_CONSOLE_ALERT_MODE_POPUP
+            //LVA_CONSOLE_ALERT_MODE_ALERT
+            //LVA_CONSOLE_ALERT_MODE_NOTIFICATION
+            var lvaChatConsoleAlertMode='{!lvaChatConsoleAlertMode}';
+
+            var newWindow;//GLOBAL VAR for popup window in order to be able to close it from parent
+            var windowContent='';
+
+            //initialize broeser notifications if alert mode is browser notifications
+            if (lvaChatConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_NOTIFICATION'){
+                // request permission on page load
+                document.addEventListener('DOMContentLoaded', function () {
+                  if (!Notification) {
+                    alert('Desktop notifications not available in your browser. Try other browser.');
+                    return;
+                  }
+
+                  if (Notification.permission !== "granted")
+                    Notification.requestPermission();
+                });
             }
-            
-        };
-        sforce.console.chat.onAgentStateChanged(eventHandler);
 
-        $( window ).load(function(){
-            lockAlert = true;
-            lastStatus = null;          
-        });
 
-</script>
+           /*******************************************************************************************************
+           * @description Generates/create a browser/Javascript Notification (Notification API)
+           *              when selected the mode "LVA_CONSOLE_ALERT_MODE_NOTIFICATION" in configuration
+           *              parameter LVA_CONSOLE_ALERT_MODE
+           *
+           * @param {String} title - Window title that will apears in browser window bar.
+           * @param {String} msgToDisplay - Message string or html to display in popup.
+           * @param {Integer} dismissTime - Time in milliseconds the notification will be displayed until be automaticaly be dismissed
+           *                  if not provided notification message will not be dismissed (user needs to close it manualy).
+           * @param {String} onClickLink - Link to open in browser when clicking in notification window.
+           *
+           * @example
+           * createMyNotification("Notification","text notification",5000, 'http://someadress.com');
+           *
+           * @history
+           * -----------------------------------------------------------------------------------------------
+           * Date         Created by                        Description
+           * 2017-11-30   paulo.bastos@rightitservices.com  Creation
+           ********************************************************************************************************/
+            function createNotification(title,messageToDisplay) {
+              // Let's check if the browser supports notifications
+              if (!("Notification" in window)) {
+                alert("This browser does not support system notifications");
+              }
+
+              // Let's check whether notification permissions have already been granted
+              else if (Notification.permission === "granted") {
+                // If it's okay let's create a notification
+                createLVANotification(title, messageToDisplay);
+              }
+              // Otherwise, we need to ask the user for permission
+              else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(function (permission) {
+                  // If the user accepts, let's create a notification
+                  if (permission === "granted") {
+                    createLVANotification(title, messageToDisplay);
+                  }
+                });
+              }
+            }
+
+           /*******************************************************************************************************
+           * @description Generates/create a browser/Javascript Notification (Notification API)
+           *              when selected the mode "LVA_CONSOLE_ALERT_MODE_NOTIFICATION" in configuration
+           *              parameter LVA_CONSOLE_ALERT_MODE
+           *
+           * @param {String} title - Window title that will apears in browser window bar.
+           * @param {String} msgToDisplay - Message string or html to display in popup.
+           * @param {Integer} dismissTime - Time in milliseconds the notification will be displayed until be automaticaly be dismissed
+           *                  if not provided notification message will not be dismissed (user needs to close it manualy).
+           * @param {String} onClickLink - Link to open in browser when clicking in notification window.
+           *
+           * @example
+           * createMyNotification("Notification","text notification",5000, 'http://someadress.com');
+           *
+           * @history
+           * -----------------------------------------------------------------------------------------------
+           * Date         Created by                        Description
+           * 2017-11-30   paulo.bastos@rightitservices.com  Creation
+           ********************************************************************************************************/
+            function createLVANotification(title, messageToDisplay, dismissTime, onClickLink){
+                 var n = new Notification(title, {
+                      icon: '{!$Resource.LVA_IconsExclamation}',
+                      body: messageToDisplay,
+                      tag:'LVANotificationsDisplay',
+                      renotify: true
+                    });
+
+                    if (onClickLink!=undefined){
+                        n.onclick = function () {
+                          window.open(onClickLink);
+                        };
+                    }
+
+                    //dismiss notification
+                    if (dismissTime!=undefined){
+                        setTimeout(n.close.bind(n), dismissTime);
+                    }
+
+                    return n;
+            }
+
+           /*******************************************************************************************************
+           * @description Generates html for each pop up box when selected mode "LVA_CONSOLE_ALERT_MODE_POPUP"
+           *
+           * @param {String} title - Window title that will apears in browser window bar.
+           * @param {String} msgToDisplay - Message string or html to display in popup.
+           * @param {String} msgType - Message Type (success , info , warning ,danger , default  ) - it displays a
+           *                           notification box with diferent colors according with message type provided.
+           * @param {String} isAccumulative - Flag to setup if notifications are accumulative while chat window is open.
+           *
+           * @example
+           * popUpChatConsoleAlert("Notification","<html><body>Hello World!</body></html>","warning", true);
+           *
+           * @history
+           * -----------------------------------------------------------------------------------------------
+           * Date         Created by                        Description
+           * 2017-10-27   paulo.bastos@rightitservices.com  Creation
+           ********************************************************************************************************/
+            function getAlertHtml(title, msgToDisplay, msgType, isAccumulative){
+                var datetimeStr=generateCurrDateStr();
+                var strCloseBox='';
+                if (isAccumulative==true){
+                    //strCloseBox='<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>';
+                }
+
+                var alertHtml='<html>'+
+                    '<head>'+
+                    '<title>'+title+'</title>'+
+                    '<style>'+
+                    ' .info {'+
+                    '    background-color: #2196F3 !important; /* Blue */ '+
+                    '}'+
+                    ' .info:hover {background-color: #0b7dda !important;} '+
+                    ' .success {'+
+                    '    background-color: #4CAF50 !important; /* Green */ '+
+                    '}'+
+                    ' .success:hover {background-color: #46a049 !important;} '+
+                    ' .warning {'+
+                    '    background-color: #ff9800 !important; /* Orange */'+
+                    '}'+
+                    ' .warning:hover {background-color: #e68a00 !important;} '+
+                    ' .default {'+
+                    '    background-color: #b7b7b7 !important; /* Gray */ '+
+                    '}'+
+                    ' .default:hover {background-color: #ddd !important;} '+
+                    ' .danger {'+
+                    '    background-color: #f44336 !important; /* Red */ '+
+                    '}'+
+                    ' .danger:hover {background-color: #da190b !important;} '+
+                    ' .alert {'+
+                    '    padding: 20px;'+
+                    '    background-color: #f44336; '+
+                    '    color: white;'+
+                    '    margin-bottom: 15px;'+
+                    '    font-family: verdana, arial;'+
+                    '    font-size:medium;'+
+                    '    text-align:center;'+
+                    '}'+
+                    ' .closebtn {'+
+                    '    margin-left: 15px;'+
+                    '    color: white;'+
+                    '    font-weight: bold;'+
+                    '    float: right;'+
+                    '    font-size: 22px;'+
+                    '    line-height: 20px;'+
+                    '    cursor: pointer;'+
+                    '    transition: 0.3s;'+
+                    '}'+
+                    ' .closebtn:hover {'+
+                    '    color: black;'+
+                    '}'+
+                    '</style>'+
+                    '</head>'+
+                    '<body>'+
+                    '    <div class="alert '+msgType+'">'+
+                    '        '+strCloseBox+'['+datetimeStr+'] '+msgToDisplay+
+                    '    </div>'+
+                    '</body>'+
+                    '</html>';
+
+                return alertHtml;
+            }
+
+           /*******************************************************************************************************
+           * @description Generates current date string in format eg. "2017-10-27 10:50:41"
+           *
+           * @example
+           * generateCurrDateStr();
+           *
+           * @history
+           * -----------------------------------------------------------------------------------------------
+           * Date         Created by                        Description
+           * 2017-10-27   paulo.bastos@rightitservices.com  Creation
+           ********************************************************************************************************/
+            function generateCurrDateStr(){
+                var currdate = new Date();
+                /*
+                var dateStr = currdate.getDate() + "/"
+                    + (currdate.getMonth()+1)  + "/"
+                    + currdate.getFullYear() + " @ "
+                    + currdate.getHours() + ":"
+                    + currdate.getMinutes() + ":"
+                    + currdate.getSeconds();
+                */
+                //OR Take the ISO string, replace the "T" with a space, and trim off the milliseconds
+                dateStr=currdate.toISOString().replace('T', ' ').replace(/\..*$/, '');
+
+                return dateStr;
+            }
+
+
+           /*******************************************************************************************************
+           * @description Generates a pop up with given title and message. It supports 3 pop up modes:
+           *                1) LVA_CONSOLE_ALERT_MODE_POPUP (new browser window pop up) - RECOMENDED,
+           *                2) LVA_CONSOLE_ALERT_MODE_DIALOG (alert modal box that displays in toolkit component frame area).
+           *                3) LVA_CONSOLE_ALERT_MODE_ALERT (javascript alert command with given message to display)
+           *               Those option can be set in "LVA_Configs" custom metadata type parameter "LVA_CONSOLE_ALERT_MODE"
+           *
+           * @param {String} title - Window title
+           * @param {String} msgToDisplay - Message to display in popup
+           * @param {String} msgType - Message Type (success , info , warning ,danger , default  )
+           * @param {String} isAccumulative - Flag to setup if notifications are accumulative while chat window is open.
+           *
+           * @example
+           * popUpChatConsoleAlert("Notification","<html><body>Hello World!</body></html>","warning", true);
+           *
+           * @history
+           * -----------------------------------------------------------------------------------------------
+           * Date         Created by                        Description
+           * 2017-10-27   paulo.bastos@rightitservices.com  Creation
+           ********************************************************************************************************/
+            function popUpChatConsoleAlert(title, msgToDisplay, msgType, isAccumulative, msgTxtOnly){
+
+              if (msgType=='' || msgType==undefined){
+                  msgType='info';
+              }
+
+              //Set default value for isAccumulative flag
+              if (isAccumulative=='' || isAccumulative==undefined){
+                  isAccumulative={!isAccumulative};
+              }
+
+              //If POP UP ALERT MODE (RECOMENDED MODE)
+              if (lvaChatConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_POPUP'){
+                var heightDinamic;
+
+                if (newWindow!=undefined && !newWindow.closed){
+                    //cloes window in order to when open it again the popup came to the front
+                    newWindow.close();
+                }
+
+                //If not accumulative clean content history
+                if (isAccumulative!=true){
+                    windowContent='';
+                    heightDinamic=100;
+                    //windowName='_blank';
+                    windowName='Notifications';
+                }
+                else{
+                    heightDinamic=100;//300;
+                    windowName='Notifications';
+                }
+
+                newWindow =
+                    window.open('',
+                                windowName,
+                                'width=550, height='+heightDinamic+',scrollbars=yes,toolbar=no,titlebar=no,status=no,target=_blank,resizable=no,centerscreen=yes');
+
+                var htmlToDisplay=getAlertHtml(title, msgToDisplay, msgType, isAccumulative);
+                //console.log('basto1p - htmlToDisplay='+htmlToDisplay);
+
+
+                //clean document
+                newWindow.document.body.innerHTML='';
+
+                //Set popup content
+                windowContent=htmlToDisplay+windowContent;
+
+                //writes in the document
+                newWindow.document.write(windowContent);
+
+                newWindow.focus();
+              }
+              else if (lvaChatConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_ALERT'){
+                alert(msgTxtOnly);
+              }
+              else if (lvaChatConsoleAlertMode=='LVA_CONSOLE_ALERT_MODE_NOTIFICATION'){
+                //console.log('basto1p - htmlToDisplay='+htmlToDisplay);
+                createNotification(title,msgTxtOnly);
+              }
+              else{ //MODAL MODE
+                //open the tollkit component window
+
+                //add notification to modal
+                $('#modalTitle').html(title);
+                $('#modalBody').html(msgToDisplay);
+                $('#modalFooter').html(footer);
+
+                $('#PopUpChatConsoleAlertModal').modal('show');
+              }
+            }
+
+
+
+           /*******************************************************************************************************
+           * @description Agent Status Changed event handler function, will displays a popup window with
+           *              Agent Status Changed notification.
+           *
+           * @param {Object} result - event data to pass to handler function
+           *
+           *
+           * @example
+           * eventHandlerAgentStateChanged;
+           *
+           * @history
+           * -----------------------------------------------------------------------------------------------
+           * Date         Created by                        Description
+           * 2017-10-27   paulo.bastos@rightitservices.com  Creation
+           ********************************************************************************************************/
+            var lockAlert=true;
+            var lastStatus=null;
+            var eventHandlerAgentStateChanged = function (result) {
+
+                if (   lockAlert == false
+                    && result.state != lastStatus
+                    ){
+                    //&& isChatSupervisor=={!isChatSupervisor}
+
+                    var state=result.state;
+
+                    //Mapping agent status with different mesages types (colors)
+                    if (state=='Offline'){
+                        msgType='default';
+                    }
+                    else if (state=='Away'){
+                        msgType='warning';
+                    }
+                    else if (state=='Ocupated'){
+                        msgType='danger';
+                    }
+                    else if (state=='Online'){
+                        msgType='success';
+                    }
+
+                    //Call/Generate popup window
+                    popUpChatConsoleAlert("{!$Label.LVA_ConsoleStatusChangedPopupTitle}",
+                                          "{!$Label.LVA_ConsoleStatusChangedPopupDesc} "+"<b>" + state + "</b>",
+                                          msgType,
+                                          undefined,
+                                          "{!$Label.LVA_ConsoleStatusChangedPopupDesc} "+state);
+                    lastStatus = state;
+                }else{
+                    lockAlert = false;
+                }
+            };
+
+
+           /*******************************************************************************************************
+           * @description Chat request event handler function, will displays a popup window with new chat
+           *              request notification.
+           *
+           * @param {Object} result - event data to pass to handler function
+           *
+           *
+           * @example
+           * eventHandlerChatRequest;
+           *
+           * @history
+           * -----------------------------------------------------------------------------------------------
+           * Date         Created by                        Description
+           * 2017-10-27   paulo.bastos@rightitservices.com  Creation
+           ********************************************************************************************************/
+            var eventHandlerChatRequest = function (result) {
+                popUpChatConsoleAlert("{!$Label.LVA_ConsoleNewChatReqTitle}",
+                                      "{!$Label.LVA_ConsoleNewChatReqDesc}",// "+"<b>" + result.chatKey + "</b>",
+                                       undefined,
+                                       undefined,
+                                       "{!$Label.LVA_ConsoleNewChatReqDesc}");
+            };
+
+
+            /////////////////////////////////////////////////
+            // Setup the chat events handler fucntions
+            /////////////////////////////////////////////////
+            sforce.console.chat.onAgentStateChanged(eventHandlerAgentStateChanged);
+            sforce.console.chat.onChatRequested(eventHandlerChatRequest);
+
+        </script>
+
+    </body>
+    </html>
 </apex:page>

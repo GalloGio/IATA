@@ -65,11 +65,14 @@ public class IDCardLoginControllerTest{
 
         // TestPage with cookies
         Cookie languageCookies = new Cookie('idcard_portal_lang','en_US',null,-1,false);
+         ISSP_CS__c cs = new ISSP_CS__c(name ='ipinfo_token', value__c = '871e08ecd39325');
+         insert cs;
         controllerPage = Page.IDCardLogin;
         controllerPage.setCookies(new Cookie[]{languageCookies});
       Test.setCurrentPage (controllerPage);
         idCardLoginController = new IDCardLoginController();
       idCardLoginController.getLangItems();
+      idCardLoginController.findLocation();
     }
 
     public static TestMethod void TestVerify(){

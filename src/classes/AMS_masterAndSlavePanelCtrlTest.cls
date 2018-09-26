@@ -94,6 +94,7 @@ public class AMS_masterAndSlavePanelCtrlTest{
         insert acct;
         
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'name',
                                  phone = '123',
                                  accountid = acct.id,
                                  Financial_Assessment_Contact__c = false,

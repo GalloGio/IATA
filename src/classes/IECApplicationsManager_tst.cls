@@ -36,9 +36,9 @@ private class IECApplicationsManager_tst {
     private static Accreditation__c oAccreditation3;
     
     private static final Integer SUB_USAGE_QTY = 42;
-    private static final String AGENCY1_CODE = '5555555';
-    private static final String AGENCY2_CODE = '6666666';
-    private static final String AGENCY3_CODE = '7777777';
+    private static final String AGENCY1_CODE = '55555';
+    private static final String AGENCY2_CODE = '66666';
+    private static final String AGENCY3_CODE = '77777';
     private static final String AGENT_VER_NUMBER = '5578000523';
     private static final String AGENCY_CHECK_DIGIT = '9';
     private static final String AGENCY1_NAME = 'Chillwave Agency';
@@ -113,7 +113,7 @@ private class IECApplicationsManager_tst {
         insert lstGDPAccounts;
         
         // create ID_Card records
-        oIDCard = IECTestUtil.createSampleIDCard('John', 'Doe', AGENT_VER_NUMBER, AGENCY1_NAME, AGENCY1_CODE, 'Printed/Delivered');
+        oIDCard = IECTestUtil.createSampleIDCard('John', 'Doe', AGENT_VER_NUMBER, AGENCY1_NAME, AGENCY1_CODE, 'Valid ID Card');
         oIDCard.Valid_To_Date__c = Date.today().addYears(1);
         oIDCard.Valid_From_Date__c = Date.today();
         insert oIDCard;
@@ -220,7 +220,34 @@ private class IECApplicationsManager_tst {
         oCommunityUser = IECTestUtil.createSampleUser(oContact);
     } // initDataForCustomerSearch
     
-    
+
+    // ====================================================================
+    // creates a registry in tha custom setting CAC_and_GAD_Settings__c
+    // output: CAC_and_GAD_Settings__c
+    // used by testAnonymousSearch
+    private static void createCACandGADEntry(){
+        Boolean exists = false;
+
+        //fetch the existing entries for this custom setting
+        for(CAC_and_GAD_Settings__c cs : CAC_and_GAD_Settings__c.getAll().values()){
+            //check if already exists one named Excluded Values
+            if(cs.Name.equals('Excluded Values')){
+                exists = true;
+            }
+
+        }
+
+        //If does not exist an Excluded Values custom setting creates it
+        if(!exists){
+            CAC_and_GAD_Settings__c CacGadSettings = new CAC_and_GAD_Settings__c();
+            CacGadSettings.Name = 'Excluded Values';
+            CacGadSettings.Excluded_CAC_Location_Classes__c = 'A;I;L;Q;R;U;Y;Z';
+            CacGadSettings.Excluded_GAD_Location_Classes__c = 'A;I;L;Q;R;U;Y;Z;C;X';
+
+            insert CacGadSettings;
+        }
+
+    }
     
     // ====================================================================
     // test customer search functionality: part 1
@@ -228,6 +255,8 @@ private class IECApplicationsManager_tst {
     @isTest(SeeAllData=true)
     static void testCustomerSearch1_Count() {
         initDataForCustomerSearch();
+
+        createCACandGADEntry();
         
         IECTestUtil.trgPortalUserAfterInserUpdate = true;
         List<IEC_Product_Access__c> lstProductAccess = null;
@@ -264,6 +293,8 @@ private class IECApplicationsManager_tst {
     @isTest(SeeAllData=true)
     static void testCustomerSearch2() {
         initDataForCustomerSearch();
+
+        createCACandGADEntry();
         
         IECTestUtil.trgPortalUserAfterInserUpdate = true;
         List<IEC_Product_Access__c> lstProductAccess = null;
@@ -325,46 +356,55 @@ private class IECApplicationsManager_tst {
       
     
    
+    @isTest(SeeAllData=true)
+    static void testCustomerSearch3Pre() {  
 
-   static void testCustomerSearch3Pre() {  
-            //account 3 - start
-            List<GDP_Products_Account_View__c> lstSearchResult = null;
-                 IATA_ISO_Country__c oISOCountry = IECTestUtil.CreateSampleIATAISOCountry();
-                insert oISOCountry;
-                GDP_Geo_Detail__c oGEODetail = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
-                insert oGEODetail;
-                oGDPAccount3 = IECTestUtil.createSampleGDPAccount(AGENCY1_NAME, AGENCY1_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationType);
-                oGDPAccount3.Check_Digit__c = AGENCY_CHECK_DIGIT;
+        initDataForCustomerSearch();
 
-                insert oGDPAccount3;
+        createCACandGADEntry();
+        //account 3 - start
+        List<GDP_Products_Account_View__c> lstSearchResult = null;
+        IATA_ISO_Country__c oISOCountry = IECTestUtil.CreateSampleIATAISOCountry();
+        insert oISOCountry;
+        GDP_Geo_Detail__c oGEODetail = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
+        insert oGEODetail;
+        /*oGDPAccount3 = IECTestUtil.createSampleGDPAccount(AGENCY1_NAME, AGENCY1_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationType);
+        oGDPAccount3.Check_Digit__c = AGENCY_CHECK_DIGIT;
 
-                oAccreditation3 = IECTestUtil.CreateSampleAccreditation(null, oGDPAccount3, 'GDP');
-                oAccreditation3.Status__c = oRefAgencyStatus.Id;
-                insert oAccreditation3;
-                oGDPAccount3.Related_Accreditation_Class__c = oAccreditation3.Id;
-                update oGDPAccount3;
-            //account 3 - end
+        insert oGDPAccount3;
+        */
 
-            GDP_Address__c oGDPAddress3 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount3, oISOCountry, null, oGEODetail);
-            oGDPAddress3.Address_Postal_Code__c = 'H0H 0H0';
-            oGDPAddress3.Address_Type__c = 'Location';
-            oGDPAddress3.Address_City__c = 'BOYA';
-            insert oGDPAddress3;
+        /*oAccreditation3 = IECTestUtil.CreateSampleAccreditation(null, oGDPAccount3, 'GDP');
+        oAccreditation3.Status__c = oRefAgencyStatus.Id;
+        insert oAccreditation3;
+        oGDPAccount3.Related_Accreditation_Class__c = oAccreditation3.Id;
+        update oGDPAccount3;
+        */
+        //account 3 - end
 
-            oGDPAccount3.Related_GDP_Address__c = oGDPAddress3.Id;
-            update oGDPAccount3;
-            SchdlGDPProductsAccountSnapshotCleanup bat = new SchdlGDPProductsAccountSnapshotCleanup();
-            List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
-            bat.execute(null, gpav);
-
-            IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
-            oFilter.Zip_Code__c = '0H 0';
-            oFilter.City__c = oGDPAddress3.Address_City__c;
-            oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
-            oFilter.Country__c = oGDPAddress3.Address_ISO_Country_Code__c;
+        GDP_Address__c oGDPAddress3 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount3, oISOCountry, null, oGEODetail);
+        oGDPAddress3.Address_Postal_Code__c = 'H0H 0H0';
+        oGDPAddress3.Address_Type__c = 'Location';
+        oGDPAddress3.Address_City__c = 'BOYA';
+        insert oGDPAddress3;
 
 
-            
+        oGDPAccount3.Related_GDP_Address__c = oGDPAddress3.Id;
+        update oGDPAccount3;
+        SchdlGDPProductsAccountSnapshotCleanup bat = new SchdlGDPProductsAccountSnapshotCleanup();
+        
+		/*
+		List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
+        bat.execute(null, gpav);
+
+        IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
+        oFilter.Zip_Code__c = '0H 0';
+        oFilter.City__c = oGDPAddress3.Address_City__c;
+        oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
+        oFilter.Country__c = oGDPAddress3.Address_ISO_Country_Code__c;
+
+
+        System.runAs(oCommunityUser) {
 
             lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
 
@@ -379,8 +419,13 @@ private class IECApplicationsManager_tst {
             oFilter.City_Search_Type__c = IECConstants.GADSearchType.ExactMatch.name();
 
             lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount1.Id == lstSearchResult.get(0).Id, 'The Agency #2 should be found based on agency name and city');
+            //system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount1.Id == lstSearchResult.get(0).Id, 'The Agency #2 should be found based on agency name and city');
         }
+		*/
+    }
+
+    
+
     // test customer search functionality: part 4
     // test search by address
     //@isTest(SeeAllData=true)
@@ -516,6 +561,9 @@ private class IECApplicationsManager_tst {
         List<GDP_Products_Account_View__c> lstSearchResult = null;
         List<IEC_Usage_Tracker_Live__c> lstUsageLive = null;
         ID_Card__c oSearchedIDCard = null;
+
+        //Creates a regist in CAC_and_GAD_Settings__c to be used in the test
+        createCACandGADEntry();
         
         setupData();
         
@@ -532,6 +580,16 @@ private class IECApplicationsManager_tst {
                             AND Date__c >= :Datetime.now().addSeconds(-5)
                         ORDER by CreatedDate desc];
         system.assert(lstUsageLive != null && lstUsageLive.size() > 0, 'The Usage Tracking record should be found');
+
+        // Test #2 - search for an existing checkCode
+        lstSearchResult = IECApplicationsManager.anonymousSearchAgencyByIATACode('4444444', '0', null, IECConstants.ProductCategory_SF_CACFREE);
+        system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No Agency should be found');
+
+        // Test #3 - search for an existing checkCode and CASSCode
+        lstSearchResult = IECApplicationsManager.anonymousSearchAgencyByIATACode('4444444', '0', '0', IECConstants.ProductCategory_SF_CACFREE);
+        system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No Agency should be found');
+
+
         //system.assertEquals(IECConstants.IECUsageTrackerSearchStatus_Fail, lstUsageLive.get(0).Search_Status__c, 'The Search Status should be Fail');
         //system.assertEquals(1, lstUsageLive.get(0).Counter__c, 'The Counter should be set to 1');
         
@@ -539,9 +597,9 @@ private class IECApplicationsManager_tst {
         //lstSearchResult = IECApplicationsManager.anonymousSearchAgencyByIATACode(AGENCY1_CODE, null, null, IECConstants.ProductCategory_SF_CACFREE);
         //system.assert(lstSearchResult != null && lstSearchResult.size() == 1, 'The Agency should be found');
         
-        // Test #3 - search for invalid ID Card
-        //oSearchedIDCard = IECApplicationsManager.anonymousSearchAgentByVER('3213215', IECConstants.ProductCategory_SF_CACFREE);
-        //system.assert(oSearchedIDCard == null, 'The ID Card should not be found for unknown VER number');
+        // Test #4 - search for invalid ID Card
+        oSearchedIDCard = IECApplicationsManager.anonymousSearchAgentByVER('3213215', IECConstants.ProductCategory_SF_CACFREE);
+        system.assert(oSearchedIDCard == null, 'The ID Card should not be found for unknown VER number');
         
         // Test #4 - search for valid ID Card
         //oSearchedIDCard = IECApplicationsManager.anonymousSearchAgentByVER(AGENT_VER_NUMBER, IECConstants.ProductCategory_SF_CACFREE);
@@ -619,13 +677,22 @@ private class IECApplicationsManager_tst {
         System.assertNotEquals(0, lstProdAccessByProductCategory.size(), 'ProductAccess By Product Category should be found.');
         
         IECApplicationsManager.adjustProductAccessOnSubscription( oContact.Id, oSubscription, 'INVOICE 333', lstProdAccessBySubs[0]); 
-        
+
         List<IEC_Application_Filter__c> lstFilters = IECApplicationsManager.LoadFilterByContact( oContact.id, true) ;// test for bSystemGenerated
         
         System.runAs(oCommunityUser) {
             Date dEndSubscriptionDate = IECApplicationsManager.getEnddateOfSubscriptionName(oSubscription.Name);
             Integer iDayLeftForAccess = IECApplicationsManager.getDaysLeftForAccessBySubscriptionName(oSubscription.Name);
         }
+
+        /*
+        IECEBC_TestUtility.createEbcSetupAndRelatedData();
+        IECEBC_TestUtility.createTestUser();
+        Zuora__Subscription__c ebcSubscription = IECEBC_TestUtility.createEbcSubscription(IECEBC_TestUtility.lEbcProductRatePlanMember[1], IECEBC_TestUtility.oEbcProductMember, dtSubscriptionEnddate);
+        ebcSubscription.Product_Rate_Plan_Information__c = oProductRatePlanInfo.Id;
+        IECApplicationsManager.adjustProductAccessOnSubscription( oContact.Id, ebcSubscription, 'INVOICE 333', null);
+        */
+
         Test.stopTest();
         
     } // end of testOtherStuff2
@@ -666,6 +733,7 @@ private class IECApplicationsManager_tst {
         Boolean resetPreviouslyStoredBillingAcct = true;
         bPermissionGranted = IECApplicationsManager.isEbcAccessGrantedForContact(oTestContact.Id, resetPreviouslyStoredBillingAcct); // 
         System.assertEquals( true, bPermissionGranted, 'Permission to access EBC should be granted based on BillingAccount setting');
+		
         
     } // testIsEbcAccessGrantedForContact
 } // end of IECApplicationsManager_tst

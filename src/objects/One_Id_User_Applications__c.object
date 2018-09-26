@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,12 +45,39 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Action__c</fullName>
+        <externalId>false</externalId>
+        <label>Action</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Add</fullName>
+                    <default>true</default>
+                    <label>Add</label>
+                </value>
+                <value>
+                    <fullName>Remove</fullName>
+                    <default>false</default>
+                    <label>Remove</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
     <fields>
         <fullName>App_Key__c</fullName>
         <caseSensitive>true</caseSensitive>
@@ -136,33 +159,53 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Portal_Service_Access__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Portal Service Access</label>
+        <referenceTo>Portal_Application_Right__c</referenceTo>
+        <relationshipLabel>One Id User Applications</relationshipLabel>
+        <relationshipName>One_Id_User_Applications</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Provisioning_Status__c</fullName>
         <externalId>false</externalId>
         <label>Provisioning Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Requested</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Completed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Deleted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Requested</fullName>
+                    <default>true</default>
+                    <label>Requested</label>
+                </value>
+                <value>
+                    <fullName>Failed</fullName>
+                    <default>false</default>
+                    <label>Failed</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>Deleted</fullName>
+                    <default>false</default>
+                    <label>Deleted</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Selected_Role__c</fullName>
@@ -205,12 +248,15 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Identity_User__c</columns>
+        <columns>App_Name__c</columns>
+        <columns>Provisioning_Status__c</columns>
+        <columns>CREATEDBY_USER</columns>
         <columns>One_Id_App_Bundle__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Action__c</columns>
+        <columns>Portal_Service_Access__c</columns>
         <columns>Application__c</columns>
         <columns>One_Id_Service_Provider_Config__c</columns>
-        <columns>User_Provisioning_Request__c</columns>
-        <columns>User_App_State__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -225,4 +271,5 @@
     <pluralLabel>One Id User Applications</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

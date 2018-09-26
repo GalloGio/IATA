@@ -13,25 +13,28 @@
             <apex:inputField value="{!LocalGovernance__c.Abbreviation__c}" />
             <apex:inputField value="{!LocalGovernance__c.Region__c}" />
             <apex:inputField value="{!LocalGovernance__c.Reporting_to__c}" required="true" />
-            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
-            <apex:inputField value="{!LocalGovernance__c.Group_Owner_Text__c}" required="true" />
+            <apex:inputField value="{!LocalGovernance__c.Group_Owner__c}" required="true" styleClass="hidePicklist"/>
+            <!-- <apex:pageBlockSectionItem ></apex:pageBlockSectionItem> -->
+            <apex:inputField value="{!LocalGovernance__c.Active__c}"  />
+            <apex:inputField value="{!LocalGovernance__c.Group_Administrator__c}" styleClass="hidePicklist"/>
+            <apex:inputField value="{!LocalGovernance__c.Managed_in_SSW__c}"  />
 
         </apex:pageBlockSection>
 
         <apex:pageBlockSection title="Terms of Reference"  id="torSection" >
             <apex:inputField value="{!LocalGovernance__c.Restricted_of_Participants__c}"  />
-            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+            <!-- <apex:pageBlockSectionItem ></apex:pageBlockSectionItem> -->
 
-            <apex:inputField value="{!LocalGovernance__c.Maximum_Number_of_Participiants__c}" id="numParticipiants" />
             <apex:inputField value="{!LocalGovernance__c.Open_to__c}" />
+            <apex:inputField value="{!LocalGovernance__c.Maximum_Number_of_Participiants__c}" id="numParticipiants" />
             <!-- <apex:inputField value="{!LocalGovernance__c.Open_to_non_IATA_Airlines_and_Others__c}"  /> -->
 
-            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
             <apex:inputField value="{!LocalGovernance__c.Frequency_of_Face_to_Face_Meetings__c}" />
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+            <apex:inputField value="{!LocalGovernance__c.Frequency_of_Meetings__c}" /><!-- rows="5" -->
             <apex:inputField value="{!LocalGovernance__c.Mission__c}" required="true" />
-            <apex:inputTextArea value="{!LocalGovernance__c.Frequency_of_Meetings__c}" rows="5"/>
-            <apex:inputTextArea value="{!LocalGovernance__c.Latest_Successes__c}" rows="5"/>
-            <apex:inputTextArea value="{!LocalGovernance__c.What_is_Group_Working_on_Now__c}" rows="5"/>
+            <apex:inputField value="{!LocalGovernance__c.What_is_Group_Working_on_Now__c}" /><!-- rows="5" -->
+            <apex:inputField value="{!LocalGovernance__c.Latest_Successes__c}" /><!-- rows="5" -->
         </apex:pageBlockSection>
         </apex:outputPanel>
 

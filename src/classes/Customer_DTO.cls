@@ -1,5 +1,22 @@
 public class Customer_DTO 
 {
+    // Ecommerce Enhancements
+    private static Boolean isLoginEvent = false;
+    private static Customer_DTO loginEventSingleton = null;
+    private static Id loginContactId = null;
+
+    public static void setLoginEvent(Id contactId) {
+        isLoginEvent = true;
+        loginContactId = contactId;
+    }
+
+    public static void resetLoginEvent() {
+        isLoginEvent = false;
+        loginContactId = null;
+    }
+
+    // Ecommerce Enhancements end
+
     private static Customer_DTO singleton = null;
 
     public User sfUser { get; set; }
@@ -97,8 +114,8 @@ public class Customer_DTO
         
         //*** get information on contact and account and parent account to determine if eligible
         List<Contact> checks = [select User_IECPortal_Status__c, Account.ParentId, Account.Industry, Account.IATACode__c
-                              , Account.RecordType.DeveloperName, Account.Membership_status__c, Account.ICH_Member__c
-                              , Account.Parent.RecordType.DeveloperName, Account.Parent.Membership_status__c, Account.Parent.ICH_Member__c
+                              , Account.RecordType.DeveloperName, Account.Membership_status__c, Account.ICH_Member__c, Account.ACH_Member__c
+                              , Account.Parent.RecordType.DeveloperName, Account.Parent.Membership_status__c, Account.Parent.ICH_Member__c, Account.Parent.ACH_Member__c
                          from Contact
                          where Id = :sfContact.Id limit 1];
 
@@ -114,19 +131,20 @@ public class Customer_DTO
         Boolean isAccountEligible = false;
         if (check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_BranchAirline || check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_Airline )
         {
-            if ( check.Account.ParentId != null && check.Account.Parent.ICH_Member__c == true)      
+            if ( check.Account.ParentId != null && (check.Account.Parent.ICH_Member__c == true || check.Account.Parent.ACH_Member__c == true))      
                 return true;
-            if(check.Account.ICH_Member__c == true)
+            if(check.Account.ICH_Member__c == true || check.Account.ACH_Member__c == true)
                 return true;
         }
         else
         {      
-            if(check.Account.ICH_Member__c == true)
+            if(check.Account.ICH_Member__c == true || check.Account.ACH_Member__c == true)
                 return true;
     }
     return false;
 }
 
+/*
     public static Customer_DTO getLoggedCustomer()
     {
         //-- If logged user 
@@ -149,6 +167,58 @@ public class Customer_DTO
             return null; 
         }   
     }
+*/
+
+    // Ecommerce Enhancements - new version to hook on login event
+    public static Customer_DTO getLoggedCustomer()
+    {
+        if (isLoginEvent == false) {
+            // Existing behaviour (default)
+            //-- If logged user 
+            if(UserInfo.getUserType() == 'PowerPartner')
+            {
+                if(singleton == null)
+                {
+                    Customer_DTO customer = getCustomerByUser(UserInfo.getUserId());  
+                    
+                    //-- Build Customer addresses 
+                    setCustomerAddresses(customer);
+                    singleton = customer; 
+                }
+
+                return singleton;
+            }
+            //-- Non logged user 
+            else
+            {
+                return null; 
+            }   
+        } else {
+            // New Behaviour, create simulation of logged in user on login event
+            if (loginEventSingleton == null) {
+                Customer_DTO customer = getCustomerByContact(loginContactId);
+
+                setCustomerAddresses(customer);
+                loginEventSingleton = customer;
+            }
+
+            return loginEventSingleton;
+        }
+    }
+
+    public static Customer_DTO getCustomerByContact(Id contactId) {
+        List<User> userList = [SELECT Id, ContactId FROM User WHERE ContactId = :contactId];
+
+        if (userList != null && userList.isEmpty() == false) {
+            User user = userList[0];
+
+            return getCustomerByUser(user.Id);
+        } else {
+            return null;
+        }
+    }
+
+    // Ecommerce Enhancements end
 
     public static Customer_DTO getCustomerByUser(Id userId)
     {

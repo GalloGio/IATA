@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Relationship between a Client and an Airline for E&amp;F stating what charges we bill in what currency and payment method.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -156,12 +153,15 @@
     <fields>
         <fullName>Billing_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Client__c</fullName>
@@ -230,12 +230,15 @@
     <fields>
         <fullName>Data_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Data Currency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Airline_Id__c</fullName>
@@ -318,13 +321,16 @@
     <fields>
         <fullName>EF_Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
         <inlineHelpText>If no active material line item exist, the E&amp;F Status is automatically set to Inactive</inlineHelpText>
         <label>E&amp;F Status</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>EF_Submitter_Email__c</fullName>
@@ -363,12 +369,15 @@
     <fields>
         <fullName>Invoice_Distribution_Method__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Invoice_Distribution</globalPicklist>
         <label>Invoice Distribution Method</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Invoice_Distribution</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Location_Code_Details__c</fullName>
@@ -398,33 +407,40 @@
         <description>Helper field for &quot;require approval&quot; functionality.</description>
         <externalId>false</externalId>
         <label>Manager Approval</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recalled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>false</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Recalled</fullName>
+                    <default>false</default>
+                    <label>Recalled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Payer__c</fullName>
@@ -442,12 +458,15 @@
     <fields>
         <fullName>Payment_Currency__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Currency</globalPicklist>
         <label>Payment Currency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Currency</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Payment_Method_Code__c</fullName>
@@ -485,12 +504,15 @@
     <fields>
         <fullName>Payment_Method__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Payment_Method</globalPicklist>
         <label>Payment Method</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Payment_Method</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Payment_Terms_Code__c</fullName>
@@ -507,12 +529,15 @@
     <fields>
         <fullName>Payment_Terms__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Payment_Terms</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Requested_Changes__c</fullName>
@@ -584,18 +609,42 @@
         <fullName>Status__c</fullName>
         <description>Helper field for &quot;require approval&quot; functionality.</description>
         <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>EF_Status</valueSetName>
+        </valueSet>
     </fields>
     <label>E&amp;F Airline Billing Agreement</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Billing_Agreements</fullName>
+        <columns>NAME</columns>
+        <columns>BillingAgreement_Name__c</columns>
+        <columns>Airline__c</columns>
+        <columns>Client__c</columns>
+        <columns>Contract__c</columns>
+        <columns>Contract_Group_Code__c</columns>
+        <columns>EF_Airline_Id__c</columns>
+        <columns>EF_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>E&amp;F Billing Agreements</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
+        </sharedTo>
     </listViews>
     <nameField>
         <displayFormat>E&amp;F ABA-{0000}{MM}{YY}</displayFormat>
@@ -658,6 +707,7 @@ OR(ISPICKVAL( Airline__r.EF_Status__c , &apos;Inactive&apos;), ISPICKVAL( Client
 )</errorConditionFormula>
         <errorMessage>Business Development Managers and E&amp;F General Access roles are not allowed to update or create Airline Billing Agreements.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Edit_All</fullName>
         <availability>online</availability>

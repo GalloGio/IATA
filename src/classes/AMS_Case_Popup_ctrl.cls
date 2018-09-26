@@ -12,11 +12,11 @@ public class AMS_Case_Popup_ctrl {
     }
     
     private string checkAccumulatedIrregularityPopup(){
-        list<case> lsCase = [select Account.Accumulated_Irregularities__c, Acc_IRR_leading_to_DEF__c,
+        list<case> lsCase = [select Account.Accumulated_Irregularities__c, Account.ANG_IsNewGenAgency__c,Acc_IRR_leading_to_DEF__c,
                                           (Select Id, change_code__c From Agencies_Applied_Change_codes__r where change_code__c in:setChangeCodeToCheck)
-                                          from case where id=:theCaseId];
+                                          from case where id=:theCaseId and Account.Status__c != 'Cash basis/No commission' AND Account.Location_Class__c != 'I' ];
         
-        if(lsCase.isEmpty() || theCaseId==null){
+        if(lsCase.isEmpty() || theCaseId==null || lsCase.get(0).Account.ANG_IsNewGenAgency__c){
             return '';
         }else{
             boolean bHasDEF = false;

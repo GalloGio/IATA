@@ -5,6 +5,10 @@
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
     <aura:attribute name="isError" type="Boolean" default="false"/>
     <aura:attribute name="errorMessage" type="String"/>
+
+    <aura:attribute type="String[]" name="statusValues"/>
+    <aura:attribute type="String" name="status"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
     <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
@@ -12,6 +16,7 @@
     
     <aura:registerEvent name="updateMilestone" type="c:AMP_UpdateOrDeleteTask"/>
     <aura:registerEvent name="deleteMilestone" type="c:AMP_UpdateOrDeleteTask"/>
+    <aura:registerEvent name="cancelAddMilestone" type="c:AMP_UpdateOrDeleteTask"/>
     
     <aura:handler event="c:AMP_KAPActivityError" action="{!c.HandleMilestoneError}"/>
     
@@ -43,21 +48,32 @@
                 </div>
             </aura:if>
         </td>
-        <td><ui:inputText value="{!v.milestone.Subject}" class="slds-input required" /></td>
-        <td><ui:inputTextArea value="{!v.milestone.AM_Responsible__c}" class="slds-textarea" rows="5"/></td>
-        <td><ui:inputTextArea value="{!v.milestone.AM_Involved__c}" class="slds-textarea" rows="5"/></td>
-        <td><ui:inputTextArea value="{!v.milestone.AM_Support_Required_from_Account__c}" class="slds-textarea" rows="5"/></td>
+        <td><ui:inputTextArea value="{!v.milestone.Subject__c}" class="slds-textarea required" rows="5" maxlength = "255"/></td>
+        <td><ui:inputTextArea value="{!v.milestone.AM_Responsible__c}" class="slds-textarea" rows="5" maxlength = "255"/></td>
+        <td><ui:inputTextArea value="{!v.milestone.AM_Involved__c}" class="slds-textarea" rows="5" maxlength = "255"/></td>
+        <td><ui:inputTextArea value="{!v.milestone.AM_Support_Required_from_Account__c}" class="slds-textarea" rows="5" maxlength = "255"/></td>
         <td>
-            <ui:inputSelect aura:id="status" class="slds-select required">
+            <ui:inputSelect aura:id="statusList" class="slds-select required" >
+
+                <aura:iteration items="{!v.statusValues}" var="sv">
+                  <aura:if isTrue="{!v.status == sv}">
+                      <ui:inputSelectOption text="{!sv}" value="true" label="{!sv}"/>
+                      <aura:set attribute="else">
+                          <ui:inputSelectOption text="{!sv}" label="{!sv}"/>
+                      </aura:set>
+                  </aura:if>
+                </aura:iteration>
+            </ui:inputSelect>
+            <!-- <ui:inputSelect aura:id="status" class="slds-select required">
                 <ui:inputSelectOption label="On Track" text="On Track" value="{!v.milestone.Status == 'On Track'}" />
                 <ui:inputSelectOption label="On Hold" text="On Hold" value="{!v.milestone.Status == 'On Hold'}" />
                 <ui:inputSelectOption label="Delayed" text="Delayed" value="{!v.milestone.Status == 'Delayed'}" />
                 <ui:inputSelectOption label="Delivered" text="Delivered" value="{!v.milestone.Status == 'Delivered'}" />
                 <ui:inputSelectOption label="Cancelled" text="Cancelled" value="{!v.milestone.Status == 'Cancelled'}" />
-            </ui:inputSelect>
+            </ui:inputSelect> -->
         </td>
         <td><ui:inputDate value="{!v.milestone.ActivityDate}"   class="slds-input required" displayDatePicker="true"/></td>
-        <td><ui:inputTextArea value="{!v.milestone.Description}" class="slds-textarea" rows="5"/></td>
+        <td><ui:inputTextArea value="{!v.milestone.Description}" class="slds-textarea" rows="5" maxlength = "32000"/></td>
 
         <aura:set attribute="else">
             <td>
@@ -65,7 +81,7 @@
                     <c:AMP_EditSaveMenu />
                 </aura:if>
             </td>
-            <td><ui:outputText value="{!v.milestone.Subject}" class="slds-truncate"/></td>
+            <td><c:AMP_LongText text="{!v.milestone.Subject__c}"/></td>
             <td><c:AMP_LongText text="{!v.milestone.AM_Responsible__c}" /></td>
             <td><c:AMP_LongText text="{!v.milestone.AM_Involved__c}" /></td>
             <td><c:AMP_LongText text="{!v.milestone.AM_Support_Required_from_Account__c}" /></td>
