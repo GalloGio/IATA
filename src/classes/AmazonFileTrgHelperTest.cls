@@ -118,6 +118,68 @@ private class AmazonFileTrgHelperTest {
 
 
     }
-    
 
+    @isTest static void test_InsertWithAction() {
+        loadCredentials();
+        Account account = new Account(Name = 'testAccount');
+        insert account;
+        
+        Test.startTest();
+        AmazonFile__c file = new AmazonFile__c(
+            RecordTypeId=AmazonFileTrgHelper.RT_CERTIFICATE_ID,
+            Full_Name_Unique__c = 'test',
+            Action__c='Create Case',
+            SObject_Id__c = account.Id
+        );
+        insert file;
+        Test.stopTest();
+    }
+
+    @isTest static void test_UpdateWithAction_Reminder30() {
+        loadCredentials();
+        Account account = new Account(Name = 'testAccount');
+        insert account;
+
+        Case cse = new Case(
+            AccountId = account.Id
+        );
+        insert cse;
+
+        AmazonFile__c file = new AmazonFile__c(
+            RecordTypeId=AmazonFileTrgHelper.RT_CERTIFICATE_ID,
+            Full_Name_Unique__c = 'test',
+            SObject_Id__c = account.Id,
+            Case__c = cse.Id
+        );
+        insert file;
+
+        Test.startTest();
+        file.Action__c = 'Reminder 30 days';
+        update file;
+        Test.stopTest();
+    }
+
+    @isTest static void test_UpdateWithAction_ReminderOnExpiry() {
+        loadCredentials();
+        Account account = new Account(Name = 'testAccount');
+        insert account;
+
+        Case cse = new Case(
+            AccountId = account.Id
+        );
+        insert cse;
+
+        AmazonFile__c file = new AmazonFile__c(
+            RecordTypeId=AmazonFileTrgHelper.RT_CERTIFICATE_ID,
+            Full_Name_Unique__c = 'test',
+            SObject_Id__c = account.Id,
+            Case__c = cse.Id
+        );
+        insert file;
+
+        Test.startTest();
+        file.Action__c = 'Reminder on Expiry';
+        update file;
+        Test.stopTest();
+    }
 }
