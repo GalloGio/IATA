@@ -172,9 +172,9 @@
 								</td>
 								<td style="text-align: left; display: {!IF(helper.type == 'A','none','')}">
 									<apex:outputLabel value = "{! $Label.ANG_ISSP_ConversionFrom}" />
-									<!--&nbsp;
-									<apex:image value="/img/msg_icons/info16.png" title="{! cell.fees.ConversionFeesTooltip}" html-data-placement="right" html-data-toggle="tooltip"/-->
-									<p style="padding-left: 20px">{! cell.fees.ConversionFeesLabel}: {! cell.fees.ConversionFees}</p>
+									<apex:repeat value="{!cell.fees.ConversionFeesValuesList}" var="feeValue">
+										<p style="padding-left: 20px">{!feeValue}</p>
+									</apex:repeat>
 								</td>
 							</apex:outputPanel>
 						</apex:repeat>

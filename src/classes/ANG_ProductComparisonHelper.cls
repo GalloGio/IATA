@@ -222,8 +222,7 @@ public with sharing class ANG_ProductComparisonHelper {
 	    public String Fees_GoLite_GoGlobal {get; set;}
 	    public String Fees_GoStandard_GoGlobal {get; set;}
 
-	    public String ConversionFees {get; set;}
-	    public String ConversionFeesLabel {get; set;}
+	    public List<String> ConversionFeesValuesList {get; set;}
 	    public String ConversionFeesTooltip {get; set;}
 
     	public Fees(String HE_Annual_Fees, String AE_Annual_Fees, String HE_Application_Registration_Fees, String HE_AnnualFees_Small_Agents, String HE_AnnualFees_Medium_Agents, String HE_AnnualFees_Large_Agents,
@@ -236,6 +235,8 @@ public with sharing class ANG_ProductComparisonHelper {
 		    this.HE_AnnualFees_Small_Agents = HE_AnnualFees_Small_Agents;
 		    this.HE_AnnualFees_Medium_Agents = HE_AnnualFees_Medium_Agents;
 		    this.HE_AnnualFees_Large_Agents = HE_AnnualFees_Large_Agents;
+
+		    this.ConversionFeesValuesList = new List<String>();
 
 			this.AE_Annual_Fees = AE_Annual_Fees;
 		    this.AE_Application_Registration_Fees =	AE_Application_Registration_Fees;
@@ -254,28 +255,32 @@ public with sharing class ANG_ProductComparisonHelper {
 			Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();		    
 
 		    if (Fees_GoStandard_GoLite != null && Fees_GoStandard_GoLite != '') {
-		    	ConversionFees = Fees_GoStandard_GoLite;
-		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoStandard_GoLite__c').getDescribe().getLabel();
+		    	ConversionFeesValuesList.add(fieldMap.get('ANG_Fees_GoStandard_GoLite__c').getDescribe().getLabel() + ': ' + Fees_GoStandard_GoLite);
 		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoStandardTooltip;
-		    } else if (Fees_GoLite_GoStandard != null && Fees_GoLite_GoStandard != '') {
-		    	ConversionFees = Fees_GoLite_GoStandard;
-		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoLite_GoStandard__c').getDescribe().getLabel();
+		    } 
+
+		    if (Fees_GoLite_GoStandard != null && Fees_GoLite_GoStandard != '') {
+		    	ConversionFeesValuesList.add(fieldMap.get('ANG_Fees_GoLite_GoStandard__c').getDescribe().getLabel() + ': ' + Fees_GoLite_GoStandard);
 		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoLiteTooltip;
-		    } else if (Fees_GoGlobal_GoLite != null && Fees_GoGlobal_GoLite != '') {
-		    	ConversionFees = Fees_GoGlobal_GoLite;
-		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoGlobal_GoLite__c').getDescribe().getLabel();
+		    }
+
+		    if (Fees_GoGlobal_GoLite != null && Fees_GoGlobal_GoLite != '') {
+		    	ConversionFeesValuesList.add(fieldMap.get('ANG_Fees_GoGlobal_GoLite__c').getDescribe().getLabel() + ': ' + Fees_GoGlobal_GoLite);
 		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoGlobalTooltip;
-		    } else if (Fees_GoGlobal_GoStandard != null && Fees_GoGlobal_GoStandard != '') {
-		    	ConversionFees = Fees_GoGlobal_GoStandard;
-		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoGlobal_GoStandard__c').getDescribe().getLabel();
+		    } 
+
+		    if (Fees_GoGlobal_GoStandard != null && Fees_GoGlobal_GoStandard != '') {
+		    	ConversionFeesValuesList.add(fieldMap.get('ANG_Fees_GoGlobal_GoStandard__c').getDescribe().getLabel() + ': ' + Fees_GoGlobal_GoStandard);
 		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoGlobalTooltip;
-		    } else if (Fees_GoLite_GoGlobal != null && Fees_GoLite_GoGlobal != '') {
-		    	ConversionFees = Fees_GoLite_GoGlobal;
-		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoLite_GoGlobal__c').getDescribe().getLabel();
+		    }
+
+		    if (Fees_GoLite_GoGlobal != null && Fees_GoLite_GoGlobal != '') {
+		    	ConversionFeesValuesList.add(fieldMap.get('ANG_Fees_GoLite_GoGlobal__c').getDescribe().getLabel() + ': ' + Fees_GoLite_GoGlobal);
 		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoLiteTooltip;
-		    } else if (Fees_GoStandard_GoGlobal != null && Fees_GoStandard_GoGlobal != '') {
-		    	ConversionFees = Fees_GoStandard_GoGlobal;
-		    	ConversionFeesLabel = fieldMap.get('ANG_Fees_GoStandard_GoGlobal__c').getDescribe().getLabel();
+		    } 
+
+		    if (Fees_GoStandard_GoGlobal != null && Fees_GoStandard_GoGlobal != '') {
+		    	ConversionFeesValuesList.add(fieldMap.get('ANG_Fees_GoStandard_GoGlobal__c').getDescribe().getLabel() + ': ' + Fees_GoStandard_GoGlobal);
 		    	ConversionFeesTooltip = Label.ANG_ISSP_ConversionFromGoStandardTooltip;
 		    }
     	}
