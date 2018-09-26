@@ -4725,7 +4725,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <value>
                     <fullName>Print &amp; CDs</fullName>
                     <default>false</default>
-                    <label>Print &amp; CDs</label>
+                    <label>Print</label>
                 </value>
                 <value>
                     <fullName>Digital</fullName>
