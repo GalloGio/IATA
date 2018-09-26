@@ -247,6 +247,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Not_Applicable5__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Not Applicable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Request_coding_in_YMQ_to_allocate_design__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Coordinator</inlineHelpText>
