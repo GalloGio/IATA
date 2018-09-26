@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
-    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>ACR System Developments (Salesforce)</name>
     <queueMembers>
         <users>
             <user>larivaa@iata.org</user>
             <user>shalbakf@iata.org</user>
+            <user>alvess@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>

@@ -32,7 +32,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	private List<AsyncApexJob> batchJobs {get; set;}
 	public Boolean pollerBool {get; set;}
 	public Boolean batchStatusBool {get; set;}
-	public Integer batchCounter {get; set;}
+	public Datetime batchTimestamp {get; private set;}
 
 	public ANG_Apply_RHC_Equal_FS_Controller() {
 		populateModes();
@@ -208,11 +208,12 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 		  			bsp.ANG_RHC_Amount_Equals_FS__c = (actionValue == 'Apply_RHC');
 		  		}
 
+		  		batchTimestamp = Datetime.now();
+
 		  		update operationsToUpdate;
 
 		  		batchStatusBool = true;
   				pollerBool = true;
-  				batchCounter = 0;
   				batchPercentage = 0;
 		 		
 		  	} catch(Exception e) { ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for BSP: ' + bspValue + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString())); }
@@ -225,8 +226,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 						FROM AsyncApexJob 
 						WHERE ApexClass.Name = 'ANG_RHCEqualFSBatch'
 							AND CreatedById = :UserInfo.getUserId()
-							AND Status <> 'Completed'
-							AND Status <> 'Ended'
+							AND CreatedDate >= :batchTimestamp
 						ORDER BY CreatedDate DESC];
 
 			if (!batchJobs.isEmpty()) batchJob = batchJobs[0];
@@ -238,12 +238,11 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 			if (batchJob.JobItemsProcessed > 0) batchPercentage = batchJob.JobItemsProcessed * 100 / batchJob.TotalJobItems;
 
 			if (batchJob.status == 'Processing' && batchPercentage == 100) batchPercentage = 99;
+			if (batchJob.status == 'Completed' && batchPercentage == 0) batchPercentage = 100;
 
 			pollerBool = (batchJob.status == 'Ended' || batchJob.status == 'Completed') ? false : true;
 
 			if (!pollerBool) ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to the following agencies:'));
-
-			batchCounter++;
 		}
 	}
 }
