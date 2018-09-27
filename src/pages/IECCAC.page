@@ -265,22 +265,21 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                            <apex:outputText rendered="{!oAgency.Accreditation_Model__c != null}" value="Accreditation Model"/>
+                                            <apex:outputText rendered="{!oAgency.Accreditation_Model__c != null}" value="Accreditation Model"/></td>
+                                            <td>
+                                                <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'L'}">
+                                                    GoLite Model under NewGen ISS
+                                                </apex:outputpanel>
+                                                <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'S'}">
+                                                    GoStandard Model under NewGen ISS
+                                                </apex:outputpanel>
+                                                <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'G'}">
+                                                    GoGlobal Model under NewGen ISS
+                                                </apex:outputpanel>
+                                                <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'T'}">
+                                                    Traditonal Model not under NewGen
+                                                </apex:outputpanel>
                                             </td>
-                                                <td>
-                                                    <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'L'}">
-                                                        GoLite Model under NewGen ISS
-                                                    </apex:outputpanel>
-                                                    <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'S'}">
-                                                        GoStandard Model under NewGen ISS
-                                                    </apex:outputpanel>
-                                                    <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'G'}">
-                                                        GoGlobal Model under NewGen ISS
-                                                    </apex:outputpanel>
-                                                    <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'T'}">
-                                                        Traditonal Model not under NewGen
-                                                    </apex:outputpanel>
-                                                </td>                                            
                                         </tr>
                                     </table>
                                 </apex:outputpanel>
