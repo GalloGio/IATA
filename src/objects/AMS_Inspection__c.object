@@ -455,7 +455,9 @@
         <fullName>Class_G_Appointments</fullName>
         <active>true</active>
         <description>Prevent GSA/GSSA Appointment with status = 9 with no Territory Associated</description>
-        <errorConditionFormula>AND(Nr_of_AMS_Territories__c = 0, ISPICKVAL(Account__r.Location_Class__c, &apos;G&apos;), 
+        <errorConditionFormula>AND(Nr_of_AMS_Territories__c = 0, 
+AND(NOT(ISPICKVAL(Account__r.Status__c, &apos;Approved&apos;)),
+ISPICKVAL(Account__r.Location_Class__c, &apos;G&apos;)), 
 
 Value(Text(Accreditation_Endorsement_Status_code__c)) &gt; 4)</errorConditionFormula>
         <errorMessage>You cannot create an Appointment for a GSA/GSSA with Status greater or equal than 5 without creating an AMS Territory first. Please create the Appointment with status 2 and change it &gt;= 5 once the Account is Approved and the AMS Territory is created.</errorMessage>
