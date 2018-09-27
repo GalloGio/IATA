@@ -7,14 +7,14 @@ public class ANG_RHCMassCalculation {
     private Id batchId;
     private Datetime submitTime;
 
+    private static final Set<String> regionsToIgnore = new Set<String>{'GVA HO','Europe (Americas Countries)', 'Global'};
     private static final Map<String,String> userCaseRegionsMap = new Map<String,String>{
         'Africa & MENA' => 'Africa & Middle East',
         'Americas' => 'Americas',
         'Asia & Pacific' => 'Asia & Pacific',
+        'Asia &  Pacific' => 'Asia & Pacific', // avoid issues with wrong API Picklist value on user.IDFS_Regoin__c
         'China & North Asia' => 'China & North Asia',
-        'Europe' => 'Europe',
-        'GVA HO' => 'Europe',
-        'Europe (Americas Countries)' => 'Europe'        
+        'Europe' => 'Europe'       
     };
 
     public Boolean searched { get; set; }
@@ -46,7 +46,7 @@ public class ANG_RHCMassCalculation {
             if(regions == null){
                 regions = new List<SelectOption>();
                 for( Schema.PicklistEntry f : Case.Region__c.getDescribe().getPickListValues()){
-                    regions.add(new SelectOption(f.getValue(), f.getLabel()));
+                    if(!regionsToIgnore.contains(f.getValue())) regions.add(new SelectOption(f.getValue(), f.getLabel()));
                 } 
             }
             return regions;
