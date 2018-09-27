@@ -340,7 +340,7 @@ public with sharing class ANG_ProductComparisonHelper {
     	} else if (key == Label.ANG_ISSP_ProductStandardAccreditationWithNoCash) {
     		return 'New HE lite - Standard no Cash';
     	} else if (key == Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry) {
-    		return 'New HE global - Standard ??';
+    		return 'New HE multicountry - Multicountry';
     	} else {
     		return '';
     	}
