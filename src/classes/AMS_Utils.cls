@@ -280,6 +280,7 @@ public without sharing class AMS_Utils {
     public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
     public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
     public static final String CASE_REASON_HE_LITE = 'New HE lite';
+    public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE multicountry';
     public static final String CASE_REASON_ASSOCIATE_ENTITY_STANDARD = 'New AE';
     public static final String CASE_REASON_NEW_HO = 'New HO';
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
@@ -334,6 +335,7 @@ public without sharing class AMS_Utils {
 
     public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
     public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
+    public static final String AGENTTYPE_MULTICOUNTRY = 'Multicountry';
 
     //Account - ANG_Accreditation_Model__c
     public static final String ACCREDITATIONMODEL_CASH = 'Cash';
@@ -370,6 +372,7 @@ public without sharing class AMS_Utils {
     public static final String TYPE_PAX_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_LEGACY);
     public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
     public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
+    public static final String TYPE_HE_MULTICOUNTRY = buildOfficeType(CASE_REASON_HE_MULTICOUNTRY, AGENTTYPE_MULTICOUNTRY);
     public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES}; 
 	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
 
