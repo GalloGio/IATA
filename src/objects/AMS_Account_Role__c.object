@@ -1420,14 +1420,25 @@ TEXT(Account__r.Membership_status__c)
     <validationRules>
         <fullName>Ownership_Validation</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(RecordType.DeveloperName == &apos;Ownership&apos;,
+        <errorConditionFormula>AND(
+	RecordType.DeveloperName == &apos;Ownership&apos;,
 Account__r.CNS_Agency__c == false,
-OR(ISBLANK(Account__c), (
+	OR(
 
 AND (
-ISBLANK(Owner_Account__c), ISBLANK(Person__c), ISBLANK(Legacy_External_ID__c),ISBLANK(Contact__c)
+			ISBLANK(Account__c),
+			NOT(No_Airline_Subsidiaries__c)
+		),
+		(AND (
+			ISBLANK(Owner_Account__c), 
+			NOT(Other_Stakeholder_Types__c),
+			ISBLANK(Person__c), 
+			ISBLANK(Legacy_External_ID__c),
+			ISBLANK(Contact__c)
+			)
+		)
 )
-)))</errorConditionFormula>
+)</errorConditionFormula>
         <errorMessage>For Ownership Account Role please fill the Account, Person or Owner Account.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
