@@ -177,6 +177,7 @@ public without sharing class AMS_Utils {
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
     public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
     public static final String IEPMODELAACCOUNTSETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
+    public static final String IEPMODELBACCOUNTSETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
     public static final String PCI_COMPLIANT    = 'PCI.COMPLIANT.1.0';
 
     //Process of type NewGen
@@ -302,6 +303,9 @@ public without sharing class AMS_Utils {
     public static final String CASE_STATUS_CLOSED = 'Closed';
     public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
 
+    // Case - Reason1__c //AMSU-165
+    public static final String CASE_REASON_CHG_DATA_MAINTENANCE = 'CHG – Data Maintenance';
+
     //set with the ifap status to update the account's last financial review
     public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED};
 
@@ -325,7 +329,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
-    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
+    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X','G','D'};
     public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO','HE'};
 
     public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
@@ -3025,5 +3029,56 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                    And Sector__c = :AMS_Utils.SECTOR_PASSENGER  // agentSector
                    And IATACode__c Like :iataCode];
     }
+
+    /*** AMSU-166 Start ***/
+    /**
+    *   Method that validates if the record fields contain only latin characters
+    **/
+    public static List<String> validateCharacters(sObject record, List<Schema.SObjectField> fieldsToCheck) {
+        List<String> res = new List<String>();
+        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        Pattern p = Pattern.compile(ISO_8859_1_regEx);
+
+        for(Schema.SObjectField field : fieldsToCheck) {
+            String fieldAPIName = field.getDescribe().getName();
+            String fieldLabel = field.getDescribe().getLabel();
+            Object value = record.get(fieldAPIName);
+            if( value == null || !(value instanceof String)) {
+                continue; //Skip non String fields
+            }
+
+            if(!p.matcher((String) value).matches()) {
+                res.add(fieldLabel + ': ' + Label.ISSP_EnterValidString);
+            }
+
+            if(((String) value).contains('\t')) {
+                res.add(fieldLabel + ': Please remove all tabs');
+            }
+        }
+
+        return res;
+    }
+
+    public static final List<Schema.SObjectField> STAGING_AREA_FIELDS_TO_VALIDATE = new List<Schema.SObjectField> {
+        AMS_Pax_Accreditation_Form__c.Account_Name__c, 
+        AMS_Pax_Accreditation_Form__c.IATACode__c, 
+        AMS_Pax_Accreditation_Form__c.CASS_Number__c, 
+        AMS_Pax_Accreditation_Form__c.Short_Name__c, 
+        AMS_Pax_Accreditation_Form__c.Trade_Name__c, 
+        AMS_Pax_Accreditation_Form__c.ISSP_AMS_License_No__c, 
+        AMS_Pax_Accreditation_Form__c.ISSP_AMS_VAT_number__c,
+        AMS_Pax_Accreditation_Form__c.Branch_Office_Street_name_number__c, 
+        AMS_Pax_Accreditation_Form__c.Branch_Office_Postal_code__c, 
+        AMS_Pax_Accreditation_Form__c.Branch_Office_City__c, 
+        AMS_Pax_Accreditation_Form__c.Shipping_Street__c, 
+        AMS_Pax_Accreditation_Form__c.Shipping_Postal_Code__c,
+        AMS_Pax_Accreditation_Form__c.Shipping_City__c, 
+        AMS_Pax_Accreditation_Form__c.Branch_Office_Email__c, 
+        AMS_Pax_Accreditation_Form__c.Website__c, 
+        AMS_Pax_Accreditation_Form__c.Abbreviated_name__c, 
+        AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c, 
+        AMS_Pax_Accreditation_Form__c.VAT_Number_2__c
+    };
+    /*** AMSU-166 End ***/
 
 }

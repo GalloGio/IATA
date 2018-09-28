@@ -791,6 +791,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		System.assertEquals('Non-Active', aa.Status__c);
 
+		Test.startTest();
 
 		ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
@@ -804,9 +805,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 		aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
 
 		System.assertEquals('Active', aa.Status__c);		
-
-
-		Test.startTest();
         
 		AMS_OSCAR__c oscar = createOscarFOP();
 

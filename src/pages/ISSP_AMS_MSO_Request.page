@@ -301,10 +301,9 @@
             
             </script>
         </apex:outputPanel>
+        <c:ISSP_CustomNavigation communityName="{!communityName}"></c:ISSP_CustomNavigation>
         <div class="container">
             <div id="contentWrapper">
-
-                <c:ISSP_CustomNavigation communityName="{!communityName}"></c:ISSP_CustomNavigation>
 
                 <div class="panel-primary">
                     
@@ -607,8 +606,8 @@
                 </div>
 
             </div>
-            <c:ISSP_CustomFooter communityName="{!communityName}"/>
         </div>
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </body>  
 </html>
 

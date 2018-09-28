@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Primary user can add secondary user. Need to have create permission on user, contact and delegated admin permissions</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>FRED Primary User</label>
+</PermissionSet>
