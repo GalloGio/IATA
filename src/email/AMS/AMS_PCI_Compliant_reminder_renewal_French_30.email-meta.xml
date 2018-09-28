@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_PCI Compliant reminder renewal FR 30</name>
+    <style>freeForm</style>
+    <subject>RAPPEL PCI DSS</subject>
+    <textOnly>Cher/chère {!Case.Contact},
+
+Code IATA : {!Case.IATA_Code__c}
+
+
+
+Ceci est un message pour vous rappeler que nous n’avons pas encore reçu votre attestation de conformité à la norme PCI DSS ou votre auto déclaration d’absence d’utilisation de cartes de crédit. Nous souhaitons attirer votre attention sur le fait que la date de remise est fixée au {!Case.CreatedDate+30}. Si vous nous avez déjà fait parvenir la documentation officielle PCI DSS, veuillez ne pas tenir compte de ce message.
+
+
+
+Si vous souhaitez en savoir davantage sur la procédure de mise en conformité avec les PCI DSS, veuillez visiter notre page Web :
+
+
+
+http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+
+
+Si vous avez besoin d’informations supplémentaires de la part de l’IATA, n’hésitez pas à adresser une nouvelle demande par le biais de notre portail du service à la clientèle : www.iata.org/cs.
+
+Sincères salutations,
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+
+
+
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

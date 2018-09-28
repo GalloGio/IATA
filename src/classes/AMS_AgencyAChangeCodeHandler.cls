@@ -107,13 +107,19 @@ public class AMS_AgencyAChangeCodeHandler {
         //[select id, reason__c, Previous_Reason__c, Status__c, PreviousStatus__c from account where id in:setAccntId]
     	
     	for(Agency_Applied_Change_code__c aacc:lsAACC){
+            /*** AMSU-176 ***/
+            //Only active changes codes can update account status and reason
+            if(!aacc.Active__c) {
+                continue;
+            }
+
     		string sReason = (aacc.Reason_Code__c==null?'':aacc.Reason_Code__c)+ '-' + (aacc.Reason_Description__c==null?'':aacc.Reason_Description__c);
     		string sStatus = (aacc.AccountNewStatus__c==null?'':aacc.AccountNewStatus__c);
     		boolean bUpdateAccnt = false;
     		Account acc = new Account(id = aacc.Account__c);
     		if(!bIsUpdate) acc.Organization_Last_Change_Date__c = Date.Today();
     		if(sReason != '-'){
-    			if((aacc.Account__c != null && aacc.Active__c) || (aacc.Account__c != null && (aacc.Change_Code__c != 'IRR' || aacc.Change_Code__c != 'IRW'))){
+    			if(aacc.Account__c != null){
 	    			string sAccntReason = aacc.Account__r.reason__c;
 	    			if(sReason != sAccntReason){
 	    				acc.reason__c = sReason;
@@ -125,7 +131,7 @@ public class AMS_AgencyAChangeCodeHandler {
     		
     		//Update Account Status, but only if it's blank and different from the previous one
     		if(sStatus != ''){
-    			if((aacc.Account__c != null && aacc.Active__c) || (aacc.Account__c != null && (aacc.Change_Code__c != 'IRR' || aacc.Change_Code__c != 'IRW'))){
+    			if(aacc.Account__c != null){
 	    			string sAccntStatus = aacc.Account__r.status__c;
 	    			if(sAccntStatus != aacc.AccountNewStatus__c) {
                         acc.Date_Organisation_Status_attained__c = Date.Today();

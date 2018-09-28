@@ -27,7 +27,8 @@ public class AMS_CheckOwnershipAlignmentCtrlTest {
         insert acc;
        system.debug('## acc: '+acc);
         
-        //insert Contact
+		
+		/*
         Contact c = new Contact();
         c.Email = 'randomwell@email.com';
         c.LastName = ' rnadom cenas';
@@ -240,6 +241,7 @@ public class AMS_CheckOwnershipAlignmentCtrlTest {
         insert badOwnerBR6;
         
 		system.debug('## done inserting!');
+		*/
 	}
     
     @isTest()
