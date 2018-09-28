@@ -326,14 +326,9 @@ public class AMS_InspectionHelper {
                         fakeOscar.Current_Step__c = 'STEP31__c';
                         fakeOscar.Documentation_remarks__c = 'OSCAR FOR VR by Appointment Termination';
 
-                        //set to true so that account readon to be updated
-                        /*
                         for(Account acct: mapAccountsPerId.values()) {
-                            if(acct.Id == acctId && acct.Status__c != AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING){
-                                auxAccts.add(acct);
-                            }
+                           auxAccts.add(acct);
                         }
-                        */
 
                         System.debug('*************** fakeOscar: '+fakeOscar);
                         System.debug('*************** auxAccts: '+auxAccts);
