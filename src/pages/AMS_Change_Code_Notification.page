@@ -1,3 +1,38 @@
 <apex:page standardController="Case" extensions="AMS_Change_Code_Notification_Controller" showHeader="true" action="{!setNotificationMessage}">
+	
 	<apex:pageMessages escape="false" rendered="{! isSidra }"></apex:pageMessages>
+	<apex:outputPanel id="riskEventInfo">
+		<apex:pageMessages escape="false" rendered="{!showREmessage}"></apex:pageMessages>
+	</apex:outputPanel>
+
+	<apex:includeScript value="{!$Resource.cometd}"/>
+    <apex:includeScript value="{!$Resource.jquery}"/>
+    <apex:includeScript value="{!$Resource.json2}"/>
+    <apex:includeScript value="{!$Resource.jquery_cometd}"/>
+
+    <script>
+    	var j$ = jQuery.noConflict();
+    
+    	j$.cometd.websocketEnabled = false;
+    
+        j$.cometd.init({
+            url: window.location.protocol + '//' + window.location.hostname + '/cometd/43.0/',
+            requestHeaders: {
+                Authorization: 'OAuth {!$Api.Session_ID}'
+            }
+        });
+        
+        j$.cometd.subscribe('/event/Risk_Event_Notification__e', function(message){  
+            console.log(message.data.payload.Record_Id__c);
+            confirmMessageIsForForRecord(message.data.payload.Record_Id__c , message.data.payload.Message__c);
+        });
+
+	</script>
+
+	<apex:form id="mainForm">
+	    <apex:actionFunction name="confirmMessageIsForForRecord" action="{!compareIds}" reRender="riskEventInfo" >
+        	<apex:param id="recordid" name="record" value="" />
+            <apex:param id="messageid" name="message" value="" />
+        </apex:actionFunction>
+	</apex:form>
 </apex:page>

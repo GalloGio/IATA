@@ -115,7 +115,7 @@ public class ANG_RiskEventGenerator {
 				List<String> fields = new List<String>();
 				for(Schema.SObjectField field : fMap.values()) fields.add(field.getDescribe().getName());
 				
-				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
+				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c, ANG_Risk_Event_Type__r.Name FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
 			}
 			return configs;
 		}
@@ -158,7 +158,7 @@ public class ANG_RiskEventGenerator {
 		if(reQuery){
 			// if any of the conditions fields includes a relationship (.) requery de object to get the relationships
 			try{
-				objToEvaluate = Database.query('SELECT Id, RecordTypeId, CreatedDate, '+(objectName == 'Case' ? 'ParentId, Parent.RecordType.Name, ':'')+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
+				objToEvaluate = Database.query('SELECT Id, RecordTypeId, CreatedDate, '+(objectName == 'Case' ? 'ParentId, Parent.RecordTypeId, ':'')+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
 			}catch(System.QueryException e){
 				if(!e.getMessage().startsWith('No such column ')) throw e; 
 				else {
@@ -176,20 +176,25 @@ public class ANG_RiskEventGenerator {
 			Set<String> ifapIds = new Set<String>();
 			Set<String> accsIds = new Set<String>();
 			for (sObject o :objToEvaluate){
-				if(o.get('Parent.RecordType.Name') == AMS_Utils.RECTYPE_IFAP){
+				System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] object - '+o);
+				if(o.getSobject('Parent').get('RecordTypeId') == AMS_Utils.RECTYPE_IFAP){
 					ifapIds.add(String.valueOf(o.get('ParentId')));
 					accsIds.add(String.valueOf(o.get('AccountId')));
 				}
 			}
-			for(Case c: [SELECT Id, AccountId, Status, CreatedDate FROM Case 
-				WHERE RecordType.Name = :AMS_Utils.RECTYPE_IFAP 
-				AND AccountId IN :accsIds AND Id NOT IN :ifapIds ORDER BY CreatedDate DESC]){
 
-				if(previousIFAPsByAccount.containsKey(c.AccountId))
-					previousIFAPsByAccount.get(c.AccountId).add(c);
-				else
-					previousIFAPsByAccount.put(c.AccountId, new List<Case>{c});
+			if(!accsIds.isEmpty()){
+				for(Case c: [SELECT Id, AccountId, Status, CreatedDate FROM Case 
+					WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP 
+					AND AccountId IN :accsIds AND Id NOT IN :ifapIds ORDER BY CreatedDate DESC]){
+
+					if(previousIFAPsByAccount.containsKey(c.AccountId))
+						previousIFAPsByAccount.get(c.AccountId).add(c);
+					else
+						previousIFAPsByAccount.put(c.AccountId, new List<Case>{c});
+				}
 			}
+			System.debug('____ [cls ANG_RiskEventGenerator - generate] previousIFAPsByAccount - '+previousIFAPsByAccount);
 		}		
 
 
@@ -221,11 +226,14 @@ public class ANG_RiskEventGenerator {
 						if(config.ANG_Activate_In__c != null) risk.ANG_Issued_Date__c = System.today().addDays(Integer.valueOf(config.ANG_Activate_In__c));
 
 						//NEWGEN-2719 prevent "Fail Financial Statement" risk event creation for agents with previous ifap status = "Closed_Non compliance" 
-						if(config.ANG_Risk_Event_Type__c != ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS || objectName != 'Case' || !previousIFAPsByAccount.containsKey(String.valueOf(o.get('AccountId'))) 
-							|| !IFAP_BusinessRules.isPreviousIFAPStatusEquals(previousIFAPsByAccount.get(String.valueOF(o.get('AccountId'))),'Closed_Non compliance')){
+						if(config.ANG_Risk_Event_Type__r.Name != ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS || objectName != 'Case' || !previousIFAPsByAccount.containsKey(String.valueOf(o.get('AccountId'))) 
+							|| previousIFAPsByAccount.isEmpty() || !IFAP_BusinessRules.isPreviousIFAPStatusEquals(previousIFAPsByAccount.get(String.valueOf(o.get('AccountId'))),'Closed_Non compliance')){
 							riskEvents.add(risk);
+							System.debug('____ [cls ANG_RiskEventGenerator - generate: RISK EVENT Created...');
 						}else{
-							//do the show error part
+							System.debug('____ [cls ANG_RiskEventGenerator - generate: NOT creating "Fail Financial Statement" risk event');
+							System.debug('____ [cls ANG_RiskEventGenerator - generate: PUBLISHING EVENT...');
+							EventBus.publish(new Risk_Event_Notification__e(Record_Id__c = o.Id, Message__c = 'Risk Event was not created, please issue Notice of Termination'));
 							return;
 						}
 					}
