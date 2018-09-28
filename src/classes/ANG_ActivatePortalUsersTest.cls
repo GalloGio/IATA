@@ -3,7 +3,7 @@ private class ANG_ActivatePortalUsersTest {
 	
     @testSetup static void setup()
     {
-        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Westeros', ISO_Code__c = 'TS');       
+        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Westeros', ISO_Code__c = 'TS', ANG_Enable_NewGen__c = true);       
         insert isoc;
 
         IATA_ISO_State__c isos = new IATA_ISO_State__c(Name= 'Winterfell', ISO_Code__c = 'TS', IATA_Iso_Country__c = isoc.Id);
@@ -84,5 +84,35 @@ private class ANG_ActivatePortalUsersTest {
 		system.assertEquals(u.ContactId, c.Id);
 
 	}
+
+    @isTest static void updatePortalUser() {
+        Account acc = ISSP_ObjectFactory.createNewAccount();  
+        insert acc; 
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = acc.Id;
+        insert contact;
+        
+        User u = new User(
+            Alias = 'dsfsdfds', 
+            Email = contact.email, 
+            Emailencodingkey = 'UTF-8', 
+            Firstname = contact.firstName, 
+            Lastname = contact.lastname, 
+            Languagelocalekey = 'en_US', 
+            Localesidkey = 'en_US', 
+            ContactId = contact.Id,
+            Timezonesidkey = 'Asia/Dubai',
+            Username = contact.email+'dfgdf',
+            PortalRole = 'Manager',
+            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+            ProfileId = ISSP_Constant.TEST_User_ProfileID,
+            IsActive = true
+        );
+        insert u;
+
+        Test.startTest();
+        System.enqueueJob(new ANG_ActivatePortalUsersBatch.UpdateUserStatus(contact.Id, contact.Email, null));        
+        Test.stopTest();
+    }
 
 }

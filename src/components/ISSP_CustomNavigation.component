@@ -188,6 +188,10 @@ $(".topmenu").hover(function(){
       .panel-primary{
       min-height:314px;
       }
+      
+       .bankDetails {
+        	min-height: 142px;
+      	}
       }
 
    body{
