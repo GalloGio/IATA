@@ -708,7 +708,7 @@ public without sharing class Order_Sel extends Selector{
         return [SELECT Id, OrderNumber, EffectiveDate, EndDate, Total_Amount__c, CreatedDate
             FROM Order
             WHERE Type = :type 
-            AND ((Status NOT IN :IECConstants.expiredStatus OR EffectiveDate > :dateToCompare) )
+            AND ((Status NOT IN :IECConstants.expiredStatus AND EffectiveDate > :dateToCompare) )
             AND BillToContactId = :idContact
             ORDER BY EffectiveDate DESC, OrderNumber DESC
         ];
@@ -739,7 +739,7 @@ public without sharing class Order_Sel extends Selector{
             'FROM {1} ' +  
 
             'WHERE Type = :type ' +
-            'AND ((Status NOT IN :expiredStatus OR EffectiveDate > :dateToCompare) ) '+ 
+            'AND ((Status NOT IN :expiredStatus AND EffectiveDate > :dateToCompare) ) '+ 
             'AND BillToContactId = :idContact ORDER BY EffectiveDate DESC, OrderNumber DESC ' , 
 
             new List<String>{
