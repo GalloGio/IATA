@@ -1326,7 +1326,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 				Pattern validUrl = Pattern.compile(ISSP_CS__c.getValues('ISSP AMS ALLOWED AGENCY URL').Value__c);
 
-				if (currentAccount.fw.newform.Website__c != null && !validUrl.matcher(currentAccount.fw.newForm.Website__c.toLowerCase()).matches()) {
+				if (currentAccount.fw.newform.Website__c == null) {
+					currentAccount.fw.newform.Website__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else if (currentAccount.fw.newform.Website__c != null && !validUrl.matcher(currentAccount.fw.newForm.Website__c.toLowerCase()).matches()) {
 					currentAccount.fw.newForm.Website__c.addError(Label.ISSP_AMS_Valid_URL);
 		            errorFound = true;
 				} else if (currentAccount.fw.newform.Website__c != null && !iso8859.matcher(currentAccount.fw.newform.Website__c).matches()) {
