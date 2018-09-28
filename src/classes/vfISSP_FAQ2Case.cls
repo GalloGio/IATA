@@ -906,6 +906,11 @@ global class vfISSP_FAQ2Case
     * 2017-09-07   paulo.bastos@rightitservices.com  Creation
     ********************************************************************************************************/
     public void getButtonNameFromConfigAndAddToList(String butMapConfigKey,String buttonCategory){
+        // if we are in Emergenecy section show ONLY emergecncy button category
+        if (Clicked_EmergencyRequest  && buttonCategory!=BUT_CAT_EMERGENCY) return;
+        // if we are in a NON Emergency section show only non emergency buttons
+        if (!Clicked_EmergencyRequest  && buttonCategory==BUT_CAT_EMERGENCY) return;
+        
         String csButtonNameAux;
         LiveAgentButtonSettings__c csButtonSettObj;
 
