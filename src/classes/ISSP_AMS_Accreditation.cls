@@ -1237,12 +1237,13 @@ public without sharing class ISSP_AMS_Accreditation {
                     } //NEWGEN - 552 END
                 }
             }else {
-                    if(isocountry.ANG_Enable_NewGen__c == true){
-                        options.add(new SelectOption(AMS_Utils.TYPE_HE_ST_CASH, Label.ISSP_AMS_Head_Entity_Cash));  //can only apply for New Accreditaiton Models enable
-                        options.add(new SelectOption(AMS_Utils.TYPE_HE_LITE_NO_CASH, Label.ISSP_AMS_Head_Entity_No_Cash));  //can only apply for New Accreditaiton Models enable
-                    }else{    //Not an Accredited PAX Agent, or any type of Cargo Agent
-                         options.add(new SelectOption(AMS_Utils.TYPE_PAX_HO, Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
-                    }
+                if(isocountry.ANG_Enable_NewGen__c == true){
+                    options.add(new SelectOption(AMS_Utils.TYPE_HE_ST_CASH, Label.ISSP_AMS_Head_Entity_Cash));  //can only apply for New Accreditaiton Models enable
+                    options.add(new SelectOption(AMS_Utils.TYPE_HE_LITE_NO_CASH, Label.ISSP_AMS_Head_Entity_No_Cash));  //can only apply for New Accreditaiton Models enable
+                    if (isocountry.Multicountry_Enabled__c) options.add(new SelectOption(AMS_Utils.TYPE_HE_MULTICOUNTRY, Label.ISSP_AMS_Head_Entity_Multicountry));
+                }else{    //Not an Accredited PAX Agent, or any type of Cargo Agent
+                     options.add(new SelectOption(AMS_Utils.TYPE_PAX_HO, Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
+                }
             }
         }
 
@@ -4047,7 +4048,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                              IATA_Contry_KR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Tax_Number_label__c, Tax_number_format__c, Branches_abroad_not_allowed__c,
                                              Tax_number_help_text__c, Hide_Tax_Number_VAT__c, ISO_Code__c, EACP_Country__c, OSCAR_enabled__c, CASS_Import__c, CASS_Country_free_text__c, Region__c, Disable_non_IATA_Cargo_Agents__c,
                                              original_bank_details_not_required__c, Local_language_Agency_details_required__c, Prevent_Portal_Trade_Name_Change__c, Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
-                                             Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c,ANG_Enable_NewGen__c
+                                             Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c,ANG_Enable_NewGen__c, Multicountry_Enabled__c
                                              FROM IATA_ISO_Country__c
                                              WHERE ISO_Code__c = :isocode
                                          ];

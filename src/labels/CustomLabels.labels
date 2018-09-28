@@ -12228,6 +12228,13 @@ IFG Customer Services</value>
         <value>New Head Entity - GoStandard</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Head_Entity_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Head Entity Multicountry</shortDescription>
+        <value>New Head Entity - GoGlobal</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Head_Entity_No_Cash</fullName>
         <language>en_US</language>
         <protected>false</protected>
