@@ -175,7 +175,7 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Status_Detail_Status_Detail_c_Long_Text__c</fullName>
+        <fullName>Status_Detail__c</fullName>
         <externalId>false</externalId>
         <label>Status Detail</label>
         <length>131072</length>
@@ -184,9 +184,9 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>Status_Detail__c</fullName>
+        <fullName>Status__c</fullName>
         <externalId>false</externalId>
-        <label>Status Detail</label>
+        <label>Status</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
