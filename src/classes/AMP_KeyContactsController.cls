@@ -57,7 +57,6 @@ public with sharing class AMP_KeyContactsController {
         lOrderFunction.sort();
         for(String a :lOrderFunction){
             for(Contact c : lsKeyContacts) {
-                system.debug('##RN: ' + c.function__C);
                 if(!setKeyContactsSorted.contains(c) && c.Membership_Main_Contact__c == true) {
                     if(c.function__C == null){
                         setKeyContactsSorted.add(c);
