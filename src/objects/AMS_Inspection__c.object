@@ -463,4 +463,49 @@ Value(Text(Accreditation_Endorsement_Status_code__c)) &gt; 4)</errorConditionFor
         <errorMessage>You cannot create an Appointment for a GSA/GSSA with Status greater or equal than 5 without creating an AMS Territory first. Please create the Appointment with status 2 and change it &gt;= 5 once the Account is Approved and the AMS Territory is created.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
+    <webLinks>
+        <fullName>De_activate</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>De-activate</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)}
+
+var records = {!GETRECORDIDS($ObjectType.AMS_Inspection__c)};
+
+if(records.length &lt; 1) {
+	alert(&quot;Please choose at least one appointment.&quot;);
+} else {
+	var r = confirm(&quot;Are you sure you want to de-activate the selected appointments?\n Only appointments with status &apos;9&apos; will be update.&quot;);
+	if(r) {
+		try{
+			var listIds = records.toString().replace(/,/g , &quot;&apos;,&apos;&quot;); 
+			var soqlQuery = &quot;SELECT Id, Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE Id IN (&apos;&quot;+listIds+&quot;&apos;)&quot;;
+			var queryResult = sforce.connection.query(soqlQuery);
+			
+			var recordsResult = queryResult.getArray(&quot;records&quot;); 
+			var recordsToUpdate = [];
+			for(var i=0; i&lt;recordsResult.length; i++) {
+				var record = recordsResult[i];
+				if(record.Accreditation_Endorsement_Status_code__c == &quot;9&quot;) {
+					record.Accreditation_Endorsement_Status_code__c = &quot;0&quot;;
+					recordsToUpdate.push(record);
+				}
+			}
+			
+			var updateResult = sforce.connection.update(recordsToUpdate);
+			if(updateResult[0].success === &quot;true&quot;) {
+				window.location.reload();
+			} else {
+				alert(updateResult[0].errors.message);
+			}
+		}catch(e) {
+			alert(e);
+		}
+	}
+}</url>
+    </webLinks>
 </CustomObject>
