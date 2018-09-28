@@ -264,7 +264,7 @@
                 </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
-                    <apex:outputLabel value="Branch Address:"/>
+                    <apex:outputLabel value="{!$Label.Billing_address}:"/>
 
                     <DSE:DS_DataQuality id="BranchAddress"
                         RecordRef="{!ca.fw.newform}"
@@ -286,7 +286,7 @@
                 </apex:outputPanel>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddressShipping" layout="block">
-                    <apex:outputLabel value="Shipping Address:"/>
+                    <apex:outputLabel value="{!$Label.ISSP_Shipping_Address}:"/>
 
                     <DSE:DS_DataQuality id="ShippingAddress"
                         RecordRef="{!ca.fw.newform}"
@@ -318,7 +318,7 @@
                 </apex:outputPanel>
 
                 <apex:pageBlockSectionItem labelStyleClass="agencyLocationComponent pageBlockSectionItem" dataStyleClass="agencyLocationComponent pageBlockSectionItem" id="locationItemWebsite">
-                        <apex:outputLabel value="{!$Label.ISSP_Registration_Website}"/>
+                        <apex:outputLabel value="* {!$Label.ISSP_Registration_Website}"/>
                         <apex:inputField id="Website__c" value="{!ca.fw.newform.Website__c}"/>
                 </apex:pageBlockSectionItem>
 

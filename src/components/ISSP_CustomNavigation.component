@@ -202,8 +202,17 @@
       
       <div id="navbar" class="navbar-collapse nav-header-issp collapse" >
          <ul id="navbarMenu" class="nav navbar-nav navbar-nav-menu">
-            <li><a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M0"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> {!$Label.ISSP_Home}</a></li>
             <li>
+              <a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M0"><span class="glyphicon glyphicon-home" aria-hidden="true"/>
+                {!$Label.ISSP_Home}
+              </a>
+            </li>
+            <li class="{!IF($Profile.Name == 'ISS Portal DPC','','hide')}">
+              <a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M1"><span class="glyphicon glyphicon-envelope"/>
+                {!$Label.LAQ_ContactUs}
+              </a>
+            </li>
+            <li class="{!IF($Profile.Name == 'ISS Portal DPC','hide','')}">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M1"><span class="glyphicon glyphicon-envelope"></span> {!$Label.LAQ_ContactUs} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M1S1"> {!$Label.ISSP_Create_query}</a></li>
@@ -242,10 +251,10 @@
                   <li><a href="/ISSP_ContactList?MainNav=Admin&subNav=contacts&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  id="M4S1" >{!$Label.ISSP_Contacts}</a></li>
                   <li class="divider"></li>
                   <li><a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S3" >{!$Label.ISSP_My_Company_Cases}</a></li>
-                  <li class="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','hide','')} divider"></li>
-                  <li classs="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','hide','')}"><a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6">{!$Label.ISSP_Local_Groups_Industry}</a></li>
-                  <li class="{!if(isCargoDGR,'hide','')} divider"></li>
-                  <li class="{!if(isCargoDGR,'hide','')}"><a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7" >
+                  <li class="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal DPC','hide','')} divider"></li>
+                  <li class="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal DPC','hide','')}"><a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6">{!$Label.ISSP_Local_Groups_Industry}</a></li>
+                  <li class="{!if(isCargoDGR || $Profile.Name == 'ISS Portal DPC','hide','')} divider"></li>
+                  <li class="{!if(isCargoDGR || $Profile.Name == 'ISS Portal DPC','hide','')}"><a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7" >
                 <!--{-- ! $Label.ISSP_Manage_Services } - CREATE LABEL -->  
                 Trained Staff Certification </a></li>
                </ul>
