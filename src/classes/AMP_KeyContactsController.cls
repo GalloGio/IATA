@@ -41,6 +41,8 @@ public with sharing class AMP_KeyContactsController {
         Set<Contact> setKeyContactsSorted = new Set<Contact>();
         Set<String> setFunction = new Set<String>();
         List<String> lOrderFunction = new List<String>();
+        List<Contact> lEmptyJobMain = new List<Contact>();
+        List<Contact> lNotEmptyJobMain = new List<Contact>();
         for(Contact c : lsKeyContacts) {
             if(c.CEO_CFO__c != null && c.CEO_CFO__c != '') {
                 setKeyContactsSorted.add(c);
@@ -55,17 +57,27 @@ public with sharing class AMP_KeyContactsController {
         lOrderFunction.sort();
         for(String a :lOrderFunction){
             for(Contact c : lsKeyContacts) {
-                if(!setKeyContactsSorted.contains(c) && c.Membership_Main_Contact__c == true && a == c.function__C) {
-                    setKeyContactsSorted.add(c);
+                system.debug('##RN: ' + c.function__C);
+                if(!setKeyContactsSorted.contains(c) && c.Membership_Main_Contact__c == true) {
+                    if(c.function__C == null){
+                        setKeyContactsSorted.add(c);
+                        lEmptyJobMain.add(c);
+                    }else{
+                        setKeyContactsSorted.add(c);
+                        lNotEmptyJobMain.add(c);
+                    }
+                }
+            }
+        }
+        lsKeyContactsSorted.addAll(lEmptyJobMain);
+        lsKeyContactsSorted.addAll(lNotEmptyJobMain);
+        for(String a :lOrderFunction){
+            for(Contact c : lsKeyContacts) {
+                if(!setKeyContactsSorted.contains(c) && a == c.function__C ) {
                     lsKeyContactsSorted.add(c);
                 }
             }
         }
-            for(Contact c : lsKeyContacts) {
-                if(!setKeyContactsSorted.contains(c) ) {
-                    lsKeyContactsSorted.add(c);
-                }
-            }
         return lsKeyContactsSorted;
     }
 }
