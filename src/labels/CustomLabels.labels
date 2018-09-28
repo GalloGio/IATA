@@ -17824,7 +17824,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Branch to Shipping</shortDescription>
-        <value>Copy Branch Address to Shipping Address</value>
+        <value>Copy Billing Address to Shipping Address</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</fullName>
