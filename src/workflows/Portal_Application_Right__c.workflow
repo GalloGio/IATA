@@ -122,7 +122,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Kavi_Notify_contact_of_access_grantedVF</template>
+        <template>All/Kavi_Notify_contact_of_access_grantedVF</template>
     </alerts>
     <alerts>
         <fullName>Notification_that_user_receive_after_an_access_request</fullName>

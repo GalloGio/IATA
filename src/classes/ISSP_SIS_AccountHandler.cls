@@ -139,10 +139,11 @@ public with sharing class ISSP_SIS_AccountHandler {
             } else {
                 return true; // if the status changing to Terminated then update it
             }
+        }
 
         if (accountnew.Status__c == 'Approved') {
             if (accountOld.Status__c != 'Approved') {
-                return true;
+                return true; 
             }      
         }
 

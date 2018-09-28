@@ -96,7 +96,7 @@
         <description>Status</description>
         <externalId>false</externalId>
         <label>Status</label>
-        <length>20</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -148,7 +148,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>80470044266</value>
+            <value>96196284,96031644</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
