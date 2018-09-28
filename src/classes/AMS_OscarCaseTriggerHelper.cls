@@ -122,7 +122,7 @@ public class AMS_OscarCaseTriggerHelper {
         List<Case> oscarCases = new List<Case>();
 
          for(Case c : triggerNew){
-            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID) { // &&  (c.ParentId == null || (c.ParentId != null && c.Reason1__c == 'CLO - Closure')) ){ --> CB - 6 APR 2017 - AMS Enhancements AMSU-2
+            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID) {
                 //need to verify just for the first case on the trigger, since the second one will throw an error
                 if(oscarIds.add(c.Oscar__c)) oscarCases.add(c);
             }
@@ -131,7 +131,8 @@ public class AMS_OscarCaseTriggerHelper {
         if(oscarCases.isEmpty()) return;
 
         List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
-        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c FROM AMS_OSCAR__c where Id = :oscarIds]);
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c 
+                                                                   FROM AMS_OSCAR__c WHERE Id = :oscarIds]);
 
         for(Case c : oscarCases){
             if(!oscars.containsKey(c.Oscar__c)) continue;

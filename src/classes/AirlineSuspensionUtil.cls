@@ -6,12 +6,12 @@ public with sharing class AirlineSuspensionUtil {
 		List<Airline_Suspension__c> lstASRecords = new List<Airline_Suspension__c>();
 		for (Id caseId : setCaseIds) {
 			Airline_Suspension__c newAS = new Airline_Suspension__c(Case__c = caseId);
-			
 			lstASRecords.add(newAS);
 		}
 		
 		try {
-			insert lstASRecords;
+			if(!lstASRecords.isEmpty())
+				insert lstASRecords;
 		} catch (Exception e) {
 			system.debug(e.getMessage());
 		}

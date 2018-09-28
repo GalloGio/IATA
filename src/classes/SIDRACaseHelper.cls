@@ -8,8 +8,7 @@ public with sharing class SIDRACaseHelper {
 	private static Id sidraRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 	private static Map<Id, Account> sidraCasesAccounts;
 	private static Map<Id, Account> accountsToUpdate = new Map<Id, Account>();
-	private static Boolean  isSidraCasesAccountsInit = false; // This variable checks if the sidraCasesAccounts have been already initialized.
-
+	
 	// IRR withdrawal reasons used to have a comment record in SIDRA cases
 	public final static string IATACHARGES = 'IATA Charges';
 	public final static string FRACTION = 'Fraction (<1USD)';
@@ -32,34 +31,22 @@ public with sharing class SIDRACaseHelper {
 	    After Update Action
 	**/
 	public static void doAfterUpdate(map<Id, Case> newCases, map<Id, Case> oldCases) {
+		
 		for (Case thisCase : newCases.values()) {
 			Case oldCase = oldCases.get(thisCase.Id);
 			if ((thisCase.RecordTypeId == sidraRecordTypeId) && (oldCase.RecordTypeId != sidraRecordTypeId)) {
 				// Initialization of SOQL variables
-				if (isSidraCasesAccountsInit == false) {
-					sidraCasesAccounts = new Map<Id, Account>([SELECT Id, Identify_as_Last_SIDRA_Date__c,
-					        (SELECT Id, CaseNumber, CreatedDate FROM Account.Cases
-					         WHERE RecordTypeId = :sidraRecordTypeId
-					                              ORDER BY createdDate DESC LIMIT 1)
-					        FROM Account WHERE Id IN (SELECT AccountId From Case WHERE Id IN :newCases.keySet())]);
-					isSidraCasesAccountsInit = true;
-				}
+				sidraCasesAccounts = getMapSidra(newCases.keySet());
+
 				Account acc = sidraCasesAccounts.get(thisCase.AccountId);
 				if (acc != null) {
-					acc.Identify_as_Last_SIDRA_Date__c = DateTime.now(); //thisCase.createdDate;
+					acc.Identify_as_Last_SIDRA_Date__c = DateTime.now();
 					accountsToUpdate.put(acc.Id, acc);
 				}
 			}
 			if ((thisCase.RecordTypeId != sidraRecordTypeId) && (oldCase.RecordTypeId == sidraRecordTypeId)) {
 				// Initialization of SOQL variables
-				if (isSidraCasesAccountsInit == false) {
-					sidraCasesAccounts = new Map<Id, Account>([SELECT Id, Identify_as_Last_SIDRA_Date__c,
-					        (SELECT Id, CaseNumber, CreatedDate FROM Account.Cases
-					         WHERE RecordTypeId = :sidraRecordTypeId /*AND Status != 'Closed'*/
-					                              ORDER BY createdDate DESC LIMIT 1)
-					        FROM Account WHERE Id IN (SELECT AccountId From Case WHERE Id IN :newCases.keySet())]);
-					isSidraCasesAccountsInit = true;
-				}
+				sidraCasesAccounts = getMapSidra(newCases.keySet());
 
 				Account acc = sidraCasesAccounts.get(thisCase.AccountId);
 				if (acc != null) {
@@ -191,6 +178,20 @@ public with sharing class SIDRACaseHelper {
 			}
 		}
 		return mapSidra;
+	}
+
+	/**
+	 * Get Account Map with Sidra Cases
+	 */
+	private static Map<Id, Account> getMapSidra(Set<Id> newCases){
+		if (sidraCasesAccounts == null)
+			return new Map<Id, Account>([SELECT Id, Identify_as_Last_SIDRA_Date__c,
+								        (SELECT Id, CaseNumber, CreatedDate FROM Account.Cases
+								         WHERE RecordTypeId = :sidraRecordTypeId
+								                              ORDER BY createdDate DESC LIMIT 1)
+								        FROM Account WHERE Id IN (SELECT AccountId From Case WHERE Id IN :newCases)]);
+		else 
+			return sidraCasesAccounts;
 	}
 
 }

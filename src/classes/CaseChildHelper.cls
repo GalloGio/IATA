@@ -21,9 +21,9 @@ public  class CaseChildHelper {
     }
     
     public static boolean CreateChildCase(list<Case> olds, list<Case> news) {
+        System.debug('____ [cls CaseChildHelper - CreateChildCase]');
         Id IFAPrt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-    
-        system.debug('---------- DEBUG: CreateChildCase()');
+        
         // If I have not values in news somthing's wrong
         if(news == null || news.size() == 0)
             return false;
@@ -74,6 +74,7 @@ public  class CaseChildHelper {
             } else if(statuses.contains(news[i].Status) &&
                     !String.isblank(news[i].Resubmission_of_accounts__c) && 
                     news[i].FS_Deadline_Date__c == null) {
+
                 news[i].FS_Deadline_Date__c.addError('To resubmit the account FS deadline date is necessary.');
 
             // Case for which will be created a child case 
@@ -119,7 +120,7 @@ public  class CaseChildHelper {
         // Close all the parents of the cases with status "Assessment performed"
         if(parentCasesIds.size() > 0) {
             CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
-            for(Case c : [SELECT Status FROM Case WHERE Id IN :parentCasesIds and recordtypeId =: IFAPrt  ]) {
+            for(Case c : [SELECT Status FROM Case WHERE Id IN :parentCasesIds and recordtypeId =: IFAPrt]) {
                 c.Status = 'Closed';
                 casesToUpdate.add(c);
             }        
@@ -142,7 +143,6 @@ public  class CaseChildHelper {
             
         }
 
-
         if(casesToUpdate.size() > 0) {
             //upsert casesToUpdate;
             List<database.saveResult> results = database.update(casesToUpdate,false);
@@ -155,10 +155,7 @@ public  class CaseChildHelper {
                     CaseError.addError('Validation error on parent case: '+res.getErrors()[0].getMessage());
                 }
             }
-            
         }
         return true;
-
     }
-    
 }
