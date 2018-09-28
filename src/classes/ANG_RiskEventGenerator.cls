@@ -221,10 +221,12 @@ public class ANG_RiskEventGenerator {
 						if(config.ANG_Risk_Event_Type__r.Name != ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS || objectName != 'Case' || !previousIFAPsByAccount.containsKey(String.valueOf(o.get('AccountId'))) 
 							|| previousIFAPsByAccount.isEmpty() || !IFAP_BusinessRules.isPreviousIFAPStatusEquals(previousIFAPsByAccount.get(String.valueOf(o.get('AccountId'))),'Closed_Non compliance')){
 							riskEvents.add(risk);
+							System.debug('____ [cls ANG_RiskEventGenerator - generate: RISK EVENT Created...');
 						}else{
 							System.debug('____ [cls ANG_RiskEventGenerator - generate: NOT creating "Fail Financial Statement" risk event');
-							notifications.add(new Technical_Logs__c(Record__c = o.Id, Log__c = 'Risk Event'));
-							break;
+							System.debug('____ [cls ANG_RiskEventGenerator - generate: PUBLISHING EVENT...');
+							EventBus.publish(new Risk_Event_Notification__e(Record_Id__c = o.Id, Message__c = 'Risk Event was not created, please issue Notice of Termination'));
+							return;
 						}
 					}
 					
