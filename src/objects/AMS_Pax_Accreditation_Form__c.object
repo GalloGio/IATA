@@ -1682,7 +1682,7 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>IATA_Cargo_Code__c</field>
+            <field>IATACode__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -1693,11 +1693,6 @@
         </displayedFields>
         <displayedFields>
             <field>Short_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>TradeName__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -1763,6 +1758,11 @@
         </displayedFields>
         <displayedFields>
             <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
