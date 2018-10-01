@@ -63,6 +63,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD){
 
             options.add(new SelectOption('1','Auth. Cash Payment'));
+            options.add(new SelectOption('8','Change of Entity\'s location'));
 
             riskOpt = '1';
         }
