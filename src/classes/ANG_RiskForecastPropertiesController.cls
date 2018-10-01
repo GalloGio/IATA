@@ -20,7 +20,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
 
     public ANG_RiskForecastPropertiesController(ApexPages.StandardController stdController) {
-        this.myCase = [SELECT Id, SIDRA_Lite_Reason__c, Account.Name, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c, OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c, OSCAR__r.ANG_FA_Opt_out__c FROM Case where Id =:stdController.getId()];
+        this.myCase = [SELECT Id, SIDRA_Lite_Reason__c, Account.Name, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c, OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c, OSCAR__r.ANG_FA_Opt_out__c, OSCAR__r.ANG_Change_Entity_Location__c FROM Case where Id =:stdController.getId()];
     }
 
     public List<SelectOption> getriskOption(){
@@ -60,7 +60,14 @@ public with sharing class ANG_RiskForecastPropertiesController {
             options.add(new SelectOption('4','Payment Default'));
         }
 
-        if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD){
+        if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD && myCase.OSCAR__r.ANG_Change_Entity_Location__c){
+
+            options.add(new SelectOption('8','Change of Entity\'s location'));
+
+            riskOpt = '1';
+        }
+
+        if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD && !myCase.OSCAR__r.ANG_Change_Entity_Location__c){
 
             options.add(new SelectOption('1','Auth. Cash Payment'));
 
