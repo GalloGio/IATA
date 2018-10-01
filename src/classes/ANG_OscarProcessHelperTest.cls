@@ -673,7 +673,7 @@ private class ANG_OscarProcessHelperTest {
 	 	@isTest static void testFetchKeyContact() {
 			
 			IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c where Name='France'];
-			Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+			Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 			Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A', IATACode__c = '1234567', Status__c = 'Approved');
 			insert a1;

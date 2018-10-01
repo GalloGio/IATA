@@ -251,7 +251,7 @@ public without sharing class OneId_RegistrationProcessController {
     public static CountryInformation getISOCountries() {
         List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
         for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
-            if (iso.Name != 'All Countries'){
+            if (iso.Name != 'All Countries' &&  Name != 'NO COUNTRY'){
                 countries.add(iso);
             }
         }

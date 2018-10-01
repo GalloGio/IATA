@@ -39,7 +39,7 @@ global class ANG_OscarProcessHelper {
 
 			isIATACodeGenerationRunning = true;
  
-	        Account theAccount = [SELECT Name, Status__c, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+	        Account theAccount = [SELECT Name, Top_Parent__c, Status__c, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 					BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
 					ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
@@ -488,7 +488,10 @@ global class ANG_OscarProcessHelper {
 		System.debug('[ANG_OscarProcessHelper] Starting Ownership migration.');
 
 		if(!stagingToAccount.isEmpty() && runOwnershipMigration)
-			AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, new List<AMS_Oscar__c>{oscar});
+			AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, true, 
+																		new Map<Id,AMS_Oscar__c>{oscar.Id => oscar}, 
+																		new Map<Id,String>{oscar.Id => acc.Location_Type__c},
+																		new Map<Id,Id>{oscar.Id => acc.Top_Parent__c == null ? acc.Id : acc.Top_Parent__c});
 
 		System.debug('[ANG_OscarProcessHelper] Ownership migration completed.');
 

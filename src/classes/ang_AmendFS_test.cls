@@ -12,6 +12,7 @@ private class ang_AmendFS_test {
 			Location_Class__c='P',
 			Remittance_frequency__c='M',
 			ANG_Accreditation_Model__c ='Cash',
+			IATA_ISO_Country__c = country.Id,
         	RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
         );
         insert a;        

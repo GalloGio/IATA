@@ -3770,7 +3770,6 @@ public class AMS_OSCARTriggerHandler {
                         AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     
                         System.debug('updatedOscar.Is_PCI_compliant__c: criei CC' );
-                        //AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
                     }
 
                 } catch (Exception ex) {

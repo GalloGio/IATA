@@ -135,6 +135,24 @@ public class OneIdProvisioningDAO {
         return toReturn;
 
     }
+
+
+    public static List<One_Id_Service_Provider_Config__c> getAppRoleSelectibilityForAppPicker(String bundleName){
+        List<One_Id_Service_Provider_Config__c> toReturn = new List<One_Id_Service_Provider_Config__c>();
+
+        if(String.isNotBlank(bundleName)) {
+
+            Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
+                'Service_Bundle');
+
+            toReturn = [select id, Is_Role_Selectable__c
+            from One_Id_Service_Provider_Config__c where Is_Active__c = true and Portal_Visible__c = true
+            and RecordTypeid = :recTypeId and Service_Provider_Name__c = :bundleName limit 1];
+        }
+
+        return toReturn;
+    }     
+     
     public static List<One_Id_App_Config_Detail__c> getAppPermissionSetListForAppicker(String bundleName){
 
 

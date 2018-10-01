@@ -1505,6 +1505,8 @@ private class ISSP_AMS_Accreditation_Test {
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
+            testCase.BounceEmailCounter__c = 0.0;
+            testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
             testCase.Account_Concerned__c = child.Id;
@@ -2553,7 +2555,6 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.amsOfficeType = 'HO';
             ctrl.newForm.Validation_ERRORS__c = true;
             ctrl.highLightPageForErrors();
-            ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice WSInstance = ISSP_AMS_Accreditation.getWSInstance();
             List<ISSP_AMS_Accreditation.AccountChanges> accChanges_List = new List<ISSP_AMS_Accreditation.AccountChanges>();
             accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Phone', '0534534534', '0243242523'));
 

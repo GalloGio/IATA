@@ -1000,23 +1000,21 @@ public with sharing class ANG_AgencyChangesHelper {
 		if(toReturn == null)
 			toReturn = new AChangeStructure();
 
-		Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
+		if(toReturn.accountsMap.isEmpty())
+			toReturn.accountsMap = getAccounts(accountsAffected);
 
-		Set<Id> cloneFromHoSet = accountsAffected.clone();
-		stagingToAccount.put(oscarToProcess.AMS_Online_Accreditation__c, cloneFromHoSet);
+		Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
+		stagingToAccount.put(oscarToProcess.AMS_Online_Accreditation__c, accountsAffected);
 
 		// get from the struct
 		//Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 		Map<Id,AMS_AccountRoleCreator.OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,AMS_AccountRoleCreator.OldAndNewOwners>();
 
-		oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, isCorrection);
+		oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, isCorrection, false, new Map<Id,AMS_OSCAR__c>{oscarToProcess.Id => oscarToProcess}, 
+			new Map<Id,String>{oscarToProcess.Id => toReturn.accountsMap.get(oscarToProcess.Account__c).Location_Type__c},
+			new Map<Id,Id>{oscarToProcess.Id => toReturn.accountsMap.get(oscarToProcess.Account__c).Top_Parent__c == null ? oscarToProcess.Account__c : toReturn.accountsMap.get(oscarToProcess.Account__c).Top_Parent__c});
 
 		System.debug('[ANG_AgencyChangesHelper] oldAndNewOwnersMap -> ' + oldAndNewOwnersMap);
-
-		cloneFromHoSet = accountsAffected.clone();
-		cloneFromHoSet.remove(oscarToProcess.Account__c);
-
-		cloneOwnersFromHo(cloneFromHoSet,oscarToProcess.Account__c);
 
 		/*Capture Owner history for change codes*/
 
@@ -1172,62 +1170,6 @@ public with sharing class ANG_AgencyChangesHelper {
 		return toUpsert;
 
 	}
-
-	public static void cloneOwnersFromHo(Set<Id> accounts, Id originalAccount){
-
-		Map<Id,List<AMS_Account_role__c>> rolesInAccounts = new Map<Id,List<AMS_Account_role__c>>();
-
-		List<AMS_Account_role__c> allRoles =  Database.query(AMS_QueryUtils.getAllFieldQuery('AMS_Account_role__c',null, + 'Account__c =:originalAccount', false) );
-
-		for(AMS_Account_Role__c role: allRoles){
-
-			if(!role.Active__c)
-				continue;
-
-			if(rolesInAccounts.containsKey(role.Account__c)){
-
-				rolesInAccounts.get(role.Account__c).add(role);
-
-			}
-			else{
-
-				rolesInAccounts.put(role.Account__c, new List<AMS_Account_Role__c>{role});
-			}
-
-		}
-
-		List<AMS_Account_Role__c> rolesToInsert = new List<AMS_Account_role__c>();
-
-		List<AMS_Account_role__c> rolesToDeactivate = new List<AMS_Account_role__c>();
-
-		List<AMS_Account_role__c> oldRoles =  Database.query(AMS_QueryUtils.getAllFieldQuery('AMS_Account_role__c',null, + 'Account__c in:accounts', false) );
-
-		for(AMS_Account_Role__c role: oldRoles){
-			if(role.Active__c){
-				role.Termination_Date__c = Date.Today();
-				rolesToDeactivate.add(role);
-			}
-		}
-
-		for(Id acct : accounts){
-
-			rolesToInsert.addAll(AMS_AccountRoleCreator.assignOwners(acct,rolesInAccounts.get(originalAccount)));
-
-		}
-
-		if(!rolesToDeactivate.isEmpty()){
-			System.debug('[ANG_AgencyChangesHelper] Roles to deactivate:'+rolesToDeactivate);
-			update rolestoDeactivate;
-		}
-
-		if(!rolesToInsert.isEmpty()){
-			System.debug('[ANG_AgencyChangesHelper] Roles to insert:'+rolesToInsert);
-			insert rolesToInsert;
-		}
-
-
-	}
-
 
 	public static boolean validateTypeOfChange(AMS_OSCAR__c oscar) {
 

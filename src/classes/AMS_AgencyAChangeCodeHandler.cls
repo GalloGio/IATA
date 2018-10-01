@@ -48,8 +48,9 @@ public class AMS_AgencyAChangeCodeHandler {
     public static void handleAfterUpdate(List<Agency_Applied_Change_code__c> aacc, map<Id, Agency_Applied_Change_code__c> triggerOldMap) {
         verifyActiveAACCuniqueness(aacc);
         set<id> setIdAACC = new set<id>();
-        Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
+        //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
         set<id> setIdAACCForNewApplicationPending = new set<id>();
+        Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
         for(Agency_Applied_Change_Code__c aaccRecord : aacc)
         {
@@ -270,23 +271,14 @@ public class AMS_AgencyAChangeCodeHandler {
         List<AMS_OSCAR__c> oscarsToCopyData = new List<AMS_OSCAR__c>();
         List<AMS_OSCAR__c> oscarsToUpdateAppointments = new List<AMS_OSCAR__c>();
 
-        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
-
+        oscarsToCopyData = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
+                            
         if(!oscarsToCopyData.isEmpty()){
+
             AMS_Utils.copyDataToAccount(oscarsToCopyData);
-        
-            //moved to oscar trigger, appointment status changes needs to occur in situations without change code generation
-            /*for(AMS_OSCAR__C oscar : oscarsToCopyData)
-            {
-                 if( AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c))
-                     oscarsToUpdateAppointments.add(oscar);
-
-            }       
-
-            if(!oscarsToUpdateAppointments.isEmpty())
-                AMS_Utils.UpdateInspectionsFromOscar(oscarsToUpdateAppointments);*/
 
         }else{
+            
             System.debug('Nothing to migrate here.');
         }
     }
