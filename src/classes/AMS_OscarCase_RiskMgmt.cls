@@ -141,6 +141,8 @@ public class AMS_OscarCase_RiskMgmt {
 							from Account
 							where id in:mapAllHOs.keyset()]);
 
+			system.debug('## allAccsMap: '+allAccsMap);
+
 			for(Account a:allAccsMap.values()) {
 				//setAllAccntsHiearchy.add(a.Id);
 				id HOID = mapAllHOs.get(a.ID);
@@ -313,7 +315,7 @@ public class AMS_OscarCase_RiskMgmt {
 						if(conf.Change_Code__c == 'NFS' && c.Parent.RecordTypeId == AMS_Utils.RECTYPE_IFAP && allAccsMap.get(c.AccountId).ANG_IsNewGenAgency__c 
 							&& !allAccsMap.get(c.AccountId).Cases.isEmpty() && IFAP_BusinessRules.isPreviousIFAPStatusEquals(allAccsMap.get(c.AccountId).Cases, 'Closed_Non compliance')){
 
-							EventBus.publish(new Risk_Event_Notification__e(Record_Id__c = c.Id, Message__c = 'NFS change code was not created.'));
+							notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NFS change code'));
 
 						}else{						
 							list<AMS_ChangeCodes__c> ls;

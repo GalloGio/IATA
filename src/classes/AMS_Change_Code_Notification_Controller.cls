@@ -3,13 +3,7 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 	public String caseId {get; set;}
     public Case currentCase {get; set;}
     public Boolean isSidra {get; set;}
-    public Boolean showREmessage {
-        get{
-            if(showREmessage == null) return false;
-            else return showREmessage;
-        }
-        set;
-    }
+    
 
     public AMS_Change_Code_Notification_Controller(ApexPages.StandardController stdController) {
         caseId = stdController.getId(); 
@@ -127,17 +121,6 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 
     }
 
-    // make sure event is for the current record
-    public void compareIds(){
-        String receivedID = Apexpages.currentPage().getParameters().get('record').substring(0, 15);
-        String message = Apexpages.currentPage().getParameters().get('message');
-
-        system.debug(receivedID+' - '+caseId);
-        if (receivedID == caseId){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Risk Event was not created, please issue Notice of Termination'));
-            showREmessage = true;        
-        }    
-    }
 
 
 	//EM - To be removed
