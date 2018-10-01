@@ -44,8 +44,8 @@ private class IDCard_CleanUp_RenewReminder_SchdlrTest {
         
         IDCardTestData testData = new IDCardTestData();
         insert testData.IDCards_IDCardApplications[3];        
-        String contactsID = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[3]);
-        List<Contact> contactsScope = [Select id, SendIDCardRenewalNotice__c from Contact where Id = :contactsID];        
+        Contact contactsID = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[3]);
+        List<Contact> contactsScope = [Select id, SendIDCardRenewalNotice__c from Contact where Id = :contactsID.id];        
         ID_Card__c idcard = IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[3], contactsScope[0]);
         idcard.valid_To_Date__c = date.today();
         idcard.Card_Status__c = 'Valid ID Card';

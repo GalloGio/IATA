@@ -96,7 +96,7 @@ trigger CaseBeforInsert on Case (before insert,after insert) {
         //FAQTranslationRequestHelper.HandleFAQTranslationRequests(Trigger.new);
     }
     if(trigger.isAfter){
-        set<string> casesIds = new set<string>();
+        set<ID> casesIds = new set<ID>();
         for(Case newCase : trigger.new){
             if(newCase.Origin == 'Portal'){
                 User[] users = [Select u.UserType From User u where u.Id =: UserInfo.getUserId()];

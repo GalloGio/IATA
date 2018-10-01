@@ -75,7 +75,7 @@ trigger trgIDCard_Case_BeforeUpdate on Case (before update) {
                         
                         //**Create Contact only for new application
                         if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW)
-                              aCase.ContactId = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
+                              aCase.ContactId = IDCardUtil.CreateContactWhenNewCardIsApproved(application).ID;
                                                    
                         Contact[] contacts = [Select c.AgencyShare_Confirmation__c,c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName, c.UIR__c, c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c  From Contact c where c.VER_Number__c =: Decimal.valueof(application.VER_Number__c) and c.RecordType.Name =: 'Standard' and id=:aCase.ContactId];
     

@@ -48,10 +48,10 @@ public class trgIDCard_Contact_BeforeUpdateTest{
             
             insert idCardAppToInsert;
             
-            Id contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[1]);        
-            Id contactId3 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[3]);
+            Contact contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[1]);        
+            Contact contactId3 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[3]);
             
-            relatedContact = [SELECT Id, LastName, FirstName, VER_Number__c, IATA_Code__c, Account.RecordType.Name, Account.Status__c, Date_of_Birth__c FROM Contact WHERE Id IN (:contactId1, :contactId3)];  
+            relatedContact = [SELECT Id, LastName, FirstName, VER_Number__c, IATA_Code__c, Account.RecordType.Name, Account.Status__c, Date_of_Birth__c FROM Contact WHERE Id IN (:contactId1.ID, :contactId3.ID)];  
             
             List<ID_Card__c> idCardToInsert = new List<ID_Card__c>();
             

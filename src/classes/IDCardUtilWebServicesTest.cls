@@ -15,9 +15,9 @@ public class IDCardUtilWebServicesTest{
             insert testData.IDCards_IDCardApplications[3];
             //insert testData.IDCard_Accounts[0];   
             Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(testData.IDCards_IDCardApplications[3].IATA_Code__c);
-             String contactsID = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[3]);
+            Contact contactsID = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[3]);
             IDCardUtil.CreateIDCardApplicationCase(testData.IDCards_IDCardApplications[3], theAccount,true);       
-            Contact[] contacts = [Select c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName, c.UIR__c, c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c  From Contact c where c.Id =: contactsId];
+            Contact[] contacts = [Select c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName, c.UIR__c, c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c  From Contact c where c.Id =: contactsId.id];
             
             //IDCardUtil.CreateIDCardApplicationCase(testData.IDCards_IDCardApplications[3], theAccount);
             ID_Card__c idCard = new ID_Card__c();

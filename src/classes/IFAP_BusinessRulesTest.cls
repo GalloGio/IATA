@@ -464,7 +464,7 @@ public class IFAP_BusinessRulesTest {
         insert util;
 
         ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-
+        Map<ID,Boolean> mapStatusCanBeSelected;
         /*non Sys Admin, non Portal user profile*/
         Profile p = new Profile(Name = 'IFAP Profile');
 
@@ -490,11 +490,14 @@ public class IFAP_BusinessRulesTest {
         /*17*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Submitted'));
 
         //loop over all cases, instead of having to check each combination individually
-        for (Integer i = 0; i < allIfapCaseStatus.size(); i++)
+        for (Integer i = 0; i < allIfapCaseStatus.size(); i++){
+            Map<ID, Case> mapCases = new Map<ID, Case>(allIfapCaseStatus);
+            mapCases.put(allIfapCaseStatus[i].ID, allIfapCaseStatus[i]);    
+        
             for (Integer j = 0; j < allIfapCaseStatus.size(); j++) {
                 if (i == j)
                     continue;
-
+                List<Case> allIfapCases = new List<Case>{allIfapCaseStatus[j]};
                 //check only the combinations of allowed changes that have no dependencies on case fields
                 if (
                     (i == 0 && (j == 1 || j == 2 || j == 3 || j == 7) ) ||
@@ -509,15 +512,17 @@ public class IFAP_BusinessRulesTest {
                     (i == 14 && (j == 11 || j == 12)) ||
                     (i == 16 && (j == 14))
                 ) {
-                    System.assert(IFAP_BusinessRules.IsStatusCanBeSelected(false, allIfapCaseStatus[j], allIfapCaseStatus[i], p, false));
+                    mapStatusCanBeSelected = IFAP_BusinessRules.IsStatusCanBeSelected(false, allIfapCases, mapCases, p, false);
+                    System.assert(mapStatusCanBeSelected.values().get(0));
                     continue;
                 }
 
                 System.debug('##STATUS CHECK### old status ' + allIfapCaseStatus[i].Status + ' new status ' + allIfapCaseStatus[j].Status);
                 //combinations not stated avove should not be allowed
-                System.assert(!IFAP_BusinessRules.IsStatusCanBeSelected(false, allIfapCaseStatus[j], allIfapCaseStatus[i], p, false));
+                mapStatusCanBeSelected = IFAP_BusinessRules.IsStatusCanBeSelected(false, allIfapCases, mapCases, p, false);
+                System.assert(!mapStatusCanBeSelected.values().get(0));
             }
-
+        }
 
     }
 
