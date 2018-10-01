@@ -159,6 +159,7 @@ global class ISSP_AmazonS3_Ctrl {
         this.refreshAmazonFileMap();
         this.refreshReviewStatusMap();
     }
+
     public ISSP_AmazonS3_Ctrl(ISSP_AddAttachment amsCtrl) {
         this.Id = amsCtrl.tmpCase.Id;
 
@@ -201,6 +202,10 @@ global class ISSP_AmazonS3_Ctrl {
 
     public Boolean getCaseOwnerNewgenPCI() {
         return this.cse.Owner.Name.startsWith('NewGen PCI');
+    }
+
+    public Boolean getCaseOwnerModelA() {
+        return this.cse.Owner.Name.startsWith('Model A Onboarding');
     }
 
     private static String make_sig(string canonicalBuffer) {

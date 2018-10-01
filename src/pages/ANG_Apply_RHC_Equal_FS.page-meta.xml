@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>43.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>This will set RHC equals to Financial Security amount for all the selected agents. Existing rules will be overridden</description>
+    <label>ANG_Apply_RHC_Equal_FS</label>
+</ApexPage>

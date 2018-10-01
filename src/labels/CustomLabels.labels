@@ -1510,6 +1510,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Country Specific Requirements</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip</shortDescription>
+        <value>Financial requirements for Accreditation applicable to agents in a given market.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature1</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -1539,7 +1547,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature1Tooltip</shortDescription>
-        <value>Feature 1 Tooltip</value>
+        <value>Available Form of Payment. Tickets issued on the customer’s debit/credit card and processed on the merchant agreement of the Airline. Payment is received directly by the Airline from its card processor.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature2</fullName>
@@ -1555,7 +1563,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature2Tooltip</shortDescription>
-        <value>Feature 2 Tooltip</value>
+        <value>Available Form of Payment. Pay-as-you-go e-wallet solution.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature3</fullName>
@@ -1571,7 +1579,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature3Tooltip</shortDescription>
-        <value>Feature 3 Tooltip</value>
+        <value>Available Form of Payment. Tickets for which the Agent receives payment directly from the customer and remits the amounts due to the BSP on an established remittance date.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature4</fullName>
@@ -1587,7 +1595,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature4Tooltip</shortDescription>
-        <value>Feature 4 Tooltip</value>
+        <value>Monetary threshold applicable to Agents for outstanding Cash sales to the BSP.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature5</fullName>
@@ -1603,7 +1611,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature5Tooltip</shortDescription>
-        <value>Feature 5 Tooltip</value>
+        <value>Financial Review mandatory for GoStandard Agents.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature6</fullName>
@@ -1643,7 +1651,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature8</shortDescription>
-        <value>Financial Security / Default Insurance</value>
+        <value>Financial Security</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature8Tooltip</fullName>
@@ -1651,7 +1659,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature8Tooltip</shortDescription>
-        <value>Feature 8 Tooltip</value>
+        <value>Depending on the Agent’s Risk Status a Financial Security may have to be provided and will be calculated as per the Local Financial Criteria applicable to that market.  For GoLite Agents the amount will ensure coverage of any cash remittances resulting from ADMs.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature9</fullName>
@@ -1821,7 +1829,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG ISSP RHC Information</shortDescription>
-        <value>RHC Information</value>
+        <value>Risk Profile and RHC</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_RHC_Request_Balance_Update</fullName>
@@ -1985,14 +1993,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG RHC Amount Tooltip</shortDescription>
-        <value>RHC Amount Tooltip</value>
+        <value>Monetary threshold for agents’ outstanding BSP Cash sales</value>
     </labels>
     <labels>
         <fullName>ANG_RHC_HUB_Current_UsageTooltip</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG RHC HUB Current Usage Tooltip</shortDescription>
-        <value>RHC HUB Current Usage Tooltip</value>
+        <value>Consumed RHC Amount</value>
     </labels>
     <labels>
         <fullName>ANG_RHC_RHCAmountTooltip</fullName>
@@ -2000,14 +2008,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_RHC RHC Amount Tooltip</shortDescription>
-        <value>RHC Amount Tooltip</value>
+        <value>Monetary threshold for agents’ outstanding BSP Cash sales</value>
     </labels>
     <labels>
         <fullName>ANG_RHC_RiskStatusTooltip</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG RHC Risk Status Tooltip</shortDescription>
-        <value>RHC Risk Status Tooltip</value>
+        <value>Determined by the agents’ ongoing risk history and the outcome of their financial reviews</value>
     </labels>
     <labels>
         <fullName>ANG_VR_SELECTED_CODES</fullName>
@@ -8155,12 +8163,67 @@ IFG Customer Services</value>
         <value>Address:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Agency_Accreditation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Agency_Accreditation</shortDescription>
+        <value>Agency Accreditation</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Agency_Type</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Agency Type</shortDescription>
         <value>Type of Agency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Associate_Entity</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Associate_Entity</shortDescription>
+        <value>Apply for a New Associate Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Branch_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Branch_Office</shortDescription>
+        <value>Apply for a New Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Head_Entity</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Head_Entity</shortDescription>
+        <value>Apply for a New Head Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Office</shortDescription>
+        <value>Apply for a New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Head_Entity</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Head_Entity</shortDescription>
+        <value>Apply for New Travel Head Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Head_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Head_Office</shortDescription>
+        <value>Apply for New Travel Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Associate_Entity_Cash</fullName>
@@ -12881,7 +12944,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Minor Changes</shortDescription>
-        <value>Changes to your Trade Name, Phone or FAX numbers can be made directly from your &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Company Information&lt;/a&gt; page.</value>
+        <value>Minor changes to your Agency details e.g. Phone number, email address etc.  can be made directly from your &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Company Information&lt;/a&gt; page.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_New_Application</fullName>
@@ -12929,7 +12992,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg</shortDescription>
-        <value>For changes to your Location, Company Name, Legal Status or &lt;br/&gt;Ownership / Shareholding.</value>
+        <value>For changes to your Location, Company Name, Legal Status or Ownership / Shareholding.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Other_Forms</fullName>
@@ -15215,6 +15278,21 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>It is required to notify at least one change</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_OWNERSHIP</shortDescription>
+        <value>Total Ownership (Individuals + Companies) must equal 100% in order to submit to IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</shortDescription>
+        <value>TOTAL OWNERSHIP:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_Q2</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
@@ -15480,12 +15558,28 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>This service enables you to look for Travel and Cargo Agents in the BSP/CASS your Airline is participating in. Simply type the IATA code in the search bar to view the main details and risk related information like the active forms of payment, risk history, their accreditation and risk status, etc.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</shortDescription>
+        <value>Equal to Financial Security</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Financial Security Exists</shortDescription>
         <value>Financial Security Exists</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</shortDescription>
+        <value>According to Formula</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
@@ -15524,7 +15618,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_RHC</shortDescription>
-        <value>Remittance Holding Capacity equal to Financial Security</value>
+        <value>Remittance Holding Capacity</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_RISK_EVENTS</fullName>
@@ -15578,6 +15672,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_ANG_LeftNav_Section1_AE_Details</shortDescription>
         <value>1. IATA Accredited Head Entity Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</shortDescription>
+        <value>IATA EasyPay Customer Onboarding</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_MustAddContactsToService</fullName>
@@ -15847,10 +15948,10 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompCostTooltip</shortDescription>
-        <value>All application fees are refundable, in the event accreditation is not achieved:
-Small – up to USD 200.000 gross annual sales
-Medium – USD 200.001 – USD 2.000.000 gross annual sales
-Large – more than USD 2.000.000 gross annual sales</value>
+        <value>All application fees are refundable in the event accreditation is not achieved. &lt;br/&gt; &lt;br/&gt;
+&lt;b&gt;Small Agents&lt;/b&gt; – up to USD 200.000 gross annual sales &lt;br/&gt;
+&lt;b&gt;Medium Agents&lt;/b&gt; – USD 200.001 – USD 2.000.000 gross annual sales &lt;br/&gt;
+&lt;b&gt;Large Agents&lt;/b&gt; – more than USD 2.000.000 gross annual sales</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltipConvert</fullName>
@@ -21076,6 +21177,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Password</value>
     </labels>
     <labels>
+        <fullName>ISSP_PasswordChanged_FRED</fullName>
+        <categories>ISSP, login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
+        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PasswordMatch</fullName>
         <categories>ISSP_ChangePassword</categories>
         <language>en_US</language>
@@ -21746,6 +21855,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_Registration_Error_Login</shortDescription>
         <value>Your login attempt has failed. Make sure the Email and Password are correct.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_Error_MobilePhone</fullName>
+        <categories>ISSP, login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Error_MobilePhone</shortDescription>
+        <value>Please enter your mobile phone number</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Error_Password</fullName>
@@ -24695,7 +24812,7 @@ errMissShipTo:&lt;br/&gt;Missing &quot;Ship To&quot; information
 errInvalidCoupon:Coupon &quot;{0}&quot; is already used
 errQuantity:Quantity &quot;{0}&quot; is invalid
 errTax:Error found in Freight &amp; Taxes calculation:
-msgWarnProductNotCompliant:- Billing/Shipping country is non-compliant with the product &quot;{0}&quot; ({1}).
+msgWarnProductNotCompliant:- We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.
 msgPayTypeThreshold: (threshold exceeded)
 msgPayTypeNotAllowed: (not allowed)
 msgPayTypeBlock: (blocked by product)
@@ -24712,7 +24829,7 @@ errMissAttn:Attention cannot be empty
 errMissPhone:Phone cannot be empty
 errMissState:State/Province cannot be empty
 msgAddrExist:Shipping address is already in system.
-msgErrorCartNotCompliant:Please contact Customer Services by email custserv@iata.org&lt;mailto:custserv@iata.org&gt; or telephone in Canada +1 (514) 390 6726, to order this product.</value>
+msgErrorCartNotCompliant:We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.</value>
     </labels>
     <labels>
         <fullName>Labels_IECConfirmOrder</fullName>
@@ -24787,7 +24904,7 @@ lblStockDate:Expected Availability Date:
 lblQtyInvalid:Invalid quantity to add
 lblDiscount:Discount
 lblFreeShipping:FREE SHIPPING
-msgErrorProductNotCompliant:Please contact Customer Services by email custserv@iata.org&lt;mailto:custserv@iata.org&gt; or telephone in Canada +1 (514) 390 6726, to order this product.</value>
+msgErrorProductNotCompliant:We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.</value>
     </labels>
     <labels>
         <fullName>Labels_IECProductRelated</fullName>
@@ -25282,6 +25399,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Search for Company Name or IATA code (minimum 3 characters)</value>
     </labels>
     <labels>
+        <fullName>OneId_AccountSearch_Limit</fullName>
+        <categories>Technical Field - Do not translate</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_AccountSearch_Limit</shortDescription>
+        <value>20</value>
+    </labels>
+    <labels>
         <fullName>OneId_Account_Association</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -25312,6 +25437,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_All rights reserved</shortDescription>
         <value>All rights reserved</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Authorization_Pending</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Authorization_Pending</shortDescription>
+        <value>Authorization Pending.</value>
     </labels>
     <labels>
         <fullName>OneId_Billing_City</fullName>
@@ -25399,6 +25531,30 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Registration Process</value>
     </labels>
     <labels>
+        <fullName>OneId_EligibleExistingUserError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_EligibleExistingUserError</shortDescription>
+        <value>This Email is already registered with us.
+&lt;br/&gt;
+If you are an E-Commerce user, please use your E-Commerce credentials.
+&lt;br/&gt;
+If you are a Customer Portal user, please use your Customer Portal credentials.
+&lt;br/&gt;
+Please follow the link below to login. From 1ID homepage, you will be able to request access to FRED+.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_EligibleLoggedUserRegisteringError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_EligibleLoggedUserRegisteringError</shortDescription>
+        <value>You already have an active 1ID session opened.
+&lt;br/&gt;
+Please follow the link below to access 1ID homepage. From there, you will be able to request access to FRED+.</value>
+    </labels>
+    <labels>
         <fullName>OneId_EmailError</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25414,12 +25570,370 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
     </labels>
     <labels>
+        <fullName>OneId_ExistingUserWithFredAccessError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ExistingUserWithFredAccessError</shortDescription>
+        <value>This Email is already registered with us and has access to FRED+.
+&lt;br/&gt;
+If you are an E-Commerce user, please use your E-Commerce credentials.
+&lt;br/&gt;
+If you are a Customer Portal user, please use your Customer Portal credentials.
+&lt;br/&gt;
+Please follow the link below to login. From 1ID homepage, click the FRED+ Service in &quot;My available services&quot; section to access FRED+ system.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_ContactUs_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_ContactUs_Link</shortDescription>
+        <value>https://fred.iata.org/contact</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_0</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_0</shortDescription>
+        <value>BETA AGREEMENT</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_1</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_1</shortDescription>
+        <value>By clicking &quot;I have read and accept the Terms and Conditions of Use&quot; or accessing the FRED+ System, you (&quot;User&quot;) agree to enter into a legally binding agreement with the International Air Transport Association (&quot;IATA&quot;) requiring you to abide by the provisions contained in this agreement (&quot;Beta Agreement&quot;).  If you do not agree to the terms contained herein, do not click that you accept and do not access or otherwise use any of the services related to the FRED+ System.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_10</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_10</shortDescription>
+        <value>ARTICLE 2	BETA DISCLAIMER</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_11</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_11</shortDescription>
+        <value>2.1	The User accepts and acknowledges the System is not a finished product and may contain defects, design flaws, and other functional problems.  IATA will not be held responsible for any data that is uploaded onto the System and subsequently lost or destroyed.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_12</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_12</shortDescription>
+        <value>2.2	The User accepts and acknowledges that at the conclusion of the Beta Period, all data uploaded by the User onto the System will be deleted from the System, and IATA will not be responsible for storing, preserving, or otherwise making this data available for recovery by the User.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_13</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_13</shortDescription>
+        <value>ARTICLE 3	NO WARRANTY</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_14</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_14</shortDescription>
+        <value>3.1	The System and all of its components are provided &quot;as is&quot; and &quot;as available without any warranty, representation or conditions whatsoever, express or implied.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_15</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_15</shortDescription>
+        <value>TO THE MAXIMUM EXTENT ALLOWED UNDER APPLICABLE LEGISLATION, IATA DISCLAIMS ANY WARRANTY, REPRESENTATION OR CONDITION, EXPRESS OR IMPLIED, IN RESPECT OF THE SYSTEM AND ITS COMPONENTS, INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES, REPRESENTATIONS, CONDITIONS AND WARRANTIES OF QUALITY, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_16</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_16</shortDescription>
+        <value>WITHOUT LIMITING THE GENERALITY OF THE FOREGOING, IATA DOES NOT REPRESENT, NOR WARRANT, THAT THE SYSTEM WILL BE UNINTERRUPTED OR ERROR FREE, THAT ANY DEFICIENCIES WILL BE CORRECTED, OR THAT THE SERVER, THE SYSTEMS OR THE NETWORK UNDERLYING SAME ARE, OR WILL BE, FREE FROM VIRUSES OR OTHER HARMFUL COMPONENTS. IATA DOES NOT MAKE ANY WARRANTY OR REPRESENTATION CONCERNING THE CONTENT, USER CONTENT OR ANY OTHER INFORMATION, DATA OR OTHER ITEMS OFFERED BY WAY OF THE SYSTEM, INCLUDING WITHOUT LIMITATION, WITH RESPECT TO THE CORRECTNESS, ACCURACY, COMPLIANCE, USEFULNESS, RELIABILITY OR ANY OTHER QUALITY THEREOF. IATA UNDERTAKES NO OBLIGATION TO CONTINUE TO MAINTAIN THE SYSTEM IN OPERATION OR TO PRODUCE NEW VERSIONS OF, OR IMPROVEMENTS TO, THE SYSTEM.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_17</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_17</shortDescription>
+        <value>3.2	The User expressly acknowledges and agrees that its use of the System is at its own risk and that IATA shall not be liable for any errors, deficiencies or omissions in connection with the use of the System. In particular, the User has sole responsibility for adequate protection and backup of data and equipment used in connection with the System and will not make a claim against IATA for lost data, re-run time, inaccurate output, work delays or lost profits resulting from the use of the System. IATA also bears no responsibility for exposed User data in case of theft or loss of the computer equipment or mobile device used to access the System.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_18</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_18</shortDescription>
+        <value>3.3	Any material downloaded or otherwise obtained through the System is done at the User&apos;s own discretion and risk, and the User is solely responsible for any damage to its computer system or other equipment, or loss of data that results from the download of any such material. No advice or information, whether oral or written, obtained by the User from IATA or through the System will create any warranty not expressly stated in this Beta Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_19</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_19</shortDescription>
+        <value>ARTICLE 4	LIMITATION OF LIABILITY</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_2</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_2</shortDescription>
+        <value>Terms and Conditions</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_20</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_20</shortDescription>
+        <value>4.1	To the maximum extent allowed under applicable legislation, and except for damages related to physical prejudice resulting from an intentional or gross fault, or damages resulting from bodily or moral prejudice, IATA does not undertake any liability towards the User or any other person with respect to direct, indirect, incidental, special, consequential, punitive, or exemplary damages, including but not limited to, damages for loss of profits, revenue, goodwill, use, data, electronically transmitted orders, or other economic advantage resulting or arising from access to, use of, or inability to use, the System or its components, even if IATA is advised of the possibility of such damages or even if such damages are reasonably foreseeable.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_21</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_21</shortDescription>
+        <value>4.2	Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, and accordingly some of the above limitations or exclusions may not apply to a specific User.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_22</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_22</shortDescription>
+        <value>ARTICLE 5	PRIVACY POLICY</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_23</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_23</shortDescription>
+        <value>5.1	The User accepts and acknowledges that IATA&apos;s Privacy Policy (found at https://www.iata.org/Pages/privacy.aspx) applies to the System, and by signing the Beta Agreement the User agrees to be bound by the terms contained therein.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_24</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_24</shortDescription>
+        <value>ARTICLE 6	CONFIDENTIALITY</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_25</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_25</shortDescription>
+        <value>6.1	The User will not disclose to a third party any data contained on the System or any comments regarding the System without the prior written approval of IATA.  The User will maintain the confidentiality of the System and any data contained therein with at least the same degree of care the User uses to protect its own confidential and proprietary information, but not less than a reasonable standard of care.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_26</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_26</shortDescription>
+        <value>6.2	IATA will not disclose to a third party any User data contained on the System or any comments regarding the information uploaded by the User onto the System without the User&apos;s prior written approval.  IATA will maintain the confidentiality of the System and any data contained therein with at least the same degree of care that IATA uses to protect its own confidential and proprietary information, but not less than a reasonable standard of care.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_27</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_27</shortDescription>
+        <value>ARTICLE 7	IP RIGHTS</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_28</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_28</shortDescription>
+        <value>7.1	IATA owns and operates the System.  During the Beta Period, and subject to the terms and conditions of these Terms of Use, IATA grants to the User a non-exclusive, personal, non-assignable, non-transferrable, non-sublicensable license to access and use the System.  Except for the rights specifically granted hereinabove to the User, this does not transfer to the User any right (of ownership or otherwise) in or to the System, or any of the services or information accessible thereon. As between the User and IATA, IATA shall be considered the sole and exclusive owner of all components of the System. Any improvements, developments, modifications, changes, supplements, augmentations or works that may be derived from, created or otherwise made by the User in connection with the System shall be the exclusive property of IATA and the User hereby irrevocably and forever assigns to IATA all of his or her worldwide right, title and interest in and to same.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_29</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_29</shortDescription>
+        <value>For greater certainty, the license granted to the User under the preceding paragraph shall not grant to the User any license or right to use names, words, titles, logos, slogans, graphics or designs that constitute trademarks, service marks or trade names, and which are made available in connection with the System (collectively, the &quot;Marks&quot;), regardless of whether such Marks are the property of IATA or of third parties, without the prior written consent of IATA.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_3</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_3</shortDescription>
+        <value>I.	IATA has developed the FRED+ System (the &quot;System&quot;) for use by airline operators, regulators, and authorized verifiers to fulfill their CORSIA reporting requirements.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_30</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_30</shortDescription>
+        <value>ARTICLE 8	TERMINATION</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_31</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_31</shortDescription>
+        <value>8.1	Both parties reserve the right, at their sole discretion, to terminate the Beta Agreement at any time by providing the other party written notice.  Notification by email will be considered sufficient written notice under this Beta Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_32</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_32</shortDescription>
+        <value>ARTICLE 9	CHANGES</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_33</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_33</shortDescription>
+        <value>9.1	IATA may modify this Beta Agreement and its Privacy Policy from time to time.  If any material changes are made, IATA will provide the User notice through the System or through other means. The User will have the opportunity to review the changes before they become effective.  If the User objects to any changes, the User may close its account and cease to access the System.  The User&apos;s continued use of the System after receiving notice about any changes to these terms means that the User has consented to the updated terms.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_34</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_34</shortDescription>
+        <value>ARTICLE 10	ENTIRE AGREEMENT</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_35</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_35</shortDescription>
+        <value>10.1	This Beta Agreement constitutes the entire and only agreement between the parties regarding the System and all other prior negotiations, representations, agreements, and understandings are superseded hereby. No agreements altering or supplementing the terms hereof may be made except by means of a written document signed by the duly authorized representatives of the parties.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_36</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_36</shortDescription>
+        <value>ARTICLE 11	APPLICABLE LAW</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_37</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_37</shortDescription>
+        <value>11.1	The validity, interpretation, construction and performance of this Beta Agreement shall be governed by and construed in accordance with the laws of England and Wales.  The courts of these jurisdictions shall have exclusive jurisdiction over any judicial proceedings arising directly or indirectly from, or associated with, the use of the System.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_4</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_4</shortDescription>
+        <value>II.	Prior to its general release, IATA seeks to grant the User access to the System to explore the functionality of the System and help to identify any possible areas of improvement within the System.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_5</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_5</shortDescription>
+        <value>III.	The User wishes to serve as a beta tester for the System.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_6</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_6</shortDescription>
+        <value>THE PARTIES AGREE AS FOLLOWS:</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_7</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_7</shortDescription>
+        <value>ARTICLE 1	TERM AND SCOPE</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_8</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_8</shortDescription>
+        <value>1.1	IATA grants the User a non-exclusive, non-transferable license to access the System during the beta stage which will conclude on 31 December 2018 (the &quot;Beta Period&quot;) subject to the provisions below.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_9</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_9</shortDescription>
+        <value>1.2	In consideration for receiving access to the System, the User agrees to provide general feedback to IATA regarding the overall performance of the System.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_Of_Use_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_Of_Use_Link</shortDescription>
+        <value>http://www.iata.org</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Troubleshooting_Link</shortDescription>
+        <value>https://fred.aws-sword.net/contact</value>
+    </labels>
+    <labels>
         <fullName>OneId_ForgotPassword</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ForgotPassword</shortDescription>
         <value>Forgot your password?</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Fred_Select_Type_of_Company</fullName>
+        <categories>OneId, Fred</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Fred_Select_Type_of_Company</shortDescription>
+        <value>- Select the Type of Organization -</value>
     </labels>
     <labels>
         <fullName>OneId_GSAWarning</fullName>
@@ -25562,6 +26076,16 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Job Function</value>
     </labels>
     <labels>
+        <fullName>OneId_LoggedUserWithServiceAccessRegisteringError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_LoggedUserWithServiceAccessRegisteringError</shortDescription>
+        <value>You already have an active 1ID  session opened and have access to FRED+.
+&lt;br/&gt;
+Please follow the link below to access 1ID homepage. From there, click the FRED+ Service in &quot;My available services&quot; section to access FRED+ system.</value>
+    </labels>
+    <labels>
         <fullName>OneId_Login</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -25576,6 +26100,39 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_LoginFail</shortDescription>
         <value>Your login attempt has failed. Make sure the email and password are correct.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_LoginUserNotEligibleForFredMessage</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_LoginUserNotEligibleForFredMessage</shortDescription>
+        <value>You don&apos;t have access to FRED+ and will be redirected to 1ID homepage.
+Note that your account is not eligible for FRED+. If you think that it is a mistake, please copy and follow the link below.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_LoginUserWithoutFredAccessMessage</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_LoginUserWithoutFredAccessMessage</shortDescription>
+        <value>You don&apos;t have access to FRED+ yet and will be redirected to 1ID homepage.
+From there, you can request access to FRED+ by clicking the &quot;Request Access to a new Service&quot; button.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Max_Account_Reached</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Max_Account_Reached</shortDescription>
+        <value>Maximum number of accounts reached. Please click on troubleshooting link in the page footer</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Max_Account_Reached2</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Max_Account_Reached2</shortDescription>
+        <value>Maximum number of accounts reached. Please copy and follow the troubleshooting link below</value>
     </labels>
     <labels>
         <fullName>OneId_My_available_applications</fullName>
@@ -25672,6 +26229,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Password_ErrorBlank</shortDescription>
         <value>Enter a value in the Password field.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Passwords_Mix</fullName>
+        <categories>ISSP_ChangePassword, s6</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Passwords_Mix</shortDescription>
+        <value>Your password must have a mix of letters and numbers</value>
     </labels>
     <labels>
         <fullName>OneId_Please_Wait</fullName>
@@ -25888,6 +26453,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>http://www.iata.org/</value>
     </labels>
     <labels>
+        <fullName>OneId_Thank_you_Fred_Access_Request</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Thank_you_Fred_Access_Request</shortDescription>
+        <value>Thank you for requesting access to our service. You will be informed by email shortly about the status of your request.</value>
+    </labels>
+    <labels>
         <fullName>OneId_Thank_you_for_requesting_access_to_our_service</fullName>
         <categories>Oneid</categories>
         <language>en_US</language>
@@ -25925,6 +26498,28 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>OneId URL javaScript</shortDescription>
         <value>https://identity.iata.org</value>
+    </labels>
+    <labels>
+        <fullName>OneId_UneligibleExistingUserError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_UneligibleExistingUserError</shortDescription>
+        <value>This Email is already registered with us, but the related user is not eligible for FRED+.
+&lt;br/&gt;
+If you believe that it is a mistake, please follow the link below to contact us.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_UneligibleLoggedUserRegisteringError</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_UneligibleLoggedUserRegisteringError</shortDescription>
+        <value>You already have an active 1ID session opened. 
+&lt;br/&gt;
+Note that your user is not eligible for FRED+ access.
+&lt;br/&gt;
+If you believe that it is a mistake, please follow the link below to contact us.</value>
     </labels>
     <labels>
         <fullName>OneId_User_CreatedFromContact</fullName>
@@ -28154,6 +28749,15 @@ title,Title,Name</value>
         <value>Taxes</value>
     </labels>
     <labels>
+        <fullName>TermsConditionFred</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TermsConditionFred</shortDescription>
+        <value>&lt;p&gt;Unless otherwise stated in terms applicable specifically to a certain component, product or service offered through the Portal, the Portal and all components thereof are provided “as is” and “as available”, without any warranty, representation or condition whatsoever, express or implied.&lt;/p&gt;
+&lt;p&gt;To the maximum extent allowed under applicable legislation, IATA disclaims any warranty, representation or condition, express or implied, in respect of the Portal and its components, including, without limitation, any warranties, representations, conditions and warranties of quality, merchantability, fitness for a particular purpose and non infringement.&lt;/p&gt;
+&lt;p&gt;Without limiting the generality of the foregoing, IATA does not represent, nor warrant, that the Portal will be uninterrupted or error free, that any deficiencies will be corrected, or that the server, the systems or the network underlying same are, or will be, free from viruses or other harmful components.;</value>
+    </labels>
+    <labels>
         <fullName>ThankYou</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -28168,6 +28772,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>The attachments you select will be copied to the target case</shortDescription>
         <value>The attachments you select will be copied to the target case(s), while also remaining available on the source case.</value>
+    </labels>
+    <labels>
+        <fullName>TitleTermsConditionFred</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TitleTermsConditionFred</shortDescription>
+        <value>Terms &amp; Conditions Fred+</value>
     </labels>
     <labels>
         <fullName>Title_Home_Page</fullName>

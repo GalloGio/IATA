@@ -1303,7 +1303,11 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('hqAccount: ' + hqAccount);
         system.debug('cse: ' + cse);
         if(cse.id == null && String.isBlank(cse.CaseNumber) && cse.Reason1__c == 'New HO') {
-            List<Case> cases = [SELECT Id, CaseNumber FROM Case WHERE AccountId = :hqAccount.Id AND Reason1__c = 'New HO' AND IsClosed = false AND Type_of_customer__c = :cse.Type_of_customer__c LIMIT 1];
+            List<Case> cases = [SELECT Id, CaseNumber 
+                                FROM Case 
+                                WHERE (AccountId = :hqAccount.Id OR ContactId = :cse.ContactId) AND Reason1__c = 'New HO' AND 
+                                    (IsClosed = false AND (NOT Owner.Name LIKE '%Recycle%')) AND 
+                                    Type_of_customer__c = :cse.Type_of_customer__c  LIMIT 1];
 
             if(!cases.isEmpty()) {
                 res.add(cases[0].Id);
@@ -2906,32 +2910,6 @@ public without sharing class ISSP_AMS_Accreditation {
         upsert accountConcerned;
     }
 
-
-    public static ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice getWSInstance() {
-        ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice newInstance;
-        try {
-            partnerSoapSforceCom.Soap sp = new partnerSoapSforceCom.Soap();
-            String userName;
-            string password;
-            if (ISSP_Ams_Login_Credentials__c.getValues('AmsDev1') != null) {
-                userName = ISSP_Ams_Login_Credentials__c.getValues('AmsDev1').User_Name__c;
-                password = ISSP_Ams_Login_Credentials__c.getValues('AmsDev1').Password__c;
-            }
-            partnerSoapSforceCom.LoginResult loginResult = sp.login(userName, password);
-            newInstance = new ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice();
-
-            ISSP_AMS_RecordCreator_Class.SessionHeader_element newSessionInstance = new ISSP_AMS_RecordCreator_Class.SessionHeader_element();
-            newSessionInstance.sessionId = loginResult.sessionId;
-            newInstance.SessionHeader = newSessionInstance;
-        } catch (Exception e) {
-            system.debug('login failed: ' + e.getMessage());
-        }
-
-        return newInstance;
-
-    }
-
-
     //public static Void callToMinorChangesWS(ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice instanceWS, String accountId, List<AccountChanges> accChanges) {
     //    /**USE WS Method
     //    ISSP_AMS_RecordCreator_Class.AccountChanges[] accChangesWS = new ISSP_AMS_RecordCreator_Class.AccountChanges[]{};
@@ -3134,7 +3112,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 //NEWGEN 683
                 if (getIsAccreditationModelNotNullOrLegacy()) {
                     typeOfProcess = AMS_UTILS.NGCHANGES;
-                } else if(newCase.Reason1__c == 'Corrections') {//AMSU-140
+                } else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE) {//AMSU-140//AMSU-165
                     typeOfProcess = AMS_Utils.COR;  
                 } else {
                     typeOfProcess = 'MAJOR.CHANGES';
@@ -7246,7 +7224,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             newCase.Reason1__c = 'Bank Detail Update';
             newCase.Subject = Label.ISSP_AMS_NoC_Direct_Debit_Change + ' – ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
         } else if(newForm.Location_Class__c == 'I'){  //AMSU-140
-            newCase.Reason1__c = 'Corrections';
+            newCase.Reason1__c = AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE; //AMSU-165
             newCase.Subject =  'Agency Changes – ' + accountConcerned.Name;
         } else if ((newForm.Is_change_location__c && newForm.Is_change_legal_name__c) || (newForm.Is_change_location__c && newForm.Is_change_ownership_or_shareholding__c) || (newForm.Is_change_ownership_or_shareholding__c && newForm.Is_change_legal_name__c)) {
             newCase.Reason1__c = 'Major Change';

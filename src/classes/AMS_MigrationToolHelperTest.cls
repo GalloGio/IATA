@@ -3,13 +3,10 @@ private class AMS_MigrationToolHelperTest {
 
 	@testSetup static void setup() {
 
-		Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
-		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-
 		// create test account1
 		Account account1 = new Account();
 		account1.Name = 'Test account';
-		account1.RecordTypeId = agencyRT;
+		account1.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
 		account1.IATACode__c = '4242424';
 		account1.Type = 'IATA Passenger Sales Agent';
 		account1.BillingCity = 'Montreal';
@@ -34,7 +31,7 @@ private class AMS_MigrationToolHelperTest {
 		saamCase.Subject = 'Test SAAM case';
 		saamCase.Description = 'Test SAAM case';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
+		saamCase.RecordTypeId = AMS_Utils.RECTYPE_SAAM;
 		saamCase.Reason1__c = 'New HO';
 		insert saamCase;
 
@@ -86,7 +83,7 @@ private class AMS_MigrationToolHelperTest {
 
 		AMS_MigrationToolHelper.decode('V');
 
-		List<Case> casesList = [SELECT id, Account.Location_Class__c, Account.Category__c, Account.Location_Type__c , Financial_Assessment_compliant__c, Status, RecordType__c, Reason1__c, AccountId, BSPCountry__c , Financial_Assessment_received__c, Bank_Guarantee_amount__c, Bank_Guarantee_deadline__c, Bank_Guarantee_received__c, Bank_Guarantee_requested__c, Change_effective_as_of__c, Criteria_remarks__c, Documentation_remarks__c, Dossier_reception_date__c, Fees_refund_requested__c, Finalization_checklist__c, Financial_Assessment_deadline__c, Financial_Assessment_requested__c, Financial_Review_Result__c, Invoice_number__c, Local_Inspection_compliant__c, Local_Inspection_deadline__c, Local_Inspection_received__c, Local_Inspection_requested__c, Process_Start_Date__c, Proof_of_payment_received__c, PSAA_EACP_Agreement_received__c, PSAA_signed_copy_sent__c, SAAM_Deadline_Date__c, AIMS_updated__c, Finalized_in_AIMS__c from case];
+		List<Case> casesList = [SELECT id, Account.ANG_IsNewGenAgency__c, Account.Location_Class__c, Account.Category__c, Account.Location_Type__c ,Financial_Assessment_compliant__c, Status, RecordType__c, Reason1__c, AccountId, BSPCountry__c ,Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from case];
 
 		if (casesList.isEmpty())
 			System.assertEquals(true, false);
@@ -235,8 +232,84 @@ private class AMS_MigrationToolHelperTest {
 	}
 
 
-	@isTest
-	static void alignOwnersTest() {
+    static testMethod void test_verifyCaseMigration4() {
+		  
+		Test.startTest();
+
+		// create test account1
+		Account account1 = new Account();
+		account1.Name = 'Test account';
+        account1.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
+		account1.IATACode__c = '4242424';
+		account1.Type = 'IATA Passenger Sales Agent';
+		account1.BillingCity = 'Montreal';
+		account1.BillingCountry = 'Canada';
+		account1.BillingStreet = 'some street';
+		account1.Location_Type__c = 'HO';
+		insert account1;
+
+		// create test contact
+		Contact contact1 = new Contact();
+		contact1.FirstName = 'Dummy';
+		contact1.LastName = 'Contact';
+		contact1.Type_of_Contact__c = 'IFAP Contact';
+		contact1.AccountId = account1.Id;
+		contact1.Email = 'some2@email.org';
+		contact1.Financial_Assessment_Contact__c = true;
+		insert contact1;
+
+		Case thecase = new Case();
+		thecase.ContactId = contact1.Id;
+		thecase.AccountId = account1.Id;
+		thecase.Subject = 'Test SAAM case';
+		thecase.Description = 'Test SAAM case';
+		thecase.Status = 'Open';
+		thecase.RecordTypeId = AMS_Utils.RECTYPE_SAAM;
+		thecase.Reason1__c = 'CLO - Closure';
+		insert thecase;
+
+
+		thecase.Financial_Assessment_received__c = Date.Today();
+		thecase.Bank_Guarantee_amount__c = '666';
+		thecase.Bank_Guarantee_deadline__c = Date.Today();
+		thecase.Bank_Guarantee_received__c = Date.Today();
+		thecase.Bank_Guarantee_requested__c = Date.Today();
+		thecase.Change_effective_as_of__c = Date.Today();
+		thecase.Criteria_remarks__c = 'Stuff3';
+		thecase.Documentation_remarks__c = 'Stuff2';
+		thecase.Dossier_reception_date__c = Date.Today();
+		thecase.Fees_refund_requested__c = Date.Today();
+		thecase.Finalization_checklist__c = 'BG Updated in CAIMS (C&NA)';
+		thecase.Financial_Assessment_deadline__c = Date.Today();
+		thecase.Financial_Assessment_requested__c = Date.Today();
+		thecase.Financial_Review_Result__c = 'Satisfactory';
+		thecase.Financial_Assessment_compliant__c = 'Satisfactory';
+		thecase.Invoice_number__c = '12312323';
+		thecase.Local_Inspection_compliant__c = 'No';
+		thecase.Local_Inspection_deadline__c = Date.Today();
+		thecase.Local_Inspection_received__c = Date.Today();
+		thecase.Local_Inspection_requested__c = Date.Today();
+		thecase.Process_Start_Date__c = Date.Today();
+		thecase.Proof_of_payment_received__c = Date.Today();
+		thecase.PSAA_EACP_Agreement_received__c = Date.Today();
+		thecase.PSAA_signed_copy_sent__c = Date.Today();
+		thecase.SAAM_Deadline_Date__c = Date.Today();
+		thecase.AIMS_updated__c = Date.Today();
+		thecase.Finalized_in_AIMS__c = Date.Today();
+
+		update thecase;
+	
+		AMS_MigrationToolHelper.CaseContainer cc = new AMS_MigrationToolHelper.CaseContainer(thecase,false);
+
+		cc = AMS_MigrationToolHelper.migratecases(cc,null);
+		
+        AMS_MigrationToolHelper.fetchAccreditation(thecase.Id);
+            
+		Test.stopTest();
+		  
+	}
+
+        static testMethod void alignOwnersTest() {
 
 		Test.startTest();
 
@@ -560,11 +633,17 @@ private class AMS_MigrationToolHelperTest {
 
 
 		Test.stopTest();
-	}
+    }
+	static testMethod void TestCompliant() {
 
-	@isTest
-	static void TestCompliant() {
-		AMS_MigrationToolHelper a = new AMS_MigrationToolHelper();
-		a.isTestCompliant();
+		Test.startTest();
+
+        AMS_MigrationToolHelper a = new AMS_MigrationToolHelper();
+        a.isTestCompliant();
+		Map<String,String> b = AMS_MigrationToolHelper.newgenCaseReason;
+		Map<String, Id> c = AMS_MigrationToolHelper.oscarNewgenRTMap;
+		Map<String, String> d = AMS_MigrationToolHelper.processTypeMapNewgen;
+
+		Test.stopTest();
 	}
 }

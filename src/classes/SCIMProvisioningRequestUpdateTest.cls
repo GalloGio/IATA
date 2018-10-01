@@ -30,7 +30,8 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 				Is_Active__c = true,
 				Portal_Visible__c = false,
 				RecordTypeid = recTypeId,
-				App_Picture_Url__c = 'oi');
+				App_Picture_Url__c = 'oi',
+				Customer_Type_Activation__c='Airline');
 		insert oi;
 
 		System.debug('basto1p - testConfigObjsInit One_Id_Service_Provider_Config__c oi=' + oi);
@@ -41,7 +42,8 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 						Is_Active__c = true,
 						Portal_Visible__c = false,
 						RecordTypeid = recTypeId,
-						Service_Bundle__c = oi.id);
+						Service_Bundle__c = oi.id,
+						Customer_Type_Activation__c='Airline');
 		insert rr;
 
 		System.debug('basto1p - testConfigObjsInit One_Id_Service_Provider_Config__c rr=' + rr);

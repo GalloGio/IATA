@@ -218,6 +218,16 @@ private class ANG_AccountTriggerHandlerTest {
 
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{a.Id}, false);
 
+		List<ANG_RHC_Information__c> rhcList1 = [Select ANG_RHC_Amount_Provisional__c,
+													   ANG_Provisional_RHC_Last_Update__c,
+													   ANG_RME_Amount__c
+												  from ANG_RHC_Information__c 
+												 Where ANG_AccountId__c =: a.id];
+        
+        rhcList1[0].CurrencyIsoCode = 'USD';
+        rhcList1[0].ANG_RME_Amount__c = 200;
+        upsert rhcList1[0];
+
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 
 		message.provisionalRHC = 300;
@@ -237,7 +247,66 @@ private class ANG_AccountTriggerHandlerTest {
 		update a;
 
 		//forcing call as test will not "chain" processes
-		new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
+		//new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null); 
+		new ANG_UpdateRHCInformationQueueable(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null); 
+		Test.stopTest();
+
+		List<ANG_RHC_Information__c> rhcList = [Select ANG_RHC_Amount_Provisional__c,
+													   ANG_Provisional_RHC_Last_Update__c,
+													   ANG_RME_Amount__c
+												  from ANG_RHC_Information__c 
+												 Where ANG_AccountId__c =: a.id];
+
+		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RME_Amount__c);
+
+	}
+
+	static testMethod void test_updateRHCInformation_OptIN_OptOUT_ALT() {
+
+		//
+		// Test ANG_FA_Opt_out__c TRUE to FALSE (Oscar)
+		//
+
+		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
+		ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account a = new Account(ANG_FA_Opt_out__c = true, Name = 'NameTest1', IATACode__c = '12344567', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');
+
+		insert a;
+
+		ANG_RHCHelper.createRHCInfo(new Set<Id>{a.Id}, false);
+
+		List<ANG_RHC_Information__c> rhcList1 = [Select ANG_RHC_Amount_Provisional__c,
+													   ANG_Provisional_RHC_Last_Update__c,
+													   ANG_RME_Amount__c
+												  from ANG_RHC_Information__c 
+												 Where ANG_AccountId__c =: a.id];
+        
+        rhcList1[0].CurrencyIsoCode = 'USD';
+        rhcList1[0].ANG_RME_Amount__c = 200;
+        upsert rhcList1[0];
+
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+
+		message.provisionalRHC = 300;
+		message.storedBaseCurrency = 'USD';
+		message.consumedRHCAmount = 100;
+		message.consumedRHCPercentage = 0.1;
+		message.iataCode = '12344567';
+		message.eventTime = System.now();
+		message.storedRHCValue = 200;
+
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));		
+
+		a.ANG_FA_Opt_out__c = false;
+
+		Test.startTest();
+
+		update a;
+
+		//forcing call as test will not "chain" processes
+		//new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null); 
+		new ANG_UpdateRHCInformationQueueable(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true).execute(null); 
 		Test.stopTest();
 
 		List<ANG_RHC_Information__c> rhcList = [Select ANG_RHC_Amount_Provisional__c,
@@ -289,6 +358,16 @@ private class ANG_AccountTriggerHandlerTest {
 
 		cFS.Status = AMS_Utils.CASE_STATUS_FINANCIAL_SECURITY_REQUESTED;
 
+		List<ANG_RHC_Information__c> rhcList1 = [Select ANG_RHC_Amount_Provisional__c,
+													   ANG_Provisional_RHC_Last_Update__c,
+													   ANG_RME_Amount__c
+												  from ANG_RHC_Information__c 
+												 Where ANG_AccountId__c =: a.id];
+        
+        rhcList1[0].CurrencyIsoCode = 'USD';
+        rhcList1[0].ANG_RME_Amount__c = 200;
+        upsert rhcList1[0];
+
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 
 		message.provisionalRHC = 300;
@@ -304,7 +383,8 @@ private class ANG_AccountTriggerHandlerTest {
 		update cFS;
 
 		//forcing call as test will not "chain" processes
-        new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
+        //new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
+		new ANG_UpdateRHCInformationQueueable(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
 		Test.stopTest();
 
 		List<ANG_RHC_Information__c> rhcList = [Select ANG_RHC_Amount_Provisional__c,

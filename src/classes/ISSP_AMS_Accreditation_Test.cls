@@ -1221,12 +1221,12 @@ private class ISSP_AMS_Accreditation_Test {
 
     @isTest static void ISSP_AMS_Accreditation_Test_NOC_4s() {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
-                IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-                IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-                IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test',
-                Local_language_Agency_details_required__c = true );
+                                    IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                                    IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test',
+                                    Local_language_Agency_details_required__c = true, ANG_Enable_NewGen__c = true );
         insert country;
-        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true);
+        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true, ANG_Enable_NewGen__c = true);
         insert country2;
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
@@ -1236,10 +1236,12 @@ private class ISSP_AMS_Accreditation_Test {
         parent.Name = 'test';
         parent.sector__c = 'Travel Agent';
         parent.Location_Type__c = 'HE';
+        parent.Location_Class__c = 'P';
         parent.RecordTypeId = rtIdBr ;
         parent.IATACode__c = '100';
         parent.Category__c = 'IATA Passenger Sales Agent';
         parent.ANG_Accreditation_Model__c = 'Cashless';
+        parent.IATA_ISO_Country__c = country.Id;
         insert parent;
 
         Account child = ISSP_ObjectFactory.createNewAccount();
@@ -1253,8 +1255,11 @@ private class ISSP_AMS_Accreditation_Test {
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
         child.Location_Type__c = 'AE';
+        child.Location_Class__c = 'P';
         child.IATACode__c = '1001';
         child.ANG_Accreditation_Model__c = 'Cashless';
+        child.IATA_ISO_Country__c = country.Id;
+
         insert child;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -1500,6 +1505,8 @@ private class ISSP_AMS_Accreditation_Test {
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
+            testCase.BounceEmailCounter__c = 0.0;
+            testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
             testCase.Account_Concerned__c = child.Id;
@@ -2548,7 +2555,6 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.amsOfficeType = 'HO';
             ctrl.newForm.Validation_ERRORS__c = true;
             ctrl.highLightPageForErrors();
-            ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice WSInstance = ISSP_AMS_Accreditation.getWSInstance();
             List<ISSP_AMS_Accreditation.AccountChanges> accChanges_List = new List<ISSP_AMS_Accreditation.AccountChanges>();
             accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Phone', '0534534534', '0243242523'));
 

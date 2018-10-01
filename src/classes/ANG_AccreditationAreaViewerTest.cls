@@ -2,7 +2,7 @@
 private class ANG_AccreditationAreaViewerTest {
 	
 	@testSetup static void setup(){
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', Region__c = 'Europe')  ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', Region__c = 'Europe', ANG_Enable_NewGen__c = true);
         insert ctry ;
 
         Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');

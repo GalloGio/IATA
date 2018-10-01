@@ -21,7 +21,7 @@ public class MemberContactsCsv{
 
     public PageReference Next(){
         List<List<String>> parsedCSV;
-        string SeniorRecordTypeID =  RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Senior');
+        string standardRT =  RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         contactsFromCsv = new list<Contact>();
         try{
             if(contentFile == null)
@@ -55,7 +55,7 @@ public class MemberContactsCsv{
                                             Senior_Contact_Email__c =row[5].replaceAll('"', '') ,
                                             Senior_Contact_Phone__c =row[7].replaceAll('"', '') ,
                                             Senior_Contact_Fax__c=row[8].replaceAll('"', '') ,
-                                            recordtypeID = SeniorRecordTypeID);
+                                            recordtypeID = standardRT);
                     if(row[6]!=null && row[6]!='' && row[6].replaceAll('"', '') != null)
                         c.ISO_Country__c = mapCountryCode.containsKey(row[6].replaceAll('"', ''))?mapCountryCode.get(row[6].replaceAll('"', '')):null;
                     else

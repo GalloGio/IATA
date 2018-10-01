@@ -48,8 +48,9 @@ public class AMS_AgencyAChangeCodeHandler {
     public static void handleAfterUpdate(List<Agency_Applied_Change_code__c> aacc, map<Id, Agency_Applied_Change_code__c> triggerOldMap) {
         verifyActiveAACCuniqueness(aacc);
         set<id> setIdAACC = new set<id>();
-        Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
+        //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
         set<id> setIdAACCForNewApplicationPending = new set<id>();
+        Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
         for(Agency_Applied_Change_Code__c aaccRecord : aacc)
         {

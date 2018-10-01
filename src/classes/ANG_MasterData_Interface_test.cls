@@ -7,6 +7,9 @@ private class ANG_MasterData_Interface_test {
 
 	@testSetup static void testSetup(){
 
+                IATA_ISO_Country__c isoCntr1 = new IATA_ISO_Country__c(Name = 'Portugal', Region__c = 'Europe', ISO_Code__c='PT', ANG_Enable_NewGen__c = true);
+                insert isoCntr1;
+
                 Account acc = new Account(
                         name='acc1',
                         Location_Type__c=AMS_Utils.HE,
@@ -15,7 +18,8 @@ private class ANG_MasterData_Interface_test {
                         ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
                         recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
                         IATACode__c ='123',
-                        Accreditation_date__c = Date.valueOf('2017-01-01')
+                        Accreditation_date__c = Date.valueOf('2017-01-01'),
+                        IATA_ISO_Country__c = isoCntr1.Id
                 );
 
                 Account acc1 = new Account(
@@ -26,7 +30,8 @@ private class ANG_MasterData_Interface_test {
                         ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
                         recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
                         IATACode__c ='999',
-                        Accreditation_date__c = Date.valueOf('2017-01-01')
+                        Accreditation_date__c = Date.valueOf('2017-01-01'),
+                        IATA_ISO_Country__c = isoCntr1.Id
                 );
 
                 Account acc2 = new Account(
@@ -37,7 +42,8 @@ private class ANG_MasterData_Interface_test {
                         ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
                         recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
                         IATACode__c ='999',
-                        Accreditation_date__c = Date.valueOf('2017-01-01')
+                        Accreditation_date__c = Date.valueOf('2017-01-01'),
+                        IATA_ISO_Country__c = isoCntr1.Id
                 );
 
                 insert new list<account>{acc,acc1,acc2};
@@ -50,7 +56,8 @@ private class ANG_MasterData_Interface_test {
                         Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
                         ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
                         recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
-                        IATACode__c ='12223'
+                        IATACode__c ='12223',
+                        IATA_ISO_Country__c = isoCntr1.Id
                 );
 
                 insert accChild;
