@@ -101,7 +101,6 @@ public class TIP_BatchActivateRecordsByDate_test {
         a1.Name = name;
         a1.sector__c = 'Travel Agent';
         a1.Location_Type__c = 'HO';
-        a1.RecordTypeId = TIP_UTils.PAYMENT_PROVIDER_RECORD_TYPE_ID;
         a1.IATACode__c = String.valueOf(randomIATACode);
         a1.IATA_ISO_Country__c = country.id;
         a1.category__c = 'Payment Provider';
