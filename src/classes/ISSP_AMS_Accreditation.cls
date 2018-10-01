@@ -2910,32 +2910,6 @@ public without sharing class ISSP_AMS_Accreditation {
         upsert accountConcerned;
     }
 
-
-    public static ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice getWSInstance() {
-        ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice newInstance;
-        try {
-            partnerSoapSforceCom.Soap sp = new partnerSoapSforceCom.Soap();
-            String userName;
-            string password;
-            if (ISSP_Ams_Login_Credentials__c.getValues('AmsDev1') != null) {
-                userName = ISSP_Ams_Login_Credentials__c.getValues('AmsDev1').User_Name__c;
-                password = ISSP_Ams_Login_Credentials__c.getValues('AmsDev1').Password__c;
-            }
-            partnerSoapSforceCom.LoginResult loginResult = sp.login(userName, password);
-            newInstance = new ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice();
-
-            ISSP_AMS_RecordCreator_Class.SessionHeader_element newSessionInstance = new ISSP_AMS_RecordCreator_Class.SessionHeader_element();
-            newSessionInstance.sessionId = loginResult.sessionId;
-            newInstance.SessionHeader = newSessionInstance;
-        } catch (Exception e) {
-            system.debug('login failed: ' + e.getMessage());
-        }
-
-        return newInstance;
-
-    }
-
-
     //public static Void callToMinorChangesWS(ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice instanceWS, String accountId, List<AccountChanges> accChanges) {
     //    /**USE WS Method
     //    ISSP_AMS_RecordCreator_Class.AccountChanges[] accChangesWS = new ISSP_AMS_RecordCreator_Class.AccountChanges[]{};

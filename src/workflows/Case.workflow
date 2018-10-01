@@ -15667,17 +15667,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ISSP - Assign to Customer queue</fullName>
-        <actions>
-            <name>ISSP_Assign_to_ISSP_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>If automatic assignment rule fail, the case is assigned to a specific queue.</description>
-        <formula>AND(  LEFT($Profile.Name, 3) = &apos;ISS&apos;,  $User.Id = OwnerId )</formula>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>ISSP - Switch from ISS portal RT to Europe RT</fullName>
         <actions>
             <name>ISSP_Switch_from_ISS_portal_RT_to_Euro</name>
@@ -15691,37 +15680,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         </criteriaItems>
         <description>Switch ISS portal created cases to the &quot;classic web process&quot; by setting the Europe RT</description>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP Deactivate AP process draft</fullName>
-        <active>false</active>
-        <description>Deactivate draft AP joining processs or SAAM / OSCAR Communication cases after 2 weeks</description>
-        <formula>ISPICKVAL(Status,&apos;Draft&apos;)  &amp;&amp;  ISPICKVAL(Origin,&apos;Portal&apos;) &amp;&amp;  OR(RecordType__c = &apos;IDFS Airline Participation Process&apos;, RecordType__c = &apos;SAAM&apos;,RecordType__c = &apos;OSCAR Communication&apos;)</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>ISS_Portal_Make_case_invisible</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Move_to_Recycle_Bin_Europe</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Set_Case_status_to_abandoned</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <timeLength>15</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>ISSP IFAP Assesment done</fullName>
@@ -15773,26 +15731,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ISSP IFAP Notify contact docs succesfully submitted</fullName>
-        <actions>
-            <name>Financial_docs_successfully_submitted</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Submitted</value>
-        </criteriaItems>
-        <description>this should happen when IFAP case status has been changed to &apos;submitted&apos;; the question is if it will be displayed to Admin-financial contact only or to all Admin contacts</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ISSP Notify contact of IFAP Sanity Failure</fullName>
         <actions>
             <name>ISSP_IFAP_Notify_on_Sanity_Failure</name>
@@ -15811,25 +15749,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         </criteriaItems>
         <description>this should happen when IFAP case status has been changed to &apos;sanity check failure&apos;</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP PWC Case from Portal</fullName>
-        <actions>
-            <name>ISSP_PWC_RecordType</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Portal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>GFA communication</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>IW%3A Case assignement to Deskom</fullName>
