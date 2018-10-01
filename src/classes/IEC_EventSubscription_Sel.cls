@@ -48,13 +48,14 @@ public without sharing class IEC_EventSubscription_Sel extends Selector {
         return Database.query(query);
     }
     
-    public List<IEC_Event_Subscription__c> getEventSubscriptionByProductsIdListAndContactsList(Set<Id> lstProductsId, Set<Id> lstContactIds){
+    public List<IEC_Event_Subscription__c> getEventSubscriptionByProductNumbersListAndContactsList(Set<String> lstProductsNumbers, Set<Id> lstContactIds){
 
         String query = String.format(
             'SELECT {0}, Product__r.SAP_Material_Number__c ' +
             'FROM {1} ' + 
-            'WHERE Product__c IN :lstProductsId ' + 
-            ' AND Subscriber__c IN :lstContactIds ' , 
+            'WHERE Product_Number__c LIKE :lstProductsNumbers ' + 
+            ' AND Subscriber__c IN :lstContactIds ' +
+            ' AND Active__c = true ' , 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()

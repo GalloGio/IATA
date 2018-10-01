@@ -1,8 +1,8 @@
 public with sharing class IEC_EventSubscription_Svc {
 
-	public static Map<Id,List<IEC_Event_Subscription__c>> buildMapWithSubscByProductNbrWoVersion(List<IEC_Event_Subscription__c> lstEventSubscriptions){
+	public static Map<String,List<IEC_Event_Subscription__c>> buildMapWithSubscByProductNbrWoVersion(List<IEC_Event_Subscription__c> lstEventSubscriptions){
 
-		Map<Id,List<IEC_Event_Subscription__c>> mapSubscriptionByProductNbrWoVersion = new Map<Id,List<IEC_Event_Subscription__c>>();
+		Map<String,List<IEC_Event_Subscription__c>> mapSubscriptionByProductNbrWoVersion = new Map<String,List<IEC_Event_Subscription__c>>();
         
         if(lstEventSubscriptions != null && !lstEventSubscriptions.isEmpty()){
             for(IEC_Event_Subscription__c eventSubscriptionAux : lstEventSubscriptions){
