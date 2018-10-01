@@ -917,7 +917,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
             }
             parentISSCase = [SELECT c.Id, c.ParentId, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, 
-                                    c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, 
+                                    c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type,  c.Account.ANG_IsNewGenAgency__c,
                                     c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c
                                 FROM Case c WHERE c.Id IN :parentId];
 
@@ -994,11 +994,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                         }
                                         parentISSCase[0].firstFSnonComplianceDate__c = Date.today();
                                         // set 2nd FS deadline date for PAX and Domestic agents
+                                        
                                         if (isPassengerDomestic) {
-                                            // business rule: 31 days after the non-compliance case is raised
-                                            parentISSCase[0].FS_Second_Deadline_Date__c = parentISSCase[0].firstFSnonComplianceDate__c.addDays(31);
-                           
-                                        } else if (isCargoCASS) {
+                                            //NEWGEN-3394 - deadline for NewGen to 60 days
+                                            if(parentISSCase[0].Account.ANG_IsNewGenAgency__c)
+                                                // business rule: 31 days after the non-compliance case is raised
+                                                parentISSCase[0].FS_Second_Deadline_Date__c = parentISSCase[0].firstFSnonComplianceDate__c.addDays(60);
+                                            else
+                                                parentISSCase[0].FS_Second_Deadline_Date__c = parentISSCase[0].firstFSnonComplianceDate__c.addDays(31);
+                                           
+                                        }
+                                        else if (isCargoCASS) {
                                             if (newCase.New_IFAP_Deadline_date__c == null) {
                                                 newCase.addError('The New IFAP Deadline date is mandatory when creating a 1st non-compliance for Cargo or CASS agents.');
                                                 continue;

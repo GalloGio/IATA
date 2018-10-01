@@ -148,8 +148,10 @@ public with sharing class SidraLiteManager {
         // get related Accounts
         map<Id,Account> mapAccounts = new map<Id,Account>();
         if (!listAccountId.isEmpty()) {
-            mapAccounts = new map<Id,Account>([SELECT Id, Type, Status__c, Accumulated_Irregularities__c, Category__c
-                                               FROM Account WHERE id IN :listAccountId]);
+            mapAccounts = new map<Id,Account>(
+            [Select Id, Type, Status__c, Accumulated_Irregularities__c, Category__c, ANG_IsNewGenAgency__c 
+            from Account
+            where id in :listAccountId]);
         }
 
         list<Case> listUpdateParent = new list<Case>();
@@ -477,7 +479,12 @@ public with sharing class SidraLiteManager {
             // finally update SIDRA lite case
             parentCase.FirstFSnonComplianceDate__c = Date.today();
             if (SidraLiteUtil.isPassenger(account)) {
-                parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(31);
+                
+                if(Account.ANG_IsNewGenAgency__c)
+                    parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(60);
+                else
+                    parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(31);
+
                 if (SidraLiteUtil.isAccountActive(account)) {
                     //cse.Propose_Irregularity__c = Date.today();
                     cse.SIDRA_Lite_Default_Date__c = Date.today();

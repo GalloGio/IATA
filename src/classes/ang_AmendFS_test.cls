@@ -2,7 +2,7 @@
 private class ang_AmendFS_test {
 	 @testSetup static void testSetup(){
 	 	  // Create a new ISO Country
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', ANG_Enable_NewGen__c = true);
         insert country;
         
         // Create an Airline HQ account

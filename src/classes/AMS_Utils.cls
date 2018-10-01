@@ -101,6 +101,8 @@ public without sharing class AMS_Utils {
     public static final String WITHDRAWAL = 'Application Withdrawal';
     public static final String SUSPENSION = 'Process suspension';
     public static final String TERMINATION = 'Process termination';
+    public static final String DUEDILIGENCE = 'Due Diligence';
+    public static final String SETUPPROCESSING = 'Setup Processing';
     public static final String SETUPFINALIZATION = 'Setup finalization';
 
     public static final String PASSED = 'Passed';
@@ -187,6 +189,9 @@ public without sharing class AMS_Utils {
     //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 
+	//AMSU-162
+    public static final Set<String> AMS_ProcessesAddressToValidate = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA, new_MSO};
+
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
     public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE};
 
@@ -227,6 +232,10 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_IATAAGENCY   = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
     
     public static final String RECTYPE_IATAEASYPAY  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c', 'IATA_EasyPay_Opt_in_Out');
+    public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Accreditation_Requirement__c', 'IEP_Model_A');
+
+    public static final String RECTYPE_BSP = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Settlement_System__c','BSP');
+
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
@@ -243,6 +252,8 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+
+    public static final Set<String> ACTIVEAGENCYSTATUS = new Set<String>{ACC_S4_LISTED, ACC_S5_CASHNOCOMMISSION, ACC_S6_CASHWITHCOMMISSION, ACC_S7_UNDERREVIEW, ACC_S8_CHANGESPROCESSED, ACC_S9_APPROVED};
 
     public static final String AACC_INPROGRESS = 'in progress';
     public static final String AACC_FINALIZED = 'finalized';
@@ -285,8 +296,11 @@ public without sharing class AMS_Utils {
     public static final String CASE_STATUS_CLOSED = 'Closed';
     public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
 
+    // Case - Reason1__c //AMSU-165
+    public static final String CASE_REASON_CHG_DATA_MAINTENANCE = 'CHG – Data Maintenance';
+
     //set with the ifap status to update the account's last financial review
-    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED,CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
+    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED};
 
     public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
@@ -308,7 +322,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
-    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
+    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X','G','D'};
     public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO','HE'};
 
     public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
@@ -1291,8 +1305,8 @@ public without sharing class AMS_Utils {
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
-                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
-                (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c
+                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode,
+                (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 
@@ -2865,5 +2879,56 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                    And Sector__c = :AMS_Utils.SECTOR_PASSENGER  // agentSector
                    And IATACode__c Like :iataCode];
     }
+
+    /*** AMSU-166 Start ***/
+    /**
+    *   Method that validates if the record fields contain only latin characters
+    **/
+    public static List<String> validateCharacters(sObject record, List<Schema.SObjectField> fieldsToCheck) {
+        List<String> res = new List<String>();
+        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        Pattern p = Pattern.compile(ISO_8859_1_regEx);
+
+        for(Schema.SObjectField field : fieldsToCheck) {
+            String fieldAPIName = field.getDescribe().getName();
+            String fieldLabel = field.getDescribe().getLabel();
+            Object value = record.get(fieldAPIName);
+            if( value == null || !(value instanceof String)) {
+                continue; //Skip non String fields
+            }
+
+            if(!p.matcher((String) value).matches()) {
+                res.add(fieldLabel + ': ' + Label.ISSP_EnterValidString);
+            }
+
+            if(((String) value).contains('\t')) {
+                res.add(fieldLabel + ': Please remove all tabs');
+            }
+        }
+
+        return res;
+    }
+
+    public static final List<Schema.SObjectField> STAGING_AREA_FIELDS_TO_VALIDATE = new List<Schema.SObjectField> {
+        AMS_Pax_Accreditation_Form__c.Account_Name__c, 
+        AMS_Pax_Accreditation_Form__c.IATACode__c, 
+        AMS_Pax_Accreditation_Form__c.CASS_Number__c, 
+        AMS_Pax_Accreditation_Form__c.Short_Name__c, 
+        AMS_Pax_Accreditation_Form__c.Trade_Name__c, 
+        AMS_Pax_Accreditation_Form__c.ISSP_AMS_License_No__c, 
+        AMS_Pax_Accreditation_Form__c.ISSP_AMS_VAT_number__c,
+        AMS_Pax_Accreditation_Form__c.Branch_Office_Street_name_number__c, 
+        AMS_Pax_Accreditation_Form__c.Branch_Office_Postal_code__c, 
+        AMS_Pax_Accreditation_Form__c.Branch_Office_City__c, 
+        AMS_Pax_Accreditation_Form__c.Shipping_Street__c, 
+        AMS_Pax_Accreditation_Form__c.Shipping_Postal_Code__c,
+        AMS_Pax_Accreditation_Form__c.Shipping_City__c, 
+        AMS_Pax_Accreditation_Form__c.Branch_Office_Email__c, 
+        AMS_Pax_Accreditation_Form__c.Website__c, 
+        AMS_Pax_Accreditation_Form__c.Abbreviated_name__c, 
+        AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c, 
+        AMS_Pax_Accreditation_Form__c.VAT_Number_2__c
+    };
+    /*** AMSU-166 End ***/
 
 }

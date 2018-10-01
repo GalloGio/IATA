@@ -6,7 +6,7 @@ private class AMS_OSCARTriggerHandlerTest {
         AMS_ChangeCodes__c cc = new AMS_ChangeCodes__c(Name = 'OOT', Change_Code__c = 'OOT', Billable__c = false, Integration_RecId__c='C', Billable_Location_Class__c = 'P');
       	insert cc;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
         Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');

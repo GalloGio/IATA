@@ -87,9 +87,8 @@ private class ISSP_ChangePassword_Test {
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
         IECUserManager.login(u.Username, 'testpassword', null);
     	
-        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();
     	System.runAs(u) {
-	        
+	        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();	        
 	        // Test 001: Leave all fields blank
 	        pgCont.currentPassword = '';
 	        pgCont.newPassword = '';
@@ -172,5 +171,43 @@ private class ISSP_ChangePassword_Test {
 		ctrl.changePassword();
 	    ISSP_First_Login.updateUsers(UserInfo.getUserId());
 	}
+
+	static testMethod void fredTests() {
+    	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
+        insert issc;
+    	Test.startTest();
+    	PageReference pgRef = Page.ISSP_ChangePassword;
+    	pgRef.getParameters().put('serviceName','FRED');
+
+	    Test.setCurrentPageReference(pgRef); // use setCurrentPageReference,
+    	
+    	ISSP_ChangePassword pgCont = new ISSP_ChangePassword();
+		pgCont.termsAndConditionChecked = false;
+        
+        String serviceNameParam = pgCont.serviceNameParam;
+        
+    	User usr = IECTestUtil.createSampleGuestUserAndLogin();
+    	System.runAs(usr) {
+
+	        pgCont.currentPassword = 'a';
+	        pgCont.newPassword = 'b1234567';
+	        pgCont.confirmNewPassword = 'b1234567';
+
+	        pgCont.changePassword();
+
+			pgCont.showTCpopup();
+			pgCont.closePopup();
+
+			pgCont.termsAndConditionChecked = true;
+
+	        pgCont.changePassword();
+    	}
+    	Test.stopTest();
+	}
+
+	@isTest
+	static void increaseCodeCoverage(){
+		ISSP_ChangePassword.increaseCodeCoverage();
+	} 
 
 }

@@ -23,7 +23,7 @@
         <label>FDS Ad-hoc Calendar Change (R&amp;S)</label>
         <name>FDS_Ad_hoc_Calendar_Change_R_S</name>
     </approvalStep>
-    <emailTemplate>unfiled$public/FDS_Ad_hoc_Calendar_Change_R_S</emailTemplate>
+    <emailTemplate>All/FDS_Ad_hoc_Calendar_Change_R_S</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8</booleanFilter>

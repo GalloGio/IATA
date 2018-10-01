@@ -10,9 +10,9 @@ public class OneIdProvisioningDAO {
         if (String.isNotBlank(bundleId)) {
             Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
-            toReturn = [select id, Service_Provider_Name__c, Profile_Id__c, Terms_Custom_Label_1__c, Terms_Custom_Label_2__c, Terms_Custom_Label_3__c
-                        from One_Id_Service_Provider_Config__c
-                        where id = :bundleId limit 1];
+            toReturn = [select id, Service_Provider_Name__c, Profile_Id__c, Terms_Custom_Label_1__c, Terms_Custom_Label_2__c, Terms_Custom_Label_3__c, Additional_Terms_Custom_Labels__c
+            from One_Id_Service_Provider_Config__c
+            where id= :bundleId limit 1];
         }
 
         return toReturn;
@@ -29,9 +29,9 @@ public class OneIdProvisioningDAO {
         List<One_Id_User_Applications__c> userAppsList = [select One_Id_App_Bundle__c, id, Application__c, One_Id_Service_Provider_Config__c, User_Provisioning_Request__c from One_Id_User_Applications__c
                 where Identity_User__c = :UserInfo.getUserId() and Provisioning_Status__c <> 'Deleted' order by createdDate limit 100];
 
-        bundlesAvailable = [select id, Service_Provider_Name__c, Description__c, App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c
-                            from One_Id_Service_Provider_Config__c where Is_Active__c = true and Portal_Visible__c = true
-                                    and RecordTypeid = :recTypeId order by createdDate desc limit 500];
+        bundlesAvailable = [select id, Service_Provider_Name__c,Description__c,App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c, Is_Role_Selectable__c
+        from One_Id_Service_Provider_Config__c where Is_Active__c = true and Portal_Visible__c = true
+        and RecordTypeid = :recTypeId order by createdDate desc limit 500];
 
 
         for (One_Id_User_Applications__c anUap : userAppsList) {
@@ -42,9 +42,28 @@ public class OneIdProvisioningDAO {
 
         for (One_Id_Service_Provider_Config__c testBundle : bundlesAvailable) {
             System.debug('testBundle ' + testBundle);
-            if (!usrMap.containsKey(testBundle.id)) {
-                toReturn.add(testBundle);
-            }
+            if(!usrMap.containsKey(testBundle.id)){
+                // Not all users can have access to FRED
+                if(testBundle.Service_Provider_Name__c == 'FRED'){
+                    Boolean isServiceEligible = false;
+                    User usr = [SELECT AccountId FROM User where Id =: UserInfo.getUserId()];
+                    Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account where Id =: usr.AccountId];
+            
+                    if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+                        isServiceEligible = true;
+                    }
+                    else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
+                        isServiceEligible = true;
+                    }
+                    
+                    if(isServiceEligible){
+                        toReturn.add(testBundle);
+                    }
+                }
+                else{
+                    toReturn.add(testBundle);
+                }
+			}
         }
         return toReturn;
 
@@ -116,7 +135,7 @@ public class OneIdProvisioningDAO {
         return toReturn;
 
     }
-    public static List<One_Id_App_Config_Detail__c> getAppPermissionSetListForAppicker(String bundleName) {
+    public static List<One_Id_App_Config_Detail__c> getAppPermissionSetListForAppicker(String bundleName){
 
 
         List<One_Id_Service_Provider_Config__c> temp = new List<One_Id_Service_Provider_Config__c>();
