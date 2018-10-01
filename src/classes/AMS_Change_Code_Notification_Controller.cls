@@ -3,6 +3,7 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 	public String caseId {get; set;}
     public Case currentCase {get; set;}
     public Boolean isSidra {get; set;}
+    
 
     public AMS_Change_Code_Notification_Controller(ApexPages.StandardController stdController) {
         caseId = stdController.getId(); 
@@ -62,8 +63,26 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 
 
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, Label.AMS_New_Change_Code_Notification + codes));
+
+            } else {
+                // check if we need to show any aditional notification
+                List<Technical_Logs__c> notifications = [SELECT Id, Record__c, Log__c FROM Technical_Logs__c WHERE Record__c LIKE :caseId+'%' AND CreatedDate > :dateRange ORDER BY CreatedDate DESC];
+
+                if(!notifications.isEmpty()){
+                    String message = ''; 
+                    for(Integer i = 0; i < notifications.size(); i++){
+                        message += (i == 0 ? '' :' and ')+notifications[i].Log__c; 
+                    }
+                    
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, message+(notifications.size()>1?' were ' : ' was ')+'not generated, please issue Notice of Termination'));
+
+                    //clean log records
+                    delete notifications;
+                }
             }
         }
 
     }
+
+
 }
