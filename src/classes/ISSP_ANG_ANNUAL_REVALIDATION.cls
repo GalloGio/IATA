@@ -99,6 +99,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     Integer cntAgencyLookups;
     public Boolean isAddCompanyModal {get; set;}
     public string txtHelpCurrency {get; set;}
+    public Boolean ownerWithSameIATACode {get; set;}
 	//modals
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
@@ -1998,6 +1999,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
         if (iatacode == null || iatacode.length() < 7)
             return null;
+
+        if (iatacode == currentAccount.account.IATACode__c) {
+        	ownerWithSameIATACode = true;
+        	return null;
+        }
 
         //Limit how many calls can be made to this service, to prevent a user from attempting to retrieve full list of agents
         cntAgencyLookups += 1;
