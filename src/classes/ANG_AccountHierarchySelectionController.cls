@@ -297,7 +297,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c not in ( ' +  getInvalidStatus() + ' )')){
 					Boolean main = (a.Id == oscar.Account__c);
-					hierarchy.put(a.Id, new HierarchyItem(a, main, processDetails.containsKey(a.Id), a.Location_Type__c == AMS_Utils.HE));
+					hierarchy.put(a.Id, new HierarchyItem(a, main, processDetails.containsKey(a.Id), (a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
 				}
 				selectMain();
 			}
@@ -550,7 +550,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		return false;
 		*/
 
-		return a.Location_Type__c == AMS_Utils.HE;
+		return (a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE);
 	}
 
 	public boolean isTerminatedAccount(Id acctId){
