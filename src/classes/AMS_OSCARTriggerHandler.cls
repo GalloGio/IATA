@@ -144,7 +144,7 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-125 End ***/
 
         handleAnnualRevalidation((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
-		
+
 		//Newgen 13/09/2018: Temporary removed
 		if(test.IsRunningTest())
 			performBackupANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
@@ -494,8 +494,8 @@ public class AMS_OSCARTriggerHandler {
             }
 
             if(!agenciesAuth.isEmpty()) {
-                insert agenciesAuth;
-            }
+            	insert agenciesAuth;
+        	}
         }
         /*** AMSU-31 Start ***/
 
@@ -864,6 +864,9 @@ public class AMS_OSCARTriggerHandler {
         }
         system.debug(LoggingLevel.ERROR,'[LF]: FINE CALCOLO SA');
 
+        Map<Id,String> locationTypeByOscar = new Map<Id,String>();
+        Map<Id,Id> topParentByOscar = new Map<Id,Id>();
+
         //<Account Id, Current Location Type>
         // Get the Accounts location type in the beggining before its changed (as in the case of a change of Ownership to non IATA
         // )
@@ -899,6 +902,9 @@ public class AMS_OSCARTriggerHandler {
 
 
         for (AMS_OSCAR__c oscar : oscars) {
+
+            locationTypeByOscar.put(oscar.Id, accounts.get(oscar.Account__c).Location_Type__c);
+            topParentByOscar.put(oscar.Id, accounts.get(oscar.Account__c).Top_Parent__c == null ? oscar.Account__c : accounts.get(oscar.Account__c).Top_Parent__c);
 
             AMS_OSCAR__c oldOSCAR = oldMap.get(oscar.Id);
 
@@ -1297,11 +1303,15 @@ public class AMS_OSCARTriggerHandler {
 
                 
             Map<Id,AMS_AccountRoleCreator.OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,AMS_AccountRoleCreator.OldAndNewOwners>();
+            Map<Id,AMS_OSCAR__c> mapOscars = new Map<Id,AMS_OSCAR__c>();
             //Migrate Ownership
             if (!accountsAffectedPerOnlineAccreditation.isEmpty()) {
                 system.debug('processAgencyChanges() --> accountsAffectedPerOnlineAccreditation = ' + accountsAffectedPerOnlineAccreditation);
 
-                oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck);
+                for(AMS_OSCAR__c oscar : oscars)
+                    mapOscars.put(oscar.Id, oscar);
+
+                oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck, false, mapOscars, locationTypeByOscar, topParentByOscar);
 
                 //verify ownership alignment
                 if(accsToCompareOwnership.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(accsToCompareOwnership))
@@ -2522,8 +2532,8 @@ public class AMS_OSCARTriggerHandler {
         get{
             //we just need to fetch the first time (or anytime we add a new Id)
             if(accounts == null){
-                accounts = new Map<Id, Account>([SELECT Id, Name, Abbreviated_address__c, Abbreviated_name__c, ANG_FA_Opt_out__c, ANG_isNewGenAgency__c, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, CASS_Number__c, CNS_Agency__c, Company_Type__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, IATA_ISO_Billing_State__c, IATA_ISO_Billing_State__r.Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__r.Name, IATACode__c, In_a_Airport__c, Is_Branch_Abroad__c, Is_PCI_compliant__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, Parent.Location_Type__c, ParentId, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, VAT_Number_2__c, VAT_Number__c, Website,
-                    (SELECT Id, ParentId, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
+                accounts = new Map<Id, Account>([SELECT Id, Name, Abbreviated_address__c, Abbreviated_name__c, ANG_FA_Opt_out__c, ANG_isNewGenAgency__c, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, CASS_Number__c, CNS_Agency__c, Company_Type__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, IATA_ISO_Billing_State__c, IATA_ISO_Billing_State__r.Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__r.Name, IATACode__c, In_a_Airport__c, Is_Branch_Abroad__c, Is_PCI_compliant__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, VAT_Number_2__c, VAT_Number__c, Website,
+                    (SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
                     (SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
                 FROM Account WHERE Id IN :accountIds]);
             }
@@ -2562,7 +2572,7 @@ public class AMS_OSCARTriggerHandler {
             OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
             List<Contact> contList;
-            contList = fetchContactInfoFromCase(oscarCommCaseId);
+                contList = fetchContactInfoFromCase(oscarCommCaseId);
 
             if(!contList.isEmpty())
                 AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
@@ -2616,7 +2626,7 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_NonCompliance';
         else if(agencyType == ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_REMINDER_TEMPLATE_ID&& step == null) templateId  = 'ANG_PCI_RENEWAL_Reminder';
         else if(agencyType == ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID&& step == null) templateId  = 'ANG_PCI_RENEWAL_NonCompliance';
-        
+
         System.debug('[ANGemailTemplates] Template to use is:'+templateId);
 
         //Get the templates for NG accreditation outcoume
@@ -2829,7 +2839,7 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
                 }
-
+                
                 /*** AMSU-166 ***/
                 if(oscar.Process__c == AMS_Utils.COR || oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
                     allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
@@ -2844,8 +2854,8 @@ public class AMS_OSCARTriggerHandler {
                 Boolean isCorrection = oscar.Process__c == AMS_Utils.COR;
                 Boolean isChangeOfLocation = oscar.Process__c == AMS_Utils.AGENCYCHANGES && String.isNotBlank(oscar.Type_of_change__c) && oscar.Type_of_change__c.contains(AMS_Utils.Location);
                 if(isNewAccreditaion || isCorrection || isChangeOfLocation) {
-                	allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
-                	validateShippingAddress(oscar, allOnlineAccr);
+                allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
+                validateShippingAddress(oscar, allOnlineAccr);
                 }
                 /*** AMSU-121 End ***/ 
 
@@ -3096,7 +3106,7 @@ public class AMS_OSCARTriggerHandler {
 
         //NEWGEN-2473 - if due diligence step is failed automatically close the OSCAR/case
         if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Failed') updatedOscar.Status__c = 'Closed';
-        
+
         //NEWGEN-2473 - Send an email notification on case closure (passed or failed)
         if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && updatedOscar.Status__c == 'Closed'){
 
@@ -3394,26 +3404,23 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
 
-                    List<Account> accountsToCheck = [SELECT Id, Status__c, Reason__c FROM Account WHERE Id IN :allHierarchyAccountIds]; 
+                    Map<Id,Account> mapAccountsToCheck = new Map<Id,Account>([SELECT Id, Status__c, Reason__c, Location_Type__c, Top_Parent__c FROM Account WHERE Id IN :allHierarchyAccountIds]);
+					List<Account> accountsToCheck = mapAccountsToCheck.values();
 
                     //Remove TERMINATED and NOT ACCREDITED Accounts from list
                     for(Account acc: accountsToCheck){
                         if(acc.Status__c == null || acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED) || acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S1_NOTACCREDITED)) allHierarchyAccountIds.remove(acc.Id);
                     }
 
-                    //RB: Bypass hierarchy verification when hierarchy is too big with many owners
-                    Apex_Setting__c idAccountOwner = Apex_Setting__c.getInstance('Stop Owner Alignment');
-                    system.debug('Stop Owner Verification: '+ idAccountOwner.Text_1__c);
-                    system.debug('Stop Owner Verification user ID: '+ UserInfo.getUserId());    
-
-                    if(idAccountOwner.Text_1__c != String.valueOf(UserInfo.getUserId())) {
-                        stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
-                        system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
-                        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
-                    }
-
+                    stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
+                    system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
+                    AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true, false,
+                                                                                new Map<Id,AMS_OSCAR__c>{updatedOscar.Id => updatedOscar}, 
+                                                                                new Map<Id,String>{updatedOscar.Id => mapAccountsToCheck.get(updatedOscar.Account__c).Location_Type__c}, 
+                                                                                new Map<Id,Id>{updatedOscar.Id => mapAccountsToCheck.get(updatedOscar.Account__c).Top_Parent__c == null ? updatedOscar.Account__c : mapAccountsToCheck.get(updatedOscar.Account__c).Top_Parent__c});
+                    
                     //verify ownership alignment
-                    if(idAccountOwner.Text_1__c != String.valueOf(UserInfo.getUserId()) && allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
+                    if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
                         throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
 
                     if(updatedOscar.AMS_Correction_change_code__c == 'COR' || updatedOscar.AMS_Correction_change_code__c == 'CAD'){
@@ -3479,10 +3486,10 @@ public class AMS_OSCARTriggerHandler {
                         //if nothing from the cycle above we still need to input at least the existing accounts retrieve before
                         if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){// it means that the account does not have an hierarchy yet generated.
                             for(Account acc: accountsToCheck){
-                                if(acc.Id != updatedOscar.Account__c && acc.Status__c !=null && acc.Status__c != AMS_Utils.ACC_S0_TERMINATED && acc.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED ){
+								if(acc.Id != updatedOscar.Account__c && acc.Status__c !=null && acc.Status__c != AMS_Utils.ACC_S0_TERMINATED && acc.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED ){
                                     //accounts.put(acc.Id, acc);
                                     accounts.put(acc.Id, new Account(id = acc.Id, Status__c = acc.Status__c, Reason__c = acc.Reason__c));
-                                }else if(acc.Id == updatedOscar.Account__c && acc.Status__c !=null){
+								}else if(acc.Id == updatedOscar.Account__c && acc.Status__c !=null){
                                     //accounts.put(acc.Id, acc);
                                     accounts.put(acc.Id, new Account(id = acc.Id, Status__c = acc.Status__c, Reason__c = acc.Reason__c));
                                 }
