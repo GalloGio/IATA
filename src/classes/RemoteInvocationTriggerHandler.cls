@@ -12,7 +12,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 
 	//Remote Invocation Status
 	public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';
-	public static final String REMOTE_INVOCATION_STATUS_PROGRESS = 'Progress';
+	public static final String REMOTE_INVOCATION_STATUS_PROGRESS     = 'Progress';
 
 	//Remote Invocation Recordtypes
 	public static final String RECTYPE_NEWGEN = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Remote_Invocation_Artefact__c').get(NEWGEN_EASY_PAY);
@@ -33,7 +33,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 	public static void assignRecordtypeToRequest(){
 		
 		for(Remote_Invocation__c er : triggerNew){
-			er.recordtype = (er.Request_Type__c == NEWGEN_EASY_PAY ? RECTYPE_NEWGEN : RECTYPE_TIP);
+			er.recordtypeid = (er.Request_Type__c == NEWGEN_EASY_PAY ? RECTYPE_NEWGEN : RECTYPE_TIP);
 		}
 	}
 

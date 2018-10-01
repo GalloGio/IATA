@@ -1694,7 +1694,7 @@ global class ANG_OscarProcessHelper {
 
     }
 
-    public static void createIEPAccountOscar(Map<Id,Account> accsMap, String model){
+    public static List<AMS_OSCAR__c> createIEPAccountOscar(Map<Id,Account> accsMap, String model){
 
     	List<Account> accs = accsMap.values();
 
@@ -1724,7 +1724,7 @@ global class ANG_OscarProcessHelper {
 			
             if(contactAcc.get(acc.Id) == null){
             	acc.addError('An IEP Admin Contact is needed on this Account for the IEP Account OSCAR');
-            	return;
+            	return null;
             } 
             	
             
@@ -1818,7 +1818,7 @@ global class ANG_OscarProcessHelper {
             AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : AMS_Utils.IEPMODELBACCOUNTSETUP), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
 
         }
-
+        return oscarsToInsert;
     }
 
 	//EM - To be removed
