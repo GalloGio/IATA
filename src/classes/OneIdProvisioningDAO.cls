@@ -142,8 +142,7 @@ public class OneIdProvisioningDAO {
 
         if(String.isNotBlank(bundleName)) {
 
-            Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
-                'Service_Bundle');
+            Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
             toReturn = [select id, Is_Role_Selectable__c
             from One_Id_Service_Provider_Config__c where Is_Active__c = true and Portal_Visible__c = true
