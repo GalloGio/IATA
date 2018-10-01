@@ -464,45 +464,34 @@ Value(Text(Accreditation_Endorsement_Status_code__c)) &gt; 4)</errorConditionFor
     </validationRules>
     <visibility>Public</visibility>
     <webLinks>
-        <fullName>De_activate</fullName>
+        <fullName>Terminate</fullName>
         <availability>online</availability>
-        <displayType>massActionButton</displayType>
+        <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>De-activate</masterLabel>
+        <masterLabel>Terminate</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)}
+   
+var recordId = &quot;{!AMS_Inspection__c.Id}&quot;;
+var currentStatus = &quot;{!AMS_Inspection__c.Accreditation_Endorsement_Status_code__c}&quot;;
 
-var records = {!GETRECORDIDS($ObjectType.AMS_Inspection__c)};
-
-if(records.length &lt; 1) {
-	alert(&quot;Please choose at least one appointment.&quot;);
+if(currentStatus != &quot;9&quot;) {
+	alert(&quot;You can only terminate appointments with status 9&quot;);
 } else {
-	var r = confirm(&quot;Are you sure you want to de-activate the selected appointments?\n Only appointments with status &apos;9&apos; will be update.&quot;);
+	var r = confirm(&quot;Are you sure you want to terminate this appointment?&quot;); 
 	if(r) {
-		try{
-			var listIds = records.toString().replace(/,/g , &quot;&apos;,&apos;&quot;); 
-			var soqlQuery = &quot;SELECT Id, Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE Id IN (&apos;&quot;+listIds+&quot;&apos;)&quot;;
-			var queryResult = sforce.connection.query(soqlQuery);
-			
-			var recordsResult = queryResult.getArray(&quot;records&quot;); 
-			var recordsToUpdate = [];
-			for(var i=0; i&lt;recordsResult.length; i++) {
-				var record = recordsResult[i];
-				if(record.Accreditation_Endorsement_Status_code__c == &quot;9&quot;) {
-					record.Accreditation_Endorsement_Status_code__c = &quot;0&quot;;
-					recordsToUpdate.push(record);
-				}
-			}
-			
-			var updateResult = sforce.connection.update(recordsToUpdate);
+		try {
+			var record = new sforce.SObject(&quot;AMS_Inspection__c&quot;);
+			record.Id = recordId;
+			record.Accreditation_Endorsement_Status_code__c = &quot;0&quot;;
+			var updateResult = sforce.connection.update([record]); 
 			if(updateResult[0].success === &quot;true&quot;) {
-				window.location.reload();
+				window.location=window.location;
 			} else {
 				alert(updateResult[0].errors.message);
 			}
-		}catch(e) {
+		} catch(e) {
 			alert(e);
 		}
 	}
