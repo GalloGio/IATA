@@ -774,12 +774,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			List<IFAP_Quality_Issue__c> issues = new list<IFAP_Quality_Issue__c>();
 
 			// Check if received cases are IFAP Cases
-//Ask Gavinho! Nao faz sentido fazer-se break
 			for(Case cse : Trigger.new){
 				if(cse.RecordTypeId == IFAPcaseRecordTypeID)
 					mapCaseIds.put(cse.Id, cse);
-				else
-					break;
 			}
 			if (!mapCaseIds.isEmpty()){
 				List<IFAP_Quality_Issue__c> QIs = [SELECT Status__c , Approved_Date__c, Related_Case__c 

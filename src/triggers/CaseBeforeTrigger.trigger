@@ -1375,8 +1375,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             ISSP_Case.preventTrigger = true;
             set<string> CountryNameSet = new set<string>();
 
-            Map<ID, Contact> accountFromRelatedContact;
-            Map<ID, Case> parentAccounts;
+            Map<ID, Contact> accountFromRelatedContact = new Map<ID, Contact>();
+            Map<ID, Case> parentAccounts = new Map<ID, Case>();
 
             List<Mapping_for_CSR_Cases__c> CSRCasesMapping = Mapping_for_CSR_Cases__c.getAll().values();
             List<EmailTemplate__c> templateToUse = new List<EmailTemplate__c>();
@@ -2192,7 +2192,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
      */
     private static Profile getUserProfile(){
         if(currentUserProfile == null)
-            return [SELECT ID, Name FROM Profile WHERE id = :UserInfo.getUserId() limit 1];
+            return [SELECT ID, Name FROM Profile WHERE id = :UserInfo.getProfileId() limit 1];
         else
             return currentUserProfile;
     }
