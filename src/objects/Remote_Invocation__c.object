@@ -170,6 +170,98 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Remote Invocations</pluralLabel>
+    <recordTypes>
+        <fullName>ANG_IEP_MODEL_A</fullName>
+        <active>true</active>
+        <label>NewGen - Easy Pay Model A</label>
+        <picklistValues>
+            <picklist>Request_Type__c</picklist>
+            <values>
+                <fullName>ANG_IEP_MODEL_A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP_IFG_REPORT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Source__c</picklist>
+            <values>
+                <fullName>IEP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initializing</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>TIP_IFG_REPORT</fullName>
+        <active>true</active>
+        <label>TIP - IFG Report</label>
+        <picklistValues>
+            <picklist>Request_Type__c</picklist>
+            <values>
+                <fullName>ANG_IEP_MODEL_A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP_IFG_REPORT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Source__c</picklist>
+            <values>
+                <fullName>IEP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initializing</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
