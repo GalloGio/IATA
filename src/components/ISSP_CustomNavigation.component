@@ -188,9 +188,9 @@
       <div id="navbarHeader" class="navbar-header">
          <button id="navbarBurgerButton" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
          <span class="sr-only">Toggle navigation</span>
-         <span class="icon-bar"></span>
-         <span class="icon-bar"></span>
-         <span class="icon-bar"></span>
+         <span class="icon-bar" style="background-color: white;"></span>
+         <span class="icon-bar" style="background-color: white;"></span>
+         <span class="icon-bar" style="background-color: white;"></span>
          </button>
          <div id="navbarLogo" class="oiHeader cOneIdHeader">
             <a class="homeIcon" href="/ISSP_HomePage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >
@@ -263,7 +263,7 @@
          <ul id="navbarRight" class="nav navbar-nav navbar-right">
             
             <apex:form id="LselectLanguage" rendered="{!communityName!='CNS'}" styleClass="navbar-form">
-               <apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);">
+               <apex:selectList styleClass="form-control selector" id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);" style="padding: 0px 12px;">
                   <apex:selectOption itemValue="-- Language --" itemLabel="Language"/>
                   <apex:selectOptions value="{!languages}"/>
                </apex:selectList>
