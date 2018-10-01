@@ -209,6 +209,48 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         checkLogs(false);
     }
     
+    static testMethod void updateSISUser_checkSISIDInHierarchy() {
+        ISSP_WS_SIS_updateUser.InputData inputData = createInputData();
+
+        Account topAccount = ISSP_ObjectFactory.createNewAccount();
+        topAccount.SIS_ID__c = inputData.SISMemberID + 'Y';
+        topAccount.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert topAccount;
+
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.SIS_ID__c = inputData.SISMemberID + 'X';
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        account.ParentId = topAccount.Id;
+        
+        Account account2 = ISSP_ObjectFactory.createNewAccount();
+        account2.SIS_ID__c = inputData.SISMemberID;
+        account2.RecordTypeId = IATA_AIRLINE_RT.Id;
+        account2.ParentId = topAccount.Id;
+        
+        insert new list<Account>{account, account2};
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.APPROVED_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+        
+        Test.startTest();
+        inputData.FederationID = user.FederationIdentifier;
+        ISSP_WS_SIS_updateUser.ResponseData response = ISSP_WS_SIS_updateUser.updateUser(inputData);
+        Test.stopTest();
+        
+        System.assertEquals(true, response.IsSuccess,'Should be a success but was ' + response.ErrorCode);
+        
+        checkLogs(true);
+    }
+    
     static testMethod void updateSISUser_InactiveUserError() {
         ISSP_WS_SIS_updateUser.InputData inputData = createInputData();
         
