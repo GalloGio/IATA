@@ -201,6 +201,7 @@ public class ANG_RiskEventGenerator {
 		// for each object on the list, verify that it matches a config and create a risk event
 		List<ANG_Agency_Risk_Event__c> riskEvents  = new List<ANG_Agency_Risk_Event__c>();
 		Map<String, String> riskEventsToUpdate  = new Map<String, String>();
+		List<Technical_Logs__c> notifications = new List<Technical_Logs__c>();
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
 				if((Id)o.get('RecordTypeId') == recordTypes.get(objectName).get(config.ANG_Object_Record_Type__c) && checkRequisites(o, config)){
@@ -229,12 +230,10 @@ public class ANG_RiskEventGenerator {
 						if(config.ANG_Risk_Event_Type__r.Name != ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS || objectName != 'Case' || !previousIFAPsByAccount.containsKey(String.valueOf(o.get('AccountId'))) 
 							|| previousIFAPsByAccount.isEmpty() || !IFAP_BusinessRules.isPreviousIFAPStatusEquals(previousIFAPsByAccount.get(String.valueOf(o.get('AccountId'))),'Closed_Non compliance')){
 							riskEvents.add(risk);
-							System.debug('____ [cls ANG_RiskEventGenerator - generate: RISK EVENT Created...');
 						}else{
 							System.debug('____ [cls ANG_RiskEventGenerator - generate: NOT creating "Fail Financial Statement" risk event');
-							System.debug('____ [cls ANG_RiskEventGenerator - generate: PUBLISHING EVENT...');
-							EventBus.publish(new Risk_Event_Notification__e(Record_Id__c = o.Id, Message__c = 'Risk Event was not created, please issue Notice of Termination'));
-							return;
+							notifications.add(new Technical_Logs__c(Record__c = o.Id, Log__c = 'Risk Event'));
+							break;
 						}
 					}
 					
@@ -277,8 +276,10 @@ public class ANG_RiskEventGenerator {
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] riskEvents - ' + riskEvents);
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] riskEventsToUpdate - ' + riskEventsToUpdate);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] notificationsToInsert - ' + notifications);
 
 		if(!riskEvents.isEmpty()) update riskEvents;
+		if(!notifications.isEmpty()) insert notifications;
 	}
 
 	public void loadInitialInformations(){		

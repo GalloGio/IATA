@@ -136,10 +136,12 @@ public class AMS_OscarCase_RiskMgmt {
 
 
 			Map<Id,Account> allAccsMap = new Map<Id,Account>([select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, 
-							ParentId, Parent.ParentId, CNS_Agency__c, Default_date__c, 
+							ParentId, Parent.ParentId, CNS_Agency__c, Default_date__c, ANG_IsNewGenAgency__c,
 							(SELECT Id, RecordTypeId, CreatedDate, AccountId, Status FROM Cases WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP AND Id NOT IN :parentCasesIds)
 							from Account
 							where id in:mapAllHOs.keyset()]);
+
+			system.debug('## allAccsMap: '+allAccsMap);
 
 			for(Account a:allAccsMap.values()) {
 				//setAllAccntsHiearchy.add(a.Id);
@@ -244,6 +246,7 @@ public class AMS_OscarCase_RiskMgmt {
 								  from case where id in:mapTrgNew.keySet()]);
 
 			set<string> setOperationCalendarExtID = new set<string>();
+			List<Technical_Logs__c> notifications = new List<Technical_Logs__c>();
 
 			for(Case c: mapCases.values()){
 				setAccntIdCase.add(c.AccountId);
@@ -308,10 +311,11 @@ public class AMS_OscarCase_RiskMgmt {
 						//mapCasePerAccount.put(c.AccountId, c);
 
 						//NEWGEN-2719 check if we need to skip CC creation depending on previous ifap status
+						system.debug('## allAccsMap.get(c.AccountId): '+allAccsMap.get(c.AccountId));
 						if(conf.Change_Code__c == 'NFS' && c.Parent.RecordTypeId == AMS_Utils.RECTYPE_IFAP && allAccsMap.get(c.AccountId).ANG_IsNewGenAgency__c 
 							&& !allAccsMap.get(c.AccountId).Cases.isEmpty() && IFAP_BusinessRules.isPreviousIFAPStatusEquals(allAccsMap.get(c.AccountId).Cases, 'Closed_Non compliance')){
 
-							EventBus.publish(new Risk_Event_Notification__e(Record_Id__c = c.Id, Message__c = 'NFS change code was not created.'));
+							notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NFS change code'));
 
 						}else{						
 							list<AMS_ChangeCodes__c> ls;
@@ -423,7 +427,11 @@ public class AMS_OscarCase_RiskMgmt {
 
 				if(!setAccntIdToClearExpDate.isEmpty())
 					ClearExpiryDate(setAccntIdToClearExpDate);
+
 			}
+
+			if(!notifications.isEmpty())
+					insert notifications;
 		}
 	}
 
