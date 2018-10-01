@@ -4,7 +4,8 @@ public class SIDRAOIActionPlansCtrlTest {
 
 	private static Operational_Improvements__c createSidraCase(){
 		Case cse = new Case(
-			RecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId()
+			RecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId(),
+			Late_Payment_Date__c = Date.today()
 		);
 		insert cse;
 

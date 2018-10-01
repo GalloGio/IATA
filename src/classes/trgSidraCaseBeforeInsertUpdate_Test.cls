@@ -106,6 +106,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 50,
                             CurrencyExchangeRateUSD__c = 1,
                             SIDRA_exchange_rate_updated__c = true,
+                            Late_Payment_Date__c = Date.today(),
                             BSP_CASS__c = 'BSP'
         ));
         
@@ -120,6 +121,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 60,
                             CurrencyExchangeRateUSD__c = 1,
                             SIDRA_exchange_rate_updated__c = true,
+                            Late_Payment_Date__c = Date.today(),
                             BSP_CASS__c = 'BSP'
         ));
         
@@ -134,6 +136,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 100,
                             CurrencyExchangeRateUSD__c = 1,
                             SIDRA_exchange_rate_updated__c = true,
+                            Late_Payment_Date__c = Date.today(),
                             BSP_CASS__c = 'BSP'
         ));
         
@@ -148,6 +151,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 101,
                             CurrencyExchangeRateUSD__c = 1,
                             SIDRA_exchange_rate_updated__c = true,
+                            Late_Payment_Date__c = Date.today(),
                             BSP_CASS__c = 'BSP'
         ));
         
@@ -162,6 +166,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 150000,
                             CurrencyExchangeRateUSD__c = 1,
                             SIDRA_exchange_rate_updated__c = true,
+                            Late_Payment_Date__c = Date.today(),
                             BSP_CASS__c = 'BSP'
         ));
         
@@ -176,6 +181,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 160000,
                             CurrencyExchangeRateUSD__c = 1,
                             SIDRA_exchange_rate_updated__c = true,
+                            Late_Payment_Date__c = Date.today(),
                             BSP_CASS__c = 'BSP'
         ));
         
@@ -207,6 +213,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 5,
                             CurrencyExchangeRateUSD__c = 1,
                             SIDRA_exchange_rate_updated__c = true,
+                            Late_Payment_Date__c = Date.today(),
                             BSP_CASS__c = 'BSP'
         );
         
@@ -300,6 +307,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 50,
                             CurrencyExchangeRateUSD__c = 1,
                             BSP_CASS__c = 'BSP',
+                            Late_Payment_Date__c = Date.today(),
                             SIDRA_exchange_rate_updated__c = true
         ));
         
@@ -315,6 +323,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 100,
                             CurrencyExchangeRateUSD__c = 1,
                             BSP_CASS__c = 'BSP',
+                            Late_Payment_Date__c = Date.today(),
                             SIDRA_exchange_rate_updated__c = true
         ));
         
@@ -330,6 +339,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 150000,
                             CurrencyExchangeRateUSD__c = 1,
                             BSP_CASS__c = 'BSP',
+                            Late_Payment_Date__c = Date.today(),
                             SIDRA_exchange_rate_updated__c = true
         ));
         
@@ -351,6 +361,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             BSP_CASS__c = 'BSP',
                             Update_AIMS_REI_DEFWITH__c = Datetime.now(),
                             REI_ApprovalRejectin__c = 'Approved',
+                            Late_Payment_Date__c = Date.today(),
                             DEF_Withdrawal_Approval_Rejection__c = '');
         insert rei;
         
@@ -366,6 +377,7 @@ public class trgSidraCaseBeforeInsertUpdate_Test{
                             Short_Payment_Amount__c = 5,
                             CurrencyExchangeRateUSD__c = 1,
                             SIDRA_exchange_rate_updated__c = true,
+                            Late_Payment_Date__c = Date.today(),
                             BSP_CASS__c = 'BSP'
         );
         insert testcase;

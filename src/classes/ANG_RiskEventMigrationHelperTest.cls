@@ -770,6 +770,7 @@ private class ANG_RiskEventMigrationHelperTest {
 							Status = 'Open',
 							Origin = 'IATA Internal User',
 							Subject = 'subject',
+							Late_Payment_Date__c = Date.today(),
 							IATAcode__c	 = 'webiata code');
 
  		return c;

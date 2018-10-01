@@ -98,6 +98,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
         ccase.ContactId = con.Id; 
         ccase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('SIDRA');
         ccase.Status = 'Open';
+        ccase.Late_Payment_Date__c = Date.today();
         insert ccase;
 
 

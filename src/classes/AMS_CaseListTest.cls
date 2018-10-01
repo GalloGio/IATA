@@ -20,16 +20,16 @@ private class AMS_CaseListTest {
                                     Financial_Assessment_Contact__c = false);
         insert co1;
 
-        Case c1 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Accreditation Process');
-        Case c2 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Accreditation Process');
-        Case c3 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Risk Management Process');
-        Case c4 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Risk Management Process');
-        Case c5 = new Case(recordTypeId = caseRT.get('SIDRA'), ContactId = co1.id, accountid = acc.id);
-        Case c6 = new Case(recordTypeId = caseRT.get('SIDRA'), ContactId = co1.id, accountid = acc.id);
-        Case c7 = new Case(recordTypeId = caseRT.get('CasesMENA'), ContactId = co1.id, accountid = acc.id);
-        Case c8 = new Case(recordTypeId = caseRT.get('CasesMENA'), ContactId = co1.id, accountid = acc.id);
-        Case c9 = new Case(recordTypeId = caseRT.get('InternalCasesEuropeSCE'), ContactId = co1.id, accountid = acc.id);
-        Case c10 = new Case(recordTypeId = caseRT.get('InternalCasesEuropeSCE'), ContactId = co1.id, accountid = acc.id);
+        Case c1 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Accreditation Process',Late_Payment_Date__c = Date.today());
+        Case c2 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Accreditation Process',Late_Payment_Date__c = Date.today());
+        Case c3 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Risk Management Process',Late_Payment_Date__c = Date.today());
+        Case c4 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Risk Management Process',Late_Payment_Date__c = Date.today());
+        Case c5 = new Case(recordTypeId = caseRT.get('SIDRA'), ContactId = co1.id, accountid = acc.id,Late_Payment_Date__c = Date.today());
+        Case c6 = new Case(recordTypeId = caseRT.get('SIDRA'), ContactId = co1.id, accountid = acc.id,Late_Payment_Date__c = Date.today());
+        Case c7 = new Case(recordTypeId = caseRT.get('CasesMENA'), ContactId = co1.id, accountid = acc.id,Late_Payment_Date__c = Date.today());
+        Case c8 = new Case(recordTypeId = caseRT.get('CasesMENA'), ContactId = co1.id, accountid = acc.id,Late_Payment_Date__c = Date.today());
+        Case c9 = new Case(recordTypeId = caseRT.get('InternalCasesEuropeSCE'), ContactId = co1.id, accountid = acc.id,Late_Payment_Date__c = Date.today());
+        Case c10 = new Case(recordTypeId = caseRT.get('InternalCasesEuropeSCE'), ContactId = co1.id, accountid = acc.id,Late_Payment_Date__c = Date.today());
 
         List<Case> listOfCases = new List<Case>();
         listOfCases.add(c1);

@@ -24,6 +24,7 @@ public class trgCaseLastSIDRADateTest{
         case1.Subject = 'Test Case 1';
         case1.Description = 'Test Case 1';
         case1.BSPCountry__c = 'Canada';
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Case case3 = new Case();
@@ -33,6 +34,7 @@ public class trgCaseLastSIDRADateTest{
         case3.Subject = 'Test Case 1';
         case3.Description = 'Test Case 1';
         case3.BSPCountry__c = 'Canada';
+        case3.Late_Payment_Date__c = Date.today();
         insert case3;
 
     }
@@ -65,6 +67,7 @@ public class trgCaseLastSIDRADateTest{
         case1.Subject = 'Test Case 1';
         case1.Description = 'Test Case 1';
         case1.BSPCountry__c = 'Canada';
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Test.startTest();
@@ -104,6 +107,7 @@ public class trgCaseLastSIDRADateTest{
         case1.Subject = 'Test Case 1';
         case1.Description = 'Test Case 1';
         case1.BSPCountry__c = 'Canada';
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Test.startTest();
@@ -141,6 +145,7 @@ public class trgCaseLastSIDRADateTest{
         case1.Description = 'Test Case 1';
         case1.BSPCountry__c = 'Canada';
         case1.Remittance_Period__c = 'PERIOD1';
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Test.StartTest();
@@ -153,6 +158,7 @@ public class trgCaseLastSIDRADateTest{
         case2.BSPCountry__c = 'Canada';
         case2.Remittance_Period__c = 'PERIOD1';
         case2.IRR_Withdrawal_Reason__c = SIDRACaseHelper.IATACHARGES;
+        case2.Late_Payment_Date__c = Date.today();
         insert case2;
         Test.StopTest();
     }
@@ -184,6 +190,7 @@ public class trgCaseLastSIDRADateTest{
         case1.BSPCountry__c = 'Canada';
         case1.Remittance_Period__c = 'PERIOD1';
         case1.IRR_Withdrawal_Reason__c = SIDRACaseHelper.IATACHARGES;
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Test.StartTest();
@@ -195,6 +202,7 @@ public class trgCaseLastSIDRADateTest{
         case2.Description = 'Test Case 2';
         case2.BSPCountry__c = 'Canada';
         case2.Remittance_Period__c = 'PERIOD1';
+        case2.Late_Payment_Date__c = Date.today();
         insert case2;
         Test.StopTest();
     }
@@ -225,6 +233,7 @@ public class trgCaseLastSIDRADateTest{
         case1.Description = 'Test Case 1';
         case1.BSPCountry__c = 'Canada';
         case1.Remittance_Period__c = 'PERIOD1';
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Test.StartTest();
@@ -236,6 +245,7 @@ public class trgCaseLastSIDRADateTest{
         case2.Description = 'Test Case 2';
         case2.BSPCountry__c = 'Canada';
         case2.Remittance_Period__c = 'PERIOD1';
+        case2.Late_Payment_Date__c = Date.today();
         insert case2;
         Test.StopTest();
     }

@@ -8,7 +8,7 @@ private class ANG_RiskEventGeneratorTest {
 		Account a = new Account(Name = 'Test', RecordTypeId = accRecType);
 		insert a;
 
-		Case c = new Case(AccountId = a.Id, Subject = 'Test', RecordTypeId = caseRecType, Update_AIMS_IRR__c = System.now());
+		Case c = new Case(AccountId = a.Id, Subject = 'Test', RecordTypeId = caseRecType, Update_AIMS_IRR__c = System.now(),Late_Payment_Date__c=Date.today());
 
 		ANG_RiskEventGenerator.skip = true;
 		insert c;

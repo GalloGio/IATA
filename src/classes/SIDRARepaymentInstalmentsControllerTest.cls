@@ -42,6 +42,7 @@ private class SIDRARepaymentInstalmentsControllerTest {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
         
         list<Case_Detail__c> rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
@@ -75,6 +76,7 @@ private class SIDRARepaymentInstalmentsControllerTest {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
         
         ApexPages.StandardController stdc = new ApexPages.StandardController(aCase);
@@ -101,6 +103,7 @@ private class SIDRARepaymentInstalmentsControllerTest {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
         
         ApexPages.StandardController stdc = new ApexPages.StandardController(aCase);
