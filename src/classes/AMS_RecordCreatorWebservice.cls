@@ -268,7 +268,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
 
          if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
-            return oscarRT.get('NGCORRECTION');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
             
         return null;
 
