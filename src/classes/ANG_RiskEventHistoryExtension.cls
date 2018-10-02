@@ -57,7 +57,7 @@ global class ANG_RiskEventHistoryExtension {
     }
 
     public ANG_RiskEventHistoryExtension(ApexPages.StandardController stdController) {
-         if (!Test.isRunningTest()) stdController.addFields(new List<String>{'Location_Type__c'});
+         if (!Test.isRunningTest()) stdController.addFields(new List<String>{'Location_Type__c', 'ANG_Accreditation_Model__c'});
         this.acc = (Account)stdController.getRecord();
     }
 
