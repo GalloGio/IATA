@@ -49,7 +49,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 				parentIDs.add(re.id);
 			}
 		}
-		Map<ID,Remote_Invocation_Artefact__c> artefacts = new Map<ID,Remote_Invocation_Artefact__c>([SELECT ID, External_Id__c, Format__c, Internal_ID__c, Name__c, Previous_Version__c, Remote_Invocation__c, 
+		Map<ID,Remote_Invocation_Artefact__c> artefacts = new Map<ID,Remote_Invocation_Artefact__c>([SELECT ID, External_ID__c, Format__c, Internal_ID__c, Name__c, Previous_Version__c, Remote_Invocation__c, 
 															Request_Result__c, Source__c, Status__C, Status_Detail__c, Valid_From__c, Valid_To__c, Version__c, Version_Notes__c
 															FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :parentIDs]);
 		
@@ -83,7 +83,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 				
 				//NEWGEN validations
 				if(parent.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY && acc.recordtypeid == AMS_Utils.RECTYPE_IATAAGENCY){
-					mapNewgenIATAcodeReqsToProcess.put(artifact.External_Id__c,artifact);
+					mapNewgenIATAcodeReqsToProcess.put(artifact.Internal_Id__c,artifact);
 					mapAccsWithIDs.put(acc.id,acc);
 				}
 				//else if (TIP validations)
@@ -158,7 +158,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 				remoteInvocationWithErrors.add(artifact.Remote_Invocation__c);
 				
 				requestToUpdate.add(artifact);
-				reqsToCreateOSCAR.remove(artifact.External_Id__c);
+				reqsToCreateOSCAR.remove(artifact.Internal_Id__c);
 			}
 		}
 
@@ -178,7 +178,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 				remoteInvocationWithErrors.add(artifact.Remote_Invocation__c);
 				
 				requestToUpdate.add(artifact);
-				reqsToCreateOSCAR.remove(artifact.External_Id__c);
+				reqsToCreateOSCAR.remove(artifact.Internal_Id__c);
 			}
 		}
 		update requestToUpdate;
