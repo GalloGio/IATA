@@ -27,9 +27,9 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
         List<SelectOption> options= new List<SelectOption>();
 
-        options.add(new SelectOption('SELECT Risk Option', 'SELECT Risk Option'));
-
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_SIDRALITE){
+
+            options.add(new SelectOption('SELECT Risk Option', 'SELECT Risk Option'));
 
             options.add(new SelectOption('5','Fail Financial Statements'));
             options.add(new SelectOption('7','Unreported Major Change'));
@@ -55,16 +55,21 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_SIDRA){
 
+            options.add(new SelectOption('SELECT Risk Option', 'SELECT Risk Option'));
+
             options.add(new SelectOption('2','Late/Short payment'));
             options.add(new SelectOption('3','Wrong currency payment'));
             options.add(new SelectOption('4','Payment Default'));
+
+            riskOpt = '1';
+
         }
 
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD && myCase.OSCAR__r.ANG_Change_Entity_Location__c){
 
             options.add(new SelectOption('8','Change of Entity\'s location'));
 
-            riskOpt = '1';
+            riskOpt = '1'; 
         }
 
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD && !myCase.OSCAR__r.ANG_Change_Entity_Location__c){
@@ -75,6 +80,8 @@ public with sharing class ANG_RiskForecastPropertiesController {
         }
 
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NGCHANGES){
+
+            options.add(new SelectOption('SELECT Risk Option', 'SELECT Risk Option'));
 
             options.add(new SelectOption('1','Auth. Cash Payment'));
             options.add(new SelectOption('6','Major change (owner or legal)'));
@@ -95,6 +102,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
         }
 
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NGOPTINOUT){
+
             options.add(new SelectOption('OptInOut', 'Opt-In/Opt-Out'));
             riskOpt = 'OptInOut';
         }
