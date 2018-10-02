@@ -92,7 +92,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 
 					//mark parent with error
 					parent.Status__c = 'Failed';
-					parent.Status_detail__c = 'Completed with failure';
+					parent.Status_detail__c = 'Fail to Passed the validations for NewGen';
 					remoteInvocationWithErrors.add(artifact.Remote_Invocation__c);
 				}
 				
@@ -103,7 +103,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 
 				//mark parent with error
 				parent.Status__c = 'Failed';
-				parent.Status_detail__c = 'Completed with failure';
+				parent.Status_detail__c = 'Fail to Passed the general validations';
 				remoteInvocationWithErrors.add(artifact.Remote_Invocation__c);
 			}
 		}
@@ -145,7 +145,18 @@ public with sharing class RemoteInvocationTriggerHandler {
 				requestToUpdate.add(reqsToCreateOSCAR.get(iataCode));	
 			}
 		}catch(Exception e){
-			updateRecordsWithError(e.getMessage());
+			for(Remote_Invocation_Artefact__c artifact : reqsToCreateOSCAR.values()){
+				artifact.Request_Result__c = 'Failed';
+				
+				//mark parent with error
+				newMap.get(artifact.Remote_Invocation__c).Status__c = 'Failed';
+				newMap.get(artifact.Remote_Invocation__c).Status_detail__c = e.getMessage();
+				//status details should be filled with error description but...
+				remoteInvocationWithErrors.add(artifact.Remote_Invocation__c);
+				
+				requestToUpdate.add(artifact);
+				reqsToCreateOSCAR.remove(artifact.External_Id__c);
+			}
 		}
 
 		/*After processing all OSCAR's, the reqsToCreateOSCAR should be empty 
@@ -154,26 +165,20 @@ public with sharing class RemoteInvocationTriggerHandler {
 		The existence of records in this map means that some error occur. */ 
 
 		if(!reqsToCreateOSCAR.isEmpty()){
-			updateRecordsWithError("Unknown Error occurred");
-		}
-
-		update requestToUpdate;
-	}
-
-
-	private static void updateRecordsWithError(string errorMessage){
-		for(Remote_Invocation_Artefact__c artifact : reqsToCreateOSCAR.values()){
+			for(Remote_Invocation_Artefact__c artifact : reqsToCreateOSCAR.values()){
 				artifact.Request_Result__c = 'Failed';
 				
 				//mark parent with error
 				newMap.get(artifact.Remote_Invocation__c).Status__c = 'Failed';
-				newMap.get(artifact.Remote_Invocation__c).Status_detail__c = errorMessage;
+				newMap.get(artifact.Remote_Invocation__c).Status_detail__c = 'Unknown Error occurred';
 				//status details should be filled with error description but...
 				remoteInvocationWithErrors.add(artifact.Remote_Invocation__c);
 				
 				requestToUpdate.add(artifact);
 				reqsToCreateOSCAR.remove(artifact.External_Id__c);
 			}
+		}
+		update requestToUpdate;
 	}
 
 }
