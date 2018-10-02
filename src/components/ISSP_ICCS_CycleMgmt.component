@@ -1,0 +1,316 @@
+<apex:component controller="ISSP_ICCS_CycleMgmtController">
+    <apex:attribute name="pageCtrl" 
+                    type="ISSP_ICCS_ServiceController" 
+                    assignTo="{!pageController}" 
+                    required="true" 
+                    description="The controller for the page." />
+
+    <apex:pageBlock rendered="{! pageController.isSignatoryUser || pageController.isLevel1User || pageController.isReadOnlyUser}">
+        <apex:form id="cycleManagementForm">
+            <div class="row margin-top-bottom">
+	            <apex:outputPanel rendered="{! pageController.userMessage != null}" id="messagePanel">
+	                <br/>
+	                <div class="panel panel-default">
+	                    <div class="panel-body" style="font-weight:bold;">
+							<div class="pddg">
+								<apex:outputText value="{! pageController.userMessage}" escape="false" style="color : {! IF(pageController.isSuccessMessage, '#000000', '#FF0000')};"/>
+							</div>
+	                    </div>
+	                </div>
+	            </apex:outputPanel>
+
+                <!-- Adhoc SI's -->
+                <div class="row margin-top-bottom no-mrgn">
+                    <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+                        <div class="section-title-gray cycle">
+                        	<apex:image url="{!URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+                        	<apex:outputText value="{! $Label.ICCS_CycleMgmt_Adhoc_Table_Title}" escape="false"/>
+                        </div>
+                        <div class="bottom-box mrgn-l-r" style="text-align: justify;text-justify: inter-word;">
+                            <div class="pddg-2">
+								<apex:outputText value="{! $Label.ICCS_CycleMgmt_AdHoc_Header}" escape="false"/>
+	                        </div>
+
+							<div class="divider-cycle-2"/>
+	
+							<apex:outputPanel rendered="{! selectedAdhocCycle != ''}">
+	                            <div class="filter">
+	                                <div class="labelText">
+	                                    <apex:outputText value="{! $Label.ICCS_Filter_By}"/>
+	                                </div>
+	                                <apex:selectList value="{! adhocCycleParticipationTable.selectedCategory}" multiselect="false" size="1">
+	                                    <apex:selectOptions value="{! adhocCycleParticipationTable.categoryFilter}"/>
+	                                    <apex:actionSupport event="onchange" action="{! adhocCycleParticipationTable.applyFilters}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                </apex:selectList>
+	                                <apex:selectList value="{! adhocCycleParticipationTable.selectedCountry}" multiselect="false" size="1">
+	                                    <apex:selectOptions value="{! adhocCycleParticipationTable.countryFilter}"/>
+	                                    <apex:actionSupport event="onchange" action="{! adhocCycleParticipationTable.applyFilters}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                </apex:selectList>
+	                                <apex:selectList value="{! adhocCycleParticipationTable.selectedCurrency}" multiselect="false" size="1">
+	                                    <apex:selectOptions value="{! adhocCycleParticipationTable.currencyFilter}"/>
+	                                    <apex:actionSupport event="onchange" action="{! adhocCycleParticipationTable.applyFilters}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                </apex:selectList>
+	                            </div>
+                            </apex:outputPanel>
+
+                            <div class="select">
+                                <apex:outputPanel rendered="{! adhocCyclesSize > 0}">
+                                    <apex:outputText value="{! $Label.ICCS_Cycle_Label} : "/>
+                                    <apex:outputText value="{! selectedAdhocCycle}" rendered="{! adhocCyclesSize == 1}"/>
+                                    <apex:selectList value="{! selectedAdhocCycle}" multiselect="false" size="1" rendered="{! adhocCyclesSize > 1}">
+                                        <apex:selectOptions value="{! adhocCycleFilter}"/>
+                                        <apex:actionSupport event="onchange" rerender="cycleManagementForm" status="processActStatusId"/>
+                                    </apex:selectList>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{! adhocCyclesSize == 0}">
+                                    <div class="msg-pstn">
+                                        <apex:outputText value="{! $Label.ICCS_No_Editable_Cycle_Message}" escape="false"/>
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+
+                            <apex:outputPanel rendered="{! selectedAdhocCycle != ''}">
+								<apex:outputPanel id="cycleSiTable">
+	                                <apex:repeat value="{! cycleParticipationRows}" var="participationRow">
+	                                    <apex:outputPanel rendered="{! !participationRow.isFilteredOut}">
+	                                        <div class="panel-primary" style="min-height:20px;">
+	                                            <div class="panel-heading head_panel_green">
+	                                                <div class="panel-title">
+	                                                    <table style="width : 100%;">
+	                                                        <tr>
+	                                                            <td style="width : 50%; text-align : left;">
+	                                                                <apex:outputText value="{! participationRow.participation.cashflow.name + ' ' + participationRow.participation.cashflow.processingCurrency + ' - Settlement Amount : '}"/>
+	                                                                <apex:outputText value="{0, Number}">
+		                                                                <apex:param value="{! participationRow.numericSettlementAmount}"/>
+	                                                                </apex:outputText>
+	                                                            </td>
+			                                                    <td style="width : 25%; text-align : left;">
+			                                                        <apex:outputText value="{! $Label.ICCS_NoA}" rendered="{! participationRow.participation.noa == 'true'}"/>
+			                                                    </td>
+	                                                            <td style="width : 25%; text-align : right; font-size : 10pt;">
+																	<apex:outputPanel rendered="{! participationRow.participation.noa != 'true' && pageController.isMembershipMember && (pageController.isSignatoryUser || pageController.isLevel1User)}">
+		                                                                <apex:commandLink style="white-space:nowrap;" action="{! createSettlementInstruction}" value="{! $Label.ICCS_Create_Adhoc_SI_Link}" rerender="pageMainPanel" status="processActStatusId">
+				                                                        	<apex:param name="settlementInstructionType" value="AdHoc" assignTo="{! settlementInstructionTypeParameter}"/>
+				                                                        	<apex:param name="participationId" value="{! participationRow.participationId}" assignTo="{! participationIdParameter}"/>
+				                                                        	<apex:param name="cycleId" value="{! selectedAdhocCycle}" assignTo="{! cycleIdParameter}"/>
+		                                                                </apex:commandLink>
+		                                                                <div class="v-line"></div>
+	                                                                </apex:outputPanel>
+	
+	                                                                <apex:commandLink style="white-space:nowrap;" action="{! participationRow.showSettlementInstructions}" value="{! $Label.ICCS_Show_SIs_Link}" rendered="{! !participationRow.displaySettlementInstructions}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                                                <apex:commandLink style="white-space:nowrap;" action="{! participationRow.hideSettlementInstructions}" value="{! $Label.ICCS_Hide_SIs_Link}" rendered="{! participationRow.displaySettlementInstructions}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                                            </td>
+	                                                        </tr>
+	                                                    </table>
+	                                                </div>
+	                                            </div>
+	                                            <apex:outputPanel rendered="{! participationRow.displaySettlementInstructions}">
+	                                                <apex:repeat value="{! participationRow.settlementInstructionRows}" var="settlementInstructionRow">
+	                                                <div class="oddTable">
+	                                                    <table style="width : 100%;">
+	                                                        <tr>
+	                                                            <td style="width : 50%; text-align : left;">
+	                                                            	<apex:outputText value="{! $Label.ICCS_Type_Label}" style="font-weight:bold;"/>
+	                                                            	&nbsp;
+	                                                            	<apex:outputText value="{!settlementInstructionRow.settlementInstruction.type.code}"/>
+																	&nbsp;&nbsp;&nbsp;
+	                                                            	<apex:outputText value="{! $Label.ICCS_Label_Status}" style="font-weight:bold;"/>
+	                                                            	&nbsp;
+	                                                            	<apex:outputText value="{! settlementInstructionRow.settlementInstruction.approvalStatus}"/>
+																	&nbsp;&nbsp;&nbsp;
+	                                                            	<apex:outputText value="{! $Label.ICCS_Applied_Label}" style="font-weight:bold;"/>
+	                                                            	&nbsp;
+	                                                            	<apex:outputText value="{! IF(settlementInstructionRow.settlementInstruction.isApplied, 'Yes', 'No')}"/>
+	                                                            </td>
+	                                                            <td style="width : 50%; text-align : right; font-size : 10pt;">
+																	<apex:outputPanel rendered="{! participationRow.participation.noa != 'true'}">
+		                                                                <apex:commandLink style="white-space:nowrap;" action="{! cloneCycleSettlementInstruction}" value="{! $Label.ICCS_Clone_SI_Link}" rendered="{! participationRow.participation.noa != 'true' && pageController.isMembershipMember && (pageController.isSignatoryUser || pageController.isLevel1User)}" rerender="pageMainPanel" status="processActStatusId">
+				                                                        	<apex:param name="settlementInstructionId" value="{! settlementInstructionRow.settlementInstructionId}" assignTo="{! settlementInstructionIdParameter}"/>
+				                                                        	<apex:param name="cycleId" value="{! selectedAdhocCycle}" assignTo="{! cycleIdParameter}"/>
+		                                                                </apex:commandLink>
+		
+		                                                                <div class="v-line"></div>
+																	</apex:outputPanel>
+	
+	                                                                <apex:commandLink style="white-space:nowrap;" action="{! settlementInstructionRow.showInstructionLines}" value="{! $Label.ICCS_Show_Instruction_Lines_Link}" rendered="{! !settlementInstructionRow.displayInstructionLines}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                                                <apex:commandLink style="white-space:nowrap;" action="{! settlementInstructionRow.hideInstructionLines}" value="{! $Label.ICCS_Hide_Instruction_Lines_Link}" rendered="{! settlementInstructionRow.displayInstructionLines}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                                            </td>
+	                                                        </tr>
+	                                                    </table>
+	                                                    </div>
+	                                                    <apex:pageBlockTable value="{!settlementInstructionRow.settlementInstruction.instructionLines}" var="line" rendered="{! settlementInstructionRow.displayInstructionLines}">
+	                                                        <apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
+	                                                            <apex:outputText value="{!line.accountCode.code}"/>
+	                                                        </apex:column>
+	                                                        <apex:column headerValue="{! $Label.ICCS_Account_Currency_Label}">
+	                                                            <apex:outputText value="{!line.accountCode.bankAccount.currency_x}"/>
+	                                                        </apex:column>
+	                                                        <apex:column headerValue="{! $Label.ICCS_Account_Number_Label}">
+	                                                            <apex:outputText value="{!line.accountCode.bankAccount.number_x}"/>
+	                                                        </apex:column>
+	                                                        <apex:column headerValue="{! $Label.ICCS_Instruction_Line_Type_Label}">
+	                                                            <apex:outputText value="{!line.type.code}"/>
+	                                                        </apex:column>
+	                                                        <apex:column headerValue="{! $Label.ICCS_Value_Label}">
+	                                                            <apex:outputText value="{!line.value}" rendered="{! line.type.code != 'Balance'}"/>
+	                                                        </apex:column>
+	                                                        <apex:column headerValue="{! $Label.ICCS_Priority_Order_Label}">
+	                                                            <apex:outputText value="{!line.order}"/>
+	                                                        </apex:column>
+	                                                    </apex:pageBlockTable>
+	                                                </apex:repeat>
+	                                            </apex:outputPanel>                                 
+	                                        </div>
+	                                    </apex:outputPanel>
+	                                </apex:repeat>
+                                </apex:outputPanel>
+
+		                        <div class="expand">
+		                        	<apex:commandLink id="expandCycleParticipation" style="color: #0075bb; white-space:nowrap;" action="{! expandCollapseCycleParticipationTable}" value="{! IF(isCycleParticipationTableExpanded, $Label.ICCS_See_Less, $Label.ICCS_See_More)}" rendered="{! isCycleParticipationTableExpandable}" rerender="cycleSiTable,expandCycleParticipation" status="processActStatusId"/>
+		                        </div>
+                            </apex:outputPanel>                       
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Future Adhoc SI's -->
+                <div class="row margin-top-bottom">
+                    <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+                        <div class="section-title-gray cycle">
+                        	<apex:image url="{!URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+                        	<apex:outputText value="{! $Label.ICCS_CycleMgmt_Future_Table_Title}" escape="false"/>
+                        </div>
+                        <div class="bottom-box mrgn-l-r" style="text-align: justify;text-justify: inter-word;">
+                            <div class="pddg-2">
+								<apex:outputText value="{! $Label.ICCS_CycleMgmt_Future_Header}" escape="false"/>
+	                        </div>         
+
+                            <div class="divider-cycle-2"/>
+
+                            <apex:outputPanel rendered="{! selectedFutureCycle != ''}">
+	                            <div class="filter">
+	                                <div class="labelText">
+	                                    <apex:outputText value="{! $Label.ICCS_Filter_By}"/>
+	                                </div>
+	
+	                                <apex:selectList value="{! futureCycleParticipationTable.selectedCategory}" multiselect="false" size="1">
+	                                    <apex:selectOptions value="{! futureCycleParticipationTable.categoryFilter}"/>
+	                                    <apex:actionSupport event="onchange" action="{! futureCycleParticipationTable.applyFilters}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                </apex:selectList>
+	
+	                                <apex:selectList value="{! futureCycleParticipationTable.selectedCountry}" multiselect="false" size="1">
+	                                    <apex:selectOptions value="{! futureCycleParticipationTable.countryFilter}"/>
+	                                    <apex:actionSupport event="onchange" action="{! futureCycleParticipationTable.applyFilters}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                </apex:selectList>
+	
+	                                <apex:selectList value="{! futureCycleParticipationTable.selectedCurrency}" multiselect="false" size="1">
+	                                    <apex:selectOptions value="{! futureCycleParticipationTable.currencyFilter}"/>
+	                                    <apex:actionSupport event="onchange" action="{! futureCycleParticipationTable.applyFilters}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                </apex:selectList>
+	                            </div>
+                            </apex:outputPanel>
+
+	                        <div class="select">
+	                            <apex:outputPanel rendered="{! futureCyclesSize > 0}">
+	                                <apex:outputText value="{! $Label.ICCS_Cycle_Label} : "/>
+	                                <apex:outputText value="{! selectedFutureCycle}" rendered="{! futureCyclesSize == 1}"/>
+	                                <apex:selectList value="{! selectedFutureCycle}" multiselect="false" size="1" rendered="{! futureCyclesSize > 1}">
+	                                    <apex:selectOptions value="{! futureCycleFilter}"/>
+	                                    <apex:actionSupport event="onchange" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                </apex:selectList>
+	                            </apex:outputPanel>
+	                            <apex:outputPanel rendered="{! futureCyclesSize == 0}">
+	                                <div class="msg-pstn">
+                                        <apex:outputText value="{! $Label.ICCS_No_Editable_Cycle_Message}" escape="false"/>
+	                                </div>
+	                            </apex:outputPanel>
+	                        </div>
+
+                            <apex:outputPanel rendered="{! selectedFutureCycle != ''}">
+                            	<apex:outputPanel id="futureSiTable">
+	                                <apex:repeat value="{! futureParticipationRows}" var="participationRow">
+	                                    <apex:outputPanel rendered="{! !participationRow.isFilteredOut}">
+	                                        <div class="panel-primary" style="min-height:20px;">
+	                                            <div class="panel-heading head_panel_green">
+	                                                <div class="panel-title">
+	                                                    <table style="width : 100%;">
+	                                                        <tr>
+	                                                            <td style="width : 50%; text-align : left;">
+	                                                                <apex:outputText value="{! participationRow.participation.cashflow.name + ' ' + participationRow.participation.cashflow.processingCurrency}"/>
+	                                                            </td>
+			                                                    <td style="width : 25%; text-align : left;">
+			                                                        <apex:outputText value="{! $Label.ICCS_NoA}" rendered="{! participationRow.participation.noa == 'true'}"/>
+			                                                    </td>
+	                                                            <td style="width : 25%; text-align : right; font-size : 10pt;">
+	                                                                <apex:commandLink style="white-space:nowrap;" action="{! createSettlementInstruction}" value="{! $Label.ICCS_Create_Future_SI_Link}" rendered="{! participationRow.participation.noa != 'true' && pageController.isMembershipMember && (pageController.isSignatoryUser || pageController.isLevel1User) && !participationRow.hasSettlementInstructions}" rerender="pageMainPanel" status="processActStatusId">
+			                                                        	<apex:param name="settlementInstructionType" value="Future" assignTo="{! settlementInstructionTypeParameter}"/>
+			                                                        	<apex:param name="participationId" value="{! participationRow.participationId}" assignTo="{! participationIdParameter}"/>
+			                                                        	<apex:param name="cycleId" value="{! selectedFutureCycle}" assignTo="{! cycleIdParameter}"/>
+	                                                                </apex:commandLink>
+	                                                                <apex:commandLink style="white-space:nowrap;" action="{! participationRow.showSettlementInstructions}" value="{! $Label.ICCS_Show_SI_Link}" rendered="{! participationRow.hasSettlementInstructions && !participationRow.displaySettlementInstructions}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                                                <apex:commandLink style="white-space:nowrap;" action="{! participationRow.hideSettlementInstructions}" value="{! $Label.ICCS_Hide_SI_Link}" rendered="{! participationRow.hasSettlementInstructions && participationRow.displaySettlementInstructions}" rerender="cycleManagementForm" status="processActStatusId"/>
+	                                                            </td>
+	                                                        </tr>
+	                                                    </table>
+	                                                </div>
+	                                            </div>
+	                                            <apex:outputPanel rendered="{! participationRow.displaySettlementInstructions}">
+	                                                <apex:repeat value="{! participationRow.settlementInstructionRows}" var="settlementInstructionRow">
+	                                                    <table style="width : 100%;">
+	                                                        <tr>
+	                                                            <td style="width : 100%; text-align : right; font-size : 10pt;">
+	                                                            	<apex:outputPanel rendered="{! participationRow.participation.noa != 'true' && pageController.isMembershipMember && (pageController.isSignatoryUser || pageController.isLevel1User)}">
+		                                                                <apex:commandLink style="white-space:nowrap;" action="{! editSettlementInstruction}" value="{! $Label.ICCS_Edit_SI_Link}" rerender="pageMainPanel">
+				                                                        	<apex:param name="settlementInstructionType" value="Future" assignTo="{! settlementInstructionTypeParameter}"/>
+				                                                        	<apex:param name="settlementInstructionId" value="{! settlementInstructionRow.settlementInstructionId}" assignTo="{! settlementInstructionIdParameter}"/>
+		                                                                </apex:commandLink>
+		
+		                                                                <div class="v-line"></div>
+	
+		                                                                <apex:commandLink style="white-space:nowrap;" onclick="if(!confirm('Are you sure?')){return false};" action="{! deleteSettlementInstruction}" value="{! $Label.ICCS_Delete_SI_Link}" rerender="cycleManagementForm">
+				                                                        	<apex:param name="settlementInstructionId" value="{! settlementInstructionRow.settlementInstructionId}" assignTo="{! settlementInstructionIdParameter}"/>
+				                                                        	<apex:param name="modifiedOn" value="{! settlementInstructionRow.settlementInstruction.modifiedOn}" assignTo="{! modifiedOnParameter}"/>
+		                                                                </apex:commandLink>
+	                                                                </apex:outputPanel>
+	                                                            </td>
+	                                                        </tr>
+	                                                    </table>
+	                                                    <apex:pageBlockTable value="{!settlementInstructionRow.settlementInstruction.instructionLines}" var="line" rendered="{! settlementInstructionRow.displayInstructionLines}">
+	                                                        <apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
+	                                                            <apex:outputText value="{!line.accountCode.code}"/>
+	                                                        </apex:column>
+	                                                        <apex:column headerValue="{! $Label.ICCS_Account_Currency_Label}">
+	                                                            <apex:outputText value="{!line.accountCode.bankAccount.currency_x}"/>
+	                                                        </apex:column>
+	                                                        <apex:column headerValue="{! $Label.ICCS_Account_Number_Label}">
+	                                                            <apex:outputText value="{!line.accountCode.bankAccount.number_x}"/>
+	                                                        </apex:column>
+	                                                        <apex:column headerValue="{! $Label.ICCS_Instruction_Line_Type_Label}">
+	                                                            <apex:outputText value="{!line.type.code}"/>
+	                                                        </apex:column>
+	                                                        <apex:column headerValue="{! $Label.ICCS_Value_Label}">
+	                                                            <apex:outputText value="{!line.value}" rendered="{! line.type.code != 'Balance'}"/>
+	                                                        </apex:column>
+	                                                        <apex:column headerValue="{! $Label.ICCS_Priority_Order_Label}">
+	                                                            <apex:outputText value="{!line.order}"/>
+	                                                        </apex:column>
+	                                                    </apex:pageBlockTable>
+	                                                </apex:repeat>
+	                                            </apex:outputPanel>                                 
+	                                        </div>
+	                                    </apex:outputPanel>
+	                                </apex:repeat>
+                                </apex:outputPanel>
+
+		                        <div class="expand">
+		                        	<apex:commandLink id="expandFutureParticipation" style="color: #0075bb; white-space:nowrap;" action="{! expandCollapseFutureParticipationTable}" value="{! IF(isFutureParticipationTableExpanded, $Label.ICCS_See_Less, $Label.ICCS_See_More)}" rendered="{! isFutureParticipationTableExpandable}" rerender="futureSiTable,expandFutureParticipation" status="processActStatusId"/>
+		                        </div>
+                            </apex:outputPanel>                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </apex:form>
+    </apex:pageBlock>
+</apex:component>

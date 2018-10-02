@@ -144,6 +144,8 @@ public with sharing class ISSP_AvailableServices{
 
         } set;}    
 
+    public List<SelectOption> iccsAvailablePortalServiceRoles {get; set;}
+
     public String sortExpression {
      get { return sortExp; }
      set {
@@ -226,6 +228,19 @@ public with sharing class ISSP_AvailableServices{
 
         IepStatus = currentPortalUser.contact.account.ANG_IEP_Status_FF__c;
 
+        iccsAvailablePortalServiceRoles = new List<SelectOption>();
+        
+        List<Connected_App_Roles__c> iccsRoles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App__c = 'ICCS' and (Role__c = : ISSP_ICCS_Utils.ICCS_ROLE_READ_ONLY or Role__c = : ISSP_ICCS_Utils.ICCS_ROLE_LEVEL1)];
+
+        iccsAvailablePortalServiceRoles.add(new SelectOption('', ''));
+        
+        for (Connected_App_Roles__c role : iccsRoles) {
+            iccsAvailablePortalServiceRoles.add(new SelectOption(role.Role__c, role.Role__c));
+
+            if (role.Default_User_Role__c) {
+                this.defaultPortalUserRole = role.Role__c;
+            }
+        }
     }
 
     public String getCustomLabel(String labelName) {
@@ -339,6 +354,9 @@ public with sharing class ISSP_AvailableServices{
                     isModalErrorMessageEnable = true;
                     modalErrorMessage = Label.ANG_ISSP_IEP_Abroad_Account_error_msg;
                 }
+                
+                // ICCS Part
+                iccsMembershipStatus = ISSP_ICCS_Utils.getICCSMembershipStatus(conId);
             }
             else
                 isAdmin = false;
@@ -347,6 +365,14 @@ public with sharing class ISSP_AvailableServices{
         }
         return null;
     }
+    
+	public String iccsMembershipStatus {get;set;}
+	public Boolean isIccsMembershipInactive {get{return iccsMembershipStatus == ISSP_ICCS_Utils.ICCS_MEMBERSHIP_NONE || iccsMembershipStatus == ISSP_ICCS_Utils.ICCS_MEMBERSHIP_INACTIVE;}}
+	public Boolean isIccsMembershipProspect {get{return iccsMembershipStatus == ISSP_ICCS_Utils.ICCS_MEMBERSHIP_PROSPECT;}}
+	public Boolean isIccsMembershipActive {get{return iccsMembershipStatus == ISSP_ICCS_Utils.ICCS_MEMBERSHIP_ACTIVE;}}
+	public Boolean isIccsMembershipMember {get{return iccsMembershipStatus == ISSP_ICCS_Utils.ICCS_MEMBERSHIP_MEMBER;}}
+	public Boolean isIccsMembershipWithdrawn {get{return iccsMembershipStatus == ISSP_ICCS_Utils.ICCS_MEMBERSHIP_WITHDRAWN;}}
+	public Boolean isIccsMembershipSuspended {get{return iccsMembershipStatus == ISSP_ICCS_Utils.ICCS_MEMBERSHIP_SUSPENDED;}}
     
     //AEF:
     private list<ISSPServiceListView__c> csServiceListViews { 
@@ -789,13 +815,24 @@ public with sharing class ISSP_AvailableServices{
     @RemoteAction
     public static string newAppsRequest (string applicationId, string applicationName, string contactId){
         String appRight = 'Access Requested';
+        String appRole = ''; 
         if(applicationName=='Standards Setting Workspace')
             appRight = 'Access Granted';
-        Portal_Application_Right__c app =  new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight);
+            
+		// We'll ensure in the ISSP_AvailableServices pages that this method is called when ICCS membership is not Member
+		// What about the Suspended and Withdrawn statuses?
+        if(applicationName == ISSP_ICCS_Utils.ICCS_PORTAL_APPLICATION_NAME){
+            appRight = 'Access Granted';
+	        appRole = ISSP_ICCS_Utils.ICCS_ROLE_REGISTRATION;
+        }
+                    
+        Portal_Application_Right__c app =  new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight, ANG_Portal_Service_Role__c = appRole);
         insert app;
         submitApprovalProcess(app.id);
         return 'ok';
     }
+    
+    public String iccsPortalApplicationName {get{return ISSP_ICCS_Utils.ICCS_PORTAL_APPLICATION_NAME;}}
     
     @RemoteAction    
     public static string newAppsRequest2 (string applicationId, string applicationName, string contactId, String portalServiceRole, Boolean flagUseDefaultRole, String defaultPortalUserRole) {
@@ -814,6 +851,13 @@ public with sharing class ISSP_AvailableServices{
         }
         System.debug('-->Insert');
         insert app;
+
+		if(applicationName == ISSP_ICCS_Utils.ICCS_PORTAL_APPLICATION_NAME){
+        	System.debug('sending notification');
+			Portal_Application_Right__c appForNotification = [select Id, Top_Account__c, Contact__r.FirstName, Contact__r.LastName, ANG_Portal_Service_Role__c from Portal_Application_Right__c where id =: app.Id];
+			ISSP_ICCS_Utils.requestRole(appForNotification, portalServiceRole, true);
+        }
+
         submitApprovalProcess(app.id);
 
         return 'ok';             

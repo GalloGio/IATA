@@ -96,7 +96,7 @@
         <inlineHelpText>The CNPJ # must correspond with the address to be inserted in IATA Systems</inlineHelpText>
         <label>CNPJ Address corresponds</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -132,7 +132,7 @@
         <inlineHelpText>Does the CNPJ# provided above correspond with the Bank Beneficiary Account Holder?</inlineHelpText>
         <label>CNPJ is Bank Beneficiary Acnt Holder</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -517,7 +517,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <externalId>false</externalId>
         <label>BSP Russia Double Tax avoiding Treaty</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -543,7 +543,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <label>BSP UA BankCode MFO</label>
         <length>100</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -555,7 +555,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <label>BSP UA LocalReg Number EDRPOU</label>
         <length>100</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1457,7 +1457,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <externalId>false</externalId>
         <label>Canada Has Principal Office</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1482,7 +1482,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <label>Canada Local VAT Info</label>
         <length>100</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1492,7 +1492,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <externalId>false</externalId>
         <label>Canada Provincial Offices</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1698,7 +1698,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <externalId>false</externalId>
         <label>Colombia - Type of Contributor</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1860,7 +1860,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <externalId>false</externalId>
         <label>Cyprus Turkey based Airline</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -2056,7 +2056,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <externalId>false</externalId>
         <label>Ecuador Legal Forms requirements</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -2081,7 +2081,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <externalId>false</externalId>
         <label>Fin./Adm. Contact Address</label>
         <length>32768</length>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -2092,7 +2092,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <label>Fin./Adm. Contact City</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -2102,7 +2102,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <externalId>false</externalId>
         <label>Fin./Adm. Contact Country</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -2180,7 +2180,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <label>Fin./Adm. Contact Zip Code</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -2435,7 +2435,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <externalId>false</externalId>
         <label>Hot files delivery format</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -2548,7 +2548,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <externalId>false</externalId>
         <label>Local CC / Settlement Scheme?</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -2905,7 +2905,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <externalId>false</externalId>
         <label>Receive HOT files</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -3042,7 +3042,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <externalId>false</externalId>
         <label>Type of participation desired</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -3078,7 +3078,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <label>VAT/Tax number in your home country</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -3110,8 +3110,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
     <label>AP Process Form</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Case__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>AP-{000000}</displayFormat>
