@@ -9,23 +9,24 @@ public with sharing class ISSP_SIS_AccountHandler {
     public static set<ID> ALLOWED_COUNTRIES = null;
     public static Boolean BLOCK_EXECUTION = false;
     
-    public static map<String,list<ISSP_SIS_Account_Status__c>> MAP_SIS_ACCOUNT_STATUS = null;
+    public static map<String,ISSP_SIS_Account_Status__c> MAP_SIS_ACCOUNT_STATUS = null;
     /**
         Get the map with the custom setting 'ISSP_SIS_Account_Status__c' or creates it if not initialized
     **/
-    public static map<String,list<ISSP_SIS_Account_Status__c>> getMapSISAccountStatus() {
+    public static map<String,ISSP_SIS_Account_Status__c> getMapSISAccountStatus() {
         //initialize map only once
         if (MAP_SIS_ACCOUNT_STATUS == null) {
-            MAP_SIS_ACCOUNT_STATUS = new map<String,list<ISSP_SIS_Account_Status__c>>();
+            MAP_SIS_ACCOUNT_STATUS = new map<String,ISSP_SIS_Account_Status__c>();
             Map<String,Id> mapAccountRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account');
             for (ISSP_SIS_Account_Status__c setting: ISSP_SIS_Account_Status__c.getAll().values()) {
-                String key = mapAccountRT.get(setting.Recordtype__c) + ' ' + setting.Status__c;
-                list<ISSP_SIS_Account_Status__c> listSettings = MAP_SIS_ACCOUNT_STATUS.get(key);
-                if (listSettings==null) {
-                    listSettings = new list<ISSP_SIS_Account_Status__c>();
+                list<String> listISOCode = setting.Country_ISO_Codes__c==null? new list<String>(): setting.Country_ISO_Codes__c.split(',');
+                list<String> listLocations = setting.Location_Class__c==null? new list<String>(): setting.Location_Class__c.split(',');
+                for (String countryISOCode: listISOCode) {
+                    for (String location: listLocations) {
+                        String key = mapAccountRT.get(setting.Recordtype__c) + ' ' + setting.Status__c + ' ' + location + ' ' + countryISOCode;
+                        MAP_SIS_ACCOUNT_STATUS.put(key, setting);
+                    }
                 }
-                listSettings.add(setting);
-                MAP_SIS_ACCOUNT_STATUS.put(key, listSettings);
             }
         }
         return MAP_SIS_ACCOUNT_STATUS;
@@ -171,7 +172,8 @@ public with sharing class ISSP_SIS_AccountHandler {
             Account accountOld = mapOlds.get(accountNew.Id);
             if (accountNew.RecordTypeId!=accountOld.RecordtypeId ||
                 accountNew.Status__c!=accountOld.Status__c ||
-                accountNew.IATA_ISO_Country__c!=accountOld.IATA_ISO_Country__c
+                accountNew.IATA_ISO_Country__c!=accountOld.IATA_ISO_Country__c ||
+                accountNew.Location_Class__c!=accountOld.Location_Class__c
             ) {
                 listAccount.add(accountNew);
             }
@@ -205,23 +207,25 @@ public with sharing class ISSP_SIS_AccountHandler {
     **/
     private static ISSP_SIS_Account_Status__c findCustomSettingSISStatus(Account account) {
         //find  custom setting
-        map<String,list<ISSP_SIS_Account_Status__c>> mapSettings = getMapSISAccountStatus();
-        // get list of possible Setting for a specific recordtype and status
-        String key = account.RecordtypeId + ' ' + account.Status__c;
-        list<ISSP_SIS_Account_Status__c> listSettings = mapSettings.get(key);
-        if (listSettings==null) return null;
-        ISSP_SIS_Account_Status__c allCountriesSettings = null;
-        // if a list of possible settings is found select the one that includes the account country
-        for (ISSP_SIS_Account_Status__c setting: listSettings) {
-            if (setting.Country_ISO_Codes__c.equalsIgnoreCase('All')) {
-                allCountriesSettings = setting;
-            } else {
-                if (setting.Country_ISO_Codes__c.contains(account.IATA_ISO_Country__r.ISO_Code__c)) {
-                    return setting;
-                }
-            }
-        }
-        // if no country is found use the setting with the keyword 'All'
-        return allCountriesSettings;
+        map<String,ISSP_SIS_Account_Status__c> mapSettings = getMapSISAccountStatus();
+        // first find the setting for all exact values
+        String key = account.RecordtypeId + ' ' + account.Status__c + ' ' + account.Location_Class__c + ' ' + account.IATA_ISO_Country__r.ISO_Code__c;
+        ISSP_SIS_Account_Status__c setting = mapSettings.get(key);
+        if (setting!=null) return setting;
+        
+        // second only when the country has a wildcard
+        key = account.RecordtypeId + ' ' + account.Status__c + ' ' + account.Location_Class__c + ' All';
+        setting = mapSettings.get(key);
+        if (setting!=null) return setting;
+        
+        // third when the location class has the wildcard
+        key = account.RecordtypeId + ' ' + account.Status__c + ' All ' + account.IATA_ISO_Country__r.ISO_Code__c;
+        setting = mapSettings.get(key);
+        if (setting!=null) return setting;
+        
+        // finally when the location class and the country have wildcards
+        key = account.RecordtypeId + ' ' + account.Status__c + ' All All';
+        setting = mapSettings.get(key);
+        return setting;
     }
 }
