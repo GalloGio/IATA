@@ -1313,10 +1313,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 				Pattern validEmail = Pattern.compile( '([a-zA-Z0-9_\\-\\.]+)@(((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,6}|[0-9]{1,6}))');
 
-				if (currentAccount.fw.newform.Branch_Office_Email__c == null) {
-					currentAccount.fw.newform.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				} else if (currentAccount.fw.newForm.Branch_Office_Email__c != null && !validEmail.matcher(currentAccount.fw.newForm.Branch_Office_Email__c).matches()) {
+				if (currentAccount.fw.newForm.Branch_Office_Email__c != null && !validEmail.matcher(currentAccount.fw.newForm.Branch_Office_Email__c).matches()) {
 					currentAccount.fw.newForm.Branch_Office_Email__c.addError(Label.ISSP_AMS_Invalid_Email);
 	                errorFound = true;
 				} else if (currentAccount.fw.newform.Branch_Office_Email__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_Email__c).matches()) {
