@@ -151,7 +151,7 @@
 -->
   
     <!-- <apex:pageMessages /> -->
-    <h4>{!$Label.ISSP_Company_Administration} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+    <h4>{!$Label.ISSP_Available_services} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
          {!$Label.ISSP_Access_to_services} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
          <small>{!$Label.ISSP_PageDescription_ISSP_AccessToService}</small></h4>
     
