@@ -17499,6 +17499,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>* Please confirm which GDSs are used in your company?</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</shortDescription>
+        <value>The same IATA Code as the one being updated cannot be added as a Company Owner.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
