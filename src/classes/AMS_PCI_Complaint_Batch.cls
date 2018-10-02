@@ -443,7 +443,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                 Id userId = mapContactsVs_User.get(recipient.Id);
 
                 /**For testing purposes**/
-                if(Test.isRunningTest()) userId = UserInfo.getUserId();
+                //if(Test.isRunningTest()) userId = UserInfo.getUserId();
 
                 system.debug('DGR sendEmailAlert: userId : ' + userId);
 
