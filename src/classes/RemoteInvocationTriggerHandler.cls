@@ -138,7 +138,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 		List<Remote_Invocation_Artefact__c> requestToUpdate = new List<Remote_Invocation_Artefact__c>();
 		
 		try{
-			List<AMS_OSCAR__c> listOSCARs = ANG_OSCARProcessHelper.createIEPAccountOscar(mapIDAccs,'A'); //mudar o metodo para devolver a lista de oscars
+			List<AMS_OSCAR__c> listOSCARs = ANG_OSCARProcessHelper.createIEPAccountOscar(mapIDAccs,'setup'); //mudar o metodo para devolver a lista de oscars
 			
 			for(AMS_OSCAR__c oscar : listOSCARs){
 				String iataCode = mapIDAccs.get(oscar.Account__c).IATACode__c;
