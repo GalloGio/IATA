@@ -77,6 +77,8 @@ public with sharing class RemoteInvocationTriggerHandler {
 
 			Remote_Invocation__c parent = newMap.get(artifact.Remote_Invocation__c);
 			Account acc = mapIATACodeAccs.get(parent.Internal_ID__c);
+			system.debug('##acc ' + acc);
+			system.debug('##parent ' + parent);
 			if(parent != null && acc != null){
 				
 				//NEWGEN validations
@@ -143,6 +145,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 				reqsToCreateOSCAR.get(iataCode).Request_Result__c = 'Completed';
 				reqsToCreateOSCAR.get(iataCode).Object_ID_Created__c = oscar.id;
 				requestToUpdate.add(reqsToCreateOSCAR.get(iataCode));	
+				reqsToCreateOSCAR.remove(iataCode);
 			}
 		}catch(Exception e){
 			for(Remote_Invocation_Artefact__c artifact : reqsToCreateOSCAR.values()){
