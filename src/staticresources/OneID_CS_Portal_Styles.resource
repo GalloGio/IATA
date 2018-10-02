@@ -252,7 +252,8 @@ a.homeIcon:hover {
     width:100%;
     background-repeat:no-repeat;
     height:26px;
-    background-position-y:7px
+    background-position-y:7px;
+    background-position-x:2px;
 }
 .oiHeader a.homeIcon .logoTitle {
     display:block;
