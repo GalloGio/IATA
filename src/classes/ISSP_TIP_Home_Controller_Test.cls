@@ -36,6 +36,7 @@ private class ISSP_TIP_Home_Controller_Test {
         ar.Provider_Code__c = '1000';
         ar.Account__c = parent.id;
         ar.HQ_Location__c = country.Id;
+        ar.recordtypeId=TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
         insert ar;
         
         //create case
