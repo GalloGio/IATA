@@ -716,11 +716,11 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			                	}
 			        		}
 			        	}
-			            if (c.IsClosed && c.Has_the_agent_paid_invoice__c != null && c.Has_the_agent_paid_invoice__c != 'Not paid') {
-			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = '');
-			                    lstAccountsToUpdate.add( a );
+			            if (c.IsClosed && c.Has_the_agent_paid_invoice__c != null && (c.Has_the_agent_paid_invoice__c == 'Not paid' || c.Has_the_agent_paid_invoice__c =='Partially unpaid')) {
+			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = 'Pending dues'); 
+			                    lstAccountsToUpdate.add( a );                            	
 			            }else{
-			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = 'Pending dues');
+			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = '');
 			                    lstAccountsToUpdate.add( a );
 			            }
 			        }
