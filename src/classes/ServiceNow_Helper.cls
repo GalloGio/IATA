@@ -69,7 +69,14 @@ public without sharing class ServiceNow_Helper {
     
     public static void sendRequestToSNOW(SNOWBody theBody, string setting_name){
 
-            ISSP_Int_Error__c s = ISSP_Int_Error__c.getall().get(setting_name);
+            Map<String,ISSP_Int_Error__c> settings =  ISSP_Int_Error__c.getall();
+
+            if(!settings.containsKey(setting_name)){
+                System.debug('[ServiceNow_Helper - sendRequestToSNOW] - SNOW incident not created: missing '+setting_name+' ISSP_Int_Error__c configuration');
+                return;
+            } 
+
+            ISSP_Int_Error__c s = settings.get(setting_name);
         
             theBody.caused_by = s.caused_by__c;
             theBody.u_issue_identified_by = s.u_issue_identified_by__c;
