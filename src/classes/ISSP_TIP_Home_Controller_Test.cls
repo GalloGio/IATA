@@ -146,7 +146,7 @@ private class ISSP_TIP_Home_Controller_Test {
     static void testEditProduct() {
 
         setupTest();
-
+        Test.startTest();
         //System.runAs(user){
         List<selectOption> t = controller.acceptedTransactionsOptList;
         List<selectOption> tt = controller.paymentGuaranteeOptList;
@@ -156,7 +156,7 @@ private class ISSP_TIP_Home_Controller_Test {
         //controller.fillContactList();
         //controller.saveAccountEnrolmentAsDraft();
         controller.cancelNewEditProd();
-
+        Test.stopTest();
         //}
     }
 
@@ -459,6 +459,7 @@ private class ISSP_TIP_Home_Controller_Test {
     @isTest
     static void testTerminateProduct() {
         setupTest();
+        Test.startTest();
         ID prodid = [Select id from Partner_products__c limit 1].id;
         System.currentPageReference().getParameters().put('prodId', prod.id);
         controller.NewEditProduct();
@@ -466,7 +467,7 @@ private class ISSP_TIP_Home_Controller_Test {
         controller.terminateProduct();
         controller.terminationReason = 'Termination Reason';
         controller.terminationDate = string.valueof(Date.today());
-        Test.startTest();
+        
         controller.submitProductTerminationRequest();
 
         System.assertEquals('Product Termination Request - test / test prod', controller.newcase.Subject);
