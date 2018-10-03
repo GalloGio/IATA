@@ -348,6 +348,7 @@
     </fields>
     <fields>
         <fullName>ANG_Share_documentation_with_vendor__c</fullName>
+        <description>Used on IEP Model B Oscar. If checked the documentation is marked as shared with the vendor. Required to pass application receipt step</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Share documentation with vendor</label>
