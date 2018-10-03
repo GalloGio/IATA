@@ -54,6 +54,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Integration_Transaction_ID__c</fullName>
+        <description>Required. External ID, Unique (Case Sensitive)</description>
         <externalId>false</externalId>
         <label>Integration Transaction ID</label>
         <length>80</length>
@@ -64,6 +65,7 @@
     </fields>
     <fields>
         <fullName>Internal_ID__c</fullName>
+        <description>An identifier used by the business for this invocation e.g. if it relates to an agency process then this could be the IATA Code.</description>
         <externalId>false</externalId>
         <label>Internal ID</label>
         <length>80</length>
@@ -74,6 +76,7 @@
     </fields>
     <fields>
         <fullName>Request_Type__c</fullName>
+        <description>Required. It identifies the type of request</description>
         <externalId>false</externalId>
         <label>Request Type</label>
         <required>true</required>
@@ -98,6 +101,7 @@
     </fields>
     <fields>
         <fullName>Source__c</fullName>
+        <description>Identifies the source system</description>
         <externalId>false</externalId>
         <label>Source</label>
         <required>false</required>
@@ -122,6 +126,7 @@
     </fields>
     <fields>
         <fullName>Status_Detail__c</fullName>
+        <description>Is the description of the execution, full detail</description>
         <externalId>false</externalId>
         <label>Status Detail</label>
         <length>131072</length>
@@ -131,6 +136,8 @@
     </fields>
     <fields>
         <fullName>Status__c</fullName>
+        <description>Default: Initializing.
+When MS sets “In Progress”, trigger to fire</description>
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>
