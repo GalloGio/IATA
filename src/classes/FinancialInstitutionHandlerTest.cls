@@ -17,7 +17,7 @@ public with sharing class FinancialInstitutionHandlerTest {
         );
         insert institution;
         
-        Integer numElements = 2500;
+        Integer numElements = 2001;
         ANG_FinancialSecurityTriggerHandler.BLOCK_TRIGGER_EXECUTION = true;
         list<Financial_Security__c> listSecurities = new list<Financial_Security__c>();
         for (Integer i=0; i<numElements;i++) {
