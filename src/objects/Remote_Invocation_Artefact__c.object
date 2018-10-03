@@ -54,6 +54,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>External_Id__c</fullName>
+        <description>e.g. External Party, File Id</description>
         <externalId>false</externalId>
         <label>External ID</label>
         <length>255</length>
@@ -64,6 +65,7 @@
     </fields>
     <fields>
         <fullName>Format__c</fullName>
+        <description>File Format</description>
         <externalId>false</externalId>
         <label>Format</label>
         <required>false</required>
@@ -93,6 +95,7 @@
     </fields>
     <fields>
         <fullName>Internal_ID__c</fullName>
+        <description>Business Id e.g. IATA Code</description>
         <externalId>false</externalId>
         <label>Internal ID</label>
         <length>255</length>
@@ -103,6 +106,7 @@
     </fields>
     <fields>
         <fullName>Name__c</fullName>
+        <description>e.g. Filename</description>
         <externalId>false</externalId>
         <label>Name</label>
         <length>255</length>
@@ -113,6 +117,7 @@
     </fields>
     <fields>
         <fullName>Object_ID_Created__c</fullName>
+        <description>ID of the object created e.g. OSCAR ID</description>
         <externalId>false</externalId>
         <label>Object ID Created</label>
         <length>18</length>
@@ -123,6 +128,7 @@
     </fields>
     <fields>
         <fullName>Previous_Version__c</fullName>
+        <description>Previous version</description>
         <externalId>false</externalId>
         <label>Previous Version</label>
         <length>255</length>
@@ -133,6 +139,7 @@
     </fields>
     <fields>
         <fullName>Remote_Invocation__c</fullName>
+        <description>Master-Detail to Remote Invocation</description>
         <externalId>false</externalId>
         <label>Remote Invocation</label>
         <referenceTo>Remote_Invocation__c</referenceTo>
@@ -146,6 +153,8 @@
     </fields>
     <fields>
         <fullName>Request_Result__c</fullName>
+        <description>Describes the result of the request for this artefact as part of a remote invocation.
+Default value: In Progress</description>
         <externalId>false</externalId>
         <label>Request Result</label>
         <required>false</required>
@@ -175,6 +184,7 @@
     </fields>
     <fields>
         <fullName>Source__c</fullName>
+        <description>Identifies the source system</description>
         <externalId>false</externalId>
         <formula>TEXT(Remote_Invocation__r.Source__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -186,6 +196,7 @@
     </fields>
     <fields>
         <fullName>Status_Detail__c</fullName>
+        <description>Describes the stage of the remote invocation request</description>
         <externalId>false</externalId>
         <label>Status Detail</label>
         <length>131072</length>
@@ -195,6 +206,7 @@
     </fields>
     <fields>
         <fullName>Status__c</fullName>
+        <description>Status of the Artifact</description>
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>
@@ -219,6 +231,7 @@
     </fields>
     <fields>
         <fullName>Valid_From__c</fullName>
+        <description>Date since it is valid</description>
         <externalId>false</externalId>
         <label>Valid From</label>
         <required>false</required>
@@ -227,6 +240,7 @@
     </fields>
     <fields>
         <fullName>Valid_To__c</fullName>
+        <description>Date until it is valid</description>
         <externalId>false</externalId>
         <label>Valid To</label>
         <required>false</required>
@@ -235,6 +249,7 @@
     </fields>
     <fields>
         <fullName>Version_Notes__c</fullName>
+        <description>Version notes</description>
         <externalId>false</externalId>
         <label>Version Notes</label>
         <length>255</length>
@@ -245,6 +260,7 @@
     </fields>
     <fields>
         <fullName>Version__c</fullName>
+        <description>Version of the Artifact</description>
         <externalId>false</externalId>
         <label>Version</label>
         <required>false</required>
