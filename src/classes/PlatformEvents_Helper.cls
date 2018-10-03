@@ -16,7 +16,7 @@ public class PlatformEvents_Helper {
             
             if(MapMapping==null) return;
             
-            Map<ID, Schema.RecordTypeInfo> mapRT = Schema.getGlobalDescribe().get(ObjSource).getDescribe().getRecordTypeInfosById();
+            List<RecordType> rtList = RecordTypeSingleton.getInstance().getRecordTypesBySObject(ObjSource);
             
             List<SObject> lstSObjs = new list<SObject>();
             
@@ -25,8 +25,8 @@ public class PlatformEvents_Helper {
     
                 for(String FieldSource : MapMapping.keyset()){
                     if(FieldSource=='Recordtype')
-                        if(mapRT.size()>1) //master is there. check if there is anything else. if no other recortyoe but master, field "RecorDTypeId" doesn't exist....
-                            sObj.put(MapMapping.get(FieldSource) , RTName(ObjSource, (Id)(ObjectMap.get(ObjId).get('RecordtypeId'))));
+                        if(!rtList.isEmpty()) 
+                            sObj.put(MapMapping.get(FieldSource) , RecordTypeSingleton.getInstance().getRecordTypeById(ObjSource, (Id)(ObjectMap.get(ObjId).get('RecordtypeId'))).Name);
                         else
                             sObj.put(MapMapping.get(FieldSource), null);
                         
@@ -64,11 +64,6 @@ public class PlatformEvents_Helper {
         }
         
         if(!lsLogs.isEmpty()) insert lsLogs;
-    }
-    
-    private static string RTName(string theObject, id RTId){
-        if(RTId==null)  return null;
-        return Schema.getGlobalDescribe().get(theObject).getDescribe().getRecordTypeInfosById().get(RTId).getName();
     }
     
     private static map<string, string> getMappingMap(string sObj){

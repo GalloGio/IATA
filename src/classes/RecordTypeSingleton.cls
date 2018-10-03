@@ -59,6 +59,8 @@ public class RecordTypeSingleton {
 	 */
 	public RecordType getRecordType(String objectName, String devName){
 
+		if(!recordTypesByName.containsKey(objectName)) return null;
+
 		return recordTypesByName.get(objectName).get(devName);
 
 	}
@@ -72,6 +74,9 @@ public class RecordTypeSingleton {
 	 */
 	public Id getRecordTypeId(String objectName, String devName){
 
+		if(!recordTypesByName.containsKey(objectName)) return null;
+		if(!recordTypesByName.get(objectName).containsKey(devName)) return null;
+
 		return recordTypesByName.get(objectName).get(devName).Id;
 
 	}
@@ -83,6 +88,8 @@ public class RecordTypeSingleton {
 	 * @return            the list of record types for the passed object name
 	 */
 	public List<RecordType> getRecordTypesBySObject(String objectName){
+
+		if(!recordTypesByName.containsKey(objectName)) return new List<RecordType>();
 
 		return recordTypesByName.get(objectName).values();
 
@@ -96,6 +103,8 @@ public class RecordTypeSingleton {
 	public Map<String, String> getMapRecordTypesBySObject(String objectName){
 
 		Map<String, String> mapRecordType = new Map<String, String>();
+
+		if(!recordTypesByName.containsKey(objectName)) return new Map<String, String>();
 
 		for(RecordType rt : recordTypesByName.get(objectName).values()){
 			mapRecordType.put(rt.name, rt.Id);
@@ -114,6 +123,8 @@ public class RecordTypeSingleton {
 	public List<Id> getRecordTypeObjIdListForSpecfifiedNames(String objectName, List<String> devNameList){
 
 		List<Id> returnRecTypeObjIdList = new List<Id>();
+
+		if(!recordTypesByName.containsKey(objectName)) return new List<Id>();
 
 		for(String devName : devNameList){
 
@@ -135,6 +146,8 @@ public class RecordTypeSingleton {
 
 		List<Id> returnRecTypeObjIdList = new List<Id>();
 
+		if(!recordTypesByName.containsKey(objectName)) return new List<Id>();
+
 		for(RecordType recType : recordTypesByName.get(objectName).values()){
 
 			if(!exceptDevNameList.contains(recType.DeveloperName)){
@@ -155,6 +168,8 @@ public class RecordTypeSingleton {
 	 */
 	public RecordType getRecordTypeById(String objectName, Id rtId){
 
+		if(!recordTypesByName.containsKey(objectName)) return null;
+		
 		return recordTypesById.get(objectName).get(rtId);
 
 	}
