@@ -236,6 +236,13 @@
         <value>Restore Forms of Payment</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action19</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action19</shortDescription>
+        <value>Define GE Hierarchy</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -385,6 +392,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR DISAPPROVAL</shortDescription>
         <value>Application Disapproval</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GOGLOBAL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GOGLOBAL</shortDescription>
+        <value>GoGlobal Hierarchy selection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_MASTERDATA</fullName>
