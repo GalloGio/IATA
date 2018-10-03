@@ -218,7 +218,7 @@
 			<div class="slds-form-element">
 				<label class="slds-form-element__label">{!v.accountLabels.Website}</label>
 				<div class="slds-form-element__control">
-					<input type="url" value="{!v.account.Website}" class="slds-input "/>
+					<ui:inputURL aura:id= "website" value="{!v.account.Website}" class="slds-input "/>
 				</div>
 			</div>
 		</div>
