@@ -606,7 +606,7 @@ public class ISSP_CaseTest {
 
     public static testMethod void testDCPnewCase() {
         Account account = ISSP_ObjectFactory.createNewAccount();
-        account.Name = 'Account1';
+        account.Name = 'iDPC';
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
@@ -752,6 +752,7 @@ public class ISSP_CaseTest {
             update cttr.newCase;
             cttr.getAccountConcernedName();
             cttr.getCaseContactName();
+            cttr.getListDPCValidCaseStatus();
         }
         Test.stopTest();
     }

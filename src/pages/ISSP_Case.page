@@ -939,7 +939,23 @@
                                         <apex:outputfield value="{!newCase.Priority}" rendered="{!NOT(AND(isACCA,newCase.Status!='Closed'))}"/>
 
                                         <apex:outputfield value="{!newCase.DPC_Software__c}" rendered="{!AND(NOT(IsInterDPCCase),caseType='DPCSR')}" />
-                                        <apex:outputfield value="{!newCase.Status}" />
+                                        <apex:outputfield value="{!newCase.Status}" rendered="{!NOT(AND(IsInterDPCCase,isDPCUser))}" />
+                                        <!-- STATUS Field for DPC -->
+                                        <script>
+                                            function updateStatus(element) {
+                                                var result = confirm('Change Status from ' + element.oldValue + ' to ' + element.value + '.\nAre you sure?');
+                                                if (result) {
+                                                    updateCase();
+                                                } else {
+                                                    element.value = element.oldValue;
+                                                }
+                                            }
+                                        </script>
+                                        <apex:selectList value="{!newCase.Status}" styleclass="form-control"  required="true" style="width: auto;" size="1" rendered="{!AND(IsInterDPCCase,isDPCUser)}"
+                                            onfocus="this.oldValue=this.value" onchange="updateStatus(this);">
+                                            <apex:selectOptions value="{!listDPCValidCaseStatus}"/>
+                                        </apex:selectList>
+                                        
                                         <apex:outputfield value="{!newCase.CaseNumber}" />
                                         <!-- <apex:outputfield value="{!newCase.ParentId}" /> -->
                                         <apex:outputfield styleclass="table" value="{!newCase.Origin}"  rendered="{!NOT(caseType='DPCSR')}"/>
