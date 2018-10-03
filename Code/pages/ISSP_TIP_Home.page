@@ -1,0 +1,539 @@
+<apex:page id="topPage" 
+controller="ISSP_TIP_Home_Controller" 
+cache="false" 
+sidebar="false" 
+showHeader="false" 
+standardStylesheets="false" 
+applyBodyTag="false" 
+applyHtmlTag="false"
+action="{!initActions}"
+>
+
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+        <c:ISSP_Header ></c:ISSP_Header>
+        <c:iss_ap_css />
+
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                changeRequestButtonStatus();               
+                if({!!(isAdmin && isPaymentProvider)}) document.getElementById("newProductBtn").disabled = true; 
+            })
+
+            function changeRequestButtonStatus() {
+                document.getElementById("requestButton").disabled = {!!btnEnabled};
+                //ACAMBAS - TIP-241 - Start
+                if({!btnVoluntReliqEnabled}) {
+                    document.getElementById("requestVoluntaryRelinquishmentBtn").style.display = 'block';
+                }
+                else {
+                    document.getElementById("requestVoluntaryRelinquishmentBtn").style.display = 'none';
+                }
+                //ACAMBAS - TIP-241 - End
+            }
+
+            function validateIfportalAdmin() {
+                if ({!isAdmin}) {
+                    //window.location.href = '/apex/ISSP_TIP_Enrolment';
+                    navigateToEnrolmentPage();
+                } else {
+                    alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators}");
+                }
+            }
+
+            function validateIfportalAdminToProducts() {
+                if ({!isAdmin} && {!isPaymentProvider}) {
+                    openProdDetailPage(null);
+                    // window.location.href = '/apex/TIP_Product_Enrollment';
+                } else if ({!!isAdmin}){
+                    alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products}");
+                }else if({!!isPaymentProvider}){
+                    alert("{!$label.ISSP_TIP_Home_Account_must_be_Payment_Provider}");
+                }   
+            }
+
+            function validateIfportalAdminToProductsToEdit(id) {
+
+                if ({!isAdmin} && {!isPaymentProvider}) {
+                    //window.location.href = '/apex/TIP_Product_Enrollment?id=' + id;
+                   openProdDetailPage(id);return true;
+                } else if ({!!isAdmin}){
+                    alert("{!$label.ISSP_TIP_Home_Only_Portal_Administrators_Enrol_Products}");
+                }else if({!!isPaymentProvider}){
+                    alert("{!$label.ISSP_TIP_Home_Account_must_be_Payment_Provider}");
+                }
+                return false;
+            }
+
+            //ACAMBAS - TIP-241 - Start
+
+            function toggleDialog() {
+                $('#myModal').modal('toggle');
+            }
+
+            function closeDialog(){
+               toggleDialog();
+            } 
+
+            function clearErrorElement(elemFld){
+                $(elemFld).next('.errorMsg').remove();
+            }
+
+            function checkVoluntaryRelinqMandatory() {
+
+                if($('[id$="datepicker"]').val() === null || $('[id$="datepicker"]').val() =='' ) {
+                    if($('[id$="datepicker"]').next('.errorMsg').val()==undefined) {
+                        $('[id$="datepicker"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                    }
+                    return;
+                }
+                else {
+                    clearErrorElement('[id$="datepicker"]');
+                }
+
+                if($('[id$="voluntaryReliqReason"]').val() === null || $('[id$="voluntaryReliqReason"]').val() =='' ) {
+                    if($('[id$="voluntaryReliqReason"]').next('.errorMsg').val()==undefined)
+                        $('[id$="voluntaryReliqReason"]').after('<div class="errorMsg">{!$Label.IEC_Required_Field_Error_Msg}</div>');
+                    return;
+                }
+                else {
+                    clearErrorElement('[id$="voluntaryReliqReason"]');
+                }
+
+                startLoading();
+                submitVoluntaryRelinquishment(); 
+            }
+            //ACAMBAS - TIP-241 - End
+
+        </script>
+    </head>
+    <html>
+
+    <style>
+        .section-header {
+            background-color: rgb(43, 120, 228);
+            color: white;
+            line-height: 1.42857143;
+            padding: 8px;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+        }
+
+        .section-header>i {
+            color: black;
+            margin-right: 5px;
+        }
+
+        main {
+            background-color: white;
+        }
+
+        td>img {
+            padding-bottom: 7px;
+            padding-left: 5px;
+        }
+
+        i.check {
+            color: green;
+        }
+
+        i.wrong {
+            color: red;
+        }
+
+        #gaugeSection {
+            padding-left: 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #gaugeSection>strong {
+            margin-left: 15px;
+        }
+
+        .tableFormat {
+            padding-left: 5px !important;
+            padding-right: 15px !important;
+            padding-bottom: 2px !important;
+            padding-top: 2px !important;
+            vertical-align: middle !important;
+        }
+
+        .last-updated {
+            display: block;
+            width: 100%;
+            text-align: center;
+            color: rgb(121, 118, 111);
+            font-size: 12px;
+        }
+
+        div.customTable {
+            width: 100%;
+        }
+
+        div.customTable>div:nth-child(2n-1) {
+            padding-top: 5px;
+            width: 50%;
+            float: left;
+        }
+
+        div.customTable>div:nth-child(2n) {
+            padding-top: 5px;
+            width: 50%;
+            float: left;
+        }
+
+        div.customTable2 {
+            width: 100%;
+        }
+
+        div.customTable2>div:nth-child(2n-1) {
+            padding-top: 5px;
+            width: 30%;
+            float: left;
+        }
+
+        div.customTable2>div:nth-child(2n) {
+            padding-top: 5px;
+            width: 70%;
+            float: left;
+        }
+
+        div.customTable3 {
+            width: 100%;
+        }
+
+        input+label {
+            font-weight: normal;
+        }
+
+        @media (max-width: 992px) {
+            .fa-money {
+                font-size: 200px;
+            }
+            .fa-credit-card-alt {
+                font-size: 167px;
+            }
+            .fa-credit-card {
+                font-size: 198px;
+            }
+            #gaugeSection>strong {
+                margin-left: 25px;
+                font-size: 20px;
+            }
+            .last-updated {
+                font-size: 13px;
+            }
+        }
+
+        .errorMsg {
+            color: rgb(220, 0, 0);;
+        }
+    </style>
+
+    <body>
+        <main class="container">
+            <c:ISSP_CustomNavigation />
+              <div class="row" >
+                <div class="col-md-5">
+                    <div id='enrolment_certification' style="padding-top: 50px; padding-bottom: 10px; min-height: 322px">
+
+                        <section name="left-side" >
+                            <section name="remittance-holding" class="row">
+                                <header class="col-xs-12">
+                                    <div class="section-header">
+                                        <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$Label.ISSP_Payment_Provider_Home_title}</strong>
+                                    </div>
+                                </header>
+                            </section>
+
+                            <div style="padding-top: 10px;" class="col-col-xs-12 col-md-8 col-md-offset-2">
+                                <button id="requestButton" onclick="validateIfportalAdmin(); return false;" class="btn btn-block btn_iata_primary">{!$label.ISSP_Button_Request_Enlistment}</button>
+                            </div>
+
+                            <!-- ACAMBAS - TIP-241 Start -->
+                            <div style="padding-top: 10px;padding-bottom: 10px;" class="col-col-xs-12 col-md-8 col-md-offset-2">
+                                <button id="requestVoluntaryRelinquishmentBtn" onclick="toggleDialog();displayCalendar();return false;" class="btn btn-block btn_iata_primary" oncomplete="toggleDialog();" reRender="modalContentoutpanel">{!$Label.ISSP_TIP_VOLUNT_RELINQ_BUTTON}</button>
+                            </div>
+                            <!-- ACAMBAS - TIP-241 End -->
+
+                        </section>
+                    </div>
+                    <div id='tipRequests' style="padding-top: 50px; padding-bottom: 200px;">
+                        <section name="left-side" >
+                            <section name="remittance-holding" class="row">
+                                <header class="col-xs-12">
+                                    <div class="section-header">
+                                        <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$label.ISSP_Ongoing_TIP_Requests}</strong>
+                                    </div>
+                                </header>
+                            </section>
+
+                            <apex:pageBlock >
+                                <apex:form >
+                                    <apex:actionFunction action="{!startEnrolmentAccount}" name="navigateToEnrolmentPage"></apex:actionFunction>
+                                    <hr />
+                                    <apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
+                                        <apex:column >
+                                            <apex:facet name="header">
+                                                {!$ObjectType.Case.fields.CaseNumber.label}
+                                            </apex:facet>
+                                            <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}" target="_self">{!item.CaseNumber}</apex:outputLink>
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">
+                                                {!$ObjectType.Case.fields.Subject.label}
+                                            </apex:facet>
+                                            {!item.subject}
+                                        </apex:column>
+
+                                        <apex:column >
+                                            <apex:facet name="header">
+                                                {!$ObjectType.Case.fields.Status.label}
+                                            </apex:facet>
+                                            {!item.status}
+                                        </apex:column>
+
+                                        <apex:column >
+                                            <apex:facet name="header">
+                                                {!$Label.ISSP_Home_Table_Date_Time_Opened}
+                                            </apex:facet>
+                                            <apex:outputText value="{0,date,MM/dd/yyyy hh:mm aaa}">
+                                                <apex:param value="{!item.createddate}" /> 
+                                            </apex:outputText>
+                                        </apex:column>
+                                    </apex:pageBlockTable>
+                                </apex:form>
+                            </apex:pageBlock>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div id='tipProducts' style="padding-top: 50px; padding-bottom: 200px;">
+                        <section name="left-side" >
+                            <div style="min-height: 270px;">
+                                <section name="remittance-holding" class="row">
+                                    <header class="col-xs-12">
+                                        <div class="section-header">
+                                            <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$label.ISSP_TIP_Home_Manage_Products}</strong>
+                                        </div>
+                                    </header>
+                                </section>
+
+                                <div style="float: right;padding: 20px;" class="col-col-xs-6 col-md-4 col-md-offset-2">
+                                    <!--input type="button " id="newProductBtn" class="btn btn-block btn_iata_primary" onclick="openProdDetailPage(null);" value="Enroll New Product"/-->
+                                    <button id="newProductBtn" onclick="openProdDetailPage(null);return false;" class="btn btn-block btn_iata_primary">Enroll New Product</button>
+                                </div>
+
+                                <apex:pageBlock >
+                                    <apex:form >
+                                    <apex:actionFunction action="{!NewEditProduct}" name="openProdDetailPage">
+                                    </apex:actionFunction>
+                                       <apex:pageBlockTable value="{!products}" var="item" styleClass="table-hover table table-condensed table-responsive">
+                                            
+                                            <apex:column >
+                                                <apex:outputPanel rendered="{!item.status != 'Draft'}">
+                                                    <apex:commandLink style="margin-right:5px" title="View/Update" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
+                                                    <span class="glyphicon glyphicon-eye-open "/> 
+                                                    <apex:param name="prodId" value="{!item.id}"/>
+                                                    </apex:commandLink>
+                                                </apex:outputPanel>
+
+                                                <apex:outputPanel rendered="{!item.status == 'Draft'}">
+                                                    <apex:commandLink style="margin-right:5px" title="Edit" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
+                                                        <span class="glyphicon glyphicon-pencil"/> 
+                                                        <apex:param name="prodId" value="{!item.id}"/>
+                                                    </apex:commandLink>
+                                                </apex:outputPanel>
+                                            </apex:column> 
+
+                                            <apex:column >
+                                                <apex:facet name="header">
+                                                    {!$ObjectType.Partner_products__c.fields.name.label}
+                                                </apex:facet>
+                                                {!item.name} 
+                                            </apex:column>
+
+                                            <apex:column >
+                                                <apex:facet name="header">
+                                                    {!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.label}
+                                                </apex:facet>
+                                                {!item.PaymentNetwork} 
+                                            </apex:column>
+
+                                            <apex:column >
+                                                <apex:facet name="header">
+                                                    {!$ObjectType.Partner_products__c.fields.PP_Effective_from_Date__c.label}
+                                                </apex:facet>
+                                                {!item.EffectiveFromDate} 
+                                            </apex:column>
+
+                                            <apex:column >
+                                                <apex:facet name="header">
+                                                    {!$ObjectType.Partner_products__c.fields.PP_Effective_to_Date__c.label}
+                                                </apex:facet>
+                                                {!item.EffectiveToDate} 
+                                            </apex:column>
+
+                                            <apex:column >
+                                                <apex:facet name="header">
+                                                    {!$ObjectType.Partner_products__c.fields.PP_Status__c.label}
+                                                </apex:facet>
+                                                {!item.status} 
+                                            </apex:column>
+
+                                        </apex:pageBlockTable>
+                                    </apex:form>
+                                </apex:pageBlock>
+                            </div>
+                            <!--ACAMBAS - TIP-281 Start -->
+                            <apex:outputPanel rendered="{!isPaymentProvider}">
+                                <section name="remittance-holding" class="row">
+                                    <header class="col-xs-12">
+                                        <div class="section-header">
+                                            <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>{!$label.ISSP_TIP_PROVIDER_DETAILS}</strong>
+                                        </div>
+                                    </header>
+                                </section>
+                                <br/>
+                                <apex:pageBlock>
+                                    <div>
+                                        <label>{!$label.ISSP_TIP_PRIMARY_CONTACTS}</label>
+                                    </div>
+                                    <apex:outputPanel id ="primaryConSection">
+                                        <apex:repeat var="primaryContact" value="{!primaryContacts}">
+                                            {!primaryContact.First_Name__c} {!primaryContact.Last_Name__c} (<a style="color:blue" href="mailto:{!primaryContact.Email__c}">{!primaryContact.Email__c}</a>)<br/>
+                                        </apex:repeat>
+                                    </apex:outputPanel>
+                                    <br/>  
+                                    <apex:outputText escape="false" value="{!$label.ISSP_TIP_PRIMARY_CONTACTS_MSG}"/>
+                                </apex:pageBlock>
+                                <!--ACAMBAS - TIP-313 Start -->
+                                <apex:pageBlock>
+                                    <div style="margin-top: 20px;">
+                                        <label>{!$label.ISSP_TIP_UPDATE_PROV_ACC_DETAILS}</label>
+                                    </div>
+                                    <apex:outputText escape="false" value="{!$label.ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1}"/><br/><br/>
+                                    <apex:outputText escape="false" value="{!$label.ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2}"/>
+                                </apex:pageBlock>
+                                <!--ACAMBAS - TIP-313 End -->
+                            </apex:outputPanel>
+                            <!--ACAMBAS - TIP-281 End -->
+
+                        </section>               
+                    </div>
+                </div>
+            </div>
+                                    
+            <!-- ACAMBAS - TIP-241 Start -->
+                        <apex:form > 
+                                <apex:pageblock > 
+                                    <!-- ------------MODAL WIDOWN -------------------  -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                      <apex:outputPanel id="modalContentoutpanel">
+                                          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent3"> 
+                                            <div class="modal-content"> 
+                                              <div class="modal-header"> 
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">{!$Label.ISSP_TIP_VOLUNT_RELINQ_TITLE}</h4>
+                                              </div>
+
+                                              <div class="modal-body" style="display:{!if(true,'','none')}">
+                                                <apex:pageblock id="terminateProd"> 
+                                                    <script>
+                                                        function displayCalendar() {
+                                                            var date = new Date();
+                                                            var minDay = date.getDate()+{!voluntaryReliqMinDays};
+                                                            $('[id$=datepicker]').datepicker( 
+                                                                {
+                                                                    "minDate": new Date(date.getFullYear(), date.getMonth(), minDay)});
+
+                                                            $('[id$=datepicker]').datepicker("option", $.datepicker.regional['en']);
+                                                        }
+                                                        
+
+                                                        function startLoading() {
+                                                            $('.loadingBox').show();
+                                                        }
+                                                    </script>
+                                                    <style>
+                                                      .overlay {
+                                                        display: none;
+                                                        height: 100%;
+                                                        left: 0;
+                                                        position: fixed;
+                                                        top: 0;
+                                                        opacity: 0.3;
+                                                        -moz-opacity: 0.3;
+                                                        width: 100%;
+                                                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+                                                        filter: alpha(opacity=30);
+                                                        background: #000;
+                                                        -khtml-opacity: 0.3;
+                                                        z-index: 1000;
+                                                      }
+                                                      .loader {
+                                                        background: url('/img/loading32.gif') scroll no-repeat 0 0;
+                                                        width: 32px;
+                                                        height: 32px;
+                                                        position: absolute;
+                                                        left: 50%;
+                                                        top: 150px;
+                                                      }
+                                                    </style>
+                                                    <apex:PageMessages id="msgs"/>                           
+                                                    <apex:pageBlockSection columns="1" collapsible="false">
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%">
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_VOLUNT_RELINQ_MSG}"/>
+                                                      </apex:pageBlockSectionItem>
+                                                      <br/>
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_EFFECTIVE_DATE}*"/>
+                                                        <apex:inputText value="{!voluntaryReliqDate}" id="datepicker"/> 
+                                                      </apex:pageBlockSectionItem>
+                                                      <br/>  
+                                                      <apex:pageBlockSectionItem labelStyle="width:26%" >
+                                                        <apex:outputLabel value="{!$Label.ISSP_TIP_REASON_FOR_CLOSURE}*"/>
+                                                        <apex:inputTextarea id="voluntaryReliqReason" value="{!voluntaryReliqReason}"/>
+                                                      </apex:pageBlockSectionItem>
+                                                    </apex:pageBlockSection>
+                                                </apex:pageblock>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <button type="button" onclick="toggleDialog(); return false;" class="btn_iata_cancel btn-block btn">{!$Label.ISSP_Cancel}</button>
+                                                    </div>
+                                                    <div class="col-md-6">                                                
+                                                        <button type="button" id="submitVoluntaryRelinqBtn" onclick="checkVoluntaryRelinqMandatory(); return false;" class="btn_iata_submit btn-block btn">{!$Label.ISSP_Submit}</button>
+                                                    </div>
+                                                    <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+                                                    <div class="loadingBox overlay"> </div>
+                                                </div>
+                                                <apex:actionFunction name="submitVoluntaryRelinquishment" action="{!submitVoluntaryRelinquishmentReq}"  oncomplete="closeDialog();"/>
+                                              </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                          </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                </apex:pageblock>
+
+                            </apex:form>  
+                            <!-- ACAMBAS - TIP-241 End -->
+
+            
+            <div style="display: inline-block;">
+                <c:ISSP_CustomFooter communityName="{!communityName}" />
+            </div>
+        </main>
+    </body>
+
+    </html>
+</apex:page>

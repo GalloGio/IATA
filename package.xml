@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>AccountRoleHandler</members>
+        <members>DAL_ISSP</members>
+        <members>ISSP_ContactList</members>
+        <members>ISSP_TIP_Home_Controller</members>
+        <members>ISSP_TIP_Home_Controller_Test</members>
+        <members>PlatformEvents_Helper</members>
+        <members>PlatformEvents_Helper_Test</members>
+        <members>RecordTypeSingleton</members>
+        <members>TIP_BINRangeTriggerHandlerTest</members>
+        <members>TIP_BatchActivateRecordsByDate</members>
+        <members>TIP_BatchActivateRecordsByDate_test</members>
+        <members>TIP_Utils</members>
+        <name>ApexClass</name>
+    </types>   
+	<types>
+        <members>*</members>
+        <name>CustomLabel</name>
+    </types>    
+    <types>
+        <members>Account-IATA AMS Account</members>
+        <members>Account-New IATA Airline HQs</members>
+        <members>Account-Others</members>
+        <members>Account-new IATA Standard Account</members>
+        <members>Account_Contact_Role__c-Account Contact Role Layout</members>
+        <members>Account_Contact_Role__c-TIP Account Contact Role</members>
+        <members>Account_Role__c-Account Role Layout</members>
+        <members>Account_Role__c-TIP_Payment_Provider</members>
+        <members>Partner_products__c-Partner Product Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>Account</members>
+        <members>AccountContactRole__e</members>
+        <members>AccountRole__e</members>
+        <members>Account_Contact_Role__c</members>
+        <members>Account_Role__c</members>
+        <members>Case</members>
+        <members>Contact</members>
+        <members>Partner_products__c</members>
+        <members>Portal_Application_Right__c</members>
+        <members>TIP_BIN_Range__c</members>
+        <members>TIP_Configuration__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>ISSP_TIP_Enrolment</members>
+        <members>ISSP_TIP_Home</members>
+        <members>ISSP_TIP_Product_Enrollment</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>AccountRoleTrigger</members>
+        <members>AccountTrigger</members>
+        <members>Account_Contact_Role</members>
+        <members>Partner_Product</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>Account_Contact_Role__c</members>
+        <members>Account_Role__c</members>
+        <name>Workflow</name>
+    </types>
+    <types>
+        <members>TIP</members>
+        <name>CustomApplication</name>
+    </types>  
+    <version>40.0</version>
+</Package>
