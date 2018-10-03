@@ -76,8 +76,13 @@
           document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';       
       } else {
           requested = 1;
-          if (appPortalRole != 'SKIP') {
+          
+          if (appPortalRole != 'SKIP' && appPortalRole != 'AUTO') {
               closeDialog();
+
+          } else if(appPortalRole == 'AUTO') {
+            closeDialog();
+            $("[id$='myModalContent']").hide();
           }
           if(isEasyPayService && flagUseDefaultRole == "true") {
             showModal('#ModalNewIepServiceRequest');
