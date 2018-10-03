@@ -526,12 +526,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>IRW,LSP,LSW,MCF,NOT,NWD,ONL,PCA,PCI,PCR,RCR,RVW,RWD,SDR,TRW,VRR</value>
-        </filters>
-        <filters>
-            <field>Billable__c</field>
-            <operation>equals</operation>
-            <value>1</value>
+            <value>CLO</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>

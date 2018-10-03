@@ -128,6 +128,7 @@ public class ANG_RHCMassCalculation {
         agents.clear();
         selectedAgents.clear();
         calculatedAgents.clear();
+        selectAll = false;
     }
 
     public void calculate(){
