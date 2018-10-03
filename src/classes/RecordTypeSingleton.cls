@@ -169,7 +169,6 @@ public class RecordTypeSingleton {
 	public RecordType getRecordTypeById(String objectName, Id rtId){
 
 		if(!recordTypesByName.containsKey(objectName)) return null;
-		if(!recordTypesByName.get(objectName).containsKey(rtId)) return null;
 		
 		return recordTypesById.get(objectName).get(rtId);
 
