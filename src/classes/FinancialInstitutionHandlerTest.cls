@@ -18,7 +18,7 @@ public with sharing class FinancialInstitutionHandlerTest {
         insert institution;
         
         Integer numElements = 2500;
-        
+        ANG_FinancialSecurityTriggerHandler.BLOCK_TRIGGER_EXECUTION = true;
         list<Financial_Security__c> listSecurities = new list<Financial_Security__c>();
         for (Integer i=0; i<numElements;i++) {
             listSecurities.add(new Financial_Security__c(
@@ -31,12 +31,13 @@ public with sharing class FinancialInstitutionHandlerTest {
                 Expiry_Date__c = Date.today().addMonths(3),
                 Security_Type__c = 'Bank Guarantee'
             ));
-            if (listSecurities.size()==1000) {
+            if (listSecurities.size()==200) {
                 insert listSecurities;
                 listSecurities = new list<Financial_Security__c>();
             }
         }
         insert listSecurities;
+        ANG_FinancialSecurityTriggerHandler.BLOCK_TRIGGER_EXECUTION = false;
         
         Test.startTest();
         institution.First_Call_Letter_Required__c = 'Yes';

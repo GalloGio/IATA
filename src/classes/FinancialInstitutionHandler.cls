@@ -42,7 +42,9 @@ public with sharing class FinancialInstitutionHandler {
             }
         }
         if (!listUpdateSecurities.isEmpty()) {
+            ANG_FinancialSecurityTriggerHandler.BLOCK_TRIGGER_EXECUTION = true;
             update listUpdateSecurities;
+            ANG_FinancialSecurityTriggerHandler.BLOCK_TRIGGER_EXECUTION = false;
         }
     }
 }
