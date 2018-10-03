@@ -106,4 +106,42 @@ public class AMS_AccountRoleHelper {
 		if(!personsToUpdate.isEmpty()) update personsToUpdate;
 	}
 
+
+	/*** AMSU-171 ***/
+	public static void calculateCoveredOwnership(List<AMS_Account_Role__c> records, Map<Id,AMS_Account_Role__c> oldMap) {
+		Id ownerRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+		Set<Id> accountIds = new Set<Id>();
+		for(AMS_Account_Role__c record : records) {
+			Boolean checkAccount = oldMap == null || (record.Percentage__c != oldMap.get(record.Id).Percentage__c);
+			Boolean changeActive = oldMap == null || (record.Active__c != oldMap.get(record.Id).Active__c);
+			if((record.Active__c || changeActive) && record.RecordTypeId == ownerRecordTypeId && (checkAccount || changeActive)) {
+				accountIds.add(record.Account__c);
+			}
+		}
+
+		if(accountIds.isEmpty()) {
+			return;
+		}
+
+		List<Account> accounts = [SELECT Id, Covered_Ownership__c, (SELECT Percentage__c FROM AMS_Account_Roles1__r WHERE Active__c = true AND RecordTypeId = :ownerRecordTypeId)
+								  FROM Account
+								  WHERE Id IN :accountIds];
+
+		List<Account> accountsToUpdate = new List<Account>();
+		for(Account acc : accounts) {
+			Double totalCovered = 0;
+			for(AMS_Account_Role__c owner : acc.AMS_Account_Roles1__r) {
+				totalCovered += owner.Percentage__c != null ? owner.Percentage__c : 0;
+			}
+			if(totalCovered != acc.Covered_Ownership__c) {
+				acc.Covered_Ownership__c = totalCovered;
+				accountsToUpdate.add(acc);
+			}
+		}
+
+		if(!accountsToUpdate.isEmpty()) {
+			update accountsToUpdate;
+		}
+	}
+
 }

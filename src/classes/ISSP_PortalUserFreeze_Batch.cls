@@ -124,7 +124,7 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
    				message += 'ERROR: ' + thisResult + '\n';
    			}
    		}
-   		transformationHelper.sendSFDevsAlertMessage('BATCH RESULT ' ,  message,  new list<string>{'tiago.ferreira@kerensen.com'});
+   		transformationHelper.sendSFDevsAlertMessage('BATCH RESULT ' ,  message,  new list<string>{'nunesr@iata.org','beatrizr@iata.org'});
 
    		/*
    		Messaging.sendEmailResult[] sendEmailResults = new List<Messaging.Sendemailresult>();

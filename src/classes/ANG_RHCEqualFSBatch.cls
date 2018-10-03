@@ -9,7 +9,6 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<Account>, Databas
 	Boolean applyFlag = true;
 
 	private List<String> errors = new List<String>();
-	private Integer agenciesProcessed = 0;
 
 	private Set<String> bspsIds = new Set<String>();
 
@@ -45,9 +44,6 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<Account>, Databas
 			if(applyFlag != acc.IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c) applyFlag = acc.IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c;					
 		}
 
-		if(!rhcInfosToUpdate.isEmpty()){
-			agenciesProcessed += rhcInfosToUpdate.size();
-		}
 	}
 	
 	global void finish(Database.BatchableContext BC) {
@@ -73,13 +69,13 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<Account>, Databas
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         emailAddresses.add(UserInfo.getUserEmail());
         mail.setToAddresses(emailAddresses);    
-        mail.setSubject((applyFlag ? 'Apply' : 'Revert') + ' RHC Equal to FS Batch completed' + (errors.isEmpty() ? ' successfully: '+agenciesProcessed+' agents processed.'  :' with errors')+' - End time: '+ System.now());
+        mail.setSubject((applyFlag ? 'Apply' : 'Revert') + ' RHC Equal to FS Batch completed' + (errors.isEmpty() ? ' successfully: '+iataCodesAndNames.size()+' agents processed.'  :' with errors')+' - End time: '+ System.now());
         mail.setSenderDisplayName('Batch Processing Completed');
         mail.setPlainTextBody('Batch Process has been completed'+ (errors.isEmpty() ? ' successfully.'+'\n\nBSPs: '+String.join(new List<String>(bsps), ',') + '\n\nAgencies processed:\n\n'+String.join(iataCodesAndNames,'\n') : ' with errors: ' +
         (errors.isEmpty() ?'':'\n\n\tERRORS:\n\n' +errors+'\n')));
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
 
 		System.debug('[ANG_RHCEqualFSBatch] ERRORS: '+errors);
-		System.debug('[ANG_RHCEqualFSBatch] PROCESSED AGENTS: '+agenciesProcessed);		
+		System.debug('[ANG_RHCEqualFSBatch] PROCESSED AGENTS: '+iataCodesAndNames.size());		
 	}
 }

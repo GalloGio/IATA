@@ -1198,8 +1198,8 @@ public without sharing class ISSP_APProcess {
     }
 
     public PageReference securityCheck() {
-        if ((newCase.Id != null && newCase.Status != 'Draft')) {
-            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+        if (newCase.Id != null && newCase.Status != 'Draft' && newCase.Status != 'Return application to customer') {
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id); 
         }
 
         return null;
