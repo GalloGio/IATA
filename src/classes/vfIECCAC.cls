@@ -42,7 +42,8 @@ public without sharing class vfIECCAC extends IECPageController {
    * [3] = Data Value
    */
   public List<List<String>> lResultList {get; set;}
-    
+  
+
   //public GDP_Account__c oAgency {get; set;}
   public GDP_Products_Account_View__c oAgency {get; set;}
   public ID_Card__c oAgent {get; set;}
@@ -66,8 +67,6 @@ public without sharing class vfIECCAC extends IECPageController {
         ctrSubsInfo = new vfIECSubscriptionInfo(); 
         ctrSubsInfo.loggedCustomer = loggedCustomer;
         ctrSubsInfo.sApplicationName = IECConstants.ProductCategory_SF_CACPRO;
-        
-       
        
        lResultList = new List< List<String> >();
        
