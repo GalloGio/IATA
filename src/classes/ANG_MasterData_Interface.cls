@@ -228,7 +228,7 @@ global class ANG_MasterData_Interface{
                 this.lsDueDiligence = new List<DueDiligence>();
 
                 /* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
-                if(dueDiligenceIEPChangeCodes.contains(changeCode)){
+                if(dueDiligenceIEPChangeCodes.contains(changeCode) && acc.oscars__r != null && acc.oscars__r.size()>0){
                     if(changeCode == 'MaddY')
                         this.lsDueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ?  'Passed' : 'Failed'  )));
                     else
