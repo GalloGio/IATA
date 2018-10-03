@@ -4127,6 +4127,17 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Assign_NFE_ACR_to_system_manager</fullName>
+        <description>Assign to NFE system owner/manager</description>
+        <field>Product_Manager_ACR__c</field>
+        <lookupValue>hyokcholk@iata.org</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Assign NFE ACR to system manager</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Assign_to_Agency_Management_Europe_queue</fullName>
         <field>OwnerId</field>
         <lookupValue>CasesACCEuropeOffOnshore</lookupValue>
@@ -15982,6 +15993,21 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         </criteriaItems>
         <description>Rule to define if a case is an internal or external query.</description>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>NFE System to product owner</fullName>
+        <actions>
+            <name>Assign_NFE_ACR_to_system_manager</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>NFE</value>
+        </criteriaItems>
+        <description>Assign NFE ACRs to the product owner Kang</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>New External Case %28InvoiceWork%29</fullName>
