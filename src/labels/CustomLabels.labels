@@ -25567,6 +25567,14 @@ CNS Customer Services</value>
         <value>Trade Name of company</value>
     </labels>
     <labels>
+        <fullName>ISSP_Trained_Staff_Certification</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Trained Staff Certification</shortDescription>
+        <value>Trained Staff Certification</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Travel</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
