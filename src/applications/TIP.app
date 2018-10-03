@@ -3,6 +3,8 @@
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Transparency In Payments(TIP) App</description>
     <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>TIP</label>
     <tabs>standard-Account</tabs>
     <tabs>standard-Contact</tabs>
