@@ -1742,10 +1742,12 @@ global class ANG_OscarProcessHelper {
 	        
 	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
 
-	        //assign to queue
-	       	Database.DMLOptions dmo = new Database.DMLOptions();
-	        dmo.assignmentRuleHeader.useDefaultRule = true;
-	        cse.setOptions(dmo);
+            //assign to queue
+            if(!Test.isRunningTest()){           
+                Database.DMLOptions dmo = new Database.DMLOptions();
+                dmo.assignmentRuleHeader.useDefaultRule = true;
+                cse.setOptions(dmo);
+            }
 
 	        oscarObjs = new OscarObjectsWrapper();
 	        oscarObjs.cse = cse;
