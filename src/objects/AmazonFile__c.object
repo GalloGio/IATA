@@ -73,6 +73,37 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Action__c</fullName>
+        <description>Field to be used by a WF rule, when its value changes a trigger will perform an action</description>
+        <externalId>false</externalId>
+        <label>Action</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Create Case</fullName>
+                    <default>false</default>
+                    <label>Create Case</label>
+                </value>
+                <value>
+                    <fullName>Reminder 30 days</fullName>
+                    <default>false</default>
+                    <label>Reminder 30 days</label>
+                </value>
+                <value>
+                    <fullName>Reminder on Expiry</fullName>
+                    <default>false</default>
+                    <label>Reminder on Expiry</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Additional_Information__c</fullName>
         <description>Additional information if the E&amp;F Category is Ad-Hoc Report or Miscellaneous</description>
         <externalId>false</externalId>
@@ -1045,6 +1076,21 @@
         <active>true</active>
         <label>AMS File</label>
         <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Create Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reminder 30 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reminder on Expiry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Ad-Hoc Report</fullName>
@@ -1464,6 +1510,21 @@
         <active>true</active>
         <label>Certificate</label>
         <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Create Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reminder 30 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reminder on Expiry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Ad-Hoc Report</fullName>
@@ -1874,6 +1935,21 @@
         <fullName>EF_File</fullName>
         <active>true</active>
         <label>E&amp;F File</label>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Create Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reminder 30 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reminder on Expiry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
@@ -2293,6 +2369,21 @@
         <fullName>File</fullName>
         <active>true</active>
         <label>File</label>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Create Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reminder 30 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reminder on Expiry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>

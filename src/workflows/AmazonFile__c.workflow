@@ -85,16 +85,6 @@ A trigger will be executed to check if a reminder is needed</description>
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Create_Case_Field</fullName>
-        <description>Updates Create_Case__c to force a trigger execution to create a new case</description>
-        <field>Create_Case__c</field>
-        <literalValue>1</literalValue>
-        <name>Update Create Case Field</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
     <rules>
         <fullName>AmazonFile_RejectedClosed</fullName>
         <actions>
