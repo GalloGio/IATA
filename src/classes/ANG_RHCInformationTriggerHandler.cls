@@ -14,6 +14,7 @@ public class ANG_RHCInformationTriggerHandler{
 	// ************************************************************
 	
 	public void onBeforeInsert(){
+		runValidations();
 		convertAndSumFS();
 		sumRHCAmount();
 	}
@@ -322,4 +323,24 @@ public class ANG_RHCInformationTriggerHandler{
 
 	}
 	*/
+
+	private void runValidations() {
+
+		Set<Id> accsIds = new Set<Id>();
+		List<SObject> rhcInfosToValidate = new List<SObject>();
+
+		for(ANG_RHC_Information__c rhcinfo :triggerNew)
+			accsIds.add(rhcinfo.ANG_AccountId__c);
+		
+		Map<Id,Account> accsMap = new MAp<Id,Account>([SELECT Id FROM Account WHERE Id IN :accsIds AND ANG_Accreditation_Model__c = 'Multicountry']);
+
+		if(accsMap.isEmpty())
+			return;
+
+		for (SObject obj:Trigger.new)
+			if(accsMap.containsKey(String.valueOf(obj.get('ANG_AccountId__c'))))
+				rhcInfosToValidate.add(obj);
+		
+		AMS_Utils.runCurrencyValidations(rhcInfosToValidate);
+	}
 }

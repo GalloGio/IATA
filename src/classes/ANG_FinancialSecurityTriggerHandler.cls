@@ -40,6 +40,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 	}
 	
 	public void onBeforeInsert(){
+		runValidations();
 		convertFSAmount();
 	}
 	public void onAfterInsert(){
@@ -114,6 +115,26 @@ public class ANG_FinancialSecurityTriggerHandler{
 
 	private void doDml(){
 		if(!map2Insert.values().isEmpty())upsert map2Insert.values() ANG_UniqueKey__c;
+	}
+
+	private void runValidations() {
+
+		Set<Id> accsIds = new Set<Id>();
+		List<SObject> fsToValidate = new List<SObject>();
+
+		for(Financial_Security__c fs :triggerNew)
+			accsIds.add(fs.Account__c);
+		
+		Map<Id,Account> accsMap = new Map<Id,Account>([SELECT Id FROM Account WHERE Id IN :accsIds AND ANG_Accreditation_Model__c = 'Multicountry']);
+
+		if(accsMap.isEmpty())
+			return;
+
+		for (SObject obj:Trigger.new)
+			if(accsMap.containsKey(String.valueOf(obj.get('Account__c'))))
+				fsToValidate.add(obj);
+		
+		AMS_Utils.runCurrencyValidations(fsToValidate);
 	}
 
 }
