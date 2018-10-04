@@ -367,7 +367,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		isoCountryMap = new Map<String, IATA_ISO_Country__c>();
 
         List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, 
-        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c
+        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c, Tax_Number_VAT_field_mandatory__c 
                                         From IATA_ISO_Country__c
                                         Where ISO_Code__c In :isocodes];
 
@@ -1232,10 +1232,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
+				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
-				} else if (currentAccount.fw.newForm.INVALID_Tax_Number__c && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
+				} else if (currentAccount.fw.newForm.INVALID_Tax_Number__c && currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);
 					errorFound = true;
 				}
