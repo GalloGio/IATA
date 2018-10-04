@@ -2,10 +2,10 @@ trigger RemoteInvocationTrigger on Remote_Invocation__c (before insert, before u
 
 	if (Trigger.isBefore) {
         if (Trigger.isInsert) {
-            RemoteInvocationTriggerHandler.handleBeforeInsert();
+            new RemoteInvocationTriggerHandler().handleBeforeInsert();
         }
          if (Trigger.isUpdate) {
-            RemoteInvocationTriggerHandler.handleBeforeUpdate();
+            new RemoteInvocationTriggerHandler().handleBeforeUpdate();
         }
     }
 }
