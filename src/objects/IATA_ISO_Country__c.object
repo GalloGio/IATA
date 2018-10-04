@@ -2681,6 +2681,17 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Tax_Number_VAT_field_mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</description>
+        <externalId>false</externalId>
+        <inlineHelpText>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</inlineHelpText>
+        <label>Tax Number / VAT field mandatory</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Tax_Number_label__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>This is the label that will appear on all web forms that require customer input of their local tax number. The label will default to VAT if left empty for a country.</inlineHelpText>

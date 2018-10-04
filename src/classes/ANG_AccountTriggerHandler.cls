@@ -30,7 +30,7 @@ public class ANG_AccountTriggerHandler {
 		updateRiskStatus();
 	}
 	public void onAfterInsert() {
-		createIEPModelAOscars();
+
 	}
 
 	public void onBeforeUpdate(){
