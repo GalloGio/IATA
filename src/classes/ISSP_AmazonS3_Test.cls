@@ -2,7 +2,7 @@
 private class ISSP_AmazonS3_Test {
 
     static testMethod void unitTest_1() {
-    	
+        
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
@@ -10,6 +10,27 @@ private class ISSP_AmazonS3_Test {
         insert country;
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
+
+        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (Name = 'Portugal_test',
+                                                                ISO_Code__c = 'PT',
+                                                                ANG_Enable_NewGen__c = true,
+                                                                Region__c = 'Europe');
+        insert portugal;
+
+        AMS_Accreditation_Country_CheckList__c cc1 = new AMS_Accreditation_Country_CheckList__c(IATA_ISO_Country__c = portugal.Id,
+                                                                                            Operation__c = 'Travel Agent');
+        insert cc1;
+
+        AMS_Accreditation_Requirement__c ac1 = new AMS_Accreditation_Requirement__c(AMS_Accreditation_Country_CheckList__c = cc1.Id,
+                                                                                    Name = 'Name1',
+                                                                                    Requirement_text__c = 'Text1',
+                                                                                    Language__c = 'English',
+                                                                                    Type_Of_Agent__c = 'IATA Travel Agent',
+                                                                                    RecordTypeId = AMS_Utils.RECTYPE_IEP_MODEL_A,
+                                                                                    File_to_Upload__c = 'Optional',
+                                                                                    File_Identifier2__c = 'REG_CERT');
+
+        insert ac1;
 
         Id rtIdBr = [ SELECT Id FROM RecordType 
         WHERE SobjectType = 'Account'
@@ -20,7 +41,7 @@ private class ISSP_AmazonS3_Test {
         parent.Name = 'test';
         parent.sector__c = 'airline';
         parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr ;
+        parent.RecordTypeId = rtIdBr;
         parent.IATACode__c = '100';
         insert parent;
 
@@ -31,8 +52,28 @@ private class ISSP_AmazonS3_Test {
         child.sector__c = 'airline';
         child.Top_Parent__c = null;
         child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr ;
+        child.RecordTypeId = rtIdBr;
         insert child;
+
+        Account a1 = new Account (Name = 'Travel Portugal',
+                                RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+                                IATA_ISO_Country__c = portugal.Id,
+                                Region__c = portugal.Region__c,
+                                Sector__c = Ams_Utils.SECTOR_PASSENGER,
+                                Status__c = Ams_Utils.ACC_S9_APPROVED,
+                                Location_type__c = AMS_Utils.HE,
+                                Location_Class__c = 'P',
+                                ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+                                OwnerId = UserInfo.getUserId(),
+                                IATACode__c = '12345678');
+        insert a1;
+
+        Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)');
+        insert portalApp;
+
+        Contact con1 = ISSP_ObjectFactory.createNewContact();
+        con1.AccountId = a1.Id;
+        insert con1;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= child.Id;
@@ -42,6 +83,12 @@ private class ISSP_AmazonS3_Test {
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
         update con;
+
+        Portal_Application_Right__c par1 = new Portal_Application_Right__c(Contact__c = con1.Id,
+                                                                        Portal_Application__c = portalApp.Id,
+                                                                        Right__c = 'Access Granted',
+                                                                        ANG_Portal_Service_Role__c = 'IEP Admin');
+        insert par1;
 
         Test.startTest();
 
@@ -103,7 +150,7 @@ private class ISSP_AmazonS3_Test {
             //ctrl.sendFileInfo();
             
             if (ctrl.canUploadAndDelete){
-            	Boolean thisTest = true;
+                Boolean thisTest = true;
             }
             
             //ISSP_AmazonS3_Ctrl.createUploadFile(c.Id, 'test', 'pdf', 'test', '500');
@@ -173,7 +220,18 @@ private class ISSP_AmazonS3_Test {
 
             ISSP_AmazonS3_Ctrl ctrl4 = new ISSP_AmazonS3_Ctrl(attCtrl);
 
+            
+
         }
+        Map<Id, Account> accountMap = new Map<Id, Account>();
+        accountMap.put(a1.Id, a1);
+        ANG_OscarProcessHelper.createIEPAccountOscar(accountMap, 'A');
+        Case modelACase = [SELECT Id FROM Case WHERE Account_Concerned__c = :a1.Id LIMIT 1];
+        //Test.setCurrentPageReference(new PageReference('Page.ISSP_ModelA_Onboarding'));
+        System.currentPageReference().getParameters().put('caseId', modelACase.Id);
+
+        ISSP_ModelA_Onboarding modelACtrl = new ISSP_ModelA_Onboarding();
+        ISSP_AmazonS3_Ctrl ctrl5 = new ISSP_AmazonS3_Ctrl(modelACtrl);
 
         Test.stopTest();
 
