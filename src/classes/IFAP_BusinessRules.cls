@@ -352,7 +352,7 @@ public with sharing class IFAP_BusinessRules {
     }
 
     /*// ** replaces validation rule: IFAP_FS_validation_check_box*/
-    public static Boolean FSValidationCheckBox(Case UpdatedCase, Case OldCase, Profile currentUserProfile) {
+    public static Boolean FSValidationCheckBox(Case UpdatedCase, Profile currentUserProfile) {
 
         /*//base case*/
         if (UpdatedCase.Agent_Name_chkbx__c == false && UpdatedCase.Financial_Security_Amount_chkbx__c == false && UpdatedCase.Financial_Security_Currency_chkbx__c == false && UpdatedCase.Financial_Security_Type_chkbx__c == false && UpdatedCase.Financial_Security_Template_chkbx__c == false && UpdatedCase.Financial_Security_Provider_chkbx__c == false && UpdatedCase.Expiry_Date_chkbx__c == false)

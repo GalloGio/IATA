@@ -612,8 +612,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             if (!casesToTrigger.isEmpty()) {
                 set<String> ServicesToCheck = new set<String>();
                 map<String, Case_Reason_Service__c> ServicesPerReason  = new map<String, Case_Reason_Service__c>();
-                list<Case> cases = new list<Case>();
-                list<Case> casesValidation = new list<Case>();
+
                 // this custom setting contains the infos regargind the need to reparent the provider to the hq to which the consumer belongs to.
                 for (Case_Reason_Service__c ReasonServiceMapping : Case_Reason_Service__c.getall().values()) {
                     ServicesPerReason.put(ReasonServiceMapping.name, ReasonServiceMapping);
@@ -654,15 +653,20 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         // Preliminary step for completing the Account Concerned when the account is an airline and the IATA Country is specified
                         // get the potentially concerned cases, by choosing those with an IATA Country not null
                         if (aCase.BSPCountry__c != null && 
-                            ((Trigger.isInsert && aCase.Account_Concerned__c == null) || 
-                            (Trigger.isUpdate && aCase.BSPCountry__c != Trigger.oldMap.get(aCase.Id).BSPCountry__c)) ) {
+                            (
+                                (Trigger.isInsert && aCase.Account_Concerned__c == null) || 
+                                (Trigger.isUpdate && aCase.BSPCountry__c != Trigger.oldMap.get(aCase.Id).BSPCountry__c)
+                            ) 
+                        ) {
 
                             System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] Inside if 1');
                             lstCasesWithBSPCountry.add(aCase);
                             lstAccountIds.add(aCase.AccountId);
                         }
                         // Complete the Account Concerned automatically when a Web IATA Code is specified
-                        if ((Trigger.isInsert && aCase.IATAcode__c != null && aCase.Account_Concerned__c == null) || (Trigger.isUpdate && aCase.IATAcode__c != null && aCase.IATAcode__c != Trigger.oldMap.get(aCase.Id).IATAcode__c)) {
+                        if ( (Trigger.isInsert && aCase.IATAcode__c != null && aCase.Account_Concerned__c == null) || 
+                            (Trigger.isUpdate && aCase.IATAcode__c != null && aCase.IATAcode__c != Trigger.oldMap.get(aCase.Id).IATAcode__c)
+                        ) {
                             System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] Inside if 2');
                             // this will make sure the IATA code entered by the user would be searched in DB for lengths 7,8,10 and 11
                             String WebIATAcode = aCase.IATAcode__c;
@@ -797,7 +801,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*updateAccountFieldBasedOnIATAwebCode Trigger*/
 
-//Check with Gavinho 
+//Check with Gavinho
+
         /*trgAccelyaRequestSetCountry Trigger*/
         //GM - IMPRO - START
         //this trigger doesn't work... 
@@ -851,46 +856,43 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if (trgCustomerPortalCaseSharing) {
             System.debug('____ [cls CaseBeforeTrigger - trgCustomerPortalCaseSharing]');
             try {
-                String CPCcaseRecType;
                 BusinessHours bHourObj = new BusinessHours();
                 Set<Id> UserIds = new Set<Id>();
                 list<User> lstUsers = new List<User>();
                 list<QueueSobject> lstQueue = new List<QueueSobject>();
-                //the control on record type has been thought for a single insert only
-                for (Case ObjCaseNew : Trigger.New) {
-                    CPCcaseRecType = ObjCaseNew.RecordTypeId;
-                    UserIds.add(ObjCaseNew.OwnerId);
-                }
+                List<Case> portalCases = new List<Case>();
 
-                if (CPCcaseRecType == PortalRecordTypeID) {
+                for (Case ObjCaseNew : Trigger.New) {
+                    if(ObjCaseNew.RecordTypeId == PortalRecordTypeID){
+                        UserIds.add(ObjCaseNew.OwnerId);
+                        ObjCaseNew.BusinessHoursId = bHourObj.Id;
+                        portalCases.add(ObjCaseNew);
+                    }
+                }
+                // Just for PortalRecordTypeID
+                if (!UserIds.isEmpty()) {
                     lstUsers = [Select Id, Name FROM User WHERE Id IN : UserIds and IsActive = : True];
                     bHourObj = [Select id, name FROM BusinessHours where name = : 'EUR - France'];
-                    for (Case ObjCaseNew : Trigger.New) {
-                        ObjCaseNew.BusinessHoursId = bHourObj.Id;
+
+                    if(lstUsers.isEmpty()){
+                        lstQueue = [SELECT Id, Queue.Id, Queue.Name, Queue.Type FROM QueueSobject WHERE Queue.Id IN : UserIds];
                     }
-                    if (lstUsers.Size() > 0) {
-                        for (Case ObjCaseNew : Trigger.New) {
-                            for (Integer i = 0; i < lstUsers.Size(); i++) {
-                                if (ObjCaseNew.OwnerId == lstUsers[i].Id) {
-                                    ObjCaseNew.Case_Owner_CP__c = lstUsers[i].Name;
-                                    break;
-                                }
+
+                    for(Case ObjCaseNew : portalCases){
+                        for(User usr : lstUsers){
+                            if (ObjCaseNew.OwnerId == usr.Id) {
+                                ObjCaseNew.Case_Owner_CP__c = usr.Name;
+                                break;
                             }
                         }
-                    } else {
-                        lstQueue = [SELECT Id, Queue.Id, Queue.Name, Queue.Type FROM QueueSobject WHERE Queue.Id IN : UserIds];
-                        if (lstQueue.Size() > 0) {
-                            for (Case ObjCaseNew : Trigger.New) {
-                                for (Integer i = 0; i < lstQueue.Size(); i++) {
-                                    if (ObjCaseNew.OwnerId == lstQueue[i].QueueId) {
-                                        ObjCaseNew.Case_Owner_CP__c = lstQueue[i].Queue.Name;
-                                        break;
-                                    }
-                                }
+                        for(QueueSobject queu : lstQueue){
+                            if (ObjCaseNew.OwnerId == queu.QueueId) {
+                                ObjCaseNew.Case_Owner_CP__c = queu.Queue.Name;
+                                break;
                             }
-                        } //lstQueue.Size
-                    } //else
-                } //if CPCcaseRecType
+                        }
+                    }
+                } //if !UserIds.isEmpty()
             }//GM - IMPRO - END
             catch (Exception e) {
                 System.debug('____ [cls CaseBeforeTrigger - trgCustomerPortalCaseSharing - Error Message: ' + e.getMessage() + ']');
@@ -1175,7 +1177,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                     // Phase 4
                     // check if the agent already has closed case for the same financial year and if the checkbox has been checked
- //Gavinho
                     List<Case> caseClosedList = mapAccountCases.get(newCase.AccountId);
                     if (caseClosedList != null && newCase.IFAP_CanCreateWhileClosedCase__c == false && IFAP_BusinessRules.checkIFAPFinancialYear(caseClosedList, newCase.IFAP_Financial_Year__c))
                         newCase.addError('The selected agent already has a closed IFAP case for the financial year ' + newCase.IFAP_Financial_Year__c + '. Please confirm that you really wish to create another IFAP case for this account by checking the confirmation check box at the bottom of this page.');
@@ -1192,9 +1193,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
                 Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(true, IFAPCaseList, null, currentUserProfile, isIfapAuthorizedUser);
                 for(Case newCase : caseList){
-                    if(mapCase.containsKey(newCase.id))
-                        if(mapCase.get(newCase.id) == false)
+                    if(mapCase.containsKey(newCase.id)){
+                        if(mapCase.get(newCase.id) == false){
                             newCase.addError('This following case status cannot be selected: ' + newCase.status);
+                        }
+                    }
                 }
     
             }
@@ -1242,13 +1245,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if ((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == SEDAcaseRecordTypeID) && c.Currency__c != null) {
                     setCurrencies.add(c.Currency__c);
                 }
-                if (c.RecordTypeId == SEDAcaseRecordTypeID) {
-                    if (c.Demand_by_Email_Fax__c!=null) {
-                        c.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
-                    }
+                if (c.RecordTypeId == SEDAcaseRecordTypeID && c.Demand_by_Email_Fax__c!=null) {
+                    c.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
                 }
             }
-            map<String, CurrencyType> mapCurrencyTypePerCurrencyCode = new map<String, CurrencyType>();
+            Map<String, CurrencyType> mapCurrencyTypePerCurrencyCode = new Map<String, CurrencyType>();
             if (! setCurrencies.isEmpty()) {
                 for (CurrencyType ct : [SELECT Id, IsoCode, ConversionRate FROM CurrencyType WHERE IsoCode IN :setCurrencies]) {
                     mapCurrencyTypePerCurrencyCode.put(ct.IsoCode, ct);
@@ -1366,7 +1367,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             System.debug('____ [cls CaseBeforeTrigger - CaseBeforInsert Trigger.isInsert]');
 
             ISSP_Case.preventTrigger = true;
-            set<string> CountryNameSet = new set<string>();
+            Set<string> CountryNameSet = new Set<string>();
 
             Map<ID, Contact> accountFromRelatedContact = new Map<ID, Contact>();
             Map<ID, Case> parentAccounts = new Map<ID, Case>();
@@ -1395,16 +1396,19 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                 }
             }
-            if(!setContactID.isEmpty())
+            
+            if(!setContactID.isEmpty()){ // Get Contacts by setContactID
                 accountFromRelatedContact = new Map<ID, Contact>([SELECT Id, AccountId FROM Contact WHERE Id IN :setContactID]);
-            if(!setParentID.isEmpty())
+            }
+            if(!setParentID.isEmpty()){ // Get Cases by setParentID
                 parentAccounts = new Map<ID, Case>([SELECT Id, AccountId from Case where Id IN :setParentID]);
-
-            if(!mapCaseIDWithAccount.values().isEmpty())
-                mapAccount = new Map<Id, Account>([SELECT Id, Sector__c, Category__c, IATA_ISO_Country__c FROM Account WHERE Id IN :mapCaseIDWithAccount.values()]);
+            }
+            if(!mapCaseIDWithAccount.values().isEmpty()){ // Get Accounts where Cases is IATA_Financial_Security_Monitoring 
+                mapAccount = new Map<Id, Account>([SELECT Id, Sector__c, Category__c, IATA_ISO_Country__c 
+                                                    FROM Account WHERE Id IN :mapCaseIDWithAccount.values()]);
+            }
 
             if(!mapAccount.isEmpty()){
-                cs = new Financial_Monitoring_Template__c();
                 List<String> listCategories = new List<String>();
 
                 String queryEmailTemplate = 'SELECT id, Name, Agent_Type__c, IATA_ISO_Country__c'
@@ -1412,8 +1416,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                           +' WHERE ';
 
                 String whereClauses;
-                
-                for(Account acc : mapAccount.values()){
+                // Iterate only accounts with IATA_Financial_Security_Monitoring Cases
+                for(Account acc : mapAccount.values()){ 
                     cs = Financial_Monitoring_Template__c.getInstance(acc.Sector__c);
                     if (cs != null) { //it means that the sector is in the Custom Setting
                         listCategories = cs.Category__c.split(',');
@@ -1444,22 +1448,23 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
 
             for (Case newCase : trigger.new) {
-
-                if (IATAISOCountryMap.get(newCase.Country_concerned_by_the_query__c) != null) {
-                    IATA_ISO_Country__c iso = IATAISOCountryMap.get(newCase.Country_concerned_by_the_query__c);
+                IATA_ISO_Country__c iso = IATAISOCountryMap.get(newCase.Country_concerned_by_the_query__c);
+                if (iso!= null) {
                     newCase.IFAP_Country_ISO__c = iso.ISO_Code__c;
                     newCase.BSPCountry__c = iso.Case_BSP_Country__c;
                     newCase.Region__c = iso.Region__c;
                 } else {
                     newCase.Country_concerned_by_the_query__c = newCase.BSPCountry__c;
                 }
+
                 if(!templateToUse.isEmpty()){
                     Id accountID = mapCaseIDWithAccount.get(newCase.id);
                     Account acc = mapAccount.get(accountID);
                     cs = mapAccIDwithFinancial.get(acc.ID);
                     for(EmailTemplate__c emailTemplate : templateToUse){
-                        if(acc.IATA_ISO_Country__c == emailTemplate.IATA_ISO_Country__c && cs.Email_Template_Agency_Type__c == emailTemplate.Agent_Type__c)
+                        if(acc.IATA_ISO_Country__c == emailTemplate.IATA_ISO_Country__c && cs.Email_Template_Agency_Type__c == emailTemplate.Agent_Type__c){
                             newCase.Reminder_EmailTemplate__c = emailTemplate.Id;
+                        }
                     }
                 }
                 if(!accountFromRelatedContact.isEmpty() || !parentAccounts.isEmpty()){
@@ -1578,7 +1583,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             if (IFAPupdatedCase.status <> IFAPoldCase.status) {
                                 updatedCases.add(IFAPupdatedCase);
                                 oldCases.put(IFAPoldCase.ID, IFAPoldCase);
-                                if (IFAP_BusinessRules.FSValidationCheckBox(IFAPupdatedCase, IFAPoldCase , currentUserProfile)) {
+                                if (IFAP_BusinessRules.FSValidationCheckBox(IFAPupdatedCase, currentUserProfile)) {
                                     System.debug('IFAP_BusinessRules.FSValidationCheckBox..........');
                                     IFAPupdatedCase.addError('The case cannot be saved. Tick ALL the Financial Security Validation checkboxes and enter FS Submitted Date to save the case.' );
                                 }

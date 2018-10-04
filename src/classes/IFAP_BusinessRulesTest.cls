@@ -546,11 +546,11 @@ public class IFAP_BusinessRulesTest {
 
 
 
-        IFAP_BusinessRules.FSValidationCheckBox(c1, c2, p);
+        IFAP_BusinessRules.FSValidationCheckBox(c1, p);
         p.Name = 'ifap customer portal user';
-        IFAP_BusinessRules.FSValidationCheckBox(c1, c2, p);
+        IFAP_BusinessRules.FSValidationCheckBox(c1, p);
         p.Name = 'TEST';
-        IFAP_BusinessRules.FSValidationCheckBox(c1, c2, p);
+        IFAP_BusinessRules.FSValidationCheckBox(c1, p);
         c2.Status = 'Financial Security Requested';
         c2.Agent_Name_chkbx__c = true;
         c2.Financial_Security_Amount_chkbx__c = true;
@@ -559,7 +559,7 @@ public class IFAP_BusinessRulesTest {
         c2.Financial_Security_Template_chkbx__c = true;
         c2.Financial_Security_Type_chkbx__c = true;
         c2.Expiry_Date_chkbx__c = true;
-        IFAP_BusinessRules.FSValidationCheckBox(c1, c2, p);
+        IFAP_BusinessRules.FSValidationCheckBox(c1, p);
 
     }
 
