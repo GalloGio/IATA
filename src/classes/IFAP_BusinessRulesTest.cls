@@ -67,7 +67,7 @@ public class IFAP_BusinessRulesTest {
         /////////////////////////
         // Positive test case #1
 
-        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1, contactMap), false);
+        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1), false);
 
 
         /////////////////////////
@@ -75,7 +75,7 @@ public class IFAP_BusinessRulesTest {
 
         account1.Type = 'IATA Cargo Agent';
         update account1;
-        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1, contactMap), false);
+        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1), false);
 
 
         /////////////////////////
@@ -83,7 +83,7 @@ public class IFAP_BusinessRulesTest {
 
         account1.Type = 'Jedi Agent';   // inexisting account type
         update account1;
-        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1, contactMap), false);
+        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1), false);
 
 
         /////////////////////////
@@ -91,7 +91,7 @@ public class IFAP_BusinessRulesTest {
 
         account1.Type = 'Other1';
         update account1;
-        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1, contactMap), false);
+        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1), false);
 
 
     }

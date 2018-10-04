@@ -51,7 +51,7 @@ public with sharing class IFAP_BusinessRules {
     /**
      * Validates the Agent Type of a Case's Contact
      */
-    public static boolean isAgentTypeValid(Case theCase, map<id, Contact> contactMap) {
+    public static boolean isAgentTypeValid(Case theCase) {
 
         boolean isValid = false;
 
@@ -375,11 +375,15 @@ public with sharing class IFAP_BusinessRules {
         return true;
     }
 
+    /*
+     * Check IFAP financial year for Case list
+     */
     public static Boolean checkIFAPFinancialYear(List<Case> caseList, String financialYear){
-
-        for(Case c : caseList){
-            if(c.IFAP_Financial_Year__c == financialYear)
-                return true; 
+        if(caseList != null){
+            for(Case c : caseList){
+                if(c.IFAP_Financial_Year__c == financialYear)
+                    return true; 
+            }
         }
         return false;
     }

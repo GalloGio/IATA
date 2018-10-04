@@ -101,16 +101,44 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /*Record type*/
 
     /*Variables*/
-    Date OneYearAgo = Date.today().addYears(-1);
-    Datetime Last24Hours = Datetime.now().addDays(-1);
     final static string SMALLAMOUNT = 'Small Amount (<50USD)';
     final static string MINORPOLICY = 'Minor error policy';
     public static final String PAX = 'Travel Agent';
     public static final String CARGO = 'Cargo Agent';
     public static final String FDS = 'FDS - Create Authorized Signatories Package';
 
-    Profile currentUserProfile;
-    Boolean isIfapAuthorizedUser = false;
+    private static Profile currentUserProfile{
+        get{
+            if(currentUserProfile == null){
+                return [SELECT ID, Name FROM Profile WHERE id = :UserInfo.getProfileId() limit 1];
+            }
+            return currentUserProfile;
+        }
+        set{}
+    }
+
+    private static List<EmailTemplate__c> IFAPemailtemplate{
+        get{
+            if(IFAPemailtemplate == null){
+                IFAPemailtemplate = [SELECT et.IATA_ISO_Country__r.Id FROM EmailTemplate__c et WHERE et.recordType.Name = 'IFAP'];
+            }
+            return IFAPemailtemplate;
+        }
+        set{}
+    }
+
+    private static Boolean isIfapAuthorizedUser{
+        get{
+            if(isIfapAuthorizedUser == null){
+                List<PermissionSetAssignment> psa = [SELECT AssigneeId FROM PermissionSetAssignment WHERE Assignee.IsActive = true 
+                                                      AND AssigneeId = :UserInfo.getUserId() AND PermissionSetId IN (SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users')];
+                isIfapAuthorizedUser = !psa.isEmpty();
+            }
+            return isIfapAuthorizedUser;
+        }
+        set{}
+    }
+
     Boolean isAccelya = false;
     boolean hasOneSISCase = false;
     /*Variables*/
@@ -118,35 +146,30 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /*Maps, Sets, Lists*/
     Set<id> setFSMCaseId = new Set<id>();
    
-    //update for New Interaction: if new case a parent case with type = Id Cards: update new interaction fields
-    map<String, Case> casePerParentId = new map<String, Case>();
-    map<id, Contact> contactMap = new map<id, Contact>();
-    map<id, Account> accountMap = new map<id, Account>();
-
     /*CONTROLLARE IL POPOLAMENTO DELLE SEGUENTI MAPPE QUANDO VIENE CHIAMATA CheckBusinessHoursHelperClass*/
     Map <string, Contact> CBHContactMap = new Map <string, Contact> ();
     Map <string, Account> CBHAccountMap = new Map <string, Account> ();
     Map <ID, Case> mapFSMCases;
 
+    //trgCaseIFAP
+    List<Case> IFAPCaseList;
+    Map<Id, Case> parentsIFAPCases;
+    Map<id, Account> accountMap = new map<id, Account>();
     Map<ID, List<Case>> mapSAAMParentIDCase = new Map<ID, List<Case>>();
     Map<ID, List<Case>> mapIFAPParentIDCase = new Map<ID, List<Case>>();
-    
-    List<EmailTemplate__c> IFAPemailtemplate = new List<EmailTemplate__c>();
 
     //trgProcessISSCase
-    List<Case> parentISSCase = new List<Case>();
+    Map<ID, Case> parentISSPCases = new Map<ID, Case>();
+    List<Case> processISS_SAAMCase = new List<Case>();
+
+    //Case_FSM_Handle_NonCompliance_BI_BU
+    List<Case> SAAMCaseList;
 
     //get a Set of the Ids of all the Accounts with IFAP Cases linked to the Trigger cases
     Set<Id> IFAPaccountIds = new Set<Id>();
-    //get a Set of Ids Parent of all IFAP New Cases 
-    Set<ID> IFAPParentID = new Set<ID>();
-
-    // Map used for trgCaseIFAP
-    Map<Id, Case> parentsIFAPCases;
-
+    
     /*Maps, Sets, Lists*/
     
-
 /***********************************************************************************************************************************************************/
     /*Share trigger code*/
     if (Trigger.isInsert || Trigger.isUpdate) {
@@ -154,68 +177,47 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ 
             System.debug('____ [cls CaseBeforeTrigger - trgCaseIFAP]');
+            //get a Set of Ids Parent of all IFAP New Cases 
+            Set<ID> IFAPParentID = new Set<ID>();
 
             if (!CaseChildHelper.noValidationsOnTrgCAseIFAP){
-                Set<Id> contactIds = new Set<Id>();
                 
-                Map<Id, Contact> contacts;
-                Map<Id, Account> accounts;
-
+                IFAPCaseList = new List<Case>();
                 for (Case aCase : trigger.New) {
                     if (aCase.RecordTypeId == IFAPcaseRecordTypeID) {
-                        system.debug('Contact Id: ' + aCase.contactId  + ' Account ID: ' + aCase.accountId);
-                        contactIds.add(aCase.contactId);
                         IFAPaccountIds.add(aCase.accountId);
-                    }
-                    // Fill a list of ParentIDs of cases
-                    IFAPParentID.add(aCase.ParentId);
-                }
-
-                parentsIFAPCases = new Map<Id, Case>([SELECT Id, Status, Subject, RecordTypeId, ParentId, Financial_Assessment_requested__c,
-                                                        Financial_Assessment_received__c, Financial_Assessment_deadline__c, Financial_Assessment_compliant__c
-                                                    FROM Case WHERE Id IN :IFAPParentID]);
-
-                //isSAAMCase - Fill a map with all Case Parent ID and list of case related to its Parent Case
-                for (Case currentCase : parentsIFAPCases.values()) {
-                    if(currentCase.RecordTypeId == ProcessISSPcaseRecordTypeID){
-                        if(!mapSAAMParentIDCase.containsKey(currentCase.ParentId))
-                            mapSAAMParentIDCase.put(currentCase.ParentId, new List<Case>{currentCase});
-                        else
-                            mapSAAMParentIDCase.get(currentCase.ParentId).add(currentCase);
-                    }
-                    if(currentCase.RecordTypeId == IFAPcaseRecordTypeID){
-                        if(!mapIFAPParentIDCase.containsKey(currentCase.ParentId))
-                            mapIFAPParentIDCase.put(currentCase.ParentId, new List<Case>{currentCase});
-                        else
-                            mapIFAPParentIDCase.get(currentCase.ParentId).add(currentCase);
+                        IFAPCaseList.add(aCase);
+                        IFAPParentID.add(aCase.ParentId);
                     }
                 }
 
-                if (!contactIds.isEmpty() || !IFAPaccountIds.isEmpty()) {
-                    currentUserProfile = getUserProfile(); 
-                
-                    contacts = new Map<Id, Contact>([SELECT c.Id, c.Agent_Type__c, c.AccountId FROM Contact c WHERE Id IN :contactIds]);
-            
-                    accounts = new Map<Id, Account>([SELECT a.Id, a.IATACode__c, a.BillingCountry, a.Type, a.RecordType.DeveloperName, a.CNS_Account__c 
-                                                    FROM Account a WHERE Id IN :IFAPaccountIds]);
-                   
-                    //emailtemplate query from isinsert and isupdate to the share code
-                    IFAPemailtemplate = [SELECT et.IATA_ISO_Country__r.Id FROM EmailTemplate__c et WHERE et.recordType.Name = 'IFAP'];
+                if(!IFAPParentID.isEmpty()){
+                    parentsIFAPCases = new Map<Id, Case>([SELECT Id, Status, Subject, RecordTypeId, ParentId, Financial_Assessment_requested__c,
+                                                            Financial_Assessment_received__c, Financial_Assessment_deadline__c, Financial_Assessment_compliant__c
+                                                        FROM Case WHERE Id IN :IFAPParentID]);
 
-                    //Ifap Authorized users have a specific permission set
-                    List<PermissionSetAssignment> psaList = [SELECT AssigneeId FROM PermissionSetAssignment 
-                                                            WHERE Assignee.IsActive = true AND AssigneeId = :UserInfo.getUserId()
-                                                                AND PermissionSetId IN (SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users')];
-                    if (!psaList.isEmpty()){
-                        isIfapAuthorizedUser = true;
-                    }
-
-                    // Create Account and contact Map (in order to decrease the number of SOQL queries executed)
-                    for (Case aCase : trigger.New) {
-                        // Search for the contact related to the case
-                        if(contacts.get(aCase.ContactId) != null){
-                            contactMap.put(aCase.id, contacts.get(aCase.ContactId));
+                    //isSAAMCase - Fill a map with all Case Parent ID and list of case related to its Parent Case
+                    for (Case currentCase : parentsIFAPCases.values()) {
+                        if(currentCase.RecordTypeId == ProcessISSPcaseRecordTypeID){
+                            if(!mapSAAMParentIDCase.containsKey(currentCase.id)){
+                                mapSAAMParentIDCase.put(currentCase.id, new List<Case>());
+                            }
+                            mapSAAMParentIDCase.get(currentCase.id).add(currentCase);
                         }
+                        if(currentCase.RecordTypeId == IFAPcaseRecordTypeID){
+                            if(!mapIFAPParentIDCase.containsKey(currentCase.id)){
+                                mapIFAPParentIDCase.put(currentCase.id, new List<Case>());
+                            }
+                            mapIFAPParentIDCase.get(currentCase.id).add(currentCase);
+                        }
+                    }
+                }
+
+                if (!IFAPaccountIds.isEmpty()) {
+                    Map<Id, Account> accounts = new Map<Id, Account>([SELECT a.Id, a.IATACode__c, a.BillingCountry, a.Type, a.RecordType.DeveloperName, a.CNS_Account__c 
+                                                    FROM Account a WHERE Id IN :IFAPaccountIds]);
+                    // Create Account (in order to decrease the number of SOQL queries executed)
+                    for (Case aCase : IFAPCaseList) {
                         // Search for the account related to the case
                         Account aAccount = accounts.get(aCase.AccountId);
                         if(aAccount != null){
@@ -235,15 +237,15 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if(UserInfoUpdate){
             System.debug('____ [cls CaseBeforeTrigger - UserInfoUpdate]');
             Set<string> caseStatus = new set<string>();
-            for(CaseClosedStatus__c cs : CaseClosedStatus__c.getAll().values()) { //RN-INC347705 -> get isclosed cases status from custom Setting to remove a query
+            for(CaseClosedStatus__c cs : CaseClosedStatus__c.getAll().values()) {
                 caseStatus.add(cs.name);
             }
             // When a case is closed, update the user who closed the case.
-            for (Case c : Trigger.new) { //RN-INC342887 - validation with isClosed
-                if ((Trigger.isInsert && caseStatus.contains(c.status)) || (Trigger.isUpdate && caseStatus.contains(c.status)) ) {
+            for (Case c : Trigger.new) {
+                if (caseStatus.contains(c.status)) {
                     c.WhoClosedCase__c = UserInfo.getUserId();
                 }
-                if (Trigger.isUpdate && !caseStatus.contains(c.status)) {
+                else if (Trigger.isUpdate) {
                     c.WhoClosedCase__c = null;
                 }
             }
@@ -255,10 +257,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if (trgCheckBusinessHoursBeforeInsert) {
             System.debug('____ [cls CaseBeforeTrigger - trgCheckBusinessHoursBeforeInsert]');
             List <Contact> ctcIdList = new List < Contact >();
-            for (Case newCaseObj : trigger.new) {
-                if (((newCaseObj.RecordTypeId != null) && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID) || ((newCaseObj.description != null)
-                        && (newCaseObj.description.contains(Label.Case_Area_ICH) || newCaseObj.description.contains(Label.Case_Area_SIS))) || ((newCaseObj.CaseArea__c != null)
-                        && (newCaseObj.CaseArea__c == Label.SIS || newCaseObj.CaseArea__c == Label.ICH))) {
+            for (Case newCaseObj : Trigger.new) {
+                if ((newCaseObj.RecordTypeId != null && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID) || 
+                    (newCaseObj.description != null && (newCaseObj.description.contains(Label.Case_Area_ICH) || newCaseObj.description.contains(Label.Case_Area_SIS))) || 
+                    (newCaseObj.CaseArea__c != null && (newCaseObj.CaseArea__c == Label.SIS || newCaseObj.CaseArea__c == Label.ICH))
+                ) {
                     hasOneSISCase = true;
                     break;
                 }
@@ -268,7 +271,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 List < Account > accIdList = [SELECT id, Name FROM Account WHERE Name in : AccountNames];
                 if (!accIdList.isEmpty()) {
                     for (Account relatedAccount : accIdList) {
-                        system.debug('\nRelatedAccount.Name: ' + relatedAccount.Name);
                         CBHAccountMap.put(relatedAccount.Name, relatedAccount);
                     }
                 }
@@ -293,15 +295,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     if (newCase.CaseArea__c == 'ICH' && (newCase.Type == 'SIS Feature Request' || newCase.Type == 'SIS Technical Problem' || newCase.Type == 'SIS Internal Case'
                                                          || newCase.Type == 'SIS Question/Problem' || newCase.Type == 'SIS Member Profile Update' || newCase.Type == 'SIS Membership'
                                                          || newCase.Type == 'Feature Request' || newCase.Type == 'General Question' || newCase.Type == 'Problem / Issue')) {
-                        //system.debug('\n case area:' + newCase.CaseArea__c + ' type: ' + newCase.Type );
-                        system.debug('\n Assert error2 caught .......');
                         newCase.addError(Label.HelpDesk_SIS_ICH_Type_Area_Mismatch);
                     }
                     if (newCase.CaseArea__c == 'SIS' && (newCase.Type != 'SIS Feature Request' && newCase.Type != 'SIS Technical Problem' && newCase.Type != 'SIS Internal Case'
                                                          && newCase.Type != 'SIS Question/Problem' && newCase.Type != 'SIS Member Profile Update' && newCase.Type != 'SIS Membership'
                                                          && newCase.Type != 'Feature Request' && newCase.Type != 'General Question' && newCase.Type != 'Problem / Issue')) {
-                        //system.debug('\n case area:' + newCase.CaseArea__c + ' type: ' + newCase.Type);
-                        system.debug('\n Assert error1 caught .......');
                         newCase.addError(Label.HelpDesk_SIS_ICH_Type_Area_Mismatch);
                     }
                 }
@@ -328,9 +326,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             final string INS = 'ICCS – Assign Product';
             final string UPD = 'ICCS – Update Payment Instructions';
             final string DEL = 'ICCS – Delete Bank Account';
-            Boolean ThereAreICCSProductManagementCases = false;
-            Boolean ThereAreICCSBankAccountManagementCases = false;
+            List<Case> ICCSProductManagementCases = new List<Case>();
+            List<Case> ICCSBankAccountManagementCases = new List<Case>();
             Boolean ThereAreICCSCaseClosing = false;
+
             Set<Id> BankAccounts = new Set<Id>();
 
             // List of trigger-related  ICCS Bank Accounts
@@ -385,26 +384,26 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
                      // This trigger only handles ICCS cases, so we check there is at least one such case of interest
                     if (c.RecordTypeId == RT_ICCS_Id) {
-                        ThereAreICCSProductManagementCases = true;
+                        ICCSProductManagementCases.add(c);
+                        lstAccountIds.add(c.AccountId);
+                        lstProducts.add(c.ICCS_Product__c);
                         if (c.Status == 'Closed')
                             ThereAreICCSCaseClosing = true;
                     } else if (c.RecordTypeId == RT_ICCS_BA_Id && c.CaseArea__c == DEL) {
-                        ThereAreICCSBankAccountManagementCases = true;
+                        ICCSBankAccountManagementCases.add(c);
                     }
-                        lstBankAccountIds.add(c.ICCS_Bank_Account__c);
-                        lstAccountIds.add(c.AccountId);
-                        lstProducts.add(c.ICCS_Product__c);
+                    lstBankAccountIds.add(c.ICCS_Bank_Account__c); // Validar com a versao antiga
                 }
             }
 
-            if (ThereAreICCSBankAccountManagementCases || ThereAreICCSProductManagementCases){
+            if (!ICCSBankAccountManagementCases.isEmpty() || !ICCSProductManagementCases.isEmpty()){
                 productAssignmentActiveList = [SELECT Id, Account__c, ICCS_Bank_Account__c, ICCS_Product_Currency__c 
                                                FROM Product_Assignment__c 
                                                WHERE Status__c = 'Active' 
                                                AND (ICCS_Bank_Account__c IN :lstBankAccountIds OR Account__c IN :lstAccountIds)]; 
             }
 
-            if (ThereAreICCSBankAccountManagementCases) {
+            if (!ICCSBankAccountManagementCases.isEmpty()) {
                 // Create a map of all active Product Assignments linked to trigger-related Bank Accounts; Key = Bank Account SF Id, Value = PA
                 Map<Id, Product_Assignment__c> mapBaPaPerId = new Map<Id, Product_Assignment__c>();
 
@@ -415,17 +414,14 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         }
                     }
                 }
-                for (Case c : Trigger.new) {
-                    // Only Cases with the FDS_ICCS_Bank_Account_Management record type
-                    if (c.RecordTypeId == RT_ICCS_BA_Id) {
-                        // Check that the chosen product combination is valid & active - only for open cases! (combinations used on old cases might have been inactivated)
-                        if (mapBaPaPerId.get(c.ICCS_Bank_Account__c) != null && c.CaseArea__c == DEL) {
-                            c.ICCS_Bank_Account__c.addError('This Bank Account is linked to active Product Assignments. You cannot remove a Bank Account that is currently in use.');
-                        }
+                for (Case c : ICCSBankAccountManagementCases) {
+                    // Check that the chosen product combination is valid & active - only for open cases! (combinations used on old cases might have been inactivated)
+                    if (mapBaPaPerId.get(c.ICCS_Bank_Account__c) != null ) {
+                        c.ICCS_Bank_Account__c.addError('This Bank Account is linked to active Product Assignments. You cannot remove a Bank Account that is currently in use.');
                     }
                 }
             }
-            if (ThereAreICCSProductManagementCases) {
+            if (!ICCSProductManagementCases.isEmpty()) {
                 // Create a map of all active services, with the key [Product-Country-Currency]
                 Map<String, ICCS_Product_Currency__c> mapProductCurrencyPerKey = new Map<String, ICCS_Product_Currency__c>();
                 
@@ -455,42 +451,41 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         CaseWithBalanceOrTotal.add(batc.Case__c);
                     }
                 }
-                for (Case c : Trigger.new) {
-                    // Only Cases with the FDS_ICCS_Product_Management record type
-                    if (c.RecordTypeId == RT_ICCS_Id) {
-                        if ((c.CaseArea__c == INS || c.CaseArea__c == UPD) && c.Status == 'Closed' && !CaseWithBalanceOrTotal.contains(c.id)) {
-                            c.addError('To close this case it\'s required to add a Bank Account with Split Type = "Balance" or "Total"');
-                            continue;
-                        }
-                        // This check is only performed for product assignment / removal / update cases
-                        // Check that the chosen product combination is valid & active - only for open cases! (combinations used on old cases might have been inactivated)
-                        if (mapProductCurrencyPerKey.get(c.ICCS_Product__c + '-' + c.ICCS_Country__c + '-' + c.ICCS_Currencies__c) == null &&
-                                !(Trigger.isUpdate && Trigger.oldMap.get(c.Id).isClosed) &&
-                                (c.CaseArea__c == INS || c.CaseArea__c == UPD || c.CaseArea__c == DEL)) {
-                            c.ICCS_Currencies__c.addError('This Product - Country - Currency combination doesn\'t exist or is inactive.');
-                        }
-                        // Assignment / removal / payment instruction cases checks
-                        ICCS_Product_Currency__c tmpProdCurr = mapProductCurrencyPerKey.get(c.ICCS_Product__c + '-' + c.ICCS_Country__c + '-' + c.ICCS_Currencies__c);
-                        if (tmpProdCurr != null && c.Status != 'Closed') {
-                            Product_Assignment__c tmpPA = mapProductAssignmentsPerKey.get(String.valueOf(tmpProdCurr.Id) + '-' + String.valueOf(c.AccountId)); 
 
-                            // If this is an assignment Case and the product-country-currency is already assigned to the Account, raise an error
-                            if (c.CaseArea__c == INS && tmpPA != null) {
-                                c.ICCS_Currencies__c.addError(' This Product - Country - Currency combination is already assigned and active on the selected Account.');
-                            }
-                            // If this is a removal Case and the product-country-currency is NOT assigned & active on the Account, raise an error
-                            else if (c.CaseArea__c == DEL && tmpPA == null) {
-                                c.ICCS_Currencies__c.addError(' This Product - Country - Currency combination is NOT currently active on the selected Account.');
-                            }
-                            // If this is an Update Payment Instructions Case
-                            else if (c.CaseArea__c == UPD && tmpPA == null) {
-                                //If the selected product-country-currency is NOT assigned & active on the Account, raise an error
-                                c.ICCS_Currencies__c.addError(' This Product - Country - Currency combination is NOT currently active on the selected Account.');
-                            }
+                // Only Cases with the FDS_ICCS_Product_Management record type
+                for (Case c : ICCSProductManagementCases) {
+                    if ((c.CaseArea__c == INS || c.CaseArea__c == UPD) && c.Status == 'Closed' && !CaseWithBalanceOrTotal.contains(c.id)) {
+                        c.addError('To close this case it\'s required to add a Bank Account with Split Type = "Balance" or "Total"');
+                        continue;
+                    }
+                    // This check is only performed for product assignment / removal / update cases
+                    // Check that the chosen product combination is valid & active - only for open cases! (combinations used on old cases might have been inactivated)
+                    if (mapProductCurrencyPerKey.get(c.ICCS_Product__c + '-' + c.ICCS_Country__c + '-' + c.ICCS_Currencies__c) == null &&
+                            !(Trigger.isUpdate && Trigger.oldMap.get(c.Id).isClosed) &&
+                            (c.CaseArea__c == INS || c.CaseArea__c == UPD || c.CaseArea__c == DEL)) {
+                        c.ICCS_Currencies__c.addError('This Product - Country - Currency combination doesn\'t exist or is inactive.');
+                    }
+                    // Assignment / removal / payment instruction cases checks
+                    ICCS_Product_Currency__c tmpProdCurr = mapProductCurrencyPerKey.get(c.ICCS_Product__c + '-' + c.ICCS_Country__c + '-' + c.ICCS_Currencies__c);
+                    if (tmpProdCurr != null && c.Status != 'Closed') {
+                        Product_Assignment__c tmpPA = mapProductAssignmentsPerKey.get(String.valueOf(tmpProdCurr.Id) + '-' + String.valueOf(c.AccountId)); 
+
+                        // If this is an assignment Case and the product-country-currency is already assigned to the Account, raise an error
+                        if (c.CaseArea__c == INS && tmpPA != null) {
+                            c.ICCS_Currencies__c.addError(' This Product - Country - Currency combination is already assigned and active on the selected Account.');
                         }
-                    } // if (c.RecordTypeId == RT_ICCS.Id)
-                } // for
-            } // if (ThereAreICCSCases)
+                        // If this is a removal Case and the product-country-currency is NOT assigned & active on the Account, raise an error
+                        else if (c.CaseArea__c == DEL && tmpPA == null) {
+                            c.ICCS_Currencies__c.addError(' This Product - Country - Currency combination is NOT currently active on the selected Account.');
+                        }
+                        // If this is an Update Payment Instructions Case
+                        else if (c.CaseArea__c == UPD && tmpPA == null) {
+                            //If the selected product-country-currency is NOT assigned & active on the Account, raise an error
+                            c.ICCS_Currencies__c.addError(' This Product - Country - Currency combination is NOT currently active on the selected Account.');
+                        }
+                    }
+                } 
+            }
         }
         /*trgICCSCaseValidation Trigger*/
 
@@ -498,8 +493,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         //Run only for non-compliance case. Put parent id (FSM Case) into a set
         if (Case_FSM_Handle_NonCompliance_BI_BU) {
             System.debug('____ [cls CaseBeforeTrigger - Case_FSM_Handle_NonCompliance_BI_BU]');
+            SAAMCaseList = new List<Case>();
             for (Case NCCase : trigger.new) {
                 if (NCCase.RecordTypeId == ProcessISSPcaseRecordTypeID) {
+                    SAAMCaseList.add(NCCase);
                     setFSMCaseId.add(NCCase.ParentId);
                 }
             }
@@ -563,7 +560,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // if there's already an open case on the same account, get it
                     Case existingASPCase = mapCasesPerAccountId.get(c.AccountId);
                     // if the case is an ASP case and there already is an open ASP case on the same Account, raise an error
-                    if ( c.RecordTypeId == RT_ICCS_ASP_Id  &&  c.CaseArea__c == FDS  
+                    if (c.RecordTypeId == RT_ICCS_ASP_Id && c.CaseArea__c == FDS  
                          && existingASPCase != null && existingASPCase.CaseArea__c == FDS  
                          && existingASPCase.Id != c.Id) {
                         c.addError('There is already an open FDS ASP creation case on the selected Account. There can be only one open case of this type on an Account.');
@@ -581,7 +578,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
             // Prevent the closing of the ASP cases if there are related tasks still open
             // only continue if there are ASP cases getting closed
-            System.debug(loggingLevel.ERROR, '____ [CaseBeforeTrigger - trgICCS_ASP_Case_Validation] setClosingCasesIds - ' + setClosingCasesIds);
+            System.debug(loggingLevel.ERROR, '____ [CaseBeforeTrigger - trgICCS_ASP_Case_Validation] setClosingCasesIds] - ' + setClosingCasesIds);
             if (!setClosingCasesIds.isEmpty()) {
                 //create a map of open tasks related to the cases
                 Map<Id, Task> mapTasksPerCaseId = new Map<Id, Task>();
@@ -649,19 +646,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 for (Case aCase : trigger.New) {
                     System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] RECORD TYPE: ' + aCase.RecordTypeId);
                     // check if correct record type
-                    if ((aCase.RecordTypeId == SIDRAcaseRecordTypeID) || (aCase.RecordTypeId == ProcessISSPcaseRecordTypeID) || (aCase.RecordTypeId == EuropecaseRecordTypeID)
-                            || (aCase.RecordTypeId == AmericacaseRecordTypeID) || (aCase.RecordTypeId == AfricaMEcaseRecordTypeID) || (aCase.RecordTypeId == AsiaPacificcaseRecordTypeID)
-                            || (aCase.RecordTypeId == ChinaAsiacaseRecordTypeID) || (aCase.RecordTypeId == InternalcaseRecordTypeID) || (aCase.RecordTypeId == InvCollectioncaseRecordTypeID)
-                            || (aCase.RecordTypeId == CSProcesscaseRecordTypeID) || (aCase.RecordTypeId == SEDAcaseRecordTypeID) || (aCase.RecordTypeId == ISSPcaseRecordTypeID)) {
-                        system.debug('isInsert: ' + Trigger.isInsert);
-                        system.debug('isUpdate: ' + Trigger.isUpdate);
-                        system.debug('Account_Concerned__c: ' + aCase.Account_Concerned__c);
-                        system.debug('BSPCountry__c: ' + aCase.BSPCountry__c);
-                        system.debug('IATAcode__c: ' + aCase.IATAcode__c);
+                    if ( (aCase.RecordTypeId == SIDRAcaseRecordTypeID) || (aCase.RecordTypeId == ProcessISSPcaseRecordTypeID) || (aCase.RecordTypeId == EuropecaseRecordTypeID)
+                        || (aCase.RecordTypeId == AmericacaseRecordTypeID) || (aCase.RecordTypeId == AfricaMEcaseRecordTypeID) || (aCase.RecordTypeId == AsiaPacificcaseRecordTypeID)
+                        || (aCase.RecordTypeId == ChinaAsiacaseRecordTypeID) || (aCase.RecordTypeId == InternalcaseRecordTypeID) || (aCase.RecordTypeId == InvCollectioncaseRecordTypeID)
+                        || (aCase.RecordTypeId == CSProcesscaseRecordTypeID) || (aCase.RecordTypeId == SEDAcaseRecordTypeID) || (aCase.RecordTypeId == ISSPcaseRecordTypeID) ){
+
                         // Preliminary step for completing the Account Concerned when the account is an airline and the IATA Country is specified
                         // get the potentially concerned cases, by choosing those with an IATA Country not null
-                        if (aCase.BSPCountry__c != null && ((Trigger.isInsert && aCase.Account_Concerned__c == null) 
-                                                            || (Trigger.isUpdate && aCase.BSPCountry__c != Trigger.oldMap.get(aCase.Id).BSPCountry__c))) {
+                        if (aCase.BSPCountry__c != null && 
+                            ((Trigger.isInsert && aCase.Account_Concerned__c == null) || 
+                            (Trigger.isUpdate && aCase.BSPCountry__c != Trigger.oldMap.get(aCase.Id).BSPCountry__c)) ) {
+
                             System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] Inside if 1');
                             lstCasesWithBSPCountry.add(aCase);
                             lstAccountIds.add(aCase.AccountId);
@@ -695,13 +690,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             }
                             system.debug('IATA CODE 4: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
                             // Create an entry in the map for the processed key
-                            if  (mapCasesPerWebIATACode.get(WebIATAcode) == null) {
+                            if (mapCasesPerWebIATACode.get(WebIATAcode) == null) {
                                 mapCasesPerWebIATACode.put(WebIATAcode, new List<Case>());
                             }
                             mapCasesPerWebIATACode.get(WebIATAcode).add(aCase);
                             // and another one for the initial (user-entered, unprocessed) key - if it is different from the processed one
                             if (WebIATAcode2 != WebIATAcode) {
-                                if  (mapCasesPerWebIATACode.get(WebIATAcode2) == null) {
+                                if (mapCasesPerWebIATACode.get(WebIATAcode2) == null) {
                                     mapCasesPerWebIATACode.put(WebIATAcode2, new List<Case>());
                                 }
                                 mapCasesPerWebIATACode.get(WebIATAcode2).add(aCase);
@@ -711,7 +706,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
                 // Web IATA Code > Account Concerned
                 // Match the processed & unprocessed Web IATA Code with the Account Site on the Account records
-                system.debug('mapCasesPerWebIATACode.keyset(): ' + mapCasesPerWebIATACode.keyset());
                 if (!mapCasesPerWebIATACode.keyset().isEmpty()) {
                 
                     // Update the Cases with the Account or Account Concerned info retrieved from the DB - only if the found Account / Account Concerned is different from the Account in the Case
@@ -824,8 +818,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         bspCountryList = c.Country_concerned__c.split(';');
                         c.BSPCountry__c = bspCountryList[0];
                         c.RecordTypeId = CSRcaseRecordTypeID;
-                        System.debug('BSP Country ----> ' + c.BSPCountry__c);
-                        //GM - IMPRO - END
                     }
                 }
             }
@@ -881,7 +873,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             for (Integer i = 0; i < lstUsers.Size(); i++) {
                                 if (ObjCaseNew.OwnerId == lstUsers[i].Id) {
                                     ObjCaseNew.Case_Owner_CP__c = lstUsers[i].Name;
-                                    System.debug('Owner name: ' + ObjCaseNew.Case_Owner_CP__c);
                                     break;
                                 }
                             }
@@ -914,35 +905,40 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             for (Case newCase : trigger.new) {
                 if (newCase.RecordTypeId == ProcessISSPcaseRecordTypeID){
                     parentId.add(newCase.ParentId);
+                    processISS_SAAMCase.add(newCase);
+
                 }
             }
-            parentISSCase = [SELECT c.Id, c.ParentId, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, 
+            if(!parentId.isEmpty()){
+                parentISSPCases = new Map<ID,Case>([SELECT c.Id, c.ParentId, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, 
                                     c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type,  c.Account.ANG_IsNewGenAgency__c,
                                     c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c
-                                FROM Case c WHERE c.Id IN :parentId];
+                                FROM Case c WHERE c.Id IN :parentId]);
+            }
 
-            if (parentISSCase != null && parentISSCase.size() > 0) {
-                for (Case newCase : trigger.new) {
-                    // only process case of type SAAM
-                    if (newCase.RecordTypeId == ProcessISSPcaseRecordTypeID) {
+            if (parentISSPCases != null && parentISSPCases.size() > 0) {
+                // only process case of type SAAM
+                for (Case newCase : processISS_SAAMCase) {
+                    Case parentISSPCase = parentISSPCases.get(newCase.ID);
+                    if(parentISSPCase != null){
                         // check if parent case is an IFAP case
-                        if (parentISSCase[0].RecordTypeId == IFAPcaseRecordTypeID) {
+                        if (parentISSPCase.RecordTypeId == IFAPcaseRecordTypeID) {
                             // first business rule
-                            if (parentISSCase[0].FA_Letter_Sent__c == False && (parentISSCase[0].Status == 'Agent Notified (Mail)' || parentISSCase[0].Status == 'Agent Notified (Email)'
-                                    || parentISSCase[0].Status == 'Financial Statements Uploaded' || parentISSCase[0].Status == 'Sanity Check Failure')) {
+                            if (parentISSPCase.FA_Letter_Sent__c == False && (parentISSPCase.Status == 'Agent Notified (Mail)' || parentISSPCase.Status == 'Agent Notified (Email)'
+                                    || parentISSPCase.Status == 'Financial Statements Uploaded' || parentISSPCase.Status == 'Sanity Check Failure')) {
                                 newCase.addError('The ?FA Letter Sent? check box has not been ticked, kindly send the physical letter requesting the financial documents to the Agent before you proceed.');
                             }
                             // second business rule
-                            if (parentISSCase[0].FS_Letter_Sent__c == False && parentISSCase[0].Status == 'Financial Security Requested') {
+                            if (parentISSPCase.FS_Letter_Sent__c == False && parentISSPCase.Status == 'Financial Security Requested') {
                                 newCase.addError('The ?FS Letter Sent? check box has not been ticked, kindly send the physical letter requesting the financial documents to the Agent before you proceed');
                             }
                             // third business rule
-                            if (newCase.Status == 'Open' && newCase.Reason1__c == 'FA/ FS Non-Compliance' && (parentISSCase[0].Status == 'Action Needed'
-                                    || parentISSCase[0].Status == 'Agent to be Notified' || parentISSCase[0].Status == 'Agent to be notified (Email)'
-                                    || parentISSCase[0].Status == 'Assessment Performed' || parentISSCase[0].Status == 'Financial Security Provided'
-                                    || parentISSCase[0].Status == 'Re-open/ed' || parentISSCase[0].Status == 'Submitted'
-                                    || parentISSCase[0].Status == 'Assessment Cancelled' || parentISSCase[0].Status == 'Closed')) {
-                                newCase.addError('A Non-compliance case cannot be updated when the parent case status is ' + parentISSCase[0].Status);
+                            if (newCase.Status == 'Open' && newCase.Reason1__c == 'FA/ FS Non-Compliance' && (parentISSPCase.Status == 'Action Needed'
+                                    || parentISSPCase.Status == 'Agent to be Notified' || parentISSPCase.Status == 'Agent to be notified (Email)'
+                                    || parentISSPCase.Status == 'Assessment Performed' || parentISSPCase.Status == 'Financial Security Provided'
+                                    || parentISSPCase.Status == 'Re-open/ed' || parentISSPCase.Status == 'Submitted'
+                                    || parentISSPCase.Status == 'Assessment Cancelled' || parentISSPCase.Status == 'Closed')) {
+                                newCase.addError('A Non-compliance case cannot be updated when the parent case status is ' + parentISSPCase.Status);
                             }
                         }
                     }
@@ -966,145 +962,146 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgProcessISSCase Trigger.isInsert*/
         if (trgProcessISSCase) { 
             System.debug('____ [cls CaseBeforeTrigger - trgProcessISSCase Trigger.isInsert]');
-            // loop tru cases to be created
-            for (Case newCase : trigger.new) {
-                // only process case of type SAAM
-                if (newCase.RecordTypeId == ProcessISSPcaseRecordTypeID) {
-                    if (parentISSCase != null && parentISSCase.size() > 0) {
-                        // check if parent case is an IFAP case
-                        if (parentISSCase[0].RecordTypeId == IFAPcaseRecordTypeID) {
-                            if (newCase.CaseArea__c == 'Accreditation Process' && newCase.reason1__c == 'FA/ FS Non-Compliance' && newCase.Origin == 'Internal Case') {
-                                // flags
-                                Boolean isPassengerDomestic = (parentISSCase[0].Account.Type == 'IATA Passenger Sales Agent' || parentISSCase[0].Account.Type == 'Domestic Agent');
-                                Boolean isCargoCASS = (parentISSCase[0].Account.Type == 'IATA Cargo Agent' || parentISSCase[0].Account.Type == 'CASS Associate');
-                                // the deadline date must not be set for Passenger/Domestic Agents
-                                if (isPassengerDomestic && newCase.New_IFAP_Deadline_date__c != null) {
-                                    newCase.addError('The New IFAP Deadline date must be empty for non-compliance cases on Passenger and Domestic agents');
-                                    continue;
-                                }
-                                //set IFAP case non compliance date
-                                //BRD: Item 2.4
-                                if (parentISSCase[0].Status == 'Financial Security Requested') {
-                                    //FS non compliance case
-                                    if (parentISSCase[0].firstFSnonComplianceDate__c == null) {
-                                        // cannot create a 1st FS non-compliance case if 1st deadline date has not been reached yet
-                                        if (parentISSCase[0].FS_Deadline_Date__c >= Date.today()) {
-                                            newCase.addError('Cannot create a 1st FS non-compliance case. The 1st FS Deadline is ' + parentISSCase[0].FS_Deadline_Date__c.format());
-                                            continue;
-                                        }
-                                        parentISSCase[0].firstFSnonComplianceDate__c = Date.today();
-                                        // set 2nd FS deadline date for PAX and Domestic agents
-                                        
-                                        if (isPassengerDomestic) {
-                                            //NEWGEN-3394 - deadline for NewGen to 60 days
-                                            if(parentISSCase[0].Account.ANG_IsNewGenAgency__c)
-                                                // business rule: 31 days after the non-compliance case is raised
-                                                parentISSCase[0].FS_Second_Deadline_Date__c = parentISSCase[0].firstFSnonComplianceDate__c.addDays(60);
-                                            else
-                                                parentISSCase[0].FS_Second_Deadline_Date__c = parentISSCase[0].firstFSnonComplianceDate__c.addDays(31);
-                                           
-                                        }
-                                        else if (isCargoCASS) {
-                                            if (newCase.New_IFAP_Deadline_date__c == null) {
-                                                newCase.addError('The New IFAP Deadline date is mandatory when creating a 1st non-compliance for Cargo or CASS agents.');
-                                                continue;
-                                            } else {
-                                                // copy deadline date to IFAP case
-                                                parentISSCase[0].FS_Second_Deadline_Date__c = newCase.New_IFAP_Deadline_date__c;
-                                            }
-                                        }
-                                    } else if (parentISSCase[0].secondFSnonComplianceDate__c == null) {
-                                        // cannot create a 2nd FS non-compliance case if 2nd deadline date has not been reached yet
-                                        if (parentISSCase[0].FS_Second_Deadline_Date__c >= Date.today()) {
-                                            newCase.addError('Cannot create a 2nd FS non-compliance case. The 2nd FS Deadline is ' + parentISSCase[0].FS_Second_Deadline_Date__c.format());
-                                            continue;
-                                        }
-                                        parentISSCase[0].secondFSnonComplianceDate__c = Date.today();
-                                        // set 3rd FS deadline date for PAX and Domestic agents
-                                        if (isPassengerDomestic) {
-                                            // business rule: 31 days after the non-compliance case is raised
-                                            Date inTwoMonths = parentISSCase[0].secondFSnonComplianceDate__c.addMonths(2);
-                                            Date newDeadline = Date.newInstance(inTwoMonths.year(), inTwoMonths.month(), 1);
-                                            newDeadline = newDeadline.addDays(-1);
-                                            parentISSCase[0].FS_Third_Deadline_Date__c = newDeadline;
-                                        } else if (isCargoCASS) {
-                                            if (newCase.New_IFAP_Deadline_date__c == null) {
-                                                newCase.addError('The New IFAP Deadline date is mandatory when creating a 1st non-compliance for Cargo or CASS agents.');
-                                                continue;
-                                            } else {
-                                                // copy deadline date to IFAP case
-                                                parentISSCase[0].FS_Third_Deadline_Date__c = newCase.New_IFAP_Deadline_date__c;
-                                            }
-                                        }
-                                    } else {
-                                        newCase.addError('Cannot create a 3rd FS non-compliance case.');
+            // only process case of type SAAM
+            List<Case> casesToUpdate = new List<Case>();
+            for (Case newCase : processISS_SAAMCase) {
+                Case parentISSPCase = parentISSPCases.get(newCase.ID);
+                if(parentISSPCase != null){
+                    // check if parent case is an IFAP case
+                    if (parentISSPCase.RecordTypeId == IFAPcaseRecordTypeID) {
+                        if (newCase.CaseArea__c == 'Accreditation Process' && newCase.reason1__c == 'FA/ FS Non-Compliance' && newCase.Origin == 'Internal Case') {
+                            // flags
+                            Boolean isPassengerDomestic = (parentISSPCase.Account.Type == 'IATA Passenger Sales Agent' || parentISSPCase.Account.Type == 'Domestic Agent');
+                            Boolean isCargoCASS = (parentISSPCase.Account.Type == 'IATA Cargo Agent' || parentISSPCase.Account.Type == 'CASS Associate');
+                            // the deadline date must not be set for Passenger/Domestic Agents
+                            if (isPassengerDomestic && newCase.New_IFAP_Deadline_date__c != null) {
+                                newCase.addError('The New IFAP Deadline date must be empty for non-compliance cases on Passenger and Domestic agents');
+                                continue;
+                            }
+                            //set IFAP case non compliance date
+                            //BRD: Item 2.4
+                            if (parentISSPCase.Status == 'Financial Security Requested') {
+                                //FS non compliance case
+                                if (parentISSPCase.firstFSnonComplianceDate__c == null) {
+                                    // cannot create a 1st FS non-compliance case if 1st deadline date has not been reached yet
+                                    if (parentISSPCase.FS_Deadline_Date__c >= Date.today()) {
+                                        newCase.addError('Cannot create a 1st FS non-compliance case. The 1st FS Deadline is ' + parentISSPCase.FS_Deadline_Date__c.format());
+                                        continue;
                                     }
-                                } else {
-                                    // 1st FA non-compliance case
-                                    if (parentISSCase[0].firstFAnonComplianceDate__c == null) {
-                                        // cannot create a 1st FA non-compliance case if 1st deadline date has not been reached yet
-                                        if (parentISSCase[0].Deadline_Date__c >= Date.today()) {
-                                            newCase.addError('Cannot create a 1st FA non-compliance case. The 1st FA Deadline is ' + parentISSCase[0].Deadline_Date__c.format());
-                                            continue;
-                                        }
-                                        parentISSCase[0].firstFAnonComplianceDate__c = Date.today();
-                                        // set 2nd FA deadline date for PAX and Domestic agents
-                                        if (isPassengerDomestic) {
+                                    parentISSPCase.firstFSnonComplianceDate__c = Date.today();
+                                    // set 2nd FS deadline date for PAX and Domestic agents
+                                    
+                                    if (isPassengerDomestic) {
+                                        //NEWGEN-3394 - deadline for NewGen to 60 days
+                                        if(parentISSPCase.Account.ANG_IsNewGenAgency__c)
                                             // business rule: 31 days after the non-compliance case is raised
-                                            parentISSCase[0].FA_Second_Deadline_Date__c = parentISSCase[0].firstFAnonComplianceDate__c.addDays(31);
-                                        } else if (isCargoCASS) {
-                                            if (newCase.New_IFAP_Deadline_date__c == null) {
-                                                newCase.addError('The New IFAP Deadline date is mandatory when creating a 1st non-compliance for Cargo or CASS agents.');
-                                                continue;
-                                            } else {
-                                                // copy deadline date to IFAP case
-                                                parentISSCase[0].FA_Second_Deadline_Date__c = newCase.New_IFAP_Deadline_date__c;
-                                            }
-                                        }
-                                    } else if (parentISSCase[0].secondFAnonComplianceDate__c == null) {
-                                        // 2nd FA non-compliance
-                                        // cannot create a 2nd FA non-compliance case if 2nd deadline date has not been reached yet
-                                        if (parentISSCase[0].FA_Second_Deadline_Date__c >= Date.today()) {
-                                            newCase.addError('Cannot create a 2nd FA non-compliance case. The 2nd FA Deadline is ' + parentISSCase[0].FA_Second_Deadline_Date__c.format());
-                                            continue;
-                                        }
-                                        parentISSCase[0].secondFAnonComplianceDate__c = Date.today();
-                                        // set 3rd FA deadline date for PAX and Domestic agents
-                                        if (isPassengerDomestic) {
-                                            // business rule: the last day of the following month after the non-compliance case is raised
-                                            Date inTwoMonths = parentISSCase[0].secondFAnonComplianceDate__c.addMonths(2);
-                                            Date newDeadline = Date.newInstance(inTwoMonths.year(), inTwoMonths.month(), 1);
-                                            newDeadline = newDeadline.addDays(-1);
-                                            parentISSCase[0].FA_Third_Deadline_Date__c = newDeadline;
-                                        } else if (isCargoCASS) {
-                                            if (newCase.New_IFAP_Deadline_date__c == null) {
-                                                newCase.addError('The New IFAP Deadline date is mandatory when creating a 2nd non-compliance for Cargo or CASS agents.');
-                                                continue;
-                                            } else {
-                                                // copy deadline date to IFAP case
-                                                parentISSCase[0].FA_Third_Deadline_Date__c = newCase.New_IFAP_Deadline_date__c;
-                                            }
-                                        }
-                                    } else if (parentISSCase[0].Third_FA_non_Compliance_Date__c == null) {
-                                        // 3rd FA non-compliance
-                                        // cannot create a 3rd FA non-compliance case if 3rd deadline date has not been reached yet
-                                        if (parentISSCase[0].FA_Third_Deadline_Date__c >= Date.today()) {
-                                            newCase.addError('Cannot create a 3rd FA non-compliance case. The 3rd FA Deadline is ' + parentISSCase[0].FA_Third_Deadline_Date__c.format());
+                                            parentISSPCase.FS_Second_Deadline_Date__c = parentISSPCase.firstFSnonComplianceDate__c.addDays(60);
+                                        else
+                                            parentISSPCase.FS_Second_Deadline_Date__c = parentISSPCase.firstFSnonComplianceDate__c.addDays(31);
+                                       
+                                    }
+                                    else if (isCargoCASS) {
+                                        if (newCase.New_IFAP_Deadline_date__c == null) {
+                                            newCase.addError('The New IFAP Deadline date is mandatory when creating a 1st non-compliance for Cargo or CASS agents.');
                                             continue;
                                         } else {
-                                            parentISSCase[0].Third_FA_non_Compliance_Date__c = Date.today();
+                                            // copy deadline date to IFAP case
+                                            parentISSPCase.FS_Second_Deadline_Date__c = newCase.New_IFAP_Deadline_date__c;
                                         }
-                                    } else {
-                                        // 4th non-compliance is blocked
-                                        newCase.addError('Cannot create a 4th FA non-compliance case.');
                                     }
+                                } else if (parentISSPCase.secondFSnonComplianceDate__c == null) {
+                                    // cannot create a 2nd FS non-compliance case if 2nd deadline date has not been reached yet
+                                    if (parentISSPCase.FS_Second_Deadline_Date__c >= Date.today()) {
+                                        newCase.addError('Cannot create a 2nd FS non-compliance case. The 2nd FS Deadline is ' + parentISSPCase.FS_Second_Deadline_Date__c.format());
+                                        continue;
+                                    }
+                                    parentISSPCase.secondFSnonComplianceDate__c = Date.today();
+                                    // set 3rd FS deadline date for PAX and Domestic agents
+                                    if (isPassengerDomestic) {
+                                        // business rule: 31 days after the non-compliance case is raised
+                                        Date inTwoMonths = parentISSPCase.secondFSnonComplianceDate__c.addMonths(2);
+                                        Date newDeadline = Date.newInstance(inTwoMonths.year(), inTwoMonths.month(), 1);
+                                        newDeadline = newDeadline.addDays(-1);
+                                        parentISSPCase.FS_Third_Deadline_Date__c = newDeadline;
+                                    } else if (isCargoCASS) {
+                                        if (newCase.New_IFAP_Deadline_date__c == null) {
+                                            newCase.addError('The New IFAP Deadline date is mandatory when creating a 1st non-compliance for Cargo or CASS agents.');
+                                            continue;
+                                        } else {
+                                            // copy deadline date to IFAP case
+                                            parentISSPCase.FS_Third_Deadline_Date__c = newCase.New_IFAP_Deadline_date__c;
+                                        }
+                                    }
+                                } else {
+                                    newCase.addError('Cannot create a 3rd FS non-compliance case.');
                                 }
-                                update parentISSCase[0];
+                            } else {
+                                // 1st FA non-compliance case
+                                if (parentISSPCase.firstFAnonComplianceDate__c == null) {
+                                    // cannot create a 1st FA non-compliance case if 1st deadline date has not been reached yet
+                                    if (parentISSPCase.Deadline_Date__c >= Date.today()) {
+                                        newCase.addError('Cannot create a 1st FA non-compliance case. The 1st FA Deadline is ' + parentISSPCase.Deadline_Date__c.format());
+                                        continue;
+                                    }
+                                    parentISSPCase.firstFAnonComplianceDate__c = Date.today();
+                                    // set 2nd FA deadline date for PAX and Domestic agents
+                                    if (isPassengerDomestic) {
+                                        // business rule: 31 days after the non-compliance case is raised
+                                        parentISSPCase.FA_Second_Deadline_Date__c = parentISSPCase.firstFAnonComplianceDate__c.addDays(31);
+                                    } else if (isCargoCASS) {
+                                        if (newCase.New_IFAP_Deadline_date__c == null) {
+                                            newCase.addError('The New IFAP Deadline date is mandatory when creating a 1st non-compliance for Cargo or CASS agents.');
+                                            continue;
+                                        } else {
+                                            // copy deadline date to IFAP case
+                                            parentISSPCase.FA_Second_Deadline_Date__c = newCase.New_IFAP_Deadline_date__c;
+                                        }
+                                    }
+                                } else if (parentISSPCase.secondFAnonComplianceDate__c == null) {
+                                    // 2nd FA non-compliance
+                                    // cannot create a 2nd FA non-compliance case if 2nd deadline date has not been reached yet
+                                    if (parentISSPCase.FA_Second_Deadline_Date__c >= Date.today()) {
+                                        newCase.addError('Cannot create a 2nd FA non-compliance case. The 2nd FA Deadline is ' + parentISSPCase.FA_Second_Deadline_Date__c.format());
+                                        continue;
+                                    }
+                                    parentISSPCase.secondFAnonComplianceDate__c = Date.today();
+                                    // set 3rd FA deadline date for PAX and Domestic agents
+                                    if (isPassengerDomestic) {
+                                        // business rule: the last day of the following month after the non-compliance case is raised
+                                        Date inTwoMonths = parentISSPCase.secondFAnonComplianceDate__c.addMonths(2);
+                                        Date newDeadline = Date.newInstance(inTwoMonths.year(), inTwoMonths.month(), 1);
+                                        newDeadline = newDeadline.addDays(-1);
+                                        parentISSPCase.FA_Third_Deadline_Date__c = newDeadline;
+                                    } else if (isCargoCASS) {
+                                        if (newCase.New_IFAP_Deadline_date__c == null) {
+                                            newCase.addError('The New IFAP Deadline date is mandatory when creating a 2nd non-compliance for Cargo or CASS agents.');
+                                            continue;
+                                        } else {
+                                            // copy deadline date to IFAP case
+                                            parentISSPCase.FA_Third_Deadline_Date__c = newCase.New_IFAP_Deadline_date__c;
+                                        }
+                                    }
+                                } else if (parentISSPCase.Third_FA_non_Compliance_Date__c == null) {
+                                    // 3rd FA non-compliance
+                                    // cannot create a 3rd FA non-compliance case if 3rd deadline date has not been reached yet
+                                    if (parentISSPCase.FA_Third_Deadline_Date__c >= Date.today()) {
+                                        newCase.addError('Cannot create a 3rd FA non-compliance case. The 3rd FA Deadline is ' + parentISSPCase.FA_Third_Deadline_Date__c.format());
+                                        continue;
+                                    } else {
+                                        parentISSPCase.Third_FA_non_Compliance_Date__c = Date.today();
+                                    }
+                                } else {
+                                    // 4th non-compliance is blocked
+                                    newCase.addError('Cannot create a 4th FA non-compliance case.');
+                                }
                             }
+                            casesToUpdate.add(parentISSPCase);
                         }
                     }
                 }
             }
+            if(!casesToUpdate.isEmpty())
+                update casesToUpdate;
         }
         /*trgProcessISSCase Trigger.isInsert*/
 
@@ -1112,8 +1109,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if (trgCaseIFAP) {
             if (!CaseChildHelper.noValidationsOnTrgCAseIFAP) {
                 System.debug('____ [cls CaseBeforeTrigger - trgCaseIFAP Trigger.isInsert]');
-                //Get User profile 
-                currentUserProfile = getUserProfile();
 
                 Map<ID, List<Case>> mapAccountCases = new Map<ID, List<Case>>();
                 List<Case> caseList = new List<Case>();
@@ -1122,82 +1117,80 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     for(Case currentCase : [SELECT c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId FROM Case c 
                                             WHERE c.AccountId IN :IFAPaccountIds AND c.Status = 'Closed' AND c.RecordTypeId = : IFAPcaseRecordTypeID]){
 
-                        if(!mapAccountCases.containsKey(currentCase.AccountId))
-                            mapAccountCases.put(currentCase.AccountId, new List<Case>{currentCase});
-                        else
-                            mapAccountCases.get(currentCase.AccountId).add(currentCase);
+                        if(!mapAccountCases.containsKey(currentCase.AccountId)){
+                            mapAccountCases.put(currentCase.AccountId, new List<Case>());
+                        }
+                        mapAccountCases.get(currentCase.AccountId).add(currentCase);
                     }
                 }
-
-                for (Case newCase : Trigger.New) {
-                    // only consider IFAP cases
-                    if (newCase.RecordTypeId == IFAPcaseRecordTypeID) {
-                        caseList.add(newCase);
-                        // validate the account's country
-                        if (!IFAP_BusinessRules.isCountryValid(newCase, accountMap)) { //if false
-                            newCase.addError('The account\'s country is not valid.');
-                        } else
-                            IFAP_BusinessRules.setCountryAreaAndISOCode(newCase, accountMap);
-                        // validate the Agent Code if the financial review type is not 'New'
-                        if (newCase.Financial_Review_Type__c != 'New applications')
-                            //the check on the agent code is done only on number of characters 7<X<11, sure is correct?
-                            if (!IFAP_BusinessRules.isAgentCodeValid(newCase, accountMap))
-                                newCase.addError('The contact\'s Agent Code is not valid.');
+                // only consider IFAP cases
+                for (Case newCase : IFAPCaseList) {
+                    // validate the account's country
+                    if (!IFAP_BusinessRules.isCountryValid(newCase, accountMap)) { //if false
+                        newCase.addError('The account\'s country is not valid.');
+                    } else
+                        IFAP_BusinessRules.setCountryAreaAndISOCode(newCase, accountMap);
+                    // validate the Agent Code if the financial review type is not 'New'
+                    if (newCase.Financial_Review_Type__c != 'New applications')
+                        //the check on the agent code is done only on number of characters 7<X<11, sure is correct?
+                        if (!IFAP_BusinessRules.isAgentCodeValid(newCase, accountMap))
+                            newCase.addError('The contact\'s Agent Code is not valid.');
 
 
-                        // check if the FA template's country matches the case country
-                        if (newCase.EmailTemplate__c != null) {
-                            for (EmailTemplate__c EmTe : IFAPemailtemplate) {
-                                if (EmTe.Id == newCase.EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(EmTe, newCase.IFAP_Country_ISO__c)) {
-                                    newCase.addError('The selected Initial Request Email Template does not match the case country.');
-                                    break;
-                                }
+                    // check if the FA template's country matches the case country
+                    if (newCase.EmailTemplate__c != null) {
+                        for (EmailTemplate__c EmTe : IFAPemailtemplate) {
+                            if (EmTe.Id == newCase.EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(EmTe, newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected Initial Request Email Template does not match the case country.');
+                                break;
                             }
-                        }
-                        // check if the FA reminder template's country matches the case country
-                        if (newCase.Reminder_EmailTemplate__c != null) {
-                            for (EmailTemplate__c REmTe : IFAPemailtemplate) {
-                                if (REmTe.Id == newCase.Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(REmTe, newCase.IFAP_Country_ISO__c)) {
-                                    newCase.addError('The selected Reminder Email Template does not match the case country.');
-                                    break;
-                                }
-                            }
-                        }
-                        // check if the FS template's country matches the case country
-                        if (newCase.FS_EmailTemplate__c != null) {
-                            for (EmailTemplate__c FSEmTe : IFAPemailtemplate) {
-                                if (FSEmTe.Id == newCase.FS_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSEmTe, newCase.IFAP_Country_ISO__c)) {
-                                    newCase.addError('The selected FS Email Template does not match the case country.');
-                                    break;
-                                }
-                            }
-                        }
-                        // check if the FS reminder template's country matches the case country
-                        if (newCase.FS_Reminder_EmailTemplate__c != null) {
-                            for (EmailTemplate__c FSREmTe : IFAPemailtemplate) {
-                                if (FSREmTe.Id == newCase.FS_Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSREmTe, newCase.IFAP_Country_ISO__c)) {
-                                    newCase.addError('The selected FS Reminder Email Template does not match the case country.');
-                                    break;
-                                }
-                            }
-                        }
-                        // Phase 4
-                        // check if the agent already has closed case for the same financial year and if the checkbox has been checked
-                        List<Case> caseClosedList = mapAccountCases.get(newCase.AccountId);
-                        if (!caseClosedList.isEmpty() && newCase.IFAP_CanCreateWhileClosedCase__c == false && IFAP_BusinessRules.checkIFAPFinancialYear(caseClosedList,newCase.IFAP_Financial_Year__c))
-                            newCase.addError('The selected agent already has a closed IFAP case for the financial year ' + newCase.IFAP_Financial_Year__c + '. Please confirm that you really wish to create another IFAP case for this account by checking the confirmation check box at the bottom of this page.');
-                        else if (caseClosedList.isEmpty() && newCase.IFAP_CanCreateWhileClosedCase__c && !IFAP_BusinessRules.checkIFAPFinancialYear(caseClosedList,newCase.IFAP_Financial_Year__c))
-                            newCase.addError('The selected account does not have any closed IFAP cases. Please uncheck the confirmation check box at the bottom of this page');
-                        // check if Parent case already has child IFAP cases
-                        List<Case> caseSAAMList = mapSAAMParentIDCase.get(newCase.ParentId);
-                        List<Case> caseIFAPList = mapIFAPParentIDCase.get(newCase.ParentId);
-                        if (String.valueOf(newCase.ParentId) != '' && (caseSAAMList != null && caseSAAMList.size() > 0) && (caseIFAPList != null && caseIFAPList.size() > 0)) {
-                            newCase.addError('The parent SAAM case already has an IFAP case.');
                         }
                     }
+                    // check if the FA reminder template's country matches the case country
+                    if (newCase.Reminder_EmailTemplate__c != null) {
+                        for (EmailTemplate__c REmTe : IFAPemailtemplate) {
+                            if (REmTe.Id == newCase.Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(REmTe, newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected Reminder Email Template does not match the case country.');
+                                break;
+                            }
+                        }
+                    }
+                    // check if the FS template's country matches the case country
+                    if (newCase.FS_EmailTemplate__c != null) {
+                        for (EmailTemplate__c FSEmTe : IFAPemailtemplate) {
+                            if (FSEmTe.Id == newCase.FS_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSEmTe, newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected FS Email Template does not match the case country.');
+                                break;
+                            }
+                        }
+                    }
+                    // check if the FS reminder template's country matches the case country
+                    if (newCase.FS_Reminder_EmailTemplate__c != null) {
+                        for (EmailTemplate__c FSREmTe : IFAPemailtemplate) {
+                            if (FSREmTe.Id == newCase.FS_Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSREmTe, newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected FS Reminder Email Template does not match the case country.');
+                                break;
+                            }
+                        }
+                    }
+                    // Phase 4
+                    // check if the agent already has closed case for the same financial year and if the checkbox has been checked
+ //Gavinho
+                    List<Case> caseClosedList = mapAccountCases.get(newCase.AccountId);
+                    if (caseClosedList != null && newCase.IFAP_CanCreateWhileClosedCase__c == false && IFAP_BusinessRules.checkIFAPFinancialYear(caseClosedList, newCase.IFAP_Financial_Year__c))
+                        newCase.addError('The selected agent already has a closed IFAP case for the financial year ' + newCase.IFAP_Financial_Year__c + '. Please confirm that you really wish to create another IFAP case for this account by checking the confirmation check box at the bottom of this page.');
+                    else if (caseClosedList == null && newCase.IFAP_CanCreateWhileClosedCase__c && !IFAP_BusinessRules.checkIFAPFinancialYear(caseClosedList,newCase.IFAP_Financial_Year__c))
+                        newCase.addError('The selected account does not have any closed IFAP cases. Please uncheck the confirmation check box at the bottom of this page');
+                    // check if Parent case already has child IFAP cases
+                    List<Case> caseSAAMList = mapSAAMParentIDCase.get(newCase.ParentId);
+                    List<Case> caseIFAPList = mapIFAPParentIDCase.get(newCase.ParentId);
+                    if (String.valueOf(newCase.ParentId) != '' && (caseSAAMList != null && caseSAAMList.size() > 0) && (caseIFAPList != null && caseIFAPList.size() > 0)) {
+                        newCase.addError('The parent SAAM case already has an IFAP case.');
+                    }
+                    
                 }
 
-                Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(true, caseList, null, currentUserProfile, isIfapAuthorizedUser);
+                Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(true, IFAPCaseList, null, currentUserProfile, isIfapAuthorizedUser);
                 for(Case newCase : caseList){
                     if(mapCase.containsKey(newCase.id))
                         if(mapCase.get(newCase.id) == false)
@@ -1279,8 +1272,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             if (!setFSMCaseId.isEmpty()) {
                 map<Id, Case> mapFSMCaseToUpdate = new map<Id, Case>(); //List of FSM case to update
                 //Search Parent Case (FSM)
-                for (Case NCCase : trigger.new) {
-                    if (NCCase.RecordTypeId == ProcessISSPcaseRecordTypeID && mapFSMCases.keyset().contains(NCCase.ParentId)) {
+                for (Case NCCase : SAAMCaseList) {
+                    if (mapFSMCases.keyset().contains(NCCase.ParentId)) {
                         Case FSMCase;
                         if (mapFSMCaseToUpdate.containsKey(NCCase.ParentId))
                             FSMCase = mapFSMCaseToUpdate.get(NCCase.ParentId);
@@ -1330,9 +1323,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                                 FSMCase.FS_Third_Deadline_Date__c = getMondayIfOnWeekend(Date.newInstance(Date.today().addMonths(2).year(), Date.today().addMonths(2).month(), 1).addDays(-1));
                                             }
                                             if (AccntType == CARGO) {
-                                                if (sMsgCargoCheckNewDate == '')
+                                                if (sMsgCargoCheckNewDate == ''){
                                                     FSMCase.FS_Third_Deadline_Date__c = NCCase.New_IFAP_Deadline_date__c;
-                                                else {
+                                                }else {
                                                     NCCase.addError(sMsgCargoCheckNewDate);
                                                     continue;
                                                 }
@@ -1515,7 +1508,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
         }
         /*trgAccelyaRequestSetCountry Trigger.isInsert*/
-
     }
 
 /**************************************************** Trigger.isUpdate ************************************************************************************************/
@@ -1572,7 +1564,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         }
                         if (IFAPupdatedCase.IFAP_Agent_Type__c <> IFAPoldCase.IFAP_Agent_Type__c) {
                             // validate the Agent Type
-                            if (!IFAP_BusinessRules.isAgentTypeValid(IFAPupdatedCase, contactMap))
+                            if (!IFAP_BusinessRules.isAgentTypeValid(IFAPupdatedCase))
                                 IFAPupdatedCase.addError('The contact\'s Agent Type is not valid.');
                         }
                         // validate the Agent Code if the financial review type is not 'New'
@@ -1717,17 +1709,21 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate*/
         if (trgSidraCaseBeforeInsertUpdate) { 
             System.debug('____ [cls CaseBeforeTrigger - trgSidraCaseBeforeInsertUpdate Trigger.isUpdate]');
+            Datetime Last24Hours = Datetime.now().addDays(-1);
 
             Set<Id> accountIds = new Set<Id>();
             for (Case aCase : trigger.new) { // Fill a set of Account Ids for the cases select statement
                 // Only for Sidra small amount cases, only cases created within the last 24 hours
                 System.debug('____ [cls CaseBeforeTrigger - trgSidraCaseBeforeInsertUpdate UPDATE analyze ' + aCase.Subject + 'which has IRR_Withdrawal_Reason__c =  ' + aCase.IRR_Withdrawal_Reason__c + ']');
                 if (aCase.RecordTypeId == SIDRAcaseRecordTypeID && 
-                    (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && aCase.CreatedDate >= Last24Hours && aCase.AccountId != null) {
+                    (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && 
+                    aCase.CreatedDate >= Last24Hours && aCase.AccountId != null
+                ) {
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                     accountIds.add(aCase.AccountId);
                 }     
-                if (aCase.RecordTypeId == SEDAcaseRecordTypeID) {
+                else if (aCase.RecordTypeId == SEDAcaseRecordTypeID) {
+
                     Case aCaseOld = Trigger.oldMap.get(aCase.Id);
                     if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
                         aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
@@ -1737,6 +1733,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
             if (accountIds.size() > 0) { // This list should be empty if all of the cases aren't related to the Sidra Small amount process
                 // Get a list of all related cases
+                Date OneYearAgo = Date.today().addYears(-1);
                 List<Case> casesUpd = [SELECT AccountId, Action_needed_Small_Amount__c, Subject, CreatedDate, Propose_Irregularity__c, IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c
                                        FROM Case 
                                        WHERE RecordTypeId = : SIDRAcaseRecordTypeID
@@ -1848,8 +1845,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             System.debug('____ [cls CaseBeforeTrigger - trgCase_SIS_ICH_AreaVsType Trigger.isUpdate]');
 
             for (case newCase: Trigger.new) {
-                if (newCase.priority != null && newCase.Type != null && newCase.CaseArea__c != null && newCase.CaseArea__c == 'ICH' && newCase.Assigned_To__c == 'ICH Application Support'
-                        && newCase.Status == 'Escalated' && newCase.L2_Support_Priority__c == null && newCase.Priority != 'Priority 1 (Showstopper)') {
+                if (newCase.priority != null && newCase.Type != null && newCase.CaseArea__c != null && newCase.CaseArea__c == 'ICH' 
+                        && newCase.Assigned_To__c == 'ICH Application Support' && newCase.Status == 'Escalated' 
+                        && newCase.L2_Support_Priority__c == null && newCase.Priority != 'Priority 1 (Showstopper)'
+                ) {
                     System.debug('____ [cls CaseBeforeTrigger - trgCase_SIS_ICH_AreaVsType: Assert error3 caught...]');
 
                     newCase.addError(Label.L2_Support_Priority_escalation_check);
@@ -1857,9 +1856,16 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 String oldStatus = trigger.oldMap.get(newCase.id).status;
                 String oldPriority = trigger.oldMap.get(newCase.id).priority;
                 String oldTeam = trigger.oldMap.get(newCase.id).assigned_to__c;
-                if (newCase.priority != null && newCase.Type != null && newCase.CaseArea__c != null && newCase.CaseArea__c == 'ICH' && (((newCase.status != oldStatus || newCase.assigned_to__c != oldTeam)
-                        && newCase.status == 'Escalated' && oldPriority != 'Priority 1 (Showstopper)' && newCase.assigned_to__c == 'ICH Application Support') || (oldPriority != newCase.priority
-                                && newCase.priority == 'Priority 1 (Showstopper)' && !(oldStatus == 'Escalated' && newCase.assigned_to__c == 'ICH Application Support')))) {
+                if (newCase.priority != null && newCase.Type != null && newCase.CaseArea__c != null && newCase.CaseArea__c == 'ICH' && 
+                    (
+                        ( ( newCase.status != oldStatus || newCase.assigned_to__c != oldTeam )
+                            && newCase.status == 'Escalated' && oldPriority != 'Priority 1 (Showstopper)' && newCase.assigned_to__c == 'ICH Application Support'
+                        ) ||
+                        ( oldPriority != newCase.priority && newCase.priority == 'Priority 1 (Showstopper)' && 
+                            !(oldStatus == 'Escalated' && newCase.assigned_to__c == 'ICH Application Support') 
+                        )
+                    )
+                ) {
                     if (newCase.L2_Support_Priority__c == null)
                         newCase.L2_Support_Priority__c = '1 - High';
                     if (newCase.Kale_Status__c == null)
@@ -1899,21 +1905,16 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             } 
         }
         /*trgParentCaseUpdate Trigger.isUpdate*/
-
+//Gavinho
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isUpdate*/
         if (Case_FSM_Handle_NonCompliance_BI_BU) {
             System.debug('____ [cls CaseBeforeTrigger - Case_FSM_Handle_NonCompliance_BI_BU Trigger.isUpdate]');
             //FSM Case(s) found! Proceed with the logic
             if (!setFSMCaseId.isEmpty()) {
-                map<Id, Case> mapFSMCaseToUpdate = new map<Id, Case>(); //List of FSM case to update
                 //Search Parent Case (FSM)
-                for (Case NCCase : trigger.new) {
-                    if (NCCase.RecordTypeId == ProcessISSPcaseRecordTypeID && mapFSMCases.keyset().contains(NCCase.ParentId)) {
-                        Case FSMCase;
-                        if (mapFSMCaseToUpdate.containsKey(NCCase.ParentId))
-                            FSMCase = mapFSMCaseToUpdate.get(NCCase.ParentId);
-                        else
-                            FSMCase = mapFSMCases.get(NCCase.ParentId);
+                for (Case NCCase : SAAMCaseList) {
+                    if (mapFSMCases.keyset().contains(NCCase.ParentId)) {
+                        Case FSMCase = mapFSMCases.get(NCCase.ParentId);
                         string AccntType = FSMCase.Account.Industry;    //Type of account. Cargo Agent / Travel Agent
                         if (FSMCase.FS_Deadline_Date__c != null) {
                             if (FSMCase.isClosed == false) {
@@ -1923,10 +1924,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             }
                         } else {
                             NCCase.AddError('The FS Request Letter has not been sent. Kindly send the letter before you proceed.');
-                        }
-                        //Commit FSM Cases
-                        if (!mapFSMCaseToUpdate.isEmpty()) {
-                            update mapFSMCaseToUpdate.values();
                         }
                     }
                 }
@@ -1940,19 +1937,25 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             Boolean isCurrentUserProfileInit = false;
             Boolean isAdmin = false;
             Boolean isSiteGuestUser = false;
-            currentUserProfile = getUserProfile();
 
             // Get contactID from Trigger.new to use in the query
             Set<Id> contactIDList = new Set<Id>();
             Set<Id> relatedIDCardAppList = new Set<Id>();
-            List<Contact> ContactToUpdate = new List<Contact>(); 
-            Contact theContact;
+            
+            List<Case> idCardCases = new List<Case>();
+            Map<String, Case> casePerParentId = new map<String, Case>();
 
             for (Case aCase : trigger.new) { 
                 Case oldCase = Trigger.oldMap.get(aCase.ID);
-                if (aCase.RecordTypeId == caseRecordType && aCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_APPROVED && oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL) {
-                    contactIDList.add(aCase.ContactId);
-                    relatedIDCardAppList.add(aCase.Related_ID_Card_Application__c);
+
+                if(aCase.RecordTypeId == caseRecordType){
+                    idCardCases.add(aCase);
+                    if (aCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_APPROVED && oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL) {
+                        contactIDList.add(aCase.ContactId);
+                        relatedIDCardAppList.add(aCase.Related_ID_Card_Application__c);
+                    }
+                }else if (aCase.ParentID != null){
+                    casePerParentId.put(aCase.parentId, acase);
                 }
             }
 
@@ -1979,105 +1982,101 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                                       (SELECT Id FROM ID_Cards__r LIMIT 1)
                                                     FROM ID_Card_Application__c
                                                     WHERE ID IN :relatedIDCardAppList]);  
-                             
-            for (Case aCase : trigger.new) {
+            //only iterate Case with ID Card RecordType                 
+            for (Case aCase : idCardCases) {
 
-                if (aCase.RecordTypeId == caseRecordType) {
-                    //R.A 6/17/2013: allow Admins to change the status of ID Card otherwise blocks the change of Approval, Pending Payment and Pending
-                    if(!isCurrentUserProfileInit && currentUserProfile != null) {
-                        isAdmin = currentUserProfile.Name.toLowerCase().contains('system administrator');
-                        isSiteGuestUser = currentUserProfile.Name.toLowerCase().contains('idcard portal profile');
-                        isCurrentUserProfileInit = true;
-                    }
-                
-                    if (isCurrentUserProfileInit) {
-                        Case oldCase = Trigger.oldMap.get(aCase.ID);
-                        if ((!isAdmin && !isSiteGuestUser) || Test.isRunningTest()) {
-                            if (oldCase.ID_Card_Status__c == aCase.ID_Card_Status__c) {
-                                continue;
-                            }
-                            if (oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_APPROVED && aCase.ID_Card_Status__c != IDCardUtil.CASECARDSTATUS_REJECTED) {
-                                aCase.addError('The ID Card Case cannot be updated if the status is ' + oldCase.ID_Card_Status__c);
-                                continue;
-                            }
-                            if (oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_REJECTED && aCase.ID_Card_Status__c != IDCardUtil.CASECARDSTATUS_APPROVED) {
-                                aCase.addError('The ID Card Case cannot be updated if the status is ' + oldCase.ID_Card_Status__c);
-                                continue;
-                            }
-                            if (oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL && (aCase.ID_Card_Status__c != IDCardUtil.CASECARDSTATUS_APPROVED && aCase.ID_Card_Status__c != IDCardUtil.CASECARDSTATUS_REJECTED)) {
-                                aCase.addError('The ID Card Case cannot be updated from the status ' + oldCase.ID_Card_Status__c + ' to the status ' + aCase.ID_Card_Status__c);
-                                continue;
-                            }
-                        }
-                        //Case For Cheque Payment Manager Approval
-                        //Code not bulkied but this trigger runs only in case of cheque payment after the manager approves the case
-                        SavePoint sp = database.setSavepoint();
-
-                        try {
-                            if (aCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_APPROVED && oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL) {
-                                ID_Card__c idCard;
-                                ID_Card_Application__c application = idCardAppMap.get(aCase.Related_ID_Card_Application__c);
-
-                                // To Avoid Creating Card/Contact more than once
-                                if (application.ID_Cards__r.size() == 0) {
-                                    //**Create Contact only for new application
-                                    if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW){
-                                        theContact = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
-                                        theContact.Email = application.Email_admin__c; 
-                                    }
-                                    if (theContact == null) 
-                                        throw new IDCardApplicationException(string.format(Label.ID_Card_Contact_Not_found_for_VER, new string[] {application.VER_Number__c}));
-                                    
-                                    idCard = IDCardUtil.CreateIDCardObjectFromApplication(application, theContact);
-                                    if (idCard != null)
-                                        insert idCard;
-                                }else{
-
-                                    theContact = contactMap.get(aCase.ContactId);
-                                    idCard = theContact.id_cards__r[0];
-
-                                    //Update Contact Info
-                                    theContact.LastName = application.Last_Name__c;
-                                    theContact.ID_Card_Preferred_Language__c = application.IDCard_Prefered_Language__c;
-                                    theContact.Phone = application.Telephone__c;
-                                    theContact.Email = application.Email_admin__c;    
-                                    theContact.Position__c = application.Position_in_Current_Agency__c;
-                                    theContact.Duties__c = application.Duties_in_Current_Agency__c;
-                                    theContact.Hours_per_week__c = application.Hours_worked__c;
-                                    theContact.Solicitation_Flag__c = application.Solicitation_Flag__c;
-                                    theContact.Revenue_Confirmation__c = application.Revenue_Confirmation__c;
-                                    theContact.AgencyShare_Confirmation__c = application.AgencyShare_Confirmation__c;
-                                    
-                                    if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REPLACEMENT)
-                                        theContact.AccountId = aCase.Account.Id;
-                                    //Future action: REMOVE UPDATE from FOR 
-                                    update theContact;
-                                }
-
-                                // Change the status of the old card to "Cancelled" (only on reissue => Lost/stolen)
-                                if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE) {
-                                    //find old card to cancel it
-                                    if (idCard != null) {
-                                        idCard.Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
-                                        //Future action: REMOVE UPDATE from FOR 
-                                        update idCard;
-                                    }
-                                }
-                                // call the cropping tool web service to rename the photo filename (from a GUID to the UIR)
-                                IDCardUtil.renameIDCardPhotoOfContact(application.ID, '', UserInfo.getSessionId());
-                            }
-                        } catch (Exception e) {
-                            database.rollback(sp);
-                            aCase.addError('** Error ' + e.getMessage() + '  ' + e.getStackTraceString());
-                            break;
-                        }
-                    }
-                }else {
-                    //if case a now a parent id add it to map for checking
-                    if (aCase.ParentID != null )
-                        casePerParentId.put(aCase.parentId, acase);
+                //R.A 6/17/2013: allow Admins to change the status of ID Card otherwise blocks the change of Approval, Pending Payment and Pending
+                if(!isCurrentUserProfileInit && currentUserProfile != null) {
+                    isAdmin = currentUserProfile.Name.toLowerCase().contains('system administrator');
+                    isSiteGuestUser = currentUserProfile.Name.toLowerCase().contains('idcard portal profile');
+                    isCurrentUserProfileInit = true;
                 }
-            } // END for (Case aCase : trigger.new)
+            
+                if (isCurrentUserProfileInit) {
+                    Case oldCase = Trigger.oldMap.get(aCase.ID);
+                    if ((!isAdmin && !isSiteGuestUser) || Test.isRunningTest()) {
+                        if (oldCase.ID_Card_Status__c == aCase.ID_Card_Status__c) {
+                            continue;
+                        }
+                        if (oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_APPROVED && aCase.ID_Card_Status__c != IDCardUtil.CASECARDSTATUS_REJECTED) {
+                            aCase.addError('The ID Card Case cannot be updated if the status is ' + oldCase.ID_Card_Status__c);
+                            continue;
+                        }
+                        if (oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_REJECTED && aCase.ID_Card_Status__c != IDCardUtil.CASECARDSTATUS_APPROVED) {
+                            aCase.addError('The ID Card Case cannot be updated if the status is ' + oldCase.ID_Card_Status__c);
+                            continue;
+                        }
+                        if (oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL && (aCase.ID_Card_Status__c != IDCardUtil.CASECARDSTATUS_APPROVED && aCase.ID_Card_Status__c != IDCardUtil.CASECARDSTATUS_REJECTED)) {
+                            aCase.addError('The ID Card Case cannot be updated from the status ' + oldCase.ID_Card_Status__c + ' to the status ' + aCase.ID_Card_Status__c);
+                            continue;
+                        }
+                    }
+                    //Case For Cheque Payment Manager Approval
+                    //Code not bulkied but this trigger runs only in case of cheque payment after the manager approves the case
+                    SavePoint sp = database.setSavepoint();
+
+                    try {
+                        Contact theContact;
+                        if (aCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_APPROVED && oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL) {
+                            ID_Card__c idCard;
+                            ID_Card_Application__c application = idCardAppMap.get(aCase.Related_ID_Card_Application__c);
+
+                            // To Avoid Creating Card/Contact more than once
+                            if (application.ID_Cards__r.size() == 0) {
+                                //**Create Contact only for new application
+                                if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW){
+                                    theContact = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
+                                    theContact.Email = application.Email_admin__c; 
+                                }
+                                if (theContact == null) 
+                                    throw new IDCardApplicationException(string.format(Label.ID_Card_Contact_Not_found_for_VER, new string[] {application.VER_Number__c}));
+                                
+                                idCard = IDCardUtil.CreateIDCardObjectFromApplication(application, theContact);
+                                if (idCard != null)
+                                    insert idCard;
+                            }else{
+
+                                theContact = contactMap.get(aCase.ContactId);
+                                idCard = theContact.id_cards__r[0];
+
+                                //Update Contact Info
+                                theContact.LastName = application.Last_Name__c;
+                                theContact.ID_Card_Preferred_Language__c = application.IDCard_Prefered_Language__c;
+                                theContact.Phone = application.Telephone__c;
+                                theContact.Email = application.Email_admin__c;    
+                                theContact.Position__c = application.Position_in_Current_Agency__c;
+                                theContact.Duties__c = application.Duties_in_Current_Agency__c;
+                                theContact.Hours_per_week__c = application.Hours_worked__c;
+                                theContact.Solicitation_Flag__c = application.Solicitation_Flag__c;
+                                theContact.Revenue_Confirmation__c = application.Revenue_Confirmation__c;
+                                theContact.AgencyShare_Confirmation__c = application.AgencyShare_Confirmation__c;
+                                
+                                if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REPLACEMENT)
+                                    theContact.AccountId = aCase.Account.Id;
+                                //Future action: REMOVE UPDATE from FOR 
+                                update theContact;
+                            }
+
+                            // Change the status of the old card to "Cancelled" (only on reissue => Lost/stolen)
+                            if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE) {
+                                //find old card to cancel it
+                                if (idCard != null) {
+                                    idCard.Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
+                                    //Future action: REMOVE UPDATE from FOR 
+                                    update idCard;
+                                }
+                            }
+                            // call the cropping tool web service to rename the photo filename (from a GUID to the UIR)
+                            IDCardUtil.renameIDCardPhotoOfContact(application.ID, '', UserInfo.getSessionId());
+                        }
+                    } catch (Exception e) {
+                        database.rollback(sp);
+                        aCase.addError('** Error ' + e.getMessage() + '  ' + e.getStackTraceString());
+                        break;
+                    }
+                }
+                   
+            }// END for (Case aCase : idCardCases)
 
             //2014-07-17 new interactiuon feature
             if (casePerParentId.size() > 0) {
@@ -2186,14 +2185,4 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
     }
     /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
-
-    /*
-     * Get User profile
-     */
-    private static Profile getUserProfile(){
-        if(currentUserProfile == null)
-            return [SELECT ID, Name FROM Profile WHERE id = :UserInfo.getProfileId() limit 1];
-        else
-            return currentUserProfile;
-    }
 }

@@ -45,9 +45,10 @@ public with sharing class SidraLiteManager {
             WSSidraLite.insertComments(listSidraLite);
 
             // set default case assignment rule
+            list<Case> listCase = [Select Id from Case where id in :listSidraLite];
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
-            Database.update(listSidraLite, dmo);
+            Database.update(listCase, dmo);
         }
     }
 
@@ -158,52 +159,54 @@ public with sharing class SidraLiteManager {
         for (Case cse: listCases) {
             Case parentCase = mapParents.get(cse.ParentId);
             Account account = mapAccounts.get(cse.AccountId);
-            
-            // if parent case is SMAP
-            if (parentCase.RecordTypeId == RECORDTYPE_SMAP) {
-                try {
-                    checkInsertSingleSidraLiteSmapParentCase(cse, parentCase, account);
-                } catch (SidraLiteException e) {
-                    cse.addError(e.getMessage());
-                }
-
-            // if parent case is OSCAR
-            } else if (parentCase.RecordTypeId == RECORDTYPE_OSCAR) {
-                try {
-                    checkInsertSingleSidraLiteOscarParentCase(cse, parentCase, account);
-                } catch (SidraLiteException e) {
-                    cse.addError(e.getMessage());
-                }
-
-            // if parent case is SAAM
-            } else if (parentCase.RecordTypeId == RECORDTYPE_SAAM) {
-                try {
-                    Case updateCase = checkInsertSingleSidraLiteSaamParentCase(cse, parentCase, account);
-                    listUpdateParent.add(updateCase);
-                } catch (SidraLiteException e) {
-                    cse.addError(e.getMessage());
-                }
-
-            // if parent case is Invoicing Collection Cases
-            } else if (parentCase.RecordTypeId == RECORDTYPE_INVOICING) {
+              
+            if(parentCase != null){
+                // if parent case is SMAP
+                if (parentCase.RecordTypeId == RECORDTYPE_SMAP) {
                     try {
-                        Case updateCase = checkInsertSingleSidraLiteInvoicingParentCase(cse, parentCase, account);
+                        checkInsertSingleSidraLiteSmapParentCase(cse, parentCase, account);
+                    } catch (SidraLiteException e) {
+                        cse.addError(e.getMessage());
+                    }
+
+                // if parent case is OSCAR
+                } else if (parentCase.RecordTypeId == RECORDTYPE_OSCAR) {
+                    try {
+                        checkInsertSingleSidraLiteOscarParentCase(cse, parentCase, account);
+                    } catch (SidraLiteException e) {
+                        cse.addError(e.getMessage());
+                    }
+
+                // if parent case is SAAM
+                } else if (parentCase.RecordTypeId == RECORDTYPE_SAAM) {
+                    try {
+                        Case updateCase = checkInsertSingleSidraLiteSaamParentCase(cse, parentCase, account);
                         listUpdateParent.add(updateCase);
                     } catch (SidraLiteException e) {
                         cse.addError(e.getMessage());
                     }
 
-            // if parent is IFAP case
-            } else if (parentCase.RecordTypeId == RECORDTYPE_IFAP) {
-                try {
-                    Case updateCase = checkInsertSingleSidraLiteIfapParentCase(cse, parentCase, account);
-                    listUpdateParent.add(updateCase);
-                    cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
-                } catch (SidraLiteException e) {
-                    cse.addError(e.getMessage());
+                // if parent case is Invoicing Collection Cases
+                } else if (parentCase.RecordTypeId == RECORDTYPE_INVOICING) {
+                        try {
+                            Case updateCase = checkInsertSingleSidraLiteInvoicingParentCase(cse, parentCase, account);
+                            listUpdateParent.add(updateCase);
+                        } catch (SidraLiteException e) {
+                            cse.addError(e.getMessage());
+                        }
+
+                // if parent is IFAP case
+                } else if (parentCase.RecordTypeId == RECORDTYPE_IFAP) {
+                    try {
+                        Case updateCase = checkInsertSingleSidraLiteIfapParentCase(cse, parentCase, account);
+                        listUpdateParent.add(updateCase);
+                        cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
+                    } catch (SidraLiteException e) {
+                        cse.addError(e.getMessage());
+                    }
+                } else {
+                    cse.addError('You cannot create a SIDRA Lite Case for this case type');
                 }
-            } else {
-                cse.addError('You cannot create a SIDRA Lite Case for this case type');
             }
         }
         return listUpdateParent;
