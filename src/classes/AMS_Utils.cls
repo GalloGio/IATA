@@ -3062,17 +3062,4 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     /*** AMSU-179 ***/
     public static final List<Schema.FieldSetMember> ACCOUNT_FIELDS_TO_VALIDATE = SObjectType.Account.FieldSets.AMS_ACCOUNT_FIELDS_TO_VALIDATE.getFields();
 
-    /*** AMSU-173 ***/
-    public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
-
-    /*** AMSU-155 ***/
-    public static Boolean isMandatoryDueDiligence(AMS_OSCAR__c oscar) {
-        if(oscar == null) {
-            return false;
-        }
-        AMS_AgencyChangesConfigHelper.ChangesConfig changesConfig = AMS_AgencyChangesConfigHelper.getConfig(oscar);
-        //et<String> mandatory = new Set<String> {'Combination03', 'Combination04'};
-        System.debug('changesConfig.confi: ' + changesConfig);
-        return String.isNotBlank(changesConfig.config.TCA_Not_Applicable_Steps__c) && !changesConfig.config.TCA_Not_Applicable_Steps__c.contains('STEP17');
-    }
 }
