@@ -521,7 +521,7 @@
                                                                             reRender="treeArea, componentsArea, buttonsArea"
                                                                             value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}"
                                                                             disabled="{!NOT(ownershipCompleted)}"/>
-                                                                            <!--rui-->
+
                                                                         <apex:commandButton styleclass="btn btn-default"
                                                                             action="{!updateDetails}" onclick=""
                                                                             status="WaitingStatus"
