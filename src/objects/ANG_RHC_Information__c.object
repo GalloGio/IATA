@@ -180,20 +180,6 @@
         <type>Currency</type>
     </fields>
     <fields>
-        <fullName>ANG_Preferred_RHC_Currency__c</fullName>
-        <description>Preferred currency for the RHC information</description>
-        <externalId>false</externalId>
-        <label>Preferred RHC Currency</label>
-        <required>true</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>ANG_Provisional_RHC_Last_Update__c</fullName>
         <description>The date of the Provisional RHC Amount last update. This information comes from an external system and should not be updated manually.</description>
         <externalId>false</externalId>

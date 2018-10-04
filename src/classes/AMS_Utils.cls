@@ -3064,6 +3064,22 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return res;
     }
 
+    // validate that RHC / Financial Security currency is allowed
+    public static void runCurrencyValidations(List<SObject> objects) {
+        Map<String,ANG_RHC_Currencies__c> currencyConfs = ANG_RHC_Currencies__c.getall();
+        List<ANG_RHC_Currencies__c> sortedList = currencyConfs.values();
+        sortedList.sort();
+
+        String allowedCurrencies = '';
+        for(ANG_RHC_Currencies__c conf : sortedList){
+            allowedCurrencies +='<br/>'+conf.name +' - '+conf.Currency_Name__c; 
+        }
+
+        for(SObject obj :objects){
+            if(!currencyConfs.containsKey(String.valueOf(obj.get('CurrencyIsoCode')))) obj.addError('The Currency selected is not allowed. Currently allowed currencies are: <br/>'+allowedCurrencies, false);
+        }
+    }
+    
     public static final List<Schema.SObjectField> STAGING_AREA_FIELDS_TO_VALIDATE = new List<Schema.SObjectField> {
         AMS_Pax_Accreditation_Form__c.Account_Name__c, 
         AMS_Pax_Accreditation_Form__c.IATACode__c, 
