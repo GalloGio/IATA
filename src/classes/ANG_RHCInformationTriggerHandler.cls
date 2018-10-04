@@ -14,6 +14,7 @@ public class ANG_RHCInformationTriggerHandler{
 	// ************************************************************
 	
 	public void onBeforeInsert(){
+		runValidations();
 		convertAndSumFS();
 		sumRHCAmount();
 	}
@@ -322,4 +323,18 @@ public class ANG_RHCInformationTriggerHandler{
 
 	}
 	*/
+
+	private void runValidations() {
+		// validate 
+		Map<String,ANG_RHC_Currencies__c> currencyConfs = ANG_RHC_Currencies__c.getall();
+
+		String allowedCurrencies = '';
+		for(ANG_RHC_Currencies__c conf : currencyConfs.values()){
+			allowedCurrencies += '\n'+conf.name +' - '+conf.Currency_Name__c; 
+		}
+
+		for(ANG_RHC_Information__c rhcInfo :triggerNew){
+			if(!currencyConfs.containsKey(rhcInfo.ANG_Preferred_RHC_Currency__c)) rhcInfo.addError('The Preferred Currency selected is not allowed. Currently allowed currencies are:\n'+allowedCurrencies);
+		}
+	}
 }
