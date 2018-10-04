@@ -5,7 +5,7 @@
 **/
 public with sharing class ISSP_SIS_AccountHandler {
     
-    public static final ID RT_AGENCY = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+    public static final ID RT_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
     public static set<ID> ALLOWED_COUNTRIES = null;
     public static Boolean BLOCK_EXECUTION = false;
     
@@ -17,13 +17,12 @@ public with sharing class ISSP_SIS_AccountHandler {
         //initialize map only once
         if (MAP_SIS_ACCOUNT_STATUS == null) {
             MAP_SIS_ACCOUNT_STATUS = new map<String,ISSP_SIS_Account_Status__c>();
-            Map<String,Id> mapAccountRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account');
             for (ISSP_SIS_Account_Status__c setting: ISSP_SIS_Account_Status__c.getAll().values()) {
                 list<String> listISOCode = setting.Country_ISO_Codes__c==null? new list<String>(): setting.Country_ISO_Codes__c.split(',');
                 list<String> listLocations = setting.Location_Class__c==null? new list<String>(): setting.Location_Class__c.split(',');
                 for (String countryISOCode: listISOCode) {
                     for (String location: listLocations) {
-                        String key = mapAccountRT.get(setting.Recordtype__c) + ' ' + setting.Status__c + ' ' + location + ' ' + countryISOCode;
+                        String key = RecordTypeSingleton.getInstance().getRecordTypeId('Account', setting.Recordtype__c) + ' ' + setting.Status__c + ' ' + location + ' ' + countryISOCode;
                         MAP_SIS_ACCOUNT_STATUS.put(key, setting);
                     }
                 }
