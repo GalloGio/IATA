@@ -15,8 +15,8 @@ public with sharing class RemoteInvocationTriggerHandler {
 	public static final String REMOTE_INVOCATION_STATUS_PROGRESS     = 'In Progress';
 
 	//Remote Invocation Recordtypes
-	public static final ID RECTYPE_NEWGEN = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c',NEWGEN_EASY_PAY);
-	public static final ID RECTYPE_TIP    = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c',TIP_IFG_REPORT);
+	public static final ID RECTYPE_NEWGEN = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Remote_Invocation__c').get(NEWGEN_EASY_PAY);
+	public static final ID RECTYPE_TIP    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Remote_Invocation__c').get(TIP_IFG_REPORT);
 
 	//to store the remote invocations with errors
 	public Set<ID> remoteInvocationWithErrors;
