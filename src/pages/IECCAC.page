@@ -230,27 +230,6 @@
 
 
                                         <tr>
-                                            <td>Agency Class</td>
-                                            <td>
-                                                <apex:outputPanel rendered="{!oAgency.Related_Accreditation_Class__r != null && oAgency.Related_Accreditation_Class__r.Class__r != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != ''}">
-                                                    <span class="features simptip-position-right simptip-movable simptip-color" data-tooltip="{!oAgency.Related_Accreditation_Class__r.Class__r.Definition__c}">{!oAgency.Related_Accreditation_Class__r.Class__r.Name}</span>
-                                                </apex:outputPanel>
-                                                <apex:outputText value="{!oAgency.Related_Accreditation_Class__r.Class__r.Name}" rendered="{!oAgency.Related_Accreditation_Class__r != null && oAgency.Related_Accreditation_Class__r.Class__r != null && NOT(oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != '')}" />
-
-                                            </td>
-
-                                            <td>Agency Type</td>
-                                            <td>
-                                                <apex:outputPanel rendered="{!oAgency.Location_Type__r != null && oAgency.Location_Type__r.Definition__c != null && oAgency.Location_Type__r.Definition__c != ''}">
-                                                    <span class="features simptip-position-right simptip-movable simptip-color" data-tooltip="{!oAgency.Location_Type__r.Definition__c}">{!oAgency.Location_Type__r.Name}</span>
-                                                </apex:outputPanel>
-                                                <apex:outputText value="{!oAgency.Location_Type__r.Name}" rendered="{!oAgency.Location_Type__r != null && NOT(oAgency.Location_Type__r.Definition__c != null && oAgency.Location_Type__r.Definition__c != '')}" />
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
                                             <td>Approval Date</td>
                                             <td>
                                                 <apex:outputText value="{0,date, dd MMM yyyy}" rendered="{!oAgency.Related_Accreditation_Class__r != null}">
@@ -262,6 +241,44 @@
                                             <td>
                                                 <apex:outputText value="{!oAgency.Related_Main_Phone__r.Name}" rendered="{!oAgency.Related_Main_Phone__r != null}" />
                                                 <BR/>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td>Agency Class</td>
+                                            <td>
+                                                <apex:outputPanel rendered="{!oAgency.Related_Accreditation_Class__r != null && oAgency.Related_Accreditation_Class__r.Class__r != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != ''}">
+                                                    <span class="features simptip-position-right simptip-movable simptip-color" data-tooltip="{!oAgency.Related_Accreditation_Class__r.Class__r.Definition__c}">{!oAgency.Related_Accreditation_Class__r.Class__r.Name}</span>
+                                                </apex:outputPanel>
+                                                <apex:outputText value="{!oAgency.Related_Accreditation_Class__r.Class__r.Name}" rendered="{!oAgency.Related_Accreditation_Class__r != null && oAgency.Related_Accreditation_Class__r.Class__r != null && NOT(oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != '')}" />
+                                            </td>
+
+                                            <td>Agency Type</td>
+                                            <td>
+                                                <apex:outputPanel rendered="{!oAgency.Location_Type__r != null && oAgency.Location_Type__r.Definition__c != null && oAgency.Location_Type__r.Definition__c != ''}">
+                                                    <span class="features simptip-position-right simptip-movable simptip-color" data-tooltip="{!oAgency.Location_Type__r.Definition__c}">{!oAgency.Location_Type__r.Name}</span>
+                                                </apex:outputPanel>
+                                                <apex:outputText value="{!oAgency.Location_Type__r.Name}" rendered="{!oAgency.Location_Type__r != null && NOT(oAgency.Location_Type__r.Definition__c != null && oAgency.Location_Type__r.Definition__c != '')}" />
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <apex:outputText rendered="{!oAgency.Accreditation_Model__c != null}" value="Accreditation Model"/></td>
+                                            <td>
+                                                <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'L'}">
+                                                    GoLite Model under NewGen ISS
+                                                </apex:outputpanel>
+                                                <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'S'}">
+                                                    GoStandard Model under NewGen ISS
+                                                </apex:outputpanel>
+                                                <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'G'}">
+                                                    GoGlobal Model under NewGen ISS
+                                                </apex:outputpanel>
+                                                <apex:outputpanel rendered="{!oAgency.Accreditation_Model__c == 'T'}">
+                                                    Traditonal Model not under NewGen
+                                                </apex:outputpanel>
                                             </td>
                                         </tr>
                                     </table>

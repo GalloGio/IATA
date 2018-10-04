@@ -212,7 +212,7 @@
 
             <!-- left part-->
             <apex:pageBlockSection columns="1">
-                <apex:pageBlockSectionItem labelStyle="width:26%" rendered="{!OR(ca.account.BillingStreet != '', ca.account.BillingCity != '', ca.account.BillingPostalCode != '', ca.account.BillingCountry != '')}">
+                <apex:pageBlockSectionItem labelStyle="width:26%">
                     <apex:outputText value="<b>Billing Address:</b><br/>{0} <br/>{1}<br/>{2}<br/><br/>" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
                         <apex:param value="{!ca.account.BillingStreet}" />
                         <apex:param value="{!ca.account.BillingCity},&nbsp;{!ca.account.BillingPostalCode}" />
@@ -220,7 +220,7 @@
                     </apex:outputText>
                 </apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem labelStyle="width:26%" rendered="{!OR(ca.account.ShippingStreet != '', ca.account.ShippingCity != '', ca.account.ShippingPostalCode != '', ca.account.ShippingCountry != '')}">
+                <apex:pageBlockSectionItem labelStyle="width:26%">
                     <apex:outputText value="<b>Shipping Address:</b><br />{0}<br />{1}<br />{2}<br /><br />" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
                         <apex:param value="{!ca.account.ShippingStreet}" />
                         <apex:param value="{!ca.account.ShippingCity},&nbsp;{!ca.account.ShippingPostalCode}" />
@@ -252,6 +252,11 @@
                         $(".shipping_city__c").attr('disabled','disabled');
                         $(".shipping_postal_code__c").attr('disabled','disabled');
                         $(".shipping_state__c").attr('disabled','disabled');
+
+                        $(".shipping_street__c").val("{!ca.account.ShippingStreet}");
+                        $(".shipping_city__c").val("{!ca.account.ShippingCity}");
+                        $(".shipping_postal_code__c").val("{!ca.account.ShippingPostalCode}");
+                        $(".shipping_state__c").val("{!ca.account.ShippingState}");
                     }
 
                     $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
@@ -318,7 +323,7 @@
                 </apex:outputPanel>
 
                 <apex:pageBlockSectionItem labelStyleClass="agencyLocationComponent pageBlockSectionItem" dataStyleClass="agencyLocationComponent pageBlockSectionItem" id="locationItemWebsite">
-                        <apex:outputLabel value="* {!$Label.ISSP_Registration_Website}"/>
+                        <apex:outputLabel value="{!$Label.ISSP_Registration_Website}"/>
                         <apex:inputField id="Website__c" value="{!ca.fw.newform.Website__c}"/>
                 </apex:pageBlockSectionItem>
 
@@ -1016,7 +1021,7 @@
             $(".country__c").attr('readonly', true);
             $(".country__c").attr('disabled','disabled');
 
-            $(".shipping_country__c").val("{!ca.isocountry.Name}");
+            $(".shipping_country__c").val("{!ca.account.ShippingCountry}");
             $(".shipping_country__c").attr('readonly', true);
             $(".shipping_country__c").attr('disabled','disabled');
         }

@@ -985,7 +985,8 @@
                                 </apex:actionStatus>
 
                                 <apex:outputPanel id="companyModalIataCodeValidation">
-                                    <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(companyModalNameOfEmployer=='', iatacode!='')}"/>
+                                    <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(NOT(ownerWithSameIATACode),companyModalNameOfEmployer=='', iatacode!='')}"/>
+                                    <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_SAME_OWNER_ERROR}" styleClass="bg-danger" escape="false" rendered="{!AND(ownerWithSameIATACode, iatacode!='')}"/>
                                     <apex:outputPanel rendered="{!AND(companyModalNameOfEmployer!='', iatacode!='')}">
                                         <span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_Agency_name} </span>{!companyModalNameOfEmployer} <br/>
                                         <span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_AMS_Address} </span> {!companyModalAddress}

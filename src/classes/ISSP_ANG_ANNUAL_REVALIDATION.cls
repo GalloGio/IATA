@@ -102,6 +102,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     Integer cntAgencyLookups;
     public Boolean isAddCompanyModal {get; set;}
     public string txtHelpCurrency {get; set;}
+    public Boolean ownerWithSameIATACode {get; set;}
 	//modals
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
@@ -398,7 +399,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity,
                        Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c,
                        Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Sector__c, Category__c,
-                       License_Number__c, GDS__c,
+                       License_Number__c, GDS__c, Site,
                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
 				  From Account
 				 Where Id in :accountIds
@@ -1327,10 +1328,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 				Pattern validEmail = Pattern.compile( '([a-zA-Z0-9_\\-\\.]+)@(((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,6}|[0-9]{1,6}))');
 
-				if (currentAccount.fw.newform.Branch_Office_Email__c == null) {
-					currentAccount.fw.newform.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				} else if (currentAccount.fw.newForm.Branch_Office_Email__c != null && !validEmail.matcher(currentAccount.fw.newForm.Branch_Office_Email__c).matches()) {
+				if (currentAccount.fw.newForm.Branch_Office_Email__c != null && !validEmail.matcher(currentAccount.fw.newForm.Branch_Office_Email__c).matches()) {
 					currentAccount.fw.newForm.Branch_Office_Email__c.addError(Label.ISSP_AMS_Invalid_Email);
 	                errorFound = true;
 				} else if (currentAccount.fw.newform.Branch_Office_Email__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_Email__c).matches()) {
@@ -1659,11 +1657,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                 contactSaved = false;
                 return;
             }
-            if (currentAccount.newContact.Registration_number__c == null || currentAccount.newContact.Name == null || currentAccount.newContact.Financial_interest__c == null ) {
-                contactSaved = false;
-                return;
-            }
-            if (!validateCharactersInCompanyWindow()) {
+
+            if (currentAccount.newContact.Registration_number__c == null || currentAccount.newContact.Name == null || currentAccount.newContact.Financial_interest__c == null || !validateCharactersInCompanyWindow() || ownerWithSameIATACode) {
                 contactSaved = false;
                 return;
             }
@@ -2009,9 +2004,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         Account generalAccount = null;
         companyModalAddress = '';
         companyModalNameOfEmployer = '';
+        ownerWithSameIATACode = false;
 
         if (iatacode == null || iatacode.length() < 7)
             return null;
+
+        if (iatacode == currentAccount.account.IATACode__c || iatacode == currentAccount.account.Site) {
+        	ownerWithSameIATACode = true;
+        	return null;
+        }
 
         //Limit how many calls can be made to this service, to prevent a user from attempting to retrieve full list of agents
         cntAgencyLookups += 1;
@@ -2029,7 +2030,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		System.debug('alex agentaccounts : ' + agentaccounts);
 
         if (agentaccounts!= null && !agentaccounts.isEmpty()) {
-			generalAccount = agentaccounts[0];
+        	generalAccount = agentaccounts[0];
             String agentAddress;
 
             TravelAgentPrevAccount = agentaccounts[0];

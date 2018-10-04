@@ -4214,6 +4214,37 @@
                 "IsDependent": true
               },
               {
+                "Name": "STEP13",
+                "Required": [
+                  "STEP8",
+                  "STEP9"
+                ],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_failed"
+                  },
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_inProgress"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "Send_inspection_request__c",
+                  "STEP13__c"
+                ],
+                "IsDependent": false
+              },
+              {
                 "Name": "STEP14",
                 "Required": [
                   "STEP8",
@@ -4689,6 +4720,37 @@
                 "IsDependent": true
               },
               {
+                "Name": "STEP13",
+                "Required": [
+                  "STEP8",
+                  "STEP9"
+                ],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_failed"
+                  },
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_inProgress"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "Send_inspection_request__c",
+                  "STEP13__c"
+                ],
+                "IsDependent": false
+              },
+              {
                 "Name": "STEP14",
                 "Required": [
                   "STEP8",
@@ -5118,6 +5180,42 @@
                 ],
                 "IsDependent": true
               }
+            ]
+          },
+          {
+          "Name": "AMS_OSCAR_APPLICATIONPROCESSING",
+          "Steps": [
+            {
+                    "Name": "STEP13",
+                    "Required": [
+                      "STEP8",
+                      "STEP9"
+                    ],
+                    "Actions": [],
+                    "Automations": [
+                      {
+                        "Status": "Passed",
+                        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_succeeded"
+                      },
+                      {
+                        "Status": "Failed",
+                        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_failed"
+                      },
+                      {
+                        "Status": "In Progress",
+                        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_inProgress"
+                      },
+                      {
+                        "Status": "Not Applicable",
+                        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_notApplicable"
+                      }
+                    ],
+                    "DisplayFields": [
+                      "Send_inspection_request__c",
+                      "STEP13__c"
+                    ],
+                    "IsDependent": false
+                  }
             ]
           },
           {
