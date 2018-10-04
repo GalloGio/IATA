@@ -17476,6 +17476,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Total Ownership (Individuals + Companies) must equal 100% in order to submit to IATA.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</shortDescription>
+        <value>According to our records the Ownership for this IATA Code is not 100%. Please update the Agency details (Agency Ownership / Shareholding section), to ensure that the total ownership equals 100% in order that we can update our records.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</fullName>
         <language>en_US</language>
         <protected>false</protected>

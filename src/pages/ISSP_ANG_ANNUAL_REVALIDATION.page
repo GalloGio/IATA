@@ -1,5 +1,4 @@
-<apex:page controller="ISSP_ANG_ANNUAL_REVALIDATION" cache="false" sidebar="false" showHeader="false" standardStylesheets="true"
-    applyBodyTag="false" applyHtmlTag="false" action="{!securityCheck}">
+<apex:page controller="ISSP_ANG_ANNUAL_REVALIDATION" cache="false" sidebar="false" showHeader="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false" action="{!securityCheck}">
 
     <html>
 
@@ -515,12 +514,14 @@
                                                             <apex:outputPanel id="buttonsArea">
 
                                                                     <div class="center" style="display:{!IF(currentAccount.status == 'O','inline-block','none')}">
+                                                                        <apex:pageMessage summary="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE}" severity="error" strength="3" rendered="{!NOT(ownershipCompleted)}"/>
                                                                         <apex:commandButton styleclass="btn btn-default"
                                                                             action="{!confirmDetails}" onclick=""
                                                                             status="WaitingStatus"
                                                                             reRender="treeArea, componentsArea, buttonsArea"
-                                                                            value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}"/>
-
+                                                                            value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}"
+                                                                            disabled="{!NOT(ownershipCompleted)}"/>
+                                                                            <!--rui-->
                                                                         <apex:commandButton styleclass="btn btn-default"
                                                                             action="{!updateDetails}" onclick=""
                                                                             status="WaitingStatus"
