@@ -39,12 +39,23 @@
     #main-form-panel .bPageBlock .detailList tr td, .bPageBlock .detailList tr th, .hoverDetail .bPageBlock .detailList tr td, .hoverDetail .bPageBlock .detailList tr th {
         border: none !important;
     }
+    
+    #main-form-panel .progress-bar-off {
+        color:#6BBBEA;
+        font-weight:bold;
+        background-image:none !important;
+        background-color:transparent !important;
+        border-right:2px solid white;
+    } 
+
     #form-container .account-field-label {
         color: green;
     }
     #form-container .copy-info {
         text-decoration: underline;
         cursor: pointer;
+        color: #1797C0 !important;
+        font-weight: bold;
     }
     #form-container .requiredBlock{
         display: none;
@@ -144,10 +155,6 @@
         font-weight:700;
     }
 
-    #form-container iframe {
-        height: 190px;
-    }
-
     .link-highlighted {
         text-decoration: underline;
         color: rgb(1,91,167) !important;
@@ -186,6 +193,16 @@
             <div class="panel-body" id="body-enquiries">
 
                 <apex:form id="mainform" styleClass="inline">
+
+                    <div class="progress">
+                        <apex:variable var="stepcounter" value="{!IF(isTOU,1,0)}"/>
+                        <apex:repeat value="{!steps}" var="step">
+                            <apex:variable var="stepcounter" value="{!stepcounter+1}"/>
+                            <div class="progress-bar {!IF(currentStep==stepcounter,'','progress-bar-off')}" role="progressbar" aria-valuenow="{!stepcounter}" aria-valuemin="0" aria-valuemax="{!steps.size}" style="width: {!100/steps.size}%;">
+                                {!step}
+                            </div>
+                        </apex:repeat>
+                    </div>
 
                     <!-- BEGIN STEP 2 -->
                     <apex:pageBlock mode="edit">

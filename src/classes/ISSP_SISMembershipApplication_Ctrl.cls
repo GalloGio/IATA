@@ -1,6 +1,6 @@
 global class ISSP_SISMembershipApplication_Ctrl {
     
-    public static final String APP_NAME = 'SIS Membership Application';
+    public static final String APP_NAME = 'SIS Membership';
     public static final Id CASE_RT_AIRLINE_PARTICIPATION = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('IDFS_Airline_Participation_Process').getRecordTypeId();
     public static final Map<String,Schema.RecordTypeInfo> MAP_AP_RT = Schema.SObjectType.AP_Process_Form__c.getRecordTypeInfosByDeveloperName();
     public static final Id AP_RT_ISPA = MAP_AP_RT.get('SIS_Application_ISPA').getRecordTypeId();
@@ -151,6 +151,7 @@ global class ISSP_SISMembershipApplication_Ctrl {
             WHERE Case__r.AccountId = :account.Id
             AND Case__r.RecordTypeId = :CASE_RT_AIRLINE_PARTICIPATION
             AND Case__r.isClosed = false
+            AND (NOT Case__r.Owner.Name LIKE 'Recycle Bin%')
             AND RecordTypeId IN :MAP_RECORDTYPE_FORMS.keyset()
             ORDER BY CreatedDate desc];
 

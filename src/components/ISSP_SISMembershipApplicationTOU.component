@@ -55,13 +55,12 @@
     <apex:pageBlockSection columns="2" id="section1" collapsible="false">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 1 - Company information
+                Section 1 - Company Information
             </apex:outputpanel>
         </apex:facet>
 
         <tr><td colspan="4"><div class="strong-label">Airline Head Office Information:</div></td></tr>
         <apex:outputText >Airline Information to be included in the invoices produced by SIS</apex:outputText>
-        
 
         <apex:pageBlockSectionItem >
             <apex:outputLabel value="Legal Name of the Company" />
@@ -106,6 +105,18 @@
             </apex:selectList>
         </apex:pageBlockSectionItem>
 
+        <tr><td colspan="4">
+            <h3>Notice</h3>
+            <div class="strong-label">
+            Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.
+            </div>
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+        Name of company: <br/>
+        Address: <br/>
+        Attn (please include a name and email): <br/>
+
     </apex:pageBlockSection>
 
     <apex:pageBlockSection columns="2" id="section2" collapsible="false">
@@ -131,19 +142,6 @@
         <apex:pageBlockSectionItem >
             <apex:outputLabel value="Phone Number"/>
             <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Number__c}"/>
-            <!--
-            <DSE:DS_DataQuality id="BranchAddress"
-                RecordRef="{!newForm.Billing_File_Emrgcy_Contact_Number__c}"
-                FieldGroupName="Branch Address"
-                Edit="true"
-                FormGroupStyle="form-group"
-                RowStyle="row"
-                LabelStyle="col-lg-4 adlabel"
-                InputStyle="col-lg-5 col-md-1 col-sm-1 col-xs-1"
-                StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1"
-                FormControlStyle="apcontainer">
-            </DSE:DS_DataQuality>
-            -->
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >

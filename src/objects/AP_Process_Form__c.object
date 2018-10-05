@@ -1828,18 +1828,6 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         </valueSet>
     </fields>
     <fields>
-        <fullName>Commercial_Name__c</fullName>
-        <description>Commercial Name used in SIS recordtypes</description>
-        <externalId>false</externalId>
-        <label>Commercial Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Commission_Rate__c</fullName>
         <externalId>false</externalId>
         <label>Commission Rate</label>
@@ -2147,6 +2135,32 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <description>Used for SIS Recordtypes</description>
         <externalId>false</externalId>
         <label>Do you have an iiNET account?</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Do_you_want_to_add_Bank_Details__c</fullName>
+        <description>Used for SIS recordtypes</description>
+        <externalId>false</externalId>
+        <label>Do you want to add Bank Details?</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

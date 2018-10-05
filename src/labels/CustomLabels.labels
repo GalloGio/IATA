@@ -22357,6 +22357,15 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Apply Now</value>
     </labels>
     <labels>
+        <fullName>ISSP_SIS_Membership_AutoBilling_Helptext</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership AutoBilling Helptext</shortDescription>
+        <value>As part of this service, IS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis IS will generate a Revenue Recognition File (File Format defined in the IS Participation Guide) containing the billing records of coupons included in the Auto-Billing Invoices.
+The Auto-Billed invoices are automatically closed and finalized by IS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, IS generates an Invoice Posting File which includes details of all Auto-Billed invoices.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SIS_Membership_BankMandateDescription</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
@@ -22364,6 +22373,22 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <shortDescription>ISSP_SIS_Membership_BankMandateDescription</shortDescription>
         <value>Download this document and upload a signed version:
  &lt;a href=&quot;/servlet/servlet.FileDownload?file=0159E000000K6J9&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Billing Value Confirmation Helptext</shortDescription>
+        <value>IS generates a Billing Value Confirmation file for passenger prime billing coupons where both the billing entity and billed entity are subscribers to this service. This file is forwarded to ATPCO for further processing. ATPCO validates the billing values with the prorate values stored within its database. Any exchange rate conversions of the prorate values as per the billing month will be done by ATPCO before comparing the values. The results of the comparison are updated by ATPCO and provided to IS. IS updates the comparison results within its Billing Record Database.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Billing_Value_Determination_Helptext</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Billing Value Determination Helptext</shortDescription>
+        <value>As part of this service, IS accepts Usage Files (modified Record 50 file format as defined in the IS Participation guide) from billing entities requesting prorate values for coupons utilized by them. IS validates the file format and forwards the Usage File to ATPCO for further processing. The processed information is provided by ATPCO back to IS. IS forwards the output files provided by ATPCO to the billing entities.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Description_ISPA</fullName>
@@ -22389,6 +22414,24 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <shortDescription>ISSP SIS Membership Description TOU</shortDescription>
         <value>Receiving only (PDF) Limited access to SIS to receive Non Transportation invoices only, free of charge</value>
     </labels>
+        <labels>
+        <fullName>ISSP_SIS_Membership_Digital_Signature_Application_Helptext</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Digital_Signature Application Helptext</shortDescription>
+        <value>SIS offers a digital signature (DS) application service in a number of countries with the help of a trusted digital signature service provider. Based on the instructions provided by the billing entity, SIS creates an invoice subset file from the IS-format invoice data with the necessary legal and invoice information fields. This digitally signed file is made available by SIS as one of the outputs to the billing entity at the end of the billing period, based on the configuration of the Member Profile. It can also be downloaded online over the IS-WEB.
+
+SIS allows billed entities to configure the application of Digital Signature on Payable Invoices in the Member Profile. Based on the location details specified on the payable invoice, SIS triggers the process to apply digital signature in the countries covered by the service.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Digital_Signature_Verification_Helptext</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Digital Signature Verification Helptext</shortDescription>
+        <value>SIS provides an option whereby the billed entity can request verification of the digital signature applied on Payable Invoices, via the Member Profile. A verification log file is created by this process which contains the status of the applied digital signature in the countries covered by the service.</value>
+    </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Features</fullName>
         <categories>ISSP SIS Membership</categories>
@@ -22406,12 +22449,12 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Download the PDF form and upload a signed version</value>
     </labels>
     <labels>
-        <fullName>ISSP_SIS_Membership_Subtitle</fullName>
+        <fullName>ISSP_SIS_Membership_Legal_Archiving_Helptext</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP SIS Membership Subtitle</shortDescription>
-        <value>ISSP SIS Membership  Subtitle</value>
+        <shortDescription>ISSP SIS Membership Legal Archiving Helptext</shortDescription>
+        <value>Some jurisdictions may require legal storage for the digitally signed invoices for varying amounts of time. During this period, the invoices and any applicable digital signature need to be accessible for any audits. To address this issue, SIS will provide an optional Legal Archiving service to store the digitally signed invoices and other related information on behalf of the Participant in an external Legal archive for a longer period as required by the local regulations.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Title</fullName>

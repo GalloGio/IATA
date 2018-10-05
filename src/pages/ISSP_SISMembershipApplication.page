@@ -15,6 +15,10 @@
     div.messageText {
         display:none;
     }
+    div.my-alert {
+        margin: 0px;
+        padding: 10px;
+    }
 </style>
 <script>
   $( function() {
@@ -46,7 +50,6 @@
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3>{!$Label.ISSP_SIS_Membership_Title}</h3>
-          <p><b>{!$Label.ISSP_SIS_Membership_Subtitle}</b></p>
         </div>
 
         <apex:outputPanel styleclass="panel-body" rendered="{!listWrapperType.size=0}">
@@ -83,17 +86,19 @@
                                         <apex:commandLink action="{!wrapper.goToCase}" value="View My Application"
                                             styleClass="btn btn_iata_primary" rendered="{!wrapper.ShowGoToCase}" status="WaitingStatus"/>
                                         <!-- CURRENT MEMBERSHIP BUTTON -->
+                                        <apex:outputPanel layout="block" styleclass="alert alert-success my-alert" html-role="alert" rendered="{!wrapper.ShowCurrentMembership}">
+                                            Your Current Membership
+                                        </apex:outputPanel>
+                                        <!--
                                         <apex:commandLink value="Your Current Membership" onclick="return false;" style="cursor: not-allowed;"
                                             styleClass="btn btn_iata_primary btn-success" rendered="{!wrapper.ShowCurrentMembership}" status="WaitingStatus"/>
+                                        -->
                                     </div>
                                     <div class="type-text">
                                         <p class="text-justify">
                                             <small class="text-muted">
-                                                {!$Label[wrapper.sisType.Description_Label__c]}
+                                                <apex:outputText escape="false" value="{!$Label[wrapper.sisType.Description_Label__c]}"/>
                                             </small>
-                                        </p>
-                                        <p>
-                                            <small class="text-muted">****Prices <a>Here</a></small>
                                         </p>
                                     </div>
                                 </div>

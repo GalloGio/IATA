@@ -33,7 +33,7 @@
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem>
             <apex:outputLabel value="Commercial Name" />
-            <apex:outputText value="{!newForm.Commercial_Name__c}"/>
+            <apex:outputText value="{!newForm.Airline_trade_name__c}"/>
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem>

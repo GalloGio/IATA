@@ -9,10 +9,17 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         AP_RT_ISUA => 'ISUA',
         AP_RT_TOU  => 'TOU'
     };
-
+    public static final Map<String,list<String>> MAP_STEPS = new Map<String,list<String>>{
+        AP_RT_ISPA => new list<String>{'A. Review Country Requirements','B. Fill the Form','C. Submit to IATA'},
+        AP_RT_ISUA => new list<String>{'A. Review Country Requirements','B. Fill the Form','C. Submit to IATA'},
+        AP_RT_TOU  => new list<String>{'A. Fill the Form','B. Submit to IATA'}
+    };
     public Boolean getisISPA() {return this.newForm.RecordTypeId==AP_RT_ISPA;}
     public Boolean getisISUA() {return this.newForm.RecordTypeId==AP_RT_ISUA;}
     public Boolean getisTOU()  {return this.newForm.RecordTypeId==AP_RT_TOU;}
+    public list<String> getSteps()  {
+        return MAP_STEPS.get(this.newForm.RecordTypeId);
+    }
 
     public Integer currentStep {get;set;}
     public Sis_Management_Type__mdt sisType {get;set;}
@@ -92,12 +99,12 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
             BSP_Russia_Double_Tax_avoiding_Treaty__c, Colombia_City_selection__c, Colombia_City_percentage__c, Name_Appearing_in_VAT__c, Colombia_Type_of_Contributor__c, Territory_Percentage__c,
             Canada_Has_Principal_Office__c,Canada_Provincial_Offices__c,Canada_LocalVAT_Info__c, GSSA_Legal_Name_Formula__c, GSSA_Address_Formula__c, Case__r.AccountId,
             ANG_Airline_accepts_EasyPay_tr_in_BSP__c,Minimum_Commission_Rate__c, Maximum_Commission_Rate__c, Default_Commission_Rate__c, Type_of_Change_Requested__c,
-            Legal_Name_of_company__c,Commercial_Name__c,Company_address__c,Company_city__c,Company_State__c,Postal_code__c,Company_Country__c, Company_Country__r.Name, Company_Trade_Name__c,
+            Legal_Name_of_company__c,Company_address__c,Company_city__c,Company_State__c,Postal_code__c,Company_Country__c, Company_Country__r.Name, Company_Trade_Name__c,
             Super_User_Salutation__c,Super_User_First_Name__c,Super_User_Last_Name__c,Super_User_Email_Address__c,Super_User_Phone_Number__c,Super_User_Mobile_Number__c,Super_User_Fax_Number__c,
             Is_AA_Member__c,Digital_Signature_application__c,Digital_Signature_verification__c,Legal_Archiving__c,Billing_Value_Determination__c,Billing_Value_Confirmation__c,Auto_billing__c,
             Do_you_have_an_iiNET_account__c,Is_your_company_joining_the_Clearing_Hou__c,Select_Bank_Account__c,Is_company_subject_to_EU_laws__c,EU_Data_Privacy_Laws__c,
             Company_Registration_ID__c,TAX_VAT_Registration_Number__c,Billing_File_Emrgcy_Contact_Number__c,Who_requested_to_join_TOU__c,Legal_Name_of_account__c,
-            RecordTypeId, RecordType.DeveloperName
+            RecordTypeId, RecordType.DeveloperName, Do_you_want_to_add_Bank_Details__c
             FROM AP_Process_Form__c
             WHERE Id = :formId
         ];
@@ -216,16 +223,19 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         if (this.currentStep==2) {
             if (getisISPA()||getisISUA()) {
                 list<String> listMandatoryFileId = new list<String>{'COI','Shareholders_List'};
-                if (this.newForm.Is_your_company_joining_the_Clearing_Hou__c=='No' || this.newForm.Select_Bank_Account__c=='New Account') {
+                if (this.newForm.Do_you_want_to_add_Bank_Details__c=='Yes') {
                     listMandatoryFileId.add('BankMandate');
+                    listMandatoryFileId.add('Passport');
                 }
                 return checkMandatoryFiles(listMandatoryFileId);
             }
+            return true;
         }
         if (this.currentStep==3) {
             list<String> listMandatoryFileId = new list<String>{'SISMembershipForm'};
             return checkMandatoryFiles(listMandatoryFileId);
         }
+        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Wrong step number'));
         return false;
     }
 

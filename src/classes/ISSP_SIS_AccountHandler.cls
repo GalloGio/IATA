@@ -210,7 +210,7 @@ public with sharing class ISSP_SIS_AccountHandler {
     
     /**
         Give_SIS_Membership__c can only be changed from empty to some value
-        if there is at least one portal contact having access to SIS Membership Application
+        if there is at least one portal contact having access to 'SIS Membership' Application
     **/
     private static void validateFieldAvailableSISManagement(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
         list<Id> listAccountId = new list<Id>();
@@ -222,12 +222,12 @@ public with sharing class ISSP_SIS_AccountHandler {
         }
         if (listAccountId.isEmpty()) return;
         list<Account> listQueryAccount = [
-            SELECT Id, (SELECT id, Available_Services__c FROM Contacts WHERE Available_Services__c INCLUDES ('SIS Membership Application'))
+            SELECT Id, (SELECT id, Available_Services__c FROM Contacts WHERE Available_Services__c INCLUDES ('SIS Membership'))
             FROM Account
             WHERE id IN :listAccountId];
         for (Account account: listQueryAccount) {
             if (account.Contacts.isEmpty()) {
-                mapNews.get(account.Id).Give_SIS_Membership__c.addError('Required at least one contact with "SIS Membership Application"');
+                mapNews.get(account.Id).Give_SIS_Membership__c.addError('Required at least one contact with "SIS Membership" Application');
             } 
         }
     }
