@@ -25322,7 +25322,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE</shortDescription>
-        <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;You must select at least one value.</value>
+        <value>&lt;strong&gt;Error:&lt;/strong&gt;You must select at least one value.</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_SUBMIT_TO_IATA</fullName>
