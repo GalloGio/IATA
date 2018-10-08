@@ -75,7 +75,7 @@
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
                 
         AMS_Oscar__c oscar = [SELECT id, Account__c, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Oscar_Communication_Case_Id__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Oscar_Communication_Case_Id__c, AMS_Online_Accreditation__c  from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
         Case oscarCase = [Select id from case where Oscar__c = :oscar.id];
         
@@ -87,6 +87,19 @@
           Name = 'test'
         );
         insert attc;
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
         oscar.STEP6__c = 'Passed';
         oscar.STEP10__c = 'Passed';
@@ -307,7 +320,7 @@
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
         AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,account__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
     
         Case oscarCase = [Select id from case where Oscar__c = :oscar.id];
         
@@ -319,6 +332,19 @@
           Name = 'test'
         );
         insert attc;
+        
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;  
         
         oscar.STEP5__c = 'Passed';
         oscar.STEP6__c = 'Passed';
@@ -750,7 +776,7 @@
 
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
-        AMS_OSCAR__c oscar = [SELECT id, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        AMS_OSCAR__c oscar = [SELECT id, Status__c,OwnerId, AMS_Online_Accreditation__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         Case oscarCase = [Select id from case where Oscar__c = :oscar.id];
         
         Attachment attc = new Attachment(
@@ -762,6 +788,19 @@
         );
         insert attc;
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
         oscar.recordTypeID = newRT;
         oscar.STEP6__c = AMS_Utils.PASSED;
@@ -1039,6 +1078,19 @@
         AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c );
         insert stagingArea;
 
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= stagingArea.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
+
         AMS_OSCAR__c oscarToUpdate = [SELECT id, STEP6__c, Type_of_change__c, Change_effective_as_of__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];        
 
         oscarToUpdate.STEP6__c = AMS_Utils.PASSED;
@@ -1099,6 +1151,14 @@
         insert attc;
         AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aHo.Name, Short_Name__c=aHo.Short_Name__c );
         insert stagingArea;
+
+        /*** AMSU-180 ***/
+        Contact c = new Contact(FirstName= 'test', LastName= 'contact', Email= 'test.owner@contact.com');
+        insert c;
+        AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c= aHo.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId());
+        AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= aBr.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId());
+
+        insert new List<AMS_Account_Role__c> {owner1, owner2};
 
         AMS_OSCAR__c oscarToUpdate = [SELECT id, STEP6__c, Type_of_change__c, Change_effective_as_of__c from AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];        
 
@@ -1161,6 +1221,19 @@
         insert attc;
         AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=a.Name, Short_Name__c=a.Short_Name__c );
         insert stagingArea;
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= stagingArea.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
         AMS_OSCAR__c oscarToUpdate = [SELECT id, STEP6__c, Type_of_change__c, Change_effective_as_of__c from AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];        
 
@@ -1226,6 +1299,19 @@
         insert attc;
         AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c );
         insert stagingArea;
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= stagingArea.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
         AMS_OSCAR__c oscarToUpdate = [SELECT id, STEP6__c, Type_of_change__c, Change_effective_as_of__c from AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];        
 
