@@ -1,5 +1,4 @@
-<apex:page controller="ISSP_ANG_ANNUAL_REVALIDATION" cache="false" sidebar="false" showHeader="false" standardStylesheets="true"
-    applyBodyTag="false" applyHtmlTag="false" action="{!securityCheck}">
+<apex:page controller="ISSP_ANG_ANNUAL_REVALIDATION" cache="false" sidebar="false" showHeader="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false" action="{!securityCheck}">
 
     <html>
 
@@ -515,11 +514,13 @@
                                                             <apex:outputPanel id="buttonsArea">
 
                                                                     <div class="center" style="display:{!IF(currentAccount.status == 'O','inline-block','none')}">
+                                                                        <apex:pageMessage summary="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE}" severity="error" strength="3" rendered="{!NOT(ownershipCompleted)}"/>
                                                                         <apex:commandButton styleclass="btn btn-default"
                                                                             action="{!confirmDetails}" onclick=""
                                                                             status="WaitingStatus"
                                                                             reRender="treeArea, componentsArea, buttonsArea"
-                                                                            value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}"/>
+                                                                            value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}"
+                                                                            disabled="{!NOT(ownershipCompleted)}"/>
 
                                                                         <apex:commandButton styleclass="btn btn-default"
                                                                             action="{!updateDetails}" onclick=""
@@ -984,7 +985,8 @@
                                 </apex:actionStatus>
 
                                 <apex:outputPanel id="companyModalIataCodeValidation">
-                                    <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(companyModalNameOfEmployer=='', iatacode!='')}"/>
+                                    <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(NOT(ownerWithSameIATACode),companyModalNameOfEmployer=='', iatacode!='')}"/>
+                                    <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_SAME_OWNER_ERROR}" styleClass="bg-danger" escape="false" rendered="{!AND(ownerWithSameIATACode, iatacode!='')}"/>
                                     <apex:outputPanel rendered="{!AND(companyModalNameOfEmployer!='', iatacode!='')}">
                                         <span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_Agency_name} </span>{!companyModalNameOfEmployer} <br/>
                                         <span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_AMS_Address} </span> {!companyModalAddress}

@@ -85,6 +85,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Mass_Email_Send__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Assessment_Cancelled_On__c</field>
             </layoutItems>
         </layoutColumns>

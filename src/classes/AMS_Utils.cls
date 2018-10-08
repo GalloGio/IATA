@@ -152,6 +152,8 @@ public without sharing class AMS_Utils {
     public static final String SA = 'SA';
     public static final String HE = 'HE';
     public static final String AE = 'AE';
+    public static final String GE = 'GE';
+
 
     public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
 
@@ -280,6 +282,7 @@ public without sharing class AMS_Utils {
     public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
     public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
     public static final String CASE_REASON_HE_LITE = 'New HE lite';
+    public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE multicountry';
     public static final String CASE_REASON_ASSOCIATE_ENTITY_STANDARD = 'New AE';
     public static final String CASE_REASON_NEW_HO = 'New HO';
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
@@ -334,6 +337,7 @@ public without sharing class AMS_Utils {
 
     public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
     public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
+    public static final String AGENTTYPE_MULTICOUNTRY = 'Multicountry';
 
     //Account - ANG_Accreditation_Model__c
     public static final String ACCREDITATIONMODEL_CASH = 'Cash';
@@ -370,6 +374,7 @@ public without sharing class AMS_Utils {
     public static final String TYPE_PAX_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_LEGACY);
     public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
     public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
+    public static final String TYPE_HE_MULTICOUNTRY = buildOfficeType(CASE_REASON_HE_MULTICOUNTRY, AGENTTYPE_MULTICOUNTRY);
     public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES}; 
 	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
 
@@ -3059,6 +3064,22 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return res;
     }
 
+    // validate that RHC / Financial Security currency is allowed
+    public static void runCurrencyValidations(List<SObject> objects) {
+        Map<String,ANG_RHC_Currencies__c> currencyConfs = ANG_RHC_Currencies__c.getall();
+        List<ANG_RHC_Currencies__c> sortedList = currencyConfs.values();
+        sortedList.sort();
+
+        String allowedCurrencies = '';
+        for(ANG_RHC_Currencies__c conf : sortedList){
+            allowedCurrencies +='<br/>'+conf.name +' - '+conf.Currency_Name__c; 
+        }
+
+        for(SObject obj :objects){
+            if(!currencyConfs.containsKey(String.valueOf(obj.get('CurrencyIsoCode')))) obj.addError('The Currency selected is not allowed. Currently allowed currencies are: <br/>'+allowedCurrencies, false);
+        }
+    }
+    
     public static final List<Schema.SObjectField> STAGING_AREA_FIELDS_TO_VALIDATE = new List<Schema.SObjectField> {
         AMS_Pax_Accreditation_Form__c.Account_Name__c, 
         AMS_Pax_Accreditation_Form__c.IATACode__c, 

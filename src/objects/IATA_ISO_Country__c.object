@@ -2427,6 +2427,15 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Multicountry_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Multicountry Enabled</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>OSCAR_enabled__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2676,6 +2685,17 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Tax ID Mandatory?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Number_VAT_field_mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</description>
+        <externalId>false</externalId>
+        <inlineHelpText>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</inlineHelpText>
+        <label>Tax Number / VAT field mandatory</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>

@@ -144,6 +144,7 @@ private class ISSP_ModelA_Onboarding_Test {
                                 Sector__c = Ams_Utils.SECTOR_PASSENGER,
                                 Status__c = Ams_Utils.ACC_S9_APPROVED,
                                 Location_type__c = AMS_Utils.HE,
+                                Location_class__c = 'P',
                                 ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
                                 OwnerId = UserInfo.getUserId(),
                                 IATACode__c = '12345678');
@@ -155,6 +156,7 @@ private class ISSP_ModelA_Onboarding_Test {
                                 Sector__c = Ams_Utils.SECTOR_PASSENGER,
                                 Status__c = Ams_Utils.ACC_S9_APPROVED,
                                 Location_type__c = AMS_Utils.HE,
+                                Location_class__c = 'P',
                                 ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
                                 OwnerId = UserInfo.getUserId(),
                                 IATACode__c = '12345679');
@@ -166,6 +168,7 @@ private class ISSP_ModelA_Onboarding_Test {
                                 Sector__c = Ams_Utils.SECTOR_PASSENGER,
                                 Status__c = Ams_Utils.ACC_S9_APPROVED,
                                 Location_type__c = AMS_Utils.HE,
+                                Location_class__c = 'P',
                                 ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
                                 OwnerId = UserInfo.getUserId(),
                                 IATACode__c = '12345670');
@@ -177,6 +180,7 @@ private class ISSP_ModelA_Onboarding_Test {
                                 Sector__c = Ams_Utils.SECTOR_PASSENGER,
                                 Status__c = Ams_Utils.ACC_S9_APPROVED,
                                 Location_type__c = AMS_Utils.HE,
+                                Location_class__c = 'P',
                                 ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
                                 OwnerId = UserInfo.getUserId(),
                                 IATACode__c = '12345671');
@@ -188,6 +192,7 @@ private class ISSP_ModelA_Onboarding_Test {
                                 Sector__c = Ams_Utils.SECTOR_PASSENGER,
                                 Status__c = Ams_Utils.ACC_S9_APPROVED,
                                 Location_type__c = AMS_Utils.HE,
+                                Location_class__c = 'P',
                                 ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
                                 OwnerId = UserInfo.getUserId(),
                                 IATACode__c = '12345645');
@@ -199,6 +204,7 @@ private class ISSP_ModelA_Onboarding_Test {
                                 Sector__c = Ams_Utils.SECTOR_PASSENGER,
                                 Status__c = Ams_Utils.ACC_S9_APPROVED,
                                 Location_type__c = AMS_Utils.HE,
+                                Location_class__c = 'P',
                                 ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
                                 OwnerId = UserInfo.getUserId(),
                                 IATACode__c = '12345644');

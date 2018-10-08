@@ -596,25 +596,28 @@ global class ANG_OscarProcessHelper {
 	    System.debug('[ANG_OscarProcessHelper] 3. Number of script statements used so far : ' +  Limits.getDmlStatements());
     }
 
-    webservice static String[] processRestrictFOP(String oscarId, Boolean restrictCreditCard , Boolean restrictCash){
+    webservice static String[] processRestoreFOP(String oscarId, Boolean restoreCC , Boolean restoreCA){
 
-    	/*
-		Restrict FoP for the full hierarchy 
-		- Accounts with statuses "Terminated", "Not accreditated","New application pending" and "Not in Operation" will not be affected
-		- If "Restrict cash" is selected set Status = "Non-active" on Accounts' Agency Authorization having Form of Payment ID = CA
-		- If "Restrict credit card is selected set Status = "Non-active" on Accounts' Agency Authorization having Form of Payment ID = CC
-    	*/
+		return processRestrictRestoreFOP(oscarId, false , false ,restoreCC , restoreCA);
+    }
+
+    webservice static String[] processRestrictFOP(String oscarId, Boolean restrictCC , Boolean restrictCA){
+
+		return processRestrictRestoreFOP(oscarId, restrictCC , restrictCA, false, false);
+    }
+
+    webservice static String[] processRestrictRestoreFOP(String oscarId, Boolean restrictCC , Boolean restrictCA, Boolean restoreCC , Boolean restoreCA){
+
+		System.debug('[ANG_OscarProcessHelper] Starting processRestrictRestoreFOP with values:');
+		System.debug('[ANG_OscarProcessHelper] oscarId :' + oscarId);
+		System.debug('[ANG_OscarProcessHelper] restrictCC :' + restrictCC);
+		System.debug('[ANG_OscarProcessHelper] restrictCA :' + restrictCA);
+		System.debug('[ANG_OscarProcessHelper] restoreCC :' + restoreCC);
+		System.debug('[ANG_OscarProcessHelper] restoreCA :' + restoreCA);
 
 		AMS_OSCAR__c oscar = [Select Id, Account__c, STEP38__c, SIDRA_lite_reason__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
-
 		
 		try{
-
-			//no need to check, running when step38 is being approved
-	    	/*if(oscar.STEP38__c == AMS_Utils.PASSED){
-	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
-				return new String[]{'-1',exMessage};
-	    	}*/
 
 			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
 
@@ -626,38 +629,51 @@ global class ANG_OscarProcessHelper {
 
 			accountHierarchyRelationships.add(oscar.Account__c);
 
-			Set<Id> accountIdsChanged = restrictRestoreFOPonAccounts(accountHierarchyRelationships, false, false, restrictCreditCard , restrictCash , 'Non-active');
+			Set<AgencyAuthorizationOBject> aaObjectSet = restrictRestoreFOPonAccounts(accountHierarchyRelationships, restoreCC, restoreCA, restrictCC , restrictCA);
 			
-			oscar.ANG_Restrict_Cash__c = restrictCash; 
-			oscar.ANG_Restrict_Credit_Card__c = restrictCreditCard;
+			System.debug('[ANG_OscarProcessHelper] AgencyAuthorizationOBject returned are:'+aaObjectSet);
+
+
+			oscar.ANG_Restrict_Cash__c = restrictCA; 
+			oscar.ANG_Restrict_Credit_Card__c = restrictCC;
+			oscar.ANG_Restore_Cash__c = restoreCA; 
+			oscar.ANG_Restore_Credit_Card__c = restoreCC;
 			oscar.STEP38__c = AMS_Utils.PASSED;
 
 			EntityUpdater updater = new EntityUpdater();
 			
 			updater.oscarMap.put(oscar.Id,oscar);
 
-			if(!accountIdsChanged.isEmpty()){
-
-				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged];
-
-				String changeCodeName= null;
+			if(!aaObjectSet.isEmpty()){
 				
-				/*
-					 - PCA if Restrict cash is set
-					 - CCA if Restrict Credit card is set 
-					 - FOP if both Restrict cash and Restrict Credit card are set
-				*/
+				Set<Id> accountIdsChanged = new Set<Id>();
 
-				if(restrictCreditCard && restrictCash)
-					changeCodeName = 'FOP';
-				else if(restrictCash)
-					changeCodeName = 'PCA';
-				else
-					changeCodeName = 'CCA';
+				for(AgencyAuthorizationOBject aaObject: aaObjectSet)
+					accountIdsChanged.add(aaObject.AccountId);
 
-				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
+				Map<Id,Account> accountToCreateCC = new Map<ID, Account>([Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged]);
+
+				Map<String,Set<Account>> ccAccountsMap = new Map<String,Set<Account>>();
+
+				for(AgencyAuthorizationOBject aaObject: aaObjectSet){
+					
+					if(aaObject.changeCodeToInsert != null){
+
+						if(ccAccountsMap.get(aaObject.changeCodeToInsert) == null)
+							ccAccountsMap.put(aaObject.changeCodeToInsert,new Set<Account>{accountToCreateCC.get(aaObject.AccountId)});
+						else
+							ccAccountsMap.get(aaObject.changeCodeToInsert).add(accountToCreateCC.get(aaObject.AccountId));
+					}
+					
+				}
+
+				System.debug('[ANG_OscarProcessHelper] ccAccountsMap to create are:'+ccAccountsMap);
+
+				for(String changeCode : ccAccountsMap.keySet())
+					updater = createChangeCodeForFOP(updater, oscar, new List<Account>(ccAccountsMap.get(changeCode)), changeCode );
 
 			}
+
 			//no more need to update OSCAR. Running from automation (Before Trigger)
 			updater.oscarMap.remove(oscar.id);
 			updateUpdater(updater);
@@ -667,7 +683,9 @@ global class ANG_OscarProcessHelper {
 			oscar.STEP38__c = AMS_Utils.FAILED;
 			//update oscar;
 
-			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+			String exMessage = 'An error occured while restricting/restoring Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+			System.debug('[ANG_OscarProcessHelper] An error occured while restricting/restoring Forms of Payment:' + AMS_Utils.errorMessageBeautifyer(ex));
+
 			return new String[]{'-1',exMessage};
 		}
 
@@ -675,140 +693,130 @@ global class ANG_OscarProcessHelper {
 
     }
 
-    webservice static String[] processRestoreFOP(String oscarId, Boolean restoreCreditCard , Boolean restoreCash){
 
-    	/*
-			Restore FoP for the full hierarchy 
-			- Accounts with statuses "Terminated", "Not accreditated","New application pending" and "Not in Operation" will not be affected
-			- If "Restore cash" is selected set Status = "Active" on Accounts' Agency Authorization having Form of Payment ID = CA
-			- If "Restore credit card and if the Account has PCI Compliant = "Yes" then set Status = "Active" on  Agency Authorization having Form of Payment ID = CC
-    	*/
 
-    	AMS_OSCAR__c oscar = [Select Id, Account__c,STEP39__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
+    public static Set<AgencyAuthorizationOBject> restrictRestoreFOPonAccounts(Set<Id> accounts, Boolean restoreCreditCard , Boolean restoreCash, Boolean restrictCreditCard, Boolean restrictCash){
 
-    	
+    	//System.debug('Performing restrictRestoreFOPonAccounts on accounts:'+accounts + ' with value restrictCash set to ' + restrictCash + ' and restrictCreditCard set to ' + restrictCreditCard + ' and valueToAdd set to ' + valueToAdd + 'and restoreCreditCard value set to ' + restoreCreditCard + ' and restoreCash value set to ' + restoreCash);
 
-		try{
+		Set<AgencyAuthorizationOBject> accountsChanged = new Set<AgencyAuthorizationOBject>();
 
-			//no need to check, running when step39 is being approved
-	    	/*if(oscar.STEP39__c == AMS_Utils.PASSED){
-	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
-				return new String[]{'-1',exMessage};
-	    	}*/
-
-			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
-
-			Set<Id> accountHierarchyRelationships = new Set<Id>();
-			accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
-
-			accountHierarchyRelationships.add(oscar.Account__c);
-
-			Set<Id> accountIdsChanged = restrictRestoreFOPonAccounts(accountHierarchyRelationships, restoreCreditCard, restoreCash, false, false,  'Active');
-		
-			oscar.ANG_Restore_Credit_Card__c = restoreCreditCard; 
-			oscar.ANG_Restore_Cash__c = restoreCash;
-			oscar.STEP39__c = AMS_Utils.PASSED;
-			
-			EntityUpdater updater = new EntityUpdater();
-			
-			updater.oscarMap.put(oscar.Id,oscar);
-
-			if(!accountIdsChanged.isEmpty()){
-				
-				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged];
-
-				String changeCodeName= null;
-				
-				/*
-				 - PCR if Restore cash is set
-				 - CCR if Restore Credit card is set 
-				 - FPR if both Restore cash and Restore Credit card are set
-				*/
-
-				if(restoreCreditCard && restoreCash)
-					changeCodeName = 'FPR';
-				else if(restoreCash)
-					changeCodeName = 'PCR';
-				else
-					changeCodeName = 'CCR';
-
-				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
-			}
-
-			//no more need to OSCAR. Running from automation (Before Trigger)
-			updater.oscarMap.remove(oscar.id);
-			updateUpdater(updater);
-
-		}catch(Exception ex){
-			
-			oscar.STEP39__c = AMS_Utils.FAILED;
-			//update oscar;
-
-			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
-			return new String[]{'-1',exMessage};
-		}
-
-		return new String[]{'0',null};
-
-    }
-
-    public static Set<Id> restrictRestoreFOPonAccounts(Set<Id> accounts, Boolean restoreCreditCard , Boolean restoreCash, Boolean restrictCreditCard, Boolean restrictCash, String valueToAdd){
-
-    	System.debug('Performing restrictRestoreFOPonAccounts on accounts:'+accounts + ' with value restrictCash set to ' + restrictCash + ' and restrictCreditCard set to ' + restrictCreditCard + ' and valueToAdd set to ' + valueToAdd + 'and restoreCreditCard value set to ' + restoreCreditCard + ' and restoreCash value set to ' + restoreCash);
-
-    	Set<Id> accountIdsChanged = new Set<Id>();
-
-    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts];
+    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and (ANG_FormOfPayment_ID__c = 'CA' or ANG_FormOfPayment_ID__c = 'CC')];
     	List<Agency_Authorization__c> aaLstToUpdate = new List<Agency_Authorization__c>();
 
-    	for(Agency_Authorization__c aa: aaLst){
+		Map<Id,AgencyAuthorizationOBject> accountsAA = new Map<Id,AgencyAuthorizationOBject>();
 
-    		if( restrictCash || restrictCreditCard){
+		for(Agency_Authorization__c aa: aaLst){
+			
+			AgencyAuthorizationOBject aaObject;
 
-	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
+			if(accountsAA.get(aa.Account__c) == null)
+				aaObject = new AgencyAuthorizationOBject(aa.Account__c);
+			else
+				aaObject = accountsAA.get(aa.Account__c);
 
-					if(aa.Status__c != valueToAdd){
-		    			aa.Status__c = valueToAdd;
-		    			accountIdsChanged.add(aa.Account__c);
-		    		}
+			if(aa.ANG_FormOfPayment_ID__c == 'CA')
+				aaObject.addCash(aa);
+			else
+				aaObject.addCreditCard(aa);
 
-	    			aaLstToUpdate.add(aa);
-	    		}
+			accountsAA.put(aa.Account__c,aaObject);
 
-	    		if(restrictCreditCard && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
-    				aa.Status__c = valueToAdd;
-    				aaLstToUpdate.add(aa);
-    				accountIdsChanged.add(aa.Account__c);
-    			}
+		}
 
-    		}
+		String process = restoreCash  && restoreCreditCard  ? 'Restore All' : 
+						 restrictCash && restrictCreditCard ? 'Restrict All' : 
+						 restrictCash ? 'Restrict Cash' :
+						 restrictCreditCard ? 'Restrict Credit Card' :
+						 restoreCash ? 'Restore Cash' : 'Restore Credit Card';
 
-    		if(restoreCash || restoreCreditCard){
+		List<ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcess = [SELECT Cash_before__c,Credit_Card_before__c,Action_in_FoP_OSCAR__c,Cash_after__c,Credit_Card_after__c,Change_Code__c FROM ANG_Forms_Of_Payment_CC_Matrix__mdt WHERE Action_in_FoP_OSCAR__c =:process];
 
-				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
+		Map<String,ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcessMap = new Map<String,ANG_Forms_Of_Payment_CC_Matrix__mdt>();
 
-    				aa.Status__c = valueToAdd;
-    				accountIdsChanged.add(aa.Account__c);
-    				aaLstToUpdate.add(aa);
-    			}
+		for(ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject: matrixAAProcess)
+			matrixAAProcessMap.put(matrixObject.Cash_before__c+matrixObject.Credit_Card_before__c,matrixObject);
 
-	    		if(restoreCreditCard && aa.Account__r.Is_PCI_compliant__c == 'Yes' && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
-    				aa.Status__c = valueToAdd;
-    				aaLstToUpdate.add(aa);
-    				accountIdsChanged.add(aa.Account__c);
-    			}
+		ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject;
 
-    		}
+		for(AgencyAuthorizationOBject aaOjectToAnalyze: accountsAA.values()){
+			
+			matrixObject = matrixAAProcessMap.get(aaOjectToAnalyze.oldCA+aaOjectToAnalyze.oldCC);
 
-    	}
+			System.debug('matrixObject is ' + matrixObject);
 
+			aaOjectToAnalyze.addCashValue(matrixObject.Cash_after__c, matrixObject.Change_Code__c);
+			aaOjectToAnalyze.addCreditCardValue(matrixObject.Credit_Card_after__c, matrixObject.Change_Code__c);
+			
+			if(aaOjectToAnalyze.changedCA)
+				aaLstToUpdate.add(aaOjectToAnalyze.cashAA);
+			if(aaOjectToAnalyze.changedCC)
+				aaLstToUpdate.add(aaOjectToAnalyze.creditCardAA);
+
+			if(aaOjectToAnalyze.changedCA || aaOjectToAnalyze.changedCC)
+				accountsChanged.add(aaOjectToAnalyze);				
+		}
+
+				
     	if(!aaLstToUpdate.isEmpty())
     		update aaLst;
 
-    	return accountIdsChanged;
+    	return accountsChanged;
     	
     }
 
+	public class AgencyAuthorizationOBject{
+
+		Public Agency_Authorization__c creditCardAA;
+		Public Agency_Authorization__c cashAA;
+
+		Public String oldCC;
+		Public String oldCA;
+
+		Public Id accountId;
+
+		Public String changeCodeToInsert;
+
+		boolean changedCC;
+		boolean changedCA;
+
+		public AgencyAuthorizationOBject(Id accountId){
+			this.accountId = accountId;
+			this.changedCC = false;
+			this.changedCA = false;
+			this.oldCA = null;
+			this.oldCC = null;
+		}
+
+		public void addCreditCard(Agency_Authorization__c aa){
+			this.creditCardAA = aa;
+			this.oldCC = aa.Status__c;
+		}
+
+		public void addCash(Agency_Authorization__c aa){
+			this.cashAA = aa;
+			this.oldCA = aa.Status__c;
+		}
+
+		public void addCashValue(String value,String changeCodeToInsert){
+			if(this.oldCA == value)
+				return;
+			
+			cashAA.Status__c = value;
+			changedCA = true;
+			this.changeCodeToInsert = changeCodeToInsert;
+		}
+
+		public void addCreditCardValue(String value, String changeCodeToInsert){
+			if(this.oldCC == value)
+				return;
+			
+			creditCardAA.Status__c = value;
+			this.changedCC = true;
+			this.changeCodeToInsert = changeCodeToInsert;
+		}
+
+	}
 
     public static EntityUpdater createChangeCodeForFOP(EntityUpdater updater, AMS_Oscar__c theOSCAR, List<Account> accounts, String changeCodeName) {
 		
@@ -1694,7 +1702,7 @@ global class ANG_OscarProcessHelper {
 
     }
 
-    public static void createIEPAccountOscar(Map<Id,Account> accsMap, String model){
+    public static List<AMS_OSCAR__c> createIEPAccountOscar(Map<Id,Account> accsMap, String model){
 
     	List<Account> accs = accsMap.values();
 
@@ -1712,7 +1720,7 @@ global class ANG_OscarProcessHelper {
 			FROM Contact WHERE AccountId IN :accsMap.keySet() 
             AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
                 AND ANG_Portal_Service_Role__c = 'IEP Admin' 
-                AND Portal_Application__r.Name IN : (model == 'A' ? MODEL_A_PROVIDERS : MODEL_B_PROVIDERS))]){
+                AND Portal_Application__r.Name IN : (model == 'A' || model == 'setup' ? MODEL_A_PROVIDERS : MODEL_B_PROVIDERS))]){
                 
 			contactAcc.put(con.AccountId,con);
 		} 
@@ -1724,7 +1732,7 @@ global class ANG_OscarProcessHelper {
 			
             if(contactAcc.get(acc.Id) == null){
             	acc.addError('An IEP Admin Contact is needed on this Account for the IEP Account OSCAR');
-            	return;
+            	return null;
             } 
             	
             
@@ -1735,17 +1743,19 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
 	        fieldsOfObject.put('Origin','IEP portal');
-	        fieldsOfObject.put('Reason1__c', model == 'A' ? 'Onboarding IEP Model A' : 'Screening IEP Model B');
-	        fieldsOfObject.put('Subject',(model == 'A' ? 'Onboarding IEP Model A - ' : 'Screening IEP Model B -') + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Reason1__c', (model == 'A' ? 'Onboarding IEP Model A' : (model == 'B' ? 'Screening IEP Model B' : 'IEP Bank Account Setup')));
+	        fieldsOfObject.put('Subject',(model == 'A' ? 'Onboarding IEP Model A - ' : (model == 'B' ? 'Screening IEP Model B -' : 'IEP Bank Account Setup -')) + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 	        
 	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
 
-	        //assign to queue
-	       	Database.DMLOptions dmo = new Database.DMLOptions();
-	        dmo.assignmentRuleHeader.useDefaultRule = true;
-	        cse.setOptions(dmo);
+            //assign to queue
+            if(!Test.isRunningTest()){           
+                Database.DMLOptions dmo = new Database.DMLOptions();
+                dmo.assignmentRuleHeader.useDefaultRule = true;
+                cse.setOptions(dmo);
+            }
 
 	        oscarObjs = new OscarObjectsWrapper();
 	        oscarObjs.cse = cse;
@@ -1773,7 +1783,7 @@ global class ANG_OscarProcessHelper {
         for (Account acc : accs){
         
 			fieldsOfObject = new Map<String,Object>();
-	        fieldsOfObject.put('Process__c',(model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP :AMS_Utils.IEPMODELBACCOUNTSETUP));
+	        fieldsOfObject.put('Process__c',(model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP :AMS_Utils.IEPBANKACCOUNTSETUP)));
 			fieldsOfObject.put('Status__c','Open');
 			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
 			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
@@ -1815,10 +1825,10 @@ global class ANG_OscarProcessHelper {
 		//sending email with url for portal    
         for (Account acc: accs){
         
-            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : AMS_Utils.IEPMODELBACCOUNTSETUP), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
+            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP)), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
 
         }
-
+        return oscarsToInsert;
     }
 
 	//EM - To be removed
