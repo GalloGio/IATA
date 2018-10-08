@@ -395,8 +395,8 @@ private class ISSP_ModelA_Onboarding_Test {
         controller.submitForm();
         controller.cancel();
         
-        Group groupResult = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Id IN (SELECT OwnerId FROM Case)];
-        System.assertEquals('Model A Onboarding - Europe', groupResult.Name);
+        User userResult = [SELECT Id, Name FROM User WHERE Id IN (SELECT OwnerId FROM Case)];
+        System.assertNotEquals('Model A Onboarding - Europe', userResult.Name);
         
         Test.stopTest();
     }
