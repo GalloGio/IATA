@@ -255,7 +255,7 @@ public class ANG_RHCAlertTriggerHandler{
                 continue;
 
                 if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP){
-                    if( 'IN'.equals(accountAlerts.get(ralert.ANG_Account__c).ANG_Account__r.Country_ISO_Code__c) && ralert.ANG_Threshold_Level__c == '100%') 
+                    if( accountAlerts.get(ralert.ANG_Account__c) != null && 'IN'.equals(accountAlerts.get(ralert.ANG_Account__c).ANG_Account__r.Country_ISO_Code__c) && ralert.ANG_Threshold_Level__c == '100%') 
                     continue;
                     toDeactivateAccounts.add(ralert.ANG_Account__c);
                 }
