@@ -32,7 +32,12 @@ public with sharing class OneIdTermsAndConditions {
                 
 
                 //ystem.debug('translation '+ translatedString);
-                appInfo.add(bundles.get(0).Service_Provider_Name__c);
+                if(bundles.get(0).Service_Provider_Name__c == 'FRED'){
+	                appInfo.add('FRED+');
+                }
+                else{
+                	appInfo.add(bundles.get(0).Service_Provider_Name__c);
+                }
                 appInfo.add(terms1);
                 appInfo.add(terms2);
                 appInfo.add(terms3);
