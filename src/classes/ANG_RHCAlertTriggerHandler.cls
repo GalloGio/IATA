@@ -246,7 +246,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         Map<Id,ANG_Risk_Alert__c> accountAlerts = new Map<Id,ANG_Risk_Alert__c>();
 
-       for(ANG_Risk_Alert__c ralert : [Select Id, ANG_Direction__c, ANG_Account__c,ANG_Threshold_Level__c  from ANG_Risk_Alert__c where ANG_Account__c in: accountIds and Id not in:triggerNew Order by CreatedDate ASC])
+       for(ANG_Risk_Alert__c ralert : [Select Id, ANG_Direction__c, ANG_Account__c,ANG_Threshold_Level__c, ANG_Account__r.Country_ISO_Code__c from ANG_Risk_Alert__c where ANG_Account__c in: accountIds and Id not in:triggerNew Order by CreatedDate ASC])
             accountAlerts.put(ralert.ANG_Account__c, ralert);
         
         for(ANG_Risk_Alert__c ralert:triggerNew){
@@ -255,6 +255,8 @@ public class ANG_RHCAlertTriggerHandler{
                 continue;
 
                 if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP){
+                    if( 'IN'.equals(accountAlerts.get(ralert.ANG_Account__c).ANG_Account__r.Country_ISO_Code__c) && ralert.ANG_Threshold_Level__c == '100%') 
+                    continue;
                     toDeactivateAccounts.add(ralert.ANG_Account__c);
                 }
                 
