@@ -394,11 +394,11 @@ public without sharing class ISSP_Case {
                 isEditMode = true;
 
 
-            //Survey Handle
+            //Survey Handle 
             mySurveyCompletedVariable  = false ;
             List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
                     FROM Instant_Surveys__c
-                    WHERE Relationship_to_Case__c = :newCase.Id]);
+                    WHERE Relationship_to_Case__c = :newCase.Id and recordType.developername != 'Live_Agent_Chat']);
             if (Survey_List != null && Survey_List.size() > 0) {
                 mySurveyCompletedVariable = true ;
             }
