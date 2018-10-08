@@ -252,20 +252,9 @@
                         $(".shipping_city__c").attr('disabled','disabled');
                         $(".shipping_postal_code__c").attr('disabled','disabled');
                         $(".shipping_state__c").attr('disabled','disabled');
-
-                        $(".shipping_street__c").val("{!ca.account.ShippingStreet}");
-                        $(".shipping_city__c").val("{!ca.account.ShippingCity}");
-                        $(".shipping_postal_code__c").val("{!ca.account.ShippingPostalCode}");
-                        $(".shipping_state__c").val("{!ca.account.ShippingState}");
                     }
-
-                    $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
-                        return "* " + $(this).text();
-                    });
-
-                    $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
-                        return "* " + $(this).text();
-                    });
+                    
+                    
                 </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
@@ -1024,6 +1013,19 @@
             $(".shipping_country__c").val("{!ca.account.ShippingCountry}");
             $(".shipping_country__c").attr('readonly', true);
             $(".shipping_country__c").attr('disabled','disabled');
+            
+            $(".shipping_street__c").val("{!ca.account.ShippingStreet}");
+            $(".shipping_city__c").val("{!ca.account.ShippingCity}");
+            $(".shipping_postal_code__c").val("{!ca.account.ShippingPostalCode}");
+            $(".shipping_state__c").val("{!ca.account.ShippingState}");
+            
+            $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
+                return "* " + $(this).text();
+            });
+            
+            $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
+                return "* " + $(this).text();
+            });
         }
 
         function showForms() {
