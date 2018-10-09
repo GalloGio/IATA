@@ -3,7 +3,7 @@
     <available>true</available>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>IATADynamicSkyLetterhead</letterhead>
-    <name>AMS_PCI Compliant reminder renewal SP</name>
+    <name>AMS_PCI Compliant reminder renewal SP 30</name>
     <style>freeForm</style>
     <subject>RECORDATORIO SOBRE LAS DSS DE LA PCI</subject>
     <textOnly>Estimado/a {!Case.Contact},
