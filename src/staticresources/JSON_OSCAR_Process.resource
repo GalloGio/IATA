@@ -4981,7 +4981,7 @@
             "Name": "AMS_OSCAR_GOGLOBAL",
             "Steps": [
               {
-                "Name": "STEP5",
+                "Name": "STEP45",
                 "Required": [],
                 "Actions": [{
                     "FunctionName": "hierarchySelectionForGE",
