@@ -251,12 +251,10 @@
                   <li><a href="/ISSP_ContactList?MainNav=Admin&subNav=contacts&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  id="M4S1" >{!$Label.ISSP_Contacts}</a></li>
                   <li class="divider"></li>
                   <li><a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S3" >{!$Label.ISSP_My_Company_Cases}</a></li>
-                  <li class="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal DPC','hide','')} divider"></li>
-                  <li class="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal DPC','hide','')}"><a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6">{!$Label.ISSP_Local_Groups_Industry}</a></li>
-                  <li class="{!if(isCargoDGR || $Profile.Name == 'ISS Portal DPC','hide','')} divider"></li>
-                  <li class="{!if(isCargoDGR || $Profile.Name == 'ISS Portal DPC','hide','')}"><a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7" >
-                <!--{-- ! $Label.ISSP_Manage_Services } - CREATE LABEL -->  
-                Trained Staff Certification </a></li>
+                  <li class="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','hide')} divider"></li>
+                  <li class="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','hide')}"><a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6">{!$Label.ISSP_Local_Groups_Industry}</a></li>
+                  <li class="{!IF(isCargoDGR,'','hide')} divider"></li>
+                  <li class="{!IF(isCargoDGR,'','hide')}"><a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7">{!$Label.ISSP_Trained_Staff_Certification}</a></li>
                </ul>
             </li>
          </ul>

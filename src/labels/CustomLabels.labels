@@ -1370,7 +1370,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ModelBanking Link Label</shortDescription>
-        <value>Information on IATA EasyPay Account Opening</value>
+        <value>Bank Contact Details</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_OpeningInProgress</fullName>
