@@ -660,13 +660,6 @@ public without sharing class ISSP_Case {
                             WHERE Id IN :lsAccountIds];
                     }
                 }
-                //adding iDPC account to who to contact list
-                try{
-                    Account idpcAccount = [SELECT Id, Name FROM Account WHERE Name = 'iDPC'];
-                    lsAccounts.add(idpcAccount);
-                } catch (Exception e) {
-                    System.debug('iDPC account not found');
-                }
                 
                 List<Contact> lsContacts = new list<Contact>();
                 for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
