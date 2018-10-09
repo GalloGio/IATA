@@ -3,7 +3,6 @@ public class ANG_AgencyChangesHelperTest {
 
 	 @testSetup static void testSetup(){
 		
-
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
@@ -20,7 +19,7 @@ public class ANG_AgencyChangesHelperTest {
 		account.Location_Class__c = 'P';
 		account.Location_Type__c = 'HE';
 		account.ANG_Accreditation_Model__c = 'Cashless';
-
+		account.IATA_ISO_Country__c = ctry.Id;
 		account.ANG_IEP_HE_AccntNum__c = '1232132323';
 		account.ANG_IEP_Status__c = 'Suspended' ;
 		account.ANG_HE_CashCondition__c = true;
@@ -288,7 +287,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -416,7 +415,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -533,7 +532,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -651,7 +650,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -764,7 +763,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = [Select Id,ANG_Enable_NewGen__c from IATA_ISO_Country__c];
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
@@ -785,6 +784,7 @@ public class ANG_AgencyChangesHelperTest {
 		newHeSingle.ANG_HE_RiskStatus__c = 'Not Applicable';
 		newHeSingle.RecordTypeId = accountAgencyRT;
 		newHeSingle.ANG_Accreditation_Model__c = 'Cashless';
+		newHeSingle.IATA_ISO_Country__c = ctry.Id;
 
 		insert newHeSingle;
 
@@ -866,7 +866,8 @@ public class ANG_AgencyChangesHelperTest {
 
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = [Select Id,ANG_Enable_NewGen__c from IATA_ISO_Country__c];
+
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
@@ -887,6 +888,7 @@ public class ANG_AgencyChangesHelperTest {
 		newHeSingle.ANG_HE_RiskStatus__c = 'Not Applicable';
 		newHeSingle.RecordTypeId = accountAgencyRT;
 		newHeSingle.ANG_Accreditation_Model__c = 'Cashless';
+		newHeSingle.IATA_ISO_Country__c = ctry.Id;
 
 		insert newHeSingle;
 
@@ -897,7 +899,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '15520003454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -1867,6 +1869,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
 
 		update oscar;
@@ -1910,6 +1913,7 @@ public class ANG_AgencyChangesHelperTest {
 	@isTest static void test_getChangeCodes(){
 
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
 		EF_AttachmentListController.runningForEF = false;
 		loadCredentials();
 
@@ -2055,6 +2059,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');
@@ -2248,6 +2253,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
 		oscar.AMS_Correction_change_code__c = 'COR';
   	    
@@ -2329,6 +2335,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar2.STEP6__c = 'Passed';
 		oscar2.Change_effective_as_of__c = System.today();
 		oscar2.Is_PCI_compliant__c = 'Yes';
+		oscar2.ANG_PCI_compliance_expiry_date__c = System.today();
 		oscar2.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
 		oscar2.AMS_Correction_change_code__c = 'CAD';
   	    
@@ -2490,6 +2497,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
 		oscar.AMS_Correction_change_code__c = 'LET';
   	    
@@ -2528,6 +2536,8 @@ public class ANG_AgencyChangesHelperTest {
 
 	@isTest static void testANGAccountHierarchyChange(){
 
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
+
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		EF_AttachmentListController.runningForEF = false;
 		loadCredentials();
@@ -2633,6 +2643,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');
@@ -2664,6 +2675,8 @@ public class ANG_AgencyChangesHelperTest {
 
 		@isTest static void testANGAccountHierarchyChange2(){
 
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
+
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		EF_AttachmentListController.runningForEF = false;
 		loadCredentials();
@@ -2769,6 +2782,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');

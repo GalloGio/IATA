@@ -9,7 +9,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/sMAP_Inform_to_CM</template>
+        <template>All/sMAP_Inform_to_CM</template>
     </alerts>
     <alerts>
         <fullName>sMAP_Inform_to_CM_Backup_Contact</fullName>
@@ -24,7 +24,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/sMAP_Inform_to_CM_Backup_Contact</template>
+        <template>All/sMAP_Inform_to_CM_Backup_Contact</template>
     </alerts>
     <fieldUpdates>
         <fullName>sMAP_Update_Airline_Input_By</fullName>

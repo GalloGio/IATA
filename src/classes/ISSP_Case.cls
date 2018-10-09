@@ -175,8 +175,21 @@ public without sharing class ISSP_Case {
             }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Reason1__c == 'Annual revalidation' && newCase.Owner.Name.startsWith('Annual Revalidation')){
                 PageReference pr = new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + caseId);
                 return pr;
+            } else if (newCase.RecordType.Name == 'OSCAR Communication' && newCase.Owner.Name.startsWith('Model A Onboarding')) {
+                return new PageReference('/ISSP_ModelA_Onboarding?caseId=' + caseId);
             }
 
+            // If Case is an ICCS Case, redirect to ICCS Service
+			Set<String> recordTypesSet = new Set<String>{
+				'FDS ASP Management',
+				'FDS ICCS Bank Account Management',
+				'FDS ICCS Membership Management',
+				'FDS ICCS Product Management'
+			};
+			if(newCase.Origin == 'Portal' && recordTypesSet.contains(newCase.RecordType.Name)){
+                PageReference pr = new PageReference('/ISSP_ICCS_Service?caseId=' + caseId);
+                return pr;
+			}
             showAlertMessage();
 
         }
@@ -423,7 +436,7 @@ public without sharing class ISSP_Case {
                 }
 
                 system.debug('status: ' + newCase.Status);
-                if (newCase.Status == 'Draft' || newCase.Status == 'Open - EDMC' || newCase.Status == 'Pending customer') {
+                if (newCase.Status == 'Draft' || newCase.Status == 'Open - EDMC' || newCase.Status == 'Return application to customer') {
                     List <AP_Process_Form__c> apList = [SELECT Id FROM AP_Process_Form__c WHERE Case__c = :caseId];
 
                     system.debug('apList: ' + apList);

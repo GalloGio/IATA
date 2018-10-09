@@ -28,6 +28,14 @@ public class ANG_RHCInformationTriggerHandler{
 		convertAndSumFS();
 		sumRHCAmount();
 		//analyzeConsumedRHCAdjustment(); as per NEWGEN-1085
+
+		List<ANG_RHC_Information__c> updatedFlagsForRHCEqsFS = new List<ANG_RHC_Information__c>();
+		
+		for(ANG_RHC_Information__c rhc : triggerNew) 
+			if(rhc.ANG_RHC_Amount_Equals_FS__c != oldMap.get(rhc.id).ANG_RHC_Amount_Equals_FS__c)
+				updatedFlagsForRHCEqsFS.add(rhc);
+
+		if (!updatedFlagsForRHCEqsFS.isEmpty()) ANG_RHCHelper.calculateRHCAmount(updatedFlagsForRHCEqsFS);
 	}
 	public void onAfterUpdate(){
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'RHC_Information','ANG_AccountId__c').run();
@@ -95,6 +103,7 @@ public class ANG_RHCInformationTriggerHandler{
 					|| rhcInfo.ANG_Financial_Security__c != oldMap.get(rhcInfo.Id).ANG_Financial_Security__c
 					|| rhcInfo.ANG_Minimum_Financial_Security__c != oldMap.get(rhcInfo.Id).ANG_Minimum_Financial_Security__c
 					|| rhcInfo.ANG_RHC_Amount_Provisional__c != oldMap.get(rhcInfo.Id).ANG_RHC_Amount_Provisional__c
+					|| rhcInfo.ANG_RHC_Amount_Equals_FS__c != oldMap.get(rhcInfo.Id).ANG_RHC_Amount_Equals_FS__c
 				)
 			){
 				rhcToSum.add(rhcInfo);
@@ -114,9 +123,17 @@ public class ANG_RHCInformationTriggerHandler{
 		for(ANG_RHC_Information__c r : triggerNew){
 			if(!r.ANG_CashCondition__c && oldMap.get(r.Id).ANG_CashCondition__c) accIds.add(r.ANG_AccountId__c);
 		}
+		/* **** INC424176 ****
+		   ****  Disable the Provisional RHC re-calculation call from RME ****
+		if(!accIds.isEmpty()) {
+			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+			else System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+		}*/
 
-		if(!accIds.isEmpty()) System.enqueueJob(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
-			
+		if(!accIds.isEmpty()) {
+			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+			else System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+		}	
 	}
 
 	/* as per NEWGEN-1085

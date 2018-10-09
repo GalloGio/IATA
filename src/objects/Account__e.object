@@ -5,6 +5,7 @@
     <eventType>StandardVolume</eventType>
     <fields>
         <fullName>AccountId__c</fullName>
+        <description>Id of the Account which generate the event</description>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>
@@ -30,6 +31,7 @@
     </fields>
     <fields>
         <fullName>Type__c</fullName>
+        <description>Type of event</description>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>
