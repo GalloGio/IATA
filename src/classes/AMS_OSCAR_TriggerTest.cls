@@ -1112,7 +1112,7 @@
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
 		loadCredentials();
 
-        Test.startTest();
+        
 
         List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
         customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination10', TC_Location_type__c = false, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership',
@@ -1126,13 +1126,17 @@
         Account aHo = [SELECT id, Location_Type__c, Short_Name__c, Name from Account where Location_Type__c = 'HO' LIMIT 1];
         Account aBr = [SELECT id, Location_Type__c from Account where Location_Type__c = 'BR' LIMIT 1];
 
-        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        /*** AMSU-180 ***/
+        Contact c = new Contact(FirstName= 'test', LastName= 'contact', Email= 'test.owner@contact.com');
+        insert c;
+
+        ID changeRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = aHo.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
         
@@ -1141,6 +1145,9 @@
         newCase.setOptions(dmo);
 
         insert newCase;        
+        
+        Test.startTest();
+        
         Attachment attc = new Attachment(
           OwnerId = UserInfo.getUserId(),
           IsPrivate = true,
@@ -1152,9 +1159,7 @@
         AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aHo.Name, Short_Name__c=aHo.Short_Name__c );
         insert stagingArea;
 
-        /*** AMSU-180 ***/
-        Contact c = new Contact(FirstName= 'test', LastName= 'contact', Email= 'test.owner@contact.com');
-        insert c;
+        
         AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c= aHo.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId());
         AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= aBr.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId());
 
@@ -1169,12 +1174,11 @@
         oscarToUpdate.AMS_Online_Accreditation__c = stagingArea.Id;
         update oscarToUpdate;
 
+        Test.stopTest();
+
         AMS_OSCAR__c oscarT = [SELECT id, STEP6__c from AMS_OSCAR__c where id = :oscar.id];
 
         System.assertEquals('Passed',oscarT.STEP6__c);
-
-        Test.stopTest();
-
     }
 
     @isTest static void testMCOwnershipToNonIATA() {
