@@ -939,7 +939,7 @@
                                         <apex:outputfield value="{!newCase.Priority}" rendered="{!NOT(AND(isACCA,newCase.Status!='Closed'))}"/>
 
                                         <apex:outputfield value="{!newCase.DPC_Software__c}" rendered="{!AND(NOT(IsInterDPCCase),caseType='DPCSR')}" />
-                                        <apex:outputfield value="{!newCase.Status}" rendered="{!NOT(AND(IsInterDPCCase,isDPCUser))}" />
+                                        <apex:outputfield value="{!newCase.Status}" rendered="{!NOT(AND(IsInterDPCCase,isDPCUser,newCase.Status!='Closed'))}" />
                                         <!-- STATUS Field for DPC -->
                                         <script>
                                             function updateStatus(element) {
@@ -951,7 +951,7 @@
                                                 }
                                             }
                                         </script>
-                                        <apex:selectList value="{!newCase.Status}" styleclass="form-control"  required="true" style="width: auto;" size="1" rendered="{!AND(IsInterDPCCase,isDPCUser)}"
+                                        <apex:selectList value="{!newCase.Status}" styleclass="form-control"  required="true" style="width: auto;" size="1" rendered="{!AND(IsInterDPCCase,isDPCUser,newCase.Status!='Closed')}"
                                             onfocus="this.oldValue=this.value" onchange="updateStatus(this);">
                                             <apex:selectOptions value="{!listDPCValidCaseStatus}"/>
                                         </apex:selectList>
