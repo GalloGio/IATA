@@ -245,6 +245,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Multicountry_Enabled__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ANG_GDI_Enabled__c</field>
             </layoutItems>
         </layoutColumns>
@@ -260,10 +264,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_IEP_Model__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Multicountry_Enabled__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
