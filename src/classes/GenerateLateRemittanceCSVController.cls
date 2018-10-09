@@ -64,11 +64,11 @@ public without sharing class GenerateLateRemittanceCSVController {
     
     public String getCSVcontent () {
         // the string that will hold the generated CSV contents; initialized with the table header
-        String strCSVReport = 'DocType,SalesOrg,DistChan,Division,SalesOffice,CustName,AgentCode,ContractNo,Ponumber,Podate,Sodesc,DocCurr,PayMethod,BillingDate,TextPrint,InternalRemark,Material,MatDesc,Quantity,UnitPrice,UnitPriceCurr,DateFrom,DateTo';
+        String strCSVReport = 'DocType,SalesOrg,DistChan,Division,SalesOffice,CustName,AgentCode,ContractNo,Ponumber,Podate,Sodesc,DocCurr,PayMethod,BillingDate,TextPrint,InternalRemark,Material,MatDesc,Quantity,UnitPrice,UnitPriceCurr,DateFrom,DateTo,CaseNumber,Region,IATACountry';
         
         /* REPORT 1 - Late payment fee report */
         List<Case> tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c, Short_Payment_Amount__c, Short_Payment_Date__c, Late_Payment_Date__c, 
-        								Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c
+        								Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c, CaseNumber, Region__c, Account.IATA_ISO_Country__r.Name
                                     FROM Case
                                     WHERE RecordType.DeveloperName = 'SIDRA'
                                     AND Update_AIMS_IRR__c <> null 
@@ -125,6 +125,9 @@ public without sharing class GenerateLateRemittanceCSVController {
             cw.UnitPriceCurr = '';
             cw.DateFrom = startDate.format().replace('/','.');
             cw.DateTo = endDate.format().replace('/','.');
+            cw.CaseNumber = c.CaseNumber;
+            cw.Region = c.Region__c;
+            cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
             
             strCSVReport += '\n' + cw.toCSV();
             
@@ -159,6 +162,9 @@ public without sharing class GenerateLateRemittanceCSVController {
             cw.UnitPriceCurr = c.Currency__c != null ? c.Currency__c : '';
             cw.DateFrom = c.Remittance_Date__c != null ? c.Remittance_Date__c.format().replace('/','.') : '';
             cw.DateTo = c.Late_Payment_Date__c != null ? c.Late_Payment_Date__c.format().replace('/','.') : '';
+            cw.CaseNumber = c.CaseNumber;
+            cw.Region = c.Region__c;
+            cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
             
             strCSVReport += '\n' + cw.toCSV();
         }
@@ -166,7 +172,7 @@ public without sharing class GenerateLateRemittanceCSVController {
         
         /* REPORT 2 - Reinstatement fee report */
         tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c, Short_Payment_Amount__c, Short_Payment_Date__c, Late_Payment_Date__c, 
-								Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c
+								Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c, CaseNumber, Region__c, Account.IATA_ISO_Country__r.Name
                         FROM Case
                         WHERE RecordType.DeveloperName = 'SIDRA'
                         AND Update_AIMS_REI_DEFWITH__c <> null 
@@ -223,6 +229,9 @@ public without sharing class GenerateLateRemittanceCSVController {
             cw.UnitPriceCurr = '';
             cw.DateFrom = startDate.format().replace('/','.');
             cw.DateTo = endDate.format().replace('/','.'); 
+            cw.CaseNumber = c.CaseNumber;
+            cw.Region = c.Region__c;
+            cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
             
             strCSVReport += '\n' + cw.toCSV();
             
@@ -257,6 +266,9 @@ public without sharing class GenerateLateRemittanceCSVController {
             cw.UnitPriceCurr = c.Currency__c != null ? c.Currency__c : '';
             cw.DateFrom = c.Remittance_Date__c != null ? c.Remittance_Date__c.format().replace('/','.') : ''; // Short_Payment_Date__c
             cw.DateTo = c.Late_Payment_Date__c != null ? c.Late_Payment_Date__c.format().replace('/','.') : '';
+            cw.CaseNumber = c.CaseNumber;
+            cw.Region = c.Region__c;
+            cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
             
             strCSVReport += '\n' + cw.toCSV();
             
@@ -285,13 +297,16 @@ public without sharing class GenerateLateRemittanceCSVController {
             cw.UnitPriceCurr = '';
             cw.DateFrom = startDate.format().replace('/','.');
             cw.DateTo = endDate.format().replace('/','.'); 
+            cw.CaseNumber = c.CaseNumber;
+            cw.Region = c.Region__c;
+            cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
                         
             strCSVReport += '\n' + cw.toCSV();
         }
         
         
         /* REPORT 3 - Minor error policy (IFAP) */
-        tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c 
+        tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c, CaseNumber, Region__c, Account.IATA_ISO_Country__r.Name 
                         FROM Case
                         WHERE RecordType.DeveloperName IN ('IATA_Financial_Review','ProcessEuropeSCE')
                         AND SIDRA_Exclude_from_report_exceptions__c = true 
@@ -334,6 +349,9 @@ public without sharing class GenerateLateRemittanceCSVController {
             cw.UnitPriceCurr = '';
             cw.DateFrom = startDate.format().replace('/','.');
             cw.DateTo = endDate.format().replace('/','.');
+            cw.CaseNumber = c.CaseNumber;
+            cw.Region = c.Region__c;
+            cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
             
             strCSVReport += '\n' + cw.toCSV();
         }
@@ -365,12 +383,15 @@ public without sharing class GenerateLateRemittanceCSVController {
         public String UnitPriceCurr {get; set;}
         public String DateFrom {get; set;}
         public String DateTo {get; set;}
+        public String CaseNumber {get; set;}
+        public String Region {get; set;}
+        public String IATACountry {get; set;}
         
         public String toCSV() {
             return DocType + ',' + SalesOrg + ',' + DistChan + ',' + Division + ',' + SalesOffice + ',' + CustName + ',' + AgentCode + 
                 ',' + ContractNo + ',' + Ponumber + ',' + Podate + ',' + Sodesc + ',' + DocCurr + ',' + PayMethod + ',' + BillingDate + 
                 ',' + TextPrint + ',' + InternalRemark + ',' + Material + ',' + MatDesc + ',' + Quantity + ',' + UnitPrice + ',' + UnitPriceCurr + 
-                ',' + DateFrom + ',' + DateTo;
+                ',' + DateFrom + ',' + DateTo + ',' + CaseNumber + ',' + Region + ',' + IATACountry;
         }
         
     }
