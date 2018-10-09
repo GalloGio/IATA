@@ -589,4 +589,16 @@
         <label>Closed_Disapproved</label>
         <closed>true</closed>
     </standardValue>
+    <standardValue>
+        <fullName>Return application to customer</fullName>
+        <default>false</default>
+        <label>Return application to customer</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>        
+        <fullName>Closed_Non compliance</fullName>
+        <default>false</default>
+        <label>Closed_Non compliance</label>
+        <closed>true</closed>
+    </standardValue>
 </StandardValueSet>

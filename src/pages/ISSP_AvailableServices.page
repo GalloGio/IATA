@@ -96,6 +96,23 @@
       //refresh(); 
     }
 
+	function newICCSReq(appId, appName){
+		if('{!isIccsMembershipInactive}' == 'true' || '{!isIccsMembershipProspect}' == 'true' || '{!isIccsMembershipActive}' == 'true'){
+			showModal('#ModalNewIccsServiceRequest');
+            ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}', newAppReqCallback);
+		}
+		else if('{!isIccsMembershipMember}' == 'true' || '{!isIccsMembershipSuspended}' == 'true' ){
+			var appPortalRole = $('[id$="iccsPortalRoles"]').val();
+			if (appPortalRole == '' || appPortalRole == null || appPortalRole == undefined){
+				document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';       
+			}
+			else{
+				showModal('#ModalNewServiceRequest');
+	    		ISSP_AvailableServices.newAppsRequest2(appId, appName, '{!conId}', appPortalRole, 'false', '', newAppReqCallback);
+			}
+		}
+	}
+
     function newAppReqCallback(res){
       
     }
@@ -373,8 +390,8 @@
    }
 
     </style>
-    <h4>{!$Label.ISSP_services}  <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
-         {!$Label.ISSP_Available_services} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+    <h4>{!$Label.ISSP_Available_services}  <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+         {!$Label.ISSP_Manage_Services} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
         <small>{!$Label.ISSP_PageDescription_ISSP_AvailableServices} </small></h4>
     <apex:form id="contactListForm">
 
@@ -582,7 +599,8 @@
                   </span-->
                   <td style="padding-left: 10px">
                   <span>
-                      <apex:outputPanel rendered="{!NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}">
+
+                      <apex:outputPanel rendered="{! NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay') || Serv.recordService.Name == iccsPortalApplicationName)}">
                           <apex:outputLabel escape="false" value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c}" />
 
                         <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
@@ -602,6 +620,21 @@
                       <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
 
                       </apex:outputPanel>  
+
+						<apex:outputPanel rendered="{! Serv.recordService.Name == iccsPortalApplicationName}">
+							<apex:outputPanel rendered="{! isIccsMembershipInactive || isIccsMembershipProspect || isIccsMembershipActive}">
+	                            <apex:outputLabel escape="false" value="{! $Label.ICCS_Service_Access_Inactive}"/>
+							</apex:outputPanel>
+
+							<apex:outputPanel rendered="{! isIccsMembershipMember || isIccsMembershipSuspended}">
+	                            <apex:outputLabel escape="false" value="{! $Label.ICCS_Homepage_Select_Role_Label}"/>
+							</apex:outputPanel>
+
+							<apex:outputPanel rendered="{! isIccsMembershipWithdrawn}">
+	                            <apex:outputLabel escape="false" value="{! $Label.ICCS_Membership_Withdrawn_Message}"/>
+							</apex:outputPanel>
+                      </apex:outputPanel> 
+
                   </span>
                     </td>
                 </tr>
@@ -645,7 +678,21 @@
                           </div>                          
                         </apex:repeat>
                     </apex:outputPanel>
-                  </td>
+
+						<!-- ICCS -->
+						<!-- IF user can request access with a role when membership is suspended, we'll have to update the rendered attribute below  -->
+	                  <apex:outputPanel rendered="{! Serv.recordService.Name == iccsPortalApplicationName && (isIccsMembershipMember || isIccsMembershipSuspended)}">
+	                    <apex:outputText value="{! $Label.ICCS_Homepage_Request_Role_Message2}" escape="false"/>
+	                    <br/>
+	                    <br/>
+	                    <br/>
+	                    <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " title="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE_HINT}"/>
+	                    <apex:selectList id="iccsPortalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
+	                      <apex:selectOptions value="{!iccsAvailablePortalServiceRoles}"/>
+	                      <apex:actionSupport event="onchange" rerender="serviceSubmitButton,serviceSubmitButton2,serviceSubmitButton3"/>
+	                    </apex:selectList>                  
+	                  </apex:outputPanel>
+	              </td>
                 </tr>
               </table>
 
@@ -691,7 +738,7 @@
                   oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');}" 
                   rerender="display_messages"/>
             
-                <apex:outputPanel rendered="{!Serv.recordService.Name<>'Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}"
+                <apex:outputPanel rendered="{!Serv.recordService.Name<>'Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay') || Serv.recordService.Name == iccsPortalApplicationName)}"
                   id="serviceSubmitButton">
                   <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');"
                      class="btn_iata_success btn-block btn">
@@ -704,6 +751,14 @@
                      {!$Label.ISSP_Confirm}
                   </a>
                 </apex:outputPanel> 
+
+				<!-- ICCS -->
+				<!-- IF user can request access with a role when membership is suspended, we'll have to update the rendered attribute below  -->
+                <apex:outputPanel rendered="{! Serv.recordService.Name == iccsPortalApplicationName && (isIccsMembershipInactive || isIccsMembershipProspect || isIccsMembershipActive || isIccsMembershipMember || isIccsMembershipSuspended)}" id="serviceSubmitButton3">
+                  <a onclick="newICCSReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}');"    class="btn_iata_success btn-block btn">
+                     {!$Label.ISSP_Confirm}
+                  </a>
+                </apex:outputPanel>
 
               </div>
               <div class="col-md-6">
@@ -788,6 +843,26 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal New ICCS Service Request-->
+    <div class="modal" id="ModalNewIccsServiceRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" href="#" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="btn_iata" class="close" data-dismiss="modal" aria-hidden="true" onclick="location.reload(true);" >&times;</button>
+            <h4 class="modal-title">{! $Label.ICCS_Service_Access_Granted_Title}</h4>
+          </div>
+          <div class="modal-body">
+            <div class="title">
+				<apex:outputText value="{! $Label.ICCS_Service_Access_Granted_Message}" escape="false"/>
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>          
+        </div>
+      </div>
+    </div>
+
 </apex:form>
 </div>
 </div><!-- end container-->

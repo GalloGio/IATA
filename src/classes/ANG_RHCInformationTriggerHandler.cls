@@ -123,10 +123,16 @@ public class ANG_RHCInformationTriggerHandler{
 		for(ANG_RHC_Information__c r : triggerNew){
 			if(!r.ANG_CashCondition__c && oldMap.get(r.Id).ANG_CashCondition__c) accIds.add(r.ANG_AccountId__c);
 		}
-
+		/* **** INC424176 ****
+		   ****  Disable the Provisional RHC re-calculation call from RME ****
 		if(!accIds.isEmpty()) {
 			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
 			else System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+		}*/
+
+		if(!accIds.isEmpty()) {
+			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+			else System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
 		}	
 	}
 

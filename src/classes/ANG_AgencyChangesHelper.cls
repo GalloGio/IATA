@@ -973,8 +973,8 @@ public with sharing class ANG_AgencyChangesHelper {
 					if (oldValue != newValue)
 						objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
 
-
-					if(toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.HE && oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.VFMR){
+                    
+					if(toReturn.accountsMap.containsKey(accId) && toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.HE && oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.VFMR){
 						if(accFieldApiName == 'Remittance_frequency__c' && oldValue != newValue)
 							accountsToUpdateRHC.add(accId);
 					}
@@ -1019,9 +1019,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		if(!accountIdsToProcess.isEmpty()){
 			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs())
-				Database.executeBatch(new ANG_UpdateRHCInformationBatch(accountIdsToProcess, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+				Database.executeBatch(new ANG_UpdateRHCInformationBatch(accountIdsToProcess, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, false, 1));
 			else 
-				System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accountIdsToProcess, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 1));
+				System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accountIdsToProcess, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, false, 1));
 		}
 	}
 

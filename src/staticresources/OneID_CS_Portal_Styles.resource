@@ -252,7 +252,8 @@ a.homeIcon:hover {
     width:100%;
     background-repeat:no-repeat;
     height:26px;
-    background-position-y:7px
+    background-position-y:7px;
+    background-position-x:2px;
 }
 .oiHeader a.homeIcon .logoTitle {
     display:block;
@@ -845,6 +846,24 @@ label, .labelCol,.lbl {
     #searchbox {
         display: none;
     }
+
+    #navbarHeader {
+        background-color: #00305b;
+        margin-top: 50px;
+        margin-bottom: 70px;
+    }
+
+    #navbar {
+        background-color: white;
+    }
+
+    #navbarLogo {
+        margin-top: -50px;
+    }
+
+    select[id$="LanguageLocaleKeySelect"] {
+        width: 200px !important;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
@@ -932,6 +951,24 @@ label, .labelCol,.lbl {
     
     .navbar-nav .open .dropdown-menu .dropdown-header, .navbar-nav .open .dropdown-menu > li > a {
         padding: 5px 15px 5px 25px;
+    }
+
+    #navbarHeader {
+        background-color: #00305b;
+        margin-top: 50px;
+        margin-bottom: 70px;
+    }
+
+    #navbar {
+        background-color: white;
+    }
+
+    #navbarLogo {
+        margin-top: -50px;
+    }
+
+    select[id$="LanguageLocaleKeySelect"] {
+        width: 200px !important;
     }
 }
 

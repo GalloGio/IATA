@@ -30,7 +30,7 @@ public class ANG_AccountTriggerHandler {
 		updateRiskStatus();
 	}
 	public void onAfterInsert() {
-		createIEPModelAOscars();
+
 	}
 
 	public void onBeforeUpdate(){
@@ -182,7 +182,8 @@ public class ANG_AccountTriggerHandler {
 		try{
 			if(!newCases.isEmpty()) insert newCases;
 		}catch(Exception e){
-            ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'manageDowngrades', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+            //ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'manageDowngrades', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW10',e);
 		}
 
 		//downgrade from B to C
@@ -495,7 +496,8 @@ public class ANG_AccountTriggerHandler {
 			
 			update oscars;
 		}catch(Exception e){
-            ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createVMFROscars', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+            //ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createVMFROscars', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+        	ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW11',e);
         }
 	}
 
@@ -550,7 +552,8 @@ public class ANG_AccountTriggerHandler {
 			//insert cases
 			insert cases;
 		}catch(Exception e){
-        	ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createFOPOscar', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+        	//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createFOPOscar', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW12',e);
 		}
 	}
 

@@ -3771,11 +3771,7 @@
         <description>Salesforce Change Request - Evaluation required</description>
         <protected>false</protected>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>parkyr@iata.org</recipient>
+            <recipient>larivaa@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -4128,6 +4124,17 @@
         <name>Assign ICCS Team</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Assign_NFE_ACR_to_system_manager</fullName>
+        <description>Assign to NFE system owner/manager</description>
+        <field>Product_Manager_ACR__c</field>
+        <lookupValue>hyokcholk@iata.org</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Assign NFE ACR to system manager</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -15168,7 +15175,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20 AND (NOT(23) AND 15))) AND 16 AND 18 AND 19 AND 21 AND 22) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20 AND (NOT(23) AND 15))) AND 16 AND 18 AND 19 AND 21 AND 22 AND NOT(23 AND 24)) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15283,6 +15290,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Origin</field>
             <operation>equals</operation>
             <value>Portal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
@@ -15981,6 +15993,21 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         </criteriaItems>
         <description>Rule to define if a case is an internal or external query.</description>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>NFE System to product owner</fullName>
+        <actions>
+            <name>Assign_NFE_ACR_to_system_manager</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>NFE</value>
+        </criteriaItems>
+        <description>Assign NFE ACRs to the product owner Kang</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>New External Case %28InvoiceWork%29</fullName>
