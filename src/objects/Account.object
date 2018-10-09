@@ -107617,7 +107617,8 @@ $User.ProfileId = &apos;00ew0000001R6uT&apos;,
 $User.ProfileId = &apos;00e20000000kvcd&apos;,
 $User.ProfileId = &apos;00e20000001Q8eH&apos;,
 $User.ProfileId = &apos;00ew0000001QUyp&apos;,
-$User.ProfileId = &apos;00e20000001QMpc&apos;)))</errorConditionFormula>
+$User.ProfileId = &apos;00e20000001QMpc&apos;,
+$User.ProfileId = &apos;00ew0000001QRzC&apos;)))</errorConditionFormula>
         <errorMessage>You are not allowed to modify AMS data, Please contact agency management or your system admin</errorMessage>
     </validationRules>
     <validationRules>
