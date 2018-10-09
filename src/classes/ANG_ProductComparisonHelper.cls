@@ -60,8 +60,8 @@ public with sharing class ANG_ProductComparisonHelper {
 									ANG_AE_Fees_Next_15_Locations__c, ANG_AE_Fees_Additional_Locations__c,
 									ANG_Fees_GoStandard_GoLite__c, ANG_Fees_GoLite_GoStandard__c, ANG_Fees_GoGlobal_GoLite__c, ANG_Fees_GoGlobal_GoStandard__c, ANG_Fees_GoLite_GoGlobal__c, ANG_Fees_GoStandard_GoGlobal__c,
 	    							(SELECT id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c, Order__c from Product_BOM__r ORDER BY Order__c)
-	    						FROM Product2 WHERE id in:setProdId]) {
-					if (!this.multiCountryEnabled && p2.Name == 'MultiCountry') continue;
+	    						FROM Product2 WHERE Id IN :setProdId ORDER BY Name DESC]) {
+					if (!this.multiCountryEnabled && p2.Name == 'Multicountry Accreditation') continue;
 					lsProd.add(p2);
 				}
 	    		
