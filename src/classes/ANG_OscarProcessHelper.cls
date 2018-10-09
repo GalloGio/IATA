@@ -88,7 +88,7 @@ global class ANG_OscarProcessHelper {
 			updater.oscarMap.put(oscar.Id,oscar);
 			updater.acctMap.put(theAccount.Id,theAccount);
 			updater.onlineAMap.put(theAccreditation.Id,theAccreditation);
-
+			
 			/*** AMSU-162 ***/
 			if(AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) && !isShippingAddressValid(theAccreditation)) {
 				isIATACodeGenerationRunning = false;
@@ -364,10 +364,10 @@ global class ANG_OscarProcessHelper {
 	public static void updateUpdater(EntityUpdater updater){
 
 		if(!updater.acctMap.values().isEmpty())
-			update updater.acctMap.values();
+            update updater.acctMap.values();
 
 		if(!updater.onlineAMap.values().isEmpty())		
-			update updater.onlineAMap.values();
+            update updater.onlineAMap.values();
 
 		if(!updater.oscarMap.values().isEmpty()){
 			isIATACodeGenerationRunning = false;
@@ -523,10 +523,10 @@ global class ANG_OscarProcessHelper {
         changeCode.reasonCode = n.Reason_Code__c;
         //changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
         if(n==null)
-        	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
-        else
-        	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
-        
+	        changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
+	    else
+	    	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
+	    
         changeCode.reasonDesc  = n.Reason_Code_Description__c;
         changeCode.status  = n.Account_status_change__c;
         changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
@@ -670,13 +670,10 @@ global class ANG_OscarProcessHelper {
 				System.debug('[ANG_OscarProcessHelper] ccAccountsMap to create are:'+ccAccountsMap);
 
 				for(String changeCode : ccAccountsMap.keySet())
-					updater = createChangeCodeForFOP(updater, oscar, new List<Account>(ccAccountsMap.get(changeCode)), changeCode );
+					createChangeCodeForFOP(updater, oscar, new List<Account>(ccAccountsMap.get(changeCode)), changeCode );
 
 			}
-
-			//no more need to update OSCAR. Running from automation (Before Trigger)
-			updater.oscarMap.remove(oscar.id);
-			updateUpdater(updater);
+            
 		
 		}catch(Exception ex){
 			
@@ -1072,10 +1069,10 @@ global class ANG_OscarProcessHelper {
 	        accOscarObjsMap.get(acc.Id).oscar = oscar;
     	}
 
-		if(!oscarsToInsert.isEmpty())
+    	if(!oscarsToInsert.isEmpty())
     		insert oscarsToInsert;
-		
-		OrgWideEmailAddress[] owea;
+
+    	OrgWideEmailAddress[] owea;
 
 		if(!accsToSendEmail.isEmpty()){
 			owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
@@ -1085,10 +1082,10 @@ global class ANG_OscarProcessHelper {
 
 		for (Account acc: accs){
 		// fields needed on contact: Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
-			
+
 			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
 			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
-			
+
 			//if(accsToSendEmail.contains(acc.Id))
 	            //AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
 
