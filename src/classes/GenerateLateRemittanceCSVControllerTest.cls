@@ -149,14 +149,14 @@ private class GenerateLateRemittanceCSVControllerTest {
             // build the expected result string
             String strExpectedCSVcontent = 'DocType,SalesOrg,DistChan,Division,SalesOffice,CustName,AgentCode,ContractNo,Ponumber,Podate,Sodesc,DocCurr,PayMethod,BillingDate,TextPrint,InternalRemark,Material,MatDesc,Quantity,UnitPrice,UnitPriceCurr,DateFrom,DateTo,CaseNumber,Region,IATACountry';
             // report 1 runs first
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800395,Late Remittance Recovery -,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.');
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800394,Late Remittance Interest -,2,,,' + dToday.format().replace('/','.') + ',' + dToday.addDays(2).format().replace('/','.');
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800395,Late Remittance Recovery -,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.')+',,,';
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800394,Late Remittance Interest -,2,,,' + dToday.format().replace('/','.') + ',' + dToday.addDays(2).format().replace('/','.')+',,,';
             // then runs report 2
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800395,Late Remittance Recovery --,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.');
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800395,Late Remittance Recovery --,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.')+',,,';
             strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800394,Late Remittance Interest --,2,,,' + dToday.format().replace('/','.') + ',' + dToday.addDays(2).format().replace('/','.');
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800402,,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.');
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800402,,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.')+',,,';
             // report 3 at the end
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,752026,,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.');
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,752026,,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.')+',,,';
             
             system.assertEquals( strExpectedCSVcontent, csvCtrl.getCSVcontent() );
             
