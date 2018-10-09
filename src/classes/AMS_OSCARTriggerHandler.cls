@@ -146,7 +146,7 @@ public class AMS_OSCARTriggerHandler {
         handleAnnualRevalidation((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
 		//Newgen 13/09/2018: Temporary removed
-		if(test.IsRunningTest())
+		//if(test.IsRunningTest())
 			performBackupANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
 
 
@@ -171,7 +171,7 @@ public class AMS_OSCARTriggerHandler {
         updateCaseKPIFields();
 
         //Newgen 13/09/2018: Temporary removed
-		if(test.IsRunningTest())
+		//if(test.IsRunningTest())
 			performBackupANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
 
     }
@@ -194,7 +194,7 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-134 End ***/
 
         //Newgen 13/09/2018: Temporary removed
-		if(test.IsRunningTest())
+		//if(test.IsRunningTest())
 			performRollbackANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
 
     }
