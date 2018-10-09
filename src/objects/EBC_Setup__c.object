@@ -271,6 +271,21 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Member_Email_Block_Product__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</inlineHelpText>
+        <label>Member Email Block Product</label>
+        <referenceTo>zqu__ZProduct__c</referenceTo>
+        <relationshipLabel>EBC Setups for Member Email Block Product</relationshipLabel>
+        <relationshipName>Member_Email_Block_EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Member_Pay_As_You_Go_Plan__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>EBC Pay As You Go Rate Plan for member. 
@@ -346,6 +361,21 @@ There is no recurring charge for this.</inlineHelpText>
         <relationshipName>EBC_Plan_Member_Prepaid_04_Setups</relationshipName>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Non_Member_Email_Block_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the product that will be the base of the Rate Plans for the Email Blocks, for non member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the product that will be the base of the Rate Plans for the Email Blocks, for non member</inlineHelpText>
+        <label>Non Member Email Block Product</label>
+        <referenceTo>zqu__ZProduct__c</referenceTo>
+        <relationshipLabel>EBC Setups (Non Member Member Email Block Product)</relationshipLabel>
+        <relationshipName>Non_Member_Email_Block_EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
