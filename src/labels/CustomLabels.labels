@@ -780,6 +780,13 @@
         <value>Notice of Termination</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP45</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP45</shortDescription>
+        <value>Confirm the hierarchy structure</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
         <language>en_US</language>
         <protected>false</protected>
