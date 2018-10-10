@@ -1,0 +1,186 @@
+<apex:page showHeader="false" sidebar="false" standardController="AMS_OSCAR__c" extensions="ANG_MulticountryHierarchySelectionCrtl" tabStyle="AMS_OSCAR__c">
+
+	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+	<apex:includeScript value="/support/console/34.0/integration.js"/>
+    <script type="text/javascript">
+    	function logCLose(closetab) {
+    		console.info(closetab);
+    	}
+        function testSetTabTitle() {
+            //Set the current tab's title
+            sforce.console.setTabTitle('Account Hierarchy Selection');
+        }
+        var pageLoad = window.onload;
+		window.onload = function() {
+			if (pageLoad) {
+				pageLoad();
+            }
+			testSetTabTitle();
+		}
+
+		function closeTab(){
+			sforce.console.getEnclosingTabId(closeSubtab);
+		}
+		
+		var closeSubtab = function closeSubtab(result){
+		    var tabId = result.id;
+		    sforce.console.closeTab(tabId);
+		};
+
+		function refreshTab(){
+
+				if (sforce.console.isInConsole()) {
+						sforce.console.getEnclosingTabId(function(enclosingResult){
+								sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+										sforce.console.refreshPrimaryTabById(primaryResult.id,true,null);
+										closeTab();
+								});
+						});
+				} else {
+						// for inline Vf
+						window.top.location.href = '/'+redirectUrl
+						// for normal vf
+						// window.location.href = '/'+redirectUrl
+				}
+		}
+
+
+		function bindCheckboxes() {
+			$('[data-group]').on("change", function () {
+                              
+                var $clicked = $(this);
+
+				$('[data-group="'+$(this).data("group")+'"]').not($clicked).each(function () {
+                    $(this).prop("checked", !$clicked.prop("checked"));						
+					});
+			});
+		}
+	</script>
+
+
+
+	<style>
+		.pos-relative{ position: relative; }
+		.loading-backdrop{ 
+			position: absolute; 
+			top: 0; 
+			bottom: 0; 
+			right: 0; 
+			left: 0; 
+			background: #FFF; 
+			opacity: 0.5; 
+		}
+		.loading-img{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -16px;
+			margin-left: -16px;
+			}
+	</style>
+	
+	<apex:sectionHeader title="Newgen ISS Multi-Country Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
+	
+	<apex:form styleClass="pos-relative">
+		<apex:pageBlock mode="edit" rendered="{!editable}">
+
+			<apex:pageBlockSection id="notes" columns="1" title="Notes" collapsible="true">
+				<apex:dataList value="{!noteList}" var="note" rendered="{!noteList.size > 0}">
+					<apex:outputText value="{!note}"/>
+				</apex:dataList>
+			</apex:pageBlockSection>
+
+
+			<apex:pageBlockSection id="table" columns="1" title="Select Accounts" rendered="{!hierarchyValues.size > 0}">
+
+				<apex:pageMessages id="pageMessages"/>
+
+                <apex:outputPanel id="buttonPanel">
+                    <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
+                    <apex:outputText >Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+                    <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                </apex:outputPanel>
+					
+                <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
+					
+					<apex:column headerValue="GE">
+						<apex:inputCheckbox value="{!hi.main}" disabled="true"/>
+					</apex:column>
+
+					<apex:column headerValue="HE">
+					    <apex:inputCheckbox html-data-group="{!hi.acc.Id}" value="{!hi.isHE}" disabled="{!hi.main}"/>
+                    </apex:column>
+
+
+					<apex:column headerValue="AE">
+                        <apex:inputCheckbox html-data-group="{!hi.acc.Id}" value="{!hi.isAE}" disabled="{!hi.main}"/>
+
+                    </apex:column>
+
+					<apex:column value="{!hi.acc['Name']}"/>
+					<apex:column value="{!hi.acc['IATA_ISO_Country__r.Name']}"/>
+                    <apex:column value="{!hi.acc['BillingStreet']} , {!hi.acc['BillingCity']}, {!hi.acc['BillingPostalCode']} "/>
+
+				</apex:pageBlockTable>
+
+				<script>
+					bindCheckboxes();
+				</script>
+
+				<apex:actionFunction name="selectMain" action="{!selectMain}" status="blockEditing" reRender="table, dependentFields"/>
+
+				<apex:actionStatus id="blockEditing">
+					<apex:facet name="start">
+						<apex:outputPanel layout="none">
+							<apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+							<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+						</apex:outputPanel>
+					</apex:facet>
+				</apex:actionStatus>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'refreshTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages"/>
+				<apex:commandButton onclick="closeTab(); return false;" status="blockEditing" value="{!$Label.site.cancel}" immediate="true"/>
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+
+		<apex:pageBlock tabStyle="AMS_OSCAR__c" rendered="{!NOT(editable)}">
+
+			<apex:pageBlockSection id="table" columns="1" title="Accounts Selected" rendered="{!hierarchyValues.size > 0}">
+
+                <apex:outputPanel id="buttonPanel">
+                    <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
+                    <apex:outputText >Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+                    <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                </apex:outputPanel>
+					
+                <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
+					
+					<apex:column headerValue="Main">
+						<apex:inputCheckbox value="{!hi.main}" disabled="true"/>
+					</apex:column>
+
+					<apex:column >
+						<apex:inputCheckbox value="{!hi.selected}" disabled="true"/>
+					</apex:column>
+
+					<apex:column value="{!hi.acc['Name']}"/>
+					<apex:column value="{!hi.acc['Location_Type__c']}"/>
+					<apex:column value="{!hi.acc['IATACode__c']}"/>
+					<apex:column value="{!hi.acc['Status__c']}"/>
+					<apex:column value="{!hi.acc['BillingCity']}"/>
+					<apex:column value="{!hi.acc['Category__c']}"/>
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockButtons >
+				<button class="btn" onclick="closeTab(); return false;">{!$Label.site.cancel}</button>
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>
