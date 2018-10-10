@@ -11,7 +11,7 @@ private class Update_Contact_Available_Services_Test {
 		insert countrylist;
 		
 		List<Account> agencylist = new List<Account>();
-		Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeID('Account','IATA_Agency');
 		Account a1 = new Account(Name='Test1 Agency', RecordtypeId=agencyRT,
 			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
 			IATACode__c = '12345678', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED, 
