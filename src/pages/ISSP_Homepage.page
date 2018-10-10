@@ -555,7 +555,7 @@
                               </div>
   <!--------------------------------------------- end Carousel banner Section -------------------------------------------->
 <!---------------------------------------------key docs Section -------------------------------------------->
-                              <div class="col-md-4 bottomrow"  id="KeyDocuments">
+                              <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="KeyDocuments" rendered="{!NOT(OR(isOpCalendarAirlineUser,isOpCalendarAgencyUser))}">
                                     <div class="panel panel-primary">
                                           <div class="panel-heading">
                                                 <h3 class="panel-title"><span class="glyphicon glyphicon-book"></span> {!$Label.ISSP_Popular_FAQs}</h3>
@@ -599,12 +599,17 @@
                                                     &nbsp;<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
                                                 </div>
 
-
-
                                           </div>
                                     </div>
-                              </div>
+                              </apex:OutputPanel>
+                              
+<!--------------------------------------------OperationalCalendar Section------------------------------------------>
+                            <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="OperationalCalendar" rendered="{!OR(isOpCalendarAirlineUser,isOpCalendarAgencyUser)}">
+                                <c:ISSP_OperationalCalendarMini />
+                            </apex:OutputPanel>
+<!-------------------------------------------- end OperationalCalendar Section--------------------------------------->
                         </div>
+                        
 
   <!--------------------------------------------services Section -------------------------------------------->
       <div class="row show-grid" style="display:none">
