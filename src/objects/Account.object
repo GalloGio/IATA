@@ -94657,9 +94657,9 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
     <validationRules>
         <fullName>Location_Type_cannot_choose_HE_or_AE</fullName>
         <active>true</active>
-        <description>User cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</description>
-        <errorConditionFormula>AND(ISNEW(),OR(ISPICKVAL(Location_Type__c,&apos;HE&apos;),ISPICKVAL(Location_Type__c,&apos;AE&apos;)),OR(NOT(ANG_IsNewGenAgency__c),NOT(OR(ISPICKVAL(Location_Class__c,&apos;P&apos;),ISPICKVAL(Location_Class__c,&apos;D&apos;)))))</errorConditionFormula>
-        <errorMessage>You cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</errorMessage>
+        <description>User cannot set location type HE/GE/AE if the location class is not P/D and country is not NewGen.</description>
+        <errorConditionFormula>AND(ISNEW(),OR(ISPICKVAL(Location_Type__c,&apos;HE&apos;),ISPICKVAL(Location_Type__c,&apos;GE&apos;),ISPICKVAL(Location_Type__c,&apos;AE&apos;)),OR(NOT(ANG_IsNewGenAgency__c),NOT(OR(ISPICKVAL(Location_Class__c,&apos;P&apos;),ISPICKVAL(Location_Class__c,&apos;D&apos;)))))</errorConditionFormula>
+        <errorMessage>You cannot set location type HE/GE/AE if the location class is not P/D and country is not NewGen.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>MITA_Mandatory_Fields_For_Members</fullName>
