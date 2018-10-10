@@ -645,17 +645,5 @@ var dyn_functions = {
             }else
                 alert(result[1]);
         }
-    },
-    hierarchySelectionForGE:function (arg1) { 
-        var changeTab = function(result){
-        };
-
-        // Use the results primary tab id and open a new subtab
-        var openSubtab = function(result)
-        {               
-            sforce.console.openSubtab(result.id, '/apex/ANG_MulticountryHierarchySelection?Id='+arg1, true, 'Multicountry - Account Hierarchy Selection', null, changeTab);   
-        };
-
-        sforce.console.getEnclosingPrimaryTabId(openSubtab);
     }
 };
