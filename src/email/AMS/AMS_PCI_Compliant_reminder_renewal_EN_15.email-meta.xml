@@ -3,7 +3,7 @@
     <available>true</available>
     <encodingKey>UTF-8</encodingKey>
     <letterhead>IATADynamicSkyLetterhead</letterhead>
-    <name>AMS_PCI Compliant reminder renewal EN</name>
+    <name>AMS_PCI Compliant reminder renewal EN 15</name>
     <style>freeForm</style>
     <subject>PCI DSS REMINDER</subject>
     <textOnly>Dear {!Case.Contact},

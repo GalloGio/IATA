@@ -595,8 +595,7 @@
 
 
 <body onload="calculateDisplayedName();">
-
-    
+	<c:IDCardToolsComponent />    
     <div id="page_wrapper">
         <apex:form forceSSL="true" id="idcardForm" enctype="multipart/form-data">
             <apex:actionFunction name="ShowHideIFrames" action="{!ShowHideIFrames}"></apex:actionFunction>

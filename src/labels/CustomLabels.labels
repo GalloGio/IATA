@@ -1033,35 +1033,35 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</shortDescription>
-        <value>Please read this</value>
+        <value>You can access your IATA EasyPay account from the</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</shortDescription>
-        <value>FAQ</value>
+        <value>IATA Customer Service Portal</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</shortDescription>
-        <value>to learn more on how to manage your EasyPay account and get started.</value>
+        <value>at any time. Your colleagues can now also request access to your newly opened account.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</shortDescription>
-        <value>http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US</value>
+        <value>https://portal.iata.org/ISSP_Login</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</shortDescription>
-        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &amp;lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&amp;gt;FAQ&amp;lt;/a&amp;gt; above describes how you can manage user access.</value>
+        <value>Please refer to the FAQ/Help section on the IATA EasyPay portal for further information on how to manage your EasyPay account.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</fullName>
@@ -1069,10 +1069,14 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</shortDescription>
         <value>Congratulations on the opening of your new IATA EasyPay account.
-        Please follow this article that describes how to manage your EasyPay account and the initial steps in order to transfer funds so that you can start issuing EasyPay tickets.
-        Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The article above describes how you can manage user access.
-        Thank you,
-        IATA Customer Service</value>
+
+You can access your IATA EasyPay account from the IATA Customer Service Portal&lt;https://portal.iata.org/ISSP_Login&gt; at any time.
+
+Your colleagues can now also request access to your newly opened account.
+Please refer to the FAQ/Help section on the IATA EasyPay portal for further information on how to manage your EasyPay account.
+
+Thank you,
+IATA Customer Service</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ConfirmRequestIEP_1</fullName>
@@ -17472,6 +17476,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Total Ownership (Individuals + Companies) must equal 100% in order to submit to IATA.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</shortDescription>
+        <value>According to our records the Ownership for this IATA Code is not 100%. Please update the Agency details (Agency Ownership / Shareholding section), to ensure that the total ownership equals 100% in order that we can update our records.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -17493,6 +17505,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ANNUAL_REV_Q3</shortDescription>
         <value>* Please confirm which GDSs are used in your company?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</shortDescription>
+        <value>The same IATA Code as the one being updated cannot be added as a Company Owner.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</fullName>
@@ -17865,7 +17885,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Branch to Shipping</shortDescription>
-        <value>Copy Branch Address to Shipping Address</value>
+        <value>Copy Billing Address to Shipping Address</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</fullName>
@@ -25531,6 +25551,14 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_Trade name of Company</shortDescription>
         <value>Trade Name of company</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Trained_Staff_Certification</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Trained Staff Certification</shortDescription>
+        <value>Trained Staff Certification</value>
     </labels>
     <labels>
         <fullName>ISSP_Travel</fullName>
