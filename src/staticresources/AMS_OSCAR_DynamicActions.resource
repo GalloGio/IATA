@@ -645,5 +645,8 @@ var dyn_functions = {
             }else
                 alert(result[1]);
         }
+    },
+    hierarchySelectionForGE:function (arg1) { 
+        //TODO
     }
 };

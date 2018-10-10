@@ -60,7 +60,7 @@ public with sharing class AMS_OSCAR_Automation {
                     
                         oscar.Sanity_check_deadline__c = Date.today() + 14;
 
-                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
+                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWGESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
 
                         oscar.Sanity_check_deadline__c = Date.today() + 15;           
 
@@ -515,7 +515,7 @@ public with sharing class AMS_OSCAR_Automation {
                 }
             }
 
-            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES))
+            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES))
                 && !hasFRRequiredStep) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
@@ -646,7 +646,7 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.addError('Manager Approval cannot be granted if Sanity check step does not equals PASSED');
             } else {
                 
-                if (oscar != null && ((oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed') && oscar.STEP12__c != 'Failed') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES)) {
+                if (oscar != null && ((oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed') && oscar.STEP12__c != 'Failed') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD  || oscar.Process__c == AMS_Utils.NEWGESTANDARD|| oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES)) {
 
                     oscar.Approval_disapproval_date__c = Date.today();
                     oscar.Status__c = 'On Hold_Internal';

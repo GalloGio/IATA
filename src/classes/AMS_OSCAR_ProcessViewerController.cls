@@ -42,7 +42,7 @@ public class AMS_OSCAR_ProcessViewerController {
                 return false;
                 
             // NG Processes specific conditions
-            If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) && oscar.Process__c != AMS_Utils.NEWHELITE && oscar.Process__c != AMS_Utils.NEWHESTANDARD) {
+            If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) && oscar.Process__c != AMS_Utils.NEWHELITE && oscar.Process__c != AMS_Utils.NEWHESTANDARD && oscar.Process__c != AMS_Utils.NEWGESTANDARD) {
                 return (
                     oscar != null
                     && (oscar.AMS_Online_Accreditation__r.Remittance_frequency__c == null
@@ -97,7 +97,7 @@ public class AMS_OSCAR_ProcessViewerController {
         get{
             return (
                 oscar != null
-                && (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD)
+                && (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD)
             );
         }
     }
@@ -184,7 +184,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
     public boolean isNewgenRT{
         get{
-            return oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWHE && oscar.Process__c == AMS_Utils.NEWHESTANDARD;
+            return (oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWHE && oscar.Process__c == AMS_Utils.NEWHESTANDARD) || (oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWGE && oscar.Process__c == AMS_Utils.NEWGESTANDARD);
         }
     }
 

@@ -567,7 +567,7 @@ public class AMS_OSCARTriggerHandler {
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
-            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
+            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
                 oscar.Sanity_check_deadline__c = Date.today() + 15;
                 oscar.OSCAR_Deadline__c = Date.today() + 30;
 
@@ -2773,6 +2773,12 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
                 }
+
+                if(oscar.process__c == AMS_Utils.NEWGESTANDARD && oscar.Is_PCI_compliant__c == null){
+                    oscar.addError('In order to pass this step you need to check the Is PCI compliant field.');
+                    return;
+                }
+
 				//AMSU-34 - AMS gets to have the same validations as NG
                 if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c) || AMS_Utils.processesAMSrequiredAttachValidation.contains(oscar.Process__c)){
                     
@@ -3160,7 +3166,7 @@ public class AMS_OSCARTriggerHandler {
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE){
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE){
 
                 if (updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD && updatedOscar.STEP34__c != AMS_Utils.PASSED)
                      updatedOscar.addError('Approval can\'t be set if Request financial security step is not Passed.');
@@ -3170,7 +3176,7 @@ public class AMS_OSCARTriggerHandler {
                 //using an already existing method to send email aler to user.
                 AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
 
-                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
+                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD)
                     createAgencyAuthorizations(updatedOscar);
                 else if(updatedOscar.Process__c == AMS_Utils.NEWAE)
                     copyAgencyAuthorizationsFromParent(updatedOscar);
@@ -3189,7 +3195,7 @@ public class AMS_OSCARTriggerHandler {
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Disapproval') {
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD){
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD){
 
                 System.debug('Sending the email for the user to anounce disapproval of the oscar');
 
@@ -3331,10 +3337,10 @@ public class AMS_OSCARTriggerHandler {
             // *****************************************************
             // ********* STANDARD WITH CASH VALIDATIONS ************
             // *****************************************************
-            if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NGCHANGES){
+            if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NEWGESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NGCHANGES){
 
                 
-                if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD && oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && (updatedOscar.RPM_Approval__c == 'Not Started' || updatedOscar.RPM_Approval__c == null)){
+                if((updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NEWGESTANDARD) && oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && (updatedOscar.RPM_Approval__c == 'Not Started' || updatedOscar.RPM_Approval__c == null)){
                     updatedOSCAR.addError('Cannot close the OSCAR until the Manager Approval Step is not completed.');
                 }
 
@@ -3853,7 +3859,7 @@ public class AMS_OSCARTriggerHandler {
 
         String statusForCC = 'Active';
 
-        if(oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NEWHESTANDARD)
+        if(oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NEWHESTANDARD  || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD)
             statusForCC = (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Corporate Card'  ? 'Active' : 'Non-Active');
         else if(oscar.Process__c == AMS_Utils.NEWHELITE){
 
@@ -3864,7 +3870,7 @@ public class AMS_OSCARTriggerHandler {
         }
 
         authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = statusForCC, RecordTypeId = FormOfPaymentRT));
-        if(oscar.Process__c == AMS_Utils.NEWHESTANDARD)
+        if(oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD)
             authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 

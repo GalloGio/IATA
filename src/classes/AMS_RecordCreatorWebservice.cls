@@ -340,7 +340,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             }
         }
 
-        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT};
+        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWGESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT};
         if(processesToUpdateCaseOnOscar.contains(processType)){
             oscar.Oscar_Communication_Case_Id__c = caseId;
         }
