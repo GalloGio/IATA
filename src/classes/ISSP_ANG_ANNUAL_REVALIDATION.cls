@@ -208,6 +208,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         applyLanguage = UserInfo.getLanguage();
 
         ownershipCompleted = checkPreviousOwnership();
+        ownerWithSameIATACode = false;
 
         if(currentAccount != null && currentAccount.fw != null && this.currentAccount.fw.newForm != null && currentAccount.fw.newForm.ISSP_AMS_Legal_Status__c != null) {
             legalstatus = currentAccount.fw.newForm.ISSP_AMS_Legal_Status__c.toLowerCase();
