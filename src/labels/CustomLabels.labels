@@ -23087,10 +23087,163 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Ongoing TIP Requests</value>
     </labels>
     <labels>
-        <fullName>ISSP_OperationalCalendar_Reset</fullName>
+        <fullName>ISSP_OperationalCalendar</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_OperationalCalendar_Reset</shortDescription>
+        <shortDescription>ISSP_OperationalCalendar</shortDescription>
+        <value>Operational Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Billing_Period</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Billing_Period</shortDescription>
+        <value>Billing Period</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_BSPCASS_Filter_Required</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_BSPCASS_Filter_Required</shortDescription>
+        <value>Please, select a value in BSP/CASS filter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_BSPCASSFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_BSPCASSFilter</shortDescription>
+        <value>BSP/CASS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Country_Filter_Required</shortDescription>
+        <value>Please, select a value in Country filter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_CountryFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_CountryFilter</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_CurrencyFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_CurrencyFilter</shortDescription>
+        <value>Currency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_DownloadDate</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_DownloadDate</shortDescription>
+        <value>Download Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_EnableFilters</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_EnableFilters</shortDescription>
+        <value>Enable Filters</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</shortDescription>
+        <value>Disclaimer for Export Calendar file</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Export_Disclaimer</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Export_Disclaimer</shortDescription>
+        <value>Disclaimer for Export file to csv or pdf</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_FilterTitle</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_FilterTitle</shortDescription>
+        <value>Filters</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_FrequencyFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_FrequencyFilter</shortDescription>
+        <value>Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Full_Details</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Full_Details</shortDescription>
+        <value>Full Details and Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Header</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Header</shortDescription>
+        <value>{0} Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_LastModifiedDate</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_LastModifiedDate</shortDescription>
+        <value>Last Modified Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_No_Events</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_No_Events</shortDescription>
+        <value>No events to show</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Show_Calendar</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Show_Calendar</shortDescription>
+        <value>Show Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Sync_Calendar</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Sync_Calendar</shortDescription>
+        <value>Sync Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Reset</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP OperationalCalendar Reset</shortDescription>
         <value>Reset</value>
     </labels>
     <labels>
@@ -24870,6 +25023,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Showing page _PAGE_ of _PAGES_</value>
     </labels>
     <labels>
+        <fullName>ISSP_Showing_total_records</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Showing total records</shortDescription>
+        <value>Showing _MAX_ records</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Simplified_Interline_Settlement</fullName>
         <categories>Portal, S10</categories>
         <language>en_US</language>
@@ -25928,6 +26089,118 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_We_sorry_you_are_unsatisfied</shortDescription>
         <value>We&apos;re sorry you are dissatisfied.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Friday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Friday</shortDescription>
+        <value>Friday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Monday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Monday</shortDescription>
+        <value>Monday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Saturday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Saturday</shortDescription>
+        <value>Saturday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Thursday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Thursday</shortDescription>
+        <value>Thursday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Sunday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Sunday</shortDescription>
+        <value>Sunday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Tuesday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Tuesday</shortDescription>
+        <value>Tuesday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Wednesday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Wednesday</shortDescription>
+        <value>Wednesday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Friday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Friday</shortDescription>
+        <value>Fri</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Monday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Monday</shortDescription>
+        <value>Mon</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Saturday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Saturday</shortDescription>
+        <value>Sat</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Thursday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Thursday</shortDescription>
+        <value>Thu</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Sunday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Sunday</shortDescription>
+        <value>Sun</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Tuesday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Tuesday</shortDescription>
+        <value>Tue</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Wednesday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Wednesday</shortDescription>
+        <value>Wed</value>
     </labels>
     <labels>
         <fullName>ISSP_Who_to_contact</fullName>

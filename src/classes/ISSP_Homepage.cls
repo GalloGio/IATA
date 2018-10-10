@@ -5,6 +5,8 @@ public with sharing class ISSP_Homepage {
     public boolean isPartner {get;private set;}
     public boolean isDPCUser {get;set;}
     public boolean isAdmin{set;get;}
+    public boolean isOpCalendarAirlineUser{set;get;}
+    public boolean isOpCalendarAgencyUser{set;get;}
     public boolean showIrregularities {get;private set;}
     public list<Case> caseList {get;private set;}
     public list<Case> caseList_CompanyOpenCases {get;private set;}
@@ -48,6 +50,17 @@ public with sharing class ISSP_Homepage {
         String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
         isDPCUser = (profileName.startsWith('ISS Portal DPC'));
         isAdmin =(profileName.containsIgnoreCase('admin'));
+        String profileId15 = String.ValueOf(UserInfo.getProfileId()).left(15);
+        try {
+            isOpCalendarAirlineUser = ISSP_CS__c.getValues('ISS OperationalCalendar Airline Profil').Value__c.split(',').contains(profileId15);
+        } catch (Exception e) {
+            isOpCalendarAirlineUser = false;
+        }
+        try {
+            isOpCalendarAgencyUser = ISSP_CS__c.getValues('ISS OperationalCalendar Agency Profile').Value__c.split(',').contains(profileId15);
+        } catch (Exception e) {
+            isOpCalendarAgencyUser = false;
+        }
 
         //Survey init
         ShowModal = true ;
