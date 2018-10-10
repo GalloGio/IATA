@@ -248,20 +248,26 @@ public class ANG_RHCAlertTriggerHandler{
 
        for(ANG_Risk_Alert__c ralert : [Select Id, ANG_Direction__c, ANG_Account__c,ANG_Threshold_Level__c, ANG_Account__r.Country_ISO_Code__c from ANG_Risk_Alert__c where ANG_Account__c in: accountIds and Id not in:triggerNew Order by CreatedDate ASC])
             accountAlerts.put(ralert.ANG_Account__c, ralert);
-       
-       CountryFoPException__c cFoPException = CountryFoPException__c.getInstance();
-       Set<String> ccException;
-       if(cFoPException.Country_Code__c != null){
-            ccException = new Set<String>(cFoPException.Country_Code__c.split(','));    
-       } 
-             
+            
+        CountryFoPException__c cFoPException = CountryFoPException__c.getInstance();
+        Set<String> ccException = new Set<String>();
+        if(cFoPException.ISO_Country_Code__c != null){
+            if(cFoPException.ISO_Country_Code__c.contains(',')){
+                for(String cc : cFoPException.ISO_Country_Code__c.split(',')){
+                    ccException.add(cc.trim());
+                }        
+            } else {
+                ccException.add(cFoPException.ISO_Country_Code__c);
+            }
+        }
+
         for(ANG_Risk_Alert__c ralert:triggerNew){
 
             if(!(ralert.recordTypeId == ANG_RHCHelper.RECTYPE_RISKALERT_RHC && (ralert.ANG_Threshold_Level__c == '100%' && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP) || (( ralert.ANG_Threshold_Level__c == '100%' || ralert.ANG_Threshold_Level__c == '75%' || ralert.ANG_Threshold_Level__c == '50%') && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN )))
                 continue;
 
                 if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP){
-                    if( accountAlerts.get(ralert.ANG_Account__c) != null && ccException != null && ccException.contains(accountAlerts.get(ralert.ANG_Account__c).ANG_Account__r.Country_ISO_Code__c) && ralert.ANG_Threshold_Level__c == '100%') 
+                    if( accountAlerts.get(ralert.ANG_Account__c) != null && !ccException.isEmpty() && ccException.contains(accountAlerts.get(ralert.ANG_Account__c).ANG_Account__r.Country_ISO_Code__c) && ralert.ANG_Threshold_Level__c == '100%') 
                     continue;
                     toDeactivateAccounts.add(ralert.ANG_Account__c);
                 }
