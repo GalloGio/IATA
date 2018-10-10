@@ -3,8 +3,8 @@
     <apiVersion>29.0</apiVersion>
     <available>true</available>
     <encodingKey>UTF-8</encodingKey>
-    <name>RHC Portal 100 India</name>
+    <name>RHC Portal 100 Exception</name>
     <style>none</style>
-    <subject>IATA Customer Portal - Access to  granted</subject>
+    <subject>IMPORTANT NOTIFICATION : Remittance Holding Capacity Monitoring status -</subject>
     <type>visualforce</type>
 </EmailTemplate>
