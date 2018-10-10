@@ -339,16 +339,6 @@
         <label>ISSP Page Hover For CASS Airline</label>
     </fieldSets>
     <fields>
-        <fullName>Agent_Correction_Cut_Off__c</fullName>
-        <description>Deadline for the agent to make corrections</description>
-        <externalId>false</externalId>
-        <label>Agent Correction Cut-Off</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>Airline_Billing_HOT__c</fullName>
         <externalId>false</externalId>
         <label>Airline Billing &amp; HOT</label>
@@ -358,81 +348,10 @@
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Airline_Correction_Response_Cut_Off__c</fullName>
-        <description>Deadline for the airlines to respond to the agents submitted corrections</description>
-        <externalId>false</externalId>
-        <label>Airline Correction Response Cut-Off</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Airline_Input_Upload_Cut_Off__c</fullName>
-        <description>Deadline for the airline to upload CASS billing to the agent</description>
-        <externalId>false</externalId>
-        <label>Airline Input Upload Cut-Off</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Billing_Availability__c</fullName>
-        <description>Date of when the billing BSP/CASS is available to the agent to pay</description>
-        <externalId>false</externalId>
-        <label>Billing Availability</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>CASS_reports_Availability__c</fullName>
-        <description>Date of CASS initial reports availability uploaded by the airlines</description>
-        <externalId>false</externalId>
-        <label>CASS reports Availability</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>EP_Settlement_date__c</fullName>
-        <externalId>false</externalId>
-        <label>EP Settlement date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>ExternalId__c</fullName>
-        <caseSensitive>false</caseSensitive>
-        <description>Used to allow updates from external systems: Mulesoft + IRIS</description>
-        <externalId>true</externalId>
-        <label>ExternalId</label>
-        <length>40</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>true</unique>
-    </fields>
-    <fields>
         <fullName>Agent_Correction_Cut_Off__c</fullName>
         <description>Deadline for the agent to make corrections</description>
         <externalId>false</externalId>
         <label>Agent Correction Cut-Off</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Airline_Billing_HOT__c</fullName>
-        <externalId>false</externalId>
-        <label>Airline Billing &amp; HOT</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
