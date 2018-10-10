@@ -46307,7 +46307,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>NG_New_GE</fullName>
+        <fullName>ANG_New_GE</fullName>
         <active>true</active>
         <label>NG New GE</label>
         <picklistValues>
