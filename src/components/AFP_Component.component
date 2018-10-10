@@ -88,7 +88,7 @@
           <div class="row">
             <div class="col-md-12">
               <a onclick="hideModal('#ModalErrorMessage')" class="{!IF(wrapper.iepModel == 'Banking Model', 'btn_iata_success', 'btn_iata_cancel')}  btn-block btn">
-                {!IF(wrapper.iepModel == 'Banking Model', 'OK', $Label.ISSP_Cancel)}
+                {!IF(wrapper.iepModel == 'Banking Model', $Label.IFAP_close, $Label.ISSP_Cancel)}
               </a>
             </div>
           </div>            
