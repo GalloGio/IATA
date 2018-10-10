@@ -292,6 +292,21 @@ public without sharing class AMP_ChatterTopicSubscribeController {
                 'display: block!important;'+
                 'width: 100%!important'+
             '}'+
+            'td.buttonWrapper {'+
+		        'width: 98 !important;'+
+		        'height: 23 !important;'+
+		    '}'+
+		    'a.button { width: 96 !important; }'+
+		    'a.buttonWide { width: 118 !important; }'+
+		    'a.buttonAuto { padding-left:1em !important; padding-right:1em !important;}'+
+		    'a.button, a.buttonWide, a.buttonAuto {'+
+		    	'height: 23 !important;'+
+		        'line-height: 23px !important;'+
+		        'border-radius: 4px !important;'+
+		        '-webkit-border-radius: 4px !important;'+ 
+		        '-moz-border-radius: 4px !important;'+
+		    '}'+
+		      
         '}'+
     '</style>';
 		emailBody +=	'</head>';
@@ -480,7 +495,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 					// only add post if the next one is not the same
 					else {
 
-						emailBody += getFeedItemBody(fi,  lsAccountIds, mpAccountId2Account, lsTopicAssignments);
+						emailBody += getFeedItemBody(fi,  lsAccountIds, mpAccountId2Account, lsTopicAssignments, topicName);
 
 						if(topicFeedItemCounter < amountOfFeedItems) {
 							emailBody += feeditemSeparator();
@@ -504,7 +519,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	mpAccountId2Account: a map to get the Account with the Id
 	lsTopicAssignments: all the TopicAssignments for the lsAllFeedItems and Broadcast topics
 	**/
-	public static String getFeedItemBody(FeedItem fi, List<Id> lsAccountIds, Map<Id, Account> mpAccountId2Account, List<TopicAssignment> lsTopicAssignments) {
+	public static String getFeedItemBody(FeedItem fi, List<Id> lsAccountIds, Map<Id, Account> mpAccountId2Account, List<TopicAssignment> lsTopicAssignments, String topicName) {
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
 		emailBody += '<table class="row collapse collection" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">'+
@@ -551,6 +566,9 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 				lsFITopics.add(ta.Topic.Name);
 			}
 		}
+		
+		String remainingURL = '';
+		
 		if(lsAccountIds.size()>0 && lsFITopics.isEmpty()) {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
 							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
@@ -560,10 +578,15 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			for(Id i : lsAccountIds) {
 				emailBody += mpAccountId2Account.get(i).Name + ' ';
 			}
+			
 			emailBody += '</p></th>'+
 			'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
 			'</tr>';
+
+			remainingURL = lsAccountIds.size() > 1 ? ('/apex/AMP_ReplyToPostFromDigestByTopic?topic=' + topicName + '&feedItemId=' + fi.Id) : ('/' + fi.Id);
+			
 		}
+		
 		if(lsFITopics.size()>0) {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
 							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
@@ -575,7 +598,22 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			emailBody += '</p></th>'+
 			'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
 			'</tr>';
+			
+			remainingURL = '/apex/AMP_ReplyToPostFromDigestByTopic?topic=' + topicName + '&feedItemId=' + fi.Id;
+			
 		}
+		
+		if(String.isNotBlank(remainingURL)){
+			emailBody += '  <br/>';
+			emailBody +=' 	<tr>';
+			emailBody +=' 		<td class="" style="font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif; font-size: 14px;" width="116">';
+			emailBody +=' 			<span class="">';
+			emailBody +=' 				<a href="'+ URL.getSalesforceBaseUrl().toExternalForm() + remainingURL + '" class="" target="_blank"><span class="text" style="white-space: nowrap;"><b>Respond</b></span></a>';
+			emailBody +=' 			</span>';
+			emailBody +=' 		</td>';
+			emailBody +='	</tr>';
+		}
+		
 		emailBody +='</tbody></table>\n';
 		return emailBody;
 	}
@@ -600,9 +638,10 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	}
 
 	public static String getUserPhotoURL(String UserId) {
-		if(Test.isRunningTest()) return '';
+		/*if(Test.isRunningTest()) return '';
 	    ConnectApi.Photo ph =  ConnectApi.UserProfiles.getPhoto(null, UserId);
-	    return ph.fullEmailPhotoUrl;
+	    return ph.fullEmailPhotoUrl;*/
+	    return '';
 	}
 
 }
