@@ -215,7 +215,7 @@
                 <apex:pageBlockSectionItem labelStyle="width:26%">
                     <apex:outputText value="<b>Billing Address:</b><br/>{0} <br/>{1}<br/>{2}<br/><br/>" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
                         <apex:param value="{!ca.account.BillingStreet}" />
-                        <apex:param value="{!ca.account.BillingCity},&nbsp;{!ca.account.BillingPostalCode}" />
+                        <apex:param value="{!IF(ca.account.BillingCity != '', ca.account.BillingCity + ',&nbsp;', '')}{!ca.account.BillingPostalCode}" />
                         <apex:param value="{!IF(ca.account.BillingState!='',ca.account.BillingState + ',&nbsp;','')}{!ca.account.BillingCountry}" />
                     </apex:outputText>
                 </apex:pageBlockSectionItem>
@@ -223,7 +223,7 @@
                 <apex:pageBlockSectionItem labelStyle="width:26%">
                     <apex:outputText value="<b>Shipping Address:</b><br />{0}<br />{1}<br />{2}<br /><br />" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
                         <apex:param value="{!ca.account.ShippingStreet}" />
-                        <apex:param value="{!ca.account.ShippingCity},&nbsp;{!ca.account.ShippingPostalCode}" />
+                        <apex:param value="{!IF(ca.account.ShippingCity != '', ca.account.ShippingCity + ',&nbsp;', '')}{!ca.account.ShippingPostalCode}" />
                         <apex:param value="{!IF(ca.account.ShippingState!='',ca.account.ShippingState + ',&nbsp;','')}{!ca.account.ShippingCountry}" />
                     </apex:outputText>
                 </apex:pageBlockSectionItem>
@@ -252,20 +252,9 @@
                         $(".shipping_city__c").attr('disabled','disabled');
                         $(".shipping_postal_code__c").attr('disabled','disabled');
                         $(".shipping_state__c").attr('disabled','disabled');
-
-                        $(".shipping_street__c").val("{!ca.account.ShippingStreet}");
-                        $(".shipping_city__c").val("{!ca.account.ShippingCity}");
-                        $(".shipping_postal_code__c").val("{!ca.account.ShippingPostalCode}");
-                        $(".shipping_state__c").val("{!ca.account.ShippingState}");
                     }
-
-                    $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
-                        return "* " + $(this).text();
-                    });
-
-                    $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
-                        return "* " + $(this).text();
-                    });
+                    
+                    
                 </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
@@ -509,6 +498,8 @@
             </div>
         </apex:pageBlockSection>
 
+        <apex:pageMessage summary="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE}" severity="error" strength="3" rendered="{!ca.fw.newForm.ISSP_AMS_Total_Previous_Ownership__c != 100}"/>
+
         <apex:pageBlockSection columns="2" collapsible="false" id="Section3CheckBoxes">
 
             <!--apex:facet name="header">
@@ -516,13 +507,13 @@
                     <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding}</apex:outputpanel>
                 </apex:outputpanel>
             </apex:facet-->
-
+            
             <!-- CHECKBOXES -->
             <apex:outputPanel >
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(ca.errorFoundCheckBoxes, ca.fw.newForm.Confirm_Ownership_details_are_correct__c==false, ca.fw.newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px;', 'margin-right:5px')}">
                         <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" style="color:black;font-size:110%"/>
-                        <apex:inputCheckbox disabled="{!ca.isReadonly}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="$('[id$=currcorporatedetails]').hide();"/>
+                        <apex:inputCheckbox disabled="{!ca.isReadonly || ca.fw.newForm.ISSP_AMS_Total_Previous_Ownership__c != 100}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="$('[id$=currcorporatedetails]').hide();"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -1024,6 +1015,19 @@
             $(".shipping_country__c").val("{!ca.account.ShippingCountry}");
             $(".shipping_country__c").attr('readonly', true);
             $(".shipping_country__c").attr('disabled','disabled');
+            
+            $(".shipping_street__c").val("{!ca.account.ShippingStreet}");
+            $(".shipping_city__c").val("{!ca.account.ShippingCity}");
+            $(".shipping_postal_code__c").val("{!ca.account.ShippingPostalCode}");
+            $(".shipping_state__c").val("{!ca.account.ShippingState}");
+            
+            $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
+                return "* " + $(this).text();
+            });
+            
+            $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
+                return "* " + $(this).text();
+            });
         }
 
         function showForms() {

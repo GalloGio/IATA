@@ -2279,6 +2279,14 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Course_title__c</fullName>
+        <externalId>false</externalId>
+        <label>Course title</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Crisis_Communications_Members__c</fullName>
         <defaultValue>false</defaultValue>
         <description>From: ALBA MANRIQUE Mariana 
@@ -4647,14 +4655,6 @@ albam@iata.org</description>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Course_title__c</fullName>
-        <externalId>false</externalId>
-        <label>Course title</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Training_Subject_area__c</fullName>
