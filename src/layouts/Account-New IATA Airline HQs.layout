@@ -1100,6 +1100,14 @@
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Effective_From_Date__c</fields>
+        <fields>Effective_To_Date__c</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Status__c</fields>
+        <relatedList>Account_Role__c.Account__c</relatedList>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
