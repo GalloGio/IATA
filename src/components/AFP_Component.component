@@ -6,7 +6,7 @@
     function errorMessageModal(flag) {
       if(flag == '-') {
         showModal('#ModalErrorMessage');
-        $('[id$="ModalErrorMessage"]').parent().parent().css('display', 'block');
+        $('[id$="ModalErrorMessage"]').css('display', 'block');
       }
     }
 
@@ -19,6 +19,9 @@
     function hideModal(modalName) {
       if ($(modalName).is(":visible")) {
         $(modalName).modal('hide');  
+      } else {
+        $(modalName).modal('hide');
+        $('[id$="ModalErrorMessage"]').css('display', 'none');
       }
     }  
   </script>
