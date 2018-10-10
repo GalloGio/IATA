@@ -238,8 +238,8 @@
         }
 
         .h5, h5 {
-            font-weight:bold !important;
-            color:rgb(51, 122, 183) !important;
+            font-weight:bold;
+            color:rgb(51, 122, 183);
         }
 
         td{

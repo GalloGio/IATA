@@ -1152,8 +1152,7 @@ public with sharing class ISSP_AMS_EBulletin {
 
                 String nameAtt = String.valueOf(batchRecordsId) + '%';
                 System.debug('ISSP_AMS_EBulletin - checkBatchStatus - nameAtt: ' + nameAtt);
-                List<Attachment> attachments = new List<Attachment>();
-                attachments = [SELECT Id, Name FROM Attachment WHERE Name LIKE :nameAtt];
+                List<Attachment> attachments = [SELECT Id, Name FROM Attachment WHERE Name LIKE :nameAtt];
 
                 if(!attachments.isEmpty()) {
 
