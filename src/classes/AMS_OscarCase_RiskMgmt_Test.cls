@@ -40,6 +40,21 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         insert lsConf;
 
+        list<String> listAirlineId = new list<String>();
+        for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']) {
+            listAirlineId.add(profile.Id);
+        }
+        System.assert(!listAirlineId.isEmpty(), 'No airline profiles found');
+        list<String> listAgencyId = new list<String>();
+        for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Agency%']) {
+            listAgencyId.add(profile.Id);
+        }
+        System.assert(!listAgencyId.isEmpty(), 'No agency profiles found');
+        list<ISSP_CS__c> listCs = new list<ISSP_CS__c>();
+        listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Airline Profil',Value__c=String.join(listAirlineId,',')));
+        listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Agency Profile',Value__c=String.join(listAgencyId,',')));
+        insert listCs;
+     
         //Create Operational Calendar
         Operational_calendar__c oc = new operational_calendar__c(First_Day__c = system.today(), Last_Day__c = system.today().addDays(15), Operation_Period_code__c = '123_456', Operation_Code__c='123_456', Period_Code__c='789');
         insert oc;

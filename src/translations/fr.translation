@@ -12162,6 +12162,10 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
         <name>ISSP_No_records_available</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Not_Applicable --></label>
+        <name>ISSP_Not_Applicable</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Not_Authorized --></label>
         <name>ISSP_Not_Authorized</name>
     </customLabels>
@@ -13301,6 +13305,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>ISSP_TIP_Discard_Unsaved_Changes</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_TIP_EFFECTIVE_DATE --></label>
+        <name>ISSP_TIP_EFFECTIVE_DATE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_TIP_HOLD_TO_MULTISELECT --></label>
         <name>ISSP_TIP_HOLD_TO_MULTISELECT</name>
     </customLabels>
@@ -13357,6 +13365,14 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>ISSP_TIP_NEW_PROD_COUNTRY_CONFIG</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_TIP_PRIMARY_CONTACTS --></label>
+        <name>ISSP_TIP_PRIMARY_CONTACTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_PRIMARY_CONTACTS_MSG --></label>
+        <name>ISSP_TIP_PRIMARY_CONTACTS_MSG</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_TIP_PRODUCT_DETAILS_SECTION --></label>
         <name>ISSP_TIP_PRODUCT_DETAILS_SECTION</name>
     </customLabels>
@@ -13365,8 +13381,20 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>ISSP_TIP_PRODUCT_ENROLLMENT_TITLE</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_TIP_PROVIDER_DETAILS --></label>
+        <name>ISSP_TIP_PROVIDER_DETAILS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM --></label>
         <name>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_REASON_FOR_CANCEL --></label>
+        <name>ISSP_TIP_REASON_FOR_CANCEL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_REASON_FOR_CLOSURE --></label>
+        <name>ISSP_TIP_REASON_FOR_CLOSURE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_TIP_RETURN_HOMEPAGE --></label>
@@ -13393,8 +13421,44 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>ISSP_TIP_Submit_case_to_IATA_to_update_country_Config</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_TIP_TERMINATE_PROD_BUTTON --></label>
+        <name>ISSP_TIP_TERMINATE_PROD_BUTTON</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_TERMINATE_PROD_MSG --></label>
+        <name>ISSP_TIP_TERMINATE_PROD_MSG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_TERMINATE_PROD_TITLE --></label>
+        <name>ISSP_TIP_TERMINATE_PROD_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_UPDATE_PROV_ACC_DETAILS --></label>
+        <name>ISSP_TIP_UPDATE_PROV_ACC_DETAILS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1 --></label>
+        <name>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2 --></label>
+        <name>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER --></label>
         <name>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_VOLUNT_RELINQ_BUTTON --></label>
+        <name>ISSP_TIP_VOLUNT_RELINQ_BUTTON</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_VOLUNT_RELINQ_MSG --></label>
+        <name>ISSP_TIP_VOLUNT_RELINQ_MSG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_VOLUNT_RELINQ_TITLE --></label>
+        <name>ISSP_TIP_VOLUNT_RELINQ_TITLE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_TOULink --></label>
@@ -13530,6 +13594,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
     <customLabels>
         <label>Ces utilisateurs ne peuvent pas être inactivé, car ils ont actuellement accès aux services suivants:</label>
         <name>ISSP_UserInactivation_ServiceMsg_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_UserInactivation_ServiceMsg_5 --></label>
+        <name>ISSP_UserInactivation_ServiceMsg_5</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_VR_Case_Submited --></label>
