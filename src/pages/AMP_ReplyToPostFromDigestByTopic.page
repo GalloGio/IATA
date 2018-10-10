@@ -1,0 +1,119 @@
+<apex:page controller="AMP_ReplyToPostFromDigestByTopic" showHeader="true" tabStyle="Account">
+
+	<script>
+		function cvCheckAllOrNone(allOrNoneCheckbox) {
+		
+			// Find parent table
+			var container = allOrNoneCheckbox;
+			while (container.tagName != "TABLE") {
+				container = container.parentNode;
+			}
+		
+			// Switch all checkboxes
+			var inputs = container.getElementsByTagName("input");
+			var checked = allOrNoneCheckbox.checked;
+			for (var i = 0; i < inputs.length; i++) {
+				var input = inputs.item(i);
+				if (input.type == "checkbox") {
+					if (input != allOrNoneCheckbox) {
+						input.checked = checked;
+					}
+				}
+			}
+		}
+	</script>
+
+	<apex:form >
+
+ 		<a href="/">&lt; Back to Home</a>
+ 
+		<apex:pageBlock id="mainBlock" title="Reply To Post from Digest by Topic" >
+
+			<apex:pageMessages escape="false" />
+
+			<apex:pageBlockSection title="Step 1 - Select Accounts" columns="1" collapsible="false" rendered="{! step == 1}">
+		
+				<apex:pageBlockSection columns="2">
+					
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Topic" for="topicId"/>
+						<apex:outputText value="{!topicName}" id="topicId"/>
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Comment Body" for="commentBodyId"/>
+						<apex:outputText value="{!commentBody}" id="commentBodyId"/>
+					</apex:pageBlockSectionItem>
+	
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Created Date" for="createdDateId"/>
+						<apex:outputText value="{0,date,dd-MM-yyyy HH:mm:ss z}" id="createdDateId">
+							<apex:param value="{!createdDate}" /> 
+						</apex:outputText>
+					</apex:pageBlockSectionItem>
+	
+				</apex:pageBlockSection> 
+
+				<apex:pageBlockSectionItem >
+					<apex:outputPanel >
+						<apex:commandButton action="{!nextStep}" value="Next >" reRender="mainBlock" style="float: right;" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockTable value="{!feedItemAccountLst}" var="wrap" id="feedItemAccountTable">
+
+					<apex:column style="width:100px;">
+
+						<apex:facet name="header">
+							<apex:inputCheckbox onclick="cvCheckAllOrNone(this);"/> 
+						</apex:facet>
+
+						<apex:inputCheckbox value="{!wrap.isSelected}" />
+
+					</apex:column>
+
+					<apex:column headerValue="{!$ObjectType.Account.fields['Name'].label}" value="{!wrap.feedItem.Parent.Name}"/>
+
+				</apex:pageBlockTable>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputPanel >
+						<apex:commandButton action="{!nextStep}" value="Next >" reRender="mainBlock" style="float: right;" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+			</apex:pageBlockSection>
+			
+			<apex:pageBlockSection title="Step 2 - Compose Message and Reply" columns="1" collapsible="false" rendered="{! step == 2}">
+
+				<apex:inputTextarea cols="50" rows="4" value="{!message}" label="Response Message:"/>
+
+				<b>The message will be posted as a reply to the feed items related to the following accounts ({!numberOfAccounts}):</b>
+				
+				<br/>
+
+				{!acctListStr}
+
+				<apex:outputPanel >
+					<apex:commandButton action="{!previousStep}" value="< Back to Account Selection" reRender="mainBlock" />
+					<apex:commandButton action="{!postReplyMessages}" value="Post replies" reRender="mainBlock" style="float: right;" status="replyStatusId"/>
+					<apex:actionStatus id="replyStatusId" >
+						<apex:facet name="start" >
+							<img src="/img/loading.gif" style="float: right;"/>
+						</apex:facet>
+					</apex:actionStatus>
+				</apex:outputPanel>
+
+			</apex:pageBlockSection>
+		
+			<apex:pageBlockSection columns="1" collapsible="false" rendered="{! step == 3}">
+
+				<apex:commandButton action="{!restartFromStep1}" value="New replies" reRender="mainBlock" />
+
+			</apex:pageBlockSection>
+
+		</apex:pageBlock>
+
+	</apex:form>
+
+</apex:page>
