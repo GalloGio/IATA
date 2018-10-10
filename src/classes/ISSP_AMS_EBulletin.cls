@@ -12,8 +12,25 @@ public with sharing class ISSP_AMS_EBulletin {
     public List<String> dailyCountryName {get; set;}
     public List<String> weeklyCountryName {get; set;}
 
-    public String dailyFileDownload {get; set;}
-    public String weeklyFileDownload {get; set;}
+    public List<WrapperReports> dailyFileDownloadList {get; set;}
+    public Boolean isAvailableToShowDaily{get;set;}
+    public Set<Id> dailyAllIdsList {get; set;}
+    public String dailyFileDownloadListJSON {
+        get{
+            return JSON.serialize(dailyAllIdsList);
+        }
+        set{}
+    }
+    public List<WrapperReports> weeklyFileDownloadList {get; set;}
+    public Boolean isAvailableToShowWeekly{get;set;}
+    public Set<Id> weeklyAllIdsList {get; set;}
+    public String weeklyFileDownloadListJSON {
+        get{
+            return JSON.serialize(weeklyAllIdsList);
+        }
+        set{}
+    }
+    
     
     public String daysOfWeek { get; set; }
     public String week { get; set; }
@@ -221,6 +238,11 @@ public with sharing class ISSP_AMS_EBulletin {
         isBatchProcessing = false;
         isGettingReportDaily = false;
         isGettingReportWeekly = false;
+        weeklyFileDownloadList = new List<WrapperReports>();
+        isAvailableToShowWeekly = false;
+        dailyFileDownloadList = new List<WrapperReports>();
+        isAvailableToShowDaily = false;
+
     }
 
     public PageReference checkRedirect(){
@@ -992,11 +1014,15 @@ public with sharing class ISSP_AMS_EBulletin {
 
             String header = getHeader();
             System.debug('ISSP_AMS_EBulletin - dailyReportDownload - header: ' + header);
-            dailyFileDownload = '';
+            dailyFileDownloadList = new List<WrapperReports>();
+            isAvailableToShowDaily = false;
+            dailyAllIdsList = new Set<Id>();
             getRecords(header, newFormDaily, endDate, startDate);
 
         }catch(Exception e){
-            dailyFileDownload = '';
+            dailyFileDownloadList = new List<WrapperReports>();
+            isAvailableToShowDaily = false;
+            dailyAllIdsList = new Set<Id>();
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage());
             ApexPages.addMessage(myMsg);
             isGettingReportDaily = false;
@@ -1037,11 +1063,15 @@ public with sharing class ISSP_AMS_EBulletin {
 
             String header = getHeader();
             System.debug('ISSP_AMS_EBulletin - weeklyReportDownload - header: ' + header);
-            weeklyFileDownload = '';
+            weeklyFileDownloadList = new List<WrapperReports>();
+            isAvailableToShowWeekly = false;
+            weeklyAllIdsList = new Set<Id>();
             getRecords(header, newFormWeekly, endDate, startDate);
 
         }catch(Exception e){
-            weeklyFileDownload = '';
+            weeklyFileDownloadList = new List<WrapperReports>();
+            isAvailableToShowWeekly = false;
+            weeklyAllIdsList = new Set<Id>();
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage());
             ApexPages.addMessage(myMsg);
             isGettingReportWeekly = false;
@@ -1122,36 +1152,62 @@ public with sharing class ISSP_AMS_EBulletin {
 
                 String nameAtt = String.valueOf(batchRecordsId) + '%';
                 System.debug('ISSP_AMS_EBulletin - checkBatchStatus - nameAtt: ' + nameAtt);
-                List<Attachment> attachment = new List<Attachment>();
-                attachment = [SELECT Id, Name FROM Attachment WHERE Name LIKE :nameAtt];
+                List<Attachment> attachments = new List<Attachment>();
+                attachments = [SELECT Id, Name FROM Attachment WHERE Name LIKE :nameAtt];
 
-                if(!attachment.isEmpty()) { 
+                if(!attachments.isEmpty()) {
 
                     isBatchProcessing = false;
                     isGettingReportWeekly = false;
-                    isGettingReportDaily = false;   
+                    isGettingReportDaily = false;
+                    isAvailableToShowWeekly = true;
+                    isAvailableToShowDaily = true;   
                     System.debug('ISSP_AMS_EBulletin - checkBatchStatus - job completed with records');
 
-                    String name = attachment.get(0).Name;
-                    attachment.get(0).Name = name.removeStart(batchRecordsId + '_');
-                    update attachment;
+                    Integer index = 1;
 
-                    if(name.containsIgnoreCase('weekly')) {
+                    for(Attachment att : attachments) {
 
-                        AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormWeekly.Id, attachment.get(0).id);
-                        weeklyFileDownload = '/servlet/servlet.FileDownload?file=' + attachment.get(0).id;
+                        if(attachments.size() == 1) {
+
+                            att.Name = att.Name.removeStart(batchRecordsId + '_');
+
+                        } else {
+
+                            att.Name = att.Name.replace(batchRecordsId, 'Part' + index);
+                            index++;
+                        }
+
+                        if(att.Name.containsIgnoreCase('weekly')) {
+
+                            weeklyFileDownloadList.add(new WrapperReports(att.Id, att.Name));
+                            weeklyAllIdsList.add(att.Id);
+
+                        } else {
+
+                            dailyFileDownloadList.add(new WrapperReports(att.Id, att.Name));
+                            dailyAllIdsList.add(att.Id);
+                        }
+                    }
+
+                    update attachments;
+
+                    if(attachments.get(0).Name.containsIgnoreCase('weekly')) {
+
+                        AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormWeekly.Id, weeklyAllIdsList);
 
                     } else {
 
                         fetchAMSProcessForm();
-                        AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormDaily.Id, attachment.get(0).id);
-                        dailyFileDownload = '/servlet/servlet.FileDownload?file=' + attachment.get(0).id;
+                        AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormDaily.Id, dailyAllIdsList);
                     }
                 } else {
 
                     isBatchProcessing = true;
                     isGettingReportWeekly = true;
                     isGettingReportDaily = true;
+                    isAvailableToShowWeekly = false;
+                    isAvailableToShowDaily = false;
                     System.debug('ISSP_AMS_EBulletin - checkBatchStatus - job completed waiting for attachment');
 
                 }
@@ -1167,6 +1223,8 @@ public with sharing class ISSP_AMS_EBulletin {
                 isBatchProcessing = true;
                 isGettingReportWeekly = true;
                 isGettingReportDaily = true;
+                isAvailableToShowWeekly = false;
+                isAvailableToShowDaily = false;
                 System.debug('ISSP_AMS_EBulletin - checkBatchStatus - job processing');
 
             }
@@ -1187,8 +1245,12 @@ public with sharing class ISSP_AMS_EBulletin {
         isGettingReportWeekly = false;
         isGettingReportDaily = false;
 
-        weeklyFileDownload = '';
-        dailyFileDownload = '';
+        weeklyFileDownloadList = new List<WrapperReports>();
+        isAvailableToShowWeekly = false;
+        weeklyAllIdsList = new Set<Id>();
+        dailyFileDownloadList = new List<WrapperReports>();
+        isAvailableToShowDaily = false;
+        dailyAllIdsList = new Set<Id>();
 
         ApexPages.Message myMsg;
 
@@ -1238,6 +1300,44 @@ public with sharing class ISSP_AMS_EBulletin {
             User__c= userId, TimeZone__c= tz.toString());
 
         return null;
+    }
+
+    @RemoteAction
+    public static List<FileDef> getAllAttachmentsToZip(String attachmentsToZipString) {
+
+        List<FileDef> listFileDef = new List<FileDef>();
+        Set<Id> attachmentsToZip = new Set<Id>();
+
+        JSONParser parser = JSON.createParser(attachmentsToZipString);
+        attachmentsToZip = (Set<Id>)parser.readValueAs(Set<Id>.class);
+
+        for (Attachment attach : [SELECT Id, Name, Body FROM Attachment WHERE Id IN :attachmentsToZip]) {
+            FileDef filedef = new FileDef();
+            filedef.name = attach.Name;
+            filedef.url='';
+            filedef.data= EncodingUtil.base64Encode(attach.Body);
+            listFileDef.add(filedef);
+        }
+
+        return listFileDef;
+    }
+
+    public class FileDef {
+        String name;
+        String url;
+        String data;
+    }
+
+    public class WrapperReports {
+        
+        public String urlReport{get;set;}
+        public String nameReport{get;set;}
+
+        public WrapperReports(String attachmentId, String attachmentName){
+            this.urlReport = '/servlet/servlet.FileDownload?file=' + attachmentId;
+            this.nameReport = attachmentName;
+        }
+
     }
 
 }

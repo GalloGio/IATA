@@ -24,6 +24,11 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
         <!--script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" /-->
         <!--script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" /-->
+
+        <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip-utils.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jszip, '/FileSaver.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.min.js')}"/>
        
         
         
@@ -232,6 +237,11 @@
             color:rgb(51, 122, 183) ;
         }
 
+        .h5, h5 {
+            font-weight:bold !important;
+            color:rgb(51, 122, 183) !important;
+        }
+
         td{
             color:#4a4a56 !important;
         }
@@ -274,9 +284,21 @@
                 el.style.display='none';
             }
         }
-                 
-        
-    
+
+        function downloadZIP(attachmentIds) {
+          
+            ISSP_AMS_EBulletin.getAllAttachmentsToZip(attachmentIds, function(result, event){
+         
+                try {
+                    var zipfiles = new ZipFiles(result, "reports.zip");
+                    zipfiles.downloadZip();
+                } catch (e) {
+                    alert(e);
+                }
+            }, {buffer: true, escape: false, timeout: 120000} );
+        }
+
+
         function isIE(){
             //alert(navigator.userAgent);
             //return /MSIE/.test(navigator.userAgent);
@@ -1491,7 +1513,7 @@
                                                     <br/>
 
                                                     <apex:actionFunction name="planeStartDaily" action="{!isGettingReportStartDaily}" reRender="waitingPlaneDaily,btnDailyDownload"/>
-                                                    <apex:outputPanel id='waitingPlaneDaily'>
+                                                    <apex:outputPanel id="waitingPlaneDaily">
                                                         <apex:pageBlockSectionItem rendered="{!isGettingReportDaily}">
                                                             <div class="title">
                                                                 <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
@@ -1501,19 +1523,44 @@
                                                     </apex:outputPanel>
                                                     <apex:commandButton id="btnDailyDownload" action="{!dailyReportDownload}" onclick="planeStartDaily();" reRender="batchStatusPollerDaily" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadDailyReport}" disabled="{!IF(AND(newFormDaily.Opt_in__c, NOT(isGettingReportDaily)) ,'false','true')}"/>
                                                     <apex:outputPanel id="batchStatusPollerDaily">
-                                                        <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneDaily,btnDailyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
+                                                        <apex:actionPoller reRender="reportsDailyTable,newWindow,theMessages,waitingPlaneDaily,btnDailyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
                                                     </apex:outputPanel>
+
+                                                    <br/>
                                                             
                                                     <apex:outputPanel id="newWindow">
                                                         <script>      
-                                                            function openWindow(){        
-                                                                var sWindow = '{!dailyFileDownload}';
+                                                            function openWindow(sWindow){
                                                                 if(sWindow != ''){
                                                                     window.open(sWindow);
                                                                 }
                                                             }
                                                         </script>
                                                     </apex:outputPanel>
+
+                                                    <!--<apex:outputpanel id="reportsDailyTable" rendered="{!isAvailableToShowDaily}">-->
+                                                    <apex:outputpanel id="reportsDailyTable">
+                                                        <apex:outputPanel rendered="{!isAvailableToShowDaily}">
+                                                            <span class="h5">{!$Label.ISSP_AMS_eBulletin_GeneratedReports}</span>
+                                                            <table width="100%">
+                                                                <tr>
+                                                                    <td width="100%">
+                                                                        <apex:commandLink onclick="downloadZIP('{!dailyFileDownloadListJSON}');" value="{!$Label.ISSP_DownloadAll}"></apex:commandLink>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <table width="100%">
+                                                                <apex:repeat value="{!dailyFileDownloadList}" var="dailyFile" id="filesDailyList">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <apex:commandLink onclick="openWindow('{!dailyFile.urlReport}')" value="({!$Label.ISSP_Download})"></apex:commandLink>
+                                                                        </td>
+                                                                        <td>{!dailyFile.nameReport}</td> 
+                                                                    </tr>
+                                                               </apex:repeat>
+                                                            </table>
+                                                        </apex:outputPanel>
+                                                    </apex:outputpanel>
 
                                                     
                                                 </td>
@@ -1772,7 +1819,7 @@
                                                             <br/>                                                           
 
                                                                 <apex:actionFunction name="planeStartWeekly" action="{!isGettingReportStartWeekly}" reRender="waitingPlaneWeekly,btnWeeklyDownload"/>
-                                                                <apex:outputPanel id='waitingPlaneWeekly'>
+                                                                <apex:outputPanel id="waitingPlaneWeekly">
                                                                     <apex:pageBlockSectionItem rendered="{!isGettingReportWeekly}">
                                                                         <div class="title">
                                                                             <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
@@ -1782,30 +1829,49 @@
                                                                 </apex:outputPanel>
                                                                 <apex:commandButton id="btnWeeklyDownload" action="{!weeklyReportDownload}" onclick="planeStartWeekly();" reRender="batchStatusPollerWeekly" value="{!$Label.ISSP_AMS_eBulletin_btn_DownloadWeeklyReport}" disabled="{!IF(AND(newFormWeekly.Opt_in__c, NOT(isGettingReportWeekly)) ,'false','true')}"/>
                                                                 <apex:outputPanel id="batchStatusPollerWeekly">
-                                                                    <apex:actionPoller oncomplete="openWindow();" reRender="newWindow,theMessages,waitingPlaneWeekly,btnWeeklyDownload" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
+                                                                    <apex:actionPoller reRender="newWindow,theMessages,waitingPlaneWeekly,btnWeeklyDownload,reportsWeeklyTable" interval="5" action="{!checkBatchStatus}" enabled="{!isBatchProcessing}"/>
                                                                 </apex:outputPanel>
                                                             
-                                                                
+                                                                <br/>
                                                             
                                                                 <apex:outputPanel id="newWindow">
-                                                                <script>      
-                                                                    function openWindow(){        
-                                                                        var sWindow = '{!weeklyFileDownload}';
+                                                                <script>     
+                                                                    function openWindow(sWindow){        
                                                                         if(sWindow != ''){
                                                                             window.open(sWindow);
                                                                         }
                                                                     }
                                                                 </script>
                                                                 </apex:outputPanel>
-                                                            
-                                                    
+
+                                                                <apex:outputpanel id="reportsWeeklyTable">
+                                                                    <apex:outputPanel rendered="{!isAvailableToShowWeekly}">
+                                                                        <span class="h5">{!$Label.ISSP_AMS_eBulletin_GeneratedReports}</span>
+                                                                        <table width="100%">
+                                                                            <tr>
+                                                                                <td width="100%">
+                                                                                    <apex:commandLink onclick="downloadZIP('{!weeklyFileDownloadListJSON}');" value="{!$Label.ISSP_DownloadAll}"></apex:commandLink>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <table width="100%">
+                                                                            <apex:repeat value="{!weeklyFileDownloadList}" var="weeklyFile" id="filesWeeklyList">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <apex:commandLink onclick="openWindow('{!weeklyFile.urlReport}')" value="({!$Label.ISSP_Download})"></apex:commandLink>
+                                                                                    </td>
+                                                                                    <td>{!weeklyFile.nameReport}</td> 
+                                                                                </tr>
+                                                                           </apex:repeat>
+                                                                        </table>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputpanel>                                                  
                                                         </td>
                                                     </tr>
                                                     </table> 
                                                 </td>
                                             </tr>
                                             </table>                            
-
                                         </td>
                                     </tr>
                                     </table>    

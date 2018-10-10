@@ -10,6 +10,8 @@ global class AMS_EBulletinRecordsBatch implements Database.Batchable<sObject>, D
 	List<String> countriesFilter;
 	List<String> locClsList;
 	Boolean isCNS;
+	List<Attachment> listAttachments;
+	Integer recordsProcessed;
 
 
 	global AMS_EBulletinRecordsBatch(String header, String query, AMS_eBulletin_Profile__c eBulletinProfile, Datetime endDate, Datetime startDate, Set<String> ccNamesToRecover, List<String> countriesFilter, List<String> locClsList, Boolean isCNS) {
@@ -23,6 +25,8 @@ global class AMS_EBulletinRecordsBatch implements Database.Batchable<sObject>, D
 		this.countriesFilter = countriesFilter;
 		this.locClsList = locClsList;
 		this.isCNS = isCNS;
+		this.listAttachments = new List<Attachment>();
+		this.recordsProcessed = 0;
 
 	}
 
@@ -37,36 +41,57 @@ global class AMS_EBulletinRecordsBatch implements Database.Batchable<sObject>, D
 
    			System.debug('AMS_EBulletinRecordsBatch - execute - scope: ' + scope);
 
+   			recordsProcessed += scope.size();
+
    			AMS_EBulletinReportHelper.AMSEBulletinFilters filters = new AMS_EBulletinReportHelper.AMSEBulletinFilters(eBulletinProfile, startDate, endDate);
 
    			String body = '';
 
-   			if(!isCNS){
+   			if(isCNS){
 
-   				body = AMS_EbulletinReportHelper.processEBulletinRecords(scope, filters, ISSP_AMS_EBulletin.objectHistBaseQuery, ISSP_AMS_EBulletin.objectBaseQuery, ISSP_AMS_EBulletin.eBulletinCSVFormat);
+   				body = AMS_EbulletinReportHelper.processEBulletinRecords(scope, filters, CNS_EBulletin.objectHistBaseQuery, CNS_EBulletin.objectBaseQuery, CNS_EBulletin.eBulletinCSVFormat);
    			
    			} else {
 
-   				body = AMS_EbulletinReportHelper.processEBulletinRecords(scope, filters, CNS_EBulletin.objectHistBaseQuery, CNS_EBulletin.objectBaseQuery, CNS_EBulletin.eBulletinCSVFormat);
+				body = AMS_EbulletinReportHelper.processEBulletinRecords(scope, filters, ISSP_AMS_EBulletin.objectHistBaseQuery, ISSP_AMS_EBulletin.objectBaseQuery, ISSP_AMS_EBulletin.eBulletinCSVFormat);
+   				
    			}
    			
    			System.debug('AMS_EBulletinRecordsBatch - execute - body: ' + body);
 
    			reportBody += body;
+
+   			//number of change codes allowed in each file 2900
+   			if(recordsProcessed >= AMS_EBulletinReportHelper.MAXIMUM_CHANGE_CODES_PER_FILE) {
+   				generateReportFile(BC.getJobId());
+   				recordsProcessed = 0;
+   			}
 	}
 	
 
 	global void finish(Database.BatchableContext BC) {
 
-		if(reportBody == ''){
-			System.debug('AMS_EBulletinRecordsBatch - finish - empty body');
+		if(reportBody == '' && listAttachments.isEmpty()){
+			System.debug('AMS_EBulletinRecordsBatch - finish - no attachments');
 			throw new AMS_EBulletinReportHelper.AMS_EBulletinException('01');
 			return;
+		} else if(reportBody != ''){
+			generateReportFile(BC.getJobId());
 		}
 
+		System.debug('AMS_EBulletinRecordsBatch - finish - listAttachments: ' + listAttachments);
+
+	 	if(!listAttachments.isEmpty())
+	 		insert listAttachments;
+	 	
+	}
+
+	private void generateReportFile(Id jobId) {
 		reportBody.removeEnd('\n');
 
 		String csv = header + '\n' + reportBody;
+
+		reportBody = '';
 
 		String csvPrintable = '';
 		if(!csv.isAsciiPrintable())
@@ -87,7 +112,7 @@ global class AMS_EBulletinRecordsBatch implements Database.Batchable<sObject>, D
 		
 		String recordTypeName = Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBulletinProfile.RecordTypeId).Name;
 
-		String csvName = BC.getJobId() + '_EBulletin ' + recordTypeName + ' Report ';
+		String csvName = jobId + '_EBulletin ' + recordTypeName + ' Report ';
 		String csvDate = '';
 
 		if(startDate.addDays(1) == endDate) csvDate = AMS_EBulletinReportHelper.generateDateForBulletin(startDate.date());
@@ -98,8 +123,8 @@ global class AMS_EBulletinRecordsBatch implements Database.Batchable<sObject>, D
 
 		attachment.ParentId = eBulletinProfile.id; 
 	 	
-	 	insert attachment;
-	 	System.debug('AMS_EBulletinRecordsBatch - finish - attachment.id: ' + attachment.id);
+	 	listAttachments.add(attachment);
+	 	System.debug('AMS_EBulletinRecordsBatch - execute - attachment.id: ' + attachment.id);
 	}
 	
 }

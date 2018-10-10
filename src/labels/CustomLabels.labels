@@ -16976,6 +16976,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Filter by Geographic Area</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_GeneratedReports</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_GeneratedReports</shortDescription>
+        <value>Generated Reports</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_GeographicArea</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -17218,14 +17225,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_btn_DownloadDailyReport</shortDescription>
-        <value>Download Daily Report</value>
+        <value>Generate Daily Report</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</shortDescription>
-        <value>Download Weekly Report</value>
+        <value>Generate Weekly Report</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_btn_EditSelectionCriteria</fullName>
@@ -20030,6 +20037,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Download</shortDescription>
         <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_DownloadAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_DownloadAll</shortDescription>
+        <value>Download All</value>
     </labels>
     <labels>
         <fullName>ISSP_Download_Now</fullName>

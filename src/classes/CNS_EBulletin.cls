@@ -1084,12 +1084,12 @@ public with sharing class CNS_EBulletin {
 
                     if(name.containsIgnoreCase('weekly')) {
 
-                        AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormWeekly.Id, attachment.get(0).id);
+                        AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormWeekly.Id, new Set<Id>{attachment.get(0).id});
                         weeklyFileDownload = '/servlet/servlet.FileDownload?file=' + attachment.get(0).id;
 
                     } else {
 
-                        AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormDaily.Id, attachment.get(0).id);
+                        AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormDaily.Id, new Set<Id>{attachment.get(0).id});
                         dailyFileDownload = '/servlet/servlet.FileDownload?file=' + attachment.get(0).id;
                     }
                 } else {
