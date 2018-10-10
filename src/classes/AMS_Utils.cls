@@ -152,8 +152,6 @@ public without sharing class AMS_Utils {
     public static final String SA = 'SA';
     public static final String HE = 'HE';
     public static final String AE = 'AE';
-    public static final String GE = 'GE';
-
 
     public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
 
