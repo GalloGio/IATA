@@ -189,9 +189,10 @@
 </head>
 
 <body>
-    <c:ISSP_CustomNavigation rendered="{!strRenderAs<>'PDF'}"/>
 	<div class="container">
-        <div id="contentWrapper">
+
+		<c:ISSP_CustomNavigation rendered="{!strRenderAs<>'PDF'}"/>
+
 		<apex:form >
 		<apex:actionFunction name="handleSearchAF" rerender="tablePanel, downloadButtons" action="{!refreshMsoGsaList}"/>
 
@@ -319,9 +320,10 @@
 
 			
 		</apex:form>
+
+		<c:ISSP_CustomFooter rendered="{!strRenderAs<>'PDF'}"/>
+
 	</div>
-	</div>
-    <c:ISSP_CustomFooter rendered="{!strRenderAs<>'PDF'}"/>
 </body>
 
 </html>

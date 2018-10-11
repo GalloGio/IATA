@@ -21,16 +21,144 @@
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
 
     <style>
-   		.col1_inner {width:25%; vertical-align: text-top;}
-       	.col2_inner {width:25%; vertical-align: text-top;}
-      	.row1 {padding-bottom:16px; vertical-align: text-top;}
+        .pbTitle {
+            width: {!IF(isstep2,'90% !important','40% !important')};
+        }
+
+       .pbBody {
+        padding-left:10px !important;
+       }
+
+       .pbBody a{color:#337ab7 !important}
+
+        .bPageBlock {
+            border-top-width : thin !important;
+        }
+
+        .bEditBlock input {
+            vertical-align:top !important;
+        }
+
+       .btn {
+            padding: 2px 12px !important;
+        }
+
+        .btn-primary {
+            color: #fff !important;
+            background: inherit !important;
+            background-color: #337ab7 !important;
+            border-color: #2e6da4 !important;
+            border: 1px solid transparent !important;
+            /*background: */
+        }
+
+        .tb-header {
+            padding-right:20px;
+        }
+
+        .modalrow {
+            padding-top:10px;
+        }
+
+        input + label {
+            font-weight:normal;
+        }
+
+        ul li, ol li {
+            margin-left: inherit;
+            padding-left: inherit;
+        }
+
+        #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
+
+        .requiredText {display:none;}
+
+        .dateFormat {display:none;}
+
+        .errorMsg {color:#d74c3b}
+
+        .progress-bar-off {
+                color:#6BBBEA;
+                font-weight:bold;
+                background-image:none !important;
+                background-color:transparent !important;
+                border-right:2px solid white;
+        }
+
+        body .bPageBlock .pbBody .pbSubheader{
+                background-image: url('') !important;
+                background-color:  #1797c0;
+                color: #fff;
+        }
+
+        body .bPageBlock .pbBody .summary-subsection .pbSubheader{
+                background-image: url('') !important;
+                background-color: initial;
+                color: initial;
+        }
+
+        .pbSubheader {
+            font-weight:bold;
+            font-size:15px;
+        }
+
+        .contact-detail {
+            font-size:12px;
+            margin-bottom:3px;
+        }
+
+        .tbFooter {
+         text-align:right;
+        }
+
+        .requiredBlock {
+            width:5px !important;
+        }
+
+        .checkbox-td {
+            text-align: center;
+        }
+
+        .summary-table th {
+            text-align: center;
+        }
+
+        .summary-table td.dataCell {
+            border: 1px solid #e0e3e5 !important;
+        }
+
+            .col1 {
+                padding-bottom:5px;
+                width:40%;
+                vertical-align: text-top;
+                font-weight:bold
+            }
+
+            .col1_regular {
+                padding-bottom:5px;
+                width:25%;
+                vertical-align: text-top;
+                font-weight:bold
+            }
+
+            .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
+            .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
+            .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
+            .col3 {width:50%;vertical-align: text-top;}
+
+            .col1_inner {width:25%; vertical-align: text-top;}
+            .col2_inner {width:25%; vertical-align: text-top;}
+
+             .row1 {padding-bottom:16px; vertical-align: text-top;}
     </style>
 
     <script>
+
             var showProductComparisonLink = false;
             var hideProductComparisonLink = false;
 
             setVarsProductComparisonLink('{!namEnabled}', '{!sectorValue}', '{!isHOAccredited}', '{!con.Account.Sector__c}');
+
 
             $(function(){ $('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); } );
             var pilotList = {{!pilotList}};
@@ -318,9 +446,9 @@
       </script>
     </apex:outputPanel>
 
-  	 <c:ISSP_CustomNavigation communityName="{!communityName}"/>
      <div class="container">
        <div id="contentWrapper">
+           <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <!----------------------------------------->
     <!-- STEP 1 -->
@@ -387,7 +515,7 @@
                     </apex:outputPanel></apex:facet>
                 </apex:actionStatus>
             </apex:pageBlockButtons>
-         <apex:pageMessages ></apex:pageMessages>
+         <apex:pageMessages escape="false"></apex:pageMessages>
         <apex:outputPanel id="formContainer" rendered="{!NOT(amsIsGSA=='YES')}">
 
 
@@ -417,7 +545,7 @@
                     </div>
                 </div>
                 <apex:outputPanel id="optionsSetpA">
-                    <apex:actionRegion >
+                    <apex:actionRegion>
                         <div class="form-group">
                             <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label>
                             <div class="col-lg-9">
@@ -578,7 +706,7 @@
 
                             <!-- apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}" -->
                             <apex:outputpanel id="langGSA">
-                            <apex:actionRegion >
+                            <apex:actionRegion>
                                 <apex:outputpanel rendered="{!NOT(AND(BEGINS(sectorValue,'Cargo_Agent'), NOT(isNoticeOfChange)))}">
                                     <div class="form-group">
                                     <label for="applylanguage" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Lang_Display}</label>
@@ -785,8 +913,6 @@
             />
         </apex:repeat>
         
-        <apex:variable var="isPartnership" value="{!BEGINS(sectorValue,'Travel_Agent') && OR(hqAccount.Ownership='Partnership',newForm.ISSP_AMS_Legal_Status__c=='Partnership')}"/>
-        
         <apex:pageBlock rendered="{!BEGINS(sectorValue,'Travel_Agent') && !isNoticeOfChange && NOT(isPartnership)}">
             <apex:form id="FinalForm">
                 <apex:facet name="header">
@@ -798,8 +924,8 @@
         </apex:pageBlock>
         
         <apex:outputPanel rendered="{!BEGINS(sectorValue,'Travel_Agent') && !isNoticeOfChange && isPartnership}">
-            <apex:pageBlock >
-                <apex:form >
+            <apex:pageBlock>
+                <apex:form>
                     <apex:outputText escape="false" value="{!$Label.ISSP_AP_Partnership_Download_PDF}"/>
                     <br/>
                     <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>&nbsp;
@@ -1003,8 +1129,9 @@
     </apex:pageBlock>
 
          </div>
-  	</div>
- <c:ISSP_CustomFooter communityName="{!communityName}"/>
+         <c:ISSP_CustomFooter communityName="{!communityName}"/>
+         </div>
+
     </body>
 </html>
 

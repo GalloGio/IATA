@@ -64,9 +64,8 @@
         j$("#pageSearchInput, .search-go").removeAttr("disabled");
     } 
 </script>
-            <c:ISSP_CustomNavigation communityName="{!communityName}"/>
             <div class="container">
-              <div id="contentWrapper">  
+                <c:ISSP_CustomNavigation communityName="{!communityName}"/>
                 <div class="panel panel-primary">
                     <div class="panel-heading head_panel_green">
                         <h3 class="panel-title">{!$Label.ISSP_Search_Result}</h3>
@@ -145,9 +144,8 @@
                         </apex:form>
                     </div>
                 </div>
+            <c:ISSP_CustomFooter communityName="{!communityName}"/>
             </div>
-            </div><!-- container -->
-           	 <c:ISSP_CustomFooter communityName="{!communityName}"/>
         </body>
     </html>
 </apex:page>

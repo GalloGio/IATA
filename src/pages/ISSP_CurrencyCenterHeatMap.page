@@ -28,9 +28,9 @@
 </head>
 
 <body >
-    <c:ISSP_CustomNavigation />
 	<div class="container">
-        <div id="contentWrapper">
+
+		<c:ISSP_CustomNavigation />
 		<apex:form id="form">
 		<apex:actionFunction name="handleSearchAF" rerender="tablePanel,lastUpdateDate,pdfButton" action="{!reSearch}"/>
 
@@ -111,12 +111,15 @@
       		</div>
       	</div>
 
+
+
+		
 		</apex:form>
 		<span class="hidden-print">
+		<c:ISSP_CustomFooter />
 		</span>
+
 	</div>
-    </div> <!-- end container-->
-    <c:ISSP_CustomFooter />
 </body>
 
 </html>

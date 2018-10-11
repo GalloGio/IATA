@@ -10,8 +10,9 @@
   }
 </style>
 
+<div class="container">
+
   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-  <div class="container">
 
   <div class="row">
     <div class="col-md-3"></div>
@@ -189,7 +190,7 @@
     </div>
 
   </div>
-</div>
-<c:ISSP_CustomFooter communityName="{!communityName}"/>
 
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
+</div>
 </apex:page>
