@@ -1,7 +1,5 @@
 public class ANG_FinancialSecurityTriggerHandler{
 
-	public static Boolean BLOCK_TRIGGER_EXECUTION = false;
-
 	public List<Financial_Security__c> triggerNew = (List<Financial_Security__c>) Trigger.new;
 	public List<Financial_Security__c> triggerOld = (List<Financial_Security__c>) Trigger.old;
 

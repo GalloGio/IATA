@@ -24,7 +24,7 @@ public with sharing class FinancialInstitutionHandler {
     }
     
     /**
-        Use previously seached Intotutions to update their security records
+        Use previously seached Institutions to update their security records
     **/
     public static void updateChildFinancialSecurities() {
         list<Financial_Institution__c> listInstitution = [
@@ -42,9 +42,7 @@ public with sharing class FinancialInstitutionHandler {
             }
         }
         if (!listUpdateSecurities.isEmpty()) {
-            ANG_FinancialSecurityTriggerHandler.BLOCK_TRIGGER_EXECUTION = true;
-            update listUpdateSecurities;
-            ANG_FinancialSecurityTriggerHandler.BLOCK_TRIGGER_EXECUTION = false;
+            BatchUpdate.run(listUpdateSecurities,20);
         }
     }
 }

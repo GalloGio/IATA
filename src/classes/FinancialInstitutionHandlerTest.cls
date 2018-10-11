@@ -17,8 +17,7 @@ public with sharing class FinancialInstitutionHandlerTest {
         );
         insert institution;
         
-        Integer numElements = 2001;
-        ANG_FinancialSecurityTriggerHandler.BLOCK_TRIGGER_EXECUTION = true;
+        Integer numElements = 20;
         list<Financial_Security__c> listSecurities = new list<Financial_Security__c>();
         for (Integer i=0; i<numElements;i++) {
             listSecurities.add(new Financial_Security__c(
@@ -37,7 +36,6 @@ public with sharing class FinancialInstitutionHandlerTest {
             }
         }
         insert listSecurities;
-        ANG_FinancialSecurityTriggerHandler.BLOCK_TRIGGER_EXECUTION = false;
         
         Test.startTest();
         institution.First_Call_Letter_Required__c = 'Yes';
