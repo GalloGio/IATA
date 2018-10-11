@@ -98,9 +98,10 @@
     }    
 
   </script>  
-  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+ 
   <div class="container">
-     <div id="contentWrapper">
+
+      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="ptBreadcrumb">&nbsp;&#171;&nbsp;
             <a href="/apex/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1">Back to List: Portal Service </a>
         </div>
@@ -140,7 +141,7 @@
                   <apex:inputHidden value="{!serviceName}" id="serviceName"/>
                   <apex:inputHidden value="{!contactStatus}" id="contactStatus"/>
 
-                  <apex:pageblock >               
+                  <apex:pageblock>               
                     <h3 class="blueback">Users
                       <center> 
                         <apex:commandButton action="{!RedirectToServiceAccess}" styleclass="btn btn-sm btn-primary"
@@ -167,7 +168,7 @@
                           
 
                             <apex:column headerValue="Actions" id="actionId" style="text-align: center; width: 50px;">
-                              <apex:outputPanel rendered="{! NOT(o.hide)}">
+                              <apex:outputPanel rendered='{! NOT(o.hide)}'>
                                   <a href="#" class="btn btn-xs btn-success btn-block" style="margin-top: 3px; display:{!IF(o.showGrant,'','none')}"
                                     onclick="showConfirmModal('{!o.contactStatus}', '{!o.par.contact__c}', '{!o.par.Portal_Application__c}');">
                                     <span class="glyphicon glyphicon-ok"></span>
@@ -259,7 +260,7 @@
 
                         </div>
                         <div class="modal-footer">
-                          <apex:commandButton id="confirmButton" onclick="closeConfirmModal();showReasonModalGrant();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
+                          <apex:commandButton id='confirmButton' onclick="closeConfirmModal();showReasonModalGrant();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
                           <apex:commandButton onclick="closeConfirmModal();" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
                         </div>
                       </div>
@@ -308,9 +309,9 @@
                 </apex:form>
                                 
           </div><!-- end  div class="panel panel-primary"-->
-	</div>
-  </div><!-- end container-->
-  <c:ISSP_CustomFooter communityName="{!communityName}"/>
+
+      <c:ISSP_CustomFooter communityName="{!communityName}"/>
+  </div><!-- end container-->  
         </body>
     </html>
 </apex:page>

@@ -2,10 +2,15 @@
  <html>
  <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
-
- <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+     <script>
+    $( document ).ready(function() {
+        
+    
+ });
+     </script>
  <div class="container">
-    <div id="contentWrapper">
+ <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+
     <apex:form id="caseListForm">
 
     <apex:actionFunction name="next" action="{!setCon.next}" rerender="Cases" />
@@ -162,9 +167,8 @@
     </apex:pageBlock> 
    
  </apex:form>
-</div>
+ <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
-<c:ISSP_CustomFooter communityName="{!communityName}"/>
      </body>
     </html>
 </apex:page>

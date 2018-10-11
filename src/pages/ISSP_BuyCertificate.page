@@ -4,7 +4,7 @@
       <apex:variable var="IsAgency" value="{!if($Profile.Name == 'ISS Portal Agency User (Partner)' || $Profile.Name == 'ISS Portal Agency Delegated Admin User','block','none')}" />
 <apex:variable var="NotAgency" value="{!if($Profile.Name == 'ISS Portal Agency User (Partner)' || $Profile.Name == 'ISS Portal Agency Delegated Admin User','none','block')}" />
     -->
-    <c:ISSP_Header />
+    <c:ISSP_Header ></c:ISSP_Header>
         <script>
       
 
@@ -23,9 +23,8 @@
 
 
     <body>
-        <c:ISSP_CustomNavigation />
         <div class="container">
-            <div id="contentWrapper">
+            <c:ISSP_CustomNavigation />
             <div class="panel panel-primary">
                 <div class="panel-heading head_panel_green">
                     <h3 class="panel-title">{!$Label.ISSP_IATAcertificate}</h3>
@@ -279,9 +278,8 @@
                     </div>
                 </div><!-- end panel body -->
             </div>
+            <c:ISSP_CustomFooter />
         </div>
-        </div> <!-- end container-->
-        <c:ISSP_CustomFooter />
 
     <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
     <style>
@@ -309,8 +307,8 @@
         }
     </style>
  
-    <div id="load_scrl" class="loadingBox loader" style="display:none"/>
-    <div class="loadingBox overlay" style="display:none"/> 
+    <div id="load_scrl" class="loadingBox loader" style="display:none"> </div>
+    <div class="loadingBox overlay"> </div>
 
 
     <script type="text/javascript">

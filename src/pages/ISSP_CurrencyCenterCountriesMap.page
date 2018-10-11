@@ -83,9 +83,10 @@
  	</head>
 
  	<body>
-        <c:ISSP_CustomNavigation />
      	<div class="container">
 
+        <c:ISSP_CustomNavigation />
+      
       	<apex:form >  
 
 
@@ -137,10 +138,13 @@
             </div>
 
           </div>
-        </div>	
-      	</apex:form>
-     	</div> <!-- end container-->
+        </div>
+
+
         <c:ISSP_CustomFooter />
+      	
+      	</apex:form>
+     	</div>
  	</body>
 </html>
 </apex:page>

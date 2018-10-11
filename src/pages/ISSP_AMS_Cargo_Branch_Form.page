@@ -1,6 +1,7 @@
 <apex:page controller="ISSP_AMS_Accreditation" showHeader="false" sidebar="false" standardStylesheets="true" language="{!displayLanguage}" applyBodyTag="false" applyHtmlTag="false"  action="{!securityCheck}">
     <html> 
         <c:ISSP_Header ></c:ISSP_Header>
+        <c:iss_ap_css />
         <c:ISSP_WaitingStatus />    
         <body>
         <script src="{!URLFOR($Resource.bootbox)}" />
@@ -11,6 +12,16 @@
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
         
     <style>
+        .datePicker{
+            z-index:9999;
+        }
+        .adlabel  {
+         font-size: 91%;
+         text-align: right;
+         }
+         .wid  {
+         width: 85%;
+         }
          .branchemail  {
          width: 32% !important;
          margin-left: -14%;
@@ -19,6 +30,124 @@
         .pbTitle {
             width: {!IF(isstep2,'90% !important','40% !important')};
         }
+       
+       .pbBody {
+        padding-left:10px !important;    
+       }
+            
+       .pbBody a{color:#337ab7 !important}
+               
+        .bPageBlock {
+            border-top-width : thin !important;
+        }
+        
+        .bEditBlock input {
+            vertical-align:top !important;
+        }
+       
+       .btn {
+            padding: 2px 12px !important;
+        }
+                             
+        .btn-primary {
+            color: #fff !important;
+            background: inherit !important;
+            background-color: #337ab7 !important;
+            border-color: #2e6da4 !important;
+            border: 1px solid transparent !important;
+            /*background: */
+        }
+        
+        .tb-header {
+            padding-right:20px;
+        }
+                 
+        .modalrow {
+            padding-top:10px;
+        }
+            
+        ul li, ol li {
+            margin-left: inherit;
+            padding-left: inherit;
+        }
+        
+        #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
+            
+        .requiredText {display:none;}
+        
+        .dateFormat {display:none;}
+        
+        .errorMsg {color:#d74c3b}
+            
+        .progress-bar-off {
+                color:#6BBBEA;
+                font-weight:bold;
+                background-image:none !important;
+                background-color:transparent !important;
+                border-right:2px solid white;
+        }
+        
+        body .bPageBlock .pbBody .pbSubheader{
+                background-image: url('') !important;
+                background-color:  #1797c0;
+                color: #fff;
+        }
+
+        body .bPageBlock .pbBody .summary-subsection .pbSubheader{
+                background-image: url('') !important;
+                background-color: initial;
+                color: initial;
+        }
+        
+        .pbSubheader {
+            font-weight:bold;
+            font-size:15px;
+        }
+                   
+        .contact-detail {
+            font-size:12px;
+            margin-bottom:3px;
+        }
+                   
+        .tbFooter {
+         text-align:right;
+        }
+                   
+        .requiredBlock {
+            width:5px !important;
+        }
+
+        .checkbox-td {
+            text-align: center;
+        }
+
+        .summary-table th {
+            text-align: center;
+        }
+
+        .summary-table td.dataCell {
+            border: 1px solid #e0e3e5 !important;
+        }
+        
+            .col1 {
+                padding-bottom:5px;
+                width:40%;
+                vertical-align: text-top;
+                font-weight:bold
+            }
+            
+            .col1_regular {
+                padding-bottom:5px;
+                width:25%;
+                vertical-align: text-top;
+                font-weight:bold
+            }       
+                   
+            .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
+            .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
+            .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
+            .col3 {width:50%}
+       
     </style>    
     <script type="text/javascript">
     var $j = jQuery.noConflict();
@@ -278,9 +407,9 @@
    
     </script>
 
-    <c:ISSP_CustomNavigation />
     <div class="container">
-       <div id="contentWrapper">      
+       <div id="contentWrapper">
+           <c:ISSP_CustomNavigation />
     <div class="pageNav" style="display:{!IF(isStep3,'inline-block','none')}">
         <p class="LOB">{!sectorDisplay}</p>
         <div style="border-top: 1px #fff dotted; padding-bottom: 3px;">
@@ -1136,8 +1265,9 @@
      </div>   
      </div>
      </div>
+         <c:ISSP_CustomFooter />
          </div>
-      <c:ISSP_CustomFooter />
+       
     </body>  
 </html>
     </apex:page>

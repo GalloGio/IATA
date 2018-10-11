@@ -2,9 +2,8 @@
 <html>
  <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
- <c:ISSP_CustomNavigation communityName="{!communityName}"/>
  <div class="container">
- 	 <div id="contentWrapper">
+ <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <!---------------------------------------------------------------------->
 
@@ -151,7 +150,7 @@
 -->
   
     <!-- <apex:pageMessages /> -->
-    <h4>{!$Label.ISSP_Available_services} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+    <h4>{!$Label.ISSP_Company_Administration} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
          {!$Label.ISSP_Access_to_services} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
          <small>{!$Label.ISSP_PageDescription_ISSP_AccessToService}</small></h4>
     
@@ -193,7 +192,7 @@
         <apex:pageBlockTable value="{!AccServiceList}" var="item" styleClass="table-hover table table-condensed table-responsive" id="pbt_Services">
             
             <apex:repeat value="{!fields}" var="f">
-                  <apex:column >
+                  <apex:column>
                     <apex:facet name="header">
                        <apex:commandLink action="{!refresh}" >{!f.label}
                          <apex:outputPanel layout="none" rendered="{!AND(OR(sortExpression==f.FieldPath,AND(sortExpression=='Name',f.FieldPath=='Name')), sortDirection='ASC')}">&#9650;</apex:outputPanel>
@@ -221,7 +220,7 @@
             </apex:repeat>
 
             <apex:column headerValue="Actions" id="actionId" style="text-align: center;">
-              <apex:outputPanel rendered="{! NOT(item.hide)}">
+              <apex:outputPanel rendered='{! NOT(item.hide)}'>
                   <a href="#" class="btn btn-xs btn-success btn-block" style="margin-top: 3px; display:{!IF(item.showGrant,'','none')}"
                     onclick="showConfirmModal('{!item.contactStatus}', '{!item.recordAccService.contact__c}', '{!item.recordAccService.Portal_Application__c}');">
                     <span class="glyphicon glyphicon-ok"></span>
@@ -357,7 +356,7 @@
 
               </div>
               <div class="modal-footer">
-                <apex:commandButton id="confirmButton" onclick="closeConfirmModal();showReasonModalGrant();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
+                <apex:commandButton id='confirmButton' onclick="closeConfirmModal();showReasonModalGrant();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
                 <apex:commandButton onclick="closeConfirmModal();" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
               </div>
             </div>
@@ -408,9 +407,10 @@
 
      </apex:form>
     <!---------------------------------------------------------------------->
-		</div>
-  	</div><!-- end container-->
-  	<c:ISSP_CustomFooter communityName="{!communityName}"/>
+
+
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
+</div><!-- end container-->
     </body>
     </html>
 </apex:page>

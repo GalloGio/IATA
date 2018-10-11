@@ -104,8 +104,10 @@
       text-align:center;
     }
   </style>
-  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+     
   <div class="container">
+      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+      
           <h4>
             {!$Label.ISSP_Company_Administration}
             <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
@@ -267,7 +269,7 @@
                   </div>                  
                 </div>
 
-                <apex:pageblock >
+                <apex:pageblock>
                   <div style="margin-top:10px"/>
 
                   <apex:outputPanel id="CustomList">
@@ -292,7 +294,7 @@
 
 
                               <apex:column headerValue="Actions" id="actionId" style="text-align: center; width: 50px;">
-                                <apex:outputPanel rendered="{! NOT(o.hide)}">
+                                <apex:outputPanel rendered='{! NOT(o.hide)}'>
                                     <a href="#" class="btn btn-xs btn-success btn-block" style="margin-top: 3px; display:{!IF(o.showGrant,'','none')}"
                                       onclick="showConfirmModal('{!o.contactStatus}', '{!o.par.contact__c}', '{!o.par.Portal_Application__c}');">
                                       <span class="glyphicon glyphicon-ok"></span>
@@ -384,7 +386,7 @@
 
                       </div>
                       <div class="modal-footer">
-                        <apex:commandButton id="confirmButton" onclick="closeConfirmModal();showReasonModalGrant();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
+                        <apex:commandButton id='confirmButton' onclick="closeConfirmModal();showReasonModalGrant();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
                         <apex:commandButton onclick="closeConfirmModal();" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
                       </div>
                     </div>
@@ -524,8 +526,8 @@
        <!-- ********** End of Edit Mode ******** -->    
      
           </div><!-- end  div class="panel panel-primary"-->
-  </div><!-- end container-->
-    <c:ISSP_CustomFooter communityName="{!communityName}"/>
+      <c:ISSP_CustomFooter communityName="{!communityName}"/>
+  </div><!-- end container-->  
         </body>
     </html>
 </apex:page>

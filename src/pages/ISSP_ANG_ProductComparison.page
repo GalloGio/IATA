@@ -2,15 +2,14 @@
 	<html>		
 		<c:ISSP_Header ></c:ISSP_Header>   
 	 	<body>
-            <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+            
 	 		<div class="container">
-		 		
+		 		<c:ISSP_CustomNavigation communityName="{!communityName}"/>
 				<apex:form >
 					<c:ANG_ProductComparison helperParam="{! helper}"/>
 				</apex:form>
-				
+				<c:ISSP_CustomFooter communityName="{!communityName}"/>
 			</div>
-			<c:ISSP_CustomFooter communityName="{!communityName}"/>
 		</body>	   	
     </html>
 </apex:page>
