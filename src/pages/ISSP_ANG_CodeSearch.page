@@ -2,9 +2,16 @@
            sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false"
            docType="html-5.0"
            standardStylesheets="false">
-  
+
+  <head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
     <c:ISSP_Header ></c:ISSP_Header>
-  
+    <c:iss_ap_css />
+
+  </head>
     <style>
       .section-header {
         background-color: rgb(43, 120, 228);
@@ -82,8 +89,6 @@
             return false;
           }
         });
-          
-         $('.navbar-form').css('display','none');
       });
 
       function doPreSearch() {
@@ -93,9 +98,8 @@
     </script>
 
   <body>
-    <c:ISSP_CustomNavigation />
-    <div class="container">
-      <div id="contentWrapper">
+    <main class="container">
+      <c:ISSP_CustomNavigation />
       <apex:form id="mainFrm">
 
       <apex:actionFunction action="{!doSearch}" name="doSearchServer" rerender="searchResults">
@@ -246,8 +250,8 @@
                           <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RHC}"/>
                         </td>
                         <td style="vertical-align: top !important;">
-                          <i style="display:{!IF(rhcAgencyInfo.ANG_CashCondition__c,'','none')}; margin-left: 15px; color: green;" class="glyphicon glyphicon-ok"></i>
-                          <i style="display:{!IF(NOT(rhcAgencyInfo.ANG_CashCondition__c),'','none')}; margin-left: 15px; color: red;" class="glyphicon glyphicon-remove"></i>
+                          <apex:outputText style="display:{!IF(rhcAgencyInfo.ANG_CashCondition__c,'','none')}; margin-left: 15px;" value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC}"/>
+                          <apex:outputText style="display:{!IF(NOT(rhcAgencyInfo.ANG_CashCondition__c),'','none')}; margin-left: 15px;" value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_FORMULA}"/>
                         </td>
                       </tr>
 
@@ -336,10 +340,10 @@
             </div>
           </div>
         </div>
+
+        <c:ISSP_CustomFooter />
       </apex:form>
-    </div>
-   </div>
-	<c:ISSP_CustomFooter />
+    </main>
 
     <script src="{!URLFOR($Resource.DataTablesBootstrap)}"></script>
     <script src="{!URLFOR($Resource.JqueryDataTables)}"></script>
