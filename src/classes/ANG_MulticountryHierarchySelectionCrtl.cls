@@ -45,9 +45,11 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					,'BillingCity'
 					,'BillingAddress'
 					,'Location_type__c'
-					, 'Category__c'
-					, 'BillingStreet'
-					, 'BillingPostalCode'
+					,'Category__c'
+					,'BillingStreet'
+					,'BillingPostalCode'
+					,'IATACODE__c'
+					,'Status'
 
 
 				};
@@ -275,7 +277,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
                     hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
                 }
             }
-            System.debug(loggingLevel.Info, '[cls ANG_AccountHierarchySelectionController] hierarchy items lists - ' + hierarchyValuesForDisplay);
+
             return hierarchyValuesForDisplay;
         }
         set;
