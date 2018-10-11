@@ -5,10 +5,12 @@
      <!-- elliot 19 juin -->
      <apex:variable var="AdminOrNot" value="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User','','none')}" />
     <!-- end elliot 19 juin -->
-  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
   <div class="container">
-	<div id="contentWrapper">
+
     <apex:stylesheet value="{!URLFOR($Resource.BootstrapCSS, 'css/bootstrap.min.css')}" />    
+    <!--apex:stylesheet value="{!URLFOR($Resource.DataTables, 'css/dataTables.bootstrap.min.css')}" />
+    <apex:stylesheet value="{!$Resource.InternalOrderCSS}" />
+    <apex:stylesheet value="{!URLFOR($Resource.BootstrapDatepicker, 'css/bootstrap-datepicker3.min.css')}" /-->     
 
     <!-- Load JS -->  
     <script language="JavaScript1.2" src="/js/functions.js"></script>
@@ -21,6 +23,8 @@
     <!--script src="{!URLFOR($Resource.DataTables, 'js/jquery.dataTables.min.js')}"></script>
     <script src="{!URLFOR($Resource.DataTables, 'js/dataTables.bootstrap.min.js')}"></script>
     <script src="{!URLFOR($Resource.BootstrapDatepicker, 'js/bootstrap-datepicker.min.js')}"></script-->  
+
+ <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <!---------------------------------------------------------------------->
        <script type="text/javascript">
@@ -390,8 +394,8 @@
    }
 
     </style>
-    <h4>{!$Label.ISSP_Available_services}  <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
-         {!$Label.ISSP_Manage_Services} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+    <h4>{!$Label.ISSP_services}  <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+         {!$Label.ISSP_Available_services} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
         <small>{!$Label.ISSP_PageDescription_ISSP_AvailableServices} </small></h4>
     <apex:form id="contactListForm">
 
@@ -864,9 +868,8 @@
     </div>
 
 </apex:form>
-</div>
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
- <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </body>
     </html>
 </apex:page>

@@ -72,9 +72,15 @@ font-weight: bold;
                     </table>
                 </center>
 
+                <div id="footer">
+                    <ul style="width: 100% !important;">
+                        <c:ISSP_CustomFooter />
+                    </ul>
+                </div>
+                <p></p>
                 <p></p>
             </div>
-		 <c:ISSP_CustomFooter />
+
         </apex:define>
     </apex:composition>
 

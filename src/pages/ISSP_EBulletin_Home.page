@@ -30,9 +30,8 @@
                 })
         </script>
     
-    <c:ISSP_CustomNavigation />
     <div class="container">   
-    <div id="contentWrapper">
+        <c:ISSP_CustomNavigation />
     <div>
         <img src="/resource/1440419254000/IATA_Logo_Large" width="138" height="102" style="float:left"/>
     </div>
@@ -71,9 +70,10 @@
         <apex:outputText value="{!$Label.ISSP_AMS_eBulletin_Unavailable}"/>
         </apex:outputPanel>
    </div>
-     </div>
+    
+    <c:ISSP_CustomFooter />
 </div><!-- end container-->
-  <c:ISSP_CustomFooter />      
-  </body>
+        
+  </body>  
 </html>
 </apex:page>

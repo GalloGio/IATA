@@ -1,6 +1,10 @@
 <apex:component allowDML="true">
     <style type="text/css">        
- 
+ul li, ol li {
+  			margin-left: inherit;
+  			padding-left: inherit;
+		}
+        
 .columnTitleCenter {
         text-align:center;
   }
@@ -138,7 +142,7 @@ td.hinactive {font-size: 14pt; color: #000; border-bottom: 0px !important; paddi
     font-size: 9pt;
     top: 100px;
     left: 0px;
-    height: auto;
+    height: 420px;
     margin-bottom: 0;
     margin-left: 0px;
     margin-right: 0;

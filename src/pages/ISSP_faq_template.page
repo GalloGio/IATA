@@ -17,15 +17,7 @@
        
     <script src="{!$Resource.pkb_jquery_simplemodal_1_4_4}" type="text/javascript" />
     <script src="{!URLFOR($Resource.JSTree, '/dist/jstree.min.js')}" type="text/javascript"/>
-    <link rel="stylesheet" href="{!URLFOR($Resource.JSTree, '/dist/themes/default/style.min.css')}" />   
-
-    <style type="text/css">
-      	@media (min-width: 992px) {
-        	#navbar {
-          		height: 47px !important;
-      		}
-    	}
-    </style>
+    <link rel="stylesheet" href="{!URLFOR($Resource.JSTree, '/dist/themes/default/style.min.css')}" />      
             
     <script type="text/javascript">
   //AEF:
@@ -38,8 +30,9 @@
 	})
 
 	</script>  
-     <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-     <div class="container">
+    
+     <div class="container">   
+         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
      <apex:outputText rendered="{!viewingArticle}">
         <apex:variable var="typeName" value="{!SUBSTITUTE(pkbCon.theKad.articleTypeName, pkbCon.kavExtension, '')}" />
         <apex:variable var="articleURL" value="{!pkbCon.currentSiteUrl}articles{!pkbCon.selectedLanguageURL}{!typeName}/{!pkbCon.theKad.urlName}" />
@@ -112,8 +105,9 @@
                         </div>
                     </div>
                </div>
+               <div style="clear: both;"><c:ISSP_CustomFooter communityName="{!communityName}"/></div>
          </div><!-- end container-->
-         <c:ISSP_CustomFooter communityName="{!communityName}"/>
+
   </body>
     
 </html>

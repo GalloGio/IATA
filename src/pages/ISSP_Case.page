@@ -6,6 +6,7 @@
            action="{!pageLoad}">
     <html>
     <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <body>
         <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function(event) {
@@ -35,7 +36,11 @@
         }
         </script>
         <style>
-           
+            ul li, ol li {
+                margin-left: inherit;
+                padding-left: inherit;
+            }
+
             .pbBody a {
                 color: #337ab7;
             }
@@ -279,8 +284,9 @@
 
         </style>
         <!--  **************** New Case ********************** -->
-         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="container">
+            <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+
             <!--
             <div class="ptBreadcrumb">&nbsp;&#171;&nbsp;
                 <a href="/apex/ISSP_CaseList">{!$Label.ISSP_BackLinkCaseList}</a>
@@ -1305,9 +1311,10 @@
                 <!--end main col -->
             </div>
             <!--end main row -->
+
+            <c:ISSP_CustomFooter communityName="{!communityName}" />
         </div>
         <!-- end container-->
-         <c:ISSP_CustomFooter communityName="{!communityName}" />
     </body>
 </html>
 </apex:page>

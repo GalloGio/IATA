@@ -335,10 +335,10 @@
 
         </script>
 
-        <c:ISSP_CustomNavigation communityName="{!communityName}" />
+
         <div class="container">
 
-            
+            <c:ISSP_CustomNavigation communityName="{!communityName}" />
 
             <div id="contentWrapper">
 
@@ -454,7 +454,7 @@
 
                                             <div>
                                                 <div>
-                                                    <apex:outputPanel id="panel2">
+                                                    <apex:outputPanel id = "panel2">
                                                         <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE}"></apex:outputText>
                                                         <div class="panel panel-default">
 
@@ -644,9 +644,9 @@
                 </apex:outputText>
             </div>
 
-            
+            <c:ISSP_CustomFooter />
         </div>
-        <c:ISSP_CustomFooter />
+
 
 
         <!-- MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS MODALS -->

@@ -1,12 +1,12 @@
 <apex:page controller="ISSP_ContactList" tabStyle="Contact" action="{!initialization}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false" >
  <html>
- <c:ISSP_Header communityName="{!communityName}" ></c:ISSP_Header>
+ <c:ISSP_Header  communityName="{!communityName}" ></c:ISSP_Header>
  <body>
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" />
-   <c:ISSP_CustomNavigation communityName="{!communityName}" />
     <div class="container">
-	<div id="contentWrapper">
+ <c:ISSP_CustomNavigation communityName="{!communityName}" />
+
     <script>
       $(document).ready(function() {
         $(window).keydown(function(event){
@@ -44,7 +44,6 @@
 
         // Create Jquery tooltip only for the invalid email domain validation (cross)
         $(".emadomvalinvpopup").tooltip();
-        $('.navbar-form').css('display','none');
     }
 
     function selectAllCheckboxes(obj,receivedInputID){
@@ -108,12 +107,6 @@
 
     /* Jquery tootip style customization */
     .tooltip {font-size:13px;}
-
-    @media (min-width: 992px) {
-    	#navbar {
-    		height: 47px !important;
-    	}
-    }
     </style>
 
     <apex:form id="contactListForm">
@@ -409,7 +402,8 @@
      </div>
 
  </apex:form>
-  
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
+
   <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
   <div class="loadingBox overlay"> </div>
 
@@ -449,9 +443,9 @@
            $('.loadingBox').hide();
       }
   </script> 
-</div>
+
+
 </div><!-- end container -->
-   <c:ISSP_CustomFooter communityName="{!communityName}"/>
      </body>
     </html>
 </apex:page>

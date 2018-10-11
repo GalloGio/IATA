@@ -3,9 +3,8 @@
 <html>
  <c:ISSP_Header ></c:ISSP_Header>    
  <body>
-    <c:ISSP_CustomNavigation />
     <div class="container">
-    <div id="contentWrapper">
+    
     <div class="row">
          
     <div class="col-md-3">
@@ -41,10 +40,10 @@
      </div>
              
       </div>
+  </div>    
+
+          <c:ISSP_CustomFooter />
   </div>
-	</div>
-  </div> <!-- container -->
-    <c:ISSP_CustomFooter />
     </body>
     </html>
   </apex:page>

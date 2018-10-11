@@ -1,7 +1,7 @@
 <apex:page controller="ISSP_ModelA_Onboarding" extensions="ISSP_AmazonS3_Ctrl" showHeader="false" sidebar="false"
-    applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" standardStylesheets="true" action="{!securityCheck}">
+	applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" standardStylesheets="true" action="{!securityCheck}">
 
-    <html>
+	<html>
 
 
     <meta charset="utf-8"/>
@@ -9,12 +9,142 @@
 
     <c:ISSP_Header />
 
-    <style type="text/css">
-        #navbarSearchBtn {
-            height: 34px;
+  	<style type="text/css">
+  		main {
+        	background-color: white;
+      	}
+
+      	.pbBody {
+        padding-left:10px !important;    
+       }
+            
+       .pbBody a{color:#337ab7 !important}
+               
+        .bPageBlock {
+            border-top-width : thin !important;
         }
-    </style>
-    
+        
+        .bEditBlock input {
+            vertical-align:top !important;
+        }
+       
+       .btn {
+            padding: 2px 12px !important;
+        }
+                             
+        .btn-primary {
+            color: #fff !important;
+            background: inherit !important;
+            background-color: #337ab7 !important;
+            border-color: #2e6da4 !important;
+            border: 1px solid transparent !important;
+            /*background: */
+        }
+        
+        .tb-header {
+            padding-right:20px;
+        }
+                 
+        .modalrow {
+            padding-top:10px;
+        }
+                 
+        input + label {
+            font-weight:normal;
+        }
+            
+        ul li, ol li {
+            margin-left: inherit;
+            padding-left: inherit;
+        }
+        
+        #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
+            
+        .requiredText {display:none;}
+        
+        .dateFormat {display:none;}
+        
+        .errorMsg {color:#d74c3b}
+            
+        .progress-bar-off {
+                color:#6BBBEA;
+                font-weight:bold;
+                background-image:none !important;
+                background-color:transparent !important;
+                border-right:2px solid white;
+        }
+        
+        body .bPageBlock .pbBody .pbSubheader{
+                background-image: url('') !important;
+                background-color:  #1797c0;
+                color: #fff;
+        }
+
+        body .bPageBlock .pbBody .summary-subsection .pbSubheader{
+                background-image: url('') !important;
+                background-color: initial;
+                color: initial;
+        }
+        
+        .pbSubheader {
+            font-weight:bold;
+            font-size:15px;
+        }
+                   
+        .contact-detail {
+            font-size:12px;
+            margin-bottom:3px;
+        }
+                   
+        .tbFooter {
+         text-align:right;
+        }
+                   
+        .requiredBlock {
+            width:5px !important;
+        }
+
+        .checkbox-td {
+            text-align: center;
+        }
+
+        .summary-table th {
+            text-align: center;
+        }
+
+        .summary-table td.dataCell {
+            border: 1px solid #e0e3e5 !important;
+        }
+        
+            .col1 {
+                padding-bottom:5px;
+                width:40%;
+                vertical-align: text-top;
+                font-weight:bold
+            }
+            
+            .col1_regular {
+                padding-bottom:5px;
+                width:25%;
+                vertical-align: text-top;
+                font-weight:bold
+            }       
+                   
+            .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
+            .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
+            .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
+            .col3 {width:50%;vertical-align: text-top;}
+            
+            .col1_inner {width:25%; vertical-align: text-top;}
+            .col2_inner {width:25%; vertical-align: text-top;}
+                   
+             .row1 {padding-bottom:16px; vertical-align: text-top;}
+
+             .btn {
+        		background:none;
+    		}
+  	</style>
+  	
     <script type="text/javascript">
 
     function isIE(){
@@ -32,82 +162,83 @@
     }
 
     function getFileLink(fileName) {
-        
-        $("#loading").show();
-        setTimeout(function(){
-        try{
-            ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event){
-                var result2= result.replace("&amp;","&"); 
-                var newWin = window.open(result2);
-                if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
-                    alert('{!$Label.ISSP_AMS_ACCR_Alert1}');
-                }
-                $("#loading").hide();
-            },{escape:false});
-        }catch(err){alert( err.message);}
-        },500);
+	    
+	    $("#loading").show();
+	    setTimeout(function(){
+	    try{
+	        ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event){
+	            var result2= result.replace("&amp;","&"); 
+	            var newWin = window.open(result2);
+	            if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+	                alert('{!$Label.ISSP_AMS_ACCR_Alert1}');
+	            }
+	            $("#loading").hide();
+	        },{escape:false});
+	    }catch(err){alert( err.message);}
+	    },500);
     }
 
     </script>
-    <body>
+  	<body>
 
-        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+  		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
         <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
 
-        <c:ISSP_CustomNavigation />
-        <div class="container">
+  		<main class="container">
 
-            <apex:outputText >
-            <div class="panel-primary">
-            <div class="panel-heading head_panel_green">
-                <h3 class="panel-title">{!$Label.ISSP_ANG_MODEL_A_ONBOARDING_TITLE}</h3>
-            </div>
-            <div class="panel-body" id="body-enquiries">
+  			<c:ISSP_CustomNavigation />
 
-            <div class="col-md-12">     
-            <div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>           
-                
-                    
-                    <br/>
-                    <apex:pageMessages />
-                    <div id="loading" style="display:none; width:100%">
-                        <div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;"/>
-                        <div style="border:1px solid black; background:white; text-align:center;
-                            display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
-                            position: absolute; top:60%; left:45%; z-index:10;">
-                            <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
-                        </div>
-                    </div>
-                    
-                    <apex:variable var="cnt" value="{!0}"/>
-                    <apex:repeat value="{!countryRequirementsList}" var="reqs">
-                        <apex:variable var="cnt" value="{!cnt+1}"/>
-                        <c:ISSP_AMS_FormUpload reqCnt="{!cnt}" 
-                            reqRequired="{!reqs.File_to_Upload__c}" 
-                            reqName="{!reqs.Name}" 
-                            reqDescription="{!reqs.Requirement_text__c}"
-                            reqIdentifier="{!reqs.File_Identifier2__c}"/>
-                    </apex:repeat>
-                
-                <apex:form style="text-align:center;">
-                    
-                            <apex:commandButton styleClass="btn btn-default" action="{!cancel}" value="{!$Label.ISSP_Back}"/>
-                            <apex:commandButton styleClass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}"/>
-                                                    
-                        
-                </apex:form>
+  			<apex:outputText>
+  			<div class="panel-primary">
+	    	<div class="panel-heading head_panel_green">
+	    		<h3 class="panel-title">{!$Label.ISSP_ANG_MODEL_A_ONBOARDING_TITLE}</h3>
+	    	</div>
+	    	<div class="panel-body" id="body-enquiries">
 
-            
-            </div>
+  			<div class="col-md-12">		
+  			<div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>	       
+				
+			    	
+			    	<br/>
+			    	<apex:pageMessages />
+	            	<div id="loading" style="display:none; width:100%">
+	                	<div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;"/>
+	                	<div style="border:1px solid black; background:white; text-align:center;
+	                        display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
+	                        position: absolute; top:60%; left:45%; z-index:10;">
+	                    	<apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
+	                	</div>
+	            	</div>
+			   		
+			   		<apex:variable var="cnt" value="{!0}"/>
+    				<apex:repeat value="{!countryRequirementsList}" var="reqs">
+    			    	<apex:variable var="cnt" value="{!cnt+1}"/>
+    			    	<c:ISSP_AMS_FormUpload reqCnt="{!cnt}" 
+    			        	reqRequired="{!reqs.File_to_Upload__c}" 
+    			        	reqName="{!reqs.Name}" 
+    			        	reqDescription="{!reqs.Requirement_text__c}"
+    			        	reqIdentifier="{!reqs.File_Identifier2__c}"/>
+    				</apex:repeat>
+    			
+				<apex:form style="text-align:center;">
+			        
+			    	        <apex:commandButton styleClass="btn btn-default" action="{!cancel}" value="{!$Label.ISSP_Back}"/>
+			                <apex:commandButton styleClass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}"/>
+			                		                
+			            
+			    </apex:form>
 
-        </div>
-    </div>
+			
+			</div>
+
+		</div>
+	</div>
 </apex:outputText>
 
-        </div>
-        <c:ISSP_CustomFooter />
-    </body>
-    </html>
+		<c:ISSP_CustomFooter />
+		</main>
+  	</body>
+  	</html>
 </apex:page>
