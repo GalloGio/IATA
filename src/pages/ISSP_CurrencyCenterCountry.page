@@ -109,8 +109,10 @@
     </script>
  </head>
  <body>
-     <c:ISSP_CustomNavigation />
      <div class="container">
+
+        <c:ISSP_CustomNavigation />
+
         <!-- Header -->
         <div class="row">
             <div class="col-xs-12 header-{! IF(Country_Profile__c.Listed_In__c == 'Blocked Funds', 'blocked-funds', IF(Country_Profile__c.Listed_In__c == 'Watch List', 'watch-list', 'all-others')) }">
@@ -1248,8 +1250,10 @@
             <!-- END ICCS PANEL -->
           </div>
         </div>
-     </div> <!-- end container-->
- <c:ISSP_CustomFooter />
+
+        <c:ISSP_CustomFooter />
+
+     </div>
  </body>
  </html>
 </apex:page>
