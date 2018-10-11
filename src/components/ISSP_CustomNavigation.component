@@ -132,14 +132,348 @@
       });
       
    </script><!-- end jquery initialisation -->
+   <style>
+      .ui-dialog-titlebar {
+            background: #337ab7;
+       } 
+       
+      body{
+      font-family:Arial, sans-serif; 
+       background-image: url("/identity/s/OneIdResources/images/bgDiag.png");
+      background-repeat: repeat;
+      }
+       
+      div.container{
+        background-color:white;
+        position:relative;
+      }
+      
+      .recentcasespanel{
+      min-height:354px;
+      overflow-x: auto;
+      }
+      .panel-halfsize{
+      color: #ffffff;
+      background-color: #206ba4;
+      }
+      .blueborder{
+      border-color: #428bca;
+      min-height:147px;
+      }
+      /*tables*/
+      table.list{
+      width:100%;
+      }
+      tbody{
+      width:100%;
+      }
+      .detailList{
+      width:100%;
+      }
+      #red{
+      background-color:red;
+      padding:30px;
+      text-align: center;
+      color: red;
+      }
+      .green{
+      background-color:green;
+      padding:30px;
+      text-align: center;
+      color: green;
+      }
+       
+       th.headerRow {
+      background-color: rgb(234, 234, 234);
+      color:#428bca;
+      font-size:12px;
+      padding: 3px;
+      border-right-style: inset;
+      }
+       
+      .collapsing {
+        display:none;
+      }
+       
+      .header-holder {
+      background-color:white;
+      width: 100%;
+      height: 36px;
+      padding-top:6px;
+      color: #337ab7;
+      }
+       
+      .header-holder a {
+      color: #337ab7;
+      text-decoration : none;
+      }
+       
+      .header-title {
+      font-size:18px;
+      color: #337ab7;
+      margin-left:25px;
+      }
+      .header-link {
+      float: right;
+      font-size:12px;
+      margin-right: 20px;
+      padding-top:2px;
+      }
+      .header-link-user {
+      float: right;
+      font-size:14px;
+      //font-weight:bold;
+      margin-right: 20px;
+      padding-top:2px;
+      }
+       
+      .img-arrow {
+        vertical-align:text-bottom;
+      }
+       
+      span.prevOff, span.nextOff {
+        color:#c0c0c0;
+      }
+       
+   </style>
+   <style>
+      <!-- page styles -->
+      h4{/* 'tis for breadcrumbs */
+      color: rgb(32, 107, 164);
+      font-size:14px;
+      }
+      .center{
+      text-align:center;
+      }
+      .selector{
+      /*float:left;
+      width:80%;*/
+      }
+       
+      .blueback{
+        background-color:#337AB7;
+        color:white;
+        padding: 4px;
+      }
+       
+        .nav1{
+            list-style:none;
+            padding-left: 0;
+        }
 
+        .nav2{
+            list-style:none;
+            padding-left: 0;
+            background-color: #EAEAEA;
+            padding-right: 1px;
+        }
+   
+      .mandatory{
+      <!-- red bar on mandatoryfield-->
+      border-left-color: rgb(217, 83, 79);
+      border-left-width: 5px;
+      }
+      .notification-style{
+      border-bottom-style: inset;
+      padding-bottom: 5px;
+      padding-top: 5px;
+      border-bottom-color: rgb(221, 221, 221);
+      border-bottom-width: 1px;
+      }
+      .greenbadge{
+      background-color:green;
+      }
+      .redbadge{
+      background-color:red;
+      }
+      .mybutton{
+      padding: 4px;
+      border-radius: 25px;
+      }
+      .sml{
+      width:125px;
+      }
+      .brandtext{
+      font-size: 14px;
+      color: rgb(48, 115, 172);
+      font-family: Arial, Helvetica, sans-serif;
+      }
+      .icon-bar{
+        background-color:#428bca;
+      }
+       
+      #one.two.three.four{
+        color:red;
+        }
+
+      label, .labelCol,.lbl {
+        color :#4a4a56;
+        font-weight: 600;
+      }
+       
+      <!--buttons-->
+      .btn_iata_primary{
+      border: none;
+      color: white;
+      background-color: rgb(66, 139, 202);
+      margin:5px;
+      }
+      .btn_iata_success{
+      border: none;
+      color: white;
+      background-color: #5cb85c;
+      margin:5px;
+      }
+      .btn_iata_cancel{
+      border: none;
+      color: white;
+      background-color: #d9534f;
+      margin:5px;
+      }
+      .sidenav{
+      width: 100%;
+      }
+      .lbl_services{
+      color: grey;
+      font-size: 11px;
+      padding-left: 50px;
+      }
+       
+      .navbar-collapse {
+        float: left;
+        width: 100%;
+        clear: both;
+      }
+       
+      .navbar-right {
+        color: #000;
+      }
+       
+      #searchbox {
+        top: 102px;
+        padding-right:0px;
+        height:10px;
+      }
+       
+      
+      <!-- responsive adjustments -->
+      @media screen and (max-width: 768px){
+      #searchbox{
+        display:none;
+      }
+      .bPageBlock{
+        overflow-x: auto;
+      }
+       
+       .navbar-header {
+         margin-bottom:120px;
+       }
+       
+       .navbar-form {
+         padding: 0px 35px;
+         margin-right:0px
+       }
+   }
+      
+      @media (min-width: 768px) {
+      
+       .navbar-right {
+        top: -40px;
+        right: 2%;
+        position: absolute
+      }
+       
+       .navbar-nav>li {
+        margin-right:10px;
+       }
+       
+      .navbar-nav-menu>li>a {
+        color:white;
+        font-size:110%;
+        text-decoration: none;
+        border-bottom: 3px solid transparent;
+      }
+       
+      .navbar-nav-menu>li>a:hover {
+        background-color: #00305b;
+        border-bottom: 5px solid red;
+        padding-bottom: 7px
+      }
+       
+      .navbar-nav-menu>li>a:focus {
+       background-color: #00305b;
+       border-bottom: 5px solid red;
+       padding-bottom: 7px
+      }
+       
+       .navbar-nav-menu .open>a, .navbar-nav-menu .open>a:focus, .navbar-nav-menu .open>a:hover {
+            background-color: #00305b;
+            border-bottom: 5px solid red;
+            padding-bottom: 7px
+        }
+       
+       .navbar-right .open>a, .navbar-right .open>a:focus, .navbar-right .open>a:hover {
+            background-color: #fff;
+        }
+       
+      .navbar-right>li>a  {
+        font-weight: bold;
+      }
+       
+      .navbar-right>li>a:hover  {
+        background-color: white !important;
+      }
+       
+      .navbar-right>li>a:focus  {
+        background-color: white !important;
+      }
+       
+       .navbar-nav>.active-nav>a {
+            background-color: #00305b;
+            border-bottom: 5px solid red;
+            padding-bottom: 7px
+        }
+       
+      .nav-header-issp {
+      	background-color: #00305b;
+      	width:100%;
+      	position:absolute;
+      	top:55px;
+      	height:47px;
+      }
+       
+      .navbar-text {
+        color:grey;
+        margin-top:0px;
+        margin-bottom:0px;
+       }
+       
+      .navbar-nav-menu {
+        margin-left:210px
+      }
+       
+       .navbar-form {
+         float:left;
+         margin-top:13px;
+         padding: 0px 15px;
+       }
+       
+      .container-issp {
+        padding-left: 0px;
+        height:155px
+      }
+       
+    .panel-primary{
+        min-height:314px;
+    }
+   
+   }
+   </style>
    <script>
    		$(document).ready(function() {
     		$('[id$="navbarSearchBtn"]').css({'background': 'initial', 'margin': '0', 'border-radius': '4px', 'margin-bottom': '0', 'background-color': '#fff', 'margin-left': '-1px', 'font-size': '14px', 'border-top-left-radius': '0', 'border-bottom-left-radius': '0', 'border-bottom-color': 'rgb(181, 181, 181)', 'border-color': '#ccc'});
 
     		$('li').css('margin-left', 'initial');
-
-        $('.btn_iata_primary').css({'padding': '6px 12px !important'});
 		});
 
       function transferSearchQuery() {
@@ -178,41 +512,31 @@
       
       var lang = getCookie('apex__lang');
       
-   	</script>
+   </script>
    
-   	<div class="container-fluid" style="position:absolute;width:100%;height:47px;background-color:#00305b;top:55px;">
+   <div class="container-fluid" style="position:absolute;width:100%;height:47px;background-color:#00305b;top:55px;">
        &nbsp;
    </div>
-   
-    <div id="navbarContainer" class="container container-issp" style="background-color:#fff">
-      <div id="navbarHeader" class="navbar-header">
-         <button id="navbarBurgerButton" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+
+   <div class="container container-issp" style="background-color:#fff">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
          <span class="sr-only">Toggle navigation</span>
-         <span class="icon-bar" style="background-color: white;"></span>
-         <span class="icon-bar" style="background-color: white;"></span>
-         <span class="icon-bar" style="background-color: white;"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
          </button>
-         <div id="navbarLogo" class="oiHeader cOneIdHeader">
+         <div class="oiHeader cOneIdHeader">
             <a class="homeIcon" href="/ISSP_HomePage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >
             <div class="{!if(communityName=='CNS', 'icon-cns', 'icon icon-logo')}"></div>
             <div class="subLogo"></div>
             </a>
          </div>
       </div>
-      
-      <div id="navbar" class="navbar-collapse nav-header-issp collapse" >
-         <ul id="navbarMenu" class="nav navbar-nav navbar-nav-menu">
+      <div id="navbar" class="navbar-collapse nav-header-issp">
+         <ul class="nav navbar-nav navbar-nav-menu">
+            <li><a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M0"><span class="glyphicon glyphicon-home"  aria-hidden="true"></span> {!$Label.ISSP_Home}</a></li>
             <li>
-              <a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M0"><span class="glyphicon glyphicon-home" aria-hidden="true"/>
-                {!$Label.ISSP_Home}
-              </a>
-            </li>
-            <li class="{!IF($Profile.Name == 'ISS Portal DPC','','hide')}">
-              <a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M1"><span class="glyphicon glyphicon-envelope"/>
-                {!$Label.LAQ_ContactUs}
-              </a>
-            </li>
-            <li class="{!IF($Profile.Name == 'ISS Portal DPC','hide','')}">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M1"><span class="glyphicon glyphicon-envelope"></span> {!$Label.LAQ_ContactUs} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M1S1"> {!$Label.ISSP_Create_query}</a></li>
@@ -231,14 +555,13 @@
                     <!--
                     <li class="{!IF(operationalCalendarPermission,'','hide')} divider"></li>
                     <li class="{!IF(operationalCalendarPermission,'','hide')}"  ><a href="/ISSP_OperationalCalendar?MainNav=resources&subNav=OperationalCalendar&mid=M2S4{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S4">{!$Label.ISSP_OperationalCalendar}<span class="sr-only"></span></a></li>
-          -->
+					-->
                 </ul>
             </li>
-            <li class="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC' || $Profile.Name == 'ISS Portal PwC2','','hide')} ">
-               <a href="#" class="dropdown-toggle " data-toggle="dropdown" id="M3"><span class="glyphicon glyphicon-briefcase"></span>  {!$Label.ISSP_Available_services} <span class="caret"></span></a>
+            <li class="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC' || $Profile.Name == 'ISS Portal PwC2','','hide')}">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M3"><span class="glyphicon glyphicon-briefcase"></span>  {!$Label.ISSP_Available_services} <span class="caret"></span></a>
                  <ul class="dropdown-menu" role="menu">
                     <li><a href="/ISSP_AccessToService?MainNav=Services&subNav=Access&mid=M3S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S2" > {!$Label.ISSP_Access_to_services}</a></li>
-                    <li class="divider"></li>
                     <li><a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M3S5{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S5" > {!$Label.ISSP_Manage_Services}</a></li>
                  </ul>    
             </li>
@@ -246,28 +569,30 @@
                <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M3"><span class="glyphicon glyphicon-briefcase"></span>  {!$Label.ISSP_Available_services}</a>
             </li>
             <li class="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC' || $Profile.Name == 'ISS Portal PwC2','','hide')}">
-               <a href="#" class="dropdown-toggle " data-toggle="dropdown" id="M4"><span class="glyphicon glyphicon-wrench"></span> {!$Label.ISSP_Company_Administration} <span class="caret"></span></a>
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="M4"><span class="glyphicon glyphicon-wrench"></span> {!$Label.ISSP_Company_Administration} <span class="caret"></span></a>
                <ul class="dropdown-menu" role="menu">
                   <li><a href="/ISSP_ContactList?MainNav=Admin&subNav=contacts&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  id="M4S1" >{!$Label.ISSP_Contacts}</a></li>
                   <li class="divider"></li>
                   <li><a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S3" >{!$Label.ISSP_My_Company_Cases}</a></li>
-                  <li class="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','hide')} divider"></li>
-                  <li class="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','hide')}"><a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6">{!$Label.ISSP_Local_Groups_Industry}</a></li>
-                  <li class="{!IF(isCargoDGR,'','hide')} divider"></li>
-                  <li class="{!IF(isCargoDGR,'','hide')}"><a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7">{!$Label.ISSP_Trained_Staff_Certification}</a></li>
+                  <li class="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','hide','')} divider"></li>
+                  <li classs="{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','hide','')}"><a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6">{!$Label.ISSP_Local_Groups_Industry}</a></li>
+                  <li class="{!if(isCargoDGR,'hide','')} divider"></li>
+                  <li class="{!if(isCargoDGR,'hide','')}"><a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7" >
+                <!--{-- ! $Label.ISSP_Manage_Services } - CREATE LABEL -->  
+                Trained Staff Certification </a></li>
                </ul>
             </li>
          </ul>
-         <ul id="navbarRight" class="nav navbar-nav navbar-right">
+         <ul class="nav navbar-nav navbar-right">
             
             <apex:form id="LselectLanguage" rendered="{!communityName!='CNS'}" styleClass="navbar-form">
-               <apex:selectList styleClass="form-control selector" id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);" style="padding: 0px 12px;">
+               <apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);">
                   <apex:selectOption itemValue="-- Language --" itemLabel="Language"/>
                   <apex:selectOptions value="{!languages}"/>
                </apex:selectList>
             </apex:form>
             <li class="dropdown">
-               <a href="#" class="dropdown-toggle " data-toggle="dropdown" style="padding-bottom:0px"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {!$User.FirstName} {!$User.LastName} <span class="caret"></span></a>
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-bottom:0px"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {!$User.FirstName} {!$User.LastName} <span class="caret"></span></a>
                <ul class="dropdown-menu" role="menu">
                   <li><a href="/apex/ISSP_PersonalInformation?mid=M5S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  data-target="#five" id="M5">{!$Label.ISSP_Registration_MyInformation}</a></li>
                   <li><a href="/apex/ISSP_CompanyInformation?mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}"   data-target="#five" id="M5">{!$Label.ISSP_CompanyInformation}</a></li>
@@ -305,12 +630,6 @@
       </div>
       <!-- </form> -->
    </div>
- 
-
-
-
-
-
    <div class="modal fade bootbox-confirm" id="ModalShowSurvey" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" data-backdrop="static" data-keyboard="false" >
       <div class="modal-dialog">
          <div class="modal-content">

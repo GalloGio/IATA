@@ -50,7 +50,7 @@ font-size:85%;
 </style>
 
 
-<div class="cFooterPanel" id="footer" style="display:{!if(OR(communityName== null, communityName=='ISS'),'','none')}">
+<div class="cFooterPanel" id="footer">
     <div class="header">
         <div>
             <div class="widthLimiter centerAll">
@@ -59,14 +59,6 @@ font-size:85%;
             </div>
         </div>
     </div>
-</div>
-    
-<div class="cFooterPanel" id="footerCNS" style="display:{!if(communityName=='CNS','','none')}">
-        <div class="container">
-        	<img src="{!urlfor($Resource.IIS_Portal,'/images/cnsFooter.PNG')}" style="float:right"/>
-      		<span class="footerbig" >Relevant. Committed. Connected </span><img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q77c&oid=00D2000000008TF&lastMod=1434982567000" height="30px"/><br/>
-      		<span  class="footersml">&#169; Cargo Network Services Corp., An IATA Company. All rights reserved.</span>
-      </div>
 </div>  
 
 <script>

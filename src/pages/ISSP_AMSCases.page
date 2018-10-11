@@ -227,9 +227,9 @@
                             <div class="col-md-7">
                                         
                                 <!--<input type="button" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>-->
-                                <input type="button" style="display:{!IF(NOT(isHOAccredited),'','none')}; padding: 6px 12px !important;" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
+                                <input type="button" style="display:{!IF(NOT(isHOAccredited),'','none')};" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
 
-                                <input type="button" style="display:{!IF(isHOAccredited,'','none')}; padding: 6px 12px !important;" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
+                                <input type="button" style="display:{!IF(isHOAccredited,'','none')};" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
 
                                 <br/>
                                         
@@ -241,19 +241,19 @@
                             </div>
                                     
                             <div class="col-md-5">
-                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', 'Apply for New Cargo Head Office', IF(NOT(namEnabled) ,$Label.ISSP_AMS_Apply_New_Travel_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')}; padding: 6px 12px !important;"/>
+                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', 'Apply for New Cargo Head Office', IF(NOT(namEnabled) ,$Label.ISSP_AMS_Apply_New_Travel_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
                             </div>
                         </div>
                                 
                         <div class="row" style="padding-bottom: 20px">
                             <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
-                                <input type="button" class="btn btn_iata_primary" style="padding: 6px 12px !important;" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/><br/>
+                                <input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/><br/>
                                         <apex:outputText escape="false" value="{!$Label.ISSP_ANG_proof_PCI_Info}"/>
                             </div>
                                     
                             <div class="col-md-5" >
-                                <input style="display:{!IF(flagShowOptInOutButton,'','none')}; padding: 6px 12px !important;" type="button" class="btn btn_iata_primary" onclick="optInOut();return false;" value="{!optInOutBtn}"/>
-                                <input style="display:{!IF(flagShowOptInOutButtonDisabled,'','none')}; padding: 6px 12px !important;" type="button" class="btn btn_iata_primary" value="{!optInOutBtn}" disabled="true"/>
+                                <input style="display:{!IF(flagShowOptInOutButton,'','none')};" type="button" class="btn btn_iata_primary" onclick="optInOut();return false;" value="{!optInOutBtn}"/>
+                                <input style="display:{!IF(flagShowOptInOutButtonDisabled,'','none')};" type="button" class="btn btn_iata_primary" value="{!optInOutBtn}" disabled="true"/>
                             </div>
                         </div>
 
@@ -278,13 +278,13 @@
                             
                         <div class="row bankDetails" style="padding-top: 20px">
                             <div class="col-md-12" style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};">
-                                <input type="button" class="btn btn_iata_primary" style="padding: 6px 12px !important;" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
+                                <input type="button" class="btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
                             </div>
                         </div>
                                 
                         <div class="row">
                             <div class="col-md-12" style="padding-bottom: 10px;">
-                                <input type="button" class="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" style="padding: 6px 12px !important;"/><br/>
+                                <input type="button" class="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}"/><br/>
                                     
                                 <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
                                     

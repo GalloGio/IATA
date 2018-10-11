@@ -2,9 +2,8 @@
     <html>
  <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
-     <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div class="container">
-        <div id="contentWrapper">
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">{!$Label.ISSP_Account_Information}</h3>
@@ -131,9 +130,9 @@
             
         </div>
         <!-- end  div class="panel panel-primary"-->
-      </div>
-    </div> <!-- end container-->
-     <c:ISSP_CustomFooter communityName="{!communityName}"/>
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
+    </div>
+    <!-- end container-->
         </body>
     </html>
 </apex:page>

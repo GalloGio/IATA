@@ -17,15 +17,7 @@
        
     <script src="{!$Resource.pkb_jquery_simplemodal_1_4_4}" type="text/javascript" />
     <script src="{!URLFOR($Resource.JSTree, '/dist/jstree.min.js')}" type="text/javascript"/>
-    <link rel="stylesheet" href="{!URLFOR($Resource.JSTree, '/dist/themes/default/style.min.css')}" />   
-
-    <style type="text/css">
-      	@media (min-width: 992px) {
-        	#navbar {
-          		height: 47px !important;
-      		}
-    	}
-    </style>
+    <link rel="stylesheet" href="{!URLFOR($Resource.JSTree, '/dist/themes/default/style.min.css')}" />      
             
     <script type="text/javascript">
   //AEF:

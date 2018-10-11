@@ -305,9 +305,10 @@
 	      	
 		    </script>
 	    </apex:outputPanel>
-        <c:ISSP_CustomNavigation communityName="{!communityName}"></c:ISSP_CustomNavigation>
 		<div class="container">
 			<div id="contentWrapper">
+
+				<c:ISSP_CustomNavigation communityName="{!communityName}"></c:ISSP_CustomNavigation>
 
 				<div class="panel-primary">
                     <!-- FM AMSU-119 div class="panel-heading head_panel_green">
@@ -405,7 +406,7 @@
 
                                 <!--div class="col-lg-2" style="padding-top:7px;"-->                             
                                     <!--apex:inputField id="billingPostalCode" required="false" value="{!accreditationForm.Branch_Office_Postal_code__c}"/-->
-                                    <apex:outputPanel styleClass="billingStreetPanel">
+                                    <apex:outputPanel  styleClass="billingStreetPanel">
                                         <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Postal_code__c.Label}</label>
                                                                             
                                         <div class="col-lg-10" >
@@ -415,7 +416,7 @@
                                     </apex:outputPanel>
                                 <!--/div-->
 
-                                <apex:outputPanel styleClass="billingStreetPanel">
+                                <apex:outputPanel  styleClass="billingStreetPanel">
                                     <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}</label>
 
                                     <div class="col-lg-10" >
@@ -423,7 +424,7 @@
 					            </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel styleClass="billingStreetPanel">
+                                <apex:outputPanel  styleClass="billingStreetPanel">
                                     <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_Office_Phone}</label>
 
 					            <div class="col-lg-9" >
@@ -431,7 +432,7 @@
 					            </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel styleClass="billingStreetPanel">
+                                <apex:outputPanel  styleClass="billingStreetPanel">
                                     <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_AMS_MSO_Office_Email}</label>
 
 					            <div class="col-lg-9" style="padding-top:7px;">				            	
@@ -529,7 +530,7 @@
 	                            </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel styleClass="billingStreetPanel">
+                                <apex:outputPanel  styleClass="billingStreetPanel">
                                         <label for="countryconcerned" class="col-lg-2" style=" text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Postal_code__c.Label}</label>
                                                                             
                                         <div class="col-lg-10" >
@@ -538,7 +539,7 @@
 	                            </div>
                                     </apex:outputPanel>
 
-                                <apex:outputPanel styleClass="billingStreetPanel">
+                                <apex:outputPanel  styleClass="billingStreetPanel">
                                     <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}</label>
 
                                     <div class="col-lg-10" >
@@ -546,7 +547,7 @@
 	                            </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel styleClass="billingStreetPanel">
+                                <apex:outputPanel  styleClass="billingStreetPanel">
                                     <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_Office_Phone}</label>
 
 	                            <div class="col-lg-9" >
@@ -554,7 +555,7 @@
 	                            </div>
                                 </apex:outputPanel>
 
-                               <apex:outputPanel styleClass="billingStreetPanel">
+                               <apex:outputPanel  styleClass="billingStreetPanel">
                                     <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_AMS_MSO_Office_Email}</label>
                                     
                                     <div class="col-lg-9" style="">
@@ -562,7 +563,7 @@
                                     </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel styleClass="billingStreetPanel" rendered="{!step == 'view'}">
+                                <apex:outputPanel  styleClass="billingStreetPanel" rendered="{!step == 'view'}">
                                     <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_AMS_MSO_GSA_Appointment_Status}</label>
                                     
                                     <div class="col-lg-9" style="">
@@ -570,7 +571,7 @@
                                     </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel styleClass="billingStreetPanel" rendered="{!step == 'view'}">
+                                <apex:outputPanel  styleClass="billingStreetPanel" rendered="{!step == 'view'}">
                                     <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_AMS_MSO_GSA_IATA_Code}</label>
                                     
                                     <div class="col-lg-9" style="">
@@ -578,7 +579,7 @@
 	                            </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel styleClass="billingStreetPanel" rendered="{!step == 'view'}">
+                                <apex:outputPanel  styleClass="billingStreetPanel" rendered="{!step == 'view'}">
                                     <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_AMS_MSO_GSA_Open_Date}</label>
                                     
                                     <div class="col-lg-9" style="">
@@ -586,7 +587,7 @@
                                     </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel styleClass="billingStreetPanel" rendered="{!step == 'view'}">
+                                <apex:outputPanel  styleClass="billingStreetPanel" rendered="{!step == 'view'}">
                                     <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_AMS_MSO_GSA_Close_Date}</label>
                                     
                                     <div class="col-lg-9" style="">
@@ -673,8 +674,8 @@
 		    	</div>
 
 			</div>
+		    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 		</div>
-         <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </body>  
 </html>
 

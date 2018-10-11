@@ -142,7 +142,7 @@
       }
 
       /* The Modal (background) */
-      .modal-ErrorHandling {
+      .modal {
           display: none; /* Hidden by default */
           position: fixed; /* Stay in place */
           z-index: 1; /* Sit on top */
@@ -157,7 +157,7 @@
       }
 
       /* Modal Content */
-      #modal-content-ErrorHandling {
+      .modal-content {
           background-color: #fefefe;
           margin: auto;
           padding: 20px;
@@ -166,15 +166,15 @@
       }
 
       /* The Close Button */
-      #closeModal-ErrorHandling {
+      .closeModal {
           color: #aaaaaa;
           float: right;
           font-size: 28px;
           font-weight: bold;
       }
 
-      #closeModal-ErrorHandling:hover,
-      #closeModal-ErrorHandling:focus {
+      .closeModal:hover,
+      .closeModal:focus {
           color: #000;
           text-decoration: none;
           cursor: pointer;
@@ -277,8 +277,8 @@
             <div id="myModal" class="modal">
 
               <!-- Modal content -->
-              <div id="modal-content-ErrorHandling" class="modal-content">
-                <span id="closeModal-ErrorHandling" class="closeModal">&times;</span>
+              <div class="modal-content">
+                <span class="closeModal">&times;</span>
                 <p>There was an error in updating your balance. Please try again and if the issue persists contact <b><a href="/ISSP_FAQ2Case">customer support.</a></b></p>
               </div>
 
@@ -613,7 +613,7 @@
     var btn = document.getElementById("requestRME");
 
     // Get the <span> element that closes the modal
-    var span = document.getElementById("closeModal-ErrorHandling");
+    var span = document.getElementsByClassName("closeModal")[0];
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
