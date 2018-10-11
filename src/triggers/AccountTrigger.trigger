@@ -15,8 +15,9 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     AccountTriggerHelper.CopyCountry(trigger.New, trigger.oldmap); 
     AccountTriggerHelper.AccountNoDuplicateBranch(trigger.New, trigger.OldMap);
     AccountTriggerHelper.SectorCatToIndType(trigger.New, trigger.OldMap);
-   
-    TIP_Utils.validateUniqueIATACodeForTIP(trigger.new, trigger.OldMap);
+
+
+    //TIP_Utils.validateUniqueIATACodeForTIP(trigger.new, trigger.OldMap);  //ACAMBAS - TIP-234
   }
 
   if(trigger.isAfter && trigger.isUpdate){
@@ -82,8 +83,10 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     if(Trigger.isBefore && Trigger.isUpdate){
         ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
     }
-    
-    //Trigger the platform events
+
+	
+//Trigger the platform events
     if(trigger.isAfter)
     	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+
 }
