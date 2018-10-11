@@ -263,12 +263,9 @@ public class ANG_RHCAlertTriggerHandler{
                 if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP){
                     String key = accounts.get(ralert.ANG_Account__c).IATA_ISO_Country__c + ANG_RHCHelper.RISK_ALERT_DIRECTION_UP + ralert.ANG_Threshold_Level__c;
                 
-                    if(configs.containsKey(key) && configs.get(key).ANG_Block_Cut_Cash_Form_of_Payment__c && ralert.ANG_Threshold_Level__c == '100%')
-                    continue;
+                    if(configs.containsKey(key) && configs.get(key).ANG_Block_Cut_Cash_Form_of_Payment__c && ralert.ANG_Threshold_Level__c == '100%') continue;
                     toDeactivateAccounts.add(ralert.ANG_Account__c);
-                }
-                
-                if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN){
+                } else if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN){
                     if(accountAlerts.get(ralert.ANG_Account__c) != null && accountAlerts.get(ralert.ANG_Account__c).ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP && accountAlerts.get(ralert.ANG_Account__c).ANG_Threshold_Level__c == '100%')
                         toActivateAccounts.add(ralert.ANG_Account__c);  
                 }
