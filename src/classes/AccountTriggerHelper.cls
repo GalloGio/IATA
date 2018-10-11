@@ -334,7 +334,7 @@ public  class AccountTriggerHelper {
       }
 
       if (!childrenTOUpdate.isEmpty())
-        update childrenTOUpdate;
+        System.enqueueJob(new AsyncDML_Util(childrenTOUpdate, AsyncDML_Util.DML_UPDATE, false));
     }
 
   }

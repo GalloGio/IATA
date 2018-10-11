@@ -47,9 +47,9 @@ public class OneIdProvisioningDAO {
                 if(testBundle.Service_Provider_Name__c == 'FRED'){
                     Boolean isServiceEligible = false;
                     User usr = [SELECT AccountId FROM User where Id =: UserInfo.getUserId()];
-                    Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account where Id =: usr.AccountId];
+                    Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, X8585_Code__c, RecordType.DeveloperName FROM Account where Id =: usr.AccountId];
             
-                    if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+                    if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c && acc.X8585_Code__c <> '' && acc.X8585_Code__c <> null){
                         isServiceEligible = true;
                     }
                     else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){

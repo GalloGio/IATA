@@ -16,7 +16,8 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     AccountTriggerHelper.AccountNoDuplicateBranch(trigger.New, trigger.OldMap);
     AccountTriggerHelper.SectorCatToIndType(trigger.New, trigger.OldMap);
 
-    TIP_Utils.validateUniqueIATACodeForTIP(trigger.new, trigger.OldMap);
+
+    //TIP_Utils.validateUniqueIATACodeForTIP(trigger.new, trigger.OldMap);  //ACAMBAS - TIP-234
   }
 
   if (trigger.isAfter && trigger.isUpdate) {
@@ -62,25 +63,27 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     EF_AccountTriggerHandler.manageCriticalFieldChanges(Trigger.new, Trigger.oldMap);
   }
 //Delete GDS, Account Category & GDP Products When Account is deleted
-  if (Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAccountItems(Trigger.old);
+   if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAccountItems(Trigger.old);
+ 
+   if(Trigger.isBefore && Trigger.isDelete) 
+   {
+    system.debug('old..'+Trigger.old);
+    ams2gdp_TriggerHelper.crossDeleteAccountItemsBefore(Trigger.old);}
+    //SIS Integration trigger
+    if(Trigger.isBefore && Trigger.isInsert){
+        ISSP_SIS_AccountHandler.beforeInsert(Trigger.new);
+    } 
+    if(Trigger.isAfter && Trigger.isInsert){
+        ISSP_SIS_AccountHandler.afterInsert(Trigger.new);
+    }
+    
+    if(Trigger.isBefore && Trigger.isUpdate){
+        ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
+    }
 
-  if (Trigger.isBefore && Trigger.isDelete) {
-    system.debug('old..' + Trigger.old);
-    ams2gdp_TriggerHelper.crossDeleteAccountItemsBefore(Trigger.old);
-  }
-  //SIS Integration trigger
-  if (Trigger.isBefore && Trigger.isInsert) {
-    ISSP_SIS_AccountHandler.beforeInsert(Trigger.new);
-  }
-  if (Trigger.isAfter && Trigger.isInsert) {
-    ISSP_SIS_AccountHandler.afterInsert(Trigger.new);
-  }
+	
+//Trigger the platform events
+    if(trigger.isAfter)
+    	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 
-  if (Trigger.isBefore && Trigger.isUpdate) {
-    ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
-  }
-
-  //Trigger the platform events
-  if (trigger.isAfter)
-    PlatformEvents_Helper.publishEvents((trigger.isDelete ? trigger.OldMap : Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 }
