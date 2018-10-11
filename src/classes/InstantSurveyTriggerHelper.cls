@@ -11,6 +11,7 @@ public class InstantSurveyTriggerHelper {
 		// get all current instant surveys related to these cases and put them in a map, per case
 		map<Id, Instant_Surveys__c> mapInstantSurveysPerCaseId = new map<Id, Instant_Surveys__c>();
 		set<String> setExceptedCaseRecordTypes = new set<String>{'Application_Change_Request_Salesforce'};
+		//RN-INC428791 - remove live agent chat rt
 		for (Instant_Surveys__c is : [SELECT Id, Relationship_to_Case__c FROM Instant_Surveys__c WHERE Relationship_to_Case__c IN :setParentCasesIds AND Relationship_to_Case__r.RecordType.DeveloperName NOT IN :setExceptedCaseRecordTypes and recordType.developername != 'Live_Agent_Chat']) {
 			mapInstantSurveysPerCaseId.put(is.Relationship_to_Case__c, is);
 		}

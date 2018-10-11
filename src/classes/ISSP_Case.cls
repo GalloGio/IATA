@@ -396,6 +396,7 @@ public without sharing class ISSP_Case {
 
             //Survey Handle 
             mySurveyCompletedVariable  = false ;
+            //RN-INC428791 - remove live agent chat rt
             List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
                     FROM Instant_Surveys__c
                     WHERE Relationship_to_Case__c = :newCase.Id and recordType.developername != 'Live_Agent_Chat']);
