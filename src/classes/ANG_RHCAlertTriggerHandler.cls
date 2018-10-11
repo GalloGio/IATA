@@ -6,6 +6,9 @@ public class ANG_RHCAlertTriggerHandler{
     public Map<Id, ANG_Risk_Alert__c> newMap = (Map<Id,ANG_Risk_Alert__c>) Trigger.newMap;
     public Map<Id, ANG_Risk_Alert__c> oldMap = (Map<Id,ANG_Risk_Alert__c>) Trigger.oldMap;  
 
+    public Map<Id, Account> accounts;
+    public Map<String, AMS_Country_Specific_Attribute__c> configs;
+
     public static final String DEFAULT_CODE = 'WW';
 
     public final Double UPPERFLUCTUATION = 1;
@@ -40,11 +43,12 @@ public class ANG_RHCAlertTriggerHandler{
             System.debug(loggingLevel.Debug, '____ [cls ANG_RHCAlertTriggerHandler - sendAlertNotification] Method Started');
 
             //fecth AMS Country Specifc Attributes for the accounts/countries involved
-            Map<Id, Account> accounts = new Map<Id, Account>();
+            accounts = new Map<Id, Account>();
             Map<Id, Id> countries = new Map<Id, Id>();
             for(ANG_Risk_Alert__c a : triggerNew) accounts.put(a.ANG_Account__c, null);
 
-            Map<String, AMS_Country_Specific_Attribute__c> configs = new Map<String, AMS_Country_Specific_Attribute__c>();
+            configs = new Map<String, AMS_Country_Specific_Attribute__c>();
+
             Set<Id> newGenAccounts = new Set<Id>();
             Set<Id> legacyAccounts = new Set<Id>();
             for(IATA_ISO_Country__c c : [SELECT
@@ -58,6 +62,7 @@ public class ANG_RHCAlertTriggerHandler{
                                                 , ANG_EmailTemplate_NG__c
                                                 , ANG_PortalNotificationTemplate__c
                                                 , ANG_Create_Process_Case__c
+                                                , ANG_Block_Cut_Cash_Form_of_Payment__c
                                                 FROM AMS_Country_Specific_Attributes__r
                                                 WHERE RecordTypeId = :ANG_RHCHelper.RECTYPE_RHCATTRIBUTE)
                                             , (SELECT 
@@ -68,6 +73,7 @@ public class ANG_RHCAlertTriggerHandler{
                                                 , ANG_IsNewGenAgency__c
                                                 , Region_formula__c
                                                 , BillingCountry
+                                                , IATA_ISO_Country__c
                                                 FROM Accounts_ISO_Country__r
                                                 WHERE Id IN :accounts.keySet())
                                         FROM IATA_ISO_Country__c]){
@@ -246,20 +252,8 @@ public class ANG_RHCAlertTriggerHandler{
 
         Map<Id,ANG_Risk_Alert__c> accountAlerts = new Map<Id,ANG_Risk_Alert__c>();
 
-       for(ANG_Risk_Alert__c ralert : [Select Id, ANG_Direction__c, ANG_Account__c,ANG_Threshold_Level__c, ANG_Account__r.Country_ISO_Code__c from ANG_Risk_Alert__c where ANG_Account__c in: accountIds and Id not in:triggerNew Order by CreatedDate ASC])
-            accountAlerts.put(ralert.ANG_Account__c, ralert);
-            
-        CountryFoPException__c cFoPException = CountryFoPException__c.getInstance();
-        Set<String> ccException = new Set<String>();
-        if(cFoPException.ISO_Country_Code__c != null){
-            if(cFoPException.ISO_Country_Code__c.contains(',')){
-                for(String cc : cFoPException.ISO_Country_Code__c.split(',')){
-                    ccException.add(cc.trim());
-                }        
-            } else {
-                ccException.add(cFoPException.ISO_Country_Code__c);
-            }
-        }
+       for(ANG_Risk_Alert__c ralert : [Select Id, ANG_Direction__c, ANG_Account__c,ANG_Threshold_Level__c from ANG_Risk_Alert__c where ANG_Account__c in: accountIds and Id not in:triggerNew Order by CreatedDate ASC])
+            accountAlerts.put(ralert.ANG_Account__c, ralert);   
 
         for(ANG_Risk_Alert__c ralert:triggerNew){
 
@@ -267,7 +261,9 @@ public class ANG_RHCAlertTriggerHandler{
                 continue;
 
                 if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP){
-                    if( accountAlerts.get(ralert.ANG_Account__c) != null && !ccException.isEmpty() && ccException.contains(accountAlerts.get(ralert.ANG_Account__c).ANG_Account__r.Country_ISO_Code__c) && ralert.ANG_Threshold_Level__c == '100%') 
+                    String key = accounts.get(ralert.ANG_Account__c).IATA_ISO_Country__c + ANG_RHCHelper.RISK_ALERT_DIRECTION_UP + ralert.ANG_Threshold_Level__c;
+                
+                    if(configs.containsKey(key) && configs.get(key).ANG_Block_Cut_Cash_Form_of_Payment__c && ralert.ANG_Threshold_Level__c == '100%')
                     continue;
                     toDeactivateAccounts.add(ralert.ANG_Account__c);
                 }
