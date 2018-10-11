@@ -308,7 +308,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             // Get account linked to primary user - To block account selection
             User u = [SELECT AccountId FROM User WHERE Id =: UserInfo.getUserId()];
             if(u!=null && u.AccountId != null) {
-                param.partnerAccount = [SELECT RecordType.DeveloperName, RecordType.Name, Id, Name, IATACode__c, ICAO_designator__c, Airline_designator__c, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c FROM Account WHERE Id =: u.AccountId LIMIT 1];
+                param.partnerAccount = [SELECT RecordType.DeveloperName, RecordType.Name, Id, Name, IATACode__c, X8585_Code__c, Airline_designator__c, State_Name__c, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c FROM Account WHERE Id =: u.AccountId LIMIT 1];
 
                 // To change when implemnting another primary
                 Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: u.AccountId];
@@ -367,12 +367,12 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         queryStr += ' AND Name like \'%' + userInput + '%\'';
 
         if(customerType=='Aircraft Operator') {
-            queryStr = 'SELECT Id, Name, IATACode__c, ICAO_designator__c, Airline_designator__c, IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c ';
+            queryStr = 'SELECT Id, Name, IATACode__c, X8585_Code__c, Airline_designator__c, IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c ';
             String queryStr2 = ' FROM Account WHERE';
             //queryStr2 += ' RecordType.DeveloperName = \'IATA_Airline\'';
             queryStr2 += ' (RecordType.DeveloperName = \'IATA_Airline\' OR RecordType.DeveloperName = \'Operator\' )';
-            queryStr2 += ' AND (ICAO_designator__c <> \'\')';
-            queryStr2 += ' AND (ICAO_designator__c <> null )';
+            queryStr2 += ' AND (X8585_Code__c <> \'\')';
+            queryStr2 += ' AND (X8585_Code__c <> null )';
             queryStr2 += ' AND (Name like \'%' + userInput + '%\'';
             /*
             // Jira ISI-46: Search only by commercial name for aircraft operator
