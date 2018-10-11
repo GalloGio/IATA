@@ -180,9 +180,9 @@
     }
 
   </script>
- <c:ISSP_CustomNavigation /> 
+
 	<div class="container">
-    <div id="contentWrapper">
+    <c:ISSP_CustomNavigation />
     <h3>Airline Participation</h3>
     <p/>
       <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} has already been submitted for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
@@ -230,10 +230,10 @@
         </div>
       </div>
     </apex:pageBlock>
-    </div>
+
+    <c:ISSP_CustomFooter />
   </div><!-- end container-->
- <c:ISSP_CustomFooter />
-        
+
   <!-- Modal -->
   <div id="optInOut" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
@@ -349,7 +349,7 @@
         </div>
       </div>
     </div>
-   </div>
+  </div>
   </body>
 </html>
 </apex:page>

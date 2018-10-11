@@ -22,9 +22,10 @@
  	</head>
 
  	<body>
-        <c:ISSP_CustomNavigation />
      	<div class="container">
 
+        <c:ISSP_CustomNavigation />
+      
       	<apex:form >  
 
 
@@ -205,10 +206,13 @@
           			</a>
           		</div>
           	</div>
-        </div>	
+        </div>
+
+
+        <c:ISSP_CustomFooter />
+      	
       	</apex:form>
      	</div>
-        <c:ISSP_CustomFooter />
  	</body>
 </html>
 	

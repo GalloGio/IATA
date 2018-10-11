@@ -7,9 +7,8 @@
   </style>
 
 <body>
-    <c:ISSP_CustomNavigation />
   <div class="container">
-  
+    <c:ISSP_CustomNavigation />
     <apex:form >
       <div class="row">
           <div class="col-xs-12 service-header">
@@ -140,8 +139,8 @@
       </div>
 
     </apex:form>
+    <c:ISSP_CustomFooter />
   </div>
-  <c:ISSP_CustomFooter />
 </body>
 </html>
 </apex:page>
