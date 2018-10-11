@@ -308,7 +308,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             // Get account linked to primary user - To block account selection
             User u = [SELECT AccountId FROM User WHERE Id =: UserInfo.getUserId()];
             if(u!=null && u.AccountId != null) {
-                param.partnerAccount = [SELECT RecordType.DeveloperName, RecordType.Name, Id, Name, IATACode__c, X8585_Code__c, Airline_designator__c, State_Name__c, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c FROM Account WHERE Id =: u.AccountId LIMIT 1];
+                param.partnerAccount = [SELECT RecordType.DeveloperName, RecordType.Name, Id, Name, IATACode__c, X8585_Code__c, Airline_designator__c, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c FROM Account WHERE Id =: u.AccountId LIMIT 1];
 
                 // To change when implemnting another primary
                 Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: u.AccountId];
