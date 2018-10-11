@@ -3,7 +3,7 @@ public with sharing class DAL_ISSP {
     public static User getUser(Id userId) {
         if (userId == null)
             return null;
-        List<User> users = [select Id,ContactId,contact.IFG_User_Status__c,
+        List<User> users = [select Id,ContactId,contact.IFG_User_Status__c,Contact.AccountId,
 		contact.IFG_Production__c, contact.IFG_PreProduction__c
         from User where Id =:userId];
         if (users.size() > 0)
