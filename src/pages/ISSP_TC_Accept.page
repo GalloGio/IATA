@@ -2,9 +2,10 @@
 <html>
  <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
-    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 	<div class="container">
-	<div id="contentWrapper">  
+	
+  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+	
 	<div class="row">
          
 	<div class="col-md-3">
@@ -42,9 +43,8 @@
       </div>
   </div> 	
 
+          <c:ISSP_CustomFooter communityName="{!communityName}"/>
   </div>
-  </div> <!-- container -->
-  <c:ISSP_CustomFooter communityName="{!communityName}"/>
   <!-- 
   <apex:composition template="ISS_Template">
     <apex:define name="body">
