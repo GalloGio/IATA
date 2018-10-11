@@ -4,9 +4,8 @@
  <body>
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" />
-    <c:ISSP_CustomNavigation communityName="{!communityName}" />
     <div class="container">
- 
+ <c:ISSP_CustomNavigation communityName="{!communityName}" />
 
     <script>
       $(document).ready(function() {
@@ -403,7 +402,7 @@
      </div>
 
  </apex:form>
-  
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
 
   <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
   <div class="loadingBox overlay"> </div>
@@ -447,7 +446,6 @@
 
 
 </div><!-- end container -->
-<c:ISSP_CustomFooter communityName="{!communityName}"/>
      </body>
     </html>
 </apex:page>

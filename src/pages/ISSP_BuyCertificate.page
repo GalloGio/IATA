@@ -23,9 +23,8 @@
 
 
     <body>
-        <c:ISSP_CustomNavigation />
         <div class="container">
-            
+            <c:ISSP_CustomNavigation />
             <div class="panel panel-primary">
                 <div class="panel-heading head_panel_green">
                     <h3 class="panel-title">{!$Label.ISSP_IATAcertificate}</h3>
@@ -279,8 +278,8 @@
                     </div>
                 </div><!-- end panel body -->
             </div>
+            <c:ISSP_CustomFooter />
         </div>
-        <c:ISSP_CustomFooter />
 
     <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
     <style>

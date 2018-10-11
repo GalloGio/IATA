@@ -1,7 +1,7 @@
 <apex:page controller="ISSP_Homepage" extensions="ISSP_CaseList" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" action="{!isLogined}" >
 <html>
 <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
-   
+    <head>
  <!--
  <apex:variable var="ShowBuyCertif" value="{!($Profile.Name == 'ISS Portal Agency User (Partner)' || $Profile.Name == 'ISS Portal Agency Delegated Admin User')&& con.User_Portal_Status__c !='Pending Approval' && con.Account.Category__c != 'CASS Associate' && con.Account.Category__c != 'TIDS Agent' }" />
  -->
@@ -95,6 +95,7 @@
         <!-- TF SZ: commented in order to pass this page to PreProd without the session time out and with PortalServies as Labels (S10)
         <script src="{!urlfor($Resource.sessionTime)}" type="text/javascript" > </script>
         -->
+    </head>
     <body>
      <!--
         <script>
@@ -108,8 +109,6 @@
     });
     </script>
        -->
-    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-    
     <!--------------------------------------------POPUPS Section------------------------------------------>
     <!-- Modal New Case-->
     <div class="modal fade bootbox-confirm" id="ModalNewCase" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
@@ -190,7 +189,11 @@
       <!-- /.modal-dialog -->
     </div>
 
-    <div class="container" id="maincontent">
+
+
+
+    <div class="container">
+   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
           <div class="row">
 <apex:variable var="Compatilitymode" value="{!if(isIE == 'IE'  || isIE == 'notIE','none','block')}" />
     <div style="display:{!Compatilitymode}"  class="col-md-12 col-xs-12 alert alert-warning" >
@@ -451,16 +454,16 @@
                                                               </li>
                                                           </span>
                                                           <apex:outputPanel rendered="{!app.Right__c == 'Access Requested'}" >
-                                                      <span class="lbl_services" >
-                                                        {!$Label.ISSP_Pending_Approval}
-                                                      </span>
-                                                      </apex:outputPanel>
+                                              		  <span class="lbl_services" >
+                                                		{!$Label.ISSP_Pending_Approval}
+                                              		  </span>
+                                            		  </apex:outputPanel>
 
-                                                      <apex:outputPanel rendered="{!IF(app.Right__c == 'Access Granted',IF(app.IsSCIMIFG__c,IF(app.Technical_Provisioning_Status__c!='External Access Granted', true,false),false),false)}" >
-                                                      <span class="lbl_services" >
-                                                        {!$Label.ISSP_Access_Under_Provisioning}
-                                                      </span>
-                                                  </apex:outputPanel>
+                                            		  <apex:outputPanel rendered="{!IF(app.Right__c == 'Access Granted',IF(app.IsSCIMIFG__c,IF(app.Technical_Provisioning_Status__c!='External Access Granted', true,false),false),false)}" >
+                                            		  <span class="lbl_services" >
+                                              		  	{!$Label.ISSP_Access_Under_Provisioning}
+                                            		  </span>
+                                          		  </apex:outputPanel>
                                                     </ul>
 
                                                     <script>
@@ -621,8 +624,11 @@
           </div>
         </div>
       </div>
- </div>
- <c:ISSP_CustomFooter communityName="{!communityName}"/>
+
+     <c:ISSP_CustomFooter communityName="{!communityName}"/>
+
+                  </div>
+
   </body>
 <!---------------------------------------------------------------------------------------------->
 <!------------------------------------Login Survey Popup---------------------------------------------------------->

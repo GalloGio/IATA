@@ -194,9 +194,8 @@
             }
 
             </script>
+        <div class="container">
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-            <div class="container">
-            
             <div>
                 <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float:left" rendered="{!communityName!='CNS'}"/>
             </div>
@@ -428,9 +427,8 @@
             </div>
             </apex:form>
 
-            
+            <c:ISSP_CustomFooter communityName="{!communityName}"/>
         </div>
-        <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </body>
     </html>
 </apex:page>
