@@ -274,7 +274,7 @@
                 }
                 
                 function showContactDialog() {
-                    checkForSalutation();
+                    //checkForSalutation();
                    $j( '#ContactModal').modal('show');
                    con = $j("[id$=email]").val();
                     if( isEdit){
@@ -284,7 +284,15 @@
                         $j("[id$=email]").attr('readonly', false);
                     }
             
-               }
+                }
+
+                function startLoading() {
+                    $('.loadingBox').show();
+                }
+
+                function stopLoading() {
+                    $('.loadingBox').hide();
+                }
             
                 function setLengthPhone(e, i) {
                   var phoneVal = e.value;
@@ -337,7 +345,7 @@
 
                 }
 
-                function checkForSalutation(){
+                /*function checkForSalutation(){
                   if(!isValidSalutation)
                     $j("[id$=inSalutation]").after("<div class=\"errorMsg\"><strong>Error:</strong> You must enter a value</div>");
                   
@@ -347,7 +355,7 @@
                     isValidSalutation = true;
                   //$j("[id$=inSalutation]").addClass('errorMsg');
                   //isValidateSalutation = true;
-                }
+                }*/
 
                 function confirmCancelExitPage(){
                     var msg=null;
@@ -358,6 +366,12 @@
                               window.location = '{!urlfor($Page.ISSP_TIP_Home)}';
                             }
                         });
+                }
+
+                function checkContactMandatoryFields() {
+                    if($j("[id$=email]").val() != '' && $j("[id$=inSalutation]").val() != "{!$Label.ISSP_Registration_None}" && $j("[id$=inFirstName]").val() != '' && $j("[id$=inLastName]").val() != '' && $j("[id$=inJobTitle]").val() != '' && $j("[id$=inJobFunction]").val() != '' && $j("[id$=businessphoneinput]").val() != '') {
+                        startLoading();
+                    }
                 }
                 
              
@@ -372,21 +386,20 @@
                   <div class="panel-body" id="body-enquiries">
                      <apex:form id="AMSForm">
                         <apex:pageBlock id="AMSBlock">
-                           <div class="alert alert-info" role="alert">
+                            <div class="alert alert-info" role="alert">
                               {!$Label.ISSP_AMS_Step3_Save_Anytime}
-                           </div>
+                            </div>
                             <div class="alert alert-warning"  role="alert">
                                 {!$Label.ISSP_AMS_Step1_Two_Weeks_Expiry}
                             </div> 
 
 
-                           <apex:pageBlockButtons >
-                                        <apex:commandButton action="{!submitAccountEnrolmentToIATA}" value="Submit to IATA"  />
-                                        <apex:commandButton action="{!saveAccountEnrolmentAsDraft}" value="{!$Label.ISSP_Save_Draft}"/>
+                            <apex:pageBlockButtons >
+                                        <apex:commandButton action="{!submitAccountEnrolmentToIATA}" value="Submit to IATA" onclick="startLoading();"/>
+                                        <apex:commandButton action="{!saveAccountEnrolmentAsDraft}" value="{!$Label.ISSP_Save_Draft}" onclick="startLoading();"/>
                                         <apex:commandButton onclick="confirmCancelExitPage();return false;"  value="{!$Label.ISSP_Cancel}" />
-                                     
-                                    </apex:pageBlockButtons>   
-
+                            </apex:pageBlockButtons>   
+                            
 
                            <apex:PageMessages id="msgs"/>
                            <div class="apcontainer" style="border: 1px solid #ececec;">
@@ -490,7 +503,8 @@
                                        <apex:pageBlockSectionItem >
                                             <apex:outputLabel style="margin-right: 0px !important;" value="Location of Headquarter *"/>
                                             <apex:outputPanel style="display: -webkit-inline-box;">
-                                              <apex:selectList styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_HQ_Location__c}" Label="Location of Headquarter *" size="1" >
+                                              <apex:selectList styleclass="form-control recSearch" style="width: 200px;"  value="{!TheAccountRole.HQ_Location__c}" Label="Location of Headquarter *" size="1" >
+                                                
                                                 
                                                  <apex:selectOptions value="{!ISOCountry}"/>
                                               </apex:selectList>
@@ -498,9 +512,9 @@
                                             </apex:outputPanel>
                                        </apex:pageBlockSectionItem>
                                           <apex:pageBlockSectionItem >
-                                             <apex:outputLabel value="{!$ObjectType.Account.fields.TIP_Documents__c.Label}"/>
+                                             <apex:outputLabel value="{!$ObjectType.Account_Role__c.fields.Any_Other_Information__c.Label}"/>
                                                <apex:outputPanel style="display: -webkit-inline-box;">
-                                               <apex:inputTextArea styleclass="form-control recSearch" style="width: 200px;"  value="{!account.TIP_Documents__c}"/>
+                                               <apex:inputTextArea styleclass="form-control recSearch" style="width: 200px;"  value="{!TheAccountRole.Any_Other_Information__c}"/>
                                                <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Provider_Any_Other_Info_Label}" html-data-placement="top" html-data-toggle="tooltip"/>
                                            </apex:outputPanel>
                                           </apex:pageBlockSectionItem>
@@ -575,14 +589,18 @@
                                     document.onload = mandatoryLabels();
                                  </script>           
                               
+                              
+
                               <!-------section 2 in here---->
                               <apex:pageBlockSection id="sectionTwo" columns="1" collapsible="false" title="{!$Label.ISSP_Payment_Provider_Details_section_2}">
+                              <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+                              <div class="loadingBox overlay"> </div>
                                  <apex:outputLabel html-class="alert-info" style="padding : 10px; font-size : 13px; margin-left: -10px; max-width: none; width: 101%;" html-role="alert" escape="false" value="{!$Label.ISSP_TIP_CONTACT_MESSAGE}"/>
                                  
                                  <form >
                                     <apex:commandLink style="margin-right:5px" onclick="cleanModal();return false;"><span class="glyphicon glyphicon-plus"></span>Add Contact </apex:commandLink>
                                     <apex:actionFunction name="rerenderTopPanel" rerender="sectionTwo" />
-                                    <apex:pageBlockTable value="{!contactList}" var="con" id="contactList" styleClass="table-hover table table-condensed table-responsive">
+                                    <!--  <apex:pageBlockTable value="{!contactList}" var="con" id="contactList" styleClass="table-hover table table-condensed table-responsive">
                                        <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!con.FirstName}"/>
                                        <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!con.LastName}"/>
                                        <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!con.Phone}"/>
@@ -598,8 +616,26 @@
                                        <apex:column >
                                           <apex:commandLink onclick=" editContact('{!con.id}');return false;" styleClass="glyphicon glyphicon-pencil"  />
                                        </apex:column>
+                                    </apex:pageBlockTable>-->
+                                    <apex:pageBlockTable value="{!AccountContactRoleList}" var="conRole" id="contactList" styleClass="table-hover table table-condensed table-responsive">
+                                       <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!conRole.First_Name__c}"/>
+                                       <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!conRole.Last_Name__c}"/>
+                                       <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!conRole.Contact__r.Phone}"/>
+                                       <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!conRole.Email__c}"/>
+                                       <apex:column headerValue="Primary Contact">
+                                          <apex:outputPanel rendered="{!conRole.is_primary__c}">
+                                             <input type="radio" id="primaryContactRadio" name="primaryContactGroup" checked="checked" />
+                                          </apex:outputPanel>
+                                          <apex:outputPanel rendered="{!!conRole.is_primary__c}"  onclick="startLoading();refreshTable('{!conRole.Contact__c}'); ">
+                                             <input type="radio" id="primaryContactRadio"  name="primaryContactGroup"  />
+                                          </apex:outputPanel>
+                                       </apex:column>
+                                       <apex:column >
+                                          <apex:commandLink onclick=" editContact('{!conRole.Contact__c}');return false;" styleClass="glyphicon glyphicon-pencil"  />
+                                       </apex:column>
                                     </apex:pageBlockTable>
-                                    <apex:actionFunction action="{!updateRadioButtonStatus}" name="updateRadioButton" rerender="sectionTwo,ContactForm, ContactPanel">
+                                    
+                                    <apex:actionFunction action="{!updateRadioButtonStatus}" name="updateRadioButton" rerender="" oncomplete="stopLoading();">
                                        <apex:param id="contactIDtoPrimary" name="contactIDtoPrimary" value="" />
                                     </apex:actionFunction>
                                     <apex:actionFunction action="{!setContactToEdit}" name="ActionEditContact" oncomplete="showContactDialog()" rerender="sectionTwo,ContactForm, ContactPanel">
@@ -629,6 +665,31 @@
                      </div>
                      <apex:pageMessages id="theMessages" />
                      <div class="modal-body">
+                        <style>
+                          .overlay {
+                            display: none;
+                            height: 100%;
+                            left: 0;
+                            position: fixed;
+                            top: 0;
+                            opacity: 0.3;
+                            -moz-opacity: 0.3;
+                            width: 100%;
+                            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+                            filter: alpha(opacity=30);
+                            background: #000;
+                            -khtml-opacity: 0.3;
+                            z-index: 1000;
+                          }
+                          .loader {
+                            background: url('/img/loading32.gif') scroll no-repeat 0 0;
+                            width: 32px;
+                            height: 32px;
+                            position: absolute;
+                            left: 50%;
+                            top: 150px;
+                          }
+                        </style>
                         <apex:outputPanel id="ContactPanel">
                            <div class="form-group">
                               <label for="email"><span >*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
@@ -702,12 +763,14 @@
                         </apex:outputPanel>
                      </div>
                      <div class="modal-footer">
-                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();checkForSalutation();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();" >
+                        <apex:commandButton action="{!createContact}" onclick="rerenderModal();checkContactMandatoryFields();" status="WaitingStatus"  styleClass="btn btn-default"  value="{!$Label.ISSP_Submit}" oncomplete="saveContact('{!isEmailDuplicated}');rerenderContactSection();stopLoading();" >
                         </apex:commandButton>
                         &nbsp;
                         <button type="button" class="btn btn-default" onclick="closeModal();return false;">
                         {!$Label.ISSP_Cancel} </button>
                      </div>
+                     <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+                     <div class="loadingBox overlay"> </div>
                   </div>
                </div>
             </div>
