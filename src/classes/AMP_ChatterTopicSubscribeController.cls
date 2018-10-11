@@ -638,10 +638,9 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	}
 
 	public static String getUserPhotoURL(String UserId) {
-		/*if(Test.isRunningTest()) return '';
+		if(Test.isRunningTest()) return '';
 	    ConnectApi.Photo ph =  ConnectApi.UserProfiles.getPhoto(null, UserId);
-	    return ph.fullEmailPhotoUrl;*/
-	    return '';
+	    return ph.fullEmailPhotoUrl;
 	}
 
 }
