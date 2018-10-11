@@ -908,8 +908,11 @@ public with sharing class ISSP_PortalUserStatusChange {
                     conList[0].Status__c = 'Active';
                     conList[0].Email = currentEmail;
                     conList[0].User_Portal_Status__c = 'Approved User';
-                    if(firstCommunity[1] != '')                   
+                    if(firstCommunity[1] != ''){                  
                         conList[0].Community__c = firstCommunity[1];
+                    }else{
+                        conList[0].Community__c = 'ISS Customer Portal';
+                    }
                     update conList[0];
                 }
                 catch(Exception e){

@@ -160,7 +160,7 @@ public with sharing class ISSP_AccountTriggerHandler
 		{
 			Account oldAcc = oldAccountMap.get(accId);
 			Account newAcc = newAccountMap.get(accId);
-			String newAccRname = Account.sObjectType.getDescribe().getRecordTypeInfosByID().get(newAcc.RecordTypeId).getName();
+			String newAccRname = RecordTypeSingleton.getInstance().getRecordTypeById('Account', newAcc.RecordTypeId).Name;
 			if (oldAcc.Accumulated_Irregularities__c != newAcc.Accumulated_Irregularities__c
 				&& newAccRname == 'Agency')// && newAcc.Type == 'IATA Cargo Agent')
 			{

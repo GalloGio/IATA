@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_PCI Compliant reminder renewal SP 30</name>
+    <style>freeForm</style>
+    <subject>RECORDATORIO SOBRE LAS DSS DE LA PCI</subject>
+    <textOnly>Estimado/a {!Case.Contact},
+
+Código de la IATA: {!Case.IATA_Code__c},
+
+
+
+Nos permitimos recordarle que todavía no hemos recibido la Atestación de Cumplimiento de las DSS de la PCI o la Autodeclaración de No Utilización de Tarjetas de Crédito. Le recordamos que la fecha límite de envío es el {!Case.CreatedDate+30}. En el caso de ya nos haya remitido el documento, por favor, ignore este mensaje.
+
+
+
+Si desea obtener más información acerca de los requisitos de cumplimiento de las DSS de la PCI, visite nuestra página web:
+
+http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+
+
+Si necesita que la IATA le proporcione más información, no dude en realizar una nueva consulta a través de nuestro Portal del Cliente: www.iata.org/cs.
+
+
+
+Atentamente,
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+
+
+
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

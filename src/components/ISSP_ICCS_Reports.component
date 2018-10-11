@@ -1,0 +1,188 @@
+<apex:component controller="ISSP_ICCS_ReportsController" allowDML="true">
+    <apex:attribute name="pageCtrl" 
+                    type="ISSP_ICCS_ServiceController" 
+                    assignTo="{!pageController}" 
+                    required="true" 
+                    description="The controller for the page." />
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+    <apex:form id="reportsForm">
+        <apex:pageBlock rendered="{! pageController.isSignatoryUser || pageController.isLevel1User || pageController.isReadOnlyUser}">
+            <div class="row margin-top-bottom">
+	            <apex:outputPanel rendered="{! pageController.userMessage != null}">
+	                <br/>
+	                <div class="panel panel-default">
+	                    <div class="panel-body" style="font-weight:bold;">
+							<div class="pddg">
+								<apex:outputText value="{! pageController.userMessage}" escape="false" style="color : {! IF(pageController.isSuccessMessage, '#000000', '#FF0000')};"/>
+							</div>
+	                    </div>
+	                </div>
+	            </apex:outputPanel>
+		        
+		        <apex:outputPanel id="completeRefreshPanel">
+			        <apex:outputPanel rendered="{! secondRefreshRequired}">
+			        	<script>
+			        		completeRefresh();
+			        	</script>
+			        </apex:outputPanel>
+		        </apex:outputPanel>
+
+	        	<apex:actionFunction name="completeRefresh" action="{! completeRefresh}" rerender="reportsForm" status="stopOnly"/>
+                
+				<!-- GENERATED REPORTS -->
+				<div class="row margin-top-bottom no-mrgn">
+					<div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+						<div class="section-title-gray rprts">
+							<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+							<apex:outputText value="{! $Label.ICCS_Generated_Reports_Table_Title}" escape="false"/>
+						</div>
+						<div class="bottom-box" style="text-align: justify;text-justify: inter-word;">
+							<apex:outputPanel id="generatedReports_section">
+
+								<script>
+									$( function() {		
+										$( '[id$=datepicker_from]' ).datepicker({dateFormat: "yy-mm-dd"});
+										$( '[id$=datepicker_to]' ).datepicker({dateFormat: "yy-mm-dd"});
+									} );
+								</script>
+
+	                            <apex:outputPanel>
+		                            <div class="filter-3">
+		                                <div class="labelText">
+		                                    <apex:outputLabel value="{! $Label.ICCS_Filter_By}" escape="false"/>
+		                                </div>
+	
+		                                <apex:selectList value="{! selectedCycleId}" multiselect="false" size="1">
+		                                    <apex:selectOptions value="{! cycles}"/>
+		                                    <apex:actionSupport event="onchange" action="{! deleteReportsList}" rerender="generatedReports_section"  status="processActStatusId">
+		                                        <apex:param name="page" value="1" assignTo="{! selectedPage}"/>
+		                                    </apex:actionSupport>
+		                                </apex:selectList>
+	
+		                                <apex:selectList value="{! selectedReportType}" multiselect="false" size="1">
+		                                    <apex:selectOptions value="{! reportTypes}"/>
+		                                    <apex:actionSupport event="onchange" action="{! deleteReportsList}" rerender="generatedReports_section"  status="processActStatusId">
+		                                        <apex:param name="page" value="1" assignTo="{! selectedPage}"/> 
+		                                    </apex:actionSupport>
+		                                </apex:selectList>
+	
+		                            	<div class="outputTxt">
+		                                	<apex:outputText value="{! $Label.ICCS_Start_Date_Label}" escape="false"/>
+										</div>
+										<apex:inputText value="{! selectedFromDate}" html-placeholder="yyyy-mm-dd" id="datepicker_from">
+		                                    <apex:actionSupport event="onchange" action="{! deleteReportsList}" rerender="generatedReports_section"  status="processActStatusId">
+												<apex:param name="page" value="1" assignTo="{! selectedPage}"/> 
+											</apex:actionSupport>
+										</apex:inputText>
+	
+										<div class="outputTxt">                                
+		                                	<apex:outputText value="{! $Label.ICCS_End_Date_Label}" escape="false"/>
+										</div>
+	
+										<apex:inputText value="{! selectedToDate}" html-placeholder="yyyy-mm-dd" id="datepicker_to">
+		                                    <apex:actionSupport event="onchange" action="{! deleteReportsList}" rerender="generatedReports_section"  status="processActStatusId">
+												<apex:param name="page" value="1" assignTo="{! selectedPage}"/> 
+											</apex:actionSupport>
+										</apex:inputText>
+									</div>
+								</apex:outputPanel>
+							
+								<apex:pageBlockSection columns="1" rendered="{! isReportListEmpty}">
+									<apex:outputText value="{! $Label.ICCS_No_Report_Message}" style="margin : 12px;"/>
+								</apex:pageBlockSection>
+
+								<apex:pageBlockSection columns="1" rendered="{! !isReportListEmpty}">
+									<apex:pageblockSectionItem>
+										<apex:pageBlockTable value="{! reportsList}" var="wrappedReport">
+											<apex:column headerValue="{! $Label.ICCS_Cycle_Label}">
+												<apex:outputText value="{! wrappedReport.report.cycleId}"/>
+											</apex:column>
+	
+											<apex:column headerValue="{! $Label.ICCS_Report_Type_Label}">
+												<apex:outputText value="{! wrappedReport.report.type.code}"/>
+											</apex:column>
+	
+											<apex:column headerValue="{! $Label.ICCS_Name_Label}">
+												<apex:outputText value="{! wrappedReport.report.name}"/>
+											</apex:column>
+		
+											<apex:column headerValue="{! $Label.ICCS_Format_Label}">
+												<apex:repeat value="{! wrappedReport.report.availableFormats}" var="type">
+													<apex:commandLink action="{! wrappedReport.getReport}" value="{! type.format}" target="_blank" rerender="reportsForm">
+														<apex:param name="mimetype" value="{! type.mimetype}" assignTo="{! wrappedReport.selectedMimetype}"/>
+													</apex:commandLink>
+													&nbsp;&nbsp;&nbsp;
+												</apex:repeat>
+											</apex:column>
+		
+											<apex:column headerValue="{! $Label.ICCS_Upload_Date_Label}">
+												<apex:outputText value="{! wrappedReport.report.uploadDate}"/>
+											</apex:column>
+										</apex:pageBlockTable>
+									</apex:pageblockSectionItem>
+								</apex:pageBlockSection>
+
+								<div class="page-num">
+									<apex:commandLink value="<  " action="{! deleteReportsList}" rendered="{! selectedPage > 1}" rerender="generatedReports_section" status="processActStatusId">
+										<apex:param name="page" value="{! selectedPage - 1}" assignTo="{! selectedPage}"/> 
+									</apex:commandLink>
+								
+									<apex:repeat value="{! pageNumbers}" var="page">
+										<apex:outputText value="{! page}" style="font-weight : bold;" rendered="{! page == selectedPage}"/>
+		                                <apex:outputText value="..." style="font-weight : bold;" rendered="{! page == 0}"/>
+		                                <apex:commandLink value="{! page} " action="{! deleteReportsList}" rendered="{! page != selectedPage && page != 0}" rerender="generatedReports_section" status="processActStatusId">
+		                                    <apex:param name="page" value="{! page}" assignTo="{! selectedPage}"/> 
+		                                </apex:commandLink>
+		                                &nbsp;&nbsp;
+		                            </apex:repeat>
+	
+		                            <apex:commandLink value=">" action="{! deleteReportsList}" rendered="{! selectedPage < numberOfPages}" rerender="generatedReports_section" status="processActStatusId">
+		                                <apex:param name="page" value="{! selectedPage + 1}" assignTo="{! selectedPage}"/> 
+		                            </apex:commandLink>
+	                            </div>
+	                        </apex:outputPanel>
+	                    </div>
+                    </div>
+				</div>
+                
+				<!-- REPORT TYPES SELECTION -->
+                <div class="row margin-top-bottom">
+                    <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+	                    <div class="section-title-gray rprts">
+	                    	<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                    	<apex:outputText value="{! $Label.ICCS_Reports_Selection_Table_Title}" escape="false"/>
+	                    </div>
+	                    <div class="bottom-box mrgn" style="text-align: justify;text-justify: inter-word;">
+	                        <apex:pageBlockSection id="reportsSelection_section" columns="1">
+	                        	<apex:pageblockSectionItem>
+	                                <apex:pageBlockTable value="{! types}" var="wrappedReportType">
+	                                    <apex:column headerValue="{! $Label.ICCS_Report_Type_Label}">
+	                                        <apex:outputText value="{! wrappedReportType.reportType.code}"/>
+	                                    </apex:column>
+	                                    <apex:column headerVAlue="{! $Label.ICCS_Description_Label}">
+	                                        <apex:outputText value="{! wrappedReportType.reportType.description}"/>
+	                                    </apex:column>
+	
+	                                    <apex:column headerValue="{! $Label.ICCS_Report_Subscription_Label}">
+	                                        <apex:inputCheckBox value="{! wrappedReportType.isSelected}" disabled="true"/>
+	                                    </apex:column>
+	
+	                                    <apex:column headerValue="{! $Label.ICCS_Action_Label}" rendered="{! pageController.isSignatoryUser || pageController.isLevel1User}">
+	                                        <apex:commandLink action="{! wrappedReportType.updateReportsSelection}" value="{! IF(wrappedReportType.isSelected, $Label.ICCS_Unsubscribe_Label, $Label.ICCS_Subscribe_Label)}" rerender="reportsSelection_section,completeRefreshPanel" status="startOnly"/> 
+	                                    </apex:column>
+	                                </apex:pageBlockTable>
+	                            </apex:pageblockSectionItem>
+	
+		                        <div class="expand">
+		                        	<apex:commandLink style="color: #0075bb;" action="{! expandCollapseReportTypesList}" value="{! IF(isReportTypeListExpanded, $Label.ICCS_See_Less, $Label.ICCS_See_More)}" rendered="{! isReportTypeListExpandable}" rerender="reportsSelection_section" status="processActStatusId"/>
+		                        </div>
+	                        </apex:pageBlockSection>
+	                    </div>
+                    </div>
+				</div>
+			</div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:component>

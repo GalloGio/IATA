@@ -47,7 +47,10 @@ public with sharing class ISSP_SIS_AccountHandler {
         list<Id> listInsertAccountId = new list<Id>();
         list<Id> listUpdateAccountId = new list<Id>();
         for (Account account: listAccount) {
-            if ( validSISAccount(account) && account.Status__c != 'Terminated') {
+            if (validSISAccount(account) && (account.Status__c == 'Approved' 
+                || account.Status__c == 'Cash basis/no commission' 
+                || account.Status__c == 'Cash basis/with commission' 
+                || account.Status__c == 'Changes processed')) {
                 if (String.isBlank(account.SIS_ID__c)) {
                     listInsertAccountId.add(account.Id);
                 } else {
@@ -85,6 +88,9 @@ public with sharing class ISSP_SIS_AccountHandler {
                 }
                 if (accountnew.Status__c == 'Terminated') {
                     accountnew.SIS_Status__c = 'TERMINATED';
+                }
+                if (accountnew.Status__c == 'Approved') {
+                    accountnew.SIS_Status__c = 'Active';
                 }
             }
         }
@@ -130,10 +136,22 @@ public with sharing class ISSP_SIS_AccountHandler {
                 return true; // if the status changing to Terminated then update it
             }
         }
-        for (String fieldName: ISSP_WS_SIS_Callout_CreateAccount.LIST_FIELD_NAMES) {
-            if (fieldName!='BillingAddress')
-            if (accountNew.get(fieldName) != accountOld.get(fieldName)) {
-                return true;
+
+        if (accountnew.Status__c == 'Approved') {
+            if (accountOld.Status__c != 'Approved') {
+                return true; 
+            }      
+        }
+
+        if(accountnew.Status__c == 'Approved' 
+                || accountnew.Status__c == 'Cash basis/no commission' 
+                || accountnew.Status__c == 'Cash basis/with commission' 
+                || accountnew.Status__c == 'Changes processed') {
+            for (String fieldName: ISSP_WS_SIS_Callout_CreateAccount.LIST_FIELD_NAMES) {
+                if (fieldName!='BillingAddress')
+                if (accountNew.get(fieldName) != accountOld.get(fieldName)) {
+                    return true;
+                }
             }
         }
         return false;
