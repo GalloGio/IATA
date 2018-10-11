@@ -45,7 +45,11 @@ public with sharing class SidraLiteManager {
             WSSidraLite.insertComments(listSidraLite);
 
             // set default case assignment rule
-            list<Case> listCase = [Select Id from Case where id in :listSidraLite];
+            List<Case> listCase = new List<Case>();
+            for(Case c : listNewCases){
+                listCase.add(new Case(Id = c.ID));
+            }
+
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
             Database.update(listCase, dmo);

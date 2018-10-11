@@ -897,16 +897,25 @@ global with sharing class IDCardUtil {
      * Creates an ID Card object from an ID Card application
      */
     public static ID_Card__c CreateIDCardObjectFromApplication(ID_Card_Application__c objApp, Contact theContact) {
-
+            
         Account theAccount;
         try {
             Case a = [ Select Account.Id from Case where Related_ID_Card_Application__c = : objApp.Id limit 1];
-            theAccount = [ Select Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c From Account where Id = : a.Account.Id limit 1];
-        }
-        catch ( Exception e) {
+            theAccount = [ Select Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c From Account  where Id = :a.Account.Id limit 1];
+        }catch ( Exception e) {
             System.debug('**** Error doing workaround ' + e);
             theAccount = [Select a.Name, a.ID_Card_Corporate_Validation_Date__c, a.IATA_Area__c, a.IATACode__c, a.Type, IDCard_Key_Account__c From Account a where a.RecordType.Name = 'Agency' AND a.IATACode__c = : objApp.IATA_Code__c limit 1];
         }
+
+        return IDCardUtil.CreateIDCardObjectFromApplication(objApp, null, theAccount);
+    }
+
+
+    /**
+     * Creates an ID Card object from an ID Card application
+     * Used by CaseBeforeTrigger in order to reduce SOQL limits 
+     */
+    public static ID_Card__c CreateIDCardObjectFromApplication(ID_Card_Application__c objApp, Contact theContact, Account theAccount) {
 
         system.debug(LoggingLevel.ERROR, '[CreateIDCardObjectFromApplication] start! ' + objApp.Displayed_Name__c);
 
@@ -943,7 +952,7 @@ global with sharing class IDCardUtil {
             idCard.Start_Date_Industry__c = objApp.Start_Date_Industry__c;
             idCard.Start_Date_Agency_Month__c = objApp.Start_Date_Agency_Month__c;
             idCard.Start_Date_Agency_Year__c = objApp.Start_Date_Agency_Year__c;
-            idCard.Type_of_ID_Card__c = GetAgentTypeFromAccountType(theAccount.type);
+            idCard.Type_of_ID_Card__c = GetAgentTypeFromAccountType(theAccount.Type);
             idCard.Title__c = (objApp.Title__c != null && objApp.Title__c.length() <= 5) ? objApp.Title__c : '';
             idcard.VER_Number__c = objApp.VER_Number__c;
             //set sync to true
@@ -1157,10 +1166,16 @@ global with sharing class IDCardUtil {
             theAccount = GetAccountObjectFromIATACode(application.IATA_Code__c);
         }
 
+        return IDCARDUtil.CreateContactWhenNewCardIsApproved(application, theAccount);
+    }
+
+
+    public static Contact CreateContactWhenNewCardIsApproved(ID_Card_Application__c application, Account theAccount) {
+
+        String OldPhotoName = application.Photo__c;
         system.debug('Before UIR and VER# Generation');
         // generate a new VER and UIR (for new application)
         IDCardUtil.generateAndAssignVERandUIR(application, theAccount);
-
 
         //@@@ TODO update instead of creation of contact in case it already exists
 
@@ -1589,7 +1604,7 @@ global with sharing class IDCardUtil {
                         if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW && c[0].ContactId == null)
                             c[0].ContactId = IDCardUtil.CreateContactWhenNewCardIsApproved(application).ID;
 
-                        Contact[] contacts = [Select c.Allow_Contact_LastName_Change__c, c.AgencyShare_Confirmation__c, c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName, c.UIR__c, c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c  From Contact c where c.VER_Number__c = : Decimal.valueof(application.VER_Number__c)  and Id = : c[0].ContactId  limit 1];
+                        Contact[] contacts = [Select c.Allow_Contact_LastName_Change__c, c.AgencyShare_Confirmation__c, c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName, c.UIR__c, c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c From Contact c where c.VER_Number__c = : Decimal.valueof(application.VER_Number__c) and Id = : c[0].ContactId  limit 1];
                         System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  calling the method for id card creation');
 
                         idCardNew = IDCardUtil.CreateIDCardObjectFromApplication(application, contacts[0]);

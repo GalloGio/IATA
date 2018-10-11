@@ -1,7 +1,7 @@
 trigger CalculateBusinessHoursAges on Case (before update) {
 
     // Handling of DPC cases - automatic status change
-    DPCCasesUtil.HandleStatusUpdate(Trigger.newMap, Trigger.oldMap, Trigger.isInsert, Trigger.isUpdate);
+    DPCCasesUtil.HandleStatusUpdate(Trigger.newMap, Trigger.oldMap, Trigger.isInsert);
     
     //INC147754
     for (Case updatedCase : System.Trigger.new) {
@@ -72,6 +72,6 @@ trigger CalculateBusinessHoursAges on Case (before update) {
     
     
     // Handling of DPC cases - milestone tracking
-    DPCCasesUtil.CreateMilestones(Trigger.newMap, Trigger.oldMap, Trigger.isInsert, Trigger.isUpdate);
+    DPCCasesUtil.CreateMilestones(Trigger.newMap, Trigger.oldMap, Trigger.isUpdate);
     
 }

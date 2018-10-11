@@ -189,12 +189,12 @@ public with sharing class IFAP_BusinessRules {
         System.debug('created cases : ' + cBatch.caseList);
     }
 
-    public static Map<ID, Boolean> IsStatusCanBeSelected(Boolean isOnCaseCreation, List<Case> UpdatedCases, Map<ID, Case> OldCases, Profile currentUserProfile, Boolean isAuthorizedUser) {
+    public static Map<ID, Boolean> IsStatusCanBeSelected(Boolean isOnCaseCreation, Map<Case, Case> UpdatedCases, Profile currentUserProfile, Boolean isAuthorizedUser) {
 
         Map<ID, Boolean> mapCaseStatusCanBeSelected = new Map<ID, Boolean>();
-        List<Case> caseList = new List<Case>();
+        Map<ID, Case> mapCaseActionNeeded = new Map<ID, Case>();
 
-        for(Case updateCase : UpdatedCases){
+        for(Case updateCase : UpdatedCases.keySet()){
             String caseStatus = updateCase.Status;
 
             //System Administrator: Has permission to change to any status.
@@ -212,18 +212,15 @@ public with sharing class IFAP_BusinessRules {
             }
 
             if (isOnCaseCreation) {
-
                 //initial status of the case must be one of the following
                 if (caseStatus == AGENT_NOTIFIED_EMAIL || caseStatus == AGENT_NOTIFIED_MAIL || caseStatus == AGENT_TO_BE_NOTIFIED) {
                     system.debug('** checking initial case status for agent notified email/mail or agent to be notified ');
                     mapCaseStatusCanBeSelected.put(updateCase.id, true);
                     continue;
                 }
-
             } else {
-
                 String userIdsAllowedToBypass = UtilityCS__c.getInstance('IFAP Bypass Rules').value__c;
-
+                
                 if (userIdsAllowedToBypass != null) {
                     Set<String> aux = new Set<String>(userIdsAllowedToBypass.split(',', 0));
                     if (aux.contains(UserInfo.getUserId())){
@@ -231,22 +228,24 @@ public with sharing class IFAP_BusinessRules {
                         continue;
                     }
                 }
-                String oldCaseStatus = OldCases.get(updateCase.ID).Status;
+                String oldCaseStatus = UpdatedCases.get(updateCase).Status;
+
+
                 //from status Action Needed the status can always be changed to the previous status
                 if (oldCaseStatus == ACTION_NEEDED && caseStatus != FINANCIAL_STATEMENTS_UPLOADED){
-                    caseList.add(updateCase); 
-                    continue;
+                    mapCaseActionNeeded.put(updateCase.Id, updateCase); 
                 }
                 if (caseStatus == CLOSEDOPTOUT){
                     mapCaseStatusCanBeSelected.put(updateCase.id, true); 
                     continue;
                 }
 
-                if (caseStatus == AGENT_NOTIFIED_EMAIL)
+                if (caseStatus == AGENT_NOTIFIED_EMAIL){
                     if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_MAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED){
                         mapCaseStatusCanBeSelected.put(updateCase.id, true);
                         continue;
                     }
+                }
 
                 if (caseStatus == AGENT_NOTIFIED_MAIL)
                     if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_EMAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED){
@@ -294,7 +293,6 @@ public with sharing class IFAP_BusinessRules {
                             continue;
                         }
                 }
-
                 if (caseStatus == QI_REQUEST_PENDING_APPROVAL)
                     if (oldCaseStatus == ASSESSMENT_PERFORMED || oldCaseStatus == FS_REQUESTED || oldCaseStatus == SCF || oldCaseStatus == QI_REJECTED){
                         mapCaseStatusCanBeSelected.put(updateCase.id, true);
@@ -312,17 +310,32 @@ public with sharing class IFAP_BusinessRules {
                     }
                 }
             }
-            /*// default value is false ...*/
-            System.debug('** Default Response -- This status change is not valid! **');
-        }
-
-        if(!caseList.isEmpty()){
-            // get case history
-            for(CaseHistory caseH: [SELECT Id, CaseId, Field, CreatedById, CreatedDate, IsDeleted, NewValue, OldValue 
-                                    FROM CaseHistory WHERE caseid IN :caseList AND field = 'Status' ORDER BY CreatedDate DESC]){
-                mapCaseStatusCanBeSelected.put(caseH.id, true);
+   
+            if(!mapCaseActionNeeded.containsKey(updateCase.ID) && !mapCaseStatusCanBeSelected.containsKey(updateCase.ID)) {
+                System.debug('** Default Response -- This status change is not valid! **');
+                mapCaseStatusCanBeSelected.put(updateCase.id, false);
             }
         }
+
+        if(!mapCaseActionNeeded.isEmpty()){
+            Map<ID, String> caseHistoryMap = new Map<ID, String>();
+            // get case history
+            for(CaseHistory caseH: [SELECT Id, CaseId, Field, CreatedDate, OldValue 
+                                    FROM CaseHistory WHERE caseid IN :mapCaseActionNeeded.keySet() AND field = 'Status' ORDER BY CreatedDate DESC]){
+                
+                if(!caseHistoryMap.containsKey(caseH.CaseId))
+                    caseHistoryMap.put(caseH.CaseId, String.valueOf(caseH.OldValue));
+            }
+            for(Case c : mapCaseActionNeeded.values()){
+                if(!mapCaseStatusCanBeSelected.containsKey(c.ID)){
+                    if(caseHistoryMap.get(c.ID) == c.Status)
+                        mapCaseStatusCanBeSelected.put(c.ID, true);
+                    else
+                        mapCaseStatusCanBeSelected.put(c.ID, false);
+                }    
+            }        
+        }
+
         return mapCaseStatusCanBeSelected;
     }
 

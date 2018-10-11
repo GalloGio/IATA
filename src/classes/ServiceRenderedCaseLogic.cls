@@ -123,18 +123,20 @@ public class ServiceRenderedCaseLogic {
   }
   
  
-  public static void reparentProvider(list<Case> casesToTrigger, set<String> ServicesToCheck, map<String,Case_Reason_Service__c> ServicesPerReason){
+  public static void reparentProvider(list<Case> casesToTrigger){
    
-    list<Case> casesWithoutProvider = new list<Case>();
-      for (Case c : casesToTrigger) {
-        if (ServicesToCheck.contains(c.reason1__c) && !ServicesPerReason.get(c.reason1__c).Provider_Required__c){
-              casesWithoutProvider.add(c);  
-        }else if( !ServicesToCheck.contains(c.reason1__c)){
-           c.addError('The reason you are entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting' );                  
-        }
+    List<Case> casesWithoutProvider = new List<Case>();
+    for (Case c : casesToTrigger) {
+      Case_Reason_Service__c service = Case_Reason_Service__c.getInstance(c.Reason1__c);
+      
+      if(service == null){
+         c.addError('The reason you are entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting' );                  
+      }else if(!service.Provider_Required__c){
+          casesWithoutProvider.add(c);
       }
-   if(!casesWithoutProvider.isEmpty())
-       ServiceRenderedCaseLogic.ReassignProvider(casesWithoutProvider);
+    }
+    if(!casesWithoutProvider.isEmpty()) 
+      ServiceRenderedCaseLogic.ReassignProvider(casesWithoutProvider);
   }
  
   public static list<Case> ServicesValidation(list<Case> casesOkConsumer, map<String,Case_Reason_Service__c> ServicesPerReason){
@@ -177,36 +179,32 @@ public class ServiceRenderedCaseLogic {
             
   private static void ReassignProvider(List<Case> Cases){
           
-           map<Id,list<Case>>  CasesPerConsumer = new map<Id,list<Case>>();
-            
-          for(Case c: cases){
-                             if( CasesPerConsumer.get(c.AccountId) == null)
-                                    CasesPerConsumer.put(c.AccountId,new list<Case>()); 
-                              CasesPerConsumer.get(c.AccountId).add(c);
-          } 
-    
-            set<Id> accIDs = CasesPerConsumer.keySet();          
+    Map<Id,list<Case>> CasesPerConsumer = new Map<Id,list<Case>>();
+  
+    for(Case c: cases){
+      if( CasesPerConsumer.get(c.AccountId) == null)
+        CasesPerConsumer.put(c.AccountId,new list<Case>()); 
+      CasesPerConsumer.get(c.AccountId).add(c);
+    } 
 
-                    
-                    
-            for(Account a :[SELECT ParentID,RecordTypeID,ID FROM Account WHERE Id IN:accIDs]){
-            
-                    if(a.RecordTypeID == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')){                          
-                        for(Id accID:CasesPerConsumer.keyset()) 
-                            for(case c:CasesPerConsumer.get(accID))
-                                c.provider__c = a.id;
-                           /* modified cause of the possibility that the consumer can be a standard account as well*/ 
-                    }else  { 
-                            for(Id accID:CasesPerConsumer.keyset()) 
-                                for(case c:CasesPerConsumer.get(accID))
-                                    c.provider__c = a.ParentID;
-                    
-                    }
-    
-            }
-
-     
-     }   
+    set<Id> accIDs = CasesPerConsumer.keySet();          
+        
+    for(Account a :[SELECT ParentID,RecordTypeID,ID FROM Account WHERE Id IN:accIDs]){
+        
+      if(a.RecordTypeID == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')){                          
+        for(Id accID:CasesPerConsumer.keyset()) 
+          for(case c:CasesPerConsumer.get(accID))
+            c.provider__c = a.id;
+         /* modified cause of the possibility that the consumer can be a standard account as well*/ 
+      }else{ 
+        for(Id accID:CasesPerConsumer.keyset()){
+          for(case c:CasesPerConsumer.get(accID)){
+            c.provider__c = a.ParentID;
+          }
+        }
+      }
+    }
+  }   
      
 
     private static List<Services_Rendered__c> joiningCase(List<Case> cases, Map<String,Case_Reason_Service__c> ServicesPerReason ){
