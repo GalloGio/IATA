@@ -12,6 +12,28 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Product_Termination_Max_Days__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Termination Max Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Voluntary_Reliquishment_Min_Days__c</fullName>
+        <externalId>false</externalId>
+        <label>Voluntary Reliquishment Min Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
     <label>TIP Configuration</label>
     <visibility>Public</visibility>
 </CustomObject>
