@@ -107,48 +107,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     public static final String CARGO = 'Cargo Agent';
     public static final String FDS = 'FDS - Create Authorized Signatories Package';
 
-    private static Profile currentUserProfile{
-        get{
-            if(currentUserProfile == null){
-                return [SELECT ID, Name FROM Profile WHERE id = :UserInfo.getProfileId() limit 1];
-            }
-            return currentUserProfile;
-        }
-        set{}
-    }
-
-    private static List<EmailTemplate__c> IFAPemailtemplate{
-        get{
-            if(IFAPemailtemplate == null){
-                IFAPemailtemplate = [SELECT et.IATA_ISO_Country__r.Id FROM EmailTemplate__c et WHERE et.recordType.Name = 'IFAP'];
-            }
-            return IFAPemailtemplate;
-        }
-        set{}
-    }
-
-    private static Boolean isIfapAuthorizedUser{
-        get{
-            if(isIfapAuthorizedUser == null){
-                List<PermissionSetAssignment> psa = [SELECT AssigneeId FROM PermissionSetAssignment WHERE Assignee.IsActive = true 
-                                                      AND AssigneeId = :UserInfo.getUserId() AND PermissionSetId IN (SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users')];
-                isIfapAuthorizedUser = !psa.isEmpty();
-            }
-            return isIfapAuthorizedUser;
-        }
-        set{}
-    }
-
-    private static BusinessHours bHourObj{
-        get{
-            if(bHourObj == null){
-                bHourObj = [SELECT id, name FROM BusinessHours WHERE name = : 'EUR - France'];
-            }
-            return bHourObj;
-        }
-        set{}
-    }
-
     Boolean isAccelya = false;
     boolean hasOneSISCase = false;
     /*Variables*/
@@ -869,7 +827,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
                 for(Case ObjCaseNew : portalCases){
                     if(ObjCaseNew.BusinessHoursId == null){
-                        ObjCaseNew.BusinessHoursId = bHourObj.Id;
+                        ObjCaseNew.BusinessHoursId = CaseHelper.bHourObj.Id;
                     }
                     if (mapUsers.containsKey(ObjCaseNew.OwnerId)) {
                         ObjCaseNew.Case_Owner_CP__c = mapUsers.get(ObjCaseNew.ID);
@@ -1120,7 +1078,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         if (!IFAP_BusinessRules.isAgentCodeValid(newCase, accountMap))
                             newCase.addError('The contact\'s Agent Code is not valid.');
 
-
+                    List<EmailTemplate__c> IFAPemailtemplate = CaseHelper.IFAPemailtemplate;
                     // check if the FA template's country matches the case country
                     if (newCase.EmailTemplate__c != null) {
                         for (EmailTemplate__c EmTe : IFAPemailtemplate) {
@@ -1173,7 +1131,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     
                 }
 
-                Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(true, insertedCases, currentUserProfile, isIfapAuthorizedUser);
+                Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(true, insertedCases, CaseHelper.currentUserProfile, CaseHelper.isIfapAuthorizedUser);
                 for(Case newCase : IFAPCaseList){
                     if(mapCase.get(newCase.id) == false){
                         newCase.addError('This following case status cannot be selected: ' + newCase.status);
@@ -1552,12 +1510,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         if (IFAPupdatedCase.status != 'Closed' && !TransformationHelper.NoStatusValidation ) {
                             if (IFAPupdatedCase.status <> IFAPoldCase.status) {
                                 updatedCasesWithOldCase.put(IFAPupdatedCase, IFAPoldCase);
-                                if (IFAP_BusinessRules.FSValidationCheckBox(IFAPupdatedCase, currentUserProfile)) {
+                                if (IFAP_BusinessRules.FSValidationCheckBox(IFAPupdatedCase, CaseHelper.currentUserProfile)) {
                                     System.debug('IFAP_BusinessRules.FSValidationCheckBox..........');
                                     IFAPupdatedCase.addError('The case cannot be saved. Tick ALL the Financial Security Validation checkboxes and enter FS Submitted Date to save the case.' );
                                 }
                             }
                         }
+                        List<EmailTemplate__c> IFAPemailtemplate = CaseHelper.IFAPemailtemplate;
                         // check if the FA template's country matches the case country
                         if (IFAPupdatedCase.EmailTemplate__c != null && (IFAPupdatedCase.EmailTemplate__c <> IFAPoldCase.EmailTemplate__c)) {
                             for (EmailTemplate__c EmTe : IFAPemailtemplate) {
@@ -1619,13 +1578,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             IFAP_BusinessRules.updateParentSAAMCase(IFAPoldCase, IFAPupdatedCase, parentsIFAPCases.get(IFAPupdatedCase.ParentId));
                         }
                         //don not allow change of Financial Review Result for unauthorized users
-                        if (IFAPupdatedCase.Financial_Review_Result__c <> IFAPoldCase.Financial_Review_Result__c && !isIfapAuthorizedUser && !currentUserProfile.Name.toLowerCase().contains('system administrator')) {
+                        if (IFAPupdatedCase.Financial_Review_Result__c <> IFAPoldCase.Financial_Review_Result__c && !CaseHelper.isIfapAuthorizedUser && !CaseHelper.currentUserProfile.Name.toLowerCase().contains('system administrator')) {
                             IFAPupdatedCase.addError('Your user does not have the permission to change the Financial Review Result field.');
                         }
                     }
                 }
 
-                Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCasesWithOldCase, currentUserProfile, isIfapAuthorizedUser);
+                Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCasesWithOldCase, CaseHelper.currentUserProfile, CaseHelper.isIfapAuthorizedUser);
 
                 if(!caseList.isEmpty()){
                     for(Case IFAPupdatedCase : caseList){
@@ -1992,9 +1951,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             for (Case aCase : idCardCases) {
 
                 //R.A 6/17/2013: allow Admins to change the status of ID Card otherwise blocks the change of Approval, Pending Payment and Pending
-                if(currentUserProfile != null && isAdmin == null && isSiteGuestUser == null) {
-                    isAdmin = currentUserProfile.Name.toLowerCase().contains('system administrator');
-                    isSiteGuestUser = currentUserProfile.Name.toLowerCase().contains('idcard portal profile');
+                if(CaseHelper.currentUserProfile != null && isAdmin == null && isSiteGuestUser == null) {
+                    isAdmin = CaseHelper.currentUserProfile.Name.toLowerCase().contains('system administrator');
+                    isSiteGuestUser = CaseHelper.currentUserProfile.Name.toLowerCase().contains('idcard portal profile');
                 }
 
                 Case oldCase = Trigger.oldMap.get(aCase.ID);
