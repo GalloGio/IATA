@@ -907,7 +907,7 @@ global with sharing class IDCardUtil {
             theAccount = [Select a.Name, a.ID_Card_Corporate_Validation_Date__c, a.IATA_Area__c, a.IATACode__c, a.Type, IDCard_Key_Account__c From Account a where a.RecordType.Name = 'Agency' AND a.IATACode__c = : objApp.IATA_Code__c limit 1];
         }
 
-        return IDCardUtil.CreateIDCardObjectFromApplication(objApp, null, theAccount);
+        return IDCardUtil.CreateIDCardObjectFromApplication(objApp, theContact, theAccount);
     }
 
 
