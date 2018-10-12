@@ -486,6 +486,14 @@ public with sharing class ISSP_ContactList {
                     WHERE Right__c = 'Access Granted' AND Contact__c IN :contactIds
                     AND Portal_Application__r.Critical_Service__c = true
                     ORDER BY Contact__c];
+
+                //ACAMBAS - TIP-282 Start
+                List <Account_Contact_Role__c> primaryConList =
+                    [SELECT Id, Contact__c, Contact__r.Name
+                     FROM Account_Contact_Role__c
+                     WHERE Contact__c IN :contactIds AND is_primary__c = true];
+                //ACAMBAS - TIP-282 End
+
                 if (!appList.isEmpty()){
                     String message = Label.ISSP_UserInactivation_ServiceMsg_4;
                     String currentConId = '';
@@ -508,6 +516,24 @@ public with sharing class ISSP_ContactList {
                     message += Label.ISSP_UserInactivation_ServiceMsg_3;
                     errorMessage.add(message);
                 }
+                //ACAMBAS - TIP-282 Start 
+                else if(!primaryConList.isEmpty()) {
+                    String message = Label.ISSP_UserInactivation_ServiceMsg_4;
+                    String currentConId = '';
+                    for (Account_Contact_Role__c thisPrimaryContact : primaryConList){
+                        if (currentConId == ''){
+                            currentConId = thisPrimaryContact.Contact__c;
+                            message += '<br/> - ' + thisPrimaryContact.Contact__r.Name;
+                        }
+                        else if (currentConId != thisPrimaryContact.Contact__c){
+                            currentConId = thisPrimaryContact.Contact__c;
+                            message += '<br/> - ' + thisPrimaryContact.Contact__r.Name;
+                        }
+                    }
+                    message += ': ' + Label.ISSP_UserInactivation_ServiceMsg_5;
+                    errorMessage.add(message);
+                }
+                //ACAMBAS - TIP-282 End 
                 else{
                     processMultiplePortalUserStatusChange(cls, 'Deactivated', contactStatus);
                 }
