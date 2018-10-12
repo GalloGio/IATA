@@ -1082,6 +1082,23 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
         <errorMessage>Please click on &apos;Cancel&apos; and use the &apos;Assign Financial Assessment Contact&apos; button on the Contact in order to Grant or Deny IFAP access.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Restrict_Access_For_Payment_Providers</fullName>
+        <active>true</active>
+        <description>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</description>
+        <errorConditionFormula>AND( 
+Portal_Application__r.Name = &apos;Transparency in Payments (TIP)&apos;, 
+OR(Text(Right__c) = &apos;Access Granted&apos;, Text(Right__c) = &apos;Access Requested&apos;), 
+NOT(INCLUDES(Contact__r.Account.Account_Role__c,&apos;Payment Provider&apos;)), 
+AND( 
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;ISS&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;IATA Portal&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;identity&apos;)) 
+) 
+)</errorConditionFormula>
+        <errorMessage>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Restrict_IEP_request</fullName>
         <active>true</active>
         <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
