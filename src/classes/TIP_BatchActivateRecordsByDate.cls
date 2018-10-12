@@ -21,11 +21,11 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 	//MAPs
 	private final static Map <Integer,Map<Integer,String>> sObjectsFields = new Map <Integer,Map<Integer,String>> {
 		PROVIDER_TYPE => new Map<Integer,String> {
-			FIELD_START_DATE           => 'Accreditation_date__c',
-			FIELD_END_DATE             => 'Expiry_Date__c',
+			FIELD_START_DATE           => 'Effective_From_Date__c',
+			FIELD_END_DATE             => 'Effective_To_Date__c',
 			FIELD_STATUS               => 'Status__c',
-			FIELD_START_DATE_TO_UPDATE => 'Accreditation_date__c'
-		}, 
+			FIELD_START_DATE_TO_UPDATE => 'Effective_From_Date__c'
+		},
 		PRODUCT_TYPE => new Map<Integer,String> {
 			FIELD_START_DATE           => 'PP_Effective_from_Date__c',
 			FIELD_END_DATE             => 'PP_Effective_to_Date__c',
@@ -70,30 +70,29 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 	};
 
 	//Queries
-	public final static String QUERY_PROVIDERS = 'SELECT ID, Status__c, Accreditation_date__c, Expiry_Date__c FROM Account WHERE recordtypeid = \'' + TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID +'\' AND ('
+	/*public final static String QUERY_PROVIDERS = 'SELECT ID, Status__c, Accreditation_date__c, Expiry_Date__c FROM Account WHERE recordtypeid = \'' + TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID +'\' AND ('
 			+    '(Accreditation_date__c > '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_IN_PROGRESS +'\' ) '			
-			+ 'OR (Accreditation_date__c <= '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+TIP_Utils.PARTNER_STATUS_ACTIVE+'\' ))';
-	// 'OR (Expiry_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_INACTIVE +'\' ) '
+			+ 'OR (Accreditation_date__c <= '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+TIP_Utils.PARTNER_STATUS_ACTIVE+'\' ))';*/
+	public final static String QUERY_PROVIDERS = 'SELECT ID, Status__c, Effective_From_Date__c, Effective_To_Date__c FROM Account_Role__c WHERE recordtypeid = \'' + TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID +'\' AND ('
+			+    '(Effective_From_Date__c > '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_IN_PROGRESS +'\' ) '			
+			+ 'OR (Effective_From_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+TIP_Utils.PARTNER_STATUS_ACTIVE+'\' ) '
+		    + 'OR (Effective_To_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_INACTIVE +'\'))'; //ACAMBAS - TIP-161
 	
 	public final static String QUERY_PRODUCTS = 'SELECT ID, PP_status__c, PP_Effective_from_Date__c, PP_Effective_to_Date__c FROM Partner_products__c WHERE BIN_Conflict_Count__c = 0 AND PP_Payment_Product_Code__c <> NULL AND recordtypeid = \'' + TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID +'\' AND '
-		+'Provider__r.Status__c = \''+TIP_Utils.PARTNER_STATUS_ACTIVE+ '\' AND PP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_REJECTED+ '\' AND (	 '
+			+'PP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_REJECTED+ '\' AND ((Payment_Provider_Account_Role__r.Status__c = \''+TIP_Utils.PARTNER_STATUS_ACTIVE+ '\' AND  ('
 			+    '(PP_Effective_from_Date__c > '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_IN_PROGRESS +'\' ) '
-			//+ 'OR (PP_Effective_to_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE +'\' ) '
-			+ 'OR (PP_Effective_from_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+'\' ))';
+			+ 'OR (PP_Effective_from_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE +'\'))) '	
+			+ 'OR (PP_Effective_to_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE +'\'))';	//ACAMBAS - TIP-161
 
-	public final static String QUERY_BIN_RANGES = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_BIN_Range__c WHERE TIP_Payment_Provider_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ('
+	public final static String QUERY_BIN_RANGES = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_BIN_Range__c WHERE (TIP_Payment_Provider_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ('
+			+    '(TIP_Effective_From_Date_To_Show__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_IN_PROGRESS +'\' ) '
+			+ 'OR (TIP_Effective_From_Date_To_Show__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+TIP_Utils.BIN_RANGE_STATUS_ACTIVE+'\' ))) '
+			+ 'OR (TIP_Payment_Provider_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE+ '\' AND TIP_Effective_To_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_INACTIVE +'\')';	//ACAMBAS - TIP-161
 
-				+    '(TIP_Effective_From_Date_To_Show__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_IN_PROGRESS +'\' ) '
-				//+ 'OR (TIP_Effective_To_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_INACTIVE +'\' ) '
-				+ 'OR (TIP_Effective_From_Date_To_Show__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+TIP_Utils.BIN_RANGE_STATUS_ACTIVE+'\' ))';
-
-
-	public final static String QUERY_PRODUCT_CONFIGS = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_Pay_Prov_Prod_Country_Config__c WHERE TIP_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ( '
-
+	public final static String QUERY_PRODUCT_CONFIGS = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_Pay_Prov_Prod_Country_Config__c WHERE (TIP_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ( '
 			+    '(TIP_Effective_From_Date_To_Show__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS +'\' ) '
-			//+ 'OR (TIP_Effective_To_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE +'\' ) '
-			+ 'OR (TIP_Effective_From_Date_To_Show__c <= '  + system.now().format('yyyy-MM-dd') +'  AND TIP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE+'\' ))';
-			
+			+ 'OR (TIP_Effective_From_Date_To_Show__c <= '  + system.now().format('yyyy-MM-dd') +'  AND TIP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE+'\' ))) '
+			+ 'OR (TIP_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE+ '\' AND TIP_Effective_To_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE +'\')';	//ACAMBAS - TIP-161
 
 
 
@@ -168,8 +167,8 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 	public static Integer dateCompare(Date startDate, Date endDate){
 		integer stat=DATE_STATUS_IN_PROGRESS;
 		if(startDate > System.Today()) stat=DATE_STATUS_IN_PROGRESS;
-		if(startDate <=System.Today())stat=DATE_STATUS_ACTIVE;
-		//if(endDate < System.Today()) stat=DATE_STATUS_INACTIVE; 
+		if(startDate <=System.Today()) stat=DATE_STATUS_ACTIVE;
+		if(endDate <= System.Today()) stat=DATE_STATUS_INACTIVE; //ACAMBAS - TIP-161
 		return stat ; 
 	}
 		

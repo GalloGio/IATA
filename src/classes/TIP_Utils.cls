@@ -6,13 +6,23 @@ public class TIP_Utils{
 	public static String PORTAL_SERVICE_NAME_TIP= 'Transparency in Payments (TIP)';
 	//Account RT's
     public static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');  
-    public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-
+    //public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
+    
+    //Account Role RT
+    public static String ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account_Role__c').get('TIP_Payment_Provider');
+ 
 	//Account Category
 	public static String ACCOUNT_CATEGORY_PAYMENT_PROVIDER = 'Payment Provider';
 
 	//Account Sector
 	public static String ACCOUNT_SECTOR_FINANCIAL_INSTITUTION = 'Financial Institution';
+	
+	//Account service provided
+	public static string ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER = 'Payment Provider';
+	
+	//Account Contact Role Helper
+	public static string ACCOUNT_CONTACT_ROLE_SERVICE_TIP = 'TIP';
+	public static string ACCOUNT_CONTACT_ROLE_PRIMARY = 'Primary Contact';
 
 	//Case RT's
 	public static String CASE_PROCESS_IDFS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
@@ -72,7 +82,7 @@ public class TIP_Utils{
 	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Enrolled');
 
 	//TIP-49 - validate IATA code is unique for payment providers
-  	public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
+  	/*public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
 		  
 		Map<String,Account> mapIataCodeAccount = new Map<String,Account>(); //map of IATA Codes that should not exist already in the system
 		String queryString = 'SELECT ID, IATACode__c FROM Account WHERE ( recordtypeid = \''+TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID + '\' OR (recordtypeid = \''+TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID+'\' AND Category__c = \''+TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER+'\') )';
@@ -113,11 +123,82 @@ public class TIP_Utils{
 				}
 			}			
 		}
-	}
+	}*/
 
 	public static void setAssessmentDate(List<Account> triggerNew,map<id, Account> triggerOld) {
-		for(Account newAcc : triggerNew){
-			if(newAcc.recordtypeid == PAYMENT_PROVIDER_RECORD_TYPE_ID && triggerOld.get(newAcc.id).recordtypeid != newAcc.recordtypeid) newAcc.Assessment_Performed_Date__c = Date.today();
+		for(Account newAcc : triggerNew) {
+			if(newAcc.Account_Role__c != null && newAcc.Account_Role__c.contains('Payment Provider') && triggerOld.get(newAcc.id).recordtypeid != newAcc.recordtypeid) newAcc.Assessment_Performed_Date__c = Date.today();
 		}	
+	}
+	
+	//method to manage multi picklist via code
+	//sFieldValue is the value of the field on the object
+	//sValue is the value to add or remove
+	//sAction is the action to perform: "Add" or "Remove"
+	public static string ManageMultiPicklist(string sFieldValue, string sValue, string sAction){
+		string sToReturn = '';
+		set<string> setValues = new set<string>();
+		if(string.IsNotBlank(sFieldValue))
+			setValues.addAll(sFieldValue.split(';'));
+		
+		if(setValues.contains(sValue) && sAction=='Remove')
+			setValues.remove(sValue);
+		
+		if(sAction=='Add')
+			setValues.add(sValue);
+		
+		if(!setValues.isEmpty())
+			sToReturn = string.join(new list<string>(setValues), ';');
+			
+		return sToReturn;
+	}
+	
+	//Used to prevent sync between accocunt role and product fired twice
+	public static boolean SyncFromAccountRole = false;
+	
+	//Used to keep in sync Account Role with Partner Product
+	//Scenario: a partner product is updated
+	public static void SyncAccountRoleOnProduct(list<Partner_products__c> trigNew, map<id, Partner_products__c> trigOld){
+		if(TIP_Utils.SyncFromAccountRole) return;
+		
+		map<id, id> mapAccountRole = new map<id, id>();
+		set<id> setAccntId = new set<id>();
+		
+		for(Partner_products__c pp:trigNew)	setAccntId.add(pp.Provider__c);
+		
+		for(Account_Role__c acr:[select id, Account__c from Account_Role__c where Account__c in : setAccntID and recordtypeid=:TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID])
+			mapAccountRole.put(acr.Account__c, acr.Id);
+		
+		for(Partner_products__c pp:trigNew){
+			if(trigOld == null || (trigOld.get(pp.Id).Payment_Provider_Account_Role__c != pp.Payment_Provider_Account_Role__c))
+				pp.Payment_Provider_Account_Role__c = mapAccountRole.get(pp.Provider__c);
+		}
+	}
+	
+	//Used to keep in sync Account Role with Partner Product
+	//Scenario: an account role is created or update. It has to update all existing product related to account
+	public static void SyncAccountRoleOnProduct(list<Account_Role__c> trigNew, map<id, Account_Role__c> trigOld){
+		TIP_Utils.SyncFromAccountRole = true;
+		map<id, id> mapAccountRole = new map<id, id>();
+		list<Partner_products__c> prodToUpdate = new list<Partner_products__c>();
+		
+		for(Account_Role__c acr:trigNew){
+			if(acr.recordtypeid == TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID)
+				if(trigOld == null || (trigOld != null && acr.Account__c != trigOld.get(acr.Id).Account__c))
+					mapAccountRole.put(acr.Account__c, acr.Id);
+		}
+		
+		if(!mapAccountRole.isEmpty()){
+			for(Partner_products__c pp:[select id, Payment_Provider_Account_Role__c, Provider__c from Partner_products__c where Provider__c in:mapAccountRole.keySet()]){
+				if(pp.Payment_Provider_Account_Role__c != mapAccountRole.get(pp.Provider__c))
+					prodToUpdate.add(new Partner_products__c(id=pp.Id, Payment_Provider_Account_Role__c = mapAccountRole.get(pp.Provider__c)));
+			}
+		}
+		
+		if(!prodToUpdate.isEmpty())	update prodToUpdate;
+	}
+	
+	public static string AccountContactRoleGenerateUniquekey(Account_Contact_Role__c theContactRole){
+		return TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP + '_' + string.ValueOf(theContactRole.Account_Role__c).left(15) + '_' + string.ValueOf(theContactRole.Contact__c).left(15);
 	}
 }

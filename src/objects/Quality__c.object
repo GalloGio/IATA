@@ -13323,29 +13323,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>EXE2014_All_Expired</fullName>
-        <columns>NAME</columns>
-        <columns>Status__c</columns>
-        <columns>Related_Case_Number__c</columns>
-        <columns>Exe_Category_New__c</columns>
-        <columns>Exe_Category__c</columns>
-        <columns>Exception_Type__c</columns>
-        <columns>Region__c</columns>
-        <columns>IATA_Country__c</columns>
-        <columns>SOP_Type__c</columns>
-        <columns>Deadline_for_Approval__c</columns>
-        <columns>Deadline_for_Alignment__c</columns>
-        <columns>OWNER.LAST_NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Expired</value>
-        </filters>
-        <label>EXE2014 - All Expired</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>EXE2014_All_Pending_Approval</fullName>
         <columns>NAME</columns>
         <columns>Status__c</columns>

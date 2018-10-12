@@ -470,6 +470,19 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         </valueSet>
     </fields>
     <fields>
+        <fullName>Payment_Provider_Account_Role__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the Account Role record with record-type TIP (there is only one). Useful to simplify other logics (e.g. batch for activation/deactivation, integration with mulesoft, etc..)</description>
+        <externalId>false</externalId>
+        <label>Payment Provider Account Role</label>
+        <referenceTo>Account_Role__c</referenceTo>
+        <relationshipLabel>Partner Products</relationshipLabel>
+        <relationshipName>Partner_Products</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Product_Country_Configuration__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -511,7 +524,7 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
                     <label>Yes</label>
                 </value>
                 <value>
-                    <fullName>NO</fullName>
+                    <fullName>NA</fullName>
                     <default>false</default>
                     <label>Not Applicable</label>
                 </value>
@@ -678,7 +691,7 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <picklistValues>
             <picklist>is_PCI_DSS_required__c</picklist>
             <values>
-                <fullName>NO</fullName>
+                <fullName>NA</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -692,7 +705,7 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
     <validationRules>
         <fullName>ClosedLoop_Product_on_OpenLoop_Provider</fullName>
         <active>true</active>
-        <errorConditionFormula>ISPICKVAL(Provider__r.TIP_Provider_Type__c, &quot;Open Loop&quot;) &amp;&amp; ISPICKVAL(PP_Payment_Product_Network_type__c, &quot;Closed Loop&quot;)</errorConditionFormula>
+        <errorConditionFormula>ISPICKVAL(Payment_Provider_Account_Role__r.Provider_Type__c, &quot;Open Loop&quot;) &amp;&amp; ISPICKVAL(PP_Payment_Product_Network_type__c, &quot;Closed Loop&quot;)</errorConditionFormula>
         <errorDisplayField>PP_Payment_Product_Network_type__c</errorDisplayField>
         <errorMessage>Closed Loop Product cannot be added for an Open Loop Provider</errorMessage>
     </validationRules>
@@ -723,7 +736,7 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <fullName>Provider_should_be_active</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-   NOT(ISPICKVAL(Provider__r.Status__c , &quot;active&quot;)),
+   NOT(ISPICKVAL(Payment_Provider_Account_Role__r.Status__c , &quot;active&quot;)),
    ISPICKVAL(PP_Status__c  , &quot;Active&quot;)
 )</errorConditionFormula>
         <errorMessage>Partner Product cannot be activated if Provider Account is not active</errorMessage>
@@ -747,5 +760,16 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
         <url>/00O1r00000BFv0K?pv0={!Partner_products__c.Id}&amp;pv1={!Partner_products__c.Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Terminate_ATM_Product</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Terminate ATM Product</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/flow/TIP_Product_Termination?vProductId={!Partner_products__c.Id}&amp;retURL=/{!Partner_products__c.Id}</url>
     </webLinks>
 </CustomObject>

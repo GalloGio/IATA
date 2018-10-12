@@ -7328,6 +7328,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Family</picklist>
             <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ATC%2FATS Licence Fee</fullName>
                 <default>false</default>
             </values>
@@ -7420,6 +7424,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fees</fullName>
                 <default>false</default>
             </values>
@@ -7444,6 +7452,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IFG %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Interest</fullName>
                 <default>false</default>
             </values>
@@ -7453,6 +7465,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Lighting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER %28MER Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7517,6 +7533,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Runway Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO %28SFO Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13432,6 +13452,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>FF Miles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS %28FDS Division%29</fullName>
                 <default>false</default>
             </values>
             <values>

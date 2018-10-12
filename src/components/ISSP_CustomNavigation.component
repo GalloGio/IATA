@@ -698,6 +698,7 @@ background-color:#428bca;
      <li><a href="/faq_home?MainNav=resources&subNav=faq&mid=M2S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S1">{!$Label.PKB2_Category_Group_Label_1}</a></li>
       <li><a href="/ISSP_ContentPage?MainNav=resources&subNav=Contentpage&mid=M2S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S2"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Documents}<span class="sr-only">(current)</span></a></li>
       <li class="{!IF(countryRequirementPermission,'','hide')}"  ><a href="/ISSP_Country_Requirements?MainNav=resources&subNav=CountryRequirements&mid=M2S3{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S3">{!$Label.ISSP_Country_Requirements}<span class="sr-only"></span></a></li>
+      <li class="{!IF(operationalCalendarPermission,'','hide')}"  ><a href="/ISSP_OperationalCalendar?MainNav=resources&subNav=OperationalCalendar&mid=M2S4{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S4">{!$Label.ISSP_OperationalCalendar}<span class="sr-only"></span></a></li>
     </ul>
      <ul class="nav navbar-nav collapse" id="three">
 
