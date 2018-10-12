@@ -10,7 +10,6 @@ public without sharing class ISSP_Utilities {
         String Subject = 'ISSP Error!';
         mail.setSubject(Subject);
 		mail.setPlainTextBody(EmailBody);
-        //Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
     }
     
     @Future
@@ -20,17 +19,15 @@ public without sharing class ISSP_Utilities {
         String Subject = 'ISSP Error!';
         mail.setSubject(Subject);
 		mail.setPlainTextBody('Test');
-        //Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
     }
     
     @future 
-    public static void DMLOpt(set<string> casesIds){
+    public static void DMLOpt(Set<ID> casesIds){
 		List<Case> cases = [select id from Case where id IN :casesIds];
 	    if(cases!=null && cases.size()>0){
 	      Database.DMLOptions dmo = new Database.DMLOptions();
 	      dmo.assignmentRuleHeader.useDefaultRule = true;
 	      for(Case cs : cases){
-	        //dmo.emailHeader.triggerUserEmail = true;
 	        cs.setOptions(dmo);
 	      }
 	      update cases;

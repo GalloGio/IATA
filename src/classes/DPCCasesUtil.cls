@@ -185,7 +185,7 @@ public without sharing class DPCCasesUtil {
     /*
      * Changes the Escalated Status DPC and Status one in function of the other, only for DPC cases and only when the values of the fields change
      */
-    public static void HandleStatusUpdate (map<Id,Case> TriggerNew, map<Id,Case> TriggerOld, Boolean isInsert, Boolean isUpdate) {
+    public static void HandleStatusUpdate (map<Id,Case> TriggerNew, map<Id,Case> TriggerOld, Boolean isInsert) {
         Id RT_ACR_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
         Id RT_ACR_locked_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_locked');
         Id RT_ACR_ACCA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_ACCA');
@@ -307,7 +307,7 @@ public without sharing class DPCCasesUtil {
     /*
      * creates the Case Milestone records for the cases passed in the first parameter 
      */
-    public static void CreateMilestones(map<Id,Case> TriggerNew, map<Id,Case> TriggerOld, Boolean isInsert, Boolean isUpdate) {
+    public static void CreateMilestones(map<Id,Case> TriggerNew, map<Id,Case> TriggerOld, Boolean isUpdate) {
         Id RT_ACR_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
         Id RT_ACR_locked_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_locked');
         Id RT_ACR_ACCA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_ACCA');
@@ -317,173 +317,173 @@ public without sharing class DPCCasesUtil {
             system.debug(LoggingLevel.error,'################### isMilestoneAlreadyGenerated : ' + isMilestoneAlreadyGenerated );
             return;
         }
+
+        if(!isUpdate) return;
+
+        else{
                 
-        // create a map of the cases that have reached a milestone
-        map<Id, Case> mapCasesWithMilestonesPerId = new map<Id, Case>();
-        
-        for (Case c : TriggerNew.values()) {
-            if (c.RecordTypeId == RT_ACR_Id || c.RecordTypeId == RT_ACR_locked_Id || c.RecordTypeId == RT_ACR_ACCA_Id) {
-                // if the case reaches a milestone, handle the milestone creation 
-                if ( isUpdate && TriggerOld.get(c.Id).Status != c.Status && mapMilestonePerStatus.get( TriggerOld.get(c.Id).Status ) != mapMilestonePerStatus.get( c.Status )){ // setMilestoneStatuses.contains(c.Status)
-                	mapCasesWithMilestonesPerId.put(c.Id, c);
-                }
-            }
-        }
-        
-        // we only create Case Milestone records on update, because we create the records at the end of the actual milestone, to be able to track the time spent on it.
-        if (!mapCasesWithMilestonesPerId.values().isEmpty() && isUpdate) {
-                        
-            List<Case_Milestone__c> lstNewMilestones = new List<Case_Milestone__c>();
+            // create a map of the cases that have reached a milestone
+            map<Id, Case> mapCasesWithMilestonesPerId = new map<Id, Case>();
             
-            // get a list of the previous milestones from the cases that reached new milestones
-            List<Case> lstCasesWithPrevMilestones = [SELECT Id, 
-            											(SELECT Id, Time_Escalated_Externally__c, Time_Escalated_Internally__c, Time_With_Support__c, 
-            												Total_Time_Escalated_Externally__c, Total_Time_Escalated_Internally__c, Total_Time_With_Support__c, End_Date__c, 
-            												StatusName__c 
-                										 FROM Case_Milestones__r 
-                										 ORDER BY CreatedDate DESC, Id DESC LIMIT 1) 
-            										 FROM Case 
-            										 WHERE Id = :mapCasesWithMilestonesPerId.keyset()];
-            										 // ORDER BY CreatedDate DESC, StatusName__c DESC LIMIT 1
-            // put them in a map
-            map<Id, Case_Milestone__c> mapPrevMilestonePerCaseId = new map<Id, Case_Milestone__c>();
-            
-            for (Case c : lstCasesWithPrevMilestones) {
-                if (c.Case_Milestones__r.size() > 0) {
-                    mapPrevMilestonePerCaseId.put(c.Id, c.Case_Milestones__r[0]);
+            for (Case c : TriggerNew.values()) {
+                if (c.RecordTypeId == RT_ACR_Id || c.RecordTypeId == RT_ACR_locked_Id || c.RecordTypeId == RT_ACR_ACCA_Id) {
+                    // if the case reaches a milestone, handle the milestone creation 
+                    if(TriggerOld.get(c.Id).Status != c.Status && mapMilestonePerStatus.get( TriggerOld.get(c.Id).Status ) != mapMilestonePerStatus.get( c.Status )){
+                    	mapCasesWithMilestonesPerId.put(c.Id, c);
+                    }
                 }
             }
             
-            // Create the new milestones: we create a Case Milestone record for the milestone that has just ended - this way we know the time spent in that milestone. The
-            // Milestone Date represents the date the milestone has been reached, and it equals the end date of the previous milestone (or the creation date of the case for the first one). 
-            // The last milestone will be created when the case is closed - no further milestones needed afterwards (for closed / rejected).
-            for (Case c : mapCasesWithMilestonesPerId.values()){
-                Case_Milestone__c cm = new Case_Milestone__c();
-                cm.Case__c = c.Id;
-                cm.StatusName__c = mapMilestonePerStatus.get( TriggerOld.get(c.Id).Status ); // get the old status
-                cm.Classification_Phase__c = mapPhasePerStatus.get(TriggerOld.get(c.Id).Status); // get the phase name for the old status
-                cm.Type__c = 'DPC Application Change Request';
+            // we only create Case Milestone records on update, because we create the records at the end of the actual milestone, to be able to track the time spent on it.
+            if (!mapCasesWithMilestonesPerId.values().isEmpty()) {
+                            
+                List<Case_Milestone__c> lstNewMilestones = new List<Case_Milestone__c>();
                 
-                // End Date is by default the moment when the next milestone is hit ("now")
-                cm.End_Date__c = DateTime.now();
+                // get a list of the previous milestones from the cases that reached new milestones
+                List<Case> lstCasesWithPrevMilestones = [SELECT Id, 
+                											(SELECT Id, Time_Escalated_Externally__c, Time_Escalated_Internally__c, Time_With_Support__c, 
+                												Total_Time_Escalated_Externally__c, Total_Time_Escalated_Internally__c, Total_Time_With_Support__c, End_Date__c, 
+                												StatusName__c 
+                    										 FROM Case_Milestones__r 
+                    										 ORDER BY CreatedDate DESC, Id DESC LIMIT 1) 
+                										 FROM Case 
+                										 WHERE Id = :mapCasesWithMilestonesPerId.keyset()];
+                										 // ORDER BY CreatedDate DESC, StatusName__c DESC LIMIT 1
+                // put them in a map
+                map<Id, Case_Milestone__c> mapPrevMilestonePerCaseId = new map<Id, Case_Milestone__c>();
                 
-                // previous milestone (can be NULL)
-                Case_Milestone__c prev = mapPrevMilestonePerCaseId.get(c.Id);
-                
-                // calculate time spent
-                if (prev != null) {
-                    // if there is a previous milestone, time spent = overall time spent on the case until now - time spent on the case until the last milestone
-                    cm.Time_Escalated_Externally__c = c.Time_Escalated_Externally__c - prev.Total_Time_Escalated_Externally__c;
-                    cm.Time_Escalated_Internally__c = c.Time_Escalated__c - prev.Total_Time_Escalated_Internally__c;
-                    cm.Time_With_Support__c = c.Time_With_Support__c - prev.Total_Time_With_Support__c;
-                    cm.Milestone_Date__c = prev.End_Date__c;
-                } else {
-                    // no previous milestone => this is the first milestone => all the times spent on the case belong to this milestone
-                    cm.Time_Escalated_Externally__c = c.Time_Escalated_Externally__c;
-                    cm.Time_Escalated_Internally__c = c.Time_Escalated__c;
-                    cm.Time_With_Support__c = c.Time_With_Support__c;
-                    cm.Milestone_Date__c = c.CreatedDate;
+                for (Case c : lstCasesWithPrevMilestones) {
+                    if (c.Case_Milestones__r.size() > 0) {
+                        mapPrevMilestonePerCaseId.put(c.Id, c.Case_Milestones__r[0]);
+                    }
                 }
                 
-                // fill the total time values from the case - will be used for the calculations in the next milestones
-                cm.Total_Time_Escalated_Externally__c = c.Time_Escalated_Externally__c;
-                cm.Total_Time_Escalated_Internally__c = c.Time_Escalated__c;
-                cm.Total_Time_With_Support__c = c.Time_With_Support__c;
-                
-                // MOVED INSERT BELOW
-                //lstNewMilestones.add(cm);
-                
-                
-                // Check if any milestone was skipped between the current one and the previous milestone. If so create them with 0 time spent and total times the same as the previous.
-                // Only do this when skipping forward (e.g. when jumping from 3.0 to 8.0, but not when going from 8.0 to 3.0)
-                if (prev != null && mapMilestoneOrderPerMilestone.get(cm.StatusName__c) != null && mapMilestoneOrderPerMilestone.get(prev.StatusName__c) != null && 
-                	mapMilestoneOrderPerMilestone.get(cm.StatusName__c) - mapMilestoneOrderPerMilestone.get(prev.StatusName__c) > 1) {
-                		
-                	for (Integer i = mapMilestoneOrderPerMilestone.get(prev.StatusName__c) + 1; i < mapMilestoneOrderPerMilestone.get(cm.StatusName__c); i++) {
+                // Create the new milestones: we create a Case Milestone record for the milestone that has just ended - this way we know the time spent in that milestone. The
+                // Milestone Date represents the date the milestone has been reached, and it equals the end date of the previous milestone (or the creation date of the case for the first one). 
+                // The last milestone will be created when the case is closed - no further milestones needed afterwards (for closed / rejected).
+                for (Case c : mapCasesWithMilestonesPerId.values()){
+                    Case_Milestone__c cm = new Case_Milestone__c();
+                    cm.Case__c = c.Id;
+                    cm.StatusName__c = mapMilestonePerStatus.get( TriggerOld.get(c.Id).Status ); // get the old status
+                    cm.Classification_Phase__c = mapPhasePerStatus.get(TriggerOld.get(c.Id).Status); // get the phase name for the old status
+                    cm.Type__c = 'DPC Application Change Request';
+                    
+                    // End Date is by default the moment when the next milestone is hit ("now")
+                    cm.End_Date__c = DateTime.now();
+                    
+                    // previous milestone (can be NULL)
+                    Case_Milestone__c prev = mapPrevMilestonePerCaseId.get(c.Id);
+                    
+                    // calculate time spent
+                    if (prev != null) {
+                        // if there is a previous milestone, time spent = overall time spent on the case until now - time spent on the case until the last milestone
+                        cm.Time_Escalated_Externally__c = c.Time_Escalated_Externally__c - prev.Total_Time_Escalated_Externally__c;
+                        cm.Time_Escalated_Internally__c = c.Time_Escalated__c - prev.Total_Time_Escalated_Internally__c;
+                        cm.Time_With_Support__c = c.Time_With_Support__c - prev.Total_Time_With_Support__c;
+                        cm.Milestone_Date__c = prev.End_Date__c;
+                    } else {
+                        // no previous milestone => this is the first milestone => all the times spent on the case belong to this milestone
+                        cm.Time_Escalated_Externally__c = c.Time_Escalated_Externally__c;
+                        cm.Time_Escalated_Internally__c = c.Time_Escalated__c;
+                        cm.Time_With_Support__c = c.Time_With_Support__c;
+                        cm.Milestone_Date__c = c.CreatedDate;
+                    }
+                    
+                    // fill the total time values from the case - will be used for the calculations in the next milestones
+                    cm.Total_Time_Escalated_Externally__c = c.Time_Escalated_Externally__c;
+                    cm.Total_Time_Escalated_Internally__c = c.Time_Escalated__c;
+                    cm.Total_Time_With_Support__c = c.Time_With_Support__c;                
+                    
+                    // Check if any milestone was skipped between the current one and the previous milestone. If so create them with 0 time spent and total times the same as the previous.
+                    // Only do this when skipping forward (e.g. when jumping from 3.0 to 8.0, but not when going from 8.0 to 3.0)
+                    if (prev != null && mapMilestoneOrderPerMilestone.get(cm.StatusName__c) != null && mapMilestoneOrderPerMilestone.get(prev.StatusName__c) != null && 
+                    	mapMilestoneOrderPerMilestone.get(cm.StatusName__c) - mapMilestoneOrderPerMilestone.get(prev.StatusName__c) > 1) {
+                    		
+                    	for (Integer i = mapMilestoneOrderPerMilestone.get(prev.StatusName__c) + 1; i < mapMilestoneOrderPerMilestone.get(cm.StatusName__c); i++) {
+                    		Case_Milestone__c ms = new Case_Milestone__c();
+    			            ms.Case__c = c.Id;
+    			            ms.StatusName__c = mapMilestoneNamePerMilestoneOrder.get(i);
+    			            ms.Classification_Phase__c = mapPhasePerStatus.get(ms.StatusName__c);
+    			            ms.Milestone_Date__c = prev.End_Date__c;
+                    		ms.End_Date__c = prev.End_Date__c;
+                    		
+                    		// all the times spent on this milestone are 0
+    	                    ms.Time_Escalated_Externally__c = 0;
+    	                    ms.Time_Escalated_Internally__c = 0;
+    	                    ms.Time_With_Support__c = 0;
+                    		
+                    		// fill the total time values from the previous milestone
+    		                ms.Total_Time_Escalated_Externally__c = prev.Total_Time_Escalated_Externally__c;
+    		                ms.Total_Time_Escalated_Internally__c = prev.Total_Time_Escalated_Internally__c;
+    		                ms.Total_Time_With_Support__c = prev.Total_Time_With_Support__c;
+    		                
+    		                lstNewMilestones.add(ms);
+                    	}
+                    }
+                    
+                    // ADD TO THE LIST HERE, so it's inserted after the potentially skipped milestones above and before the ones below - for the correctly ordered display in the related list
+                    lstNewMilestones.add(cm);
+                    
+                    // Create the milestones from the last one created up until the current milestone (exclusively), if needed
+                    // If so create them with 0 time spent and total times the same as the new "real" milestone being created.
+                    if (mapMilestoneOrderPerMilestone.get(cm.StatusName__c) != null && mapMilestoneOrderPerMilestone.get(mapMilestonePerStatus.get(c.Status)) != null) {
+    	                for (Integer i = mapMilestoneOrderPerMilestone.get(cm.StatusName__c) + 1; i < mapMilestoneOrderPerMilestone.get(mapMilestonePerStatus.get(c.Status)); i++) {
+    	            		Case_Milestone__c ms = new Case_Milestone__c();
+    			            ms.Case__c = c.Id;
+    			            ms.StatusName__c = mapMilestoneNamePerMilestoneOrder.get(i);
+    			            ms.Classification_Phase__c = mapPhasePerStatus.get(ms.StatusName__c);
+    			            ms.Milestone_Date__c = cm.End_Date__c;
+    	            		ms.End_Date__c = cm.End_Date__c;
+    	            		
+    	            		// all the times spent on this milestone are 0
+    	                    ms.Time_Escalated_Externally__c = 0;
+    	                    ms.Time_Escalated_Internally__c = 0;
+    	                    ms.Time_With_Support__c = 0;
+    	            		
+    	            		// fill the total time values from the newly created "real" milestone
+    		                ms.Total_Time_Escalated_Externally__c = cm.Total_Time_Escalated_Externally__c;
+    		                ms.Total_Time_Escalated_Internally__c = cm.Total_Time_Escalated_Internally__c;
+    		                ms.Total_Time_With_Support__c = cm.Total_Time_With_Support__c;
+    		                
+    		                lstNewMilestones.add(ms);
+    	            	}
+                    }
+                	
+                    // If the case is closing with a "9.0 Closed" status, create the milestone with 0 time spent and total times the same as the new "real" milestone being created
+                    if (c.Status == '9.0 Closed') {
+                    	Integer i = mapMilestoneOrderPerMilestone.get(mapMilestonePerStatus.get(c.Status));
+                    	
                 		Case_Milestone__c ms = new Case_Milestone__c();
-			            ms.Case__c = c.Id;
-			            ms.StatusName__c = mapMilestoneNamePerMilestoneOrder.get(i);
-			            ms.Classification_Phase__c = mapPhasePerStatus.get(ms.StatusName__c);
-			            ms.Milestone_Date__c = prev.End_Date__c;
-                		ms.End_Date__c = prev.End_Date__c;
+    		            ms.Case__c = c.Id;
+    		            ms.StatusName__c = mapMilestoneNamePerMilestoneOrder.get(i);
+    		            ms.Classification_Phase__c = mapPhasePerStatus.get(ms.StatusName__c);
+    		            ms.Milestone_Date__c = cm.End_Date__c;
+                		ms.End_Date__c = cm.End_Date__c;
                 		
                 		// all the times spent on this milestone are 0
-	                    ms.Time_Escalated_Externally__c = 0;
-	                    ms.Time_Escalated_Internally__c = 0;
-	                    ms.Time_With_Support__c = 0;
+                        ms.Time_Escalated_Externally__c = 0;
+                        ms.Time_Escalated_Internally__c = 0;
+                        ms.Time_With_Support__c = 0;
                 		
-                		// fill the total time values from the previous milestone
-		                ms.Total_Time_Escalated_Externally__c = prev.Total_Time_Escalated_Externally__c;
-		                ms.Total_Time_Escalated_Internally__c = prev.Total_Time_Escalated_Internally__c;
-		                ms.Total_Time_With_Support__c = prev.Total_Time_With_Support__c;
-		                
-		                lstNewMilestones.add(ms);
-                	}
+                		// fill the total time values from the newly created "real" milestone
+    	                ms.Total_Time_Escalated_Externally__c = cm.Total_Time_Escalated_Externally__c;
+    	                ms.Total_Time_Escalated_Internally__c = cm.Total_Time_Escalated_Internally__c;
+    	                ms.Total_Time_With_Support__c = cm.Total_Time_With_Support__c;
+    	                
+    	                lstNewMilestones.add(ms);
+                    	
+                    }
                 }
                 
-                // ADD TO THE LIST HERE, so it's inserted after the potentially skipped milestones above and before the ones below - for the correctly ordered display in the related list
-                lstNewMilestones.add(cm);
-                
-                // Create the milestones from the last one created up until the current milestone (exclusively), if needed
-                // If so create them with 0 time spent and total times the same as the new "real" milestone being created.
-                if (mapMilestoneOrderPerMilestone.get(cm.StatusName__c) != null && mapMilestoneOrderPerMilestone.get(mapMilestonePerStatus.get(c.Status)) != null) {
-	                for (Integer i = mapMilestoneOrderPerMilestone.get(cm.StatusName__c) + 1; i < mapMilestoneOrderPerMilestone.get(mapMilestonePerStatus.get(c.Status)); i++) {
-	            		Case_Milestone__c ms = new Case_Milestone__c();
-			            ms.Case__c = c.Id;
-			            ms.StatusName__c = mapMilestoneNamePerMilestoneOrder.get(i);
-			            ms.Classification_Phase__c = mapPhasePerStatus.get(ms.StatusName__c);
-			            ms.Milestone_Date__c = cm.End_Date__c;
-	            		ms.End_Date__c = cm.End_Date__c;
-	            		
-	            		// all the times spent on this milestone are 0
-	                    ms.Time_Escalated_Externally__c = 0;
-	                    ms.Time_Escalated_Internally__c = 0;
-	                    ms.Time_With_Support__c = 0;
-	            		
-	            		// fill the total time values from the newly created "real" milestone
-		                ms.Total_Time_Escalated_Externally__c = cm.Total_Time_Escalated_Externally__c;
-		                ms.Total_Time_Escalated_Internally__c = cm.Total_Time_Escalated_Internally__c;
-		                ms.Total_Time_With_Support__c = cm.Total_Time_With_Support__c;
-		                
-		                lstNewMilestones.add(ms);
-	            	}
-                }
-            	
-                // If the case is closing with a "9.0 Closed" status, create the milestone with 0 time spent and total times the same as the new "real" milestone being created
-                if (c.Status == '9.0 Closed') {
-                	Integer i = mapMilestoneOrderPerMilestone.get(mapMilestonePerStatus.get(c.Status));
-                	
-            		Case_Milestone__c ms = new Case_Milestone__c();
-		            ms.Case__c = c.Id;
-		            ms.StatusName__c = mapMilestoneNamePerMilestoneOrder.get(i);
-		            ms.Classification_Phase__c = mapPhasePerStatus.get(ms.StatusName__c);
-		            ms.Milestone_Date__c = cm.End_Date__c;
-            		ms.End_Date__c = cm.End_Date__c;
-            		
-            		// all the times spent on this milestone are 0
-                    ms.Time_Escalated_Externally__c = 0;
-                    ms.Time_Escalated_Internally__c = 0;
-                    ms.Time_With_Support__c = 0;
-            		
-            		// fill the total time values from the newly created "real" milestone
-	                ms.Total_Time_Escalated_Externally__c = cm.Total_Time_Escalated_Externally__c;
-	                ms.Total_Time_Escalated_Internally__c = cm.Total_Time_Escalated_Internally__c;
-	                ms.Total_Time_With_Support__c = cm.Total_Time_With_Support__c;
-	                
-	                lstNewMilestones.add(ms);
-                	
-                }
+                if (!lstNewMilestones.isEmpty()) {
+                	system.debug('Inserting new milestones: ' + lstNewMilestones);
+                    insert lstNewMilestones;
+                    
+                    // Mark that the Case Milestones have been generated 
+                    isMilestoneAlreadyGenerated = true;
+                    system.debug(LoggingLevel.error,'################### SETTING isMilestoneAlreadyGenerated : ' + isMilestoneAlreadyGenerated );
+                } 
             }
-            
-            if (!lstNewMilestones.isEmpty()) {
-            	system.debug('Inserting new milestones: ' + lstNewMilestones);
-                insert lstNewMilestones;
-                
-                // Mark that the Case Milestones have been generated 
-                isMilestoneAlreadyGenerated = true;
-                system.debug(LoggingLevel.error,'################### SETTING isMilestoneAlreadyGenerated : ' + isMilestoneAlreadyGenerated );
-            }
-            
         }
     }
 }

@@ -692,8 +692,6 @@
                                         <apex:outputField value="{!newCase.Contact.Email}" rendered="{!caseType =='SIDRA'}"/>
 
                                         <apex:outputfield rendered="{!caseType =='PWC'}" value="{!newCase.ownerId}" />
-                                        <!-- <apex:outPutField rendered="{!isSAAMCase}" value="{!newCase.Dossier_reception_date__c}"/> -->
-
                                         <apex:outputfield label="{!$Label.ISSP_Case_Payment_status}" rendered="{!newCase.RecordType.Name=='Invoicing Collection Cases'}" value="{!newCase.Has_the_agent_paid_invoice__c}" />
 
                                         <!-- SIDRA Fields - Display even when empty -->
@@ -723,7 +721,7 @@
                 							<apex:param value="{!newCase.Update_AIMS_DEF__c}"/>
                 						</apex:outputText>
                                         <apex:outputText value="{!CASE(newCase.Reason_for_Default__c, 'Technical Default', $Label.ISSP_Homepage_Irregularities, newCase.Reason_for_Default__c)}" label="{!$ObjectType.Case.fields.Reason_for_Default__c.Label}" rendered="{!AND(caseType =='SIDRA',newCase.Reason_for_Default__c!=null)}" />
-                                        <!-- <apex:outputfield value="{!newCase.DEF_Withdrawal_Approval_Rejection__c}" label="{!$Label.ISSP_SIDRA_Withdraw_Approval}" rendered="{!AND(caseType =='SIDRA',newCase.DEF_Withdrawal_Approval_Rejection__c=='Approved')}" /> -->
+                                      
 
                                         <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$Label.ISSP_SIDRA_Withdraw_Approval_Date}" rendered="{!AND(caseType =='SIDRA',newCase.DEF_Withdrawal_Approval_Rejection__c=='Approved')}" >
                 							<apex:param value="{!newCase.DEF_Withdrawal_Approval_Rejection_Date__c}"/>
@@ -757,8 +755,7 @@
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update',newCase.Reason1__c=='FoP Management',newCase.Reason1__c=='CLO - Closure'))}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
                                             </apex:outputText>
                                         </apex:pageblocksectionitem>
-                                        <!-- AMSU-119 - added isMSO Condition -->
-                                        <!--apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO')}"-->
+                  
                                         <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='PCI DSS Compliant', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO', newCase.Reason1__c != 'Financial review opt-in / opt-out', newCase.Reason1__c != 'Annual revalidation', NOT(isMSOcase))}">
                                             <apex:image value="{!URLFOR($Resource.PDF_icon_large)}" />
                                             <apex:outputText >

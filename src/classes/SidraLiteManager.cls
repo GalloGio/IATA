@@ -45,7 +45,11 @@ public with sharing class SidraLiteManager {
             WSSidraLite.insertComments(listSidraLite);
 
             // set default case assignment rule
-            list<Case> listCase = [Select Id from Case where id in :listSidraLite];
+            List<Case> listCase = new List<Case>();
+            for(Case c : listNewCases){
+                listCase.add(new Case(Id = c.ID));
+            }
+
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
             Database.update(listCase, dmo);
@@ -159,56 +163,54 @@ public with sharing class SidraLiteManager {
         for (Case cse: listCases) {
             Case parentCase = mapParents.get(cse.ParentId);
             Account account = mapAccounts.get(cse.AccountId);
-            //If there is a parent Ifap case then is a valid case to process
-            if (parentCase == null) {
-                // it's a SIDRA lite case without an IFAP Parent
-                //cse.addError('There is no valid parent case');
-
-            // if parent case is SMAP
-            } else if (parentCase.RecordTypeId == RECORDTYPE_SMAP) {
-                try {
-                    checkInsertSingleSidraLiteSmapParentCase(cse, parentCase, account);
-                } catch (SidraLiteException e) {
-                    cse.addError(e.getMessage());
-                }
-
-            // if parent case is OSCAR
-            } else if (parentCase.RecordTypeId == RECORDTYPE_OSCAR) {
-                try {
-                    checkInsertSingleSidraLiteOscarParentCase(cse, parentCase, account);
-                } catch (SidraLiteException e) {
-                    cse.addError(e.getMessage());
-                }
-
-            // if parent case is SAAM
-            } else if (parentCase.RecordTypeId == RECORDTYPE_SAAM) {
-                try {
-                    Case updateCase = checkInsertSingleSidraLiteSaamParentCase(cse, parentCase, account);
-                    listUpdateParent.add(updateCase);
-                } catch (SidraLiteException e) {
-                    cse.addError(e.getMessage());
-                }
-
-            // if parent case is Invoicing Collection Cases
-            } else if (parentCase.RecordTypeId == RECORDTYPE_INVOICING) {
+              
+            if(parentCase != null){
+                // if parent case is SMAP
+                if (parentCase.RecordTypeId == RECORDTYPE_SMAP) {
                     try {
-                        Case updateCase = checkInsertSingleSidraLiteInvoicingParentCase(cse, parentCase, account);
+                        checkInsertSingleSidraLiteSmapParentCase(cse, parentCase, account);
+                    } catch (SidraLiteException e) {
+                        cse.addError(e.getMessage());
+                    }
+
+                // if parent case is OSCAR
+                } else if (parentCase.RecordTypeId == RECORDTYPE_OSCAR) {
+                    try {
+                        checkInsertSingleSidraLiteOscarParentCase(cse, parentCase, account);
+                    } catch (SidraLiteException e) {
+                        cse.addError(e.getMessage());
+                    }
+
+                // if parent case is SAAM
+                } else if (parentCase.RecordTypeId == RECORDTYPE_SAAM) {
+                    try {
+                        Case updateCase = checkInsertSingleSidraLiteSaamParentCase(cse, parentCase, account);
                         listUpdateParent.add(updateCase);
                     } catch (SidraLiteException e) {
                         cse.addError(e.getMessage());
                     }
 
-            // if parent is IFAP case
-            } else if (parentCase.RecordTypeId == RECORDTYPE_IFAP) {
-                try {
-                    Case updateCase = checkInsertSingleSidraLiteIfapParentCase(cse, parentCase, account);
-                    listUpdateParent.add(updateCase);
-                    cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
-                } catch (SidraLiteException e) {
-                    cse.addError(e.getMessage());
+                // if parent case is Invoicing Collection Cases
+                } else if (parentCase.RecordTypeId == RECORDTYPE_INVOICING) {
+                        try {
+                            Case updateCase = checkInsertSingleSidraLiteInvoicingParentCase(cse, parentCase, account);
+                            listUpdateParent.add(updateCase);
+                        } catch (SidraLiteException e) {
+                            cse.addError(e.getMessage());
+                        }
+
+                // if parent is IFAP case
+                } else if (parentCase.RecordTypeId == RECORDTYPE_IFAP) {
+                    try {
+                        Case updateCase = checkInsertSingleSidraLiteIfapParentCase(cse, parentCase, account);
+                        listUpdateParent.add(updateCase);
+                        cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
+                    } catch (SidraLiteException e) {
+                        cse.addError(e.getMessage());
+                    }
+                } else {
+                    cse.addError('You cannot create a SIDRA Lite Case for this case type');
                 }
-            } else {
-                cse.addError('You cannot create a SIDRA Lite Case for this case type');
             }
         }
         return listUpdateParent;
@@ -342,7 +344,6 @@ public with sharing class SidraLiteManager {
         cse.AccountId = account.Id;
         cse.Region__c = parentCase.Region__c;
         cse.BSPCountry__c = parentCase.BSPCountry__c;
-        //cse.SIDRA_Lite_Reason__c = SidraLiteHelperForOSCAR.getOSCARReason(parentCase);
         cse.SIDRA_Lite_Default_Date__c = Date.Today();
         cse.BSP_CASS__c = SidraLiteUtil.getBSPCASS(account);
 
@@ -421,14 +422,6 @@ public with sharing class SidraLiteManager {
             cse.Subject = 'SIDRA Lite – Financial Security Non-compliance';
             cse.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
             if (SidraLiteUtil.isAccountActive(account)) {
-                //cse.Propose_Irregularity__c = DateTime.now();
-                //cse.IRR_Approval_Rejection__c = 'Approved';
-                //cse.IRR_Approval_Rejection_Date__c = DateTime.now();
-                /*if (SidraLiteUtil.isPassenger(account)) {
-                    cse.IRR_Type__c = 'Double Irregularity';
-                } else {
-                    cse.IRR_Type__c = 'Single Irregularity';
-                }*/
                 cse.SIDRA_Lite_Default_Date__c = Date.Today();
                 cse.Reason_for_Default__c = 'Suspension - FS Non Compliance';
             } else {

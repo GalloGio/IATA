@@ -5,7 +5,6 @@ public class AMS_OscarCaseTriggerHelper {
     **/
 
     //used to assign new created oscars to one of 5 queues, pending on the region.
-    //public static List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('Africa_ME_OSCAR','Americas_OSCAR','Asia_Pacific_OSCAR','China_N_Asia_OSCAR','Europe_OSCAR')];
     public static Map<String, Group> queues{
         get{
             if(queues == null){
@@ -26,25 +25,23 @@ public class AMS_OscarCaseTriggerHelper {
         List<Id> parentcaseIds = new List<Id>();
 
         //check parent record type
-        for(Case c: triggerNew)
-            if(c.ParentId != null)
-                parentcaseIds.add(c.ParentId);
-                
-        Map<Id, Case> parentCase = new Map<Id, Case>([SELECT Id, Oscar__c, RecordTypeId FROM Case WHERE Id IN :parentcaseIds AND RecordTypeId = :OSCARCaseRecordTypeID]);
-        
         for(Case c: triggerNew){
-            
-            Case parent = parentCase.get(c.parentId);   
-            
-            if(c.ParentId != null && c.Oscar__c != null && parent != null && parent.Oscar__c != null){
-                if(c.RecordTypeId == OSCARCaseRecordTypeID && parent.RecordTypeId == OSCARCaseRecordTypeID && parent.Oscar__c <> null && c.Oscar__c == parent.Oscar__c)
-                    casestoremoveoscar.add(c);
-            }         
+            if(c.ParentId != null && c.Oscar__c != null && c.RecordTypeId == OSCARCaseRecordTypeID){
+                parentcaseIds.add(c.ParentId);
+                casestoremoveoscar.add(c);
+            }
         }
+                
+        if(!parentcaseIds.isEmpty()) return;
+
+        Map<Id, Case> parentCase = new Map<Id, Case>([SELECT Id, Oscar__c, RecordTypeId FROM Case 
+                                                    WHERE Id IN :parentcaseIds AND RecordTypeId = :OSCARCaseRecordTypeID AND OSCAR__c != null]);
         
-        for(Case c: casestoremoveoscar){ 
-          
+        for(Case c: casestoremoveoscar){
+            Case parent = parentCase.get(c.parentId);   
+            if(parent != null && c.Oscar__c == parent.Oscar__c){
                 c.Oscar__c = null;
+            }         
         }
     }
     
@@ -124,7 +121,7 @@ public class AMS_OscarCaseTriggerHelper {
         List<Case> oscarCases = new List<Case>();
 
          for(Case c : triggerNew){
-            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID) { // &&  (c.ParentId == null || (c.ParentId != null && c.Reason1__c == 'CLO - Closure')) ){ --> CB - 6 APR 2017 - AMS Enhancements AMSU-2
+            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID) {
                 //need to verify just for the first case on the trigger, since the second one will throw an error
                 if(oscarIds.add(c.Oscar__c)) oscarCases.add(c);
             }
@@ -133,7 +130,8 @@ public class AMS_OscarCaseTriggerHelper {
         if(oscarCases.isEmpty()) return;
 
         List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
-        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c FROM AMS_OSCAR__c where Id = :oscarIds]);
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c 
+                                                                   FROM AMS_OSCAR__c WHERE Id = :oscarIds]);
 
         for(Case c : oscarCases){
             if(!oscars.containsKey(c.Oscar__c)) continue;
@@ -355,51 +353,28 @@ public class AMS_OscarCaseTriggerHelper {
 
     /*AMS-1580 and AMS-1585*/
     public static void copyDataFromOscar() {
-
-
         Map<Id, Case> oldMap = (Map<Id, Case>)Trigger.oldMap;
 
         List<Case> oscarCases = new List<Case>();
         Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c>();
 
         for(Case c : (List<Case>) Trigger.New){
-            if(
-                c.RecordTypeID == OSCARCaseRecordTypeID
-                && c.OSCAR__c != null
-                && (Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c))
-            ){
-            
+            if(c.RecordTypeID == OSCARCaseRecordTypeID && c.OSCAR__c != null && !Trigger.isDelete){ 
                 oscarCases.add(c);
                 oscars.put(c.Oscar__c, null);
-            }
-            else{ // this is only for update  AMS-1667
-
-            if(
-                c.RecordTypeID == OSCARCaseRecordTypeID
-                && c.OSCAR__c != null
-                && Trigger.isUpdate 
-            ){
-
-                oscarCases.add(c);
-                oscars.put(c.Oscar__c, null);
-
-            }
-            
-
             }
         }
 
         if(oscarCases.isEmpty()) return;
 
-        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c, Location_Class__c, Account__r.Category__c, Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c, Type_of_change__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
+        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c, Location_Class__c, 
+            Account__r.Category__c, Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, 
+            Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c, Type_of_change__c 
+            FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
         for(Case c : oscarCases){
-            
-            if(c.OwnerId != oscars.get(c.Oscar__c).OwnerId)
-                c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
-            
-            if(c.Status != oscars.get(c.Oscar__c).Status__c)
-                c.Status = oscars.get(c.Oscar__c).Status__c;
+            c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
+            c.Status = oscars.get(c.Oscar__c).Status__c;
 
             String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscars.get(c.Oscar__c).Account__r.Location_Type__c,oscars.get(c.Oscar__c).Account__r.Category__c);
 
