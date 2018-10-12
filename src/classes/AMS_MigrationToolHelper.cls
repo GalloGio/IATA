@@ -41,7 +41,6 @@ public without sharing class AMS_MigrationToolHelper {
 			'ANG.NEW.HE.LITE.1.0' => AMS_Utils.RECTYPE_NEWHE,
 			'ANG.NEW.AE.1.0' => AMS_Utils.RECTYPE_NEWAE,
 			'ANG.NEW.HE.STANDARD.1.0' => AMS_Utils.RECTYPE_NEWHE,
-			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP =>  AMS_Utils.BANK_ACCOUNT_SETUP,
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELA,
 			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELB 
 		};
