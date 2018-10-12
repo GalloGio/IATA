@@ -123,11 +123,11 @@ global class ANG_MasterData_Interface{
     /* Due Diligence */
     private class DueDiligence{
         public string Type;
-        public string Value;
+        public string status;
         
-        public DueDiligence(string Type, string Value){
+        public DueDiligence(string Type, string status){
             this.Type = Type;
-            this.Value = Value;
+            this.status = status;
         }
     }
        
@@ -179,7 +179,7 @@ global class ANG_MasterData_Interface{
         public string dueDiligenceStatus;
         public boolean isNewGenAgency;
         public list<Owner> owners;
-        public list<DueDiligence> lsDueDiligence;
+        public list<DueDiligence> DueDiligence;
 
         
         
@@ -225,14 +225,14 @@ global class ANG_MasterData_Interface{
                 this.TradeName = acc.TradeName__c;
                 this.vatNumber = acc.VAT_Number__c;
                 this.topParentIATACode = acc.Top_Parent__r.IATACode__c;
-                this.lsDueDiligence = new List<DueDiligence>();
+                this.DueDiligence = new List<DueDiligence>();
 
                 /* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
                 if(dueDiligenceIEPChangeCodes.contains(changeCode)){
                     if(changeCode == 'MaddY')
-                        this.lsDueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ?  'Passed' : 'Failed'  )));
+                        this.DueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ?  'Passed' : 'Failed'  )));
                     else
-                        this.lsDueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));                    
+                        this.DueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));                    
                 }
 
                 //Risk Info
