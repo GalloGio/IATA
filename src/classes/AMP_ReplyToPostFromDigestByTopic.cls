@@ -1,4 +1,4 @@
-public with sharing class AMP_ReplyToPostFromDigestByTopic {
+public class AMP_ReplyToPostFromDigestByTopic {
 	
 	public class FeedItemWrapper {
 		
