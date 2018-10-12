@@ -2047,6 +2047,56 @@
         <label>ISSP_Contacts_PortalUsers</label>
     </fieldSets>
     <fieldSets>
+        <fullName>RelatedListForAccount</fullName>
+        <description>RelatedListContact.page</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Title</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Contact_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Available_Services__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Email</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Phone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>User_Portal_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastActivityDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>RelatedListForAccount</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>zqu__Lookup_Popup_Window</fullName>
         <availableFields>
             <field>AccountId</field>
@@ -8011,6 +8061,21 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <label>Invoicing Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Primary_Account_Contact_Role__c</fullName>
+        <description>Indicates if contact is a primary contact for the account contact role</description>
+        <externalId>false</externalId>
+        <label>Is Primary Account Contact Role</label>
+        <summaryFilterItems>
+            <field>Account_Contact_Role__c.is_primary__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Account_Contact_Role__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
     </fields>
     <fields>
         <fullName>Is_from_migration__c</fullName>
@@ -31288,6 +31353,13 @@ AND(NOT(CONTAINS($Profile.Name , &quot;System Administrator&quot; )),
         <errorMessage>Please fill a phone number or an email address</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Primary_Contact_Must_Be_Active</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(Is_Primary_Account_Contact_Role__c  &gt; 0,   NOT(ISPICKVAL(Status__c, &apos;Active&apos;)))</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>This contact is a Primary Contact (Account Contact Role) for this account and so cannot be deactivated. Please designate a new Primary Contact before deactivating this one.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Required_Community</fullName>
         <active>true</active>
         <description>Contact first Community</description>
@@ -31535,6 +31607,20 @@ myuser={!User.Id}</url>
         <openType>replace</openType>
         <page>ChooseCommunity</page>
         <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Contact_Related_List</fullName>
+        <availability>online</availability>
+        <description>Opens a Visualforce to show an enhanced list of contacts</description>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Contact Related List</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/apex/RelatedListContacts?id={!Account.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Contact_exception_report</fullName>
