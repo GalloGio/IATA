@@ -103,9 +103,27 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
                 , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
                 , AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
+                , AMS_Pax_Accreditation_Form__c.Preferred_RHC_currency__c
             };
         }
     }
+
+    public List<SelectOption> getItemsForPreferredRHC() {
+        List<SelectOption> op = new List<SelectOption>();
+        
+        for(ANG_RHC_Currencies__c c: ANG_RHC_Currencies__c.getall().values())
+            op.add(new SelectOption(c.Name, c.Currency_Name__c));
+        return op;
+  }
+
+    public String getLabelForPreferredRHC() {
+       List<SelectOption> op = new List<SelectOption>();
+        
+        for(ANG_RHC_Currencies__c c: ANG_RHC_Currencies__c.getall().values())
+           if(accreditationObj.Preferred_RHC_currency__c == c.name) return c.Currency_Name__c;
+
+        return '';
+  }
 
     public static Set<String> hidenFieldsNewgenApplications = new Set<String>{};
 

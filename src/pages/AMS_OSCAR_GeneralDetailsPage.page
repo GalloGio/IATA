@@ -217,7 +217,7 @@
             <apex:pageBlockSectionItem >&nbsp;</apex:pageBlockSectionItem>
 
             <apex:repeat value="{!accreditationFields}" var="field">
-                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.rendered, field.name != 'Remittance_frequency__c')}">
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.rendered, field.name != 'Remittance_frequency__c', field.name != 'Preferred_RHC_currency__c')}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
                     <apex:outputField value="{!accreditationObj[field.name]}" >
                         <apex:inlineEditSupport event="{!field.event}" showonEdit="saveButton,cancelButton" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" />
@@ -250,6 +250,19 @@
                                 btn_up_down="true"
                                 readonly="{!IF(OR(NOT(field.inlineEdit),isCertificationOSCAR),'true','false')}"
                                 /> 
+                            </apex:outputPanel>   
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Preferred_RHC_currency__c')}">
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
+                    <apex:outputPanel >
+                            <apex:outputLabel id="mRFLabel" value="{!LabelForPreferredRHC}"/>
+                            <apex:outputPanel id="multipick" style="display: none;">
+                               <apex:selectList value="{!accreditationObj[field.name]}" size="1" required="true">
+                            <apex:selectOptions value="{!ItemsForPreferredRHC}"/>
+
+                        </apex:selectList>
                             </apex:outputPanel>   
                     </apex:outputPanel>
                 </apex:pageBlockSectionItem>
