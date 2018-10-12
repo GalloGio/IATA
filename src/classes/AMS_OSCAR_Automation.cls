@@ -30,6 +30,10 @@ public with sharing class AMS_OSCAR_Automation {
 
                 oscar.Sanity_check_results__c = AMS_Utils.PASSED;
 
+                if(oscar.ANG_Share_documentation_with_vendor__c){
+                    oscar.ANG_Shared_documentation_with_vendor__c = Date.today();
+                }
+
                 res = True;
             }
 

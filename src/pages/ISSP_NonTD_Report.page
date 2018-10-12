@@ -2,9 +2,10 @@
     <html>
     <c:ISSP_Header ></c:ISSP_Header>
     <body>
-        <c:ISSP_CustomNavigation />
         <div class="container">
-		 <div id="contentWrapper">
+
+            <c:ISSP_CustomNavigation />
+
             <apex:form id="reportListForm">
                 <apex:pagemessages />
 
@@ -62,9 +63,8 @@
                 </div>
 
             </apex:form>
-         </div>
-        </div> <!-- container -->
-        <c:ISSP_CustomFooter />
+
+        </div>
     </body>
 </html>
 </apex:page>

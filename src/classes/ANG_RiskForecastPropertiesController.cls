@@ -27,6 +27,8 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
         List<SelectOption> options= new List<SelectOption>();
 
+        //options.add(new SelectOption('SELECT Risk Option', 'SELECT Risk Option'));
+
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_SIDRALITE){
 
             options.add(new SelectOption('SELECT Risk Option', 'SELECT Risk Option'));

@@ -2,8 +2,6 @@
    <html>
  <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
 <style>
-  td {padding-top:7px;}  
-    
   .iatainputbox{    
     // display: block;
   width: 90%;
@@ -22,12 +20,13 @@
     //background-image: url(http://www.temps-et-mesures.com/img/p/151-207-thickbox.jpg)
     background-color:red;
     }
- </style>
-       
+
+   
+    
+       </style>
  <body>
-    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div class="container">
-       <div id="contentWrapper">
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="row">
              <div class="col-md-12">
                  <h4>{!$Label.ISSP_NewContact}<small> : {!$Label.ISSP_PortalUserCreation_Description}</small></h4>
@@ -61,7 +60,7 @@
                 </div>
 			</apex:outputPanel>
 
-          <div class="row" style="background-color:white">
+            <div class="row" style="background-color:white">
             <div class="col-md-6" style="background-color:white" >
                
              
@@ -137,9 +136,9 @@
     </apex:form>
     </div><!-- end class="panel-body-->
     </div><!-- end panel primary -->
-      </div>     
+                
+         <c:ISSP_CustomFooter communityName="{!communityName}"/>
      </div>
-     <c:ISSP_CustomFooter communityName="{!communityName}"/>
        </body>
     </html>
 </apex:page>

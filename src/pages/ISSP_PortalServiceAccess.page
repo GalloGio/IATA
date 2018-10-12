@@ -1,10 +1,9 @@
 <apex:page controller="ISSP_PortalServiceAccess" showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
  <html>
  <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
- <body> 
-   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+ <body>  
     <div class="container">
-        
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="ptBreadcrumb">&nbsp;&#171;&nbsp;
             
             <a href="/apex/ISSP_AccessToService{!if(communityName=='CNS','?CommunityName='+communityName,'')}">xxBack to List: Portal Service Access</a>
@@ -50,8 +49,8 @@
             </apex:define>
         </div>
         <!-- end  div class="panel panel-primary"-->
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div>
-     <c:ISSP_CustomFooter communityName="{!communityName}"/>
     <!-- end container-->
      </body>
     </html>

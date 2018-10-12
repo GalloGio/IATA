@@ -16,9 +16,9 @@
 <link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.min.css')}" type="text/css" />
 <script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.min.js')}" type="text/javascript" > </script>
 
-  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
   <div class="container">
-	 <div id="contentWrapper">
+   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+
        
 <style type="text/css">
      
@@ -1258,9 +1258,8 @@
 <!---------------------------------------------------------------------------->
 <!---------------------------------------------------------------------------->
 <!---------------------------------------------------------------------------->
-	</div>
-	</div> <!-- end container-->
-	<c:ISSP_CustomFooter communityName="{!communityName}"/>
-	</body>
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
+                  </div>
+</body>
 </html>
 </apex:page>
