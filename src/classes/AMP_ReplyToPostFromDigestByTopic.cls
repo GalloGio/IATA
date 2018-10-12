@@ -14,10 +14,8 @@ public class AMP_ReplyToPostFromDigestByTopic {
 
 	public Integer step {get; set;}
 	public String message {get; set;}
-	public String topicName {get; set;}
 	public String commentBody {get; set;}
 	public String acctListStr {get; set;}
-	public Datetime createdDate {get; set;}
 	public Integer numberOfAccounts {get; set;}
 	public List<FeedItemWrapper> feedItemAccountLst {get; set;}
 
@@ -33,7 +31,6 @@ public class AMP_ReplyToPostFromDigestByTopic {
 			this.feedItemAccountLst			 = new List<FeedItemWrapper>();
 			this.selectedFeedItemAccountLst	 = new List<FeedItemWrapper>();
 			
-			this.topicName  = ApexPages.CurrentPage().getParameters().get('topic');
 			this.mainFeedId = Id.valueOf(ApexPages.CurrentPage().getParameters().get('feedItemId'));
 			
 			init();
@@ -83,10 +80,10 @@ public class AMP_ReplyToPostFromDigestByTopic {
 			
 			if(item.Body == fi.Body){
 				
-				//Assigns the creation date and body from the first value found
-				//in order to show both values in the page
-				if(this.createdDate == null) this.createdDate = item.CreatedDate;
-				if(this.commentBody == null) this.commentBody = item.Body;
+				//Assigns the comment body from the first value found
+				if(this.commentBody == null){
+					this.commentBody = item.Body;
+				}
 				
 				this.feedItemLst.add(item);
 

@@ -25,35 +25,21 @@
 
 	<apex:form >
 
- 		<a href="/">&lt; Back to Home</a>
- 
-		<apex:pageBlock id="mainBlock" title="Reply To Post from Digest by Topic" >
-
+		<apex:pageBlock id="mainBlock" title="Respond to Chatter Post" >
+			
+			<apex:pageBlockSection columns="2" collapsible="false" >
+			
+			    <apex:outputText style="float: left;" value="{0} {1}" escape="false">
+			    	<apex:param value="<b>Chatter Post:</b>" />
+			    	<apex:param value="{!commentBody}" />
+			    </apex:outputText>
+			
+			</apex:pageBlockSection>
+					
 			<apex:pageMessages escape="false" />
 
-			<apex:pageBlockSection title="Step 1 - Select Accounts" columns="1" collapsible="false" rendered="{! step == 1}">
+			<apex:pageBlockSection title="Step 1 - Select accounts on which you wish your response to be posted" columns="1" collapsible="false" rendered="{! step == 1}">
 		
-				<apex:pageBlockSection columns="2">
-					
-					<apex:pageBlockSectionItem >
-						<apex:outputLabel value="Topic" for="topicId"/>
-						<apex:outputText value="{!topicName}" id="topicId"/>
-					</apex:pageBlockSectionItem>
-
-					<apex:pageBlockSectionItem >
-						<apex:outputLabel value="Comment Body" for="commentBodyId"/>
-						<apex:outputText value="{!commentBody}" id="commentBodyId"/>
-					</apex:pageBlockSectionItem>
-	
-					<apex:pageBlockSectionItem >
-						<apex:outputLabel value="Created Date" for="createdDateId"/>
-						<apex:outputText value="{0,date,dd-MM-yyyy HH:mm:ss z}" id="createdDateId">
-							<apex:param value="{!createdDate}" /> 
-						</apex:outputText>
-					</apex:pageBlockSectionItem>
-	
-				</apex:pageBlockSection> 
-
 				<apex:pageBlockSectionItem >
 					<apex:outputPanel >
 						<apex:commandButton action="{!nextStep}" value="Next >" reRender="mainBlock" style="float: right;" />
@@ -84,11 +70,11 @@
 
 			</apex:pageBlockSection>
 			
-			<apex:pageBlockSection title="Step 2 - Compose Message and Reply" columns="1" collapsible="false" rendered="{! step == 2}">
+			<apex:pageBlockSection title="Step 2 - Send your response" columns="1" collapsible="false" rendered="{! step == 2}">
 
-				<apex:inputTextarea cols="50" rows="4" value="{!message}" label="Response Message:"/>
+				<apex:inputTextarea cols="50" rows="4" value="{!message}" label="Insert Response:"/>
 
-				<b>The message will be posted as a reply to the feed items related to the following accounts ({!numberOfAccounts}):</b>
+				<b>Your response will be posted on the following accounts ({!numberOfAccounts}):</b>
 				
 				<br/>
 
@@ -96,7 +82,7 @@
 
 				<apex:outputPanel >
 					<apex:commandButton action="{!previousStep}" value="< Back to Account Selection" reRender="mainBlock" />
-					<apex:commandButton action="{!postReplyMessages}" value="Post replies" reRender="mainBlock" style="float: right;" status="replyStatusId"/>
+					<apex:commandButton action="{!postReplyMessages}" value="Post Response" reRender="mainBlock" style="float: right;" status="replyStatusId"/>
 					<apex:actionStatus id="replyStatusId" >
 						<apex:facet name="start" >
 							<img src="/img/loading.gif" style="float: right;"/>
@@ -108,7 +94,7 @@
 		
 			<apex:pageBlockSection columns="1" collapsible="false" rendered="{! step == 3}">
 
-				<apex:commandButton action="{!restartFromStep1}" value="New replies" reRender="mainBlock" />
+				<apex:commandButton action="{!restartFromStep1}" value="New response" reRender="mainBlock" />
 
 			</apex:pageBlockSection>
 
