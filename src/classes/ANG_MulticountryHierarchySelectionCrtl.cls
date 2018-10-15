@@ -1,16 +1,5 @@
 public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
-	public Account newParent{
-		get{
-			
-			if(newParent == null && oscar.New_parent__c != null)
-				return [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c from Account where ID = :oscar.New_parent__c];
-			else 
-				return newParent;
-		}
-		set;
-	}
-
 	private String oscarId{
 		get{
 			if(String.isEmpty(oscarId)) oscarId = ApexPages.currentPage().getParameters().get('Id');
@@ -49,7 +38,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					,'BillingStreet'
 					,'BillingPostalCode'
 					,'IATACODE__c'
-					,'Status'
+					,'Status__c'
 
 
 				};
@@ -361,7 +350,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 			Savepoint sp = Database.setSavepoint();
 			try {
-				//update oscar;
+				
+
 
 				adjustAccountsParentship();
 
@@ -372,6 +362,10 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					createHierarchy(accountsToUpdate);
 					closeTab = true;
 				}
+
+				oscar.Step45__c = 'Passed';
+
+				update oscar;
 				//if(updateRelatedRecords()) closeTab = true;
 
 			} catch(Exception e) {
@@ -385,6 +379,11 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 	private void createHierarchy(List<Account> acctLst){
 
+		Set<String> alreadyCreatedRelations = new Set<String>();
+
+		For(AMS_Agencies_relationhip__c ar : [Select Id, Parent_Account__c, Child_Account__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__c = :oscar.account__c])
+			alreadyCreatedRelations.add(String.valueof(ar.Child_Account__c)+String.valueOf(ar.Parent_Account__c));
+
 		if(acctLst.size() < 2)
 			return;
 
@@ -397,12 +396,14 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			if(acct.Location_Type__c == AMS_Utils.GE)
 				continue;
 			
-			relsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = acct.ParentId, Child_Account__c = acct.Id, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = true));
+			if(!alreadyCreatedRelations.contains(String.valueof(acct.Id)+String.valueof(acct.ParentId)))
+				relsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = acct.ParentId, Child_Account__c = acct.Id, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = true));
 		}
 
 		if(!relsToInsert.isEmpty()){
 			insert relsToInsert;
-		}
+		}else
+			delete hierarchy;
 
 	}
 

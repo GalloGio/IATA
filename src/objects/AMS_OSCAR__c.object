@@ -266,6 +266,18 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>ANG_Hierarchy_Created__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>For Multi-country, checkbox to verify if user already defined the hierarchy before the oscar inits</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For Multi-country, checkbox to verify if user already defined the hierarchy before the oscar inits</inlineHelpText>
+        <label>Hierarchy Created</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
         <description>PCI compliance expiry date</description>
         <externalId>false</externalId>
@@ -56697,5 +56709,19 @@ window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);
         <protected>false</protected>
         <requireRowSelection>true</requireRowSelection>
         <url>javascript:srcUp(&quot;/apex/OSCARWizzardFlowPage&quot;);</url>
+    </webLinks>
+	<webLinks>
+        <fullName>Open_Account_Creator</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Open Account Creator</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if (sforce.console.isInConsole()) { 
+srcUp(&quot;/apex/ANG_MulticountryAccountCreator?id={!AMS_OSCAR__c.Id}&quot;); 
+} else { 
+window.open(&quot;/apex/ANG_MulticountryAccount?id={!AMS_OSCAR__c.Id}&quot;); 
+}</url>
     </webLinks>
 </CustomObject>
