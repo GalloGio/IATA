@@ -351,6 +351,10 @@
                 <behavior>Edit</behavior>
                 <field>X8585_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>X8585_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
