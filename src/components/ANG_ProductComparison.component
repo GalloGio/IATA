@@ -148,14 +148,14 @@
 										<p><b>{! $Label.ANG_ISSP_HeadEntity}</b></p>
 										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_HE_Application_Registration_Fees__c.Label}: {! cell.fees.HE_Application_Registration_Fees}</p>
 										<!--p style="padding-left: 20px">{! $Label.ANG_ISSP_AnnualFees}</p-->
-										<p style="padding-left: 20px">{!prodCompAnnualFeesFormattedLabel} :</p>
+										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel} :</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Small_Agents__c.Label}: {! cell.fees.HE_AnnualFees_Small_Agents}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Medium_Agents__c.Label}: {! cell.fees.HE_AnnualFees_Medium_Agents}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Large_Agents__c.Label}: {! cell.fees.HE_AnnualFees_Large_Agents}</p>
 										<p><b>{! $Label.ANG_ISSP_AssociateEntity}</b></p>
 										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_AE_Application_Registration_Fees__c.Label}: {! cell.fees.AE_Application_Registration_Fees}</p>
 										<!--p style="padding-left: 20px">{! $Label.ANG_ISSP_AnnualFees}</p-->
-										<p style="padding-left: 20px">{!prodCompAnnualFeesFormattedLabel} :</p>
+										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel} :</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_First_10_locations__c.Label}: {! cell.fees.AE_Fees_First_10_locations}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Next_15_Locations__c.Label}: {! cell.fees.AE_Fees_Next_15_Locations}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Additional_Locations__c.Label}: {! cell.fees.AE_Fees_Additional_Locations}</p>
@@ -163,11 +163,11 @@
 									<apex:outputPanel rendered="{! cell.fees.HE_AnnualFees_Small_Agents == ''}">
 										<p><b>{! $Label.ANG_ISSP_HeadEntity}</b></p>
 										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_HE_Application_Registration_Fees__c.Label}: {! cell.fees.HE_Application_Registration_Fees}</p>
-										<p style="padding-left: 20px">{!prodCompAnnualFeesFormattedLabel}: {! cell.fees.HE_Annual_Fees}</p>
+										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel}: {! cell.fees.HE_Annual_Fees}</p>
 
 										<p><b>{! $Label.ANG_ISSP_AssociateEntity}</b></p>
 										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_AE_Application_Registration_Fees__c.Label}: {! cell.fees.AE_Application_Registration_Fees}</p>
-										<p style="padding-left: 20px">{!prodCompAnnualFeesFormattedLabel}: </p>
+										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel}: </p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_First_10_locations__c.Label}: {! cell.fees.AE_Fees_First_10_locations}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Next_15_Locations__c.Label}: {! cell.fees.AE_Fees_Next_15_Locations}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Additional_Locations__c.Label}: {! cell.fees.AE_Fees_Additional_Locations}</p>
