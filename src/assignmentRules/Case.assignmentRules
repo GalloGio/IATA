@@ -6,6 +6,7 @@
         <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>equals</operation>
@@ -20,6 +21,7 @@
         <ruleEntry>
             <assignedTo>iiNET_Support_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>equals</operation>
