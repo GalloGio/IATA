@@ -546,8 +546,11 @@ function buildFunctionCall(func, argList){
                     <apex:outputPanel styleClass="{!flowColors[p.name + flow.name]}">
                     <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="{!collapsibleMap[p.name + flow.name]}" columns="1">
                         <apex:outputPanel layout="block" styleClass="sectionWrapper">
-                            <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name]}">
+                            <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name] && !isNewGE}">
                                 <p>{!$Label.AMS_Due_Diligence_Lock}</p>
+                            </apex:outputPanel>
+                             <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name] && isNewGE}">
+                                <p>{!$Label.ANG_NEW_GE_lock}</p>
                             </apex:outputPanel>
                             <apex:pageBlockSection columns="3">
                                 <apex:repeat value="{!flow.steps}" var="step">

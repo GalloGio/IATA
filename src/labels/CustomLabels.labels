@@ -1997,6 +1997,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>E-mail address</value>
     </labels>
     <labels>
+        <fullName>ANG_NEW_GE_lock</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_NEW_GE_lock</shortDescription>
+        <value>Only available after GoGlobal Hierarchy selection is completed</value>
+    </labels>
+    <labels>
         <fullName>ANG_NON_COMPLIANCE</fullName>
         <language>en_US</language>
         <protected>false</protected>

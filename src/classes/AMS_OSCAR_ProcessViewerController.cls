@@ -162,6 +162,7 @@ public class AMS_OSCAR_ProcessViewerController {
     }
 
     private Boolean isStepBlocked(String stepApiName){
+        if(oscar != null && oscar.STEP45__c != AMS_Utils.PASSED && oscar.Process__c == AMS_Utils.NEWGESTANDARD && stepApiName != 'STEP45__c') return true;   
         return alwaysOnSteps.contains(stepApiName) ? false : dueDiligenceBlocked;
     }
     
