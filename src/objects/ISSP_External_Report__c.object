@@ -58,7 +58,6 @@
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
-        <relationshipLabel>ISSP External Reports</relationshipLabel>
         <relationshipName>ISSP_External_Reports</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -75,88 +74,14 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>File_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>File Name</label>
-        <length>100</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>File_Title__c</fullName>
-        <externalId>false</externalId>
-        <label>File Title</label>
-        <length>30</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Format__c</fullName>
-        <externalId>false</externalId>
-        <label>Format</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>PDF</fullName>
-                    <default>false</default>
-                    <label>PDF</label>
-                </value>
-                <value>
-                    <fullName>DOC</fullName>
-                    <default>false</default>
-                    <label>DOC</label>
-                </value>
-                <value>
-                    <fullName>...</fullName>
-                    <default>false</default>
-                    <label>...</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>Period_From__c</fullName>
-        <externalId>false</externalId>
-        <label>Period From</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Period_To__c</fullName>
-        <externalId>false</externalId>
-        <label>Period To</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Posted_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Posted Date</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>Report_ID__c</fullName>
-        <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
         <label>Report ID</label>
         <length>30</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
-        <unique>true</unique>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Source_System__c</fullName>
@@ -168,7 +93,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <label>ISSP External Report</label>
+    <label>External Report</label>
     <listViews>
         <fullName>All</fullName>
         <filterScope>Everything</filterScope>
@@ -176,11 +101,11 @@
     </listViews>
     <nameField>
         <displayFormat>ER-{0000}</displayFormat>
-        <label>Name</label>
+        <label>Report Title</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>ISSP External Reports</pluralLabel>
+    <pluralLabel>External Reports</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
