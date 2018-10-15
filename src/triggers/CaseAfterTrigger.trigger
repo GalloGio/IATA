@@ -730,7 +730,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		
 		/*trgCase Trigger.isInsert*/
 		if(trgCase){
-       		System.debug('____ [cls trgCase Trigger.isInsert]');
+       		System.debug('____ [cls CaseAfterTrigger - trgCase Trigger.isInsert]');
 			SidraLiteManager.afterInsertSidraLiteCases(Trigger.new);
 		}
 		/*trgCase Trigger.isInsert*/
@@ -767,7 +767,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
         /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate*/
 		if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete){
-       		System.debug('____ [cls trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate]');
+       		System.debug('____ [cls CaseAfterTrigger - trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate]');
 
 			Map<Id,IFAP_Quality_Issue__c> RelatedQualityIssues = new Map<Id,IFAP_Quality_Issue__c>();
 			Map<Id, Case> mapCaseIds = new Map<Id, Case>();
@@ -814,14 +814,14 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		
 		/*trgCaseLastSIDRADate Trigger.isUpdate*/
 		if(trgCaseLastSIDRADate){
-       		System.debug('____ [cls trgCaseLastSIDRADate Trigger.isUpdate]');
+       		System.debug('____ [cls CaseAfterTrigger - trgCaseLastSIDRADate Trigger.isUpdate]');
       		SIDRACaseHelper.doAfterUpdate(Trigger.newMap, Trigger.oldMap);
         }
 		/*trgCaseLastSIDRADate Trigger.isUpdate*/
 		
 		/*trgCase_ContactLastSurveyUpdate Trigger.isUpdate*/
 		if(trgCase_ContactLastSurveyUpdate){
-       		System.debug('____ [cls trgCase_ContactLastSurveyUpdate Trigger.isUpdate]');
+       		System.debug('____ [cls CaseAfterTrigger - trgCase_ContactLastSurveyUpdate Trigger.isUpdate]');
 
 			// This part of the code update a Case's Contact field Instant_Survey_Last_survey_sent__c, if the Case field Instant_Survey_Last_survey_sent__c is updated            
             // Get all Cases' contact and put it in a Map.
@@ -849,7 +849,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		
 		/*trgICCS_ASP_CaseClosed Trigger.isUpdate*/
 		if(trgICCS_ASP_CaseClosed){
-       		System.debug('____ [cls trgICCS_ASP_CaseClosed Trigger.isUpdate]');
+       		System.debug('____ [cls CaseAfterTrigger - trgICCS_ASP_CaseClosed Trigger.isUpdate]');
 			//Hold list of IEC_Subscription_History record to be inserted
 			List<IEC_Subscription_History__c> IEC_SubHistory_Lst_ToInsert = new List<IEC_Subscription_History__c>();
 			//Hold list of Cases record to be Updated
@@ -895,7 +895,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		
 		/*AMS_OSCARCaseTrigger Trigger.isUpdate*/
 		if(AMS_OSCARCaseTrigger){
-       		System.debug('____ [cls AMS_OSCARCaseTrigger Trigger.isUpdate]');
+       		System.debug('____ [cls CaseAfterTrigger - AMS_OSCARCaseTrigger Trigger.isUpdate]');
 
 			if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'CaseAfterTrigger')){
 				AMS_OscarCaseTriggerHelper.OSCARCaseUpdateRules(trigger.New, trigger.oldMap);
@@ -913,7 +913,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	/****************************************************************************************************************************************************/    
     /*Trigger.isDelete*/
 	else if (Trigger.isDelete) { 
-       	System.debug('____ [cls Trigger.isDelete]');
+       	System.debug('____ [cls CaseAfterTrigger - Trigger.isDelete]');
 		new ANG_CaseTriggerHandler().onAfterDelete();
 	}
 	/*Trigger.isDelete*/
