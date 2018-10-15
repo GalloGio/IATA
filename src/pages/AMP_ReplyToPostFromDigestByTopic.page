@@ -22,20 +22,75 @@
 			}
 		}
 	</script>
+	
+	<style>
+			p.MsoNormal, li.MsoNormal, div.MsoNormal{
+				margin:0cm;
+				margin-bottom:.0001pt;
+			}
+			p.msonormal0, li.msonormal0, div.msonormal0 {
+				mso-style-name:msonormal;
+				mso-margin-top-alt:auto;
+				margin-right:0cm;
+				mso-margin-bottom-alt:auto;
+				margin-left:0cm;
+			}
+			
+	</style>
 
 	<apex:form >
 
 		<apex:pageBlock id="mainBlock" title="Respond to Chatter Post" >
 			
-			<apex:pageBlockSection columns="2" collapsible="false" >
+			<apex:pageBlockSection columns="1" collapsible="false" >
 			
-			    <apex:outputText style="float: left;" value="{0} {1}" escape="false">
-			    	<apex:param value="<b>Chatter Post:</b>" />
-			    	<apex:param value="{!commentBody}" />
-			    </apex:outputText>
-			
-			</apex:pageBlockSection>
+				<apex:pageBlockSectionItem >
+				
+					<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border-spacing:0;display:table">
+						
+						<tr>
+							<td width="50" style="padding:7.5pt 0cm 7.5pt 7.5pt">
+								<p class="MsoNormal">
+									<span>
+										<img border="0" width="45" height="45" style='width:.4687in;height:.4687in' src="{!userPhotoURL}"/>
+									</span>
+								</p>
+							</td>
+							
+							<td width="430" style="padding:7.5pt 7.5pt 7.5pt 0.5cm">
+								
+								<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="430" style='width:322.5pt;border-collapse:collapse;border-spacing:0'>
+									<tr>
+										<td valign="top" style="padding:0cm 0cm 0cm 0cm">
+											<p style="font-size:10.5pt;margin:0cm;margin-bottom:.0001pt">
+												<span>{!createdByName}</span>
+											</p>
+											<p style="margin:0cm;margin-bottom:.0001pt">
+												<span style="font-size:9.0pt; color:#94A4BD">{!createdDate}</span>
+											</p>
+										</td>
+									</tr>
+								</table>
+								
+							</td>
+							
+						</tr>
+					</table>
 					
+					<table>
+						<tr>
+							<td colspan="2" valign="top" style="padding:0cm 0cm 0cm 0cm">
+								<p class="MsoNormal" style="font-size:10.5pt;">
+									<span>{!commentBody}</span>
+								</p>
+							</td>
+						</tr>
+					</table>
+			
+				</apex:pageBlockSectionItem>
+				
+			</apex:pageBlockSection>
+		
 			<apex:pageMessages escape="false" />
 
 			<apex:pageBlockSection title="Step 1 - Select accounts on which you wish your response to be posted" columns="1" collapsible="false" rendered="{! step == 1}">

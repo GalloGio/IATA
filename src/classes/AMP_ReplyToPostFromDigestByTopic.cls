@@ -14,8 +14,11 @@ public class AMP_ReplyToPostFromDigestByTopic {
 
 	public Integer step {get; set;}
 	public String message {get; set;}
-	public String commentBody {get; set;}
 	public String acctListStr {get; set;}
+	public String createdDate {get; set;}
+	public String commentBody {get; set;}
+	public String userPhotoURL  {get; set;}
+	public String createdByName {get; set;}
 	public Integer numberOfAccounts {get; set;}
 	public List<FeedItemWrapper> feedItemAccountLst {get; set;}
 
@@ -65,7 +68,9 @@ public class AMP_ReplyToPostFromDigestByTopic {
 				Body,
 				ParentId,
 				Parent.Name,
-				CreatedDate
+				CreatedById,
+				CreatedDate,
+				CreatedBy.Name
 			 FROM
 			 	FeedItem
 			 WHERE
@@ -80,10 +85,11 @@ public class AMP_ReplyToPostFromDigestByTopic {
 			
 			if(item.Body == fi.Body){
 				
-				//Assigns the comment body from the first value found
-				if(this.commentBody == null){
-					this.commentBody = item.Body;
-				}
+				//Assigns the main topic information from the first value found
+				if(this.commentBody == null) this.commentBody = item.Body;
+				if(this.createdDate == null) this.createdDate = item.CreatedDate.format('yyyy-MM-dd HH:mm:ss');
+				if(this.createdByName == null) this.createdByName = item.CreatedBy.Name;
+				if(this.userPhotoURL == null) this.userPhotoURL = AMP_ChatterTopicSubscribeController.getUserPhotoURL(item.CreatedById);
 				
 				this.feedItemLst.add(item);
 
