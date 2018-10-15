@@ -23095,12 +23095,12 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Operational Calendar</value>
     </labels>
     <labels>
-        <fullName>ISSP_OperationalCalendar_Billing_Period</fullName>
+        <fullName>ISSP_OperationalCalendar_BSPCASSFilter</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_OperationalCalendar_Billing_Period</shortDescription>
-        <value>Billing Period</value>
+        <shortDescription>ISSP_OperationalCalendar_BSPCASSFilter</shortDescription>
+        <value>BSP/CASS</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_BSPCASS_Filter_Required</fullName>
@@ -23111,20 +23111,12 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Please, select a value in BSP/CASS filter</value>
     </labels>
     <labels>
-        <fullName>ISSP_OperationalCalendar_BSPCASSFilter</fullName>
+        <fullName>ISSP_OperationalCalendar_Billing_Period</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_OperationalCalendar_BSPCASSFilter</shortDescription>
-        <value>BSP/CASS</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
-        <categories>ISSP, OperationalCalendar</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_OperationalCalendar_Country_Filter_Required</shortDescription>
-        <value>Please, select a value in Country filter</value>
+        <shortDescription>ISSP_OperationalCalendar_Billing_Period</shortDescription>
+        <value>Billing Period</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_CountryFilter</fullName>
@@ -23133,6 +23125,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_CountryFilter</shortDescription>
         <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Country_Filter_Required</shortDescription>
+        <value>Please, select a value in Country filter</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_CurrencyFilter</fullName>
@@ -23223,6 +23223,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>No events to show</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_Reset</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP OperationalCalendar Reset</shortDescription>
+        <value>Reset</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_Show_Calendar</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
@@ -23237,14 +23245,6 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Sync_Calendar</shortDescription>
         <value>Sync Calendar</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_OperationalCalendar_Reset</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP OperationalCalendar Reset</shortDescription>
-        <value>Reset</value>
     </labels>
     <labels>
         <fullName>ISSP_Opt_In</fullName>
@@ -26115,38 +26115,6 @@ CNS Customer Services</value>
         <value>Saturday</value>
     </labels>
     <labels>
-        <fullName>ISSP_Weekday_Thursday</fullName>
-        <categories>ISSP, OperationalCalendar</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Weekday Thursday</shortDescription>
-        <value>Thursday</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Weekday_Sunday</fullName>
-        <categories>ISSP, OperationalCalendar</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Weekday Sunday</shortDescription>
-        <value>Sunday</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Weekday_Tuesday</fullName>
-        <categories>ISSP, OperationalCalendar</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Weekday Tuesday</shortDescription>
-        <value>Tuesday</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Weekday_Wednesday</fullName>
-        <categories>ISSP, OperationalCalendar</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Weekday Wednesday</shortDescription>
-        <value>Wednesday</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Weekday_Short_Friday</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
@@ -26171,20 +26139,20 @@ CNS Customer Services</value>
         <value>Sat</value>
     </labels>
     <labels>
-        <fullName>ISSP_Weekday_Short_Thursday</fullName>
-        <categories>ISSP, OperationalCalendar</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Weekday Short Thursday</shortDescription>
-        <value>Thu</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Weekday_Short_Sunday</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Weekday Short Sunday</shortDescription>
         <value>Sun</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Thursday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Thursday</shortDescription>
+        <value>Thu</value>
     </labels>
     <labels>
         <fullName>ISSP_Weekday_Short_Tuesday</fullName>
@@ -26201,6 +26169,38 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP Weekday Short Wednesday</shortDescription>
         <value>Wed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Sunday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Sunday</shortDescription>
+        <value>Sunday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Thursday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Thursday</shortDescription>
+        <value>Thursday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Tuesday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Tuesday</shortDescription>
+        <value>Tuesday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Wednesday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Wednesday</shortDescription>
+        <value>Wednesday</value>
     </labels>
     <labels>
         <fullName>ISSP_Who_to_contact</fullName>
