@@ -6874,6 +6874,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     </fields>
     <fields>
         <fullName>STEP45__c</fullName>
+        <description>Use in the GE process for the GoGlobal Hierarchy selection - Confirm the hierarchy structure</description>
         <externalId>false</externalId>
         <label>STEP45</label>
         <required>false</required>
@@ -53130,6 +53131,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <fullName>ANG_New_GE</fullName>
         <active>true</active>
         <label>NG New GE</label>
+        <description>New Global Entity Accreditation Record Type</description>
         <picklistValues>
             <picklist>AML_result__c</picklist>
             <values>
