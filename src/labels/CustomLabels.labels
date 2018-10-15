@@ -1604,7 +1604,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature10</shortDescription>
-        <value>Feature 10</value>
+        <value>Quarterly Financial Review</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature10Tooltip</fullName>
@@ -1612,7 +1612,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature10Tooltip</shortDescription>
-        <value>Feature 10 Tooltip</value>
+        <value>Quarterly Financial Review Tooltip</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature1Tooltip</fullName>
@@ -18198,7 +18198,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompAnnualFees</shortDescription>
-        <value>Annual fees for 2018</value>
+        <value>Annual fees for YYYY</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
