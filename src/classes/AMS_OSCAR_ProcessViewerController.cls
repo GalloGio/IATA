@@ -62,6 +62,17 @@ public class AMS_OSCAR_ProcessViewerController {
             ) || isAMSCheckRemittance; //AMSU-125
         }
     }
+
+    public Boolean isGEwithNoHierarchy{
+        get{                
+            // NG Processes specific conditions
+            If(oscar.Process__c <> AMS_Utils.NGGE){
+                return false;
+                }
+
+            return oscarCase.Origin <> 'Portal' && oscar.STEP45__C == 'Not Started' && !oscar.ANG_Hierarchy_Created__c;
+        }
+    }
     
     //AMSU-125
     public Boolean isAMSCheckRemittance {
@@ -409,12 +420,12 @@ public class AMS_OSCAR_ProcessViewerController {
 
             ID oSCARCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('OSCAR Communication');
 
-            cases =  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c =: objectId AND RecordTypeID =: oSCARCaseRecordTypeID AND ParentId = null LIMIT 1 ];
+            cases =  [SELECT Id, OSCAR__c, Origin FROM Case WHERE OSCAR__c =: objectId AND RecordTypeID =: oSCARCaseRecordTypeID AND ParentId = null LIMIT 1 ];
 
         }
         else{
 
-            cases = [SELECT Id, OSCAR__c FROM Case WHERE id = :objectId LIMIT 1];
+            cases = [SELECT Id, OSCAR__c, Origin FROM Case WHERE id = :objectId LIMIT 1];
 
         }   
 

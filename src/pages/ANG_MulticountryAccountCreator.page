@@ -1,0 +1,86 @@
+<apex:page showHeader="true" sidebar="true" standardController="AMS_OSCAR__c" extensions="ANG_MulticountryAccountCreatorController" tabStyle="AMS_OSCAR__c">
+
+	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+	<apex:includeScript value="/support/console/34.0/integration.js"/>
+
+    <script type="text/javascript">
+
+		function closeTab(){
+			sforce.console.getEnclosingTabId(closeSubtab);
+		};
+		
+		var closeSubtab = function closeSubtab(result){
+		    var tabId = result.id;
+		    sforce.console.closeTab(tabId);
+		};
+
+		function refreshTab(){
+			sforce.console.getEnclosingTabId(function(enclosingResult){
+                sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+                    sforce.console.refreshPrimaryTabById(primaryResult.id,true,null);
+                    closeTab();
+                });
+            });
+
+		}
+	</script>
+
+
+    <apex:sectionHeader title="Newgen Multi-Country Hierarchy Account Creator" subtitle="{!AMS_OSCAR__c.Account__r.Name}" />
+
+    <apex:form styleClass="pos-relative">
+        <apex:pageMessages></apex:pageMessages>
+        <apex:pageBlock rendered="{!canbeedited}"> 
+            <apex:pageBlockTable value="{!listAccount}" var="acc">
+
+                <apex:column headerValue="Account Name">
+                    <apex:inputField value="{!acc.Name}" />
+                </apex:column>
+
+                <apex:column headerValue="Parent Account">
+                    <apex:outputField value="{!acc.ParentId}" />
+                </apex:column>
+
+                <apex:column headerValue="Location Class">
+                    <apex:inputField value="{!acc.Location_Class__c}" />
+                </apex:column>
+
+                <apex:column headerValue="ISO Country">
+                    <apex:inputField value="{!acc.IATA_ISO_Country__c}" />
+                </apex:column>
+                <apex:column headerValue="Billing Street">
+                    <apex:inputField value="{!acc.BillingStreet}" />
+                </apex:column>
+
+                <apex:column headerValue="Billing City">
+                    <apex:inputField value="{!acc.BillingCity}" />
+                </apex:column>
+
+                <apex:column headerValue="Billing State">
+                    <apex:inputField value="{!acc.BillingState}" />
+                </apex:column>
+
+                <apex:column headerValue="Billing Country">
+                    <apex:inputField value="{!acc.BillingCountry}" />
+                </apex:column>
+
+                <apex:column headerValue="Billing Postal Code">
+                    <apex:inputField value="{!acc.BillingPostalCode}" />
+                </apex:column>
+
+            </apex:pageBlockTable>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Add New Account" action="{!addAccount}" />
+                <apex:commandButton value="Save/Update Accounts" action="{!saveAccount}" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Confirm and submit hierarchy" action="{!submitHierarchy}" oncomplete="{refreshTab();}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+
+        <apex:pageBlock rendered="{!!canbeedited}">
+            <apex:pageMessage severity="Error" summary="This page cannot be accessed either because the Case is coming from the Portal or the user already submited the hierarchy." strength="1"/>
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>
