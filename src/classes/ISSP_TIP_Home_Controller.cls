@@ -10,26 +10,43 @@ public without sharing class ISSP_TIP_Home_Controller {
     public Contact con {get; set;}
     public boolean isPaymentProvider {get;set;} 
     public boolean btnEnabled {get;set;}
+    public boolean btnVoluntReliqEnabled {get;set;} //ACAMBAS . TIP-241   
     public boolean isAdmin {get; set;}     //identify if a user is an administrator or not
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public List<productWrapper> products {get ;set;}
+    public List<Account_Contact_Role__c> primaryContacts {get ;set;} //ACAMBAS - TIP-281
     public boolean editMode{get;set;}
+    public boolean activeProduct{get;set;} //ACAMBAS - TIP-244
     public String binRangeChangeRequestText{get;Set;}
 
     //enrolment page
     public String conID {get; set;}
     public Contact newContact {get;set;} 
     public List <Contact> contactList {get; set;}
+    public list<Account_Contact_Role__c> AccountContactRoleList	{get; set;}
     public Boolean isEmailDuplicated {get; set;}
+    public Account_Role__c TheAccountRole	{get; set;}
 
     public User user {get; set;}
 
     public Account account {get; set;}
     public Partner_products__c newpp {get; set;}
-    private Case newCase {get; set;}
+    @TestVisible private Case newCase {get; set;}
     public boolean isNew {get; set;}
     public list<BinRangeRec> binRangeList{get; set;}
     public BinRangeRec selectedBinRange{get;set;}
+    public String terminationReason {get; set;} //ACAMBAS - TIP-244
+    public String terminationDate {get; set;} //ACAMBAS - TIP-244
+    public Integer terminationMaxDays {get; set;} //ACAMBAS - TIP-244
+    public String voluntaryReliqReason {get; set;} //ACAMBAS - TIP-241
+    public String voluntaryReliqDate {get; set;} //ACAMBAS - TIP-241
+    public Integer voluntaryReliqMinDays {
+        get {
+            if(voluntaryReliqMinDays == null) 
+                voluntaryReliqMinDays = (Integer) TIP_Configuration__c.getOrgDefaults().Voluntary_Reliquishment_Min_Days__c; 
+            return voluntaryReliqMinDays;  
+        } 
+        set;} //ACAMBAS - TIP-241
 
     public String[] paymentGuaranteeVal{get;set;}
     public String[] acceptedTransactionVal{get;set;}
@@ -41,11 +58,11 @@ public without sharing class ISSP_TIP_Home_Controller {
     public list<ProvProdConfigRec> provProdConfList{get; set;}
     public ProvProdConfigRec selectedProvProdConf{get; set;}
     public boolean renderCountryCondifPopup{get;set;}
-
+    public boolean renderTerminateProdPopup{get;set;} //ACAMBAS - TIP-244
+    public boolean renderReqVoluntRelinq{get;set;} //ACAMBAS - TIP-241
+    
     public list<string> selectProvConfigCountriesList{get;set;}
     public set<string> filterCountryList{get;set;}// list of countries that will be removed from the multiSelect for adding new product country config  
-
-
 
     public List<selectOption> paymentNetworkOptList{
         get{        
@@ -134,8 +151,9 @@ public without sharing class ISSP_TIP_Home_Controller {
     public ISSP_TIP_Home_Controller(){
         popContact();
         fillProducts();
+        fillPrimaryContacts(); //ACAMBAS - TIP-281
 
-         pageReference currentPage = new PageReference(ApexPages.currentPage().getURL());
+        pageReference currentPage = new PageReference(ApexPages.currentPage().getURL());
         Map<String, String> params  =  currentPage.getParameters(); 
         params.remove('prodId');
         params.remove('caseId');
@@ -144,15 +162,17 @@ public without sharing class ISSP_TIP_Home_Controller {
         //pre-load pages
         if (currentPage.getURL() == Page.ISSP_TIP_Enrolment.getURL() && !String.isBlank(Apexpages.currentPage().getParameters().get('caseId')))  startEnrolmentAccount();
         else if (currentPage.getURL() == Page.ISSP_TIP_Product_Enrollment.getURL() && !String.isBlank(Apexpages.currentPage().getParameters().get('prodId')))  NewEditProduct();
-        
     }
 
     //##======================Methods================================##  
 
     public Pagereference initActions(){
+    	system.debug('DTULLO START initActions');
 	User user = DAL_ISSP.getUser(Userinfo.getUserId());
       
         try {
+        	CreateAccountRole(user);
+        	
             Portal_Application_Right__c appRight = [
                 Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c
                 From Portal_Application_Right__c
@@ -194,9 +214,8 @@ public without sharing class ISSP_TIP_Home_Controller {
         fetchHQAccountDetails();
 
         btnEnabled = (account.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && account.category__c=='Payment Provider');
-        isPaymentProvider = (account.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
-
-
+        btnVoluntReliqEnabled = isAdmin && ((TheAccountRole != null) ? (TheAccountRole.Status__c == TIP_Utils.PARTNER_STATUS_ACTIVE) : false); //ACAMBAS - TIP-241
+        //isPaymentProvider = (account.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID);
     }
 
     public List<Case> getCases(){
@@ -246,6 +265,16 @@ public without sharing class ISSP_TIP_Home_Controller {
             products.add(new productWrapper(p.id,p.name, p.PP_Payment_Network__c,p.PP_Effective_to_Date__c,p.PP_Effective_from_Date__c, p.PP_status__c));
         }
     }
+
+    //ACAMBAS - TIP-281 - Start 
+    private void fillPrimaryContacts() {
+        if(TheAccountRole != null) {
+            primaryContacts =  [SELECT id, First_Name__c, Last_Name__c, Email__c
+                                FROM Account_Contact_Role__c 
+                                WHERE Account_Role__c  = :TheAccountRole.Id AND is_primary__c = True];
+        }
+    }
+    //ACAMBAS - TIP-281 - End
 
     //##======================Sidekick classes=================================##
 
@@ -343,7 +372,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     //======================Enrollment Page Methods =====================================
     
-        public PageReference startEnrolmentAccount() {
+    public PageReference startEnrolmentAccount() {
 
         applyLanguage = UserInfo.getLanguage();
         displayLanguage = UserInfo.getLanguage();
@@ -409,16 +438,24 @@ public without sharing class ISSP_TIP_Home_Controller {
             return null;
         }
         
-        if(String.isEmpty(account.TIP_HQ_Location__c)){
-            account.TIP_HQ_Location__c.addError('Please Choose the Location of Headquarter');
+        //ACAMBAS - TIP-234 ----------
+        //if(String.isEmpty(account.TIP_HQ_Location__c)){
+        if(String.isEmpty(TheAccountRole.HQ_Location__c)){
+        //----------------------------
+            TheAccountRole.HQ_Location__c.addError('Please Choose the Location of Headquarter');
             return null;
         }
 
         //confirm that primary contact is choosen
         Boolean hasPrimaryContact = false;
-        for(Contact c : contactList){
+        //ACAMBAS - TIP-234 ----------
+        /*for(Contact c : contactList){
             if (c.Primary_Contact__c) hasPrimaryContact = true;
+        }*/
+        for(Account_Contact_Role__c c : AccountContactRoleList){
+            if (c.is_primary__c) hasPrimaryContact = true;
         }
+        //----------------------------
 
         if(!hasPrimaryContact){
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please select a primary contact'));
@@ -435,7 +472,9 @@ public without sharing class ISSP_TIP_Home_Controller {
         newCase.setOptions(dmo);
 
         update account;
+        update theAccountRole;
         upsert newCase;
+        if(AccountContactRoleList != null) upsert AccountContactRoleList;
 
         //assign to TIP HO queue
         List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND developerName = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
@@ -456,7 +495,9 @@ public without sharing class ISSP_TIP_Home_Controller {
         updateCase();
         update account;
         upsert newCase;
+        upsert AccountContactRoleList;     
         try{
+            update theAccountRole;
             upsert contactList;
         }catch(Exception e){}
         PageReference pr= Page.ISSP_TIP_Home;
@@ -466,21 +507,66 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public void fetchHQAccountDetails () {
         account = [
-                        SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
+                        SELECT Id, Name, Quality__c, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
                         TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
                         Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
-                        ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,TIP_Documents__c,
+                        ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordTypeid, RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c, TIP_HQ_Location__c,Country_ISO_Code__c
+                        IATA_ISO_Country__r.Name, IATA_ISO_Country__r.region__c,Country_ISO_Code__c, Account_Role__c,
+                        (Select Account__c, Any_Other_Information__c, Effective_From_Date__c, Effective_To_Date__c, HQ_Location__c, 
+        					   Last_Review_Date__c, Provider_Code__c, Provider_Type__c, Status__c, UniqueKey__c
+        					   from Account_Roles__r
+        					   where RecordTypeId =: TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID
+        					   limit 1
+						)
                         FROM Account
                         WHERE Id = :con.AccountId
                                    LIMIT 1
                     ];
+		
+		set<string> setServiceProvided = new set<string>();
+		
+		if(Account!=null){
+			if(string.isNotBlank(Account.Account_Role__c)){
+				setServiceProvided.addAll(Account.Account_Role__c.split(';'));
+			}
+			if(!Account.Account_Roles__r.isEmpty())
+				TheAccountRole = Account.Account_Roles__r;
+		}
+		
+        //ACAMBAS - TIP-236 ---------
+		//isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER);
+        isPaymentProvider = setServiceProvided.contains(TIP_Utils.ACCOUNT_SERVICE_PROVIDED_PAYMENT_PROVIDER) && !String.isBlank(account.Quality__c) ? account.Quality__c.contains('YES') : false;
+        //---------------------------
+        
+    }
+    
+    //Method invoked by Action on visualforce page
+    //it checks if the Account Role with type Payment Provider already exist
+    //if not, it creates a new one
+    public void CreateAccountRole(user TheUser){
+    	Account acc = [select Id, 
+    						(Select Id From Account_Roles__r where RecordTypeId =: TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID)
+    				   from Account 
+    				   where Id = :TheUser.Contact.AccountID limit 1];
+    	
+    	if(acc!= null){
+    		if(Acc.Account_Roles__r.isEmpty()) {
+    			try{
+    				Account_Role__c accrole = new Account_Role__c(Account__c = acc.Id, RecordTypeId = TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID);
+    				insert accrole;
+    				
+    				insert new Account_Contact_Role__c(Contact__c = TheUser.ContactId, Service_Rendered__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP, Account__c = acc.Id, Contact_Role__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY, Account_Role__c = accrole.Id);
+    			}catch(exception  e){
+    				system.debug('DTULLO --> exception while creating account role: ' + e.getMessage());
+    			}
+    		}
+    	}
     }
 
-    private void updateCase(){
+    public void updateCase(){
 
         if (newCase == null) newCase = new Case();
         newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
@@ -501,17 +587,28 @@ public without sharing class ISSP_TIP_Home_Controller {
         List<SelectOption> options = new List<SelectOption>();      
         options.add(new SelectOption('',Label.ISSP_SELECT_COUNTRY));
         for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
-                                    where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name]){
+                                     where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name]){
             options.add(new SelectOption(iso.Id,iso.Name));
         }
         return options;
     }
 
     private void fillContactList() {
+    	set<id> SetConId = new set<id>();
+    	//Looking into account Contact Role first
+    	AccountContactRoleList = [Select id, Account__c, Account_Role__c, Business_Phone__c, Contact__c, Contact_Role__c
+    							  , Email__c, First_Name__c, Last_Name__c, Service_Rendered__c, Contact__r.Primary_Contact__c
+    							  , Contact__r.Phone, is_primary__c
+    							  from Account_Contact_Role__c
+    							  where Contact__r.Status__c = 'Active' and Contact__r.Accountid = :con.AccountId
+    							  and Service_Rendered__c =:TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP];
+    	
+    	for(Account_Contact_Role__c acr:AccountContactRoleList)	SetConId.add(acr.Contact__c);
+    	
         contactList = [SELECT id,Name, Email,Salutation, FirstName, LastName, Phone, Primary_Contact__c,MobileNational__c,Membership_Function__c,Title,MobilePhone
-
                 FROM Contact
-                WHERE Status__c = 'Active' and Accountid = :con.AccountId];
+//                WHERE Status__c = 'Active' and Accountid = :con.AccountId];
+				where id in:SetConId];
     }
 
     public void updateRadioButtonStatus() {
@@ -520,8 +617,21 @@ public without sharing class ISSP_TIP_Home_Controller {
             c.Primary_Contact__c = false;
             if(c.id == contactID) c.Primary_Contact__c = true;
         }
-    }
 
+        //ACCOUNT_CONTACT_ROLE_PRIMARY
+        for (Account_Contact_Role__c conRole: AccountContactRoleList){
+        	if(conRole.Contact__c == contactID)
+        		conRole.Contact_Role__c = TIP_Utils.ManageMultiPicklist(conRole.Contact_Role__c, TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY, 'Add');
+        	else
+				conRole.Contact_Role__c = TIP_Utils.ManageMultiPicklist(conRole.Contact_Role__c, TIP_Utils.ACCOUNT_CONTACT_ROLE_PRIMARY, 'Remove');
+        }
+        
+      
+        
+        //fillContactList();
+    }
+    
+    
     public void createContact(){
 
         newContact.AccountId = con.AccountId;
@@ -529,6 +639,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         try{
             upsert newContact;
             isEmailDuplicated = false;
+            UpsertContactRole(newContact, false);
             system.debug('##done inserting: ' +isEmailDuplicated);
         }catch(Exception e){
             system.debug('##Error inserting: ' +isEmailDuplicated);
@@ -537,6 +648,19 @@ public without sharing class ISSP_TIP_Home_Controller {
         }
         fillContactList();
         newContact = new Contact();
+    }
+    
+    private void UpsertContactRole(Contact theCon, boolean bIsPrimary){
+    	Account_Contact_Role__c theContactRole = new Account_Contact_Role__c();
+	        theContactRole.Account__c = con.AccountId;
+	        theContactRole.Contact__c = theCon.Id;
+	        theContactRole.Account_Role__c = TheAccountRole.Id;
+	        theContactRole.Service_Rendered__c = TIP_Utils.ACCOUNT_CONTACT_ROLE_SERVICE_TIP;
+            theContactRole.UniqueKey__c = TIP_Utils.AccountContactRoleGenerateUniquekey(theContactRole);
+	        if(bIsPrimary){
+	        	theContactRole.Contact_Role__c = '';
+	        }
+       upsert theContactRole UniqueKey__c;
     }
 
     public Pagereference setContactToEdit(){
@@ -570,7 +694,11 @@ public without sharing class ISSP_TIP_Home_Controller {
         applyLanguage = UserInfo.getLanguage();
         displayLanguage = UserInfo.getLanguage(); 
 
-        newpp= new Partner_products__c(PP_Payment_Product_Network_type__c=TIP_Utils.PARTNER_PRODUCT_NETWORK_TYPE_OPEN_LOOP);
+        //ACAMBAS - TIP-249 -----------------------
+        //newpp= new Partner_products__c(PP_Payment_Product_Network_type__c=TIP_Utils.PARTNER_PRODUCT_NETWORK_TYPE_OPEN_LOOP);
+        newpp= new Partner_products__c();
+        //-----------------------------------------
+        
         binRangeList= new list<BinRangeRec>();
         deletedBinRangeList= new list<TIP_BIN_Range__c>();
 
@@ -581,7 +709,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         String selectedProdId=System.currentPageReference().getParameters().get('prodId');
 
         if(!String.isBlank(selectedProdId)){
-            list<Partner_products__c> prodlist=[Select id,name,PP_Settlement_terms__c,PP_Issuer_name__c,is_PCI_DSS_required__c,PP_Chargeback_airlines__c,PP_Pay_in_model__c,PP_Category__c,PP_Banking_license__c,PP_Payment_Network__c,PP_GDS_Integration__c,PP_VAN_Type__c,PP_Interchange_fee__c,PP_Payment_guarantee__c,PP_Network_Fee__c,PP_Accepted_transactions__c,PP_Chargeback_airlines_duration__c,Provider__c,PP_status__c,PP_Payment_Product_Network_type__c,  
+            list<Partner_products__c> prodlist=[Select id,name,PP_Settlement_terms__c,PP_Issuer_name__c,is_PCI_DSS_required__c,PP_Chargeback_airlines__c,PP_Pay_in_model__c,PP_Category__c,PP_Banking_license__c,PP_Payment_Network__c,PP_GDS_Integration__c,PP_VAN_Type__c,PP_Interchange_fee__c,PP_Payment_guarantee__c,PP_Network_Fee__c,PP_Accepted_transactions__c,PP_Chargeback_airlines_duration__c,Provider__c,PP_status__c,PP_Payment_Product_Network_type__c,PP_Effective_to_Date__c, 
                                                     (select id,TIP_Range_Start__c,TIP_Range_End__c,ToLabel(TIP_Status__c) from BIN_Ranges__r),
                                                     (select id  from cases__r where RecordTypeId =: TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID AND
                                                         Reason1__c = :TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT AND
@@ -592,6 +720,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                 isNew=false;
                 newpp= prodlist.get(0);
                 editMode=newpp.PP_status__c==TIP_Utils.PARTNER_PRODUCT_STATUS_DRAFT;
+                activeProduct=newpp.PP_status__c==TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE; //ACAMBAS - TIP-244
                 integer pos=0;
                 if(!editMode) binRangeChangeRequestText = Label.ISSP_TIP_Submit_case_to_IATA_to_update_bin_range;
                 acceptedTransactionVal=String.isBlank(newpp.PP_Accepted_transactions__c)?null:newpp.PP_Accepted_transactions__c.split(';');
@@ -636,6 +765,7 @@ public without sharing class ISSP_TIP_Home_Controller {
             selectedBinRange.action='M';            
         }
         renderCountryCondifPopup=false;      
+        renderTerminateProdPopup=false; //ACAMBAS - TIP-244     
     }
 
     public void addUpdateBinRange(){
@@ -691,6 +821,7 @@ public without sharing class ISSP_TIP_Home_Controller {
         }
         bspCountrList= refreshBspList();
         renderCountryCondifPopup=true;  
+        renderTerminateProdPopup=false; //ACAMBAS - TIP-244  
     }
 
     public void addUpdateCountryConfig(){
@@ -759,7 +890,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 
     public Pagereference submitProduct(){
         try{
-           set<string> mandatoryFieldsToSubmitSet= new set<string>{'PP_Settlement_terms__c','is_PCI_DSS_required__c','PP_Chargeback_airlines__c','PP_Pay_in_model__c','PP_Category__c'}; 
+           set<string> mandatoryFieldsToSubmitSet= new set<string>{'PP_Settlement_terms__c','is_PCI_DSS_required__c','PP_Chargeback_airlines__c','PP_Pay_in_model__c','PP_Category__c','PP_Payment_Product_Network_type__c'}; 
            boolean missingValues=false;
            for(string field:mandatoryFieldsToSubmitSet){
                 if(String.isBlank(String.valueOf(newpp.get(field)))){
@@ -774,12 +905,14 @@ public without sharing class ISSP_TIP_Home_Controller {
             
             } 
 
-            if(binRangeList.isEmpty()){
+            //ACAMBAS - TIP-249 - Start
+            /*if(binRangeList.isEmpty()){
 
                  ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,Label.ISSP_TIP_INSERT_BIN_RANGE));
                  return null;
              
-             } 
+            } */
+            //ACAMBAS - TIP-249 - End
 
 
             // Check Bin Range Sizes
@@ -830,6 +963,7 @@ public without sharing class ISSP_TIP_Home_Controller {
                 newpp.PP_Accepted_transactions__c=String.join(acceptedTransactionVal,';');
                 newpp.PP_Payment_guarantee__c=String.join(paymentGuaranteeVal,';');
                 newpp.PP_status__c=status;
+                newpp.Payment_Provider_Account_Role__c = TheAccountRole.id; //ACAMBAS
                 
                 insert newpp;
                 
@@ -946,4 +1080,77 @@ public without sharing class ISSP_TIP_Home_Controller {
         return pageref;
     }
 
+    // ACAMBAS - TIP-244 - Start -------------
+    //============================== TERMINATE PRODUT =============================
+
+    public void terminateProduct() {
+        renderTerminateProdPopup = true; 
+        renderCountryCondifPopup = false; 
+        terminationMaxDays = (Integer) TIP_Configuration__c.getOrgDefaults().Product_Termination_Max_Days__c; 
+    }
+
+    public Pagereference submitProductTerminationRequest() {
+
+        //Update or create case with status Open
+        updateCase();
+        newcase.Status = 'Open';
+        newcase.Subject = 'Product Termination Request - ' + account.name + ' / ' + newpp.name;
+        newcase.Description = terminationReason + '\n\nRequested termination date:\n' + terminationDate + ' (mm/dd/yyyy)';
+        newcase.Reason1__c = TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT;
+        newcase.TIP_Partner_Product__c = newpp.Id;
+       
+        //assign to TIP HO queue
+        List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND developerName = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
+        
+        if(groups == null || groups.isEmpty()) {
+            System.debug('ERROR! Cases_Transparency_in_Payment_Service Queue not found proceeding without assign');
+        }
+        else {
+            newCase.OwnerId = groups[0].id;
+        }
+
+        insert newCase;
+
+
+        PageReference pr= Page.ISSP_TIP_Home;
+        pr.setRedirect(true);
+        return pr; 
+
+    }
+
+    // ACAMBAS - TIP-244 - End -----------------
+    
+    // ACAMBAS - TIP-241 - Start -------------
+    //============================== VOLUNTARY RELINQUISHMENT =============================
+    
+    public Pagereference submitVoluntaryRelinquishmentReq() {
+
+        //Update or create case with status Open
+        updateCase();
+        newcase.Status = 'Open';
+        newcase.Subject = 'ATM Provide Account Closure - ' + account.name;
+        newcase.Description = voluntaryReliqReason + '\n\nRequested closure date:\n' + voluntaryReliqDate + ' (mm/dd/yyyy)';
+        newcase.Reason1__c = TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT;
+       
+        //assign to TIP HO queue
+        List<Group> groups =  [SELECT Id FROM Group WHERE Type = 'Queue' AND developerName = 'Cases_Transparency_in_Payment_Service' LIMIT 1];
+        
+        if(groups == null || groups.isEmpty()) {
+            System.debug('ERROR! Cases_Transparency_in_Payment_Service Queue not found proceeding without assign');
+        }
+        else {
+            newCase.OwnerId = groups[0].id;
+        }
+
+        insert newCase;
+
+
+        PageReference pr= Page.ISSP_TIP_Home;
+        pr.setRedirect(true);
+        return pr; 
+
+    }
+    
+    // ACAMBAS - TIP-241 - End -----------------
+    
 }
