@@ -100,9 +100,8 @@
         <label>All</label>
     </listViews>
     <nameField>
-        <displayFormat>ER-{0000}</displayFormat>
-        <label>Report Title</label>
-        <type>AutoNumber</type>
+        <label>Report Title2</label>
+        <type>Text</type>
     </nameField>
     <pluralLabel>External Reports</pluralLabel>
     <searchLayouts/>
