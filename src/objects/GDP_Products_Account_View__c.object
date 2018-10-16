@@ -1213,6 +1213,18 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Total_Ownership_Percentage__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum of all Percentages from related Agency Owners Records</inlineHelpText>
+        <label>Total Ownership Percentage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
         <fullName>Trading_Name_1_Upper__c</fullName>
         <externalId>false</externalId>
         <formula>UPPER(Trading_Name_1__c)</formula>

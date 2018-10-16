@@ -516,17 +516,6 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Account_Management_Levant</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management Levant</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerLevant</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerLevant</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
         <fullName>Account_Management_Malaysia</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Malaysia</label>
@@ -601,17 +590,6 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerNordicBaltic</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Account_Management_North_Africa</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management North Africa</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerNorthAfrica</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerNorthAfrica</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -703,17 +681,6 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Account_Management_Saudi_Arabia_Yemen</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management Saudi Arabia &amp; Yemen</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerSaudiArabiaYemen</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerSaudiArabiaYemen</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
         <fullName>Account_Management_Serbia_Montenegro</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Serbia &amp; Montenegro</label>
@@ -747,17 +714,6 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Account_Management_South_West_Africa</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management South West Africa</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerSouthWestAfrica</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerSouthWestAfrica</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
         <fullName>Account_Management_South_West_Pacific</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management South West Pacific</label>
@@ -766,17 +722,6 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>Country_Manager_South_West_Pacific_BKP</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Account_Management_Southern_Africa</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management Southern Africa</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerSouthernAfrica</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerSouthernAfrica</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
