@@ -69,55 +69,59 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     if(myCS1 == null) 
                         insert new ISSP_CS__c(name = 'SysAdminProfileId' , value__c = '00e20000000h0gFAAQ');
                 }
+                for (Contact theContact : trigger.new) {
+                    if (theContact.Financial_Assessment_Contact__c) 
+                        lCons.add(theContact);
+                        AcctId.add(theContact.AccountId);
+                }
+                //************************
+                if(!lCons.isEmpty()){
+                    Cont2Account = [SELECT Location_type__c, Type FROM Account WHERE Id in :AcctId];
+                }
+                //************************
 
                 //When contact is created from Portal self-registration this trigger have to be bypassed
                 if (userinfo.getLastName() != 'Site Guest User') {
+                    system.debug('not guest user');
                     // Get the list of Profiles that we allow to create an FA contact for BR
                     String sysAdminProfileId = String.ValueOF(ISSP_CS__c.getValues('SysAdminProfileId').value__c);
+                    //list<Profile> profs = new List<Profile>();
+                    //if (sysAdminProfileId != null && sysAdminProfileId != '')
+                    //    profs = [SELECT Name, Id FROM Profile where id = :sysAdminProfileId limit 1];
+                    //profile prof;
+                    //system.debug('profs: ' + profs);
                     if (sysAdminProfileId != null && sysAdminProfileId != '') {
-
-                        for (Contact theContact : trigger.new) {
-                            //Add to the list all the Contacts(trigger.new) with the Financial_Assessment_Contact__c = true
-                            if (theContact.Financial_Assessment_Contact__c){
-                                lCons.add(theContact);
-                            }
-                                
-                            AcctId.add(theContact.AccountId);
-                        }
-                        //************************ 
-                        if(!lCons.isEmpty()){
-                            Cont2Account = [SELECT Location_type__c, Type, 
-                                                (SELECT Id FROM Contacts WHERE Financial_Assessment_Contact__c = true and Id not in :lCons)
-                                            FROM Account 
-                                            WHERE Id in :AcctId ];
-                        }
-                        //************************
-    
-                        // check the Agent Type of the Account
-                        for (Account Acct : Cont2Account){
-                            // For all contacts (Created or updated)
-                            for (Contact theContact : lCons) {
-                                try {
-                                    if(theContact.AccountId == Acct.id){
-                                        if(!Acct.contacts.isEmpty()){
-                                            theContact.addError(ERRORMSG);
-                                        }
-                                        if (Acct.Type != 'IATA Passenger Sales Agent' 
-                                            && Acct.Type != 'IATA Cargo Agent' 
-                                            && Acct.Type != 'CASS Associate'
-                                            && Acct.Type != 'Import Agent' 
-                                            && !ANG_OscarProcessHelper.isIATACodeGenerationRunning){
+                        //prof = profs[0];
+                        // For all contacts (Created or updated)
+                        for (Contact theContact : lCons) {
+                            system.debug('one contact: ' + theContact);
+                            try {
+                                system.debug('is IFAP: ' + theContact.Financial_Assessment_Contact__c);
+                                if (theContact.Financial_Assessment_Contact__c) {
+                                    // check if a financial assessment contact already exists for the same account
+                                    if (IFAP_BusinessRules.CheckFinancialAssessmentContactExist(theContact)) {
+                                        theContact.addError(ERRORMSG);
+                                    }
+                                    //QUERY IN LOOP
+                                    //Account theAccount = [Select a.Name, a.Location_Type__c, a.Type From Account a where a.Id = :theContact.AccountId];
+                                    // check the Agent Type of the Account
+                                    for (Account Acct : Cont2Account){
+                                        if(theContact.AccountId == Acct.id){
+                                            if (Acct.Type != 'IATA Passenger Sales Agent' && Acct.Type != 'IATA Cargo Agent' && Acct.Type != 'CASS Associate' && Acct.Type != 'Import Agent' && !ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
                                                 theContact.addError('Cannot associate an IFAP Contact to an Account of type ' + Acct.Type);
+                                            }
                                         }
                                     }
-                                }catch (Exception e) {
-                                    theContact.adderror('An unhandled error has occured. Error Message: ' + e.getMessage());
                                 }
+                            }catch (Exception e) {
+                                theContact.adderror('An unhandled error has occured. Error Message: ' + e.getMessage());
                             }
                         }
                     }
                 }
             }
+            /*trgIFAPContact_BeforeInsertUpdate BeforeTrigger*/
+
         }
         /*Share trigger code*/
             
