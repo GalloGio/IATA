@@ -495,7 +495,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 					// only add post if the next one is not the same
 					else {
 
-						emailBody += getFeedItemBody(fi,  lsAccountIds, mpAccountId2Account, lsTopicAssignments, topicName);
+						emailBody += getFeedItemBody(fi,  lsAccountIds, mpAccountId2Account, lsTopicAssignments);
 
 						if(topicFeedItemCounter < amountOfFeedItems) {
 							emailBody += feeditemSeparator();
@@ -519,7 +519,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	mpAccountId2Account: a map to get the Account with the Id
 	lsTopicAssignments: all the TopicAssignments for the lsAllFeedItems and Broadcast topics
 	**/
-	public static String getFeedItemBody(FeedItem fi, List<Id> lsAccountIds, Map<Id, Account> mpAccountId2Account, List<TopicAssignment> lsTopicAssignments, String topicName) {
+	public static String getFeedItemBody(FeedItem fi, List<Id> lsAccountIds, Map<Id, Account> mpAccountId2Account, List<TopicAssignment> lsTopicAssignments) {
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
 		emailBody += '<table class="row collapse collection" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">'+
@@ -583,7 +583,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
 			'</tr>';
 
-			remainingURL = lsAccountIds.size() > 1 ? ('/apex/AMP_ReplyToPostFromDigestByTopic?topic=' + topicName + '&feedItemId=' + fi.Id) : ('/' + fi.Id);
+			remainingURL = lsAccountIds.size() > 1 ? ('/apex/AMP_ReplyToPostFromDigestByTopic?feedItemId=' + fi.Id) : ('/' + fi.Id);
 			
 		}
 		
@@ -599,7 +599,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
 			'</tr>';
 			
-			remainingURL = '/apex/AMP_ReplyToPostFromDigestByTopic?topic=' + topicName + '&feedItemId=' + fi.Id;
+			remainingURL = '/apex/AMP_ReplyToPostFromDigestByTopic?feedItemId=' + fi.Id;
 			
 		}
 		
