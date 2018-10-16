@@ -397,11 +397,18 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 }
                 
                 if (contactsToDisable_TD.size() > 0){
-                    list<Portal_Application_Right__c> tdList = [SELECT Id, Right__c FROM Portal_Application_Right__c WHERE Contact__c in:contactsToDisable_TD
-                                                AND Right__c = 'Access Granted' AND Portal_Application__r.Name LIKE 'Treasury Dashboard%'];
-                    if (!tdList.isEmpty()){
-                        for(Portal_Application_Right__c par : tdList){
-                            par.Right__c = 'Access Denied';
+
+                    list<Portal_Application_Right__c> portalAppList = [SELECT Id, Right__c, Contact__c 
+                                                                      FROM Portal_Application_Right__c 
+                                                                      WHERE Contact__c in:contactsToDisable_TD
+                                                                        AND Right__c = 'Access Granted']; 
+
+                    list<Portal_Application_Right__c> tdList = new list<Portal_Application_Right__c>();
+                    for(Portal_Application_Right__c par : portalAppList){
+
+                        if(par.Portal_Application__r.Name.startsWith('Treasury Dashboard')){
+                             par.Right__c = 'Access Denied';
+                             tdList.add(par);
                         }
                         update tdList;
                     }
