@@ -55,7 +55,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
                 riskOpt ='11';
         }
 
-        if(myCase.RecordTypeId == AMS_Utils.RECTYPE_SIDRA){
+        if(myCase.RecordTypeId == AMS_Utils.RECTYPE_SIDRA){ 
 
             options.add(new SelectOption('SELECT Risk Option', 'SELECT Risk Option'));
 
