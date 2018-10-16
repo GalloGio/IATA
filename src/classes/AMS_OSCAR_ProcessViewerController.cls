@@ -122,6 +122,12 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
+    public boolean isNewGE{
+        get{
+            return (oscar != null && oscar.Process__c == AMS_Utils.NEWGESTANDARD);
+        }
+    }
+
     private Set<String> alwaysOnSteps{
         get{
             return new Set<String>{
