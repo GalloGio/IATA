@@ -16,6 +16,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					'Account__c'
 					, 'Process__c'
 					, 'Step6__c'
+					, 'Step45__c'
 				};
 			}
 			return oscarFields;
@@ -139,7 +140,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 	public Boolean editable {
 		get{
-			return (oscar.STEP6__c != AMS_Utils.PASSED);
+			return (oscar.STEP45__c != AMS_Utils.PASSED);
 		}
 		set;
 	}
@@ -344,6 +345,12 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 	public void save(){
 
+		if([Select Id, STEP45__C from AMS_OSCAR__c where Id = :oscarId].get(0).STEP45__C == AMS_Utils.PASSED){
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'The hierarchy structure is already confirmed, you cannot change it.'));
+			return;
+		}
+			
+
 		adjustHierarchy();
 
 		if(performValidations()){
@@ -363,7 +370,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					closeTab = true;
 				}
 
-				oscar.Step45__c = 'Passed';
+				oscar.Step45__c = AMS_Utils.PASSED;
 
 				update oscar;
 				//if(updateRelatedRecords()) closeTab = true;
