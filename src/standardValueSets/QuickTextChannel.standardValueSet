@@ -6,4 +6,14 @@
         <default>true</default>
         <label>Live Agent</label>
     </standardValue>
+    <standardValue>
+        <fullName>Event</fullName>
+        <default>false</default>
+        <label>Event</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Task</fullName>
+        <default>false</default>
+        <label>Task</label>
+    </standardValue>
 </StandardValueSet>
