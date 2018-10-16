@@ -22,8 +22,13 @@ private class ISSP_PortalUserStatusChangeTest {
         actionName = ISSP_PortalUserStatusChange.getActionName(controler.con.User_Portal_Status__c,'');
         ISSP_PortalUserStatusChange.preformAction(actionName,controler.con.Id,controler.con.User_Portal_Status__c);
 
+        //ISSP_PortalUserStatusChange.isUserDisabel(con.Id);
+        //ISSP_PortalUserStatusChange.disabelUser(con.Id);
         Set<String> setIds = new Set<String>();
         setIds.add(con.Id);
+
+        //ISSP_PortalUserStatusChange.futureDeactivateUsers(setIds);
+        //ISSP_PortalUserStatusChange.futureUpdateUsers(setIds);
 
         controler.con.User_Portal_Status__c = 'Approved Admin';
         actionName = ISSP_PortalUserStatusChange.getActionName(controler.con.User_Portal_Status__c,'');

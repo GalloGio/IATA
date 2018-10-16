@@ -221,18 +221,26 @@ public with sharing class ISSP_PortalService{
 
             List<Contact> cl = [Select Id, User_Portal_Status__c, Email, Name From Contact Where id =: contactId];
 
-            if(!cl.isEmpty()) {
+            if(cl.size() != 0) {
                 contact = cl[0];
-    
-                if (this.contactStatus == 'PA') {
-                    // Pending Approval
+            }
+
+            if (this.contactStatus == 'PA') {
+                // Pending Approval
+                if (contact != null) {
                     contact.User_Portal_Status__c = 'Approved User';
                     update contact;
                     ISSP_EditPortalServiceAccessExt.updateUserProfile(contact.Id);
-                } else if (this.contactStatus == 'NO') {
-                    // No USer
+                }
+            } else if (this.contactStatus == 'NO') {
+                // No USer
+                if (contact != null) {
+                    Set <Id> idSet = new Set <Id>();
+                    idSet.add(contact.Id);
+
                     ISSP_ContactList ctrl = new ISSP_ContactList();
-                    ctrl.processMultiplePortalUserStatusChange(cl, 'Approved User', 'Active');
+
+                    ctrl.processMultiplePortalUserStatusChange(idSet, 'Approved User', 'Active');
                 }
             }
 

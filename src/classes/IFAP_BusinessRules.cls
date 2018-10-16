@@ -247,16 +247,17 @@ public with sharing class IFAP_BusinessRules {
     public static Boolean CheckFinancialAssessmentContactExist(Contact theContact) {
 
         // Check for the record type, the agent type (P/C) and for the financial assessment contact boolean field
-        //        //(theContact.RecordTypeId == ContactRecordType.Id || theContact.RecordTypeId == ContactRecordTypeStandard.Id ) &&
-        if (
-            theContact.Financial_Assessment_Contact__c == true &&
-            (theContact.Agent_Type__c == 'IATA Passenger Sales Agent' || theContact.Agent_Type__c == 'IATA Cargo Agent' || theContact.Agent_Type__c == 'CASS Associate')) {
+        if (theContact.Agent_Type__c == 'IATA Passenger Sales Agent' 
+            || theContact.Agent_Type__c == 'IATA Cargo Agent'
+            || theContact.Agent_Type__c == 'CASS Associate') {
 
-            List<Contact> AccountContacts = [Select Id, Financial_Assessment_Contact__c, AccountId From Contact 
-                                            Where AccountId = : theContact.AccountId 
-                                            And Id <>: theContact.Id AND Financial_Assessment_Contact__c = true];
+            Integer countAccountContacts = [SELECT Count()
+                                            FROM Contact 
+                                            WHERE AccountId = : theContact.AccountId 
+                                                AND Id <>: theContact.Id 
+                                                AND Financial_Assessment_Contact__c = true];
 
-            if (AccountContacts.size() > 0) {
+            if (countAccountContacts > 0) {
                 return true;
             }
         }
@@ -278,6 +279,14 @@ public with sharing class IFAP_BusinessRules {
         if (currentUserProfile.Name == 'ISS Portal Agency Delegated Admin User' || currentUserProfile.Name == 'ISS Portal Agency User (Partner)'  ) {
             return true;
         }
+
+        //Allow any status change coming from webservice that will have a user that is not a sys admin making the change(UPDATE WEBSERVICE CODE TO SURE ALL THE UPDATES FROM WS SET THE FIELD IS_COMPLAINT ON THE CASE to TRUE)
+        /*
+        if (isUpdateFromWS) {
+            system.debug('*** WEBSERVICE BYPASS ***');
+            return true;
+        }
+        */
 
         if (isOnCaseCreation) {
 

@@ -244,10 +244,11 @@ public with sharing class ISSP_EditPortalServiceAccess{
         }
         else if (noUser){
             if (thisContact != null){
-                List<Contact> cls = new List<Contact>();
-                cls.add(thisContact);
+                Set <Id> idSet = new Set <Id>();
+                idSet.add(thisContact.Id);
                 ISSP_ContactList ctrl = new ISSP_ContactList();
-                ctrl.processMultiplePortalUserStatusChange(cls, 'Approved User', 'Active');
+                system.debug('calling processMultiplePortalUserStatusChange: ' + idSet);
+                ctrl.processMultiplePortalUserStatusChange(idSet, 'Approved User', 'Active');
             }
         }
         
@@ -401,7 +402,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
             
             List <Contact> processContactList = [SELECT Id, User_Portal_Status__c, Name, Email FROM Contact WHERE Id IN :contactIdSet];
             List <String> activateIdList = new List <String>();
-            List<Contact> cls = new List<Contact>();
+            Set <Id> createIdSet = new Set <Id>();
             for (Contact thisContact : processContactList){
                 system.debug('User_Portal_Status__c: ' + thisContact.User_Portal_Status__c);
                 if (thisContact.User_Portal_Status__c == 'Pending Approval'){
@@ -409,7 +410,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
                     thisContact.User_Portal_Status__c = 'Approved User';
                 }
                 else if (thisContact.User_Portal_Status__c == '' || thisContact.User_Portal_Status__c == null){
-                    cls.add(thisContact);
+                    createIdSet.add(thisContact.Id);
                 }
             }
 
@@ -418,9 +419,9 @@ public with sharing class ISSP_EditPortalServiceAccess{
                 update processContactList;
             }
 
-            if (!cls.isEmpty()){
+            if (!createIdSet.isEmpty()){
                 ISSP_ContactList ctrl = new ISSP_ContactList();
-                ctrl.processMultiplePortalUserStatusChange(cls, 'Approved User', 'Active');
+                ctrl.processMultiplePortalUserStatusChange(createIdSet, 'Approved User', 'Active');
             }
 
             //

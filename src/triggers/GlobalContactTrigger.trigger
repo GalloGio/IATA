@@ -94,34 +94,31 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
 
                         for (Contact theContact : trigger.new) {
                             //Add to the list all the Contacts(trigger.new) with the Financial_Assessment_Contact__c = true
-                            if (theContact.Financial_Assessment_Contact__c)
+                            if (theContact.Financial_Assessment_Contact__c){
+                                // check if a financial assessment contact already exists for the same account
+                                if (IFAP_BusinessRules.CheckFinancialAssessmentContactExist(theContact)) {
+                                    theContact.addError(ERRORMSG);
+                                }
                                 lCons.add(theContact);
                                 
                             AcctId.add(theContact.AccountId);
                         }
                         //************************ 
                         if(!lCons.isEmpty()){
-                            Cont2Account = [SELECT Location_type__c, Type FROM Account WHERE Id in :AcctId];
+                            Cont2Account = [SELECT Location_type__c, Type 
+                                            FROM Account 
+                                            WHERE Id in :AcctId 
+                                              AND Type not in ('IATA Passenger Sales Agent', 'IATA Cargo Agent', 'CASS Associate', 'Import Agent')];
                         }
                         //************************
     
-                        // For all contacts (Created or updated)
-                        for (Contact theContact : lCons) {
-                            try {
-                                // check if a financial assessment contact already exists for the same account
-                                if (IFAP_BusinessRules.CheckFinancialAssessmentContactExist(theContact)) {
-                                    theContact.addError(ERRORMSG);
-                                }
-
-                                // check the Agent Type of the Account
-                                for (Account Acct : Cont2Account){
+                        // check the Agent Type of the Account
+                        for (Account Acct : Cont2Account){
+                            // For all contacts (Created or updated)
+                            for (Contact theContact : lCons) {
+                                try {
                                     if(theContact.AccountId == Acct.id){
-                                        if (Acct.Type != 'IATA Passenger Sales Agent' 
-                                            && Acct.Type != 'IATA Cargo Agent' 
-                                            && Acct.Type != 'CASS Associate' 
-                                            && Acct.Type != 'Import Agent' 
-                                            && !ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
-
+                                        if (!ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
                                             theContact.addError('Cannot associate an IFAP Contact to an Account of type ' + Acct.Type);
                                         }
                                     }
@@ -385,12 +382,13 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 // Update Portal Application Rights - to Access Denide If contact Status is inactiv
                 system.debug('\n\n contactsWithStatusEqualToInactivList '+contactsWithStatusEqualToInactivList+'\n\n');
                 if(contactsWithStatusEqualToInactivList.size()>0){
-                    list<Portal_Application_Right__c> parList = [select Id,Right__c from Portal_Application_Right__c where Contact__c in:contactsWithStatusEqualToInactivList];
+                    list<Portal_Application_Right__c> parList = [SELECT Id,Right__c 
+                                                                FROM Portal_Application_Right__c 
+                                                                WHERE Contact__c in:contactsWithStatusEqualToInactivList];
                     for(Portal_Application_Right__c par :parList ){
                         par.Right__c = 'Access Denied';
                     }
-                    if(!parList.isEmpty())
-                        update parList;
+                    update parList;
                 }
                 
                 // Unactivate Users
@@ -506,7 +504,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                         }
                     }*/
 
-                    if ((con.Email != '' && (con.Email != trigger.oldMap.get(con.Id).Email || con.FirstName != trigger.oldMap.get(con.Id).FirstName || con.LastName != trigger.oldMap.get(con.Id).LastName))){
+                    if ((con.Email != '' 
+                        && (con.Email != trigger.oldMap.get(con.Id).Email 
+                            || con.FirstName != trigger.oldMap.get(con.Id).FirstName 
+                            || con.LastName != trigger.oldMap.get(con.Id).LastName))){
+                        
                         if (!conEmailMap.containsKey(con.Id)){
                             conEmailMap.put(con.Id, con.Email);
                             conEmailIdSet.add(con.Id);
@@ -550,6 +552,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 system.debug('ISSP_ContactStatusTrigger AfterUpdate');
                 Set<Id> contactIds = new Set<Id>();
                 Map<String, List<Id>> inactivationReasonMap = new Map<String, List<Id>> ();
+
                 for(Contact newCon : trigger.new){
                     Contact oldCon = trigger.oldMap.get(newCon.Id);
                     if (newCon.Status__c != oldCon.Status__c){
@@ -557,9 +560,9 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                             contactIds.add(newCon.Id);
                             system.debug('Inactivating contact');
                             if (!inactivationReasonMap.containsKey(newCon.Status__c)){
-                                inactivationReasonMap.put(newCon.Status__c, new List<Contact>{newCon});
+                                inactivationReasonMap.put(newCon.Status__c, new List<Id>{newCon.Id});
                             }else{
-                                inactivationReasonMap.get(newCon.Status__c).add(newCon);
+                                inactivationReasonMap.get(newCon.Status__c).add(newCon.Id);
                             }
                         }
                     }
@@ -587,8 +590,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     }
                     for (String thisReason : inactivationReasonMap.keySet()){
                         system.debug('thisReason: ' + thisReason);
-
-                        List<Contact> cls = inactivationReasonMap.get(thisReason);
+                        Set <Id> contactIdSet = new Set <Id>();
+                        List <Id> contactIdList = inactivationReasonMap.get(thisReason);
                         if (thisReason == 'Left Company / Relocated'){
                             thisReason = 'LeftCompany';
                         }else if (thisReason == 'Retired'){
@@ -597,11 +600,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                             thisReason = 'UnknownContact';
                         }
                         for (Id thisId : contactIdList){
-                            system.debug('contactIds: ' + thisId);
                             contactIdSet.add(thisId);
                         }
+
                         ISSP_ContactList ctrl = new ISSP_ContactList();
-                        ctrl.processMultiplePortalUserStatusChange(cls, 'Deactivated', thisReason);
+                        ctrl.processMultiplePortalUserStatusChange(contactIdSet, 'Deactivated', thisReason);
                     }
                 }
             }
