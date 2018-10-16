@@ -100,7 +100,7 @@
         <label>All</label>
     </listViews>
     <nameField>
-        <label>Report Title2</label>
+        <label>Report Title</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>External Reports</pluralLabel>
