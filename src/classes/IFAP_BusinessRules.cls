@@ -252,17 +252,12 @@ public with sharing class IFAP_BusinessRules {
             theContact.Financial_Assessment_Contact__c == true &&
             (theContact.Agent_Type__c == 'IATA Passenger Sales Agent' || theContact.Agent_Type__c == 'IATA Cargo Agent' || theContact.Agent_Type__c == 'CASS Associate')) {
 
-            List<Contact> AccountContacts = [Select Id, Financial_Assessment_Contact__c, AccountId From Contact Where AccountId = : theContact.AccountId And Id <>: theContact.Id];
-            system.debug('AccountContacts: ' + AccountContacts);
-            system.debug('theContact.AccountId: ' + theContact.AccountId);
-            system.debug('theContact.Id: ' + theContact.Id);
+            List<Contact> AccountContacts = [Select Id, Financial_Assessment_Contact__c, AccountId From Contact 
+                                            Where AccountId = : theContact.AccountId 
+                                            And Id <>: theContact.Id AND Financial_Assessment_Contact__c = true];
 
             if (AccountContacts.size() > 0) {
-                for (Contact aContact : AccountContacts) {
-                    if (aContact.Financial_Assessment_Contact__c == true) {
-                        return true;
-                    }
-                }
+                return true;
             }
         }
         return false;

@@ -593,16 +593,16 @@ public with sharing class ISSP_ContactList {
         system.debug('IDS: ' + processContactList);
 
         if (!processContactList.isEmpty()){
-            system.debug('STATUS: ' + processContactList[0].User_Portal_Status__c);
-            String currentStatus = processContactList[0].User_Portal_Status__c;
-            if (currentStatus == '' || currentStatus == null){
-                currentStatus = 'New user';
-            }
-            String theAction = ISSP_PortalUserStatusChange.actionsMap.get(currentStatus).get(action);
-            
             for (Contact thisContact : processContactList){
+                system.debug('STATUS: ' + processContactList[0].User_Portal_Status__c);
+                String currentStatus = processContactList[0].User_Portal_Status__c;
+                if (currentStatus == '' || currentStatus == null){
+                    currentStatus = 'New user';
+                }
+                String theAction = ISSP_PortalUserStatusChange.actionsMap.get(currentStatus).get(action);
                 Savepoint sPointContact = Database.setSavepoint();
-
+                //thisContact.User_Portal_Status__c = action;
+                //update thisContact;
                 String theResult = ISSP_PortalUserStatusChange.runAction(thisContact.Id, thisContact.Email, theAction, action, inactivationReason, null);
                 system.debug('theResult: ' + theResult);
                 if (theResult != ''){
@@ -619,7 +619,26 @@ public with sharing class ISSP_ContactList {
         }
     }
     
-
+    /*
+    public void disableUser(String contactId){
+        update new Contact(Id=contactId,User_Portal_Status__c='Deactivated');
+        ISSP_PortalUserStatusChange.futureDisabelUser(contactId);
+        Set <Id> teamMemberIdSet = new Set <Id>();
+        list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled from User u where contactId =:contactId];
+        for(User u : usersToUpdate){
+            teamMemberIdSet.add(u.Id);
+        }
+        if (!teamMemberIdSet.isEmpty()){
+            ISSP_HierarchyAccountTeamAccounts.deleteHierarchyAccountTeamMemberAccounts(teamMemberIdSet);
+        }
+    }
+    
+    public void rejectUser(String contactId){
+        update new Contact(Id=contactId,User_Portal_Status__c='Deactivated', Status__c='Inactive');
+        ISSP_PortalUserStatusChange.futureDisabelUser(contactId);
+    }
+    */
+    
     @future
     public static void updateContact (String contactId, String userStatus){
         system.debug('updating contact: ' + contactId);

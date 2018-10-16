@@ -695,7 +695,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                 {
                     con = contactMap.get(user.ContactKaviId__c);   
                 }
-
+                //user.email = con.email; 
                 user.firstname = con.firstName;
                 user.lastname = con.lastname;
                 user.Title = con.Title;
@@ -718,9 +718,16 @@ public with sharing class ISSP_PortalUserStatusChange {
         list<User> userList = [select Id,IsActive,IsPortalEnabled from User where ContactId in:conIdSet OR ContactKaviId__c in:conIdSet];
         for(User user : userList){
              user.IsActive = false;
+             // TF - Commented to fix SP8-28, user just needs to be inactivated. A batch has been created to change IsPortalEnabled to false
+             //user.IsPortalEnabled = false;
         }
-        if(!userList.isEmpty())
+        try 
+        {
             update userList;
+        }
+        catch(Exception e)
+        {
+        }  
     }
     
        public static Messaging.SingleEmailMessage createEmail(string templateId,string userId, string communityName){
