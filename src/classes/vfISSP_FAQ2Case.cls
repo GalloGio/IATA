@@ -623,7 +623,7 @@ global class vfISSP_FAQ2Case
 
         String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
         if(profileName.startsWith('ISS Portal PwC')){  isPWCProfile = true; }
-        if(profileName.startsWith('ISS Portal DPC') ){  isDPCUser= true; }
+        if(profileName.startsWith('ISS Portal DPC Admin') ){  isDPCUser= true; }
         if(profileName.startsWith('ISS Portal Agency') ){  isAgencyUser= true; }
         if(profileName.startsWith('ISS Portal GSA') ){
             isGSAUser= true;

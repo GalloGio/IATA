@@ -60,7 +60,7 @@
                 <field>Priority</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>ID_Card_Status__c</field>
             </layoutItems>
         </layoutColumns>
