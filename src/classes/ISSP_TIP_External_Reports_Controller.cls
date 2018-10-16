@@ -16,7 +16,7 @@ public with sharing class ISSP_TIP_External_Reports_Controller {
         String userId = UserInfo.getUserId();
         String contactId;
 
-        if (userId != null && userId != ''){
+        if (String.isBlank(userId)) {
             List <User> userList = [SELECT Id, ContactId FROM User WHERE Id = :userId];
 
             if(!userList.isEmpty()) {
@@ -25,7 +25,7 @@ public with sharing class ISSP_TIP_External_Reports_Controller {
 
                 if (contactId != null && contactId != '') {
                     List <Portal_Application_Right__c> appList = [SELECT Id FROM Portal_Application_Right__c
-					                                              WHERE Portal_Application__r.Name LIKE 'TIP Report%'
+					                                              WHERE Portal_Application__r.Name LIKE 'TIP Reports%'
 																		AND Right__c = 'Access Granted'
 																		AND Contact__c = :contactId];
                     if (appList.isEmpty()) {
