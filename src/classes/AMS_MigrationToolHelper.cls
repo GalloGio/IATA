@@ -796,7 +796,7 @@ public without sharing class AMS_MigrationToolHelper {
 				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
 			if(processType == 'CER.1.0')
 				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
-			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP )
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
 				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'BANK_ACCOUNT_SETUP');
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
