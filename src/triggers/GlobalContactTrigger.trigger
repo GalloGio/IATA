@@ -502,17 +502,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                             || (con.User_Portal_Status__c == 'Regional Administrator' && con.Regional_Administrator_Countries__c != trigger.oldMap.get(con.Id).Regional_Administrator_Countries__c))
                         conIdSet.add(con.Id);
 
-                    //TF - SP9-A5
-                    /*if ((con.Email != trigger.oldMap.get(con.Id).Email) && con.Email != ''){
-                        system.debug('ISSP_ContactUpdaetPortalUser, email being changed');
-                        if (!conEmailMap.containsKey(con.Id)){
-                            conEmailMap.put(con.Id, con.Email);
-                            conEmailIdSet.add(con.Id);
-                        }
-                    }*/
-
-                    if ((con.Email != '' 
-                        && (con.Email != trigger.oldMap.get(con.Id).Email 
+                    if ((con.Email != '' && (con.Email != trigger.oldMap.get(con.Id).Email 
                             || con.FirstName != trigger.oldMap.get(con.Id).FirstName 
                             || con.LastName != trigger.oldMap.get(con.Id).LastName))){
                         
@@ -531,6 +521,10 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     if(con.accountId != null) 
                         actListToReview.add(con.accountId);
                     /*IFG deployment*/
+                }
+                if(conIdSet.size()>0){
+                    ISSP_Constant.UserAccountChangeParent = true;
+                    update [select Id from User where ContactId in:conIdSet];
                 }
                 
                 //TF - SP9-A5
