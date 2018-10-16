@@ -561,10 +561,21 @@ function buildFunctionCall(func, argList){
                                             </a>
                                         </apex:outputPanel>
                                     </apex:pageBlockSectionItem>
-                                    <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;">
+                                    <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;" rendered="{!step.name  != 'STEP45'}">
                                         <apex:outputPanel >
                                             <div style="padding-top: {!IF((step.isDependent), '0px', '20px')}">
                                                 <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
+                                                    <apex:outputText value="{!$Label[step.label]}"/>
+                                                </a>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </apex:pageBlockSectionItem>
+
+                                    <!-- FOR GE PROCESS: CALLING DIRECTLY THE PAGE FROM URL-->
+                                    <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;" rendered="{!step.name  == 'STEP45'}">
+                                        <apex:outputPanel >
+                                            <div style="padding-top: {!IF((step.isDependent), '0px', '20px')}">
+                                                <a href="javascript:dyn_functions.hierarchySelectionForGE('{!oscar.id}');">
                                                     <apex:outputText value="{!$Label[step.label]}"/>
                                                 </a>
                                             </div>
