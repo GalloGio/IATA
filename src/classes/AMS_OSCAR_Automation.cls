@@ -1175,12 +1175,9 @@ public with sharing class AMS_OSCAR_Automation {
                     list<Account> acc = [SELECT ID, (SELECT ID FROM RHC_Informations__r) FROM ACCOUNT WHERE ID =:oscar.Account__c ];
                     List<AMS_Pax_Accreditation_Form__c> pax = [SELECT Preferred_RHC_currency__c FROM AMS_Pax_Accreditation_Form__c WHERE ID =:oscar.AMS_Online_Accreditation__c];
 
-                    if(!acc[0].RHC_Informations__r.IsEmpty() && !pax.isEmpty() && pax[0].Preferred_RHC_currency__c != ''){
+                    if(!acc[0].RHC_Informations__r.IsEmpty() && !pax.isEmpty()){
                         acc[0].RHC_Informations__r[0].CurrencyIsoCode = pax[0].Preferred_RHC_currency__c;
                         update acc[0].RHC_Informations__r;
-                    }
-                    else{
-                        oscar.addError('Please choose a preferred RHC currency');
                     }
                 }
 
