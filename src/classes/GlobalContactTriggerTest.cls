@@ -333,12 +333,16 @@ private class GlobalContactTriggerTest {
             TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
             License_Cost_Center__c = 'ISF005CH01'
         );
-        
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        insert acc;
 
-        Account acc2 = ISSP_ObjectFactory.createNewAccount();
-        insert acc2;
+        User usr = [Select id from User where Id = :UserInfo.getUserId()];
+        System.RunAs(usr){
+            Test.startTest();
+        
+            Account acc = ISSP_ObjectFactory.createNewAccount();
+            insert acc;
+
+            Account acc2 = ISSP_ObjectFactory.createNewAccount();
+            insert acc2;
 
             Contact con = ISSP_ObjectFactory.createNewContact();
             con.AccountId= acc.Id;
@@ -349,45 +353,22 @@ private class GlobalContactTriggerTest {
             con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
             insert con;
 
-        testUser.ContactId = con.id;
-        testUser.ContactKaviId__c = con.id;
-        insert testUser;
+            testUser.ContactId = con.id;
+            testUser.ContactKaviId__c = con.id;
+            insert testUser;
 
-        con.Preferred_Language__c = 'Italian';
-        con.Accountid = acc2.id;
-        con.User_Portal_Status__c = 'Deactivated';
-        con.status__c = 'Inactive';
-        con.Kavi_User__c = testUser.id;
-
-        /*Portal_Applications__c PA = new Portal_Applications__c(
-            Name = 'Treasury Dashboard'
-        );
-        insert PA;
-
-        Portal_Applications__c PA2 = new Portal_Applications__c(
-            Name = 'Standards Setting Workspace'
-        );
-        insert PA2;
-
-        Portal_Application_Right__c PAR = new Portal_Application_Right__c(
-            Contact__c = con.Id,
-            Portal_Application__c = PA.id
-        );
-        insert PAR;
-
-        Portal_Application_Right__c PAR2 = new Portal_Application_Right__c(
-            Contact__c = con.Id,
-            
-            Portal_Application__c = PA2.id
-        );
-        insert PAR2;*/
-
-        try{
-            update con;
-        }
-        catch(Exception e){
-            Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
-            //System.AssertEquals(expectedExceptionThrown, true);
+            con.Preferred_Language__c = 'Italian';
+            con.Accountid = acc2.id;
+            con.User_Portal_Status__c = 'Deactivated';
+            con.status__c = 'Inactive';
+            con.Kavi_User__c = testUser.id;
+            try{
+                update con;
+            }
+            catch(Exception e){
+                Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
+            }
+            Test.stopTest();
         }
     }
 

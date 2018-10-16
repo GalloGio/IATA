@@ -91,35 +91,25 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     //profile prof;
                     //system.debug('profs: ' + profs);
                     if (sysAdminProfileId != null && sysAdminProfileId != '') {
-
-                        for (Contact theContact : trigger.new) {
-                            //Add to the list all the Contacts(trigger.new) with the Financial_Assessment_Contact__c = true
-                            if (theContact.Financial_Assessment_Contact__c){
-                                // check if a financial assessment contact already exists for the same account
-                                if (IFAP_BusinessRules.CheckFinancialAssessmentContactExist(theContact)) {
-                                    theContact.addError(ERRORMSG);
-                                }
-                                lCons.add(theContact);
-                                
-                            AcctId.add(theContact.AccountId);
-                        }
-                        //************************ 
-                        if(!lCons.isEmpty()){
-                            Cont2Account = [SELECT Location_type__c, Type 
-                                            FROM Account 
-                                            WHERE Id in :AcctId 
-                                              AND Type not in ('IATA Passenger Sales Agent', 'IATA Cargo Agent', 'CASS Associate', 'Import Agent')];
-                        }
-                        //************************
-    
-                        // check the Agent Type of the Account
-                        for (Account Acct : Cont2Account){
-                            // For all contacts (Created or updated)
-                            for (Contact theContact : lCons) {
-                                try {
-                                    if(theContact.AccountId == Acct.id){
-                                        if (!ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
-                                            theContact.addError('Cannot associate an IFAP Contact to an Account of type ' + Acct.Type);
+                        //prof = profs[0];
+                        // For all contacts (Created or updated)
+                        for (Contact theContact : lCons) {
+                            system.debug('one contact: ' + theContact);
+                            try {
+                                system.debug('is IFAP: ' + theContact.Financial_Assessment_Contact__c);
+                                if (theContact.Financial_Assessment_Contact__c) {
+                                    // check if a financial assessment contact already exists for the same account
+                                    if (IFAP_BusinessRules.CheckFinancialAssessmentContactExist(theContact)) {
+                                        theContact.addError(ERRORMSG);
+                                    }
+                                    //QUERY IN LOOP
+                                    //Account theAccount = [Select a.Name, a.Location_Type__c, a.Type From Account a where a.Id = :theContact.AccountId];
+                                    // check the Agent Type of the Account
+                                    for (Account Acct : Cont2Account){
+                                        if(theContact.AccountId == Acct.id){
+                                            if (Acct.Type != 'IATA Passenger Sales Agent' && Acct.Type != 'IATA Cargo Agent' && Acct.Type != 'CASS Associate' && Acct.Type != 'Import Agent' && !ANG_OscarProcessHelper.isIATACodeGenerationRunning) {
+                                                theContact.addError('Cannot associate an IFAP Contact to an Account of type ' + Acct.Type);
+                                            }
                                         }
                                     }
                                 }
@@ -130,6 +120,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     }
                 }
             }
+            /*trgIFAPContact_BeforeInsertUpdate BeforeTrigger*/
+
         }
         /*Share trigger code*/
             
@@ -382,9 +374,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 // Update Portal Application Rights - to Access Denide If contact Status is inactiv
                 system.debug('\n\n contactsWithStatusEqualToInactivList '+contactsWithStatusEqualToInactivList+'\n\n');
                 if(contactsWithStatusEqualToInactivList.size()>0){
-                    list<Portal_Application_Right__c> parList = [SELECT Id,Right__c 
-                                                                FROM Portal_Application_Right__c 
-                                                                WHERE Contact__c in:contactsWithStatusEqualToInactivList];
+                    list<Portal_Application_Right__c> parList = [select Id,Right__c from Portal_Application_Right__c where Contact__c in:contactsWithStatusEqualToInactivList];
+
                     for(Portal_Application_Right__c par :parList ){
                         par.Right__c = 'Access Denied';
                     }
@@ -398,17 +389,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 
                 if (contactsToDisable_TD.size() > 0){
 
-                    list<Portal_Application_Right__c> portalAppList = [SELECT Id, Right__c, Contact__c 
-                                                                      FROM Portal_Application_Right__c 
-                                                                      WHERE Contact__c in:contactsToDisable_TD
-                                                                        AND Right__c = 'Access Granted']; 
-
-                    list<Portal_Application_Right__c> tdList = new list<Portal_Application_Right__c>();
-                    for(Portal_Application_Right__c par : portalAppList){
-
-                        if(par.Portal_Application__r.Name.startsWith('Treasury Dashboard')){
-                             par.Right__c = 'Access Denied';
-                             tdList.add(par);
+                    list<Portal_Application_Right__c> tdList = [SELECT Id, Right__c FROM Portal_Application_Right__c WHERE Contact__c in:contactsToDisable_TD
+                                                AND Right__c = 'Access Granted' AND Portal_Application__r.Name LIKE 'Treasury Dashboard%'];
+                    if (!tdList.isEmpty()){
+                        for(Portal_Application_Right__c par : tdList){
+                            par.Right__c = 'Access Denied';
                         }
                         update tdList;
                     }
