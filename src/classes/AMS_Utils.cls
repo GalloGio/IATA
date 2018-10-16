@@ -1522,12 +1522,14 @@ public without sharing class AMS_Utils {
         
         if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
             Map<String, Object> accountFieldNewValue = new Map<String,Object>();
+            Map<String, Object> accountFieldNewValueBKP = new Map<String,Object>(); //AMSU-184
 
             for (String key : fieldsMapping.keySet()) {
                 String value = fieldsMapping.get(key);
                 if (fieldsToMigrate.contains(value)) {
                 
                     accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
+                    accountFieldNewValueBKP.put(key, oscarOnlineAccreditation.get(value)); //AMSU-184
                     System.debug(key + ':' + oscarOnlineAccreditation.get(value));
                 }
             }
@@ -1554,6 +1556,23 @@ public without sharing class AMS_Utils {
 
                 Account newAcc = new Account(Id = acc.Id);
                 List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+
+                //AMSU-184 - need to bypass the name and short name for the Ownership changes to China and Taipei, but only for the remaining of the hierarchy, the selected account to change can change its name
+                if( (typesOfChange.contains(AMS_Utils.OWNERSHIP_NON_IATA) || typesOfChange.contains(AMS_Utils.OWNERSHIP_IATA) )
+                    && (oscarOnlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'CN' || oscarOnlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'TW') 
+                ){
+                    if(acc.Id != oscar.Account__c){
+                        fieldsToMigrate.remove('Account_Name__c');
+                        fieldsToMigrate.remove('Short_Name__c');
+                        accountFieldNewValue.remove('Name');
+                        accountFieldNewValue.remove('Short_Name__c');
+                    }else{
+                        fieldsToMigrate.add('Account_Name__c');
+                        fieldsToMigrate.add('Short_Name__c');
+                        accountFieldNewValue = accountFieldNewValueBKP;
+                    }
+                }
+                
 
                 for(String accFieldApiName: accountFieldNewValue.keySet())
                 {
@@ -1869,6 +1888,16 @@ public without sharing class AMS_Utils {
                     onlineAccreditationFieldNewValue.put('ISSP_AMS_GDS_with_signed_contract__c', account.GDS__c);
 
 
+                //AMSU-184 - need to bypass the name and short name for the Ownership changes to China and Taipei, but only for the remaining of the hierarchy, the selected account to change can change its name
+                if( typesOfChange.contains(AMS_Utils.OWNERSHIP_IATA) 
+                    && (onlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'CN' || onlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'TW') 
+                ){
+                    fieldsToMigrate.remove('Account_Name__c');
+                    fieldsToMigrate.remove('Short_Name__c');
+                    onlineAccreditationFieldNewValue.remove('Account_Name__c');
+                    onlineAccreditationFieldNewValue.remove('Short_Name__c');
+                }
+                
                 for(String accredFieldApiName: onlineAccreditationFieldNewValue.keySet())
                 {
 
