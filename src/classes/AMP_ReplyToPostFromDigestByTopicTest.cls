@@ -96,7 +96,6 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 		
 		Test.setCurrentPage(pageRef);
 		
-	 	pageRef.getParameters().put('topic', airportsTopic);
 	 	pageRef.getParameters().put('feedItemId', feedItem.Id);
 
 		AMP_ReplyToPostFromDigestByTopic ctrl = new AMP_ReplyToPostFromDigestByTopic();		
@@ -149,7 +148,6 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 		
 		Test.setCurrentPage(pageRef);
 		
-	 	pageRef.getParameters().put('topic', airportsTopic);
 	 	pageRef.getParameters().put('feedItemId', feedItem.Id);
 
 		AMP_ReplyToPostFromDigestByTopic ctrl = new AMP_ReplyToPostFromDigestByTopic();		
