@@ -334,7 +334,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	ID SISHelpDeskRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
 	ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
 	Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
-    Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR Communication');
+    Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     
 /*Record type*/	
     
