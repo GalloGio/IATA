@@ -16,7 +16,7 @@ public with sharing class ISSP_TIP_External_Reports_Controller {
         String userId = UserInfo.getUserId();
         String contactId;
 
-        if (String.isBlank(userId)) {
+        if(!String.isBlank(userId)) {
             List <User> userList = [SELECT Id, ContactId FROM User WHERE Id = :userId];
 
             if(!userList.isEmpty()) {
