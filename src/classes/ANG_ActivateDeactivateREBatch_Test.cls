@@ -42,9 +42,9 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		insert ret;
 
 		//isoCountry
-		IATA_ISO_Country__c isoCntr1 = new IATA_ISO_Country__c(Name = 'Portugal', Region__c = 'Europe', ISO_Code__c='PT', ANG_Enable_NewGen__c = true);
-		IATA_ISO_Country__c isoCntr2 = new IATA_ISO_Country__c(Name = 'China', Region__c = 'Asia', ISO_Code__c='CN', ANG_Enable_NewGen__c = true);
-		IATA_ISO_Country__c isoCntr3 = new IATA_ISO_Country__c(Name = 'United States', Region__c = 'Americas', ISO_Code__c='US', ANG_Enable_NewGen__c = true);
+		IATA_ISO_Country__c isoCntr1 = new IATA_ISO_Country__c(Name = 'Portugal', Region__c = 'Europe', ISO_Code__c='PT');
+		IATA_ISO_Country__c isoCntr2 = new IATA_ISO_Country__c(Name = 'China', Region__c = 'Asia', ISO_Code__c='CN');
+		IATA_ISO_Country__c isoCntr3 = new IATA_ISO_Country__c(Name = 'United States', Region__c = 'Americas', ISO_Code__c='US');
 
 		insert new List<IATA_ISO_Country__c>{isoCntr1, isoCntr2, isoCntr3};
 

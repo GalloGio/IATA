@@ -494,7 +494,7 @@ public with sharing class ISSP_AccessToService{
         } else {
             Contact contact = null;
 
-            List<Contact> cl = [Select Id, User_Portal_Status__c, Email, Name From Contact Where id =: contactId];
+            List<Contact> cl = [Select Id, User_Portal_Status__c From Contact Where id =: contactId];
 
             if(cl.size() != 0) {
                 contact = cl[0];
