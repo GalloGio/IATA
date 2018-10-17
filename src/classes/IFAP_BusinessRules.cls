@@ -189,27 +189,7 @@ public with sharing class IFAP_BusinessRules {
         System.debug('created cases : ' + cBatch.caseList);
     }
 
-    public static Boolean CheckFinancialAssessmentContactExist(Contact theContact) {
-
-        // Check for the record type, the agent type (P/C) and for the financial assessment contact boolean field
-        if (theContact.Agent_Type__c == 'IATA Passenger Sales Agent' 
-            || theContact.Agent_Type__c == 'IATA Cargo Agent'
-            || theContact.Agent_Type__c == 'CASS Associate') {
-
-            Integer countAccountContacts = [SELECT Count()
-                                            FROM Contact 
-                                            WHERE AccountId = : theContact.AccountId 
-                                                AND Id <>: theContact.Id 
-                                                AND Financial_Assessment_Contact__c = true];
-
-            if (countAccountContacts > 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static Boolean IsStatusCanBeSelected(Boolean isOnCaseCreation, Case UpdatedCase, Case OldCase, Profile currentUserProfile, Boolean isAuthorizedUser) {
+    public static Map<ID, Boolean> IsStatusCanBeSelected(Boolean isOnCaseCreation, Map<Case, Case> UpdatedCases, Profile currentUserProfile, Boolean isAuthorizedUser) {
 
         Map<ID, Boolean> mapCaseStatusCanBeSelected = new Map<ID, Boolean>();
         Map<ID, Case> mapCaseActionNeeded = new Map<ID, Case>();
