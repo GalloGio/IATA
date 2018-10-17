@@ -244,6 +244,26 @@ public with sharing class IFAP_BusinessRules {
         System.debug('created cases : ' + cBatch.caseList);
     }
 
+    public static Boolean CheckFinancialAssessmentContactExist(Contact theContact) {
+
+        // Check for the record type, the agent type (P/C) and for the financial assessment contact boolean field
+        if (theContact.Agent_Type__c == 'IATA Passenger Sales Agent' 
+            || theContact.Agent_Type__c == 'IATA Cargo Agent'
+            || theContact.Agent_Type__c == 'CASS Associate') {
+
+            Integer countAccountContacts = [SELECT Count()
+                                            FROM Contact 
+                                            WHERE AccountId = : theContact.AccountId 
+                                                AND Id <>: theContact.Id 
+                                                AND Financial_Assessment_Contact__c = true];
+
+            if (countAccountContacts > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static Boolean IsStatusCanBeSelected(Boolean isOnCaseCreation, Case UpdatedCase, Case OldCase, Profile currentUserProfile, Boolean isAuthorizedUser) {
 
         String caseStatus = UpdatedCase.Status;
@@ -259,6 +279,14 @@ public with sharing class IFAP_BusinessRules {
         if (currentUserProfile.Name == 'ISS Portal Agency Delegated Admin User' || currentUserProfile.Name == 'ISS Portal Agency User (Partner)'  ) {
             return true;
         }
+
+        //Allow any status change coming from webservice that will have a user that is not a sys admin making the change(UPDATE WEBSERVICE CODE TO SURE ALL THE UPDATES FROM WS SET THE FIELD IS_COMPLAINT ON THE CASE to TRUE)
+        /*
+        if (isUpdateFromWS) {
+            system.debug('*** WEBSERVICE BYPASS ***');
+            return true;
+        }
+        */
 
         if (isOnCaseCreation) {
 

@@ -177,6 +177,22 @@ public with sharing class ISSP_CreateNotification {
       }       
        return languageMap;
     }
+   
+    /*not used anywhere
+    public static void debug(string str,string mes){
+        system.debug('n\n\n\n'+str+' : '+ mes +'\n\n\n\n');
+    }
+    public static void debug(string str,map<string,string> mes){
+        system.debug('n\n\n\n'+str+' : '+ mes +'\n\n\n\n');
+    }
+    public static void debug(string str,set<Id> mes){
+        system.debug('n\n\n\n'+str+' : '+ mes +'\n\n\n\n');
+    }
+    public static void debug(string str,map<Id,Id> mes){
+        system.debug('n\n\n\n'+str+' : '+ mes +'\n\n\n\n');
+    }*/
+
+
 
     //INC253595 - Start
 
