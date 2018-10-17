@@ -369,7 +369,6 @@ private class GlobalContactTriggerTest {
             }
             catch(Exception e){
                 Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
-                //System.AssertEquals(expectedExceptionThrown, true);
             }
             Test.stopTest();
         }
