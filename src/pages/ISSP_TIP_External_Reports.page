@@ -291,7 +291,8 @@
 					                            $('#externalReportsTable').dataTable( {
 					                              "pageLength": 10,
 					                              "lengthMenu": [ 5, 10, 25, 50 ],
-					                              "searching": false
+					                              "searching": false,
+					                              "order": [[ 0, 'desc' ]]
 					                            } );                      
 					                          </script>
 					                        </apex:pageBlock>

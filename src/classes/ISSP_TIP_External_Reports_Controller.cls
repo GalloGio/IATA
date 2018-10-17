@@ -23,7 +23,7 @@ public with sharing class ISSP_TIP_External_Reports_Controller {
 
                 contactId = userList[0].ContactId;
 
-                if (contactId != null && contactId != '') {
+                if (!String.isBlank(contactId)) {
                     List <Portal_Application_Right__c> appList = [SELECT Id FROM Portal_Application_Right__c
 					                                              WHERE Portal_Application__r.Name LIKE 'TIP Reports%'
 																		AND Right__c = 'Access Granted'
