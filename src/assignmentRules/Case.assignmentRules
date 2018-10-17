@@ -1257,7 +1257,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>E-mail to Case - IATAN ARC bulletins,E-mail to Case - IATAN Customer Service,E-mail to Case - IATAN Mega Support,E-mail to Case - IATAN Online Changes,E-mail to Case - IATAN Online Payments</value>
+                <value>E-mail to Case - IATAN ARC bulletins,E-mail to Case - IATAN Customer Service,E-mail to Case - IATAN Mega Support,E-mail to Case - IATAN Online Changes,E-mail to Case - IATAN Online Payments,E&amp;F Client – Email to Case</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
