@@ -55,6 +55,28 @@
         <template>All/ACCA_Notification_on_New_Case_open_for_more_than_1hr</template>
     </alerts>
     <alerts>
+        <fullName>AMS_Application_Disapproved</fullName>
+        <description>AMS_Application_Disapproved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>AMS/AMS_Application_Disapproved</template>
+    </alerts>
+    <alerts>
+        <fullName>AMS_Application_Validation</fullName>
+        <description>AMS_Application_Validation</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>AMS/AMS_Application_Validation</template>
+    </alerts>
+    <alerts>
         <fullName>AlertsRSMADHub</fullName>
         <description>FDS Case assigned to SCE R&amp;S queue</description>
         <protected>false</protected>
