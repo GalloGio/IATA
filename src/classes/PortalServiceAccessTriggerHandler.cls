@@ -180,8 +180,10 @@ public without sharing class PortalServiceAccessTriggerHandler {
     
     public static ID getStandartReplyUserID(String senderAddress) {
         list<OrgWideEmailAddress> owa = [SELECT Id 
-                                        FROM OrgWideEmailAddress 
-                                        WHERE Address =: senderAddress limit 1];
+                                                //,Address 
+                                                //,DisplayName 
+                                           FROM OrgWideEmailAddress 
+                                          WHERE Address =: senderAddress limit 1];
         return ISSP_Utilities.isNotEmpty(owa) ? owa[0].Id : null;
     } 
     
@@ -199,8 +201,15 @@ public without sharing class PortalServiceAccessTriggerHandler {
             [SELECT Id,
                     UserId, 
                     AccountId
-            FROM AccountTeamMember 
-            WHERE AccountId IN: accountIds 
+                    //TeamMemberRole,
+                    //User.Contact.Salutation, 
+                    //User.Contact.Name, 
+                    //User.Contact.Email,
+                    //User.Contact.AccountId,
+                    //User.Contact.Account.Name, 
+                    //User.Contact.Account.BillingCountry
+               FROM AccountTeamMember 
+              WHERE AccountId IN: accountIds 
                 AND TeamMemberRole=: ENV.TeamMemberRolePL.PortalAdministrator]; 
     }
     

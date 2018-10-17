@@ -695,7 +695,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                 {
                     con = contactMap.get(user.ContactKaviId__c);   
                 }
-
+                //user.email = con.email; 
                 user.firstname = con.firstName;
                 user.lastname = con.lastname;
                 user.Title = con.Title;
@@ -718,9 +718,16 @@ public with sharing class ISSP_PortalUserStatusChange {
         list<User> userList = [select Id,IsActive,IsPortalEnabled from User where ContactId in:conIdSet OR ContactKaviId__c in:conIdSet];
         for(User user : userList){
              user.IsActive = false;
+             // TF - Commented to fix SP8-28, user just needs to be inactivated. A batch has been created to change IsPortalEnabled to false
+             //user.IsPortalEnabled = false;
         }
-        if(!userList.isEmpty())
+        try 
+        {
             update userList;
+        }
+        catch(Exception e)
+        {
+        }  
     }
     
        public static Messaging.SingleEmailMessage createEmail(string templateId,string userId, string communityName){
@@ -1079,8 +1086,48 @@ public with sharing class ISSP_PortalUserStatusChange {
             }
         }
     }
-   
-   
+    /*
+    @future 
+    public static void updateContact(String conId, String newStatus, String inactiveReason, String newEmail, Boolean deleteTeam) {
+        List <Contact> contactList = [SELECT Id, User_Portal_Status__c, Community__c, Email FROM Contact WHERE Id = :conId];
+        if (!contactList.isEmpty()){
+            Boolean userExists = false;
+            Set <Id> teamMemberIdSet = new Set <Id>();
+            list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled, u.Email, u.Contact.Email
+                                        from User u where contactId =:conId];
+            for(User u : usersToUpdate){
+                userExists = true;
+                teamMemberIdSet.add(u.Id);
+            }
+            
+            system.debug('contactList[0].User_Portal_Status__c: ' + contactList[0].User_Portal_Status__c);
+            system.debug('updating user portal status');
+            if (userExists){
+                contactList[0].User_Portal_Status__c = newStatus;
+                if (contactList[0].Community__c == '' || contactList[0].Community__c == null){
+                    contactList[0].Community__c = 'ISS Customer Portal';
+                }
+            }
+            
+            if (inactiveReason != '' && inactiveReason != null){
+                contactList[0].Status__c = inactiveReason;
+            }
+            
+            if (newEmail != '' && contactList[0].Email != newEmail){
+                ISSP_UserTriggerHandler.preventOtherTrigger = true;
+                contactList[0].Email = newEmail;
+            }
+            
+            if (deleteTeam){
+                if (!teamMemberIdSet.isEmpty()){
+                    delete [select Id from AccountTeamMember where UserId in:teamMemberIdSet and TeamMemberRole =:'Portal Administrator'];
+                }
+            }
+            
+            update contactList[0];
+        }
+    }
+    */
     public static integer inactiveEmailNumber(String currentEmail){
         system.debug('currentEmail: ' + currentEmail);
         String searchEmail = currentEmail + '.inactive%';
@@ -1142,8 +1189,7 @@ public with sharing class ISSP_PortalUserStatusChange {
     /*** AMSU-163 ***/
     public static void updateUserSync(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
         list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled, u.Email, u.Contact.Email, u.Community__c
-                                     from User u where contactId =:conId];
-
+                                            from User u where contactId =:conId];
         if (!usersToUpdate.isEmpty()){
             for(User u : usersToUpdate){
                 u.IsActive = isActive;

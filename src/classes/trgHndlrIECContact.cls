@@ -40,6 +40,7 @@ public with sharing class trgHndlrIECContact {
 		if(mapContactIdToBillingAccount == null || mapContactIdToBillingAccount.isEmpty()) return;
 
 		
+		//		List<String> lstAddressIds = new List<String>();
 		// Variables to Sync Billing Account
 		List<String> lstBillingAccountZId = new List<String>();
 		List<String> lstTax1ID = new List<String>();
@@ -78,7 +79,11 @@ public with sharing class trgHndlrIECContact {
 				lstPhone.add(oContact.Phone);
 				lstPhone.add(oContact.Phone);
 			}
-		
+
+/*			// add all address of the contact to the list of IECAddress__c to update
+			List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(oContact.Id);
+			for (IECAddress__c oAdd : lstAddresses)
+			lstAddressIds.add(oAdd.Id);*/			
 		}		
 		
 		// sync (future method)
@@ -89,5 +94,9 @@ public with sharing class trgHndlrIECContact {
 		if (!lstContactZId.isEmpty())
 			IECZuoraHelper.SyncZuoraContact(lstContactZId, lstFirstName, lstLastName, lstEmail, lstPhone);
 			
+		
+/*		// sync (future method)
+		if (!lstAddressIds.isEmpty())
+			IECZuoraHelper.syncAddressInformationWithZuora(lstAddressIds);*/
 	}
 }
