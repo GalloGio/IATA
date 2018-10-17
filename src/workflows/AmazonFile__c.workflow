@@ -106,6 +106,10 @@ A trigger will be executed to check if a reminder is needed</description>
         <description>Creates some time based actions to create a case, and send some reminders</description>
         <formula>AND(
   RecordType.DeveloperName=&apos;Certificate&apos;,
+  OR(
+    ISPICKVAL(Type__c,&quot;AOP Local Air Operating Permit&quot;),
+    ISPICKVAL(Type__c,&quot;Commercial Registry&quot;)
+  ),
   Expiry_Date__c &gt;= (TODAY()+60)
 )</formula>
         <triggerType>onCreateOnly</triggerType>
