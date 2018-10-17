@@ -6015,6 +6015,7 @@
                 ],
                 "DisplayFields": [
                   "Is_PCI_compliant__c",
+                  "ANG_PCI_compliance_expiry_date__c",
                   "ANG_Type_of_change_hidden__c",
                   "STEP6__c",
                   "AMS_Correction_change_code__c"
