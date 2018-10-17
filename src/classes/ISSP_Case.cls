@@ -364,7 +364,7 @@ public without sharing class ISSP_Case {
         String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
         //Verify if user is a PWC profile
         if (profileName.startsWith('ISS Portal PwC')) {  isPWCProfile = true; }
-        if (profileName.startsWith('ISS Portal DPC') ) {  isDPCUser = true; }
+        if (profileName.startsWith('ISS Portal DPC Admin') ) {  isDPCUser = true; }
         if (profileName.startsWith('ISS Portal Agency') ) {  isAgencyUser = true; }
         if (profileName.startsWith('ISS Portal GSA') ) {  isGSAUser = true; }
 
