@@ -16377,6 +16377,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Family</picklist>
             <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ATC%2FATS Licence Fee</fullName>
                 <default>false</default>
             </values>
@@ -16469,11 +16473,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fees</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Financial Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAP</fullName>
                 <default>false</default>
             </values>
             <values>
