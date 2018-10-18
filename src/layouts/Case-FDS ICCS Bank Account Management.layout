@@ -332,10 +332,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Instant_Surveys__c.Relationship_to_Case__c</relatedList>
-    </relatedLists>
-	<relatedLists>
-        <fields>NAME</fields>
-        <relatedList>ICCS_Attachment__c.Case__c</relatedList>
     </relatedLists> 
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
