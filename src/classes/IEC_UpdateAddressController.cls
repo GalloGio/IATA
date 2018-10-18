@@ -740,7 +740,7 @@ public void saveShipToAddress()
     else
     {
         //*** update location
-        if (dtoShipToAddress.countryCode != sourceAddress.countryCode || dtoShipToAddress.stateCode != sourceAddress.stateCode)
+        if (dtoShipToAddress.countryCode != sourceAddress.countryCode || dtoShipToAddress.stateCode != sourceAddress.stateCode || dtoShipToAddress.city != sourceAddress.city || dtoShipToAddress.postalCode != sourceAddress.postalCode || dtoShipToAddress.vatNumber != sourceAddress.vatNumber)         
         {
             //*** what to do when country/province changes
 
