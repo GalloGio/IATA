@@ -808,7 +808,7 @@ public without sharing class AMS_MigrationToolHelper {
 				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
 			if(processType == 'CER.1.0')
 				oscarRTId = oscarRT.get('CERTIFICATE');
-			if(AMS_Utils.IEP_PROCESSES.contains(processType))
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
 				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
 
 
