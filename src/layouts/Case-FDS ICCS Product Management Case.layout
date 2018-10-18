@@ -327,6 +327,18 @@
         <fields>NAME</fields>
         <relatedList>AP_Process_Form__c.Case__c</relatedList>
     </relatedLists>
+	<relatedLists>
+        <fields>NAME</fields>
+        <fields>ICCS_Bank_Account__c.NAME</fields>
+        <fields>Split_type__c</fields>
+        <fields>Percentage__c</fields>
+        <fields>Amount__c</fields>
+        <relatedList>ICCS_BankAccount_To_Case__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ICCS_Attachment__c.Case__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
