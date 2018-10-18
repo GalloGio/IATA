@@ -78,6 +78,10 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             }
             
 
+			// INC431553 : For verifiers, limits don't apply
+            List<RecordType> recordTypeVerifier = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'Verifier'];
+			if(recordTypeVerifier[0].Id != acc.RecordTypeId){
+
             // Load  FRED limit and compare to account number
 			List<RecordType> recordTypes = [SELECT Id FROM RecordType WHERE SObjectType = 'One_Id_Service_Provider_Config__c' AND DeveloperName = 'Service_Provider'];
 
@@ -99,6 +103,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
                 // Limit reached
                 return new RegistrationResponse(false, Label.OneId_Max_Account_Reached);
             }
+			}
                 
 
             Savepoint sp = Database.setSavepoint();
@@ -362,12 +367,12 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
         set<string> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(recordTypeSearch);
 
-        String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry FROM Account WHERE ';
+        String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry, RecordTypeId FROM Account WHERE ';
         queryStr += ' RecordType.DeveloperName in :recordTypesSet';
         queryStr += ' AND Name like \'%' + userInput + '%\'';
 
         if(customerType=='Aircraft Operator') {
-            queryStr = 'SELECT Id, Name, IATACode__c, X8585_Code__c, Airline_designator__c, IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c ';
+            queryStr = 'SELECT Id, Name, IATACode__c, X8585_Code__c, Airline_designator__c, IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c, RecordTypeId ';
             String queryStr2 = ' FROM Account WHERE';
             //queryStr2 += ' RecordType.DeveloperName = \'IATA_Airline\'';
             queryStr2 += ' (RecordType.DeveloperName = \'IATA_Airline\' OR RecordType.DeveloperName = \'Operator\' )';
@@ -387,7 +392,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         }
 
         if(customerType=='ICAO Member State') {
-            queryStr = 'SELECT Id, Name, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c, IATA_ISO_Country__r.ISO_Code__c ';
+            queryStr = 'SELECT Id, Name, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c, IATA_ISO_Country__r.ISO_Code__c, RecordTypeId ';
             String queryStr2 = ' FROM Account WHERE';
             queryStr2 += ' RecordType.DeveloperName = \'ICAO_Member_State\'';
             queryStr2 += ' AND (Name like \'%' + userInput + '%\'';
