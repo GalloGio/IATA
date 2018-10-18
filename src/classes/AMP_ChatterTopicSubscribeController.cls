@@ -603,18 +603,36 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			
 		}
 		
+		emailBody +='</tbody></table>\n';
+			
 		if(String.isNotBlank(remainingURL)){
 			emailBody += '  <br/>';
+			emailBody += '<table><tbody>';
+			
 			emailBody +=' 	<tr>';
-			emailBody +=' 		<td class="" style="font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif; font-size: 14px;" width="116">';
-			emailBody +=' 			<span class="">';
-			emailBody +=' 				<a href="'+ URL.getSalesforceBaseUrl().toExternalForm() + remainingURL + '" class="" target="_blank"><span class="text" style="white-space: nowrap;"><b>Respond</b></span></a>';
+			emailBody +=' 		<td class="buttonWrapper" style="font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif; font-size: 14px;" width="116">';
+			emailBody +=' 			<span class="button">';
+			emailBody +='				<!--[if mso]>';	
+			emailBody +='				<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" style="height:28px v-text-anchor: middle; width:114" strokecolor="#137CBD" arcsize="7%" fill="t">';
+			emailBody +='					<v:fill angle="180" type="gradient" color="#137CBD" color2="#137CBD"/>';
+			emailBody +='					<w:anchorlock/>';
+			emailBody +='					<center style="color: #FFFFFF; font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif;; font-size:13px;font-weight:normal;"><a style="text-decoration: none; color: #FFFFFF;" href="'+ URL.getSalesforceBaseUrl().toExternalForm() + remainingURL + '" target="_blank"><span style="white-space: nowrap;">Respond</span></a></center>';
+			emailBody +='				</v:roundrect>';
+			emailBody +='				<!--[if !mso] -->';			
+			emailBody +=' 				<a href="'+ URL.getSalesforceBaseUrl().toExternalForm() + remainingURL + '" style="font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif; -webkit-text-size-adjust: none; font-size: 14px; color: #FFFFFF; background-color: #137CBD; text-decoration: none; text-align: center; border: 1px solid #137CBD; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;  background-image: linear-gradient(top, #137CBD, #137CBD); background-image: -o-linear-gradient(top, #137CBD, #137CBD); background-image: -moz-linear-gradient(top, #137CBD, #137CBD); background-image: -webkit-linear-gradient(top, #137CBD, #137CBD); background-image: -ms-linear-gradient(top, #137CBD, #137CBD); display: inline-block; line-height:28px; width:114px" class="button" target="_blank"><span class="text" style="white-space: nowrap;"><b>Respond</b></span></a>';
+			emailBody +='				<!-- <![endif]-->';
 			emailBody +=' 			</span>';
 			emailBody +=' 		</td>';
+			emailBody +='		<td style="font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif;font-size: 14px;">';
+			emailBody +='			<div class="text" style="color: #595959; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; white-space: nowrap;"> &nbsp; </div>';
+			emailBody +='		</td>';
 			emailBody +='	</tr>';
+			emailBody += '</tbody></table>';
+			
 		}
 		
-		emailBody +='</tbody></table>\n';
+		emailBody +='<br/>';
+			
 		return emailBody;
 	}
 
