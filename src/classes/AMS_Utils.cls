@@ -199,7 +199,7 @@ public without sharing class AMS_Utils {
     //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 
-	//AMSU-162
+    //AMSU-162
     public static final Set<String> AMS_ProcessesAddressToValidate = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA, new_MSO};
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
@@ -254,6 +254,7 @@ public without sharing class AMS_Utils {
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
+    public static final Set<String> IEP_PROCESSES = new Set<String>{IEPBANKACCOUNTSETUP, IEPMODELAACCOUNTSETUP, IEPMODELBACCOUNTSETUP};
 
     //public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
 
@@ -384,6 +385,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWGESTANDARD,NEWAE,NGCHANGES}; 
 	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
 
+
     public static final String OPEN = 'Open';
     public static final String NO_IEP_ACCOUNT = 'No IEP Account';
 
@@ -399,8 +401,8 @@ public without sharing class AMS_Utils {
 
     //Mass created FOP case/OSCAR is assigned to one of theses queues when created:
     public static final Set<String> MASS_FOP_QUEUES = new Set<String>{'NewGen PCI - Africa & Middle East','NewGen PCI - Americas','NewGen PCI - Asia & Pacific','NewGen PCI - China & North Asia','NewGen PCI - Europe'};
-	
-	/* AMSU-139 */
+    
+    /* AMSU-139 */
     public static final String REJECTED = 'Rejected';
     public static final String REJECTED_CLOSED = 'Rejected Closed';
     public static final String ACCEPTED = 'Accepted';
@@ -1725,7 +1727,7 @@ public without sharing class AMS_Utils {
                         if(oscarAcctDB.get(key) != oscarOnlineAccreditation.get(value)) {
                             accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
                             System.debug('ADDED ENTRY :' + value + ':' + oscarOnlineAccreditation.get(value));
-                    	}
+                        }
                     }
                 }
             }
@@ -2246,54 +2248,54 @@ public static boolean isAMSProfile(Id profileId) {
 
 //TD 20180607: "old" method signature to avoid issues with classes
 public static String getChangeCodeMemoText(String process,String changeCodeId) {
-	return (getChangeCodeMemoText(process, changeCodeId, null));
+    return (getChangeCodeMemoText(process, changeCodeId, null));
 }
 
 //Get Change Code memo Text (All this configs should be passed for a Custom Setting)
 //TD 2018067 - added custom setting field in input
 public static String getChangeCodeMemoText(String process,String changeCodeId, AMS_ChangeCodes__c CCConfig) {
-	if(changeCodeId.indexOf('-CNS-')>-1){
-		//CNS PROCESS. GET BULLETIN MEMO TEXT FROM CHANGE CODE CONFIGURATION
-		if(CCConfig==null)	CCConfig = AMS_ChangeCodes__c.getInstance(changeCodeId);
-		
-		if(CCConfig!=null){
-			string sMemoText = (string.isBlank(CCConfig.Bulletin_Memo_Text__c)?'':CCConfig.Bulletin_Memo_Text__c) 
-								+ (string.isBlank(CCConfig.Bulletin_Memo_Text2__c)?'':CCConfig.Bulletin_Memo_Text2__c) 
-								+ (string.isBlank(CCConfig.Bulletin_Memo_Text3__c)?'':CCConfig.Bulletin_Memo_Text3__c);
-			if(string.isNotBlank(sMemoText))
-				return sMemoText = sMemoText.toUpperCase();
-		}
-		return '';
-	}else{
-		//UNTOUCHED FOR NON CNS PROCESSES
-		String memoText = 'New application';
+    if(changeCodeId.indexOf('-CNS-')>-1){
+        //CNS PROCESS. GET BULLETIN MEMO TEXT FROM CHANGE CODE CONFIGURATION
+        if(CCConfig==null)  CCConfig = AMS_ChangeCodes__c.getInstance(changeCodeId);
+        
+        if(CCConfig!=null){
+            string sMemoText = (string.isBlank(CCConfig.Bulletin_Memo_Text__c)?'':CCConfig.Bulletin_Memo_Text__c) 
+                                + (string.isBlank(CCConfig.Bulletin_Memo_Text2__c)?'':CCConfig.Bulletin_Memo_Text2__c) 
+                                + (string.isBlank(CCConfig.Bulletin_Memo_Text3__c)?'':CCConfig.Bulletin_Memo_Text3__c);
+            if(string.isNotBlank(sMemoText))
+                return sMemoText = sMemoText.toUpperCase();
+        }
+        return '';
+    }else{
+        //UNTOUCHED FOR NON CNS PROCESSES
+        String memoText = 'New application';
 
-		//Commented as CNS has been moved above
-	    //if(changeCodeId == 'FIN-CNS-C') memoText = 'New Endorsment';
-	    //if(changeCodeId.endsWithIgnoreCase('CNS-R')) return '';
-	
-	    if (process == new_HO || process == new_BR_ABROAD){
-	        if(changeCodeId != 'NWD') memoText += ' - Head Office';
-	    }else if (process == new_BR){
-	        memoText += ' - Branch';
-	    }else if (process == NEWHELITE || process == NEWHESTANDARD){
-	        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
-	    }else if (process == NEWAE){
-	        if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
-	    }else if (process == new_TIDS){
-	        memoText += ' - TIDS';
-	    }else if (process == new_SA){
-	        memoText += ' - SA';
-	    }else if (process == new_GSSA){
-	        memoText += ' - GSSA';
-	    }else if (process == new_GSA_BSP || process == new_GSA){
-	        memoText += ' - GSA';
-	    }else if (process == new_AHA_BSP || process == new_AHA){
-	        memoText += ' - AHA';
-	    }
+        //Commented as CNS has been moved above
+        //if(changeCodeId == 'FIN-CNS-C') memoText = 'New Endorsment';
+        //if(changeCodeId.endsWithIgnoreCase('CNS-R')) return '';
+    
+        if (process == new_HO || process == new_BR_ABROAD){
+            if(changeCodeId != 'NWD') memoText += ' - Head Office';
+        }else if (process == new_BR){
+            memoText += ' - Branch';
+        }else if (process == NEWHELITE || process == NEWHESTANDARD){
+            if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
+        }else if (process == NEWAE){
+            if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
+        }else if (process == new_TIDS){
+            memoText += ' - TIDS';
+        }else if (process == new_SA){
+            memoText += ' - SA';
+        }else if (process == new_GSSA){
+            memoText += ' - GSSA';
+        }else if (process == new_GSA_BSP || process == new_GSA){
+            memoText += ' - GSA';
+        }else if (process == new_AHA_BSP || process == new_AHA){
+            memoText += ' - AHA';
+        }
  
-	    return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
-	}
+        return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
+    }
 }
 
 
@@ -2713,7 +2715,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
         return lRes;
     }
-	
+    
     //AMSU-112
     public static String replaceTabCharcter(String str) {
         return String.isBlank(str) ? str : str.replaceAll('\t', ' ');
