@@ -4036,6 +4036,15 @@ Message: {2}</value>
         <value>FW</value>
     </labels>
     <labels>
+        <fullName>Feed_Item_Invalid_Topics</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Feed Item Invalid Topics</shortDescription>
+        <value>Your message was not posted because you are not using one of the mandatory topics.
+Please use hashtags (#) to define the topic(s) of your post.
+You can choose one or more of the following topics:</value>
+    </labels>
+    <labels>
         <fullName>File_Description</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -26452,6 +26461,15 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>Invalid Source Case</shortDescription>
         <value>Invalid source case</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Topic_Assignment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Topic Assignment</shortDescription>
+        <value>Your message was not posted because you are not using one of the mandatory topics.
+Please use hashtags (#) to define the topic(s) of your post.
+You can choose one or more of the following topics:</value>
     </labels>
     <labels>
         <fullName>Invoice_number</fullName>
