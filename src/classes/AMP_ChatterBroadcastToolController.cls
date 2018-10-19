@@ -85,13 +85,16 @@ public with sharing class AMP_ChatterBroadcastToolController {
 			'Broadcast Europe'};
 			List<Topic> lsBroadcastTopics = [SELECT Id,Name FROM Topic WHERE Name IN :lsBroadcastTopicNames];
 
+			SavePoint sp = Database.setSavepoint();
+			
 			try {
-				Database.SaveResult[] srList = Database.insert(lstItemsToPost, false);
+
+				insert lstItemsToPost;
 
 				// after inserting the actual feeditems create and insert the broadcast topic assignments
 				List<TopicAssignment> lsTopicAssignments = new List<TopicAssignment>();
 				for(FeedItem fi : lstItemsToPost) {
-					if(selectWholeRegion) {
+					if(fi.Id != null && selectWholeRegion) {
 						if(strRegion == null || strRegion == '') {
 							strRegion = 'All Regions';
 						}
@@ -106,28 +109,23 @@ public with sharing class AMP_ChatterBroadcastToolController {
 					}
 				}
 
-				if(!lsTopicAssignments.isEmpty()) { insert lsTopicAssignments; }
-				Integer success = 0;
-				Integer errors = 0;
-				for (Database.SaveResult sr : srList) {
-					if (sr.isSuccess()) {
-						success ++;
-					} else {
-						errors ++;
-					}
+				if(!lsTopicAssignments.isEmpty()) { 
+					insert lsTopicAssignments; 
 				}
 
-				if (success > 0) {
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The message was successfully broadcasted.')); // to ' + success + ' account(s) out of ' + lstItemsToPost.size() + '. ' + errors + ' error(s) encountered.'));
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'The message was successfully broadcasted.'));
 					step = 3;
-				} else if(!ApexPages.hasMessages(ApexPages.Severity.ERROR)){
-					//Only exhibits this message if it was not thrown an error before (e.g. trigger addError)
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The message failed to be broadcasted.'));
-				}
 
 			} catch (Exception e) {
 				System.debug(LoggingLevel.FINE, '____ [cls AMP_ChatterBroadcastToolController - broadcastMessage] Exception: ' + e.getMessage());
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
+				
+				if(!ApexPages.hasMessages(ApexPages.Severity.ERROR)){
+					//Only exhibits the message if it was not thrown an error before (e.g. trigger addError)
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'The message failed to be broadcasted.'));
+				}
+				
+				Database.rollback(sp);
+				
 			}
 		}
     }
