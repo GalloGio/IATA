@@ -79,7 +79,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             
 
 			// INC431553 : For verifiers, limits don't apply
-            List<RecordType> recordTypeVerifier = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'Verifier'];
+            List<RecordType> recordTypeVerifier = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'Verifiers'];
 			if(recordTypeVerifier[0].Id != acc.RecordTypeId){
 
             // Load  FRED limit and compare to account number
