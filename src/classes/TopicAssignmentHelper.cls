@@ -5,48 +5,11 @@ public with sharing class TopicAssignmentHelper {
 	 * Applies to items posted to Airline HQ accounts that are IATA Members.
 	 */
 	public static void AccountTopicValidation(list<TopicAssignment> TriggerNew) {
-		// get the list of allowed topics
-		set<String> setAccountChatterTopics = new set<String>();
-		String strAcceptedValues = '';
-		List<AMP_Account_Topics__c> topics = AMP_Account_Topics__c.getAll().Values();
 		
-		//sort topics by name
-		List<String> topicstr = new List<String>();
-		for (AMP_Account_Topics__c at : topics){
-			topicstr.add(at.Name);
-		}
-		topicstr.sort();
+		TopicHelper.TopicsWrapper topicWrapper = TopicHelper.getTopicsInfo();
 
-		integer i=1;
-		Boolean requestFromVf = ApexPages.currentPage() != null;
-		
-		for (String at : topicstr) {
-			
-			setAccountChatterTopics.add(at);
-			
-			// If the request is from visualforce (ChatterBroadCast Tool)
-			// formats the topics as a two column "table"
-			if(requestFromVf){
-				
-				if(Math.mod(i, 2) != 0){
-					strAcceptedValues += '<tr>';
-					strAcceptedValues += '<td><b>' + at + '</b></td>';
-				}
-				else {
-					strAcceptedValues += '<td><b>' + at + '</b></td>';
-					strAcceptedValues += '</tr>';
-				}
-				
-				i++;
-							
-			}
-			else {
-				//Ideally the topics would be separated by tabs (\t)
-				//However "\t" does not work on Chrome
-				strAcceptedValues += (strAcceptedValues == '' ? '' : ';   ') + at;
-			}
-		
-		}
+		String strAcceptedValues = topicWrapper.acceptedTopics;
+		Set<String> setAccountChatterTopics = topicWrapper.topicSet;
 
 		// only continue if a set of valid topics have been defined; otherwise we would be raising errors for every single topic
 		if (!setAccountChatterTopics.isEmpty()) {
