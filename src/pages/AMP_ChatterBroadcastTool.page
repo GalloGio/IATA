@@ -21,6 +21,21 @@
                 }
             }
         }
+        
+        function cleanAllCheckboxes(){
+        
+        	var clist = document.getElementsByTagName("input");
+			
+			for (var i = 0; i < clist.length; ++i){
+			
+				if (clist[i].type == 'checkbox')   {
+			    	clist[i].checked = false;
+			    }
+
+			}
+        
+        }
+        
     </script>
 
     <apex:form >
@@ -37,7 +52,7 @@
                     <apex:selectOptions value="{!MembershipStatuses}"/>
                 </apex:selectList>
                
-                <apex:selectList value="{!strRegion}" multiselect="false" size="1" onchange="reloadAccounts();" label="Show only Accounts from the following region(s):">
+                <apex:selectList value="{!strRegion}" multiselect="false" size="1" onchange="reloadAccounts()" label="Show only Accounts from the following region(s):">
                     <apex:selectOptions value="{!lstRegions}"/>
                 </apex:selectList>
 	            
@@ -96,7 +111,7 @@
 
             <apex:pageBlockSection columns="1" collapsible="false" rendered="{! step == 3}">
 
-                <apex:commandButton action="{! RestartFromStep1 }" value="Broadcast a New Message" reRender="mainBlock" />
+                <apex:commandButton action="{! RestartFromStep1 }" value="Broadcast a New Message" reRender="mainBlock" oncomplete="cleanAllCheckboxes();" />
 
             </apex:pageBlockSection>
 

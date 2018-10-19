@@ -6,9 +6,7 @@
     <name>Airline Becomes Active for the First Time Notification</name>
     <style>none</style>
     <subject>{!Account.Name} HAS BECOME ACTIVE FOR THE FIRST TIME</subject>
-    <textOnly>Dear {!User.Name},
-
-{!Account.Name}, based in {!Account.IATA_ISO_Country__c}, has become Active.
+    <textOnly>{!Account.Name}, based in {!Account.IATA_ISO_Country__c}, has become Active.
 
 Last modified by: {!Account.LastModifiedBy}, {!Account.LastModifiedDate}</textOnly>
     <type>custom</type>

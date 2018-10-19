@@ -6,9 +6,7 @@
     <name>Airline Becomes Re-Activated Notification</name>
     <style>none</style>
     <subject>{!Account.Name} HAS BECOME RE-ACTIVATED</subject>
-    <textOnly>Dear {!User.Name},
-
-{!Account.Name}, based in {!Account.IATA_ISO_Country__c}, has become Re-Activated.
+    <textOnly>{!Account.Name}, based in {!Account.IATA_ISO_Country__c}, has become Re-Activated.
 
 Last modified by: {!Account.LastModifiedBy}, {!Account.LastModifiedDate}</textOnly>
     <type>custom</type>

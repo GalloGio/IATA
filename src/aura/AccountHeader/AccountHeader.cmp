@@ -156,7 +156,7 @@
                 </dl>
             </div>
 
-			<aura:if isTrue="{!v.account.Membership_Status__c != 'IATA member'}">
+			<aura:if isTrue="{!and(and(and(v.account.RecordType.DeveloperName == 'IATA_Airline', v.account.Membership_Status__c != 'IATA member'), v.account.Sector__c == 'Airline'), v.account.ACLI_Status__c == 'Active Company')}">
 	            <!-- PAGE HEADER / ROW 2 / COLUMN 6 -->
 	            <div class="slds-col--padded ">
 	                <dl>

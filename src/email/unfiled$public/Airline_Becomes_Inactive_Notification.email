@@ -1,8 +1,3 @@
-Dear {!User.Name},
-
-<br/>
-<br/>
-
 <a href="{!Account.Link}">{!Account.Name}</a>, based in {!Account.IATA_ISO_Country__c}, has become Inactive.
 
 <br/>

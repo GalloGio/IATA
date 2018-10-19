@@ -409,6 +409,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Account_Type_HQ_to_Not_Applicable</fullName>
+        <description>Update Account Type HQ field to &apos;Not Applicable&apos;</description>
+        <field>Account_Type_HQ__c</field>
+        <literalValue>Not Applicable</literalValue>
+        <name>Update Account Type HQ to Not Applicable</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Type_HQ_to_empty</fullName>
+        <description>Clears the Account Type HQ field</description>
+        <field>Account_Type_HQ__c</field>
+        <name>Update Account Type HQ to empty</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Cash_Condition</fullName>
         <field>ANG_HE_CashCondition__c</field>
         <literalValue>1</literalValue>
@@ -601,7 +620,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>AND(  ISNEW(),  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
+        <formula>AND(  ISNEW(),  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;), ISPICKVAL(Sector__c, &apos;Airline&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -611,7 +630,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Active Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Inactive Company&apos;) )</formula>
+        <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Active Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Inactive Company&apos;), ISPICKVAL(Sector__c, &apos;Airline&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -621,7 +640,18 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Inactive Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
+        <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Inactive Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;), ISPICKVAL(Sector__c, &apos;Airline&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Clear Account Type HQ when the field is applicable</fullName>
+        <actions>
+            <name>Update_Account_Type_HQ_to_empty</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Clears the Account Type HQ field when the field should be filled by the user</description>
+        <formula>AND(         	RecordType.DeveloperName  = &apos;IATA_Airline&apos;,             	ISPICKVAL(Sector__c, &apos;Airline&apos;),         	NOT(ISPICKVAL(Membership_status__c, &apos;IATA member&apos;)),         	ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;),         	ISPICKVAL(Account_Type_HQ__c, &apos;Not Applicable&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -896,6 +926,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </criteriaItems>
         <description>Sends email when the account reaches the irregularity thresold for the country. This validation is made on the AccountTrigger trigger</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Account Type HQ when Not Applicable</fullName>
+        <actions>
+            <name>Update_Account_Type_HQ_to_Not_Applicable</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Update Account Type HQ field to &apos;Not Applicable&apos; when the field should not be filled</description>
+        <formula>AND(RecordType.DeveloperName  = &apos;IATA_Airline&apos;, NOT(AND(  	ISPICKVAL(Sector__c, &apos;Airline&apos;),  	NOT(ISPICKVAL(Membership_status__c, &apos;IATA member&apos;)),  	ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;)) ))</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Site Index</fullName>

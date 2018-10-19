@@ -24,7 +24,6 @@ public with sharing class AMP_ChatterBroadcastToolController {
 	public String strRegion {get; set;}
 	public String membershipStatusSelected {get; set;}
 
-	public String broadCastRegion {get;set;}
 	public Boolean selectWholeRegion {get;set;}
 
 	public List<SelectOption> getlstRegions() {
@@ -41,8 +40,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
     public List<SelectOption> getMembershipStatuses() {
     	List<SelectOption> options = new List<SelectOption>();
     	options.add(new SelectOption('IATA member', 'IATA Member Airlines'));
-    	options.add(new SelectOption('Non-IATA member', 'Non-IATA Member Airlines'));
-    	options.add(new SelectOption('', 'All Airlines'));
+    	options.add(new SelectOption('Non-IATA member', 'Non-IATA Active Airlines'));
     	return options;
     }
 
@@ -155,16 +153,13 @@ public with sharing class AMP_ChatterBroadcastToolController {
 		}
 		
 		// IATA member option selected
-		if(String.isNotBlank(membershipStatusSelected) && 'IATA member'.equals(membershipStatusSelected)){
+		if('IATA member'.equals(membershipStatusSelected)){
 			baseQuery += 'AND Membership_status__c = \'IATA member\' ';
 		}
 		// Non-IATA Member option selected
-		else if(String.isNotBlank(membershipStatusSelected)){
-			baseQuery += 'AND Membership_status__c <> \'IATA member\' ';
-			baseQuery += 'AND ACLI_Status__c = \'Active Company\' ';
-		}
-		// All airlines option selected
 		else {
+			baseQuery += 'AND Membership_status__c <> \'IATA member\' ';
+			baseQuery += 'AND Sector__c = \'Airline\' ';
 			baseQuery += 'AND ACLI_Status__c = \'Active Company\' ';
 		}
 		

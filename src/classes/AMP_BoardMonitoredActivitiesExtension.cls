@@ -14,17 +14,21 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 
 	public Comment__c selectedComment {get; set;}
 
+	public Boolean showNotApplicableMsg {get; set;}
 
 	public AMP_BoardMonitoredActivitiesExtension(ApexPages.StandardController stdController) {
   			// stdController.addFields(new List<String>{'Sector__c','Category__c'});
   			this.acc = (Account)stdController.getRecord();
-  			this.acc = [SELECT Id, Name, Sector__c, Category__c, Membership_status__c FROM Account WHERE Id=:this.acc.Id];
+  			this.acc = [SELECT Id, Name, Sector__c, Category__c, Membership_status__c, RecordType.DeveloperName FROM Account WHERE Id=:this.acc.Id];
   			AccountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
   			DivisionRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
   			CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
   			lstBMAs = getBMAs();
   			lstDivisionBMAs = getDivisionBMAs();
 			canEdit = getCanEdit();
+			
+			showNotApplicableMsg = (acc.RecordType.DeveloperName == 'IATA_Airline' && acc.Membership_status__c != 'IATA member');
+			
   		}
 
   		public list<Objective__c> getBMAs() {

@@ -75,7 +75,7 @@
                         <ui:outputText value="Groups"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
                     
-                    <aura:if isTrue="{!v.account.Membership_status__c == 'IATA member'}">
+                    <aura:if isTrue="{!and(v.account.RecordType.DeveloperName == 'IATA_Airline', v.account.Membership_status__c == 'IATA member')}">
 	                    <li class="slds-tabs--default__item slds-text-heading--label" title="Board Performance Measures" role="presentation" aura:id="Performance Measures">
 	                        <ui:outputText value="Performance Measures"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
 	                    </li>
