@@ -6,7 +6,7 @@
     function errorMessageModal(flag) {
       if(flag == '-') {
         showModal('#ModalErrorMessage');
-        $('[id$="ModalErrorMessage"]').parent().parent().css('display', 'block');
+        $('[id$="ModalErrorMessage"]').css('display', 'block');
       }
     }
 
@@ -19,6 +19,9 @@
     function hideModal(modalName) {
       if ($(modalName).is(":visible")) {
         $(modalName).modal('hide');  
+      } else {
+        $(modalName).modal('hide');
+        $('[id$="ModalErrorMessage"]').css('display', 'none');
       }
     }  
   </script>
@@ -84,8 +87,8 @@
         <div class="modal-footer">
           <div class="row">
             <div class="col-md-12">
-              <a onclick="hideModal('#ModalErrorMessage')" class="btn_iata_cancel btn-block btn">
-                {!$label.ISSP_Cancel}
+              <a onclick="hideModal('#ModalErrorMessage')" class="{!IF(wrapper.iepModel == 'Banking Model', 'btn_iata_success', 'btn_iata_cancel')}  btn-block btn">
+                {!IF(wrapper.iepModel == 'Banking Model', $Label.IFAP_close, $Label.ISSP_Cancel)}
               </a>
             </div>
           </div>            

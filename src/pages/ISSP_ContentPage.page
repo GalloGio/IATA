@@ -44,15 +44,10 @@
             margin-right: 10px;
             margin-bottom: 10px;
         }
-
-        @media (min-width: 992px) {
-            #navbar {
-                height: 47px !important;
-            }
-        }
       
+        
     </style>
-    <!--<script type="text/javascript" 
+    <script type="text/javascript" 
         src="https://code.jquery.com/jquery-1.12.3.js">
     </script>    
         
@@ -62,7 +57,7 @@
  
     <script type="text/javascript"    
         src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js">
-    </script>-->
+    </script>
  
     
 
@@ -247,10 +242,13 @@
 
     </script>
     <body>
-           <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="container">
-         <div id="contentWrapper">
+            <c:ISSP_CustomNavigation communityName="{!communityName}"/>
              <apex:form id="mainFrm">
+
+
+
+            
                 <apex:pagemessages id="errors" />
                 <div class="row">
                     <div class="col-md-12">
@@ -279,16 +277,16 @@
                                  <apex:outputpanel id="opp_results" rendered="{!communityName!='CNS'}">
                                         <div class="col-md-12">
                                             <div class="form-group">  
-                                             <apex:inputText id="searchInput_" value="{!search}" styleClass="form-control"/>
+                                             <apex:inputText id="searchInput_" value="{!search}" styleClass ="form-control"/>
                                             </div>
                                         </div>
                                         <div class="col-md-3" id="leftFilter">
                                             {!$Label.ISSP_Filter_by_Document_Category}
-                                            <apex:selectList id="DocCat" value="{!selectedValCat}" multiselect="false" size="1" styleClass="form-control">
+                                            <apex:selectList id="DocCat" value="{!selectedValCat}" multiselect="false" size="1" styleClass ="form-control">
                                                 <apex:selectOptions value="{!allDocumentCategoryList}"/>
                                             </apex:selectList>
                                             {!$Label.ISSP_Filter_by_Country_Publication}
-                                            <apex:selectList id="DocCountPub" value="{!selectedValPub}" multiselect="false" size="1" styleClass="form-control">
+                                            <apex:selectList id="DocCountPub" value="{!selectedValPub}" multiselect="false" size="1" styleClass ="form-control">
                                                 <apex:selectOptions value="{!allCountriesList}"/>
                                             </apex:selectList>
                                         <!--  <apex:commandButton value="{!$Label.PKB2_Reset_Search}" styleClass=" btn btn-danger" rerender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/> -->
@@ -390,14 +388,14 @@
                                                 
                                                 <apex:commandLink styleClass="paginate_button" action="{!previous}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();">Previous</apex:commandlink>
 
-                                                <apex:repeat value="{!pageNumberButtons}" var="pageN">
+                                                <apex:repeat  value="{!pageNumberButtons}" var="pageN">
                                                     <apex:commandButton styleClass="paginationButt" action="{!navigateToPage}" value="{!pageN}"  reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" rendered="{!OR(AND(pageN<5, currentPageNumber<=5),pageN==1)}" oncomplete="loadTableDocs();">
                                                           <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
                                                     </apex:commandButton>
                                                      <apex:commandButton styleClass="paginationButt" value="..." rendered="{!AND(pageN>4, currentPageNumber>=4, pageN==currentPageNumber-1)}" disabled="true">
                                                     </apex:commandButton>
                                                     
-                                                    <apex:commandButton styleClass="paginationButt" action="{!navigateToPage}" rendered="{!OR(AND(pageN>4, pageN==(currentPageNumber-1)),AND(pageN>=5, pageN==(currentPageNumber+1),(currentPageNumber+1)!=pageNumberButtons.size),AND(pageN>=5, pageN==currentPageNumber))}"
+                                                    <apex:commandButton  styleClass="paginationButt" action="{!navigateToPage}" rendered="{!OR(AND(pageN>4, pageN==(currentPageNumber-1)),AND(pageN>=5, pageN==(currentPageNumber+1),(currentPageNumber+1)!=pageNumberButtons.size),AND(pageN>=5, pageN==currentPageNumber))}"
                                                     value="{!pageN}" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();">
                                                          <apex:param name="pageToOpen" value="{!pageN}" assignTo="{!currentPageNumber}"/>
                                                     </apex:commandButton>    
@@ -455,9 +453,9 @@
                 </div><!-- end row-->
 
             </apex:form>
-          </div>
+            <c:ISSP_CustomFooter communityName="{!communityName}"/>
+       
         </div><!-- end container-->
-     <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </body>
 </html>
 </apex:page>

@@ -41,6 +41,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	private static Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
 	private static Id rtAnnualRevalidation = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Annual Revalidation').getRecordTypeId();
 
+	private static Id ownershipId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Account_Role__c').get('Ownership');
+
 	public static String DEFAULT_ICON { get{ return 'glyphicon glyphicon-refresh text-primary';} set;}
 	public static String OK_ICON { get{ return 'glyphicon glyphicon-ok text-success';} set;}
 	public static String CONFIRMED_ICON { get{ return 'glyphicon glyphicon-flag text-danger';} set;}
@@ -82,6 +84,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public String heIataCode {get; set;}
 	public Boolean errorFound {get; set;}
 	public ISSP_ANG_ANNUAL_REV_SUBMIT_REPORT_HELPER submitHelper {get; set;}
+	public Boolean ownershipCompleted {get; set;}
 
 	//modals
 	public string editContactId {get; set;}
@@ -204,6 +207,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
         applyLanguage = UserInfo.getLanguage();
 
+        ownershipCompleted = checkPreviousOwnership();
+        ownerWithSameIATACode = false;
+
         if(currentAccount != null && currentAccount.fw != null && this.currentAccount.fw.newForm != null && currentAccount.fw.newForm.ISSP_AMS_Legal_Status__c != null) {
             legalstatus = currentAccount.fw.newForm.ISSP_AMS_Legal_Status__c.toLowerCase();
         }
@@ -228,6 +234,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			update newCase;
 		}
+	}
+
+	private Boolean checkPreviousOwnership() {
+		Decimal percentage = 0;
+
+		for (AMS_Account_Role__c ar: [SELECT Percentage__c FROM AMS_Account_Role__c WHERE Account__c = :currentAccount.account.Id AND Active__c = true AND RecordTypeId = :ownershipId])
+			percentage += ar.Percentage__c;
+
+		return percentage == 100;
 	}
 
 	private void setParentsAndChilds() {
@@ -367,7 +382,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		isoCountryMap = new Map<String, IATA_ISO_Country__c>();
 
         List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, 
-        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c
+        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c, Tax_Number_VAT_field_mandatory__c 
                                         From IATA_ISO_Country__c
                                         Where ISO_Code__c In :isocodes];
 
@@ -1232,10 +1247,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
+				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
-				} else if (currentAccount.fw.newForm.INVALID_Tax_Number__c && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
+				} else if (currentAccount.fw.newForm.INVALID_Tax_Number__c && currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);
 					errorFound = true;
 				}

@@ -102,9 +102,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			if (account.IATA_ISO_Country__r.Iso_Code__c == 'KR') {
 				this.modalErrorMessage = Label.ANG_ISSP_IEP_ModelBanking_SouthKorea_msg;
 			}	
-		}
-
-		if(account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
+		} else if (account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
 			this.isIEP = YES;
 			this.isIEPFlag = true;
 			Boolean hasAccess = false;

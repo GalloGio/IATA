@@ -30,7 +30,7 @@ public class ANG_AccountTriggerHandler {
 		updateRiskStatus();
 	}
 	public void onAfterInsert() {
-		createIEPModelAOscars();
+
 	}
 
 	public void onBeforeUpdate(){
@@ -285,6 +285,8 @@ public class ANG_AccountTriggerHandler {
 	public void updateRiskEventStatus (){
 		set<Id> inactiveAccsIdSet = new set<Id>();
 		set<Id> activeAccsIdSet = new set<Id>();
+		set<Id> inactivateAcctsSet = new set<Id>();
+
 		List<ANG_Agency_Risk_Event__c> riskEventsToInactiveList = new List<ANG_Agency_Risk_Event__c>();
 		List<ANG_Agency_Risk_Event__c> riskEventsToActiveList = new List<ANG_Agency_Risk_Event__c>();
 		List<ANG_Agency_Risk_Event__c> upsertRiskEventsList = new List<ANG_Agency_Risk_Event__c>();
@@ -295,12 +297,17 @@ public class ANG_AccountTriggerHandler {
 				inactiveAccsIdSet.add(a.id);
 			else if( oldMap.get(a.id).status__c != a.Status__c && oldMap.get(a.id).status__c == AMS_Utils.ACC_S0_TERMINATED)
 				activeAccsIdSet.add(a.id);
+			
+			/*When changing accreditation type from Cash to Cashless, any active Risk Event should be updated to status "Inactive_Cashless"*/
+			if(oldMap.get(a.id).ANG_Accreditation_Model__c == 'Cash' && a.ANG_Accreditation_Model__c == 'Cashless')
+				inactivateAcctsSet.add(a.id);
 		}
 
 		
 		//create set with modified Accs
 		set<id> accIdSet = new set<id>(activeAccsIdSet);
 		accIdSet.addAll(inactiveAccsIdSet);
+		accIdSet.addAll(inactivateAcctsSet);
 
 		//get all related risk Events 
 		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
@@ -312,6 +319,8 @@ public class ANG_AccountTriggerHandler {
 				
 			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
 				re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
+			}else if( inactivateAcctsSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c <> ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS){
+				re.ang_event_status__c = ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
 			}
 
 		}

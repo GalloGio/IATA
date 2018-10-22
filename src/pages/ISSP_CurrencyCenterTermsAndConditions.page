@@ -10,8 +10,9 @@
   }
 </style>
 
-<c:ISSP_CustomNavigation />
 <div class="container">
+
+  <c:ISSP_CustomNavigation />
 
   <div class="row">
     <div class="col-md-1"></div>
@@ -215,6 +216,7 @@
     </div>
 
   </div>
+
+  <c:ISSP_CustomFooter />
 </div>
-<c:ISSP_CustomFooter />
 </apex:page>

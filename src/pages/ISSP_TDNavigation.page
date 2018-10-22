@@ -346,8 +346,8 @@ if ('{!dashboard_5_visible}' == 'true') {
                 }
             }
         </style>
-        <c:ISSP_CustomNavigation />
-        <div class="container">   
+        <div class="container">
+            <c:ISSP_CustomNavigation />
 
             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-wrap="true">
                 <!-- Indicators -->
@@ -1014,8 +1014,9 @@ We apologize for any inconvenience this may cause.
               </div>
             </div>
           </div>
-        </div> <!-- container -->
-         <c:ISSP_CustomFooter />
+        </div>
+        
+        <!-- container -->
     </body>
 
     </html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used in a workflow to inform ACCA when IATA has added a Case Comment2</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>New Case Comment2</name>
+    <style>none</style>
+    <subject>{!Case.ACCA_Owner__c} - New Case Comment to ACR No {!Case.CaseNumber}</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

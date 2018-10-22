@@ -177,7 +177,7 @@ public class ANG_RiskEventGenerator {
 			Set<String> accsIds = new Set<String>();
 			for (sObject o :objToEvaluate){
 				System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] object - '+o);
-				if(o.getSobject('Parent').get('RecordTypeId') == AMS_Utils.RECTYPE_IFAP){
+				if(o.getSobject('Parent') != null && o.getSobject('Parent').get('RecordTypeId') == AMS_Utils.RECTYPE_IFAP){
 					ifapIds.add(String.valueOf(o.get('ParentId')));
 					accsIds.add(String.valueOf(o.get('AccountId')));
 				}

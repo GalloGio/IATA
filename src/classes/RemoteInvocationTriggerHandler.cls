@@ -1,10 +1,10 @@
 public with sharing class RemoteInvocationTriggerHandler {
 
 	//Trigger variables
-	public static List<Remote_Invocation__c> triggerNew = (List<Remote_Invocation__c>) Trigger.new;
-	public static List<Remote_Invocation__c> triggerOld = (List<Remote_Invocation__c>) Trigger.old;
-	public static Map<Id, Remote_Invocation__c> newMap = (Map<Id,Remote_Invocation__c>) Trigger.newMap;
-	public static Map<Id, Remote_Invocation__c> oldMap = (Map<Id,Remote_Invocation__c>) Trigger.oldMap;
+	public List<Remote_Invocation__c> triggerNew = (List<Remote_Invocation__c>) Trigger.new;
+	public List<Remote_Invocation__c> triggerOld = (List<Remote_Invocation__c>) Trigger.old;
+	public Map<Id, Remote_Invocation__c> newMap = (Map<Id,Remote_Invocation__c>) Trigger.newMap;
+	public Map<Id, Remote_Invocation__c> oldMap = (Map<Id,Remote_Invocation__c>) Trigger.oldMap;
 
 	//Remote Invocation Request Types
 	public static final String NEWGEN_EASY_PAY = 'ANG_IEP_MODEL_A';
@@ -19,27 +19,29 @@ public with sharing class RemoteInvocationTriggerHandler {
 	public static final ID RECTYPE_TIP    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Remote_Invocation__c').get(TIP_IFG_REPORT);
 
 	//to store the remote invocations with errors
-	public static Set<ID> remoteInvocationWithErrors;
+	public Set<ID> remoteInvocationWithErrors;
 
-	private static Map<String,Account> mapIATACodeAccs;
+	private Map<String,Account> mapIATACodeAccs;
 
-	public static void handleBeforeInsert(){
+	public RemoteInvocationTriggerHandler(){
+	}
+
+	public void handleBeforeInsert(){
 		assignRecordtypeToRequest();
 	}
 
-	public static void handleBeforeUpdate(){
+	public void handleBeforeUpdate(){
 		processInvocationsInProgress();
 	}
 
 
-	public static void assignRecordtypeToRequest(){
-		
+	public void assignRecordtypeToRequest(){
 		for(Remote_Invocation__c er : triggerNew){
 			er.recordtypeid = (er.Request_Type__c == NEWGEN_EASY_PAY ? RECTYPE_NEWGEN : RECTYPE_TIP);
 		}
 	}
 
-	public static void processInvocationsInProgress(){
+	public void processInvocationsInProgress(){
 		Set<ID> parentIDs = new Set<ID>();
 		Set<String> iatacodesToFetch = new Set<String>();
 		Map<string,Account> mapIATACodeAccs = new Map<String, Account>();
@@ -52,7 +54,6 @@ public with sharing class RemoteInvocationTriggerHandler {
 		Map<ID,Remote_Invocation_Artefact__c> artefacts = new Map<ID,Remote_Invocation_Artefact__c>([SELECT ID, External_ID__c, Format__c, Internal_ID__c, Name__c, Previous_Version__c, Remote_Invocation__c, 
 															Request_Result__c, Source__c, Status__C, Status_Detail__c, Valid_From__c, Valid_To__c, Version__c, Version_Notes__c
 															FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :parentIDs]);
-		
 		for(Remote_Invocation_Artefact__c artifact : artefacts.values())
 			iatacodesToFetch.add(artifact.Internal_ID__c);
 
@@ -63,7 +64,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 		if(!mapIATACodeAccs.isEmpty()) performSanityCheck(artefacts, mapIATACodeAccs);		
 	}
 
-	public static void performSanityCheck(Map<ID,Remote_Invocation_Artefact__c> remoteInvocationToProcess, Map<string,Account> mapIATACodeAccs){
+	public void performSanityCheck(Map<ID,Remote_Invocation_Artefact__c> remoteInvocationToProcess, Map<string,Account> mapIATACodeAccs){
 
 		remoteInvocationWithErrors = new Set<ID>();
 		List<Remote_Invocation_Artefact__c> reqsWithError = new List<Remote_Invocation_Artefact__c>(); 
@@ -74,11 +75,8 @@ public with sharing class RemoteInvocationTriggerHandler {
 
 		//-----RUN VALIDATIONS--------
 		for(Remote_Invocation_Artefact__c artifact : remoteInvocationToProcess.values()){
-
 			Remote_Invocation__c parent = newMap.get(artifact.Remote_Invocation__c);
 			Account acc = mapIATACodeAccs.get(parent.Internal_ID__c);
-			system.debug('##acc ' + acc);
-			system.debug('##parent ' + parent);
 			if(parent != null && acc != null){
 				
 				//NEWGEN validations
@@ -124,7 +122,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 	}
 
 
-	public static void process_NewGen_Model_A(Map<String,Remote_Invocation_Artefact__c> reqsToCreateOSCAR, Map<ID,Account> mapIDAccs){
+	public void process_NewGen_Model_A(Map<String,Remote_Invocation_Artefact__c> reqsToCreateOSCAR, Map<ID,Account> mapIDAccs){
 
 		/*
 		1.	Fetch Account ID from IATA Code received
@@ -139,14 +137,14 @@ public with sharing class RemoteInvocationTriggerHandler {
 		
 		try{
 			List<AMS_OSCAR__c> listOSCARs = ANG_OSCARProcessHelper.createIEPAccountOscar(mapIDAccs,'setup'); //mudar o metodo para devolver a lista de oscars
-			
-			for(AMS_OSCAR__c oscar : listOSCARs){
-				String iataCode = mapIDAccs.get(oscar.Account__c).IATACode__c;
-				reqsToCreateOSCAR.get(iataCode).Request_Result__c = 'Completed';
-				reqsToCreateOSCAR.get(iataCode).Object_ID_Created__c = oscar.id;
-				requestToUpdate.add(reqsToCreateOSCAR.get(iataCode));	
-				reqsToCreateOSCAR.remove(iataCode);
-			}
+			if(listOSCARs !=null && !listOSCARs.isEmpty()) 
+				for(AMS_OSCAR__c oscar : listOSCARs){
+					String iataCode = mapIDAccs.get(oscar.Account__c).IATACode__c;
+					reqsToCreateOSCAR.get(iataCode).Request_Result__c = 'Completed';
+					reqsToCreateOSCAR.get(iataCode).Object_ID_Created__c = oscar.id;
+					requestToUpdate.add(reqsToCreateOSCAR.get(iataCode));	
+					reqsToCreateOSCAR.remove(iataCode);
+				}
 		}catch(Exception e){
 			for(Remote_Invocation_Artefact__c artifact : reqsToCreateOSCAR.values()){
 				artifact.Request_Result__c = 'Failed';

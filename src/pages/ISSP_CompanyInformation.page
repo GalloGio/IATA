@@ -21,9 +21,9 @@
            	.btn-success2 {color: #ffffff;background-color: #a1bc00;border: 1px solid #4E8E15;font-weight: bold;cursor: pointer;}
          	.required {color: #C90435;font-size: 24px;padding: 0 5px 0 0;}
     </style>
-    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+    
     <div class="container">
-        
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
                 <a name="form"></a>
@@ -285,7 +285,7 @@
                              <div class="row">
            						<div class="col-md-12 col-md-offset-9"  style="clear: both; ">
                						<apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtn" onClick="if(!validateCompanyProfile())return false;" action="{!saveAccount}" value="{!$Label.site.save}" id="loginButton" reRender="companyProfile"/>
-                                    <apex:commandButton styleclass="btn_iata btn-danger btn_cancel editModeBtn" onClick="clearErrorMessages();$('.saveMode').show();$('.editMode').hide();$('.editModeBtn').hide();$('.alert').hide();$('.selected-flag').hide();" action="{!cancelAccount}" value="{!$Label.site.cancel}" id="cancelButton" reRender="companyProfile"/>
+                                    <button type="button" class="btn_iata btn-danger btn_cancel editModeBtn" onClick="clearErrorMessages();$('.saveMode').show();$('.editMode').hide();$('.editModeBtn').hide();$('.alert').hide();$('.selected-flag').hide();" >{!$Label.site.cancel}</button>
             					</div>
          					</div>
                              
@@ -754,16 +754,16 @@
             <div class="ol-md-3 col-md-offset-10 "  style="clear: both; ">
                		<apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtnBR" onClick="if(!validateCompanyProfileBR())return false;" action="{!saveAccountBR}" value="{!$Label.site.save}" id="loginButton" reRender="branchOffice"/>
                 	
-                    <apex:commandButton styleclass="btn_iata btn-danger btn_cancel editModeBtnBR" onClick="clearErrorMessagesBR();$('.saveModeBR').show();$('.editModeBR').hide();$('.editModeBtnBR').hide();$('.alert').hide();$('.phoneBR .selected-flag').hide();$('.faxBR .selected-flag').hide();" action="{!getBranchOffice}" value="{!$Label.site.cancel}" id="cancelButtonBR" reRender="branchOffice"/>
+                    <button type="button" class="btn_iata btn-danger btn_cancel editModeBtnBR" onClick="clearErrorMessagesBR();$('.saveModeBR').show();$('.editModeBR').hide();$('.editModeBtnBR').hide();$('.alert').hide();$('.phoneBR .selected-flag').hide();$('.faxBR .selected-flag').hide();" >{!$Label.site.cancel}</button>
             	</div>
                 </apex:outputPanel>
             </div>
           </div>
             
         </apex:form>
-        
+       <c:ISSP_CustomFooter communityName="{!communityName}"/> 
     </div>
-    <c:ISSP_CustomFooter communityName="{!communityName}"/>
+    
     <script>
       function validateCompanyProfile(){
       	var flag = true;

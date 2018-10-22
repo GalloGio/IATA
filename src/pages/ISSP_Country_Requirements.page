@@ -22,11 +22,10 @@
       });
     </script>
 
-    <body>
-      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+    <body>      
       <div class="container">
-        <div id="contentWrapper">
-		<apex:form id="mainFrm">	
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+			  <apex:form id="mainFrm">	
           <apex:pagemessages id="errors" />
 
           <apex:outputpanel layout="block" rendered="{! not newLayout}">        		          
@@ -277,9 +276,8 @@
             </div>            
           </apex:outputpanel>
         </apex:form>
-      </div>
-      </div><!-- end container-->
-      <c:ISSP_CustomFooter communityName="{!communityName}"/>
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
+      </div><!-- end container-->    
     </body>
   </html>
 </apex:page>
