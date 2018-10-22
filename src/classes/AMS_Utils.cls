@@ -196,7 +196,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> AMS_ProcessesAddressToValidate = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA, new_MSO};
 
     //AMSU-180
-    public static final Set<String> oscarAMSProcesses_ValidateOwnership = new Set <String>{new_HO, new_BR, AGENCYCHANGES, new_TIDS, new_SA, COR};
+    public static final Set<String> oscarAMSProcesses_ValidateOwnership = new Set <String>{new_HO, AGENCYCHANGES, new_TIDS, COR};
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
     public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE};
