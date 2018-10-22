@@ -78,11 +78,11 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 	};
 
 	private final static Map<String, Integer> regionsMap = new Map<String, Integer> {
-		AFRICA_MIDDLE_EAST => -1,
-		ASIA_PACIFIC => -1,
-		AMERICAS => -1,
-		CHINA_NORTH_ASIA => -1,
-		EUROPE => -1
+		AFRICA_MIDDLE_EAST => 1,
+		ASIA_PACIFIC => 8,
+		AMERICAS => -6,
+		CHINA_NORTH_ASIA => 6,
+		EUROPE => 0
 	};
 
 
