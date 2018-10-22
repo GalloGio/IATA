@@ -259,7 +259,7 @@
                     <apex:outputPanel >
                             <apex:outputLabel id="mRFLabel" value="{!accreditationObj[field.name]}"/>
                             <apex:outputPanel id="multipick" style="display: none;">
-                               <apex:selectList value="{!accreditationObj[field.name]}" size="1" required="true">
+                               <apex:selectList value="{!accreditationObj[field.name]}" size="1" >
                             <apex:selectOptions value="{!ItemsForPreferredRHC}"/>
 
                         </apex:selectList>
