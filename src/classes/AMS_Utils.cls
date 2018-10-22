@@ -1442,8 +1442,6 @@ public without sharing class AMS_Utils {
 
         try {
 
-            system.debug('accountsToUpdate: ' + accountsToUpdate);
-
             if (!accountsToUpdate.isEmpty())
                 update accountsToUpdate;
 
