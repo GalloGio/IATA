@@ -110,7 +110,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public List<SelectOption> getItemsForPreferredRHC() {
         List<SelectOption> op = new List<SelectOption>();
-        op.add(new SelectOption('', ''));
+        op.add(new SelectOption('', '--None--'));
         for(ANG_RHC_Currencies__c c: ANG_RHC_Currencies__c.getall().values())
             op.add(new SelectOption(c.Name, c.Currency_Name__c));
         return op;
