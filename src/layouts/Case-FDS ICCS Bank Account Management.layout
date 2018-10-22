@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Send_Email_to_Contact</customButtons>
+    <customButtons>E2CP__New_Comment</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -17,12 +18,8 @@
                 <field>Subject</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Description</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Case_Remarks__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -43,6 +40,22 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>Status</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>New_interaction__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Region__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSPCountry__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Origin</field>
             </layoutItems>
             <layoutItems>
@@ -55,28 +68,49 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Do_Not_Send_Notification__c</field>
+                <field>Type_of_Change__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Priority</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Visible_on_ISS_Portal__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Status</field>
+                <behavior>Readonly</behavior>
+                <field>Key_Customer_Case__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>ContactId</field>
+                <behavior>Readonly</behavior>
+                <field>Case_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IATA_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Required</behavior>
+                <field>ContactId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SuppliedEmail</field>
+                <behavior>Readonly</behavior>
+                <field>ContactPhone</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ContactEmail</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -84,7 +118,38 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Priority</field>
+                <field>Type_of_customer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Instant_Survey_Feedback_requested__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Instant_Survey_Last_survey_sent__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SuppliedEmail</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Dossier Reception</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Dossier_reception_date__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Expected_Deadline__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -102,9 +167,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Case_Owner_Final_Comments__c</field>
-            </layoutItems>
-            <layoutItems>
-                <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -129,6 +191,22 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Amazon Files</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>75</height>
+                <page>ICCS_CaseAttachments</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Custom Links</label>
@@ -144,19 +222,23 @@
         <label>System Information</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CreatedDate</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
+                <field>Process_Age__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CreatedDate</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
@@ -164,10 +246,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ClosedDate</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -196,10 +274,27 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <relatedList>RelatedEmailMessageList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedEmailMessageList</relatedList>
+        <fields>NAME</fields>
+        <fields>File_Identifier__c</fields>
+        <fields>Review_Status__c</fields>
+        <fields>Original_Received__c</fields>
+        <fields>Internal_Comments__c</fields>
+        <relatedList>AmazonFile__c.Case__c</relatedList>
+        <sortField>File_Identifier__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedAttachmentList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ICCS_Attachment__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -220,14 +315,24 @@
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
         <fields>TASK.DUE_DATE</fields>
+        <fields>TASK.STATUS</fields>
+        <fields>TASK.PRIORITY</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
+        <fields>ACTIVITY.TASK</fields>
+        <fields>TASK.DUE_DATE</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>ICCS_Attachment__c.Case__c</relatedList>
-    </relatedLists>
+        <relatedList>Instant_Surveys__c.Relationship_to_Case__c</relatedList>
+    </relatedLists> 
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
