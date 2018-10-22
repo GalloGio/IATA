@@ -740,31 +740,24 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*updateAccountFieldBasedOnIATAwebCode Trigger*/
 
-//Check with Gavinho
 
         /*trgAccelyaRequestSetCountry Trigger*/
-        //GM - IMPRO - START
-        //this trigger doesn't work... 
-        //the for loop below needs a list to be filled, the loop below does really fire on all the cases or just on the Accelya subset?
         if (trgAccelyaRequestSetCountry) {
             System.debug('____ [cls CaseBeforeTrigger - trgAccelyaRequestSetCountry]');
-            for (Case aCase : trigger.New) {
-                if (aCase.RecordTypeId == CSRcaseRecordTypeID) {
-                    isAccelya = true;
-                } else {
-                    break;
+            for (Case aCase : trigger.New) { 
+                /* Trigger.isInsert: Every time a case is created (internal user or Accelya) and has a value on the Accelya: 
+                         Request Type field, we set the correct record type */
+        
+                if(Trigger.isInsert && aCase.Accelya_Request_Type__c != null && aCase.RecordTypeId != CSRcaseRecordTypeID) {
+                    aCase.RecordTypeId = CSRcaseRecordTypeID;
                 }
-            }
-            if (isAccelya) {
-                List<String> bspCountryList = new List<String>();
-                for (Case c : trigger.New) {
-                    if ((c.Case_Creator_Email__c == null || !(c.Case_Creator_Email__c.contains('@iata.org'))) && c.Accelya_Request_Type__c != null && c.Country_concerned__c != null && c.BSPCountry__c == null) {
-                        bspCountryList = c.Country_concerned__c.split(';');
-                        c.BSPCountry__c = bspCountryList[0];
-                        c.RecordTypeId = CSRcaseRecordTypeID;
-                    }
+
+                /*Every time we have a BSPlink Customer Service Requests (CSR) case 
+                    and the IATA Country is blank we set it as the first of the Country Concerned */
+                if (aCase.RecordTypeId == CSRcaseRecordTypeID && aCase.Country_concerned__c != null && aCase.BSPCountry__c == null) {
+                    aCase.BSPCountry__c = aCase.Country_concerned__c.split(';')[0];
                 }
-            }
+            }              
         }
         /*trgAccelyaRequestSetCountry Trigger*/
 
@@ -1426,22 +1419,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
         }
         /*AMS_OSCARCaseTrigger Trigger.isInsert*/
-
-        /*trgAccelyaRequestSetCountry Trigger.isInsert*/
-        if (trgAccelyaRequestSetCountry) {
-            System.debug('____ [cls CaseBeforeTrigger - trgAccelyaRequestSetCountry Trigger.isInsert]');
-            //GM - IMPRO - START
-            //this trigger is based on a flag not working propoerly, needs to be changed (see trgAccelyaRequestSetCountry Trigger)
-            if (!isAccelya) {
-                for (Case aCase : trigger.New) {
-                    if (aCase.Accelya_Request_Type__c != null && aCase.RecordTypeId != CSRcaseRecordTypeID) {
-                        aCase.RecordTypeId = CSRcaseRecordTypeID;
-                        //GM - IMPRO - END
-                    }
-                }
-            }
-        }
-        /*trgAccelyaRequestSetCountry Trigger.isInsert*/
     }
 
 /**************************************************** Trigger.isUpdate ************************************************************************************************/
