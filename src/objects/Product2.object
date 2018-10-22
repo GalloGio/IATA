@@ -2169,6 +2169,11 @@ SIS Charge Code Type.</description>
                     <label>Airline Operational Cost Management Guidelines</label>
                 </value>
                 <value>
+                    <fullName>Airlines Magazine Subscription</fullName>
+                    <default>false</default>
+                    <label>Airlines. Magazine Subscription</label>
+                </value>
+                <value>
                     <fullName>Airport Development Reference Manual</fullName>
                     <default>false</default>
                     <label>Airport Development Reference Manual</label>
@@ -7559,6 +7564,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airlines Magazine Subscription</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airport Development Reference Manual</fullName>
                 <default>false</default>
             </values>
@@ -10546,6 +10555,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13599,6 +13612,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16657,6 +16674,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
