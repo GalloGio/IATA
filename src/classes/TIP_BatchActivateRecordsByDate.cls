@@ -137,6 +137,13 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 		return Database.getQueryLocator(query);
 	}
 
+	public static id scheduleJob(Time runningTime) {
+        TIP_BatchActivateRecordsByDate bat = new TIP_BatchActivateRecordsByDate(PROVIDER_TYPE, ASIA_PACIFIC);
+        string format='ss mm HH * * ? *';
+        string sch=Datetime.newInstance(system.Today(),runningTime).format(format);
+        return system.schedule('TIP_BatchActivateRecordsByDate for TIP Job '+sch, sch, bat);
+    }
+
    	global void execute(Database.BatchableContext BC, List<sObject> scope) {
    		Integer result; 
    		system.debug('PF scope'+scope);
