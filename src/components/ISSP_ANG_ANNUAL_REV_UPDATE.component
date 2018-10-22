@@ -664,7 +664,8 @@
 
             <apex:outputPanel id="ownershipMessage" >
                 <script type="text/javascript">
-                    $('[data-toggle="popover"]').popover();
+                    var $r = jQuery.noConflict();
+                    $r('[data-toggle="popover"]').popover();
                 </script>
                 <apex:outputPanel >
                     <apex:outputLabel value="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL} " style="font-weight: bold;"/>
@@ -936,8 +937,6 @@
 
     <script>
 
-        $('[data-toggle="popover"]').popover();
-
         $(".branch_office_street_name_number__c").change(function () {
             copyBranchAddress();
         });
@@ -1016,14 +1015,9 @@
             $(".country__c").attr('readonly', true);
             $(".country__c").attr('disabled','disabled');
 
-            $(".shipping_country__c").val("{!ca.account.ShippingCountry}");
+            $(".shipping_country__c").val("{!ca.isocountry.Name}");
             $(".shipping_country__c").attr('readonly', true);
             $(".shipping_country__c").attr('disabled','disabled');
-            
-            $(".shipping_street__c").val("{!ca.account.ShippingStreet}");
-            $(".shipping_city__c").val("{!ca.account.ShippingCity}");
-            $(".shipping_postal_code__c").val("{!ca.account.ShippingPostalCode}");
-            $(".shipping_state__c").val("{!ca.account.ShippingState}");
             
             $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
@@ -1097,6 +1091,7 @@
             $('[id$="checkBoxAndInfo"]').prop('hidden', true);
 
             $('[id$="newAddress"]' + " :input").attr("disabled", true);
+            $('[id$="newShippingAddress"]' + " :input").attr("disabled", true);
             $('[id$="newEmail"]' + " :input").attr("disabled", true);
 
             $('[id$="multiSelectId"]' + " :input").attr("disabled", true);
