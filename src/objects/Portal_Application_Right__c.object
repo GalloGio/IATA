@@ -112,7 +112,7 @@
         <label>Reason</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -373,7 +373,7 @@
         <externalId>false</externalId>
         <label>ICCS Currency Center Current Visit</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -383,7 +383,7 @@
         <externalId>false</externalId>
         <label>ICCS Currency Center Previous Visit</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -465,7 +465,7 @@
         <label>New Role Requested</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1080,6 +1080,23 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
         <errorConditionFormula>$User.ProfileId = &apos;00ew0000001QRzC&apos; &amp;&amp; Portal_Application__r.Name = &apos;IFAP&apos; &amp;&amp; (allowAssignFinContactFlowChange__c = False) &amp;&amp;  ISCHANGED(Right__c) &amp;&amp; NOT(ISPICKVAL(PRIORVALUE(Right__c), &apos;Access Requested&apos;)) &amp;&amp; ISPICKVAL(Right__c, &apos;Access Denied&apos;)</errorConditionFormula>
         <errorDisplayField>Right__c</errorDisplayField>
         <errorMessage>Please click on &apos;Cancel&apos; and use the &apos;Assign Financial Assessment Contact&apos; button on the Contact in order to Grant or Deny IFAP access.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Restrict_Access_For_Payment_Providers</fullName>
+        <active>true</active>
+        <description>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</description>
+        <errorConditionFormula>AND( 
+Portal_Application__r.Name = &apos;Transparency in Payments (TIP)&apos;, 
+OR(Text(Right__c) = &apos;Access Granted&apos;, Text(Right__c) = &apos;Access Requested&apos;), 
+NOT(INCLUDES(Contact__r.Account.Account_Role__c,&apos;Payment Provider&apos;)), 
+AND( 
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;ISS&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;IATA Portal&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;identity&apos;)) 
+) 
+)</errorConditionFormula>
+        <errorMessage>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Restrict_IEP_request</fullName>
