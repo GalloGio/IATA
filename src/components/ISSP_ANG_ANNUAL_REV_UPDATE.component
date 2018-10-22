@@ -1009,7 +1009,7 @@
             $(".country__c").attr('readonly', true);
             $(".country__c").attr('disabled','disabled');
 
-            $(".shipping_country__c").val("{!ca.account.ShippingCountry}");
+            $(".shipping_country__c").val("{!ca.isocountry.Name}");
             $(".shipping_country__c").attr('readonly', true);
             $(".shipping_country__c").attr('disabled','disabled');
             
