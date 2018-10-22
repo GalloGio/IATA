@@ -126,17 +126,9 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 		regsToUpdate = new List<sObject>();
 	}
 
-    public static id scheduleJob(Time runningTime){
-        TIP_BatchActivateRecordsByDate bat= new TIP_BatchActivateRecordsByDate(PROVIDER_TYPE, CHINA_NORTH_ASIA);
-        string format='ss mm HH * * ? *';
-        string sch=Datetime.newInstance(system.Today(),runningTime).format(format);
-        return system.schedule('TIP_BatchActivateRecordsByDate for TIP Job '+sch, sch, bat);
-    }
-
     public void execute(SchedulableContext context){
         Database.executeBatch(this); 
     }
-
 
 	global Database.QueryLocator start(Database.BatchableContext BC) {
 		system.debug('##PF Query: ' + query);
@@ -159,7 +151,7 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
    			regsToUpdate.add(o);
    			
    		}
-   			system.debug('PF regsToUpdate'+regsToUpdate);
+   		system.debug('PF regsToUpdate'+regsToUpdate);
 	}
 
 	public static Integer dateCompare(Date startDate, Date endDate){
