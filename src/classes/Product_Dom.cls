@@ -197,15 +197,9 @@ public class Product_Dom {
         if (productById.size() > zMax)
             Database.executeBatch(new Product_Batch('saveZProducts', productById.values()), zMax);
         else if (System.isFuture())
-            Product_Svc.saveZProducts(productById.keySet());
-        else
-            Product_Svc.saveZProductsFuture(productById.keySet());
+            //Product_Svc.saveZProductsFuture(productById.keySet());
+            System.enqueueJob(new Product_Svc.saveZProductsQueueable(productById.keySet()));
     }
-
-//private void onAfterDelete() {
-    //getData(false, true);
-    //customAfterDelete();
-//}
 
 
 } //*** end of class
