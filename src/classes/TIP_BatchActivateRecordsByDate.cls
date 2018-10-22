@@ -18,6 +18,14 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 	public final static Integer FIELD_STATUS     = 2;
 	public final static Integer FIELD_START_DATE_TO_UPDATE = 4;
 
+	//Regions
+	public final static String AFRICA_MIDDLE_EAST = 'Africa & Middle East';
+	public final static String ASIA_PACIFIC = 'Asia & Pacific';
+	public final static String AMERICAS = 'Americas';
+	public final static String CHINA_NORTH_ASIA = 'China & North Asia';
+	public final static String EUROPE = 'Europe';
+
+
 	//MAPs
 	private final static Map <Integer,Map<Integer,String>> sObjectsFields = new Map <Integer,Map<Integer,String>> {
 		PROVIDER_TYPE => new Map<Integer,String> {
@@ -69,10 +77,17 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 		}
 	};
 
+	private final static Map<String, Integer> regionsMap = new Map<String, Integer> {
+		AFRICA_MIDDLE_EAST => 1,
+		ASIA_PACIFIC => 8,
+		AMERICAS => -6,
+		CHINA_NORTH_ASIA => 6,
+		EUROPE => 0
+	};
+
+
 	//Queries
-	/*public final static String QUERY_PROVIDERS = 'SELECT ID, Status__c, Accreditation_date__c, Expiry_Date__c FROM Account WHERE recordtypeid = \'' + TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID +'\' AND ('
-			+    '(Accreditation_date__c > '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_IN_PROGRESS +'\' ) '			
-			+ 'OR (Accreditation_date__c <= '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+TIP_Utils.PARTNER_STATUS_ACTIVE+'\' ))';*/
+
 	public final static String QUERY_PROVIDERS = 'SELECT ID, Status__c, Effective_From_Date__c, Effective_To_Date__c FROM Account_Role__c WHERE recordtypeid = \'' + TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID +'\' AND ('
 			+    '(Effective_From_Date__c > '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_IN_PROGRESS +'\' ) '			
 			+ 'OR (Effective_From_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND Status__c <> \''+TIP_Utils.PARTNER_STATUS_ACTIVE+'\' ) '
@@ -89,57 +104,34 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 			+ 'OR (TIP_Effective_From_Date_To_Show__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+TIP_Utils.BIN_RANGE_STATUS_ACTIVE+'\' ))) '
 			+ 'OR (TIP_Payment_Provider_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE+ '\' AND TIP_Effective_To_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_INACTIVE +'\')';	//ACAMBAS - TIP-161
 
-	public final static String QUERY_PRODUCT_CONFIGS = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_Pay_Prov_Prod_Country_Config__c WHERE (TIP_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ( '
+	public final static String QUERY_PRODUCT_CONFIGS = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_Pay_Prov_Prod_Country_Config__c WHERE ((TIP_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ( '
 			+    '(TIP_Effective_From_Date_To_Show__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS +'\' ) '
 			+ 'OR (TIP_Effective_From_Date_To_Show__c <= '  + system.now().format('yyyy-MM-dd') +'  AND TIP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE+'\' ))) '
-			+ 'OR (TIP_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE+ '\' AND TIP_Effective_To_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE +'\')';	//ACAMBAS - TIP-161
+			+ 'OR (TIP_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE+ '\' AND TIP_Effective_To_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE +'\')) AND '	//ACAMBAS - TIP-161
+			+ 'TIP_BSP_Country__r.Region__c = \'$REGION$\''; //ACAMBAS - TIP-320
 
 
-
-	/*public final static String QUERY_PRODUCTS = 'SELECT ID, PP_status__c, PP_Effective_from_Date__c, PP_Effective_to_Date__c FROM Partner_products__c WHERE BIN_Conflict_Count__c = 0 AND PP_Payment_Product_Code__c <> NULL AND recordtypeid = \'' + TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID +'\' AND '
-		+'Provider__r.Status__c = \''+TIP_Utils.PARTNER_STATUS_ACTIVE+ '\' AND PP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_REJECTED+ '\' AND ( '
-			+    '(PP_Effective_from_Date__c > '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_IN_PROGRESS +'\' ) '
-			+ 'OR (PP_Effective_to_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE +'\' ) '
-			+ 'OR (PP_Effective_from_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND PP_Effective_to_Date__c >= '  + system.now().format('yyyy-MM-dd') +' AND PP_status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+'\' ))';
- 	public final static String QUERY_BIN_RANGES = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c FROM TIP_BIN_Range__c WHERE TIP_Payment_Provider_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ( '
-			+    '(TIP_Effective_From_Date__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_IN_PROGRESS +'\' ) '
-			+ 'OR (TIP_Effective_To_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_INACTIVE +'\' ) '
-			+ 'OR (TIP_Effective_From_Date__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Effective_To_Date__c >= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+TIP_Utils.BIN_RANGE_STATUS_ACTIVE+'\' ))';
-
-	public final static String QUERY_PRODUCT_CONFIGS = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_Pay_Prov_Prod_Country_Config__c WHERE TIP_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ( '
-			+    '(TIP_Effective_From_Date_To_Show__c > '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS +'\' ) '
-			+ 'OR (TIP_Effective_To_Date__c < '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE +'\' ) '
-			+ 'OR (TIP_Effective_From_Date_To_Show__c <= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Effective_To_Date__c >= '  + system.now().format('yyyy-MM-dd') +' AND TIP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE+'\' ))';
-
-*/
-
+	String region;
 	String query;
 	Integer sObjectType;
 	List<sObject> regsToUpdate;
 	
-	global TIP_BatchActivateRecordsByDate(Integer chosenType) {
+	global TIP_BatchActivateRecordsByDate(Integer chosenType, String sRegion) {
 		this.sObjectType = chosenType;
+		this.region = sRegion;
 
 		if(sObjectType == PROVIDER_TYPE)             query = QUERY_PROVIDERS;
 		else if (sObjectType == PRODUCT_TYPE)        query = QUERY_PRODUCTS;
 		else if (sObjectType == BIN_RANGE_TYPE)      query = QUERY_BIN_RANGES;
-		else if (sObjectType == PRODUCT_CONFIG_TYPE) query = QUERY_PRODUCT_CONFIGS;
+		else if (sObjectType == PRODUCT_CONFIG_TYPE) query = QUERY_PRODUCT_CONFIGS.replace('$REGION$', sRegion);
+
 		regsToUpdate = new List<sObject>();
 	}
-
-    public static id scheduleJob(Time runningTime){
-        TIP_BatchActivateRecordsByDate bat= new TIP_BatchActivateRecordsByDate(PROVIDER_TYPE);
-        string format='ss mm HH * * ? *';
-        string sch=Datetime.newInstance(system.Today(),runningTime).format(format);
-        return system.schedule('TIP_BatchActivateRecordsByDate for TIP Job '+sch, sch, bat);
-    }
 
     public void execute(SchedulableContext context){
         Database.executeBatch(this); 
     }
 
-
-	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
 		system.debug('##PF Query: ' + query);
 		return Database.getQueryLocator(query);
@@ -161,7 +153,7 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
    			regsToUpdate.add(o);
    			
    		}
-   			system.debug('PF regsToUpdate'+regsToUpdate);
+   		system.debug('PF regsToUpdate'+regsToUpdate);
 	}
 
 	public static Integer dateCompare(Date startDate, Date endDate){
@@ -171,20 +163,36 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 		if(endDate <= System.Today()) stat=DATE_STATUS_INACTIVE; //ACAMBAS - TIP-161
 		return stat ; 
 	}
+
+	public static void scheduleRegion(Integer chosenType, String region, Date runningDate, Time runningTime) {
+        TIP_BatchActivateRecordsByDate bat = new TIP_BatchActivateRecordsByDate(chosenType, region);
+        String format ='ss mm HH dd MM ? yyyy';
+        if(runningDate == null){
+            format = 'ss mm HH * * ? *';
+            runningDate = System.today();
+        }
+
+        DateTime runningDateTime = DateTime.newInstanceGMT(runningDate, runningTime).addHours(regionsMap.get(region)); //creates date on GMT +timezone adjustmnent
+
+        String sch = runningDateTime.format(format);
+        String jobID = System.schedule('Batch TIP_BatchActivateRecordsByDate Job '+System.now().format('dd/MM/yyyy hh:MM:ss'), sch, bat);
+    }
 		
 	global void finish(Database.BatchableContext BC) {
 
 		Database.update(regsToUpdate, false); 
 		system.debug('##type: ' + sObjectType);
 		system.debug('##regsToUpdate: ' + regsToUpdate);
+
+		//String defaultRegion = ASIA_PACIFIC;
 		
-		if(sObjectType == PROVIDER_TYPE){
-			Database.executeBatch(new TIP_BatchActivateRecordsByDate(PRODUCT_TYPE), BATCH_SIZE);
+		if(sObjectType == PROVIDER_TYPE) {
+			Database.executeBatch(new TIP_BatchActivateRecordsByDate(PRODUCT_TYPE, region), BATCH_SIZE);
 		}
 
-		else if(sObjectType == PRODUCT_TYPE){
-			Database.executeBatch(new TIP_BatchActivateRecordsByDate(BIN_RANGE_TYPE), BATCH_SIZE);
-			Database.executeBatch(new TIP_BatchActivateRecordsByDate(PRODUCT_CONFIG_TYPE), BATCH_SIZE);	
+		else if(sObjectType == PRODUCT_TYPE) {
+			Database.executeBatch(new TIP_BatchActivateRecordsByDate(BIN_RANGE_TYPE, region), BATCH_SIZE);
+			Database.executeBatch(new TIP_BatchActivateRecordsByDate(PRODUCT_CONFIG_TYPE, region), BATCH_SIZE);
 		}
 	}
 	
