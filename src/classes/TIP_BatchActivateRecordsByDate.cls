@@ -111,12 +111,14 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 			+ 'TIP_BSP_Country__r.Region__c = \'$REGION$\''; //ACAMBAS - TIP-320
 
 
+	String region;
 	String query;
 	Integer sObjectType;
 	List<sObject> regsToUpdate;
 	
 	global TIP_BatchActivateRecordsByDate(Integer chosenType, String sRegion) {
 		this.sObjectType = chosenType;
+		this.region = sRegion;
 
 		if(sObjectType == PROVIDER_TYPE)             query = QUERY_PROVIDERS;
 		else if (sObjectType == PRODUCT_TYPE)        query = QUERY_PRODUCTS;
@@ -182,15 +184,15 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 		system.debug('##type: ' + sObjectType);
 		system.debug('##regsToUpdate: ' + regsToUpdate);
 
-		String defaultRegion = ASIA_PACIFIC;
+		//String defaultRegion = ASIA_PACIFIC;
 		
 		if(sObjectType == PROVIDER_TYPE) {
-			Database.executeBatch(new TIP_BatchActivateRecordsByDate(PRODUCT_TYPE, defaultRegion), BATCH_SIZE);
+			Database.executeBatch(new TIP_BatchActivateRecordsByDate(PRODUCT_TYPE, region), BATCH_SIZE);
 		}
 
 		else if(sObjectType == PRODUCT_TYPE) {
-			Database.executeBatch(new TIP_BatchActivateRecordsByDate(BIN_RANGE_TYPE, defaultRegion), BATCH_SIZE);
-			Database.executeBatch(new TIP_BatchActivateRecordsByDate(PRODUCT_CONFIG_TYPE, defaultRegion), BATCH_SIZE);
+			Database.executeBatch(new TIP_BatchActivateRecordsByDate(BIN_RANGE_TYPE, region), BATCH_SIZE);
+			Database.executeBatch(new TIP_BatchActivateRecordsByDate(PRODUCT_CONFIG_TYPE, region), BATCH_SIZE);
 		}
 	}
 	
