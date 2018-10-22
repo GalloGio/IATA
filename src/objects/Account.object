@@ -107618,6 +107618,14 @@ $User.ProfileId = &apos;00e20000000kvcd&apos;,
 $User.ProfileId = &apos;00e20000001Q8eH&apos;,
 $User.ProfileId = &apos;00ew0000001QUyp&apos;,
 $User.ProfileId = &apos;00e20000001QMpc&apos;,
+$User.ProfileId = &apos;00ew0000001Pj0u&apos;,
+$User.ProfileId = &apos;00ew0000001R6Uk&apos;,
+$User.ProfileId = &apos;00ew0000001QRzE&apos;,
+$User.ProfileId = &apos;00ew0000001QRzF&apos;,
+$User.ProfileId = &apos;00ew0000001QoC9&apos;,
+$User.ProfileId = &apos;00ew0000001QRzG&apos;,
+$User.ProfileId = &apos;00ew0000001QRzD&apos;,
+$User.ProfileId = &apos;00ew0000001QoBp&apos;,
 $User.ProfileId = &apos;00ew0000001QRzC&apos;)))</errorConditionFormula>
         <errorMessage>You are not allowed to modify AMS data, Please contact agency management or your system admin</errorMessage>
     </validationRules>
