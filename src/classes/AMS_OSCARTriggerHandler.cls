@@ -3379,11 +3379,12 @@ public class AMS_OSCARTriggerHandler {
     
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+        ID newNGERT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New GE').getRecordTypeId();
 
         ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
         ID certRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId(); //FM AMSU-113
         
-        if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
+        if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT  || updatedOscar.recordTypeID == newNGERT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
         	//TD2080607: partially refactored below code
         	boolean bGenerateCC =  false;
         	String changeCodeId = '';
