@@ -11,7 +11,7 @@ public with sharing class AMP_AccountManagementController {
               AM_Account_Manager__c, AM_Account_Manager__r.Name, AM_Account_Manager__r.Email,
               AM_Account_Manager__r.Phone, AM_Account_Manager__r.PPD_Tittle__c, AM_Account_Manager__r.PPD_Office__c,
               AM_Account_Manager__r.MobilePhone, SAP_BW_report_with_sales_figures__c, SAP_BW_report_without_sales_figures__c, SanctionNotice__c, Due_Diligence_Status__c,
-              Airline_Model_Type__c, Account_Type_HQ__c, ACLI_Status__c
+              Airline_Model_Type__c, Account_Type__c, ACLI_Status__c
             FROM Account
             WHERE Id = :accountId
                LIMIT 1];

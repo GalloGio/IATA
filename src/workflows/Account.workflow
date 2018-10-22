@@ -411,7 +411,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <fieldUpdates>
         <fullName>Update_Account_Type_HQ_to_Not_Applicable</fullName>
         <description>Update Account Type HQ field to &apos;Not Applicable&apos;</description>
-        <field>Account_Type_HQ__c</field>
+        <field>Account_Type__c</field>
         <literalValue>Not Applicable</literalValue>
         <name>Update Account Type HQ to Not Applicable</name>
         <notifyAssignee>false</notifyAssignee>
@@ -421,7 +421,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <fieldUpdates>
         <fullName>Update_Account_Type_HQ_to_empty</fullName>
         <description>Clears the Account Type HQ field</description>
-        <field>Account_Type_HQ__c</field>
+        <field>Account_Type__c</field>
         <name>Update Account Type HQ to empty</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
@@ -651,7 +651,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </actions>
         <active>true</active>
         <description>Clears the Account Type HQ field when the field should be filled by the user</description>
-        <formula>AND(         	RecordType.DeveloperName  = &apos;IATA_Airline&apos;,             	ISPICKVAL(Sector__c, &apos;Airline&apos;),         	NOT(ISPICKVAL(Membership_status__c, &apos;IATA member&apos;)),         	ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;),         	ISPICKVAL(Account_Type_HQ__c, &apos;Not Applicable&apos;) )</formula>
+        <formula>AND(         	RecordType.DeveloperName  = &apos;IATA_Airline&apos;,             	ISPICKVAL(Sector__c, &apos;Airline&apos;),         	NOT(ISPICKVAL(Membership_status__c, &apos;IATA member&apos;)),         	ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;),         	ISPICKVAL(Account_Type__c, &apos;Not Applicable&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

@@ -163,7 +163,7 @@
 	                    <dt>
 	                        <p class="slds-text-heading--label slds-truncate">Account Type</p>
 	                    </dt>
-	                    <dd>{!v.account.Account_Type_HQ__c}</dd>
+	                    <dd>{!v.account.Account_Type__c}</dd>
 	                </dl>
 	            </div>
             </aura:if>
