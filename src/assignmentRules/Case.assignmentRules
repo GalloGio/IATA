@@ -6,6 +6,7 @@
         <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>equals</operation>
@@ -20,6 +21,7 @@
         <ruleEntry>
             <assignedTo>iiNET_Support_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>equals</operation>
@@ -1255,7 +1257,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>E-mail to Case - IATAN ARC bulletins,E-mail to Case - IATAN Customer Service,E-mail to Case - IATAN Mega Support,E-mail to Case - IATAN Online Changes,E-mail to Case - IATAN Online Payments</value>
+                <value>E-mail to Case - IATAN ARC bulletins,E-mail to Case - IATAN Customer Service,E-mail to Case - IATAN Mega Support,E-mail to Case - IATAN Online Changes,E-mail to Case - IATAN Online Payments,E&amp;F Client – Email to Case</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
