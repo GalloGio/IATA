@@ -63,6 +63,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         account.BillingCity = 'test';
         account.Name = 'test';
         account.sector__c = Ams_Utils.SECTOR_PASSENGER;
+        account.Reason__c = '91-Accredited';
         account.Location_Type__c = AMS_Utils.HE;
         account.RecordTypeId = rtAgency ;
         account.IATACode__c = '12345678';
@@ -84,6 +85,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 			Account_Concerned__c = account.id,
 			AccountId = account.id,
 			OSCAR__c  = oscar.id,
+			CaseArea__c = 'Accreditation Process',
 			Reason1__c = 'Annual revalidation',
 			RecordTypeId = rtCase,
 			Subject = 'Annual revalidation - GoStandard - test',
@@ -97,6 +99,29 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
 
 		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
+
+		oscar.Status__c = 'Closed';
+
+		AMS_ChangeCodes__c config = new AMS_ChangeCodes__c(Name = 'ARV', 
+				Bulletin_Memo_Text__c = 'AGENT IS SERVED ADMINISTRATIVE NON-COMPLIANCE DUE TO ANNUAL REVALIDATION NON COMPLIANCE, AGENT IS GIVEN 30 DAYS TO VALIDATE THE AGENCY DETAILS',
+				Change_Code__c = 'ARV',
+				Published_in_bulletin__c = true,
+				Integration_RecId__c = 'C'
+		);
+
+		insert config;
+
+		Test.startTest();
+
+		try{
+			update oscar;
+		}catch(Exception e){
+			System.assert(e.getMessage().contains('The case cannot be closed if the sanity check is not passed or failed.'));
+		}
+
+		oscar.STEP43__c = AMS_Utils.FAILED;
+		oscar.Step6__c = AMS_Utils.PASSED;
+		update oscar;
 	}
 
 
