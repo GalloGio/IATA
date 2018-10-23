@@ -327,7 +327,7 @@
         <fields>NAME</fields>
         <relatedList>AP_Process_Form__c.Case__c</relatedList>
     </relatedLists>
-	<relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>ICCS_Bank_Account__c.NAME</fields>
         <fields>Split_type__c</fields>
