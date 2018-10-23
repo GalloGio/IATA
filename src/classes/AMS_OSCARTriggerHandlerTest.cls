@@ -256,5 +256,23 @@ private class AMS_OSCARTriggerHandlerTest {
 
         Test.stopTest();
     }
+
+    @isTest static void testaAsyncUpdateAccPCI(){
+
+        Account a = [SELECT Id FROM Account LIMIT 1][0];
+
+        String s = String.ValueOf(Date.today())+','+'Yes';
+
+        Map<Id, String> mapValues = new Map<Id, String>{ a.Id => s};
+
+        Test.startTest();
+
+        AMS_OSCARTriggerHandler.asyncUpdateAccPCI(mapValues);
+
+        test.stopTest();
+
+        System.assertEquals('Yes',[SELECT Is_PCI_compliant__c FROM Account WHERE Id = :a.Id].Is_PCI_compliant__c);
+
+    }
     
 }
