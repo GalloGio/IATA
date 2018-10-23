@@ -97,6 +97,8 @@ public class AMP_ReplyToPostFromDigestByTopic {
 			
 		}
 		
+		feedItemLst.sort();
+		
 		reloadFeedItems();
 
 		this.step = 1;
