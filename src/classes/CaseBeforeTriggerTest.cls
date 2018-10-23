@@ -106,6 +106,7 @@ private class CaseBeforeTriggerTest {
                           Country_concerned__c = 'Italy',
                           contactid = con.id,
                           AccountId = a.id,
+                          Late_Payment_Date__c = Date.today(),
                           CS_Contact_Result__c = 'Agent closed'
                           //Update_AIMS_IRR__c = system.now(),
                           //Update_AIMS_DEF__c = system.now(),
