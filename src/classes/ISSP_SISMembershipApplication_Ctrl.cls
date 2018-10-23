@@ -181,9 +181,10 @@ global class ISSP_SISMembershipApplication_Ctrl {
             Case newCase = new Case(
                 RecordtypeId = CASE_RT_AIRLINE_PARTICIPATION,
                 AccountId = account.Id,
-                CaseArea__c = 'SIS Membership',
+                CaseArea__c = 'Airline Joining',
                 Reason1__c = 'SIS Client',
                 Classification_SIS__c = 'SIS Membership',
+                Type = selectedType,
                 Defect_Issue__c = MAP_DEFECT_ISSUE.get(selectedType),
                 Subject = 'SIS Membership - ' + account.name + ' - ' + selectedType,
                 Status = 'Draft',
@@ -282,7 +283,7 @@ global class ISSP_SISMembershipApplication_Ctrl {
             if (this.form==null) return null;
             User currentUser = retrieveCurrentUser();
             if (this.form.Case__r.ContactId!=currentUser.ContactId) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Application ongoing by ' + this.form.Case__r.Contact.Name));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,Label.ISSP_SIS_Membership_Application_ongoing.replace('{0}',this.form.Case__r.Contact.Name)));
                 return null;
             }
             PageReference pageref = Page.ISSP_SISMembershipApplicationForm;
@@ -299,7 +300,7 @@ global class ISSP_SISMembershipApplication_Ctrl {
                 FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :this.form.Id];
             if (!recordAccess.hasReadAccess) {
                 
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'You do not have access for this application created by ' + this.form.Case__r.CreatedBy.Name ));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,Label.ISSP_SIS_Membership_Application_no_access.replace('{0}',this.form.Case__r.CreatedBy.Name) ));
                 return null;
             }
             PageReference pageref = Page.ISSP_Case;

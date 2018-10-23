@@ -23,12 +23,17 @@ private class ISSP_SISMembershipApplication_CtrlTest {
         
         Portal_Applications__c SISapp = new Portal_Applications__c(Name = ISSP_SISMembershipApplication_Ctrl.APP_NAME);
         insert SISapp;
-        
+        insert new Case_Reason_Service__c (
+            Name ='SIS Client',
+            Service__c =ISSP_SISMembershipApplication_Ctrl.APP_NAME,
+            Provider_Required__c = false);
+
         Portal_Application_Right__c right = new Portal_Application_Right__c(
             Contact__c = con.Id,
             Right__c = 'Access Granted',
             Portal_Application__c = SISapp.Id
         );
+        PortalServiceAccessTriggerHandler.avoidAppTrigger = true;
         insert right;
         
         return newUser;

@@ -11,7 +11,6 @@ private class ISSP_SISMembershipApplicationForm_CTest {
         creds.add(recycleBin);
         insert creds;
 
-
         list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
             new AWSKey__c(
                 name = 'adevconf',
@@ -23,6 +22,10 @@ private class ISSP_SISMembershipApplicationForm_CTest {
                 AWS_ENDPOINT_URL__c = 'asd')
         };
         insert AWS_KEYs;
+        insert new Case_Reason_Service__c (
+            Name ='SIS Client',
+            Service__c =ISSP_SISMembershipApplication_Ctrl.APP_NAME,
+            Provider_Required__c = false);
     }
     
     private static User createPortalUser() {
@@ -56,14 +59,15 @@ private class ISSP_SISMembershipApplicationForm_CTest {
             Right__c = 'Access Granted',
             Portal_Application__c = SISapp.Id
         );
+        PortalServiceAccessTriggerHandler.avoidAppTrigger = true;
         insert right;
-        
         return newUser;
     }
 
-    @isTest static void test_Controller() {
+    static testMethod void test_Controller() {
+        loadCredentials();
         User portalUser = createPortalUser();
-        
+
         System.runas(portalUser) {
             ISSP_SISMembershipApplication_Ctrl controller = new ISSP_SISMembershipApplication_Ctrl();
             ISSP_SISMembershipApplication_Ctrl.WrapperType wrapper = controller.listWrapperType[0];
@@ -81,11 +85,13 @@ private class ISSP_SISMembershipApplicationForm_CTest {
             formcontroller.getisISPA();
             formcontroller.getisISUA();
             formcontroller.getisTOU();
+            formcontroller.getSteps();
             Test.stopTest();
         }
     }
 
-    @isTest static void test_saveDraft() {
+     static testMethod void test_saveDraft() {
+         loadCredentials();
         User portalUser = createPortalUser();
         
         System.runas(portalUser) {
@@ -116,7 +122,7 @@ private class ISSP_SISMembershipApplicationForm_CTest {
         }
     }
     
-    @isTest static void test_submitForm() {
+     static testMethod void test_submitForm() {
         loadCredentials();
         User portalUser = createPortalUser();
         

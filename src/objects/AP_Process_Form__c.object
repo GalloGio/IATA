@@ -1923,6 +1923,41 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Contact_Email__c</fullName>
+        <description>SIS joining, ISUA, Contact Person info field</description>
+        <externalId>false</externalId>
+        <label>Email address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_First_Name__c</fullName>
+        <description>SIS joining, ISUA, Contact Person info field</description>
+        <externalId>false</externalId>
+        <label>First Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Last_Name__c</fullName>
+        <description>SIS joining, ISUA, Contact Person info field</description>
+        <externalId>false</externalId>
+        <label>Last Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact_Resp_Email__c</fullName>
         <description>Contact person responsible for this BSP application</description>
         <externalId>false</externalId>
@@ -2014,6 +2049,28 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         </valueSet>
     </fields>
     <fields>
+        <fullName>Contact_Title__c</fullName>
+        <description>SIS joining, ISUA, Contact Person info field</description>
+        <externalId>false</externalId>
+        <label>Title</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_number__c</fullName>
+        <description>SIS joining, ISUA, Contact Person info field</description>
+        <externalId>false</externalId>
+        <label>Telephone Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
         <fullName>Cyprus_Turkey_based_Airline__c</fullName>
         <externalId>false</externalId>
         <label>Cyprus Turkey based Airline</label>
@@ -2036,6 +2093,98 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Data_Exporter_Name__c</fullName>
+        <description>Used for SIS Recordtypes</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The &apos;Data Export&apos; means the controller who transfers the personal data</inlineHelpText>
+        <label>Data Exporter Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Exporter_Signatory_Name__c</fullName>
+        <description>Used for SIS Recordtypes</description>
+        <externalId>false</externalId>
+        <label>Data Exporter Signatory Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Exporter_Signatory_Position__c</fullName>
+        <description>Used for SIS Recordtypes</description>
+        <externalId>false</externalId>
+        <label>Data Exporter Signatory Position</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Exporting_Organization_Address__c</fullName>
+        <description>Used for SIS Recordtypes</description>
+        <externalId>false</externalId>
+        <label>Data Exporting Organization Address</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Exporting_Organization_Email__c</fullName>
+        <description>Used for SIS Recordtypes</description>
+        <externalId>false</externalId>
+        <label>Data Exporting Organization Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Exporting_Organization_Fax__c</fullName>
+        <description>Used for SIS Recordtypes</description>
+        <externalId>false</externalId>
+        <label>Data Exporting Organization Fax</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Data_Exporting_Organization_Name__c</fullName>
+        <description>Used for SIS Recordtypes</description>
+        <externalId>false</externalId>
+        <label>Data Exporting Organization Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Exporting_Organization_Phone__c</fullName>
+        <description>Used for SIS Recordtypes</description>
+        <externalId>false</externalId>
+        <label>Data Exporting Organization Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
     </fields>
     <fields>
         <fullName>Default_Commission_Rate__c</fullName>

@@ -4,379 +4,1750 @@
 
 <div id="form-container">
 
-    <apex:pageBlockSection columns="2" id="section1A" collapsible="false" rendered="{!account.Sector__c='Airline'}">
-        <apex:facet name="header">
-            <apex:outputpanel >
-                Section 1 - Company information
-            </apex:outputpanel>
-        </apex:facet>
+    <h2 class="panel-title">
+        ATTACHMENT A — PRICING SCHEDULE
+    </h2>
 
-        <tr>
-            <td colspan="2" class="blue-label">Airline Head Office Information:<br /></td>
-            <td colspan="2" class="blue-label">Airline Information to be included in the invoices produced by SIS:<br /></td>
-        </tr>
-        <apex:outputpanel ></apex:outputpanel>
+    <p>
+        The Service will be run on an operational cost-recovery basis, and the fees are subject to adjustment to ensure that operational costs are recovered. The prices below are effective 01 January 2019 and reflect the current best estimate of the charges necessary to operate the SIS Solution on a cost-recovery basis. As more information is made available to IATA about the estimated and actual use of the Service, prices will be adjusted in order to maintain neutral revenue. The annual accounts of the SIS operations covering the actual and planned cost and revenues will be shared with the SG in a timely manner. 
+    </p>
 
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel styleclass="account-field-label" value="Legal Name of the Airline"/>
-            <apex:pageBlockSectionItem>
-                <apex:outputText value="{!account.Legal_name__c}" rendered="{!account.Legal_name__c!=null}"/>
-                <apex:outputText value="{!newForm.Legal_Name_of_account__c}" rendered="{!account.Legal_name__c==null}"/>
-            </apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Legal Name of the Airline" />
-            <apex:outputText value="{!newForm.Legal_Name_of_company__c}"/>
-        </apex:pageBlockSectionItem>
+    <p class="bold">
+        1. BASIS OF CHARGING–ANNUAL SIS FLAT FEE 
+    </p>
 
-        <apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Commercial Name" />
-            <apex:outputText value="{!newForm.Airline_trade_name__c}"/>
-        </apex:pageBlockSectionItem>
+    <p>
+        The SIS Annual Fee will be charged to every SIS participant from the date of signature of the agreement at the following rates: 
+    </p>
 
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Airline Designator Code"/>
-            <apex:outputText value="{!account.Airline_designator__c}" />
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 90%; margin-left: 5%;">
+            <tr><th>Band</th><th>Invoices Submitted Annually From</th><th>To</th><th>IATA Member Airlines</th><th>Non-IATA Member Airlines, Airline Subsidiaries, ICH Sponsored Airline Members</th><th>IATA Strategic Partners, Other Sponsored or Subsidiary Participants</th><th>Associate Members, Other Participants</th></tr>
+            <tr><td>1</td><td>0</td><td>799</td><td>$1,000</td><td>$2,250</td><td>$3,250</td><td>$4,500</td></tr>
+            <tr><td>2</td><td>800</td><td>7,999</td><td>$2,500</td><td>$4,000</td><td>$5,000</td><td>$6,500</td></tr>
+            <tr><td>3</td><td>8,000</td><td>15,999</td><td>$4,000</td><td>$6,500</td><td>$7,500</td><td>$9,000</td></tr>
+            <tr><td>4</td><td>16,000</td><td>24,999</td><td>$5,500</td><td>$8,500</td><td>$9,500</td><td>$11,000</td></tr>
+            <tr><td>5</td><td>25,000</td><td> </td><td>$7,000</td><td>$10,000</td><td>$11,000</td><td>$14,000</td></tr>
+        </table>
+    </div>
 
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office Street"/>
-            <apex:outputText value="{!account.BillingStreet}" />
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office Street" />
-            <apex:outputText value="{!newForm.Company_address__c}"/>
-        </apex:pageBlockSectionItem>
+    <p>
+        The charging band for new ICH or ACH participants will be Band 1, re-assessed quarterly on an annualised volume basis until twelve months history is available. 
+    </p>
+    <p>
+        In all other cases, the charges will be re-assessed on an annualised basis each quarter and adjusted in arrears if the annualised total (or prorated equivalent) has exceeded or fallen below the threshold used. 
+    </p>
 
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office City Name"/>
-            <apex:outputText value="{!account.BillingCity}" />
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office City Name" />
-            <apex:outputText styleclass="form-city required" value="{!newForm.Company_city__c}"/>
-        </apex:pageBlockSectionItem>
+    <p class="bold">
+        2. BASIS OF CHARGING–SIS TRANSACTION FEES 
+    </p>
 
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office State Name"/>
-            <apex:outputText value="{!account.BillingState}" />
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office State Name" />
-            <apex:outputText value="{!newForm.Company_State__c}" />
-        </apex:pageBlockSectionItem>
+    <p>
+        When using the Service, transaction fees will be charged for each submission of a transaction or record by the billing participant or its agent. The amount paid per transaction depends upon the total Service transaction fees paid by the Participant in the previous quarter and will fall into one of the following categories: 
+    </p>
 
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office Postal Code"/>
-            <apex:outputText value="{!account.BillingPostalCode}" />
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office Postal Code" />
-            <apex:outputText value="{!newForm.Postal_code__c}" />
-        </apex:pageBlockSectionItem>
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 40%; margin-left: 25%;">
+            <tr><th colspan="2">SIS Transaction Fee Ranges</th></tr>
+            <tr><th>From</th><th>To</th></tr>
+            <tr><td>$0</td><td>$4,999</td></tr>
+            <tr><td>$5,000</td><td>$14,999</td></tr>
+            <tr><td>$15,000</td><td></td></tr>
+        </table>
+    </div>
 
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office Country"/>
-            <apex:outputText value="{!account.BillingCountry}" />
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office Country" />
-            <apex:outputText value="{!newForm.Company_Country__r.Name}" />
-        </apex:pageBlockSectionItem>
+    <p>
+        After determining the proper category in the chart above, the following chart will be used to determine the actual transaction prices to be charged: 
+    </p>
 
-    </apex:pageBlockSection>
+    <div class="regular-table no-page-break">
+        <table style="width: 90%; margin-left: 5%;">
+            <tr><th></th><th colspan="3"><center>SIS Transaction Fees</center></th></tr>
+            <tr><th>Quarterly volume threshold</th><th>$0–$4,999</th><th>$5,000–$14,999</th><th>$15,000 +</th></tr>
+            <tr><th>Transaction Type</th><th>(base)</th><th> </th><th> </th></tr>
+            <tr><td><div class="bold">Invoices–per</div>Pax, Cargo, UATP, Misc</td><td>$0.57</td><td>$0.45</td><td>$0.33</td></tr>
+            <tr><td><div class="bold">Group A1–per</div> Pax: Prime Coupon, Credit Memo, Sampling Provisional Invoice Coupon, Sampling Digit Evaluation Coupon, Value Determination Request, Auto-billing Request<sup>(1)</sup></td><td>$0.0074</td><td>$0.0059</td><td>$0.0043</td></tr>
+            <tr><td>Cargo: Original Billing (AWB), Credit Memo </td><td> </td><td> </td><td> </td></tr>
+            <tr><td><div class="bold">Group A2–per</div> Pax: Billing Memo </td><td>$0.0171</td><td>$0.0135</td><td>$0.0099</td></tr>
+            <tr><td>Cargo: Billing Memo </td><td> </td><td> </td><td> </td></tr>
+            <tr><td><div class="bold">Group B1–per</div> Pax: Sampling UAF Coupon </td><td>$0.0114</td><td>$0.0090</td><td>$0.0066</td></tr>
+            <tr><td><div class="bold">Group B2–per</div>
+                <span class="italic">Pax</span>: Rejection Memo (including Sampling), Correspondence<br/>
+                <span class="italic">Cargo</span>: Rejection Memo, Correspondence<br/>
+                <span class="italic">Misc</span>: Correspondence</td>
+                <td>$0.0342</td><td>$0.0270</td><td>$0.0198</td></tr>
+            <tr><td><div class="bold">Supporting Documents–per</div> kilobyte Pax, Cargo</td><td>$0.0011</td><td>$0.0009</td><td>$0.0007</td></tr>
+            <tr><td>Misc</td><td>$0.0016</td><td>$0.0014</td><td>$0.0012</td></tr>
+            <tr><td>Digital Signature (&amp; Validation, as appropriate)</td><td>$0.15</td><td>$0.15</td><td>$0.15</td></tr>
+            <tr><td>Optional legal archiving (per invoice)</td><td>$0.10</td><td>$0.10</td><td>$0.10</td></tr>
+        </table>
+    </div>
 
-    <apex:pageBlockSection columns="2" id="section1B" collapsible="false" rendered="{!account.Sector__c!='Airline'}">
-        <apex:facet name="header">
-            <apex:outputpanel >
-                Section 1 - Company information
-            </apex:outputpanel>
-        </apex:facet>
-
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Legal Name of the Company"/>
-            <apex:outputText value="{!newForm.Legal_Name_of_company__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
-        
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Trade Name of Company"/>
-            <apex:outputText value="{!newForm.Company_Trade_Name__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Incorporated under the laws of (Country)"/>
-            <apex:outputText value="{!newForm.Company_Country__r.Name}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="" />
-            <apex:outputText value="{!newForm.Company_State__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Head Office Postal Code"/>
-            <apex:outputText value="{!newForm.Postal_code__c}" />
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
-
-    </apex:pageBlockSection>
-
-    <apex:pageBlockSection columns="2" id="section2" collapsible="false">
-        <apex:facet name="header">
-            <apex:outputpanel >
-                Section 2 - Super User details
-            </apex:outputpanel>
-        </apex:facet>
-
-        <tr><td colspan="4" class="blue-label">SIS Participant must provide the following details with regards to the Member Super User for their company. Once this form is provided and the membership process completed, the super user will receive their access to SIS.</td></tr>
-        <apex:outputText ></apex:outputText>
-
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Salutation"/>
-            <apex:outputText value="{!newForm.Super_User_Salutation__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="First Name"/>
-            <apex:outputText value="{!newForm.Super_User_First_Name__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Phone Number"/>
-            <apex:outputText value="{!newForm.Super_User_Phone_Number__c}"/>
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Last Name"/>
-            <apex:outputText value="{!newForm.Super_User_Last_Name__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Mobile Number"/>
-            <apex:outputText value="{!newForm.Super_User_Mobile_Number__c}"/>
-        </apex:pageBlockSectionItem>
-        
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Email"/>
-            <apex:outputText styleclass="required email" value="{!newForm.Super_User_Email_Address__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Fax Number"/>
-            <apex:outputText value="{!newForm.Super_User_Fax_Number__c}"/>
-        </apex:pageBlockSectionItem>
-
-    </apex:pageBlockSection>
-
-    <apex:pageBlockSection columns="2" id="section3" collapsible="false">
-        <apex:facet name="header">
-            <apex:outputpanel >
-                Section 3 - Optional Services
-            </apex:outputpanel>
-        </apex:facet>
-
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Is_AA_Member__c.label}"/>
-            <apex:outputText value="{!newForm.Is_AA_Member__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Digital Signature Application"/>
-            <apex:outputText value="{!newForm.Digital_Signature_application__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Billing Value Determination"/>
-            <apex:outputText value="{!newForm.Billing_Value_Determination__c}"/>
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Digital Signature Verification"/>
-            <apex:outputText value="{!newForm.Digital_Signature_verification__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Billing Value Confirmation"/>
-            <apex:outputText value="{!newForm.Billing_Value_Confirmation__c}"/>
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Legal Archiving"/>
-            <apex:outputText value="{!newForm.Legal_Archiving__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Auto-billing"/>
-            <apex:outputText value="{!newForm.Auto_billing__c}"/>
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-            <apex:outputLabel value="Digital Signature Application"/>
-            <apex:outputText value="{!newForm.Digital_Signature_application__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-            <apex:outputLabel value="Digital Signature Verification"/>
-            <apex:outputText value="{!newForm.Digital_Signature_verification__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-            <apex:outputLabel value="Legal Archiving"/>
-            <apex:outputText value="{!newForm.Legal_Archiving__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-        </apex:pageBlockSectionItem>
-
-    </apex:pageBlockSection>
-
-    <apex:pageBlockSection columns="2" id="section4" collapsible="false">
-        <apex:facet name="header">
-            <apex:outputpanel >
-                Section 4 - iiNET
-            </apex:outputpanel>
-        </apex:facet>
-
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Do you have an iiNET account?"/>
-            <apex:outputText value="{!newForm.Do_you_have_an_iiNET_account__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>
-        </apex:pageBlockSectionItem>
-
-        <apex:variable value="{!newForm.Do_you_have_an_iiNET_account__c=='Yes'}" var="showSection4"/>
-
-        <tr><td colspan="4" class="blue-label {!IF(showSection4,'','hidden')}">
-            Please provide your iiNET ID, in case you already have an existing iiNET connection. In order to setup a new iiNET Connection please contact iinetcare@iata.org
-        </td></tr>
-        <apex:outputText ></apex:outputText>
-
-        <apex:pageBlockSectionItem rendered="{!showSection4}">
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!showSection4}">
-            <apex:outputLabel value="iiNET Account Number"/>
-            <apex:outputText value="{!newForm.IINET_account_number__c}"/>
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem rendered="{!showSection4}"/>
-        <apex:pageBlockSectionItem rendered="{!showSection4}"/>
-
-        <tr><td colspan="4" class="blue-label {!IF(showSection4,'','hidden')}">
-            Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML).
-            For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the SIS File Certification for detailed steps on how to perform testing and certification.
-        </td></tr>
-        <apex:outputText ></apex:outputText>
-
-    </apex:pageBlockSection>
-
-    <apex:pageBlockSection columns="1" id="section5" collapsible="false">
-        <apex:facet name="header">
-            <apex:outputpanel >
-                Section 5 - Corporate Documents
-            </apex:outputpanel>
-        </apex:facet>
-
-        <tr><td colspan="4" class="blue-label">
-            Please attach a scanned copy of the following documents:
-        </td></tr>
-        <apex:outputText ></apex:outputText>
-
+    <p>
+        1: The charge for auto-billing request does not include the invoice and prime coupons that are then submitted on the carrier's behalf; those are charged additionally at the described rates.
+    </p>
+    <p>
+        * All transactions entered via the IS-WEB interface and not via IS-IDEC or IS-XML (including Correspondence, which are only entered via IS-WEB) will be charged an additional 25%. This surcharge will not apply to supporting documents uploaded via the IS-WEB interface. 
+    </p>
+    <p>
+        Additional Notes on the Service Transaction Fees: 
         <ul>
-          <li>Corporate Registration</li>
-          <li>Shareholders List</li>
-        </ul> 
+            <li>For the purposes of determining the proper category, fees will only take into account the Service transactional charges and not any annual fee paid. </li>
+            <li>Digital signature charges may be payable by both the billing and billed Participant based on their selections. </li>
+            <li>Supporting Document charges are based on the stored document size (documents are stored unzipped), not the transmitted document size (documents are transmitted zipped). </li>
+            <li>Where twelve months of data is not available, the Base charging band will be applied, and re-assessed quarterly on an annualised volume basis until twelve months history is available. </li>
+            <li>Effective January 2018 - Rejection Memo, Billing Memo and Credit Memo charges are based on the count of memo coupon/AWB breakdowns instead of RM/BM/CM memo counts. </li>
+            <li>A&amp;A fees are not included in the above figures and will be charged separately by A&amp;A. The “Value Determination” and “Auto-billing” features of Integrated Settlement require the storage option from A&amp;A. </li>
+        </ul>
+    </p>
 
-        <tr><td colspan="4" class="blue-label">
-            If the corporate documents are issued in any other language than French, English, Arabic, Italian, Portuguese or Spanish, please provide, in addition to the scanned copies of original documents, an official or notarized English translation of the same.
-        </td></tr>
-        <apex:outputText ></apex:outputText>
+    <p class="bold">
+        3. OTHER CHARGES 
+    </p>
+    <p class="margin-3">
+        3.1 Access to the general file testing system (the “sandbox”) will be provided free of charge at all times. 
+    </p>
 
-    </apex:pageBlockSection>
+    <p class="margin-3">
+        3.2 Support will be charged at USD500 per day for any technical support required during the Sandbox or certification testing process. 
+    </p>
 
-    <apex:pageBlockSection columns="2" id="section6" collapsible="false">
-        <apex:facet name="header">
-            <apex:outputpanel >
-                Section 6 - Local Bank Mandate Form
-            </apex:outputpanel>
-        </apex:facet>
+    <p class="margin-3">
+        3.3 Access to the multi-account optional feature* will be charged as per the below:
+    </p>
 
-        <tr><td colspan="4">
-            <div class="strong-label">
-            The bank details, if provided, will be stored in the member profile and will be populated on invoices issued for bilateral settlement.
-            You may also use the same account you currently have for the ICH – in this case simply tick the box below.
-            </div>
-        </td></tr>
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 80%; margin-left: 10%;">
+            <tr><th>No. of Additional Accounts</th><th>Annual Fee<br/>( x account/year)</th><th>Minimum Fee</th><th>Maximum Fee</th></tr>
+            <tr><td>Between 2  - 4</td><td>$500</td><td>$1,000</td><td>$2,000</td></tr>
+            <tr><td>Between 5 – 12</td><td>$400</td><td>$2,000</td><td>$4,800</td></tr>
+            <tr><td>More than 12</td><td>$5,000 flat fee</td><td>n/a</td><td>n/a</td></tr>
+        </table>
+    </div>
 
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Is your company joining the Clearing House?"/>
-            <apex:outputText value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c}"/>
-        </apex:pageBlockSectionItem>
-        <apex:outputText ></apex:outputText>
+    <p class="margin-3">
+        *The multi-account functionality allows SIS users of group companies, subsidiaries or merged entities to access multiple SIS member accounts using a single email address. For more information about this feature contact us via the IATA Customer Portal at www.iata.org.cs.
+    </p>
 
-        <apex:variable value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c=='Yes'}" var="showSection6Yes"/>
-        <apex:variable value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c=='No'}" var="showSection6No"/>
 
-        <apex:outputPanel rendered="{!showSection6Yes}">
-            <tr><td colspan="4" class="blue-label required">Choose an option:</td></tr>
-            <apex:outputText ></apex:outputText>
-            <apex:outputText value="{!newForm.Select_Bank_Account__c}"/>
+    <h2 class="panel-title new-line">
+        ATTACHMENT B— SERVICE AND ADDITIONAL SERVICE OPTIONS
+    </h2>
 
-            <apex:outputPanel rendered="{!newForm.Select_Bank_Account__c=='New Account'}">
-                <tr><td colspan="4" class="blue-label required">Upload Files:</td></tr>
-                <apex:outputText ></apex:outputText>
-                <apex:iframe scrolling="false"
-                src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=2&reqRequired=Mandatory&reqName=Bank Mandate Form&reqDescription={!$Label.ISSP_SIS_Membership_BankMandateDescription}&reqIdentifier=BankMandate&onlyOne=true"/>
-            </apex:outputPanel>
-        </apex:outputPanel>
+    <p class="bold">
+        1. PURPOSE 
+    </p>
+    <p class="margin-3">
+        1.1 This attachment describes the Additional Services that the Participant elects to use in addition to the provision of the Service under the main agreement. This annex may be amended at any time by the Participant and communicated to IATA in order to reflect the changes in its selection of Additional Services. 
+    </p>
+    <p class="bold">
+        2. GLOSSARY 
+    </p>
+    <p class="margin-3">
+        See Glossary in Attachment D “Service Description”.
+    </p>
+    <p class="bold">
+        3. OPTIONAL SERVICES 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        3.1 Digital Signature application 
+    </p>
+    <p class="margin-3">
+        SIS offers a digital signature (DS) application service in a number of countries with the help of a trusted digital signature service provider. Based on the instructions provided by the billing entity, SIS creates an invoice subset file from the SIS-format invoice data with the necessary legal and invoice information fields. This digitally signed file is made available by SIS as one of the outputs to the billing entity at the end of the billing period, based on the configuration of the Member Profile. It can also be downloaded online over the IS-WEB.
+    </p>
+    <p class="margin-3">
+        SIS allows billed entities to configure the application of Digital Signature on Payable Invoices in the Member Profile. Based on the location details specified on the payable invoice, SIS triggers the process to apply digital signature in the countries covered by the service. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        3.2 Digital Signature verification 
+    </p>
+    <p class="margin-3">
+        SIS provides an option whereby the billed entity can request verification of the digital signature applied on Payable Invoices, via the Member Profile. A verification log file is created by this process which contains the status of the applied digital signature in the countries covered by the service. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        3.3 Legal Archiving (or E-Archiving) service 
+    </p>
+    <p class="margin-3">
+        Some jurisdictions may require legal storage for the digitally signed invoices for varying amounts of time. During this period, the invoices and any applicable digital signature need to be accessible for any audits. To address this issue, SIS will provide an optional Legal Archiving service to store the digitally signed invoices and other related information on behalf of the Participant in an external Legal archive for a longer period as required by the local regulations. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        3.4 Billing Value Determination 
+    </p>
+    <p class="margin-3">
+        As part of this service, SIS accepts Usage Files (modified Record 50 file format as defined in the IS Participation guide) from billing entities requesting prorate values for coupons utilized by them. SIS validates the file format and forwards the Usage File to ATPCO for further processing. The processed information is provided by ATPCO back to SIS. IS forwards the output files provided by ATPCO to the billing entities. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        3.5 Billing Value Confirmation 
+    </p>
+    <p class="margin-3">
+        SIS generates a Billing Value Confirmation file for passenger prime billing coupons where both the billing entity and billed entity are subscribers to this service. This file is forwarded to ATPCO for further processing. ATPCO validates the billing values with the prorate values stored within its database. Any exchange rate conversions of the prorate values as per the billing month will be done by ATPCO before comparing the values. The results of the comparison are updated by ATPCO and provided to SIS. SIS updates the comparison results within its Billing Record Database. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        3.6 Auto-billing 
+    </p>
+    <p class="margin-3">
+        As part of this service, SIS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis SIS will generate a Revenue Recognition File (File Format defined in the IS Participation Guide) containing the billing records of coupons included in the Auto-Billing Invoices. 
+    </p>
+    <p class="margin-3">
+        The Auto-Billed invoices are automatically closed and finalized by SIS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, SIS generates an Invoice Posting File which includes details of all Auto-Billed invoices 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        3.7 Summary table of Optional Services selected 
+    </p>
+    <p class="margin-3">
+        By indicating that the Optional Service is “ON” in the below table, the Participant hereby confirms that IATA is to provide this additional service and that the fees described in Attachment A of this agreement applicable to the Optional Services selected will be charged to the Participant.
+    </p>
 
-        <apex:outputPanel rendered="{!showSection6No}">
-            <tr><td colspan="4" class="blue-label required">Upload Files:</td></tr>
-            <apex:outputText ></apex:outputText>
-            <ul>
-              <li>Bank Mandate</li>
-            </ul> 
-        </apex:outputPanel>
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 80%; margin-left: 10%;">
+            <tr><th>Optional Service</th><th>ON/OFF</th></tr>
+            <tr><td>Digital Signature application</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
+            <tr><td>Digital Signature verification</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
+            <tr><td>Legal Archiving</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
+            <tr><th>Applicable to A&amp;A Members only</th><th>ON/OFF</th></tr>
+            <tr><td>Billing Value Determination</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
+            <tr><td>Billing Value Confirmation</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
+            <tr><td>Auto-billing</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
+        </table>
+    </div>
 
-    </apex:pageBlockSection>
+    <p class="margin-3">For the Participant</p>
+    <p class="margin-6">Signature: </p>
+    <p class="margin-6">Name: </p>
+    <p class="margin-6">Position: </p>
+    <p class="margin-6">Company: </p>
 
-    <apex:pageBlockSection columns="1" id="section7" collapsible="false">
-        <apex:facet name="header">
-            <apex:outputpanel >
-                Section 7 - Additional questions
-            </apex:outputpanel>
-        </apex:facet>
 
-        <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Is your company subject to EU data privacy laws?"/>
-            <apex:outputText value="{!newForm.Is_company_subject_to_EU_laws__c}"/>
-        </apex:pageBlockSectionItem>
+    <h2 class="panel-title new-line">
+        ATTACHMENT C — GOVERNANCE
+    </h2>
 
-        <apex:variable value="{!newForm.Is_company_subject_to_EU_laws__c=='Yes'}" var="showSection7"/>
+    <p class="bold">
+        1. SIS STEERING GROUP 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        1.1 Role/Mandate 
+    </p>
+    <p class="margin-3">
+        The SIS Steering Group shall act as advisor to the Financial Committee, other relevant IATA bodies, and IATA Management, on matters related to the Simplified Invoicing and Settlement System (SIS) product. 
+    </p>
+    <p class="margin-3">
+        Areas of activities include:
+        <ul class="margin-6" style="list-style-type: none;">
+            <li>(a) Maintaining global oversight of the ongoing SIS operation and development to ensure that SIS provides cost effective, high quality settlement services that are relevant to IATA members' needs. </li>
+            <li>(b) Providing a consultative forum between IATA management and Member airlines on the efficient operation of the service. </li>
+            <li>(c) Advising IATA management on prioritisation of developments and changes to functionalities of the Simplified Invoicing ad Settlement System as proposed by the user communities or the service providers and supporting any system testing as requested by IATA. </li>
+            <li>(d) Providing guidance to IATA management in respect of the pricing policies for the operation of the service. </li>
+            <li>(e) Reviewing any audit risk and risk issues associated with the service. </li>
+            <li>(f) Proposing changes to electronic invoicing processes and standards, in particular management of the IS-IDEC and IS-XML standard for electronic invoicing, determination of e-invoicing formats, submission methods, electronic documentation requirements, and changes to mandatory fields. </li>
+            <li>(g) Reviewing proposed changes in billing rules or transaction processes arising from Industry meetings and consider their implications on service delivery. </li>
+            <li>(h) Drafting and proposing any changes that may be required to the IATA Revenue Accounting Manual after considering inputs from SIS participants. </li>
+            <li>(i) Coordinating with other IATA Industry e-invoicing Services with regards to interfaces between the services. </li>
+            <li>(j) Coordinating with the XML Working Group wherever a common approach to standards may benefit the industry. </li>
+        </ul>
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        1.2 Membership 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.1 The SIS Steering Group consists of the following members:
+        <ul class="margin-6" style="list-style-type: none;">
+            <li>(a) IATA's Director for Financial and Distribution Services Operations </li>
+            <li>(b) IATA's Manager, Airline Distribution Standards (Pay/Account Vertical) </li>
+            <li>(c) Secretary/Treasurer of the Airlines Clearing House </li>
+            <li>(d) Chair of the ATA Revenue Accounting Committee </li>
+            <li>(e) Chair of the Interline Billing &amp; Settlement Operations Working Group </li>
+            <li>(f) 5 members appointed by the Financial Committee based on the results of the election at the SIS General Meeting </li>
+            <li>(g) Up to 5 additional members appointed by the Financial Committee based on members nomination </li>
+        </ul>
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.2 The members appointed by the Financial Committee shall be qualified representatives within IATA member airlines who have knowledge and experience of the operations of the interline billing and settlement process. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.3 No more than one person associated with or employed by the same airline may be a representative on the SIS Steering Group at any one time. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.4 The appointments shall take into consideration: 
+        <ul class="margin-6" style="list-style-type: none;">
+            <li>(a) Industry expertise </li>
+            <li>(b) Potential contribution to the Working Group's work </li>
+            <li>(c) Seniority within the airline of the candidate concerned </li>
+            <li>(d) Regional balance </li>
+            <li>(e) Airline alliance balance (including non-alliance airlines) </li>
+            <li>(f) Candidates from airlines that share a common ownership structure </li>
+            <li>(g) Size of Member airline balance </li>
+            <li>(h) A combination of continuity and rotation in the Working Group membership </li>
+            <li>(i) Representation of the membership across all of the Working Groups </li>
+            <li>(j) Feedback from the Industry </li>
+        </ul>
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.5 Each Member shall be appointed for a term of up to three years, which can be renewed up to a maximum of two times. If a person has served three consecutive terms, a minimum of two years must expire before that person is eligible again for appointment to the same Working Group. The Financial Committee may exceptionally approve the appointment of a person to serve more than three consecutive terms on the basis of his or her knowledge and experience. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.6 Members may not appoint a proxy to represent him or her. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.7 Each Member shall act as a representative of the membership as a whole and not as a representative of his or her region or of the Member that nominated him or her. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.8 The SIS Steering Group shall elect a Chair and Vice-Chair whose terms shall be for three years, with an expected rotation after 2 terms, through a simple majority vote. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.9 The Chair and Vice-Chair shall operate as a full member of the SIS Steering Group. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.10 IATA will appoint a secretary to work with the SIS Steering Group and coordinate its activities within IATA. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.2.11 Membership shall terminate if: 
+        <ul class="margin-6" style="list-style-type: none;">
+            <li>(a) The airline ceases to be a Member, or </li>
+            <li>(b) The Member leaves the relevant position in the airline, or </li>
+            <li>(c) The Member fails to attend two consecutive meetings, or </li>
+            <li>(d) The Member fails to attend 2 consecutive conference calls in a given calendar year. </li>
+        </ul>
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        1.3 Meetings and Procedures 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.1 The SIS Steering Group shall meet as required, including by teleconference, video conference, or other electronic means. It shall meet in person at least twice per year. It shall normally meet within six to eight weeks prior to the Financial Committee meetings to enable reporting to the Financial Committee. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.2 Meetings shall be called by IATA, in consultation with the Chair. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.3 IATA shall normally give thirty days' notice of the meeting; at least ten days' notice shall be given for a special meeting. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.4 A simple majority of the SIS Steering Group members shall constitute a quorum for any meeting. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.5 Attendance at meetings will be limited to Group Members. A limited number of qualified observers may be invited to attend specific meetings at the invitation of IATA. Where their knowledge or advice would be useful in attaining the objectives of the meeting, representatives of relevant international organisations and regional airline associations may be invited by IATA to attend meetings as observers. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.6 The agenda of any meeting shall include any relevant matter proposed by:
+        <ul class="margin-6" style="list-style-type: none;">
+            <li>(a) Any member of the Group </li>
+            <li>(b) IATA </li>
+            <li>(c) The Financial Committee or one of its Working Groups </li>
+            <li>(d) Any SIS participant whose representative shall be entitled to attend the SIS Steering Group meeting </li>
+        </ul>
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.7 The SIS Steering Group will seek to operate on a consensus basis, based on members present. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.8 The SIS Steering Group may establish its working procedures consistent with these Rules. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.9 Subject to the Financial Committee's approval, the SIS Steering Group may request the creation of a technical Task Force to address a specific technical issue. The Task Force terms of references shall state its specific objectives, work programme, deliverables, agreed timetable, and membership. Such Task Force will be reconfirmed by the Financial Committee annually and be disbanded once its mandate has been completed. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.10 These terms of reference, including the quorum may be amended from time to time by IATA's Director General or the Financial Committee. 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.3.11 The work of the SIS Steering Group shall be conducted in full compliance with applicable competition and antitrust law, with supervision from IATA Legal Counsel. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        1.4 Work Programme 
+    </p>
+    <p class="margin-6 indent-2_5">
+        1.4.1 The SIS Steering Group shall develop an annual Work Programme which will be reported as part of the overall subject activity to the Financial Committee. The report will be developed on a consensus basis. 
+    </p>
+    <p class="bold">
+        2. SIS OPERATIONS: 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        2.1 SIS Operations is the IATA unit responsible for the management and delivery of the Service. It will be managed in accordance with IATA policies and will be responsible for the following: 
+        <ul class="margin-6" style="list-style-type: none;">
+            <li>(a) Managing the operations and development of the services, delivery and systems needed to deliver the Service. </li>
+            <li>(b) Managing the development and delivery of the enhancements to the Service. </li>
+            <li>(c) Interpretation of the SIS Steering Group user requirements into Functional and Technical Specifications assisted by any Technical Task Force where relevant. </li>
+            <li>(d) Obtaining input on the finalised Functional and Technical Specifications from any Technical Task Force and Participants. </li>
+            <li>(e) Obtaining support for the specifications from the SIS Steering Group. </li>
+            <li>(f) Providing cost estimates for the functional and technical specifications generated by the SIS Steering Group in a timely manner and obtaining sign-off for development from IATA as appropriate. </li>
+            <li>(g) Development of appropriate business cases/models based on Airline/industry benefits. </li>
+            <li>(h) Development of pricing proposals for product enhancements seeking support from the SIS Steering Group. </li>
+            <li>(i) Prioritising resource allocation in line with delivery priorities agreed with the SIS Steering Group. </li>
+            <li>(j) Working with their technical teams to manage the development efforts necessary to deliver the required functional and technical specifications. </li>
+        </ul>
+    </p>
 
-        <apex:outputPanel rendered="{!showSection7}">
-            <apex:outputPanel rendered="{!newForm.EU_Data_Privacy_Laws__c=='A'}">
-                EU Standard Contractual Clauses for processing between IATA and Participant (including the EU Standard Contractual Clauses for processing between IATA and Sub-processor. A signed copy is available upon request).
-            </apex:outputPanel>
-            <apex:outputPanel rendered="{!newForm.EU_Data_Privacy_Laws__c=='B'}">
-                (for use only in jurisdictions where a tripartite agreement is required): EU Standard Contractual Clauses for processing between IATA, Participant and Sub-processor
-            </apex:outputPanel>
-        </apex:outputPanel>
+    <h2 class="panel-title new-line">
+        ATTACHMENT D — SIMPLIFIED INVOICING AND SETTLEMENT (SIS) SERVICE DESCRIPTION
+    </h2>
 
-    </apex:pageBlockSection>
+    <p class="bold">
+        Simplified Invoicing and Settlement (SIS) Service Description
+    </p>
+
+    <p class="bold">
+        1. BACKGROUND 
+    </p>
+    <p>
+        The SIS project aims to simplify interline billing, and to remove paper from the entire process, delivering tangible financial benefits to the industry. The vision is that a billing entity will submit a single electronic billing file that will be converted into an invoice and a settlement file, sent to the billed entity, and cleared through the relevant clearing house. As part of this project, an “Simplified Invoicing and Settlement” (SIS) System has been developed based on the principles of completely paperless billing, invoicing, and settlement. The SIS solution encompasses Passenger, Cargo, Miscellaneous and UATP interline billings with settlements through ICH, ACH or on a bilateral basis. 
+    </p>
+    <p>
+        In this document the terms Simplified Invoicing and Settlement (SIS) and Integrated Settlement (IS) may be used interchangeably and the term IS Member(s) has the same meaning as Participant and/or SIS Participants, as the case may be. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        1.1 Overview of Simplified Invoicing and Settlement (SIS) 
+    </p>
+    <p class="margin-3">
+        SIS is an Invoicing Platform which is connected to various external systems such as ICH, ACH, ATPCO, a trusted Digital Signature service provider, etc., thus providing a single point of communication for Interline billing, invoicing and settlement. 
+    </p>
+    <p class="margin-3">
+        A high level overview of SIS is shown in Figure 1 below: 
+    </p>
+
+    <figure>
+        <apex:image width="680" value="{!URLFOR($Resource.ISSP_MembershipApplicationFormPDF,'img/ISPA_figure1.jpg')}"/>
+        <figcaption>Figure: Overview of Simplified Invoicing and Settlement (SIS)</figcaption>
+    </figure> 
+
+    <p class="margin-3">
+        The SIS application can be grouped into the following logical modules: 
+        <ul>
+            <li>SIS Member and User Management </li>
+            <li>Receivables Data Processing </li>
+            <li>Payables Data Processing </li>
+            <li>Correspondence Management </li>
+        </ul>
+    </p>
+
+    <p class="margin-3">
+        The services provided by each module are described in the subsequent chapters.
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        1.2 Supporting Documentation 
+    </p>
+    <p class="margin-3">
+        The following documents provide additional information to the services described in this document:
+        <ul>
+            <li>SIS Participation Guide: This document provides the details of the impact of SIS on the IT systems and processes of the SIS Members. </li>
+            <li>Sign up and Certification Guide: This document provides detail explanation on the Sign up process and steps to be followed to get certified for SIS. </li>
+            <li>IATA Revenue Accounting Manual (RAM): The RAM contains all the rules and procedures associated with interline billing, with which the IS application will be compliant, and of which the SIS Participation Agreement and this Attachment are a part. </li>
+            <li>ACH Manual of Procedure: For members of the ACH, the Manual of Procedure contains all the rules and procedures associated with billings using the ACH for settlement. </li>
+            <li>SIS User Guide: This manual documents all the functional processes of SIS that are available to the individual user. </li>
+        </ul>
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        1.3 Standard Services and Optional Services 
+    </p>
+    <p class="margin-3">
+        Standard Services such as submission of invoices, flight coupon data, air waybill data, rejections etc. are available to any Member as soon as participation formalities have been completed. Optional Services require specific notification or request to SIS Operations (SIS-Ops), whether before or after use of the service has commenced. Use of optional services will incur additional charges (such as Digital Signatures) and may also require secondary agreements to be signed (such as for A&amp;A services). Because a service is shown as ‘Optional’ in SIS does not mean that it is optional in the Members operating jurisdictions. 
+    </p>
+
+    <p class="bold">
+        2. MEMBER AND USER MANAGEMENT 
+    </p>
+    <p>
+        The SIS application allows SIS Members to configure their company and staff responsibility details using the Member Profile module over IS-WEB. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        2.1 Member Creation 
+    </p>
+    <p class="margin-3">
+        The initial set-up of SIS Member is done by SIS-Ops using existing information within IATA, ICH, ACH etc. as well as using information sourced from individual members during the sign-up process. This is done for all airline entities defined in the Airline Coding Database as well as non-airline entities who are members of ICH and/or ACH. Once the participation formalities are completed, the Membership status is activated by SIS-Ops and a Super user account is created and provided to the
+    </p>
+    <p class="margin-3">
+        SIS Member. Login credentials to access IS-WEB as well as the FTP server (if required) are also provided by SIS-Ops so that the SIS Member can communicate with the SIS Platform. 
+    </p>
+    <p class="margin-3">
+        Note:
+    </p>
+    <p class="margin-3">
+        The SIS Member will have to go through the Sandbox Testing and Certification process to be able to send invoice files to SIS. This process is described in detail in the SIS Sign Up and Certification Guide.
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        2.2 Member Profile Set-up 
+    </p>
+    <p class="margin-3">
+        Using the login credentials provided by SIS-Ops, the SIS Member can login to IS-WEB and review the set-up details on the Member Profile Screen. SIS allows the SIS Member to update the details on the Member Profile. Certain fields on the Member Profile will only allow changes to be made which will be applicable for a future billing period or date. 
+    </p>
+    <p class="margin-6 bold">
+        Member Details
+    </p>
+    <p class="margin-6">
+        SIS application will allow the SIS Member to upload and store its official logo on to its platform. This logo will be used by SIS to display the image on the PDF invoices generated on behalf of the SIS Member. The Member's Accounting Code, Prefix, Legal Name, Status in SIS, IATA, the ICH, or the ACH, and the details of the Member's bank accounts for bilateral settlements cannot be changed by the SIS Member and must be referred to SIS-Ops. 
+    </p>
+    <p class="margin-6 bold">
+        Location Details
+    </p>
+    <p class="margin-6">
+        Every SIS Member needs to have at least one location detail setup in the Member Profile. This will be the default location of the SIS Member and is referred to as the “MAIN” location. The SIS Member will be allowed to update the details of the MAIN location as well as create any additional location details that may be required for legal or business reasons. This information is used at the time of PDF Invoice generation as well as when generating the Payable output invoices, in case the invoice reference data is not provided in the incoming receivables invoice. 
+    </p>
+    <p class="margin-6 bold">
+        Bank Details for Bilateral Settlement
+    </p>
+    <p class="margin-6">
+        Bank details can be set-up against each location created in the Member Profile to be used in case of bilateral settlement invoices. This set-up can only be done by SIS-Ops based on signed physical requests from the SIS Members. This information is included by SIS in the Payable Invoice in case of Bilateral Settlement. 
+    </p>
+    <p class="margin-6 bold">
+        Contacts
+    </p>
+    <p class="margin-6">
+        SIS allows set-up of two types of contacts in the Member Profile: 
+        <ul class="margin-9">
+            <li>Informational Contacts: These contacts are set up for purely informational purposes, For example Passenger RA Manager, etc. The contact details include information such as the name, designation, address, contact numbers, email id etc. of that person. The SIS application allows IS Members to retrieve the informational contacts of other SIS Members. As part of the initial data set-up, SIS-Ops will configure some of the informational contacts of the SIS Member based on the data available within IATA (RAM, ACH Manual of Procedure, ICH database, etc.). </li>
+            <li>Processing Contacts: These contacts, if set up by the SIS Member, will receive email alerts on specific events related to invoice processing e.g. Passenger File Receipt Alert Contact, Cargo Correspondence Alert Contact etc. </li>
+        </ul>
+    </p>
+    <p class="margin-6 bold">
+        E-invoicing and Billing Category Specific Details
+    </p>
+    <p class="margin-6">
+        SIS allows the SIS Member to set-up Billing Category and e-invoicing specific parameters on the Member Profile which control the behavior of the SIS application at the time of processing. 
+    </p>
+    <p class="margin-6 bold">
+        Clearing House Specific Details
+    </p>
+    <p class="margin-6">
+        SIS allows view access to the Clearing House set-up details to the SIS Members. This information can only be updated by the respective clearing house operations team members. 
+    </p>
+    <p class="margin-6 bold">
+        Technical Details
+    </p>
+    <p class="margin-6">
+        The SIS application allows the SIS Members to store the login credentials of the ftp servers/iiNET where the output files needs to be provided. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        2.3 User Set-up 
+    </p>
+    <p class="margin-3">
+        The SIS platform allows different type of users to be configured in the system. These include:
+        <ol class="margin-6">
+            <li>SIS Member Users </li>
+            <li>SIS-Ops Users </li>
+            <li>ICH Ops Users </li>
+            <li>ACH Ops Users </li>
+        </ol>
+    </p>
+    <p class="margin-3">
+        Depending on the type of the user, the IS-WEB Menu structure and the Screens changes accordingly. The User profile details stored in SIS includes the name, location details, email id, contact number etc of the person. The email id of the user acts as the login id for IS-WEB. 
+    </p>
+    <p class="margin-3">
+        In case of SIS Member Users, SIS-Ops creates a Member Super User account once the participation formalities are completed. This Member Super User can create other Users for the SIS Member. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        2.4 Assign Permissions 
+    </p>
+    <p class="margin-3">
+        The SIS Platform will assign the maximum permission allowed for a SIS Member User to the SIS Member Super User Account. The SIS Member Super User, at the time of creating other users, can assign permissions to the users. These include permissions for viewing/editing information on a particular screen, permission to perform some special operations on specific screens, permission to create other users etc. 
+    </p>
+    <p class="margin-3">
+        The SIS application will have default templates to assign permissions, which can be used by SIS Member users to assign permissions. Member Users will also have the ability to create their own permission templates and apply them to their users. 
+    </p>
+    <p class="margin-3">
+        The SIS application also provides a facility to copy the user permission profile from one user and replicate them on other users. 
+    </p>
+
+    <p class="bold">
+        3. DATA TRANSMISSION 
+    </p>
+All files to and from SIS will be processed initially by iiNet on behalf of SIS. Files will be received by iiNet from all Members, and will be transmitted by iiNet to the SIS application. Once the file is received correctly by iiNet, iiNet will complete delivery to the SIS application. Any files to be transmitted to a Member will be sent by the SIS application to iiNet, and will be transmitted from iiNet to the Member. 
+Files from the Member must be pushed to iiNet, and files from iiNet to the Member may be pushed by iiNet or pulled by the Member at the Member's choice. 
+There are no fees for this service provided by iiNet for files transmitted from and to SIS, but usage will require separate acceptance of the iiNet Terms Of Use. Any added-value services provided by iiNet beyond transmission between the SIS Member and SIS are subject to iiNet's normal terms and conditions, and fees may be applicable. 
+    <p class="bold">
+        4. RECEIVABLES PROCESSING 
+    </p>
+The SIS application will process the incoming invoices and supporting documents provided by the billing entities for all four Interline Billing Categories (Passenger, Cargo, Miscellaneous and UATP). 
+    <p class="margin-3 indent-1_5 bold">
+        4.1 Invoice Data Processing 
+    </p>
+    <p class="margin-3 bold">
+        Input Possibilities
+    </p>
+    <p class="margin-3">
+        The SIS application allows the billing entities to provide invoice information in multiple electronic formats. In the case of Passenger and Cargo billings, the invoice information can be provided in a flat file based structure (IS-IDEC) or in an XML file format (IS-XML). Miscellaneous and UATP invoices can be submitted only in the IS-XML format. 
+    </p>
+    <p class="margin-3">
+        Along with the electronic mode of invoice submission, SIS will also provide a facility to manually capture and review invoice information online over the internet, named IS-WEB. The table below details the support provided by SIS for different type of transactions within each Billing Category. 
+    </p>
+    <p class="margin-3 bold">
+        Table: Input possibilities for each Billing Category in SIS
+    </p>
+
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 90%; margin-left: 5%;">
+            <tr><th rowspan="2">Transaction Types</th><th colspan="3">Input Option</th></tr>
+            <tr><th>IS-IDEC</th><th>IS-XML</th><th>IS-WEB</th></tr>
+            <tr><th style="text-align: left;" colspan="4">Passenger Billings</th></tr>
+            <tr><td style="text-align: left;">Non Sample Prime Coupon Billings (including FIMs)</td><td>X</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Non Sample Rejection Memos</td><td>X</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Billing Memos and Credit Memos</td><td>X</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Sampling Provisional Invoice (Form A/B)</td><td>X</td><td>X</td><td>–</td></tr>
+            <tr><td style="text-align: left;">Sampling Universe Adjustment (Form C)</td><td>X</td><td>X<sup>(2)</sup></td><td>X</td></tr>
+            <tr><td style="text-align: left;">Sample Adjustments (Form D/E)</td><td>X</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Sample Rejections (Form F and XF)</td><td>X</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Correspondence</td><td>–</td><td>–</td><td>X</td></tr>
+            <tr><th style="text-align: left;" colspan="4">Cargo Billings</th></tr>
+            <tr><td style="text-align: left;">Original AWB Billings</td><td>X</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Rejection Memos</td><td>X</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Billing Memos and Credit Memos</td><td>X</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Correspondence</td><td>–</td><td>–</td><td>X</td></tr>
+            <tr><th style="text-align: left;" colspan="4">Miscellaneous Billings</th></tr>
+            <tr><td style="text-align: left;">Original Invoice</td><td>–</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Rejection Invoice</td><td>–</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Correspondence Invoice</td><td>–</td><td>X</td><td>X</td></tr>
+            <tr><td style="text-align: left;">Correspondence</td><td>–</td><td>–</td><td>X</td></tr>
+            <tr><th style="text-align: left;" colspan="4">UATP Billings</th></tr>
+            <tr><td style="text-align: left;">Original Invoice</td><td>–</td><td>X</td><td>X</td></tr>
+        </table>
+    </div>
+
+    <center>
+        2: Form C data needs to be provided in Form C IS-XML file which is separate from the standard IS-XML file.
+    </center>
+
+    <p class="margin-3">
+        On successful receipt of an incoming file, SIS generates a confirmation email and sends it to the billing entity. This email alert can be configured by billing entity using the Member Profile screen on IS-WEB. 
+    </p>
+
+    <p class="margin-3">
+        In case of invoices captured over IS-WEB, SIS generates an email alert to the billing entity 24 hours before the billing period closure providing a list of open invoices yet to be submitted for further processing. 
+    </p>
+
+    <p class="margin-3 bold">
+        Data Validation
+    </p>
+
+    <p class="margin-3">
+        Invoice data provided by the billing entities will be validated by SIS. This process will ensure that the invoice data is of good quality and the billed entities can process the same without any issue within their internal systems. This process will take place upon receipt of each SIS billing file. 
+    </p>
+
+    <p class="margin-3">
+        The different types of validation checks performed by the IS application are as follows: 
+    </p>
+    <ul class="margin-6">
+        <li>File Construction checks: SIS will validate if the invoice files are created as per the defined file specifications, naming convention, duplicate files, compression logic, etc </li>
+        <li>Field Format checks: SIS will check if data values have been provided for mandatory data elements, conditionally mandatory data elements if the condition is met, etc. It will also ensure that the data is provided as per the field format (e.g. numeric, alphabetic, date, etc) and as per the field length specifications (e.g. numeric field with a maximum of 5 digits) </li>
+        <li>Reference Master checks: Invoice data fields having standard reference data values are valid (e.g. From City field if populated should have a valid IATA city/airport code, etc) </li>
+        <li>Interline Billing Rules checks: Some of the Interline billing rules defined in the RAM or ACH Manual of Procedure, such as possible duplicate billing check, outside time limit billings, minimum billing amount check for different type of transaction, etc. </li>
+        <li>Settlement Information checks: SIS will validate the correctness of the Settlement details provided on the invoice if it needs to be cleared through a clearing house (e.g. Currency of Clearance information, Clearing House information, etc). </li>
+        <li>Billing Audit Trail checks: SIS will check if the various stages of billing are linked together and there are no out of turn billings (e.g. validation of ‘Previous Invoice number’, ‘Previous Billing Month’, ‘Previous Rejection number’, ‘Rejection Stage number’ in case of Rejections etc) </li>
+        <li>Computation checks: SIS will validate if billing amounts specified at various levels within the invoice add up together (e.g. the invoice total adds up to the sum of all Line Item totals, similarly Line Item total adds up to the sum of all Line Item details totals etc). The total of the line items must not vary from the invoice value by more than a small tolerance. </li>
+        <li>Legal Requirement checks: SIS will validate if certain legal requirements are satisfied by the Billing Entity in the invoice data (e.g. invoice Number is unique for a Billing Member within a calendar year, VAT breakdown information is provided in the case that VAT amounts are billed in the invoice, etc) </li>
+    </ul>
+    <p class="margin-3">
+        Wherever possible, SIS will validate the entire file and identify all possible errors in the file. A validation report is generated at the end of this process and is provided to Billing Entity irrespective of the status of the validation. In case of errors, the Billing Entity can configure its Member Profile to receive an email alerting its contact about the details of the Validation error. 
+    </p>
+    <p class="margin-3">
+        Invoice data captured using IS-WEB is validated at the time of data entry. SIS will alert the user in case invalid data in entered at the time of saving the information. 
+    </p>
+    <p class="margin-3">
+        The SIS Platform does not validate the following: 
+    </p>
+    <ul class="margin-6">
+        <li>Whether the entity can legally bill the invoice through SIS </li>
+        <li>Whether the billed amounts are correct </li>
+        <li>Whether all required taxes are applied correctly </li>
+        <li>Whether all required legal information of all countries in the world is provided </li>
+    </ul>
+
+    <p class="margin-3 bold">
+        Error Handling
+    </p>
+    <p class="margin-3">
+        In case of validation error, SIS provides a facility to delete the erroneous invoices or the entire file through IS-WEB. For certain errors, SIS also provides an option of carrying out online correction on the IS-WEB. These correctable errors are errors related to reference data values such as invalid city/airport code, invalid tax code etc. 
+    </p>
+    <p class="margin-3">
+        Invoices in an error status are not considered for further processing by SIS.
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        4.2 Supporting Document Management 
+    </p>
+    <p class="margin-3">
+        Input Possibilities
+    </p>
+    <p class="margin-3">
+        SIS provides the facility for billing entities to supply supporting documents in electronic format in both batch and as online modes. At the time of invoice capture, billing entities can manually upload the supporting documents. SIS will store the uploaded supporting documents and link them to the invoice, or to the transaction within the invoice. 
+    </p>
+    <p class="margin-3">
+        SIS supports 3 indexing options for submitting supporting documents in a batch mode. These are: 
+        <ul class="margin-6">
+            <li>Using folder name based indexing </li>
+            <li>Using a CSV file based indexing </li>
+            <li>Using an XML file based indexing </li>
+        </ul>
+    </p>
+
+    <p class="margin-3">
+        The formats are explained in the SIS Participation Guide.
+    </p>
+    <p class="margin-3">
+        Billing entities can use any of the options to submit the batch supporting documents to SIS. 
+    </p>
+    <p class="margin-3">
+        On successful receipt of a batch supporting file, SIS generates a confirmation email and sends it to the billing entity.
+    </p>
+    <p class="margin-3 bold">
+        Data Validation
+    </p>
+    <p class="margin-3">
+        SIS carries out certain sanity checks on the batch supporting document file before it is considered for processing. The different type of checks includes the following: 
+        <ul class="margin-6">
+            <li>File Construction checks: SIS will validate if the batch supporting documents files are created as per the defined file specifications, naming convention, duplicate files, compression logic, etc </li>
+            <li>Index Information checks: SIS will validate the index information supplied with the batch supporting documents files and confirm if it is as per the defined specification. </li>
+            <li>File Extension checks: SIS will validate the file extensions of the individual supporting documents and check if it matches with one of the supported neutral file formats. In case it is not a neutral file format, SIS will validate if any exceptions for supporting document file types have been defined in the Member Profile of the billed entity for acceptance. If it is not an exception, SIS will delete the supporting document file from the system. </li>
+        </ul>
+    </p>
+    <p class="margin-3">
+        Wherever possible, SIS will validate the entire file and identify all possible issues in the batch supporting document file. A validation report is generated at the end of this process and is provided to the billing entity. 
+    </p>
+    <p class="margin-3 bold">
+        Automated Linking of Supporting Documents
+    </p>
+    <p class="margin-3">
+        The SIS application will carry out auto-linking of supporting documents provided in a batch mode to the corresponding billing record. This linking will be based on the Index information supplied in the batch supporting document file. Invoices which are successfully validated will be considered for automated linking. SIS will take care of any timing issues in case of automated linking if the supporting document file is provided prior to the invoice being successfully validated. 
+    </p>
+    <p class="margin-3">
+        For cases where the SIS application is not able to automatically link the supporting documents, SIS provides a facility by which the billing entity can update the linking information on IS-WEB and manually trigger the linking process. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        4.3 Value Determination, Auto-Billing and Billing Value Confirmation 
+    </p>
+    <p class="margin-3">
+        Value Determination
+    </p>
+    <p class="margin-3">
+        This is an optional service provided by SIS in conjunction with A&amp;A which can be utilized by Passenger billing entities that store prorated coupon values within ARC COMPASS®. 
+    </p>
+    <p class="margin-3">
+        As part of this service, SIS accepts Usage Files (modified Record 50 file format as defined in the SIS Participation guide) from billing entities requesting prorate values for coupons utilized by them. SIS validates the file format and forwards the Usage File to ATPCO for further processing. The processed information is provided by ATPCO back to SIS. SIS forwards the output files provided by ATPCO to the billing entities. 
+    </p>
+    <p class="margin-3">
+        Internally SIS keeps track of which transactions were provided by the billing entities for processing and which transactions were processed and returned by ATPCO. On a daily basis SIS creates a report highlighting transactions where a response is not provided by ATPCO as per the defined timelines, and provides it to the billing entities. 
+    </p>
+    <p class="margin-3 bold">
+        Auto-Billing
+    </p>
+    <p class="margin-3">
+        Auto-Billing is an optional service provided by SIS in conjunction with A&amp;A and is an extension of the Value Determination process. 
+    </p>
+    <p class="margin-3">
+        As part of this service, SIS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis SIS will generate a Revenue Recognition File (File Format defined in the IS Participation Guide) containing the billing records of coupons included in the Auto-Billing Invoices. This Revenue Recognition File along with the optional ISR data is forwarded to the billing entity by SIS. SIS allows the billing entity to correct/update the values of the Auto-Billing invoices though the IS-WEB. Any update made on IS-WEB is reported back to the billing entity in the next Revenue Recognition File.
+    </p>
+    <p class="margin-3">
+        The Auto-Billed invoices are automatically closed and finalized by SIS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, SIS generates an IS-IDEC file for the billing entity called Invoice Posting File which includes details of all Auto-Billed invoices. The billing entity can use it to carry out any account postings for such invoices within its Revenue Accounting/General Ledger System. 
+    </p>
+    <p class="margin-3 bold">
+        Billing Value Confirmation
+    </p>
+    <p class="margin-3">
+        This is also an optional service provided by SIS in conjunction with A&amp;A. This service validates the Passenger billing values against the prorate values stored within ATPCO. 
+    </p>
+    <p class="margin-3">
+        SIS generates a Billing Value Confirmation file for passenger prime billing coupons where both the billing entity and billed entity are subscribers to this service. This file is forwarded to ATPCO for further processing. ATPCO validates the billing values with the prorate values stored within its database. Any exchange rate conversions of the prorate values as per the billing month will be done by ATPCO before comparing the values. The results of the comparison are updated by ATPCO and provided to SIS. SIS updates the comparison results within its Billing Record Database. 
+    </p>
+    <p class="margin-3">
+        SIS automatically generates a Billing Value Confirmation report at the end of each billing period and provides it to the billing and billed entities. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        4.4 Digital Signature Services 
+    </p>
+    <p class="margin-3">
+        This is an optional service provided by the SIS application.
+    </p>
+    <p class="margin-3 bold">
+        Digital Signature Application
+    </p>
+    <p class="margin-3">
+        SIS offers digital signature (DS) application service through a trusted digital signature service provider (currently TrustWeaver). Based on the instructions provided by the billing entity, SIS creates from the IS-format invoice data an invoice subset file in PDF or XML format with the necessary legal and invoice information fields. This invoice subset file is forwarded to a trusted DS service provider in order to apply the appropriate digital signature. The file is sent immediately unless the file is incomplete (awaiting attachment). If there are attachments awaited, the file is not sent until all attachments have been uploaded and matched, or the billing deadline is reached, at which point the number of attachments reported is updated to reflect the number that are actually available at that time. The invoice is then sent for digital signature. After applying the digital signature, SIS receives the invoice subset file and stores it in its Central Repository. This digitally signed file is made available by SIS as one of the outputs to the billing entity at the end of the billing period, based on the configuration of the Member Profile. The file can also be downloaded online over the IS-WEB. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        4.5 Settlement Services 
+    </p>
+    <p class="margin-3">
+        The SIS application provides interfaces with industry clearing houses thus enabling automatic settlement of billed invoices as well as other clearing house related services. 
+    </p>
+    <p class="margin-3 bold">
+        Settlement Information
+    </p>
+    <p class="margin-3">
+        The SIS application interfaces with two clearing houses: The IATA Clearing House (ICH), and the Airlines Clearing House (ACH). Based on the instructions provided by the billing entity, SIS generates a summary statement of the billed invoices and forwards it to the respective clearing house for settlement. In case of ICH, SIS generates claim files every 10 minutes whereas in case of ACH the settlement information is generated and passed only once at the billing period closure. 
+    </p>
+    <p class="margin-3 bold">
+        Suspended Member Billing Management
+    </p>
+    <p class="margin-3">
+        SIS supports billings from or against entities that continue in business but have been suspended from the clearing house. The billing entities can continue to send invoices to be routed through the clearing house or for bilateral settlement. In case of billing from/to suspended members involving ICH, SIS will flag the invoices as “Suspended” in the summary settlement statement and forward them to ICH. The ICH will record this information in accordance with its procedures. In the case of billing from/to suspended members involving ACH, SIS will not include such invoice details at the time of creating the summary settlement statement, and no record will be retained by the ACH. When creating the SIS-Format output (IS-IDEC, IS-XML or IS-WEB), SIS flags such invoices as “Suspended” and forwards them to the billed entity along with the other invoices. 
+    </p>
+    <p class="margin-3">
+        In case of re-instatement of the suspended member, SIS provides the functionality for the billing entities to re-submit their claims and settle through the clearing house any outstanding amounts that arose after suspension. SIS also provides a report which helps the billing entities to manage the invoice claims made during the suspension period. 
+    </p>
+    <p class="margin-3 bold">
+        Handling Late Submission Billings
+    </p>
+    <p class="margin-3">
+        SIS supports processing of invoices of closed billing periods for a short duration of time, immediately after the closure of the billing period. The designated person identified in the Member Profile can request invoices to be considered for Late Submission. On acceptance of such request by the clearing house, the invoices will automatically be considered for settlement. Clearing houses may charge a fee for such submissions. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        4.6 Reports, Alerts and Outputs 
+    </p>
+    <p class="margin-3">
+        Processing Dashboard
+    </p>
+    <p class="margin-3">
+        SIS has an online dashboard on IS-WEB which provides visibility of the status of processing of receivable invoices. There are 2 views provided by the dashboard: 
+        <ul class="margin-6">
+            <li>File Level View: This view provides the status of processing of files submitted to SIS. </li>
+            <li>Invoice Level View: This view provides the status of the receivable invoices processed in SIS. The status of the intermediate stages of invoice processing can also be viewed and downloaded by the SIS Member. </li>
+        </ul>
+    </p>
+    <p class="margin-3 bold">
+        Reports
+    </p>
+    <p class="margin-3">
+        SIS provides reports to its members based on the receivables data which can be used to analyze billing trends and volumes. These reports can be queried using a number of different criteria and saved in PDF or Microsoft Excel format. 
+    </p>
+    <p class="margin-3 bold">
+        Alerts
+    </p>
+    <p class="margin-3">
+        SIS generates a number of alert messages to the SIS Member. These alert messages are sent by email to the contacts setup in the Member Profile. Some of these alerts are listed below: 
+        <ul>
+            <li>Profile data update alert: An alert email message is generated every time a change is made to the Member profile details. It is also generated when a post-dated change made on the Member profile becomes effective. </li>
+            <li>Other Members Invoice Reference Data Update alert: An alert message is sent with an attached CSV file providing details of changes made by other SIS Members on their location information. This update can be used by the SIS Members to synchronize the new location details within their receivables system. </li>
+            <li>DS failure alert: An alert email message is generated in case SIS Platform was unable to apply Digital Signature on a particular invoice. </li>
+            <li>File Receipt alert: An alert email message is generated by SIS whenever a file is received by the platform for processing. This alert can be set up on the Member Profile for incoming files related to individual billing categories. </li>
+            <li>Validation Error alert: An alert email message is generated whenever an invoice file fails in the validation process. This alert can be set up on the Member Profile for an individual Billing Category. The Validation report is attached along with the alert email. </li>
+            <li>Open invoices alert: An alert email message is generated 24 hours before the billing period closure informing the user about open invoices on IS-WEB, yet to be submitted for processing. A list of Open invoices is also attached with this email. </li>
+        </ul>
+    </p>
+    <p class="margin-3 bold">
+        Output Information
+    </p>
+    <p class="margin-3">
+        SIS application generates the following outputs from the receivables data provided by the Member:
+        <ul>
+            <li>E-invoicing related files, which include
+                <ul style="list-style-type: circle;">
+                    <li>Invoices in PDF format </li>
+                    <li>Detail Listings in csv or pdf format </li>
+                    <li>Digital Signature files </li>
+                </ul>
+            </li>
+            <li>Memos (in case of Passenger and Cargo billings)
+                <ul style="list-style-type: circle;">
+                    <li>Rejection/Billing/Credit Memo details in html format </li>
+                </ul>
+            </li>
+        </ul>
+    </p>
+    <p class="margin-3">
+        Based on the preference defined in the member profile, SIS automatically creates a zip file and includes in it the above mentioned files for all invoices fully processed in that period. The above mentioned outputs can also be downloaded manually from the IS-WEB for individual invoices. 
+    </p>
+    <p class="margin-3">
+        In case of invoices submitted by 3rd parties on behalf of IS Members (e.g. invoices raised by IATA for Call Day Adjustments; invoices submitted by ATCAN for UATP claims), SIS provides the billing entity with the option to generate an IS-XML output file at the end of each billing period. This file can be used to carry out account adjustments within the Receivable system of the billing entity. 
+    </p>
+    <p class="margin-3">
+        SIS provides an option via the member profile to automatically generate a summary report with the listing of all invoices fully processed in a particular billing period. This report can be used by the billing entity to synchronize the processing status of invoices within its Receivable system. 
+    </p>
+
+    <p class="bold">
+        5. PAYABLES PROCESSING 
+    </p>
+    <p class="margin-3">
+        The processed invoices of the Passenger, Cargo, Miscellaneous and UATP Billing Categories are made available by the SIS Platform to the SIS Member at Output File Generation Time as shown in the SIS Calendar. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        5.1 Invoice and Supporting Data Management 
+    </p>
+    <p class="margin-3">
+        Based on the setup in the Member Profile, the SIS Member can receive the following from SIS for Payables processing:
+    </p>
+    <ul>
+        <li>
+            <p>SIS-Format Invoice Files: SIS groups the payable invoice information as per the Billed Entity and Billing Category level and generates invoice files as per the format requested by the billed entity. The SIS Member has the option of selecting both IS-IDEC and IS-XML format (if applicable for the Billing Category) in the Member Profile and SIS will generate two separate zip files one with invoice information in IS-IDEC format and another in IS-XML format.</p>
+            <p>The Payable invoices can also be reviewed over IS-WEB.</p>
+            <p>In case of Passenger Sample billings, SIS supports an option to generate a consolidated SIS-Format Payables file containing Sample Provisional Invoices raised by other SIS Members on a monthly basis. This file will be in addition to the weekly SIS-Format billing file generated for the billed entity and will be zipped separately. </p>
+        </li>
+        <li>Offline Archive Files: At Output File Generation Time as defined in the SIS Calendar, SIS generates the following additional output files and groups them as per the Billed Entity and Billing Category into separate offline archive files:
+            <ul style="list-style-type: circle;">
+                <li>E-invoicing related files
+                    <ul style="list-style-type: square;">
+                        <li>Invoice in PDF format </li>
+                        <li>Detail Listings in csv or pdf format </li>
+                        <li>Digital Signature files </li>
+                        <li>Digital Signature Verification log files</li>
+                    </ul>
+                </li>
+                <li>Memos (in case of Passenger and Cargo billings) </li>
+                <li>Supporting Documents
+                    <ul style="list-style-type: square;">
+                        <li>Rejection/Billing/Credit Memo details in html format </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <p class="margin-3">
+        An XML index file is also provided having references for each file provided in the Offline Archive. This XML file is used by the SIS Member to automatically read and link the contents of the Offline Archive within its internal payables system. 
+    </p>
+    <p class="margin-3">
+        The above outputs can also be downloaded for individual invoices manually over the IS-WEB. They are kept for 60 days, and then deleted. 
+    </p>
+    <p class="margin-3">
+        An alert email can be configured on the Member Profile at a Billing Category level to be triggered whenever the output files are generated and available to download. In case of a SIS-Member opting for IS-WEB, this alert will denote that the invoices are available for review on IS-WEB. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        5.2 Rejections of Incoming Billings 
+    </p>
+    <p class="margin-3">
+        SIS enables rejection of incoming billings either via file upload using the IS-IDEC or IS-XML formats, or by manual entry into the IS-WEB. Rejection processing can only take place once the Billing Output file has been received from SIS at the end of the clearance period. It is not possible to reject an incoming invoice in the same period as it was issued. 
+    </p>
+    <p class="margin-3">
+        The SIS application will check that rejections are in sequence, and contain the required information, and will not permit rejections beyond the limits defined in the RAM or the ACH Manual of Procedure. 
+    </p>
+    <p class="margin-3">
+        Rejections are only possible while the billing or rejection to which it refers remains live in SIS. Billing data in SIS is deleted at the expiry of the relevant billing time limit defined in the RAM or ACH Manual of Procedure, plus a system-defined period, normally set at two months after the deadline (e.g. 2nd rejection is no longer possible after 6+2 months from issue of the 1st rejection). 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        5.3 Process Invoices on IS-WEB 
+    </p>
+    <p class="margin-3">
+        The SIS Platform allows SIS Members to review the Payable invoice and transaction details on the IS-WEB. It also allows the user to view supporting documents linked to the invoice/transactions within the invoice. SIS maintains an audit trail of all invoices/transactions within the platform so that the complete billing history of any invoice/transaction can be viewed at any time. 
+    </p>
+    <p class="margin-3">
+        SIS allows Rejection Invoices/Memos to be raised weekly against Payable invoice transactions via the IS-WEB once received in the SIS outward file. The transaction details selected by the SIS Member when raising the Rejection Invoices/Memos are automatically carried forward thus reducing the data entry effort to some extent. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        5.4 Digital Signature Services 
+    </p>
+    <p class="margin-3">
+        This is an optional service provided by SIS.
+    </p>
+    <p class="margin-3 bold">
+        Digital Signature Application
+    </p>
+    <p class="margin-3">
+        SIS allows billed entities to configure the application of Digital Signature on Payable Invoices on the Member Profile. Based on the location details specified on the payable invoice, if it matches the profile set-up of the billed entity, SIS triggers the process to apply digital signature as explained in section 4.4. 
+    </p>
+    <p class="margin-3 bold">
+        Digital Signature Verification
+    </p>
+    <p class="margin-3">
+        SIS provides an option whereby the billed entity can request verification of the digital signature applied on Payable Invoices, via the Member Profile. A verification log file is created by this process which contains the status of the applied digital signature. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        5.5 Reports 
+    </p>
+    <p class="margin-3">
+        SIS provides a number of reports to its members based on the payables data which can be used to analyze billing trends and volumes. These reports can be queried using a number of different criteria and saved in PDF or MS Excel format. 
+    </p>
+
+
+    <p class="bold">
+        6. CORRESPONDENCE MANAGEMENT 
+    </p>
+    <p>
+        As per the Interline billing rules defined in the RAM and ACH Manual of Procedure, once the maximum number of allowed rejections for a billing has been reached, the entity which received the last rejection can only continue the dispute by initiating correspondence. SIS will not permit further rejections after the limit has been reached. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        6.1 Generate Correspondence 
+    </p>
+    <p class="margin-3">
+        Once the maximum number of allowed rejections has been reached, the SIS application provides a facility by which the SIS Member, who received the last rejection, selects the rejection transaction/invoice on IS-WEB and initiates correspondence. The SIS application automatically populates the data in the correspondence screen based on the Member Profile information. SIS automatically generates a correspondence reference number which remains the same until the end of the correspondence cycle. SIS provides an option to the SIS Member to attach supporting documents to the correspondence. 
+    </p>
+    <p class="margin-3">
+        SIS provides a facility by which the SIS Member user can save the correspondence in the draft stage and work on it later. SIS also provides a facility by which, if a user does not have the permission to send correspondence, can mark the correspondence as “Ready to Submit” and the supervisor can review, edit (if required) and send the correspondence. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        6.2 Receive Correspondence 
+    </p>
+    <p class="margin-3">
+        When a correspondence is sent via SIS, an email notification is generated and is sent to the Correspondence Alert contact defined in the Member Profile for the specific Billing Category. The email only contains a URL reference, which on clicking, will open up the IS-WEB Correspondence screen (note: it may be necessary for the user to modify their junk/spam filters to enable these communications to be viewed/actioned). On reading the correspondence if the IS Member wants to continue with the correspondence process, SIS provides a facility by which a reply correspondence is generated and the SIS Member user is allowed to enter the details and send it to the interline partner. 
+    </p>
+    <p class="margin-3">
+        SIS ensures that there is no out of turn correspondence done by the SIS Member User.
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        6.3 Grant Authority to Bill for Correspondence 
+    </p>
+    <p class="margin-3">
+        SIS provides a facility where the SIS Member who received the 1st correspondence can grant an Authority to Bill when responding to the received correspondence. If the interline partner who received the Authority to Bill Correspondence is not satisfied with the amount for which the authority is granted, it can continue with the correspondence process and the Authority will be considered null and void. 
+    </p>
+    <p class="margin-3">
+        If the interline partner receiving the authority to bill accepts the amount for which authority is granted, the Member is expected to raise a Billing Memo/Correspondence Invoice and claim the amount for which the authority is granted. SIS validates the amount of such Billing Memos/Correspondence Invoices and matches it with the Authority amount. In case the two are not matching and the difference is more than the allowed tolerance, the invoice will fail in the Validation process. 
+    </p>
+
+    <p class="margin-3 indent-1_5 bold">
+        6.4 Expiry of Correspondence Cases 
+    </p>
+    <p class="margin-3">
+        SIS tracks the expiry dates of open correspondence cases in the system as per the rules defined in RAM/ACH Manual of Procedure. In case the party that initiated the 1st correspondence does not respond to a received correspondence by the expiry of the time limit, the Correspondence case is closed by SIS automatically with no further recourse through SIS for that particular case. 
+    </p>
+    <p class="margin-3">
+        Similarly if an Authority to Bill was granted and the IS Member fails to raise the Billing Memo/Correspondence Invoice by the expiry time limit, SIS will close the correspondence case with no further recourse. 
+    </p>
+    <p class="margin-3">
+        In case the party who received the 1st correspondence fails to respond to a received correspondence by the expiry time limit, SIS will mark the correspondence case as Expired. The SIS Member who caused the expiry will not be allowed to respond to the correspondence any further by SIS. The other party has the right to raise a billing memo/Correspondence Invoice equal to the amount stated in the last correspondence sent which had expired. SIS validates the amount of such Billing Memos/Correspondence Invoices and matches it with the amount of the last correspondence. In case the two are not matching and the difference is more than the allowed tolerance, the invoice will fail in the validation process. 
+    </p>
+    <p class="margin-3">
+        In the above case if the SIS Member fails to raise the Billing Memo/Correspondence Invoice by the expiry time limit, SIS will close the correspondence case with no further recourse. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        6.5 Alerts and Reports 
+    </p>
+    <p class="margin-3 bold">
+        Alerts
+    </p>
+    <p class="margin-3">
+        SIS generates a number of alerts for the following correspondence cases; 
+        <ul class="margin-6">
+            <li>An email alert is generated and sent to all Correspondence Alert contacts when a new correspondence is received </li>
+            <li>72 hours before expiry of a received correspondence, an alert is generated by IS informing the Correspondence Alert contacts </li>
+            <li>72 hours before expiry of a draft correspondence, an alert is generated by IS informing the Correspondence Alert contacts </li>
+            <li>For any received correspondence which has the Authority to Bill flag and a Billing Memo/Correspondence Invoice has not yet been raised two days prior to the expiry of this Correspondence </li>
+        </ul>
+    </p>
+    <p class="margin-3">
+        Correspondence Alert Contact can be different for each Billing Category.
+    </p>
+    <p class="margin-3 bold">
+        Reports
+    </p>
+    <p class="margin-3">
+        SIS provides a Correspondence Status report allowing the users to track the details of the correspondence within the system. This report can be downloaded in PDF or Excel format. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">
+        6.6 Download 
+    </p>
+    <p class="margin-3">
+        SIS provides an option to download the correspondence case with the complete mail trail in PDF format. 
+    </p>
+
+    <p class="bold">
+        7. SYSTEM REPORTS 
+    </p>
+    <p class="margin-3">
+        SIS provides a number of reports to support the member. These include: 
+        <ul class="margin-6">
+            <li>SIS Usage Report </li>
+            <li>Member Details Report </li>
+            <li>Contact Details Report </li>
+            <li>Suspended Billings Report </li>
+            <li>PAX Receivables–Supporting Documents Mismatch Report </li>
+            <li>PAX Correspondence Status </li>
+            <li>PAX Receivables–RM BM CM Summary </li>
+            <li>PAX Payables–RM BM CM Summary </li>
+            <li>PAX Receivables–Billing Value Confirmation Analysis </li>
+            <li>PAX Payables–Billing Value Confirmation Analysis </li>
+            <li>Cargo Supporting Attachments Mismatch Report </li>
+            <li>Cargo Submission Overview–Receivables </li>
+            <li>Cargo Submission Overview–Payables </li>
+            <li>Cargo Interline Billing Summary–Receivables </li>
+            <li>Cargo Interline Billing Summary–Payables </li>
+            <li>Cargo Rejection Analysis–Receivables </li>
+            <li>Cargo Rejection Analysis–Payables </li>
+            <li>Correspondence Status Report </li>
+            <li>MISC Correspondence Status </li>
+            <li>MISC Payables Invoice Summary Report </li>
+            <li>MISC Receivable Invoice Summary Report </li>
+            <li>UATP-ATCAN Statement </li>
+        </ul>
+        A full list is available in the SIS Participation Guide and SIS User Guide.
+    </p>
+
+    <p class="bold">
+        8. GLOSSARY 
+    </p>
+
+    <div class="regular-table no-page-break">
+        <table style="width: 90%; margin-left: 5%;">
+            <tr><th><center>Term</center></th><th><center>Definition</center></th></tr>
+            <tr><td>ACH</td><td>ACH stands for Airlines Clearing House. It is the ATA's Clearing House for Interline Billings. </td></tr>
+            <tr><td>ACH Recap Sheet Submission Deadline</td><td>This is the time by which ACH members should submit their Claim details (Recap Sheet) to the Clearing Bank. </td></tr>
+            <tr><td>A&amp;A</td><td>A&amp;A stands for ATPCO and ARC. A&amp;A is the organization formed by ATPCO and ARC to support the First &amp; Final™ process. </td></tr>
+            <tr><td>ARC</td><td>Airlines Reporting Corp. ARC operates COMPASS® which houses transaction and prorate data for the purposes of settlement. </td></tr>
+            <tr><td>ATA</td><td>(Air Transport Association)–The trade group for U.S.-based airlines.</td></tr>
+            <tr><td>ATPCO</td><td>Airline Tariff Publishing Company. ATPCO, amongst other services, operates the Sales Exchange process whereby sales for First &amp; Final™ transactions are extracted, prorated, and sent to the uplifting carrier. </td></tr>
+            <tr><td>Audit trail</td><td>A chronological sequence of audit records.</td></tr>
+            <tr><td>Auto Billing</td><td>A proposed feature of SIS whereby a billing carrier is able to submit a list of uplifts. SIS will then find the prorate (either a stored own prorate or an NFP) and create the necessary billing, settlement, and invoice files. A pro-forma invoice is sent to the billing carrier daily, and invoices are sent to the billing and billed carrier on settlement. </td></tr>
+            <tr><td>Batch Key</td><td>Batch Key is a set of data elements that uniquely identifies an Invoice or a transaction that needs to be linked with supporting documents. </td></tr>
+            <tr><td>Billed Entity</td><td>The Billed Airline or Supplier</td></tr>
+            <tr><td>Billing Category</td><td>The Category of the Interline Billing Invoice. There are 4 Billing Categories: Passenger, Cargo, Miscellaneous and UATP </td></tr>
+            <tr><td>Billing Date</td><td>The Billing Date field refers to the month period of settlement. This field is referred extensively in RAM chapter A13 in case of Miscellaneous billings. </td></tr>
+            <tr><td>Billing Entity</td><td>The Billing Airline or Supplier</td></tr>
+            <tr><td>Billing Entity Code</td><td>The Numeric code of the Billing airline or the Alpha numeric code of the Supplier</td></tr>
+            <tr><td>Billing Period</td><td>Billing Period refers to the Period of the Clearance Month used for billing. As the current interline settlement is on a weekly basis, there are 4 periods in a month. The billing period is represented as 01, 02, 03 and 04. </td></tr>
+            <tr><td>Billing Record Database</td><td>This is the data store within SIS which will maintain the Invoice data provided by SIS Participants in SIS-Format. The data is kept in the system till the time the transactions are expired. </td></tr>
+            <tr><td>BM</td><td>Billing Memo. Applicable in case of Passenger and Cargo Billings</td></tr>
+            <tr><td>Breakdown Record</td><td>A Breakdown record provides additional information regarding the certain data elements present in the parent record. </td></tr>
+            <tr><td>BSP</td><td>Billing and Settlement Plan–An IATA service for the settlement of ticket revenues between agents and carriers. BSP fees can appear on interline billing invoices </td></tr>
+            <tr><td>CASS</td><td>Cargo Account Settlement Systems–An IATA Service designed to simplify the billing and settlement of accounts between airlines and freight forwarders </td></tr>
+            <tr><td>Central File Repository</td><td>Central File Repository is the data store within SIS which maintains the input and output files including the Supporting documents for the billing transactions. </td></tr>
+            <tr><td>Charge Category</td><td>The major types of Miscellaneous Invoice billed between carriers</td></tr>
+            <tr><td>Charge Code</td><td>The sub group within the Charge Category which identifies the different reasons for the Miscellaneous Invoice claim. </td></tr>
+            <tr><td>Clearance Month</td><td>It represents the month of Interline Billing.</td></tr>
+            <tr><td>CM</td><td>Credit Memo</td></tr>
+            <tr><td>CSV File</td><td>Comma separated file</td></tr>
+            <tr><td>Currency of Billing</td><td>In case of Passenger, Cargo and UATP Billings, the Currency of Billing is the currency in which the total Invoice values are converted. This Currency of Billing can be GBP, USD or EUR in case of ICH Invoices and USD or CAD in case of ACH Invoices. </td></tr>
+            <tr><td>Currency of Listing</td><td>The Currency in which the billing transactions are listed in case of Passenger, Cargo and UATP billings. The Currency of Listing can be any local currency. </td></tr>
+            <tr><td>Detailed Validation</td><td>This is the second phase of the SIS-Validation process in which the billing data is loaded in the Billing Record Database and each and every data element in the billing data is validated. </td></tr>
+            <tr><td>Digital Signature</td><td>Digital Signature is a mathematical scheme for demonstrating the authenticity of a digital message or document. A valid digital signature gives a recipient reason to believe that the message was created by a known sender, and that it was not altered in transit </td></tr>
+            <tr><td>DS</td><td>Digital Signature</td></tr>
+            <tr><td>E-Archiving</td><td>E-archiving is an optional service provided by SIS. This service allows Participants to store digitally signed invoices in an external Legal archive for a longer period as required by the local regulations. </td></tr>
+            <tr><td>EST</td><td>Eastern Standard Time</td></tr>
+            <tr><td>F&amp;F</td><td>First &amp; Final–Process in which two carriers agree to use a Neutral Fare Proration engine for interline billings. In agreeing to settle on a First &amp; Final basis, they are also agreeing that rejects based on prorate values are not permitted. </td></tr>
+            <tr><td>File Naming Convention</td><td>Rules followed for construction of the file name</td></tr>
+            <tr><td>GDS</td><td>Global Distribution System</td></tr>
+            <tr><td>GL</td><td>General Ledger</td></tr>
+            <tr><td>Hard Cut Over</td><td>The Phase in the SIS Migration when the old IDEC processing will be switched to the SIS Platform from ATPCo. </td></tr>
+            <tr><td>HTML files</td><td>Files in Hypertext markup language. HTML is a structured file format used in websites, which includes tags. </td></tr>
+            <tr><td>ICH Period Closure Day</td><td>This is the time by which ICH Members should submit their invoices to the SIS to be sent to ICH and considered for settlement. </td></tr>
+            <tr><td>Index File</td><td>An index file contains the mapping information of the various supporting documents and its corresponding Batch Key. There are two formats of index files supported by SIS. These are CSV and XML </td></tr>
+            <tr><td>IS or SIS</td><td>Integrated Settlement is the name for the collection of systems which provide the functionality behind Simplified Invoicing and Settlement (SIS). The term SIS is also used interchangeably.</td></tr>
+            <tr><td>SIS Calendar</td><td>The Calendar used by SIS to trigger various automated processes. It also has deadlines for some of the processes impacting the end-users of SIS. </td></tr>
+            <tr><td>SIS Calendar Billing Output Generation Date</td><td>This is the date and time stamp by which SIS will generate the billing output files and keep it ready for download, </td></tr>
+            <tr><td>SIS Format</td><td>SIS Format is a generic term used to define Invoice data provided to SIS in either automated formats like IS-IDEC or IS-XML or manually over IS-WEB </td></tr>
+            <tr><td>IS-IDEC</td><td>IS-IDEC is the new flat file specification defined for Passenger and Cargo invoice data billing and settlement through SIS. </td></tr>
+            <tr><td>IS WEB</td><td>IS WEB is the online user interface of the SIS System. It allows users to capture data, pull out reports, as well as configure the Member profile information. </td></tr>
+            <tr><td>IS XML</td><td>IS XML is the new interface file format defined for PAX, CGO MISC and UATP. This file format is based on the existing IATA Aviation Invoice Standard. </td></tr>
+            <tr><td>ISC</td><td>Interline Service Charges</td></tr>
+            <tr><td>ISR</td><td>Industry Standard Record (enhanced version of TCN–Transmission Control Number data). A&amp;A value determination process returns prorate values files to IS, and these files are referred to as ISR in the context of this document. The prorate values file may or may not contain sales data. In A&amp;A/ATPCO terminology, ISR is a term used only for sales data.</td></tr>
+            <tr><td>JPEG Image files</td><td>Image files in JPEG (Joint Photographic Experts Group) format. </td></tr>
+            <tr><td>Late Submission</td><td>Invoices submitted after the SIS Submission Deadline but within the Late Submission Acceptance Window to be considered for settlement in the previously closed period </td></tr>
+            <tr><td>Late Submission Acceptance Window</td><td>Time window in which Late Submission can be submitted.</td></tr>
+            <tr><td>Location Code</td><td>Code of the Member's location.</td></tr>
+            <tr><td>Location IDs</td><td>User defined code that uniquely identifies the Member's location in the Member Profile.</td></tr>
+            <tr><td>Member Profile</td><td>
+                    Centralized functionality that enables the participants to:<br/>
+                    1. Create and Manage Users of SIS<br/>
+                    2. Configure the various processes within SIS<br/>
+                    3. Set default values to be used at the time of processing<br/>
+                    4. Set up Third Party preferences, such as parameters applicable to ACH, ICH, A&amp;A
+            </td></tr>
+            <tr><td>NFP</td><td>Neutral Fare Prorate–A prorate created by a “neutral” party, as currently used within First &amp; Final™ settlement. Because of their neutral nature, NFPs are less likely to get rejected by the billed carrier, even outside of First &amp; Final™. In the future, NFP values will be available to all carriers that wish to use them. </td></tr>
+            <tr><td>Partially Migrated</td><td>Migration to SIS can be carried out in Phases. In case of Passenger billings the Billing entities have the option of migrating Prime billing first, then rejection and then Sampling. Any Billing entity who has not completed all phases of migration is referred to as Partly Migrated </td></tr>
+            <tr><td>Participant</td><td>An Airline or a Non Airline Entity who is a signatory or a potential signatory to SIS Services. </td></tr>
+            <tr><td>Payables</td><td>Billing received from other interline partners for a billing period is referred to as Payables </td></tr>
+            <tr><td>PDF</td><td>Portable Document Format </td></tr>
+            <tr><td>Prime Billing</td><td>First time billing or billings of original documents (like coupons, air waybills) are referred to as Prime Billings </td></tr>
+            <tr><td>Processing Dashboard</td><td>
+                    Module in SIS for:
+                    <ul>
+                        <li>Viewing processing details</li>
+                        <li>Submitting of invoices/files for late processing</li>
+                        <li>Increment the period of the invoices</li>
+                    </ul>
+            </td></tr>
+            <tr><td>Protest</td><td>Protest is the action taken by a billed entity against an erroneous billing done by a billing entity before the amount in error is settled by the Clearing House. </td></tr>
+            <tr><td>RAM</td><td>Revenue Accounting Manual</td></tr>
+            <tr><td>Reason Code</td><td>A two character code to be assigned to each Rejection Memo, Billing Memos as well as Credit Memos to indicate the reason for raising a Memo; </td></tr>
+            <tr><td>Receivables</td><td>Invoices billed to other interline partners is referred to as Receivables</td></tr>
+            <tr><td>Record 50 file</td><td>Record 50 is the file used today in First &amp; Final™ for Post Sales Processing. This file has been modified in SIS is now called “Usage File”. </td></tr>
+            <tr><td>Reference Data</td><td>Reference data relates to the basic legal information of the Billing and Billed entity. This includes details like the Company Legal Name, Tax Registration ID, Address details etc. </td></tr>
+            <tr><td>RM</td><td>Rejection Memos</td></tr>
+            <tr><td>Sanity Check</td><td>This is the first phase of SIS-Validation, where a file is checked for Construction errors. If an error is encountered in this phase the entire file is rejected by SIS. </td></tr>
+            <tr><td>Settlement Method Indicator</td><td>The field Settlement Method Indicator in the Invoice data drives the Settlement process of the Invoice. </td></tr>
+            <tr><td>SIS</td><td>Simplified Invoicing and Settlement</td></tr>
+            <tr><td>SIS Operations</td><td>User for SIS operations</td></tr>
+            <tr><td>SITA</td><td>Provider of global information and telecommunication solutions for the air transport industry. </td></tr>
+            <tr><td>SPA</td><td>Special Prorate Agreement</td></tr>
+            <tr><td>Submissions Open Date</td><td>The date and time from which SIS starts accepting Billing Files for a particular Clearance period </td></tr>
+            <tr><td>Supporting Attachments</td><td>The additional documentation provided to support interline billing claim. The Supporting Attachments needs to be provided in electronic format </td></tr>
+            <tr><td>Supporting Attachments Linking Deadline</td><td>The date and time stamp by which the system will stop manual and automated linking of supporting documents for the clearance period </td></tr>
+            <tr><td>TIFF Image files</td><td>Tagged Image File Format (TIFF) is a file format for storing images. </td></tr>
+            <tr><td>Time Stamp</td><td>Sequence of characters, denoting the date and/or time at which a certain event occurred</td></tr>
+            <tr><td>UATP</td><td>Universal Air Travel Plan, an Industry owned charge card</td></tr>
+            <tr><td>Usage File</td><td>The modified Record 50 file is now called Usage File. This is used as an input to SIS to carry out the process of Value Determination and/or Auto-billing </td></tr>
+            <tr><td>VAT</td><td>Value added tax</td></tr>
+        </table>
+    </div>
+
+    <h2 class="panel-title new-line">
+        ATTACHMENT E— SERVICE LEVEL AGREEMENT
+    </h2>
+
+    <p class="bold">
+        SIS—Service Level Agreement
+    </p>
+
+    <p class="bold">
+        1. System availability 
+    </p>
+    
+    <p>
+        (a) The Service will be available on a 24 hour, 7 days per week basis, with system up-time averaging 99.50% on a rolling annual average, excluding weekends . Maximum unplanned outage should not exceed 4 hours. 
+    </p>
+
+    <p class="bold">
+        2. Processing 
+    </p>
+    
+    <p>
+        (a) IS-IDEC and IS-XML files received will be processed to Clearing House submission if applicable within twenty four hours of receipt and within four hours in 99.85% of cases. 
+    </p>
+    <p>
+        (c) Online entry other than for report generation or file transfer should receive a response within 3 seconds target in 97.50% of transactions based on an end to end bandwidth of at least 256kb. 
+    </p>
+    <p class="bold">
+        3. Helpdesk availability 
+    </p>
+
+    <p>
+        (a) IATA and its service provider will provide access to a 24-hour web based helpdesk, 7 days per week. 
+    </p>
+
+    <p class="bold">
+        4. Fault reporting and clearance 
+    </p>
+    
+    <p>
+        (a) Communication may be via web interface (primary solution) or via email (back-up). 
+    </p>
+    
+    <p>
+        (b) If a fault is identified 
+        <ul class="margin-3" style="list-style-type: none;">
+            <li>(i) by the Participant:
+                <ul style="list-style-type: none;">
+                    <li>(i) The Participant will notify IATA through its Help Desk facility and indicate the severity of the fault in accordance with the categorizations below. </li>
+                    <li>(ii) If the fault is confirmed, the IATA Help Desk will validate the severity classification, and communicate immediately in case of a Severity 1 issue. In case the incident is escalated, a second e-mail notification will be sent out reporting its escalation and prioritization. </li>
+                    <li>(iii) All incidents will be recorded and the Participant will receive an e-mail notification reporting a unique tracking number associated with each case within minutes after the incident was logged via the web based solution. </li>
+                    <li>(iv) If the fault is deemed by IATA Help Desk to affect other Participants, IATA Help Desk will notify the Participants of the fault and recommend any temporary corrective action. </li>
+                </ul>
+            </li>
+            <li>(ii) by IATA or its service provider:
+                <ul style="list-style-type: none;">
+                    <li>(i) The IATA Help Desk will determine the severity of the fault and in case of a Severity 1 issue, communicate immediately to the Participant or all Participants. </li>
+                    <li>(ii) Communication could be via the IS-Web portal. </li>
+                </ul>
+            </li>
+        </ul>
+    </p>
+    
+    <p>
+        (c) IATA Help Desk will:
+        <ul class="margin-3" style="list-style-type: none;">
+            <li>(i) Generate a fault report to the Participant or all Participants, as appropriate, after full assessment of the fault (for Severity 1 issues). </li>
+            <li>(ii) In the course of defining the proper resolution, the Participant may be requested to provide any additional information to the IATA Help Desk in a timely manner to enable correction of the fault/problem. </li>
+            <li>(iii) Communicate a suitable fix for either data or processes or provide a workaround for other than trivial cases (severity 4). The time allowed will be dependent upon the severity of the case. </li>
+            <li>(iv) Notify the Participant or all Participants, as appropriate, once the fault has been fixed. </li>
+        </ul>
+    </p>
+    
+    <p>
+        (d) Fault categorization and resolution timelines 
+    </p>
+
+    <p class="margin-3">
+        1. IATA Help Desk will validate or determine the severity of the case based on the following definitions: 
+    </p>
+
+    <p class="margin-3">
+        <span class="bold">Showstoppers (Severity 1):</span> Showstopper faults are those which prevent global use of the application software or which stop an operational function of application globally, thereby preventing the users from completing essential operations. IATA will endeavour to provide a resolution, either in the form of a workaround or a patch in that order of priority, within six (6) hours. However, if more time is needed, this will be advised to the respective users. Until April 2013, the legacy processes will be maintained and can be used as fall back option. Once an alternative is provided or normal functioning of the application is instituted, the IATA Help Desk will inform the participants and the Showstopper will be considered resolved. 
+    </p>
+    <p class="margin-3">
+        The following will qualify as Showstopper faults:
+        <ul class="margin-6">
+            <li>Complete SIS platform is down </li>
+            <li>Submission of billing data is not possible </li>
+            <li>Settlement files cannot be created or are incorrect or do not arrive at their destination within the SIS perimeter </li>
+            <li>Output billing files cannot be created or are incorrect or do not arrive at their destination within SIS perimeter </li>
+            <li>Invoices cannot be digitally signed </li>
+            <li>Invoices do not contain intended values, or referential integrity is compromised </li>
+            <li>Billing data captured through IS-Web do not contain intended values, or referential integrity is compromised </li>
+            <li>Processing times for files are greater than 2 hours max to load and validate files for non-peak loads and 4 hours max for peak loads. </li>
+            <li>Response times for manual input are greater than 8 seconds for delivery of high complexity operation pages. </li>
+            <li>Users unable to log on to SIS due to problems accessing the platform (excluding invalid/lost/expired log-ons) </li>
+            <li>Migration functionality inoperative (IDEC functionality, IS-IDEC-IDEC conversion, etc) </li>
+            <li>Security breach deemed to put SIS at risk. </li>
+        </ul>
+    </p>
+    <p class="margin-3">
+        <span class="bold">Major (Severity 2):</span> Major defects are defined as those which impact a specific module within the system and for which workarounds are available, or prevent a non-core system process to be successfully completed. IATA will endeavour to provide a resolution, in the form of a workaround, within 1 Work Days (()). 
+    </p>
+    <p class="margin-3">
+        In the context of SIS, the following will qualify as Major defects:
+        <ul class="margin-6">
+            <li>Web Analysis reports cannot be viewed/downloaded </li>
+            <li>Alerts are not/incorrectly delivered </li>
+            <li>Service usage report incorrectly produced by SIS application.</li>
+        </ul>
+    </p>
+    <p class="margin-3">
+        <span class="bold">Minor (Severity 3):</span> These are faults where one or more functions in the application software are not working as normal or the SIS application's behavior deviates from expected functionality, but these do not affect the operation. 
+    </p>
+    <p class="margin-3">
+        <span class="bold">Trivial Defects (Severity 4):</span> Trivial Defects are defined as those which do not affect the functionality of the SIS application and are cosmetic in nature. These will be addressed in future releases as per section 6 in the SIS Participation Agreement. 
+    </p>
+
+    <p class="margin-3">
+        2. IATA will endeavor to resolve faults reported as per the following table from the time it is allocated. 
+    </p>
+
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 60%; margin-left: 20%;">
+            <tr><th>Fault Severity</th><th>Required Resolution Time<br/>(could be via workaround)</th></tr>
+            <tr><td>Showstopper (severity 1)</td><td>6 Hours</td></tr>
+            <tr><td>Major (severity 2)<sup>(*)</sup></td><td>1 Work Days</td></tr>
+            <tr><td>Minor (severity 3)<sup>(*)</sup></td><td>10 Work Days</td></tr>
+            <tr><td>tdivial (severity 4)</td><td>Next planned Release</td></tr>
+        </table>
+    </div>
+
+    <p class="margin-3">
+        (*): These fault severity items will be responded to during ‘Work Days’. “Work Day” is defined as 09:00 hrs to 18:00 hrs EST/EDT, Monday to Friday, excluding IATA Montréal company holidays. 
+    </p>
+
+    <p>
+        (e) The Participant will be able to access the status of the report on their incident(s) at any time via the internet in accordance with Attachment D. 
+    </p>
+
+    <p class="bold">
+        5. Disaster recovery plan, Back-up and recovery processes 
+        <ul class="margin-3" style="list-style-type: none;">
+            <li>(a) During the Term of this Agreement, IATA shall maintain a written Disaster Recovery (DR) Plan (“Plan”) and the wherewithal to implement such Plan. </li>
+            <li>(b) IATA will test the Plan annually and produce a report containing the results of the test and recommendations for improvements, if any, to the Plan. </li>
+            <li>(c) IATA will maintain a back-up process sufficient to ensure that the service is restored within 6 hours of DR site invocation in case of disaster, with not more than 3 hours of submission data needing retransmission by the Participants. </li>
+            <li>(d) The Plan will provide a 3 hours switchover from the Primary site to the DR site. </li>
+            <li>(e) The restoration for full service operations will be completed within 6 hours after a catastrophic failure. </li>
+            <li>(f) The response time of this SLA will not apply when the Service is run from the DR site except for resolution of Severity 1 faults. </li>
+        </ul>
+    </p>
+
+    <apex:outputPanel rendered="{!newForm.Is_company_subject_to_EU_laws__c=='Yes'}">
+        <h2 class="panel-title new-line">
+            ATTACHMENT G — EU STANDARD CONTRACTUAL CLAUSES
+        </h2>
+
+        <p>EU Standard Contractual Clauses for processing between an EU controller and non-EU processor (and sub-processor): </p>
+        <p>ONLY APPLICABLE TO SIS PARTICIPANTS WHO ARE SUBJECT TO EUROPEAN DATA PROTECTION LAWS.</p>
+        <p>PARTICIPANT TO CHOOSE BETWEEN <span class="bold">OPTION A</span> OR <span class="bold">OPTION B</span></p>
+        <p class="bold">OPTION A:</p>
+        <p>EU Standard Contractual Clauses for processing between IATA and Participant (including the EU Standard Contractual Clauses for processing between IATA and Sub-processor. A signed copy is available upon request). </p>
+        <p><span class="bold">OPTION B:</span> (for use only in jurisdictions where a tripartite agreement is required): </p>
+        <p>EU Standard Contractual Clauses for processing between IATA, Participant and Sub-processor.</p>
+        
+        <div class="regular-table regular-table-height-2_5 no-page-break">
+            <table style="width: 100%; margin-left: 0%;">
+                <tr>
+                    <td colspan="2">
+                        <p>OPTION A: EU Standard Contractual Clauses for processing between IATA and Participant:</p>
+                        <p>Standard Contractual Clauses (processors)</p>
+                        <p>For the purposes of Article 26(2) of Directive 95/46/EC for the transfer of personal data to processors established in third countries which do not ensure an adequate level of data protection.</p>
+                    </td>
+                </tr>
+                <tr><td>Name of the data importing organization:</td><td></td></tr>
+                <tr style="height: 6em;"><td>Address:</td><td></td></tr>
+                <tr><td>Tel:</td><td></td></tr>
+                <tr><td>Fax:</td><td></td></tr>
+                <tr><td>Email:</td><td></td></tr>
+                <tr style="height: 6em;"><td>Other information needed to identify the organisation</td><td></td></tr>
+                <tr style="height: 6em;"><td colspan="2">(the data exporter)</td></tr>
+            </table>
+        </div>
+
+        <div class="regular-table regular-table-height-2_5 no-page-break">
+            <table style="width: 100%; margin-left: 0%;">
+                <tr><td>Name of the data importing organization:</td><td>INTERNATIONAL AIR TRANSPORT ASSOCIATION</td></tr>
+                <tr><td>Address:</td>
+                    <td>
+                        800 Place Victoria, P.O. Box 113<br/>
+                        Montréal, Québec H4Z 1M1<br/>
+                        Canada<br/>
+                    </td>
+                </tr>
+                <tr><td>Tel:</td><td>1 514 874 0202</td></tr>
+                <tr><td colspan="2">
+                    <p>(the data importer)</p>
+                    <p>each a “party”; together “the parties”,</p>
+                    <p>HAVE AGREED on the following Contractual Clauses (the Clauses) in order to adduce adequate safeguards with respect to the protection of privacy and fundamental rights and freedoms of individuals for the transfer by the data exporter to the data importer of the personal data specified in Appendix 1.</p>
+                    <p>HAVE FURTHER AGREED that the data importer may utilise a sub-processor, as envisaged by these Clauses, and may enter into separate clauses with such sub-processor, a copy of which shall be provided to the data exporter to adduce adequate safeguards with respect to the protection of privacy and fundamental rights and freedoms of individuals for the personal data specified in Appendix 1.</p>
+                </td></tr>
+            </table>
+        </div>
+
+        <p class="bold">
+            Clause 1 Definitions 
+        </p>
+
+        <p class="margin-3">
+            For the purposes of the Clauses:
+            <ul class="margin-3" style="list-style-type: none;">
+                <li>(a) ‘personal data’, ‘special categories of data’, ‘process/processing’, ‘controller’, ‘processor’, ‘data subject’ and ‘supervisory authority’ shall have the same meaning as in Directive 95/46/EC of the European Parliament and of the Council of 24 October 1995 on the protection of individuals with regard to the processing of personal data and on the free movement of such data(1); </li>
+                <li>(b) ‘the data exporter’ means the controller who transfers the personal data; </li>
+                <li>(c) ‘the data importer’ means the processor who agrees to receive from the data exporter personal data intended for processing on his behalf after the transfer in accordance with his instructions and the terms of the Clauses and who is not subject to a third country's system ensuring adequate protection within the meaning of Article 25(1) of Directive 95/46/EC; </li>
+                <li>(d) ‘the sub-processor’ means any processor engaged by the data importer or by any other sub-processor of the data importer who agrees to receive from the data importer or from any other sub-processor of the data importer personal data exclusively intended for processing activities to be carried out on behalf of the data exporter after the transfer in accordance with his instructions, the terms of the Clauses and the terms of the written subcontract; </li>
+                <li>(e) ‘the applicable data protection law’ means the legislation protecting the fundamental rights and freedoms of individuals and, in particular, their right to privacy with respect to the processing of personal data applicable to a data controller in the Member State in which the data exporter is established; </li>
+                <li>(f) ‘technical and organisational security measures’ means those measures aimed at protecting personal data against accidental or unlawful destruction or accidental loss, alteration, unauthorised disclosure or access, in particular where the processing involves the transmission of data over a network, and against all other unlawful forms of processing. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            Clause 2 Details of the transfer 
+        </p>
+        <p class="margin-3">
+            The details of the transfer and in particular the special categories of personal data where applicable are specified in Appendix 1 which forms an integral part of the Clauses. 
+        </p>
+
+        <p class="bold">
+            Clause 3 Third-party beneficiary clause 
+        </p>
+
+        <ul class="margin-3" style="list-style-type: none;">
+            <li>1. The data subject can enforce against the data exporter this Clause, Clause 4(b) to (i), Clause 5(a) to (e), and (g) to (j), Clause 6(1) and (2), Clause 7, Clause 8(2), and Clauses 9 to 12 as third-party beneficiary. </li>
+            <li>2. The data subject can enforce against the data importer this Clause, Clause 5(a) to (e) and (g), Clause 6, Clause 7, Clause 8(2), and Clauses 9 to 12, in cases where the data exporter has factually disappeared or has ceased to exist in law unless any successor entity has assumed the entire legal obligations of the data exporter by contract or by operation of law, as a result of which it takes on the rights and obligations of the data exporter, in which case the data subject can enforce them against such entity. </li>
+            <li>3. The data subject can enforce against the sub-processor this Clause, Clause 5(a) to (e) and (g), Clause 6, Clause 7, Clause 8(2), and Clauses 9 to 12, in cases where both the data exporter and the data importer have factually disappeared or ceased to exist in law or have become insolvent, unless any successor entity has assumed the entire legal obligations of the data exporter by contract or by operation of law as a result of which it takes on the rights and obligations of the data exporter, in which case the data subject can enforce them against such entity. Such third-party liability of the sub-processor shall be limited to its own processing operations under the Clauses. </li>
+            <li>4. The parties do not object to a data subject being represented by an association or other body if the data subject so expressly wishes and if permitted by national law. </li>
+        </ul>
+
+        <p class="bold">
+            Clause 4 Obligations of the data exporter 
+        </p>
+
+        <p class="margin-3">
+            The data exporter agrees and warrants: 
+            <ul class="margin-3" style="list-style-type: none;">
+                <li>(a) that the processing, including the transfer itself, of the personal data has been and will continue to be carried out in accordance with the relevant provisions of the applicable data protection law (and, where applicable, has been notified to the relevant authorities of the Member State where the data exporter is established) and does not violate the relevant provisions of that State; </li>
+                <li>(b) that it has instructed and throughout the duration of the personal data processing services will instruct the data importer to process the personal data transferred only on the data exporter's behalf and in accordance with the applicable data protection law and the Clauses; </li>
+                <li>(c) that the data importer will provide sufficient guarantees in respect of the technical and organisational security measures specified in Appendix 2 to this contract; </li>
+                <li>(d) that after assessment of the requirements of the applicable data protection law, the security measures are appropriate to protect personal data against accidental or unlawful destruction or accidental loss, alteration, unauthorised disclosure or access, in particular where the processing involves the transmission of data over a network, and against all other unlawful forms of processing, and that these measures ensure a level of security appropriate to the risks presented by the processing and the nature of the data to be protected having regard to the state of the art and the cost of their implementation; </li>
+                <li>(e) that it will ensure compliance with the security measures; </li>
+                <li>(f) that, if the transfer involves special categories of data, the data subject has been informed or will be informed before, or as soon as possible after, the transfer that its data could be transmitted to a third country not providing adequate protection within the meaning of Directive 95/46/EC; </li>
+                <li>(g) to forward any notification received from the data importer or any sub-processor pursuant to Clause 5(b) and Clause 8(3) to the data protection supervisory authority if the data exporter decides to continue the transfer or to lift the suspension; </li>
+                <li>(h) to make available to the data subjects upon request a copy of the Clauses, with the exception of Appendix 2, and a summary description of the security measures, as well as a copy of any contract for sub-processing services which has to be made in accordance with the Clauses, unless the Clauses or the contract contain commercial information, in which case it may remove such commercial information; </li>
+                <li>(i) that, in the event of sub-processing, the processing activity is carried out in accordance with Clause 11 by a sub-processor providing at least the same level of protection for the personal data and the rights of data subject as the data importer under the Clauses; and </li>
+                <li>(j) that it will ensure compliance with Clause 4(a) to (i). </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            Clause 5 Obligations of the data importer(2)
+        </p>
+
+        <p class="margin-3">
+            The data importer agrees and warrants: 
+            <ul class="margin-3" style="list-style-type: none;">
+                <li>(a) to process the personal data only on behalf of the data exporter and in compliance with its instructions and the Clauses; if it cannot provide such compliance for whatever reasons, it agrees to inform promptly the data exporter of its inability to comply, in which case the data exporter is entitled to suspend the transfer of data and/or terminate the contract; </li>
+                <li>(b) that it has no reason to believe that the legislation applicable to it prevents it from fulfilling the instructions received from the data exporter and its obligations under the contract and that in the event of a change in this legislation which is likely to have a substantial adverse effect on the warranties and obligations provided by the Clauses, it will promptly notify the change to the data exporter as soon as it is aware, in which case the data exporter is entitled to suspend the transfer of data and/or terminate the contract; </li>
+                <li>(c) that it has implemented the technical and organisational security measures specified in Appendix 2 before processing the personal data transferred; </li>
+                <li>(d) that it will promptly notify the data exporter about:
+                    <ul class="margin-6" style="list-style-type: none;">
+                        <li>(i) any legally binding request for disclosure of the personal data by a law enforcement authority unless otherwise prohibited, such as a prohibition under criminal law to preserve the confidentiality of a law enforcement investigation, </li>
+                        <li>(ii) any accidental or unauthorised access, and </li>
+                        <li>(iii) any request received directly from the data subjects without responding to that request, unless it has been otherwise authorised to do so; </li>
+                    </ul>
+                </li>
+                <li>(e) to deal promptly and properly with all inquiries from the data exporter relating to its processing of the personal data subject to the transfer and to abide by the advice of the supervisory authority with regard to the processing of the data transferred; </li>
+                <li>(f) at the request of the data exporter to submit its data processing facilities for audit of the processing activities covered by the Clauses which shall be carried out by the data exporter or an inspection body composed of independent members and in possession of the required professional qualifications bound by a duty of confidentiality, selected by the data exporter, where applicable, in agreement with the supervisory authority; </li>
+                <li>(g) to make available to the data subject upon request a copy of the Clauses, or any existing contract for sub-processing, unless the Clauses or contract contain commercial information, in which case it may remove such commercial information, with the exception of Appendix 2 which shall be replaced by a summary description of the security measures in those cases where the data subject is unable to obtain a copy from the data exporter; </li>
+                <li>(h) that, in the event of sub-processing, it has previously informed the data exporter and obtained its prior written consent; </li>
+                <li>(i) that the processing services by the sub-processor will be carried out in accordance with Clause 11; </li>
+                <li>(j) to send promptly a copy of any sub-processor agreement it concludes under the Clauses to the data exporter. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            Clause 6 Liability 
+        </p>
+
+        <p class="margin-3">
+            <ul class="margin-3" style="list-style-type: none;">
+                <li>1. The parties agree that any data subject, who has suffered damage as a result of any breach of the obligations referred to in Clause 3 or in Clause 11 by any party or sub-processor is entitled to receive compensation from the data exporter for the damage suffered. </li>
+                <li>2. If a data subject is not able to bring a claim for compensation in accordance with paragraph 1 against the data exporter, arising out of a breach by the data importer or his sub-processor of any of their obligations referred to in Clause 3 or in Clause 11, because the data exporter has factually disappeared or ceased to exist in law or has become insolvent, the data importer agrees that the data subject may issue a claim against the data importer as if it were the data exporter, unless any successor entity has assumed the entire legal obligations of the data exporter by contract of by operation of law, in which case the data subject can enforce its rights against such entity. <br/>
+                The data importer may not rely on a breach by a sub-processor of its obligations in order to avoid its own liabilities. </li>
+                <li>3. If a data subject is not able to bring a claim against the data exporter or the data importer referred to in paragraphs 1 and 2, arising out of a breach by the sub-processor of any of their obligations referred to in Clause 3 or in Clause 11 because both the data exporter and the data importer have factually disappeared or ceased to exist in law or have become insolvent, the sub-processor agrees that the data subject may issue a claim against the data sub-processor with regard to its own processing operations under the Clauses as if it were the data exporter or the data importer, unless any successor entity has assumed the entire legal obligations of the data exporter or data importer by contract or by operation of law, in which case the data subject can enforce its rights against such entity. The liability of the sub-processor shall be limited to its own processing operations under the Clauses. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            Clause 7 Mediation and jurisdiction 
+        </p>
+
+        <p class="margin-3">
+            <ul class="margin-3" style="list-style-type: none;">
+                <li>1. The data importer agrees that if the data subject invokes against it third-party beneficiary rights and/or claims compensation for damages under the Clauses, the data importer will accept the decision of the data subject:
+                    <ul style="list-style-type: none;">
+                        <li>(a) to refer the dispute to mediation, by an independent person or, where applicable, by the supervisory authority; </li>
+                        <li>(b) to refer the dispute to the courts in the Member State in which the data exporter is established. </li>
+                    </ul>
+                </li>
+                <li>2. The parties agree that the choice made by the data subject will not prejudice its substantive or procedural rights to seek remedies in accordance with other provisions of national or international law. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            Clause 8 Cooperation with supervisory authorities 
+        </p>
+
+        <p class="margin-3">
+            <ul class="margin-3" style="list-style-type: none;">
+                <li>1. The data exporter agrees to deposit a copy of this contract with the supervisory authority if it so requests or if such deposit is required under the applicable data protection law. </li>
+                <li>2. The parties agree that the supervisory authority has the right to conduct an audit of the data importer, and of any sub-processor, which has the same scope and is subject to the same conditions as would apply to an audit of the data exporter under the applicable data protection law. </li>
+                <li>3. The data importer shall promptly inform the data exporter about the existence of legislation applicable to it or any sub-processor preventing the conduct of an audit of the data importer, or any sub-processor, pursuant to paragraph 2. In such a case the data exporter shall be entitled to take the measures foreseen in Clause 5 (b). </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            Clause 9 Governing Law 
+        </p>
+
+            <p class="margin-3">
+                The Clauses shall be governed by the law of the Member State in which the data exporter is established. 
+            </p>
+
+        <p class="bold">
+            Clause 10 Variation of the contract 
+        </p>
+
+        <p class="margin-3">
+            The parties undertake not to vary or modify the Clauses. This does not preclude the parties from adding clauses on business related issues where required as long as they do not contradict the Clause. 
+        </p>
+
+        <p class="bold">
+            Clause 11 Sub-processing 
+        </p>
+
+        <p class="margin-3">
+            <ul class="margin-3" style="list-style-type: none;">
+                <li>1. The data importer shall not subcontract any of its processing operations performed on behalf of the data exporter under the Clauses without the prior written consent of the data exporter. Where the data importer subcontracts its obligations under the Clauses, with the consent of the data exporter, it shall do so only by way of a written agreement with the sub-processor which imposes the same obligations on the sub-processor as are imposed on the data importer under the Clauses(3). Where the sub-processor fails to fulfil its data protection obligations under such written agreement the data importer shall remain fully liable to the data exporter for the performance of the sub-processor's obligations under such agreement. </li>
+                <li>2. The prior written contract between the data importer and the sub-processor shall also provide for a third-party beneficiary clause as laid down in Clause 3 for cases where the data subject is not able to bring the claim for compensation referred to in paragraph 1 of Clause 6 against the data exporter or the data importer because they have factually disappeared or have ceased to exist in law or have become insolvent and no successor entity has assumed the entire legal obligations of the data exporter or data importer by contract or by operation of law. Such third-party liability of the sub-processor shall be limited to its own processing operations under the Clauses. </li>
+                <li>3. The provisions relating to data protection aspects for sub-processing of the contract referred to in paragraph 1 shall be governed by the law of the Member State in which the data exporter is established. </li>
+                <li>4. The data exporter shall keep a list of sub-processing agreements concluded under the Clauses and notified by the data importer pursuant to Clause 5 (j), which shall be updated at least once a year. The list shall be available to the data exporter's data protection supervisory authority. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            Clause 12 Obligation after the termination of personal data processing services 
+        </p>
+
+        <p class="margin-3">
+            <ul class="margin-3" style="list-style-type: none;">
+                <li>1. The parties agree that on the termination of the provision of data processing services, the data importer and the sub-processor shall, at the choice of the data exporter, return all the personal data transferred and the copies thereof to the data exporter or shall destroy all the personal data and certify to the data exporter that it has done so, unless legislation imposed upon the data importer prevents it from returning or destroying all or part of the personal data transferred. In that case, the data importer warrants that it will guarantee the confidentiality of the personal data transferred and will not actively process the personal data transferred anymore. </li>
+                <li>2. The data importer and the sub-processor warrant that upon request of the data exporter and/or of the supervisory authority, it will submit its data processing facilities for an audit of the measures referred to in paragraph 1. </li>
+            </ul>
+        </p>
+
+        <p class="margin-3 bold">
+            On behalf of the data exporter:
+        </p>
+        <div class="regular-table regular-table-height-2_5 no-page-break">
+            <table style="width: 90%; margin-left: 5%;">
+                <tr><td>Name (written out in full):</td><td></td></tr>
+                <tr><td>Position:</td><td></td></tr>
+                <tr style="height: 4em;"><td>Address:</td><td></td></tr>
+                <tr style="height: 4em;"><td>Other information necessary in order for<br/>the contact to be binding (if any):</td><td></td></tr>
+                <tr style="height: 4em;"><td>(Signature)</td><td></td></tr>
+                <tr style="height: 4em;"><td>(stamp of organisation)</td><td></td></tr>
+            </table>
+        </div>
+
+        <p class="margin-3 bold">
+            On behalf of the data importer:
+        </p>
+        <div class="regular-table regular-table-height-2_5 no-page-break">
+            <table style="width: 90%; margin-left: 5%;">
+                <tr><td>Name (written out in full):</td><td>Adina Minculescu, International Air Transport Association</td></tr>
+                <tr><td>Position:</td><td>Head, e-Invoicing Services, GDC</td></tr>
+                <tr style="height: 4em;">
+                    <td>Address:</td>
+                    <td>
+                        800 Place Victoria, P.O. Box 113<br/>
+                        Montréal, Québec H4Z 1M1<br/>
+                        Canada<br/>
+                    </td>
+                </tr>
+                <tr style="height: 4em;"><td>Other information necessary in order for<br/>the contact to be binding (if any):</td><td></td></tr>
+                <tr style="height: 4em;"><td>(Signature)</td><td></td></tr>
+                <tr style="height: 4em;"><td>(stamp of organisation)</td><td></td></tr>
+            </table>
+        </div>
+
+        <h2 class="panel-title new-line">
+            APPENDIX 1 TO THE STANDARD CONTRACTUAL CLAUSES 
+        </h2>
+        <p>This Appendix forms part of the Clauses and must be completed and signed by the parties.</p>
+        <p>The Member States may complete or specify, according to their national procedures, any additional necessary information to be contained in this Appendix. </p>
+
+        <p class="bold margin-3">Data exporter</p>
+        <p class="margin-3">The data exporter is (please specify briefly your activities relevant to the transfer):</p>
+        <p class="margin-3">Sending personal data to the data importer to support and if required validate the invoices submitted for payment (using the interline billing and settlement solution provided by the data importer to the data exporter and third parties). </p>
+
+        <p class="bold margin-3">Data importer</p>
+        <p class="margin-3">The data importer is (please specify briefly activities relevant to the transfer):</p>
+        <p class="margin-3">Receiving personal data from the data exporter to support and if required validate the invoices submitted for payment (using the interline billing and settlement solution provided by the data importer to the data exporter and third parties). </p>
+
+        <p class="bold margin-3">Data subjects</p>
+        <p class="margin-3">The personal data transferred concern the following categories of data subjects (please specify): </p>
+        <p class="margin-3">Airline passengers; Crew/Staff members of the data exporter or its counterparts.</p>
+
+        <p class="bold margin-3">Categories of data</p>
+        <p class="margin-3">The personal data transferred concern the following categories of data (please specify):</p>
+        <p class="margin-3">Some or all of the following: passenger name, gender, date of birth, age, frequent flyer number, contact details, payment card data (masked in accordance with Payment Card Industry Digital Security Standard (PCI-DSS) specifications) and the special categories of data listed below. </p>
+
+        <p class="bold margin-3">Special categories of data (if appropriate)</p>
+        <p class="margin-3">The personal data transferred concern the following special categories of data (please specify): </p>
+        <p class="margin-3">Sensitive/special personal data that is associated with a charge to the customer such as medical information (if for example a charge for oxygen applied and the personal data explicitly or implicitly referenced a medical conditions). </p>
+
+        <p class="bold margin-3">Processing operations</p>
+        <p class="margin-3">The personal data transferred will be subject to the following basic processing activities (please specify): </p>
+        <p class="margin-3">Personal Data to be used where required to support and validate the accuracy of charges to be billed and settled between the data exporter and third parties. </p>
+
+        <p class="bold margin-3">Order Control</p>
+        <p class="margin-3">The Data Exporter has the right to carry out an inspection at the Data Importer's office at any time. In the course of the inspection the Data Importer shall give the Data Exporter reasonable assistance including but not limited to access to any necessary information and documentation and access to premises. In particular, the Data Exporter has the right to inspect the Data Importer's compliance with all technical and organizational measures. </p>
+
+        <div class="regular-table regular-table-height-2_5 no-page-break">
+            <table style="width: 60%; margin-left: 20%;">
+                <tr ><th><center>DATA EXPORTER</center></th><th><center>DATA IMPORTER</center></th></tr>
+                <tr ><td>Name:</td><td>Name:</td></tr>
+                <tr rowspan="3">
+                    <td>Authorised Signature:<div class="grey-box" style="height: 4em;"></div></td>
+                    <td>Authorised Signature:<div class="grey-box" style="height: 4em;"></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="panel-title new-line">
+            APPENDIX 2 TO THE STANDARD CONTRACTUAL CLAUSES 
+        </h2>
+
+        <p>
+            This Appendix forms part of the Clauses and must be completed and signed by the parties.
+        </p>
+        <p>
+            Description of the technical and organisational security measures implemented by the data importer in accordance with Clauses 4(d) and 5(c) (or document/legislation attached):
+        </p>
+
+        <p class="bold">
+            1. Access control 
+        </p>
+
+        <p class="margin-3">
+            Below are the access control mechanisms: 
+            <ul style="list-style-type: none;">
+                <li>(a) Access card readers are in place at all areas of building. </li>
+                <li>(b) Access to secure areas (for e.g. access to data centre) are protected by dual authentication comprise of Biometric and access card reader. </li>
+                <li>(c) Door Security is covered through access card reader along with 4 digit PIN Code. </li>
+                <li>(d) Environmental and Physical security includes CCTV surveillance cameras, Alarm Systems, Sprinklers, Smoke Detectors. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            2. Accession control 
+        </p>
+
+        <p class="margin-3">
+            Following procedures are implemented
+            <ul style="list-style-type: none;">
+                <li>(a) Strong Password policy is set for user authentication.
+                    <ul>
+                        <li>Base System Software Password Policy:
+                            <ul style="list-style-type: square;">
+                                <li>Minimum 8 characters password with combination of alphabets, numbers and special characters (*, %, @, #, $, ^) </li>
+                                <li>Password age—30 days</li>
+                                <li>Account lockout after 5 attempts</li>
+                                <li>Password reuse—after 5 password changes</li>
+                            </ul>
+                        </li>
+                        <li>Application Software Password Policy:
+                            <ul style="list-style-type: square;">
+                                <li>Minimum 6 characters password with combination of alphabets, numbers and special characters (*, %, @, #, $, ^) </li>
+                                <li>Account lockout after 3 attempts</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>(b) Automatic timeout is enabled on Network devices and servers </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            3. Access controls 
+        </p>
+
+        <p class="margin-3">
+            Following points are part of authorization model. 
+            <ul style="list-style-type: none;">
+                <li>(a) A formal Change management procedure is followed to authorize and grant access on any IT system to new user. </li>
+                <li>(b) Events logs of critical devices are captured for analysis and Monitoring is done on event logs. </li>
+                <li>(c) Role based access has been defined in the application. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            4. Transfer controls 
+        </p>
+
+        <p class="margin-3">
+            Below transfer controls are in place.
+            <ul style="list-style-type: none;">
+                <li>(a) All Ingress/Egress Traffic (data) over public network are encrypted through SSL. </li>
+                <li>(b) Data flowing through Virtual Private Networks are secured and encrypted though IPSEC VPN model. </li>
+                <li>(c) All Ingress/Egress Traffic (data) over public network are getting logged for analysis. </li>
+                <li>(d) Authorized Gate pass/electronic copy of receipts are required well in advance for transfers of any data from IDC. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            5. Input controls 
+        </p>
+
+        <p class="margin-3">
+            Below points are implemented as part of Audit trail process. 
+            <ul style="list-style-type: none;">
+                <li>(a) Audit trails are enabled on databases which can be further used for analysis. </li>
+                <li>(b) Events logs of critical devices are captured for analysis and Monitoring is done on event logs. </li>
+                <li>(c) Audit trails are enabled on firewall for all sets of policies. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            6. Contract controls 
+        </p>
+
+        <p class="margin-3">
+            <ul style="list-style-type: none;">
+                <li>(a) Accelya Kale is certified on ISO 9001 (quality management system) and ISO 27001 (Information security management system) and thereby follows formal procedure for contractual data. </li>
+                <li>(b) Contractor selection criterion is followed through a formal process. </li>
+                <li>(c) SLA's mentioned in contract gets monitored and reviewed at regular intervals. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            7. Availability controls 
+        </p>
+
+        <p class="margin-3">
+            Following processes are part of Data archiving 
+            <ul style="list-style-type: none;">
+                <li>(a) Daily, weekly and monthly incremental backups are taken to avoid loss of data. </li>
+                <li>(b) 24×7×365 days of uninterrupted power supply is available at iDC. </li>
+                <li>(c) Data is protected against virus, Trojans, spywares and other malwares through host based antivirus and network based unified threat machine (@ Perimeter level). </li>
+                <li>(d) Emergency response plan is in place at iDC. </li>
+                <li>(e) Disaster recovery and Business continuity plans are in place. </li>
+            </ul>
+        </p>
+
+        <p class="bold">
+            8. Controls for separation of duties 
+        </p>
+
+        <p class="margin-3">
+            <ul style="list-style-type: none;">
+                <li>(a) Duties and areas of responsibility are segregated to reduce opportunities for unauthorized or unintentional modification or misuse of the assets. </li>
+                <li>(b) Development, test and operational facilities are separated to reduce the risks of unauthorized access or changes to the operational system. </li>
+            </ul>
+        </p>
+
+        <div class="regular-table regular-table-height-2_5 no-page-break">
+            <table style="width: 60%; margin-left: 20%;">
+                <tr ><th><center>DATA EXPORTER</center></th><th><center>DATA IMPORTER</center></th></tr>
+                <tr ><td>Name:</td><td>Name:</td></tr>
+                <tr rowspan="3">
+                    <td>Authorised Signature:<div class="grey-box" style="height: 4em;"></div></td>
+                    <td>Authorised Signature:<div class="grey-box" style="height: 4em;"></div></td>
+                </tr>
+            </table>
+        </div>
+    </apex:outputPanel>
 
 </div>
 

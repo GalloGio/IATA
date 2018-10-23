@@ -53,7 +53,7 @@
         </div>
 
         <apex:outputPanel styleclass="panel-body" rendered="{!listWrapperType.size=0}">
-            No Services available
+            {!$Label.ISSP_SIS_Membership_no_services}
         </apex:outputPanel>
 
         <apex:outputPanel styleclass="panel-body scrollBar" rendered="{!listWrapperType.size>0}">
@@ -80,19 +80,15 @@
                                         <apex:commandLink action="{!wrapper.applyNow}" value="{!$Label.ISSP_SIS_Membership_Apply_Now}"
                                             styleClass="btn btn_iata_primary" rendered="{!wrapper.ShowApplyNow}" status="WaitingStatus"/>
                                         <!-- CONTINUE PROCESS BUTTON -->
-                                        <apex:commandLink action="{!wrapper.continueProcess}" value="Continue Draft"
+                                        <apex:commandLink action="{!wrapper.continueProcess}" value="{!$Label.ISSP_SIS_Membership_Continue_Draft}"
                                             styleClass="btn btn_iata_primary" rendered="{!wrapper.ShowContinueProcess}" status="WaitingStatus"/>
                                         <!-- APPLY NOW BUTTON -->
-                                        <apex:commandLink action="{!wrapper.goToCase}" value="View My Application"
+                                        <apex:commandLink action="{!wrapper.goToCase}" value="{!$Label.ISSP_SIS_Membership_View_My_Application}"
                                             styleClass="btn btn_iata_primary" rendered="{!wrapper.ShowGoToCase}" status="WaitingStatus"/>
                                         <!-- CURRENT MEMBERSHIP BUTTON -->
                                         <apex:outputPanel layout="block" styleclass="alert alert-success my-alert" html-role="alert" rendered="{!wrapper.ShowCurrentMembership}">
-                                            Your Current Membership
+                                            {!$Label.ISSP_SIS_Membership_Your_Current}
                                         </apex:outputPanel>
-                                        <!--
-                                        <apex:commandLink value="Your Current Membership" onclick="return false;" style="cursor: not-allowed;"
-                                            styleClass="btn btn_iata_primary btn-success" rendered="{!wrapper.ShowCurrentMembership}" status="WaitingStatus"/>
-                                        -->
                                     </div>
                                     <div class="type-text">
                                         <p class="text-justify">

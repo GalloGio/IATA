@@ -10,9 +10,9 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         AP_RT_TOU  => 'TOU'
     };
     public static final Map<String,list<String>> MAP_STEPS = new Map<String,list<String>>{
-        AP_RT_ISPA => new list<String>{'A. Review Country Requirements','B. Fill the Form','C. Submit to IATA'},
-        AP_RT_ISUA => new list<String>{'A. Review Country Requirements','B. Fill the Form','C. Submit to IATA'},
-        AP_RT_TOU  => new list<String>{'A. Fill the Form','B. Submit to IATA'}
+        AP_RT_ISPA => new list<String>{'A. ' + Label.ISSP_SIS_Membership_Review_Country_Req,'B. ' + Label.ISSP_SIS_Membership_Fill_The_Form,'C. ' + Label.ISSP_SIS_Membership_Submit_To_IATA},
+        AP_RT_ISUA => new list<String>{'A. ' + Label.ISSP_SIS_Membership_Review_Country_Req,'B. ' + Label.ISSP_SIS_Membership_Fill_The_Form,'C. ' + Label.ISSP_SIS_Membership_Submit_To_IATA},
+        AP_RT_TOU  => new list<String>{'A. ' + Label.ISSP_SIS_Membership_Fill_The_Form,'B. ' + Label.ISSP_SIS_Membership_Submit_To_IATA}
     };
     public Boolean getisISPA() {return this.newForm.RecordTypeId==AP_RT_ISPA;}
     public Boolean getisISUA() {return this.newForm.RecordTypeId==AP_RT_ISUA;}
@@ -26,7 +26,10 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
     public AP_Process_Form__c newForm {get;set;}
     public Account account {get;set;}
     @TestVisible private Case newCase;
-   
+
+    /**
+        Controller
+    **/
     public ISSP_SISMembershipApplicationForm_Ctrl(){
         String formId = Apexpages.CurrentPage().getParameters().get('id');
         String inputStep = Apexpages.CurrentPage().getParameters().get('step');
@@ -59,14 +62,17 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
                 WHERE DeveloperName = :typeName];
             
         } catch (Exception e) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'SIS membership type not valid'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.ISSP_SIS_Membership_Type_Not_Valid));
             return null;
         }
     }
 
+    /**
+        Get all record from input AP_Process_Form__c Id
+    **/
     public AP_Process_Form__c retrieveAPProcessForm(Id formId){
         return [
-            SELECT Id, Case__c, Case__r.CaseNumber, Case__r.BSPCountry__c, Type__c, Type_of_participation_desired__c, Airline_Local_address_in_the_BSP_Country__c,
+            SELECT Id, Type__c, Type_of_participation_desired__c, Airline_Local_address_in_the_BSP_Country__c,
             Desired_commencment_date__c, Accept_terms_and_conditions__c, Accept_payment_Cards_for_BSP_ticket__c , Airline__c,
             Airline_HO__c, Airline_trade_name__c, American_Express_Merchant_Number__c, American_Express_Name_of_Acquirer__c,
             BSP_Country_VAT_Tax_number__c, BSPLink_ASD_China_Contact_Email__c, BSPLink_ASD_China_Contact__c, BSPLink_ASD_China_Contact_L_Name__c,
@@ -97,19 +103,25 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
             Company_Registration_number__c, Name_of_business_comm_assoc__c, Capital_amount_of_the_business__c,Local_CC_Settlement_Scheme__c,Airline_Registered_under_other_name__c,
             CASS_PH_Bilateral_Agreement__c,CASS_PH_Preferred_Billing_Currency__c,CASS_PH_Bilat_Agreement_Tax_Rate__c,Airline_Intra_Europe_Flights__c,BSP_UA_LocalReg_Number_EDRPOU__c,BSP_UA_BankCode_MFO__c,Ecuador_Legal_Forms_requirements__c,
             BSP_Russia_Double_Tax_avoiding_Treaty__c, Colombia_City_selection__c, Colombia_City_percentage__c, Name_Appearing_in_VAT__c, Colombia_Type_of_Contributor__c, Territory_Percentage__c,
-            Canada_Has_Principal_Office__c,Canada_Provincial_Offices__c,Canada_LocalVAT_Info__c, GSSA_Legal_Name_Formula__c, GSSA_Address_Formula__c, Case__r.AccountId,
+            Canada_Has_Principal_Office__c,Canada_Provincial_Offices__c,Canada_LocalVAT_Info__c, GSSA_Legal_Name_Formula__c, GSSA_Address_Formula__c,
             ANG_Airline_accepts_EasyPay_tr_in_BSP__c,Minimum_Commission_Rate__c, Maximum_Commission_Rate__c, Default_Commission_Rate__c, Type_of_Change_Requested__c,
             Legal_Name_of_company__c,Company_address__c,Company_city__c,Company_State__c,Postal_code__c,Company_Country__c, Company_Country__r.Name, Company_Trade_Name__c,
             Super_User_Salutation__c,Super_User_First_Name__c,Super_User_Last_Name__c,Super_User_Email_Address__c,Super_User_Phone_Number__c,Super_User_Mobile_Number__c,Super_User_Fax_Number__c,
             Is_AA_Member__c,Digital_Signature_application__c,Digital_Signature_verification__c,Legal_Archiving__c,Billing_Value_Determination__c,Billing_Value_Confirmation__c,Auto_billing__c,
             Do_you_have_an_iiNET_account__c,Is_your_company_joining_the_Clearing_Hou__c,Select_Bank_Account__c,Is_company_subject_to_EU_laws__c,EU_Data_Privacy_Laws__c,
             Company_Registration_ID__c,TAX_VAT_Registration_Number__c,Billing_File_Emrgcy_Contact_Number__c,Who_requested_to_join_TOU__c,Legal_Name_of_account__c,
-            RecordTypeId, RecordType.DeveloperName, Do_you_want_to_add_Bank_Details__c
+            RecordTypeId, RecordType.DeveloperName, Do_you_want_to_add_Bank_Details__c, Data_Exporting_Organization_Name__c,Data_Exporting_Organization_Address__c,
+            Data_Exporting_Organization_Phone__c,Data_Exporting_Organization_Fax__c,Data_Exporter_Name__c,Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,
+            Contact_Title__c,Contact_First_name__c,Contact_Last_name__c,Contact_email__c,Contact_number__c,
+            Case__c, Case__r.CaseNumber, Case__r.BSPCountry__c, Case__r.Id, Case__r.RecordtypeId, Case__r.AccountId, Case__r.CaseArea__c, Case__r.Reason1__c, Case__r.Status, Case__r.Type
             FROM AP_Process_Form__c
             WHERE Id = :formId
         ];
     }
 
+    /**
+        Get all fields from input Account Id
+    **/
     private Account retrieveAccount(Id accountId){
         Account account = [
             SELECT Id,Name,Sector__c,Category__c,Legal_name__c,Airline_designator__c,BillingStreet,BillingCity,BillingState,BillingPostalCode,BillingCountry, IATA_ISO_Country__c
@@ -124,6 +136,9 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         return account;
     }
 
+    /**
+        Updates current Ap Process form, and makes some validations depending on the page we are
+    **/
     private Boolean saveDraft() {
         System.Savepoint savepoint = Database.setSavepoint();
         try {
@@ -177,13 +192,19 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         }
     }
 
+    /**
+        Send to main home page after saving
+    **/
     public PageReference saveFormAndLeave() {
         if(saveDraft()) {
             return Page.ISSP_Homepage;
         }
         return null;
     }
-    
+
+    /**
+        Goes to previous step after saving, unless we are in step one, then it goes to main app page
+    **/
     public PageReference saveFormAndGoBack() {
         if(saveDraft()) {
             if (this.currentStep==1) {
@@ -197,6 +218,10 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         return null;
     }
 
+    /**
+        This is the action of submit button
+        It actually sends the form to be processes, so it is markes as Open
+    **/
     public PageReference submitForm() {
         this.newCase.Status = 'Open';
         if(validateFields() && saveDraft()) {
@@ -208,7 +233,10 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         }
         return null;
     }
-    
+
+    /**
+        Goes to next step after saving
+    **/
     public PageReference saveFormAndGoForward() {
         if(validateFields() && saveDraft()) {
             this.currentStep++;
@@ -216,13 +244,21 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         return null;
     }
 
+    /**
+        Check validity of certain fields, depending on the current page
+        Some fields are mandatory and some others are dependent fields
+    **/
     private Boolean validateFields() {
         if (this.currentStep==1) {
             return true;
         }
         if (this.currentStep==2) {
             if (getisISPA()||getisISUA()) {
-                list<String> listMandatoryFileId = new list<String>{'COI','Shareholders_List'};
+                list<String> listMandatoryFileId = new list<String>();
+                if (getIsValidDueDiligence()) {
+                    listMandatoryFileId.add('COI');
+                    listMandatoryFileId.add('Shareholders_List');
+                }
                 if (this.newForm.Do_you_want_to_add_Bank_Details__c=='Yes') {
                     listMandatoryFileId.add('BankMandate');
                     listMandatoryFileId.add('Passport');
@@ -239,6 +275,9 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         return false;
     }
 
+    /**
+        Find all related amazon fiels to current AP process form
+    **/
     private map<String,list<AmazonFile__c>> retrieveMapAmazonFiles() {
         map<String,list<AmazonFile__c>> mapAmazonFiles = new map<String,list<AmazonFile__c>>();
         for (AmazonFile__c file: [
@@ -255,26 +294,39 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         return mapAmazonFiles;
     }
 
+    /**
+        Check if an Amazon Fiel is mandatory for current AP process form
+    **/
     private Boolean checkMandatoryFiles(list<String> listMandatoryFileId) {
         map<String,list<AmazonFile__c>> mapFiles = retrieveMapAmazonFiles();
         for (String fielId: listMandatoryFileId) {
             list<AmazonFile__c> listAmazonFiles = mapFiles.get(fielId);
             if (listAmazonFiles==null || listAmazonFiles.isEmpty()) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Missing input file'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.ISSP_SIS_Membership_Missing_Input_File));
                 return false;
             } else if(listAmazonFiles.size()>1) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Only one file allowed'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.ISSP_SIS_Membership_Only_One_File));
                 return false;
             } 
         }
         return true;
     }
 
+    /**
+        Lsit of countries used to populate picklists
+    **/
     public list<SelectOption> getListCountryOptions() {
         list<SelectOption> listOptions = new list<SelectOption>();
         for (IATA_ISO_Country__c country: [SELECT Id,Name FROM IATA_ISO_Country__c]) {
             listOptions.add(new SelectOption(country.Id,country.Name));
         }
         return listOptions;
+    }
+
+    /**
+        Checks if current AP process form has a valid Due diligenece (defined in a helper class)
+    **/
+    public Boolean getIsValidDueDiligence() {
+        return CaseDueDiligence.isValid(this.newCase, this.account);
     }
 }

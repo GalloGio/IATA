@@ -57,132 +57,120 @@
     <apex:pageBlockSection columns="2" id="section1A" collapsible="false" rendered="{!account.Sector__c='Airline'}">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 1 - Company Information
+                {!$Label.ISSP_SIS_Membership_ISPA_Section1_Title}
             </apex:outputpanel>
         </apex:facet>
 
         <tr>
-            <td colspan="2"><div class="blue-label">Airline Head Office Information:</div></td>
-            <td colspan="2"><div class="blue-label">Airline Information to be included in the invoices produced by SIS:</div></td>
+            <td colspan="2"><div class="blue-label text-center">{!$Label.ISSP_SIS_Membership_ISPA_Section1_Subtitle1}</div></td>
+            <td colspan="2"><div class="blue-label text-center">{!$Label.ISSP_SIS_Membership_ISPA_Section1_Subtitle2}</div></td>
         </tr>
         <apex:outputpanel ></apex:outputpanel>
 
         <tr>
             <td colspan="2"></td>
-            <td colspan="2"><a target="_blank" onclick="section1CopyInfo()" class="copy-info">Copy Airline Head Office information »</a></td>
+            <td colspan="2"><a target="_blank" onclick="section1CopyInfo()" class="copy-info">{!$Label.ISSP_SIS_Membership_ISPA_Section1_CopyButton}</a></td>
         </tr>
         <apex:outputpanel ></apex:outputpanel>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Legal Name of the Airline"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Legal_Name_of_the_Airline}"/>
             <apex:pageBlockSectionItem >
                 <apex:outputField value="{!account.Legal_name__c}" rendered="{!account.Legal_name__c!=null}"/>
                 <apex:inputField styleclass="required form-origin-legalname" value="{!newForm.Legal_Name_of_account__c}" rendered="{!account.Legal_name__c==null}"/>
             </apex:pageBlockSectionItem>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Legal Name of the Airline" />
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Legal_Name_of_the_Airline}" />
             <apex:inputField styleclass="form-legalname required" value="{!newForm.Legal_Name_of_company__c}"/>
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Trade Name" />
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Trade_Name}" />
             <apex:inputField value="{!newForm.Airline_trade_name__c}" styleclass="required"/>
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Airline Designator Code"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Airline_Designator_Code}"/>
             <apex:outputField styleclass="" value="{!account.Airline_designator__c}" />
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office Street"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_Street}"/>
             <apex:outputField styleclass="account-field" value="{!account.BillingStreet}" />
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office Street" />
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_Street}"/>
             <apex:inputField styleclass="form-address required" value="{!newForm.Company_address__c}"/>
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office City Name"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_City_Name}"/>
             <apex:outputField styleclass="account-field" value="{!account.BillingCity}" />
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office City Name" />
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_City_Name}" />
             <apex:inputField styleclass="form-city required" value="{!newForm.Company_city__c}"/>
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office State Name"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_State_Name}"/>
             <apex:outputField styleclass="account-field" value="{!account.BillingState}" />
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office State Name" />
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_State_Name}" />
             <apex:inputField styleclass="form-state" value="{!newForm.Company_State__c}" />
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office Postal Code"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_Postal_Code}"/>
             <apex:outputField styleclass="account-field" value="{!account.BillingPostalCode}" />
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office Postal Code" />
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_Postal_Code}" />
             <apex:inputField styleclass="form-postalcode" value="{!newForm.Postal_code__c}" />
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office Country"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_Country}"/>
             <apex:outputField styleclass="account-field" value="{!account.BillingCountry}" />
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office Country" />
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_Country}" />
             <apex:selectList value="{!newForm.Company_Country__c}" styleclass="form-country select2 required">
                 <apex:selectOptions value="{!ListCountryOptions}"/>
             </apex:selectList>
         </apex:pageBlockSectionItem>
-
-        <tr><td colspan="4">
-            <h3>Notice</h3>
-            <div class="strong-label">
-            Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.
-            </div>
-        </td></tr>
-        <apex:outputText ></apex:outputText>
-
-        Name of company: <br/>
-        Address: <br/>
-        Attn (please include a name and email): <br/>
 
     </apex:pageBlockSection>
 
     <apex:pageBlockSection columns="2" id="section1B" collapsible="false" rendered="{!account.Sector__c!='Airline'}">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 1 - Company Information
+                {!$Label.ISSP_SIS_Membership_ISPA_Section1_Title}
             </apex:outputpanel>
         </apex:facet>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Legal Name of the Company"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Legal_Name_Of_The_Company}"/>
             <apex:inputField styleclass="form-legalname required" value="{!newForm.Legal_Name_of_company__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
         
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Trade Name of Company"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Legal_Name_Of_The_Company}"/>
             <apex:inputField styleclass="required" value="{!newForm.Company_Trade_Name__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Incorporated under the laws of (Country)"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Incorporated_Under_Laws}"/>
             <apex:selectList value="{!newForm.Company_Country__c}" styleclass="select2" multiselect="false">
                 <apex:selectOptions value="{!ListCountryOptions}"/>
             </apex:selectList>
@@ -191,79 +179,66 @@
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="" />
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_State_Name}" />
             <apex:inputField styleclass="form-state required" value="{!newForm.Company_State__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Head Office Postal Code"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Head_Office_Postal_Code}"/>
             <apex:inputField styleclass="form-postalcode" value="{!newForm.Postal_code__c}" />
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
 
-        <tr><td colspan="4">
-            <h3>Notice</h3>
-            <div class="strong-label">
-            Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.
-            </div>
-        </td></tr>
-        <apex:outputText ></apex:outputText>
-
-        Name of company: <br/>
-        Address: <br/>
-        Attn (please include a name and email): <br/>
-    
     </apex:pageBlockSection>
 
     <apex:pageBlockSection columns="2" id="section2" collapsible="false">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 2 - Super User Details
+                {!$Label.ISSP_SIS_Membership_ISPA_Section2_Title}
             </apex:outputpanel>
         </apex:facet>
 
-        <tr><td colspan="4">
-            <div class="strong-label">The super user will be granted administrator access rights associated to their company’s SIS access for all billing category MISC. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web.</div>
-            <div class="strong-label">After your company is activated in SIS if you want to change the Super User please log a query in our IATA Customer Portal.</div>
-            <div class="strong-label">SIS Participant must provide the following details with regards to the Member Super User for their company. Once this form is provided and the membership process completed, the super user will receive their access to SIS.</div>
-        </td></tr>
+        <tr><td colspan="4"><div class="strong-label">
+            {!$Label.ISSP_SIS_Membership_ISPA_Section2_Subtitle1}
+        </div></td></tr>
         <apex:outputText ></apex:outputText>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Salutation"/>
-            <apex:inputField value="{!newForm.Super_User_Salutation__c}" styleclass="required"/>
+            <apex:outputLabel value="{!$Label.First_name}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Contact_First_name__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="First Name"/>
-            <apex:inputField styleclass="required" value="{!newForm.Super_User_First_Name__c}"/>
+            <apex:outputLabel value="{!$Label.Last_name}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Contact_Last_name__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Phone Number"/>
-            <apex:inputField value="{!newForm.Super_User_Phone_Number__c}"/>
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Last Name"/>
-            <apex:inputField styleclass="required" value="{!newForm.Super_User_Last_Name__c}"/>
+            <apex:outputLabel value="{!$Label.ISSP_Title}"/>
+            <apex:inputField value="{!newForm.Contact_Title__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Mobile Number"/>
-            <apex:inputField value="{!newForm.Super_User_Mobile_Number__c}"/>
         </apex:pageBlockSectionItem>
-        
+
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Email"/>
-            <apex:inputField styleclass="required email" value="{!newForm.Super_User_Email_Address__c}"/>
+            <apex:outputLabel value="{!$Label.Email_address}"/>
+            <apex:inputField styleclass="required email" value="{!newForm.Contact_email__c}" html-placeholder="{!$Label.ISSP_SIS_Membership_Put_a_valid_email}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Fax Number"/>
-            <apex:inputField value="{!newForm.Super_User_Fax_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$Label.Phone}"/>
+            <apex:inputField value="{!newForm.Contact_number__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
 
     </apex:pageBlockSection>
@@ -271,12 +246,62 @@
     <apex:pageBlockSection columns="2" id="section3" collapsible="false">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 3 - Optional Services
+                {!$Label.ISSP_SIS_Membership_ISPA_Section3_Title}
             </apex:outputpanel>
         </apex:facet>
 
         <tr><td colspan="4">
-            <div class="strong-label">A&amp;A stands for ATPCO and ARC. A&amp;A is the organization formed by ATPCO and ARC to support the First &amp; Final™ process.Please note that the optional services have a cost associated to each one of them, to consult the price please click here.</div>
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section3_Subtitle1}</div>
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section3_Subtitle2}</div>
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section3_Subtitle3}</div>
+        </td></tr>
+        <apex:outputText ></apex:outputText>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$Label.Salutation}"/>
+            <apex:inputField value="{!newForm.Super_User_Salutation__c}" styleclass="required"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$Label.First_Name}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Super_User_First_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$Label.Phone}"/>
+            <apex:inputField value="{!newForm.Super_User_Phone_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$Label.Last_Name}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Super_User_Last_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$Label.ISSP_Registration_MobilePhone}"/>
+            <apex:inputField value="{!newForm.Super_User_Mobile_Number__c}"/>
+        </apex:pageBlockSectionItem>
+        
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$Label.Email}"/>
+            <apex:inputField styleclass="required email" value="{!newForm.Super_User_Email_Address__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$Label.ISSP_Fax}"/>
+            <apex:inputField value="{!newForm.Super_User_Fax_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="2" id="section4" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                {!$Label.ISSP_SIS_Membership_ISPA_Section4_Title}
+            </apex:outputpanel>
+        </apex:facet>
+
+        <tr><td colspan="4">
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section4_Subtitle1}</div>
         </td></tr>
 
         <apex:pageBlockSectionItem >
@@ -285,7 +310,7 @@
                 <apex:selectRadio value="{!newForm.Is_AA_Member__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
                     <apex:selectOption itemValue="No" itemLabel="No"/>
-                    <apex:actionSupport event="onchange" rerender="section3"/>
+                    <apex:actionSupport event="onchange" rerender="section4"/>
                 </apex:selectRadio>
                 <apex:image value="/img/msg_icons/info16.png" title="{!$ObjectType.AP_Process_Form__c.fields.Is_AA_Member__c.InlineHelpText}"
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
@@ -293,24 +318,24 @@
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Digital Signature Application"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_application__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Digital_Signature_application__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="On"/>
                     <apex:selectOption itemValue="No" itemLabel="Off"/>
-                    <apex:actionSupport event="onchange" rerender="section3"/>
+                    <apex:actionSupport event="onchange" rerender="section4"/>
                 </apex:selectRadio>
                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Digital_Signature_Application_Helptext}"
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Billing Value Determination"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Billing_Value_Determination__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Billing_Value_Determination__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="On"/>
                     <apex:selectOption itemValue="No" itemLabel="Off"/>
-                    <apex:actionSupport event="onchange" rerender="section3"/>
+                    <apex:actionSupport event="onchange" rerender="section4"/>
                 </apex:selectRadio>
                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Billing_Value_Determination_Helptext}"
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
@@ -318,24 +343,24 @@
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Digital Signature Verification"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_verification__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Digital_Signature_verification__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="On"/>
                     <apex:selectOption itemValue="No" itemLabel="Off"/>
-                    <apex:actionSupport event="onchange" rerender="section3"/>
+                    <apex:actionSupport event="onchange" rerender="section4"/>
                 </apex:selectRadio>
                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Digital_Signature_Verification_Helptext}"
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Billing Value Confirmation"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Billing_Value_Confirmation__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Billing_Value_Confirmation__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="On"/>
                     <apex:selectOption itemValue="No" itemLabel="Off"/>
-                    <apex:actionSupport event="onchange" rerender="section3"/>
+                    <apex:actionSupport event="onchange" rerender="section4"/>
                 </apex:selectRadio>
                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext}"
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
@@ -343,24 +368,24 @@
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Legal Archiving"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Legal_Archiving__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Legal_Archiving__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="On"/>
                     <apex:selectOption itemValue="No" itemLabel="Off"/>
-                    <apex:actionSupport event="onchange" rerender="section3"/>
+                    <apex:actionSupport event="onchange" rerender="section4"/>
                 </apex:selectRadio>
                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Legal_Archiving_Helptext}"
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
-            <apex:outputLabel value="Auto-billing"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Auto_billing__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Auto_billing__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="On"/>
                     <apex:selectOption itemValue="No" itemLabel="Off"/>
-                    <apex:actionSupport event="onchange" rerender="section3"/>
+                    <apex:actionSupport event="onchange" rerender="section4"/>
                 </apex:selectRadio>
                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_AutoBilling_Helptext}"
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
@@ -372,7 +397,7 @@
         </apex:outputPanel>
 
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-            <apex:outputLabel value="Digital Signature Application"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_application__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Digital_Signature_application__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="On"/>
@@ -386,7 +411,7 @@
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-            <apex:outputLabel value="Digital Signature Verification"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_verification__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Digital_Signature_verification__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="On"/>
@@ -400,7 +425,7 @@
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-            <apex:outputLabel value="Legal Archiving"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Legal_Archiving__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Legal_Archiving__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="On"/>
@@ -416,24 +441,24 @@
 
     </apex:pageBlockSection>
 
-    <apex:pageBlockSection columns="2" id="section4" collapsible="false">
+    <apex:pageBlockSection columns="2" id="section5" collapsible="false">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 4 - iiNET
+                {!$Label.ISSP_SIS_Membership_ISPA_Section5_Title}
             </apex:outputpanel>
         </apex:facet>
 
         <tr><td colspan="4">
-            <div class="strong-label">Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the SIS Certification Guide for detailed steps on how to perform testing and certification.</div>
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section5_Subtitle1}</div>
         </td></tr>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Do you have an iiNET account?"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Do_you_have_an_iiNET_account__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Do_you_have_an_iiNET_account__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
                     <apex:selectOption itemValue="No" itemLabel="No"/>
-                    <apex:actionSupport event="onchange" rerender="section4"/>
+                    <apex:actionSupport event="onchange" rerender="section5"/>
                 </apex:selectRadio>
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
@@ -444,16 +469,13 @@
         <apex:variable value="{!newForm.Do_you_have_an_iiNET_account__c=='No'}" var="iiNET_No"/>
 
         <tr><td colspan="4">
-            <apex:outputPanel styleclass="strong-label" rendered="{!iiNET_Yes}">
-                Please provide your iiNET ID, in case you already have an existing iiNET connection
-            </apex:outputPanel>
             <apex:outputPanel styleclass="strong-label" rendered="{!iiNET_No}">
-                If you want to setup a new iiNET connection, please contact our iiNET team through our IATA Customer Portal
+                {!$Label.ISSP_SIS_Membership_ISPA_Section5_Subtitle2}
             </apex:outputPanel>
         </td></tr>
 
         <apex:pageBlockSectionItem rendered="{!iiNET_Yes}">
-            <apex:outputLabel value="iiNET Account Number"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.IINET_account_number__c.label}"/>
             <apex:inputField value="{!newForm.IINET_account_number__c}" styleclass="required" html-pattern="[A-Z]{2}[0-9]{2}" html-placeholder="Example: AA11"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem rendered="{!iiNET_Yes}">
@@ -462,62 +484,61 @@
 
     </apex:pageBlockSection>
 
-    <apex:pageBlockSection columns="1" id="section5" collapsible="false">
+    <apex:pageBlockSection columns="1" id="section6" collapsible="false">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 5 - ICH Membership
+                {!$Label.ISSP_SIS_Membership_ISPA_Section6_Title}
             </apex:outputpanel>
         </apex:facet>
 
         <apex:pageBlockSectionItem>
-            <apex:outputLabel value="Does your company want to join IATA Clearing House (ICH)?"/>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Join_ICH}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
                     <apex:selectOption itemValue="No" itemLabel="No"/>
-                    <apex:actionSupport event="onchange" rerender="section5"/>
+                    <apex:actionSupport event="onchange" rerender="section6"/>
                 </apex:selectRadio>
             </apex:actionRegion >
         </apex:pageBlockSectionItem>
 
         <tr><td colspan="4"><div class="strong-label {!IF(newForm.Is_your_company_joining_the_Clearing_Hou__c=='Yes','','hidden')}">
-            After this application is review, we will provide the set of documents needed to complete you ICH membership
+            {!$Label.ISSP_SIS_Membership_ISPA_Section6_Subtitle1}
         </div></td></tr>
         <apex:outputText ></apex:outputText>
 
     </apex:pageBlockSection>
 
-    <apex:pageBlockSection columns="2" id="section6" collapsible="false">
+    <apex:pageBlockSection columns="2" id="section7" collapsible="false">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 6 - Local Bank Mandate Form
+                {!$Label.ISSP_SIS_Membership_ISPA_Section7_Title}
             </apex:outputpanel>
         </apex:facet>
 
         <tr><td colspan="4">
             <div class="strong-label">
-            The bank details, if provided, will be stored in the member profile and will be populated on invoices issued for bilateral settlement.
-            You may also use the same account you currently have for the ICH – in this case simply tick the box below.
+            {!$Label.ISSP_SIS_Membership_ISPA_Section7_Subtitle1}
             </div>
         </td></tr>
         <apex:outputText ></apex:outputText>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Do you want to add Bank Details?"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Do_you_want_to_add_Bank_Details__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Do_you_want_to_add_Bank_Details__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
                     <apex:selectOption itemValue="No" itemLabel="No"/>
-                    <apex:actionSupport event="onchange" rerender="section6,section7"/>
+                    <apex:actionSupport event="onchange" rerender="section7,section8"/>
                 </apex:selectRadio>
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
         <apex:outputText ></apex:outputText>
 
-        <apex:variable value="{!newForm.Do_you_want_to_add_Bank_Details__c=='Yes'}" var="showSection6Yes"/>
+        <apex:variable value="{!newForm.Do_you_want_to_add_Bank_Details__c=='Yes'}" var="showSection7Yes"/>
 
-        <apex:outputPanel rendered="{!showSection6Yes}">
-            <tr><td colspan="4" class="required"><div class="strong-label">Upload File:</div></td></tr>
+        <apex:outputPanel rendered="{!showSection7Yes}">
+            <tr><td colspan="4" class="required"><div class="strong-label">{!$Label.Upload_File}</div></td></tr>
             <apex:outputText ></apex:outputText>
             <tr><td colspan="4" class="required">
                 <apex:iframe scrolling="false" height="180px"
@@ -527,96 +548,137 @@
 
     </apex:pageBlockSection>
 
-    <apex:pageBlockSection columns="1" id="section7" collapsible="false">
+    <apex:pageBlockSection columns="1" id="section8" collapsible="false">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 7 - Corporate Documents
+                {!$Label.ISSP_SIS_Membership_ISPA_Section7_Title}
             </apex:outputpanel>
         </apex:facet>
 
         <tr><td colspan="4" >
-            <div class="strong-label">Please attach a scanned copy of the following documents:</div>
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section8_Subtitle1}</div>
         </td></tr>
         <apex:outputText ></apex:outputText>
 
+        <apex:variable value="{!IF(IsValidDueDiligence,'Mandatory','Optional')}" var="mandatoryDoc"/>
+
         <apex:iframe scrolling="false" height="180px"
-            src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=0&reqRequired=Mandatory&reqName=Corporate Registration&reqDescription=&reqIdentifier=COI&onlyOne=true"/>
+            src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=0&reqRequired={!mandatoryDoc}&reqName=Corporate Registration&reqDescription=&reqIdentifier=COI&onlyOne=true"/>
 
         <apex:iframe scrolling="false" height="260px"
-            src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=1&reqRequired=Mandatory&reqName=Shareholders List&reqDescription=List of owners / shareholders including:<br/><ul><li>Number of shares issued</li><li>Percentage of ownership per shareholder</li><li>Signed by an officer of the company</li><li>Copies of the shareholders passports</li></ul>&reqIdentifier=Shareholders_List&onlyOne=true"/>
+            src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=1&reqRequired={!mandatoryDoc}&reqName=Shareholders List&reqDescription=List of owners / shareholders including:<br/><ul><li>Number of shares issued</li><li>Percentage of ownership per shareholder</li><li>Signed by an officer of the company</li><li>Copies of the shareholders passports</li></ul>&reqIdentifier=Shareholders_List&onlyOne=true"/>
 
         <apex:iframe scrolling="false" height="180px" rendered="{!newForm.Do_you_want_to_add_Bank_Details__c='Yes'}"
             src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=2&reqRequired=Mandatory&reqName=Passport Of Signatories&reqDescription=Copy of the passport of the signatories of the Bank Details form&reqIdentifier=Passport&onlyOne=true"/>
 
         <tr><td colspan="4">
             <div class="strong-label">
-                If the corporate documents are issued in any other language than French, English, Arabic, Italian, Portuguese or Spanish, please provide, in addition to the scanned copies of original documents, an official or notarized English translation of the same.
+                {!$Label.ISSP_SIS_Membership_ISPA_Section8_Subtitle2}
             </div>
         </td></tr>
         <apex:outputText ></apex:outputText>
 
     </apex:pageBlockSection>
 
-    <apex:pageBlockSection columns="1" id="section8" collapsible="false">
+    <apex:pageBlockSection columns="2" id="section9" collapsible="false">
         <apex:facet name="header">
             <apex:outputpanel >
-                Section 8 - Additional Questions
+                {!$Label.ISSP_SIS_Membership_ISPA_Section9_Title}
             </apex:outputpanel>
         </apex:facet>
 
         <tr><td colspan="4">
             <div class="strong-label">
-            EU data privacy laws (EU Standard Contractual Clauses for processing between an EU controller and non-EU processor). Only applicable to SIS participants who are subject to European data protection laws.
+            {!$Label.ISSP_SIS_Membership_ISPA_Section9_Subtitle1}
             </div>
         </td></tr>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Is your company subject to EU data privacy laws?"/>
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Is_company_subject_to_EU_laws__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Is_company_subject_to_EU_laws__c}" styleclass="radio-short required">
                     <apex:selectOption itemValue="Yes" itemLabel="Yes"/>
                     <apex:selectOption itemValue="No" itemLabel="No"/>
-                    <apex:actionSupport event="onchange" rerender="section8"/>
+                    <apex:actionSupport event="onchange" rerender="section9"/>
                 </apex:selectRadio>
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
 
-        <apex:variable value="{!newForm.Is_company_subject_to_EU_laws__c=='Yes'}" var="showSection8"/>
+        <apex:variable value="{!newForm.Is_company_subject_to_EU_laws__c=='Yes'}" var="showSection9"/>
 
-        <apex:outputPanel rendered="{!showSection8}">
-            <tr><td colspan="4" class="required"><div class="strong-label">Choose an option:</div></td></tr>
+        <tr><td colspan="4">
+            <div class="strong-label {!IF(showSection9,'','hidden')}">
+                {!$Label.ISSP_SIS_Membership_ISPA_Section9_Subtitle2}
+            </div>
+        </td></tr>
+
+        <apex:pageBlockSectionItem rendered="{!showSection9}">
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Data_Exporting_Organization_Name__c.label}" rendered="{!showSection9}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Data_Exporting_Organization_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!showSection9}"></apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!showSection9}">
+            <apex:outputLabel value="{!$Label.ISSP_Address}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Data_Exporting_Organization_Address__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!showSection9}"></apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!showSection9}">
+            <apex:outputLabel value="{!$Label.Phone}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Data_Exporting_Organization_Phone__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!showSection9}"></apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!showSection9}">
+            <apex:outputLabel value="{!$Label.ISSP_Fax}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Data_Exporting_Organization_Fax__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!showSection9}"></apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!showSection9}">
+            <apex:actionRegion>
+                <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Data_Exporter_Name__c.label}"/>&nbsp;
+                <apex:image value="/img/msg_icons/info16.png" title="{!$ObjectType.AP_Process_Form__c.fields.Data_Exporter_Name__c.InlineHelpText}"
+                styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+            </apex:actionRegion>
+            <apex:inputField styleclass="required" value="{!newForm.Data_Exporter_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!showSection9}"></apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!showSection9}">
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Name_Writte_out_in_full}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Data_Exporter_Signatory_Name__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!showSection9}"></apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!showSection9}">
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Position}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Data_Exporter_Signatory_Position__c}"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!showSection9}"></apex:pageBlockSectionItem>
+
+        <apex:outputPanel rendered="{!showSection9}">
+
+            <tr><td colspan="4" class="required"><div class="strong-label">{!$Label.ISSP_SIS_Membership_Choose_an_Option}</div></td></tr>
             <apex:outputText ></apex:outputText>
             
             <apex:actionRegion >
                 <apex:selectRadio styleClass="radio-data-privacy-laws required" layout="pageDirection" value="{!newForm.EU_Data_Privacy_Laws__c}">
-                    <apex:selectOption itemValue="A" itemLabel="OPTION A: EU Standard Contractual Clauses for processing between IATA and Participant (including the EU Standard Contractual Clauses for processing between IATA and Sub-processor. A signed copy is available upon request)."/>
-                    <apex:selectOption itemValue="B" itemLabel="OPTION B: (for use only in jurisdictions where a tripartite agreement is required): EU Standard Contractual Clauses for processing between IATA, Participant and Sub-processor."/>
-                    <apex:actionSupport event="onchange" rerender="section8"/>
+                    <apex:selectOption itemValue="A" itemLabel="{!$Label.ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA}"/>
+                    <apex:selectOption itemValue="B" itemLabel="{!$Label.ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionB}"/>
+                    <apex:actionSupport event="onchange" rerender="section9"/>
                 </apex:selectRadio>
             </apex:actionRegion>
 
+            <tr><td colspan="4" class="required">
+                <apex:outputText styleclass="strong-label"
+                    value="{!$Label.ISSP_SIS_Membership_ISPA_Section9_Subtitle3}" escape="false"
+                    rendered="{!NOT(ISNULL(newForm.EU_Data_Privacy_Laws__c))}"/>
+            </td></tr>
+            <apex:outputText ></apex:outputText>
+
         </apex:outputPanel>
-
-        <tr><td colspan="4" class="required"><div class="strong-label {!IF(ISNULL(newForm.EU_Data_Privacy_Laws__c),'hidden','')}">
-            To review the conditions of each option please click <a href="#" class="link-highlighted">here</a>
-        </div></td></tr>
-        <apex:outputText ></apex:outputText>
-
-        <tr><td colspan="4" class="required">
-            <div class="strong-label {!newForm.Is_company_subject_to_EU_laws__c=='Yes'}">
-                Please provide the below information:
-            </div>
-            Name of the data exporting organization: (free text)<br/>
-            Address:. (free text)<br/>
-            Tel.:. (free text)<br/>
-            fax:. (free text)<br/>
-            e-mail:. (free text, with  he controls of an email) <br/>
-            Data exporter name: (free text) <br/>
-            Add a question mark next to the data exporter and include the following: the data exporter’ means the controller who transfers the personal data<br/>
-            Signatory on behalf of the data exporter:<br/>
-            Name (written out in full): (free text)<br/>
-            Position: (free text)<br/>
-        </td></tr>
 
         <script>setRequired();</script>
 

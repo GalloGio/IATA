@@ -22349,6 +22349,38 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>SIS Help Desk</value>
     </labels>
     <labels>
+        <fullName>ISSP_SIS_Membership_Agreement</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Agreement</shortDescription>
+        <value>SIS Agreement:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Airline_Designator_Code</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Airline_Designator_Code</shortDescription>
+        <value>Airline Designator Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Application_no_access</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Application_no_access</shortDescription>
+        <value>You do not have access for this application created by {0}</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Application_ongoing</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Application_ongoing</shortDescription>
+        <value>Application ongoing by {0}</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SIS_Membership_Apply_Now</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
@@ -22391,6 +22423,30 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <value>As part of this service, IS accepts Usage Files (modified Record 50 file format as defined in the IS Participation guide) from billing entities requesting prorate values for coupons utilized by them. IS validates the file format and forwards the Usage File to ATPCO for further processing. The processed information is provided by ATPCO back to IS. IS forwards the output files provided by ATPCO to the billing entities.</value>
     </labels>
     <labels>
+        <fullName>ISSP_SIS_Membership_Choose_an_Option</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Choose_an_Option</shortDescription>
+        <value>Choose an option</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_City_Name</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_City_Name</shortDescription>
+        <value>City Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Continue_Draft</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Continue_Draft</shortDescription>
+        <value>Continue Draft</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SIS_Membership_Description_ISPA</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
@@ -22414,7 +22470,7 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <shortDescription>ISSP SIS Membership Description TOU</shortDescription>
         <value>Receiving only (PDF) Limited access to SIS to receive Non Transportation invoices only, free of charge</value>
     </labels>
-        <labels>
+    <labels>
         <fullName>ISSP_SIS_Membership_Digital_Signature_Application_Helptext</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
@@ -22433,12 +22489,84 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <value>SIS provides an option whereby the billed entity can request verification of the digital signature applied on Payable Invoices, via the Member Profile. A verification log file is created by this process which contains the status of the applied digital signature in the countries covered by the service.</value>
     </labels>
     <labels>
+        <fullName>ISSP_SIS_Membership_Disclaimer_BSP_CASS</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Disclaimer_BSP_CASS</shortDescription>
+        <value>Disclaimer BSP &amp; CASS Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Disclaimer_Line1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Disclaimer_Line1</shortDescription>
+        <value>By submitting the present application form to IATA, I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in Aruba and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Disclaimer_Line2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Disclaimer_Line2</shortDescription>
+        <value>I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the ISS Participant, and that I am fully authorized to bind the ISS Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Disclaimer_Line3</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Disclaimer_Line3</shortDescription>
+        <value>I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Disclaimer_Line4</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Disclaimer_Line4</shortDescription>
+        <value>By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Download_PDF</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Download_PDF</shortDescription>
+        <value>download a PDF version of the Membership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA</shortDescription>
+        <value>OPTION A: EU Standard Contractual Clauses for processing between IATA and Participant (including the EU Standard Contractual Clauses for processing between IATA and Sub-processor. A signed copy is available upon request).</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionB</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionB</shortDescription>
+        <value>OPTION B: (for use only in jurisdictions where a tripartite agreement is required): EU Standard Contractual Clauses for processing between IATA, Participant and Sub-processor.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SIS_Membership_Features</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Features</shortDescription>
         <value>Features</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Fill_The_Form</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Fill_The_Form</shortDescription>
+        <value>Fill the Form</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_FormDescription</fullName>
@@ -22449,12 +22577,581 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <value>Download the PDF form and upload a signed version</value>
     </labels>
     <labels>
+        <fullName>ISSP_SIS_Membership_Head_Office_City_Name</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Head_Office_City_Name</shortDescription>
+        <value>Head Office City Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Head_Office_Country</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Head_Office_Country</shortDescription>
+        <value>Head Office Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Head_Office_Postal_Code</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Head_Office_Postal_Code</shortDescription>
+        <value>Head Office Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Head_Office_State_Name</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Head_Office_State_Name</shortDescription>
+        <value>Head Office State Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Head_Office_Street</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Head_Office_Street</shortDescription>
+        <value>Head Office Street</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section1_CopyButton</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section1_CopyButton</shortDescription>
+        <value>Copy Airline Head Office information »</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section1_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section1_Subtitle1</shortDescription>
+        <value>Airline Head Office Information:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section1_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section1_Subtitle2</shortDescription>
+        <value>Airline Information to be included in the invoices produced by SIS:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section1_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section1_Title</shortDescription>
+        <value>Section 1 - Company Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section2_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section2_Subtitle1</shortDescription>
+        <value>Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section2_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section2_Title</shortDescription>
+        <value>Section 2 - Contact Person</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section3_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section3_Subtitle1</shortDescription>
+        <value>The super user will be granted administrator access rights associated to their company’s SIS access for all billing category MISC. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section3_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section3_Subtitle2</shortDescription>
+        <value>After your company is activated in SIS if you want to change the Super User please log a query in our IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section3_Subtitle3</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section3_Subtitle3</shortDescription>
+        <value>SIS Participant must provide the following details with regards to the Member Super User for their company. Once this form is provided and the membership process completed, the super user will receive their access to SIS.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section3_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section3_Title</shortDescription>
+        <value>Section 3 - Super User Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section4_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section4_Subtitle1</shortDescription>
+        <value>A&amp;A stands for ATPCO and ARC. A&amp;A is the organization formed by ATPCO and ARC to support the First &amp; Final™ process.Please note that the optional services have a cost associated to each one of them, to consult the price please click here.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section4_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section4_Title</shortDescription>
+        <value>Section 4 - Optional Services</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section5_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Subtitle1</shortDescription>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the SIS Certification Guide for detailed steps on how to perform testing and certification.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</shortDescription>
+        <value>If you want to setup a new iiNET connection, please contact our iiNET team through our IATA Customer Portal</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section5_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Title</shortDescription>
+        <value>Section 5 - iiNET</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</shortDescription>
+        <value>After this application is review, we will provide the set of documents needed to complete you ICH membership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section6_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section6_Title</shortDescription>
+        <value>Section 6 - ICH Membership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section7_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section7_Subtitle1</shortDescription>
+        <value>The bank details, if provided, will be stored in the member profile and will be populated on invoices issued for bilateral settlement.
+You may also use the same account you currently have for the ICH – in this case simply tick the box below.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section7_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section7_Title</shortDescription>
+        <value>Section 7 - Local Bank Mandate Form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section8_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section8_Subtitle1</shortDescription>
+        <value>Please attach a scanned copy of the following documents:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section8_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section8_Subtitle2</shortDescription>
+        <value>If the corporate documents are issued in any other language than French, English, Arabic, Italian, Portuguese or Spanish, please provide, in addition to the scanned copies of original documents, an official or notarized English translation of the same.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section8_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section8_Title</shortDescription>
+        <value>Section 8 - Corporate Documents</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section9_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section9_Subtitle1</shortDescription>
+        <value>EU data privacy laws (EU Standard Contractual Clauses for processing between an EU controller and non-EU processor). Only applicable to SIS participants who are subject to European data protection laws.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section9_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section9_Subtitle2</shortDescription>
+        <value>Please provide the below information:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section9_Subtitle3</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section9_Subtitle3</shortDescription>
+        <value>To review the conditions of each option please click &lt;a href=&quot;#&quot; class=&quot;link-highlighted&quot;&gt;here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section9_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section9_Title</shortDescription>
+        <value>Section 9 - Additional Questions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section1_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section1_Subtitle1</shortDescription>
+        <value>Company Information to be included in the invoices produced by SIS:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section1_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section1_Title</shortDescription>
+        <value>Section 1 - Company Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section2_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section2_Subtitle1</shortDescription>
+        <value>Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section2_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section2_Title</shortDescription>
+        <value>Section 2 - Contact Person</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section3_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section3_Subtitle1</shortDescription>
+        <value>The super user will be granted administrator access rights associated to their company’s SIS access for all billing category MISC. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web.&lt;br/&gt;After your company is activated in SIS if you want to change the Super User please log a query in our IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section3_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section3_Title</shortDescription>
+        <value>Section 3 - Super User Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section4_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Subtitle1</shortDescription>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the SIS Certification Guide for detailed steps on how to perform testing and certification.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</shortDescription>
+        <value>If you want to setup a new iiNET connection, please contact our iiNET team through our IATA Customer Portal</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section4_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Title</shortDescription>
+        <value>Section 4 - iiNET</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section5_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section5_Subtitle1</shortDescription>
+        <value>Please note that the optional services have a cost associated to each one of them, to consult the price please click here</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section5_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section5_Title</shortDescription>
+        <value>Section 5 - Optional Services</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section6_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section6_Subtitle1</shortDescription>
+        <value>After this application is review, we will provide the set of documents needed to complete you ICH membership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section6_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section6_Title</shortDescription>
+        <value>Section 6 - ICH Membership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section7_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section7_Subtitle1</shortDescription>
+        <value>The bank details, if provided, will be stored in the member profile and will be populated on invoices issued for bilateral settlement.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section7_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section7_Title</shortDescription>
+        <value>Section 7 - Local Bank Mandate Form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section8_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section8_Subtitle1</shortDescription>
+        <value>Please attach a scanned copy of the following documents:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section8_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section8_Subtitle2</shortDescription>
+        <value>If the corporate documents are issued in any other language than French, English, Arabic, Italian, Portuguese or Spanish, please provide, in addition to the scanned copies of original documents, an official or notarized English translation of the same.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section8_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section8_Title</shortDescription>
+        <value>Section 8 - Corporate Documents</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Incorporated_Under_Laws</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Incorporated_Under_Laws</shortDescription>
+        <value>Incorporated under the laws of (Country)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Join_ICH</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Join_ICH</shortDescription>
+        <value>Does your company want to join IATA Clearing House (ICH)?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SIS_Membership_Legal_Archiving_Helptext</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Legal Archiving Helptext</shortDescription>
         <value>Some jurisdictions may require legal storage for the digitally signed invoices for varying amounts of time. During this period, the invoices and any applicable digital signature need to be accessible for any audits. To address this issue, SIS will provide an optional Legal Archiving service to store the digitally signed invoices and other related information on behalf of the Participant in an external Legal archive for a longer period as required by the local regulations.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Legal_Name_Of_The_Company</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Legal_Name_Of_The_Company</shortDescription>
+        <value>Legal Name of the Company</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Legal_Name_of_the_Airline</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Legal_Name_of_the_Airline</shortDescription>
+        <value>Legal Name of the Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Missing_Input_File</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Missing_Input_File</shortDescription>
+        <value>Missing input file</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Name_Writte_out_in_full</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Name_Writte_out_in_full</shortDescription>
+        <value>Name (written out in full)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Only_One_File</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Only_One_File</shortDescription>
+        <value>Only one file allowed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Originals_To_IATA</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Originals_To_IATA</shortDescription>
+        <value>Originals should be sent to IATA Madrid office to the following address, but only after the approval of IATA:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Participation_Agreement</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Participation_Agreement</shortDescription>
+        <value>SIS Participation Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Position</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Position</shortDescription>
+        <value>Position</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Put_a_valid_email</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Put_a_valid_email</shortDescription>
+        <value>Put a valid email</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Requirements</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Requirements</shortDescription>
+        <value>REQUIREMENTS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Review_Country_Req</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Review_Country_Req</shortDescription>
+        <value>Review Country Requirements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Save_Draft_And_Leave</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Save_Draft_And_Leave</shortDescription>
+        <value>Save Draft and Leave</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_State_Name</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_State_Name</shortDescription>
+        <value>State Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Submit_To_IATA</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Submit_To_IATA</shortDescription>
+        <value>Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Subtitle</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Subtitle</shortDescription>
+        <value>ISSP SIS Membership  Subtitle</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_TOU_Section1_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_TOU_Section1_Subtitle1</shortDescription>
+        <value>Airline Head Office Information:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_TOU_Section1_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_TOU_Section1_Subtitle2</shortDescription>
+        <value>Airline Information to be included in the invoices produced by SIS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_TOU_Section1_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_TOU_Section1_Title</shortDescription>
+        <value>Section 1 - Company Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_TOU_Section2_Title</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_TOU_Section2_Title</shortDescription>
+        <value>Section 2 - Contact Person</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Terms_Disclaimer</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Terms_Disclaimer</shortDescription>
+        <value>Terms &amp; Disclaimer</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Title</fullName>
@@ -22487,6 +23184,54 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Title TOU</shortDescription>
         <value>TOU  - Terms Of Use</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Trade_Name</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Trade_Name</shortDescription>
+        <value>Trade Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Type_Not_Valid</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Type_Not_Valid</shortDescription>
+        <value>SIS membership type not valid</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_View_My_Application</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_View_My_Application</shortDescription>
+        <value>View My Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Who_requested_to_join_TOU</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Who_requested_to_join_TOU</shortDescription>
+        <value>Who requested your Company to join SIS as TOU?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_Your_Current</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Your_Current</shortDescription>
+        <value>Your Current Membership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_no_services</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_no_services</shortDescription>
+        <value>No Services available</value>
     </labels>
     <labels>
         <fullName>ISSP_Salutation</fullName>

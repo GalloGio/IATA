@@ -151,13 +151,18 @@
         font-size: 13px;
         width: 98%;
         padding: 10px;
-        text-align: center;
         font-weight:700;
     }
-
+    #form-container .blue-label-title{
+        color: rgb(32, 107, 164);
+        font-weight:700;
+    }
+    #form-container .blue-label-text{
+        font-weight:300;
+    }
     .link-highlighted {
         text-decoration: underline;
-        color: rgb(1,91,167) !important;
+        color: rgb(32, 107, 164) !important;
     }
 
     #table-requirements th>div  {
@@ -176,7 +181,7 @@
         border-bottom: 2px solid rgb(221, 221, 221);
     }
 </style>
-    
+
     <c:ISSP_Header ></c:ISSP_Header>
     
     <c:ISSP_WaitingStatus />
@@ -209,10 +214,10 @@
 
                         <apex:pageBlockButtons location="bottom">
                             <apex:outputPanel layout="none">
-                                <apex:commandButton action="{!saveFormAndGoBack}" status="WaitingStatus" value="Previous" rendered="{!OR(currentStep==1,currentStep==2,currentStep==3)}" html-novalidate="" html-formnovalidate=""/>
-                                <apex:commandButton action="{!saveFormAndGoForward}" status="WaitingStatus" value="Next" rendered="{!OR(currentStep==1,currentStep==2)}"/>
-                                <apex:commandButton action="{!submitForm}" status="WaitingStatus" value="Submit" rendered="{!currentStep==3}"/>
-                                <apex:commandButton action="{!saveFormAndLeave}" status="WaitingStatus" value="Save Draft and Leave" styleclass="pull-right" rendered="{!OR(currentStep==1,currentStep==2,currentStep==3)}" html-novalidate="" html-formnovalidate=""/>
+                                <apex:commandButton action="{!saveFormAndGoBack}" status="WaitingStatus" value="{!$Label.ISSP_Previous}" rendered="{!OR(currentStep==1,currentStep==2,currentStep==3)}" html-novalidate="" html-formnovalidate=""/>
+                                <apex:commandButton action="{!saveFormAndGoForward}" status="WaitingStatus" value="{!$Label.ISSP_Next}" rendered="{!OR(currentStep==1,currentStep==2)}"/>
+                                <apex:commandButton action="{!submitForm}" status="WaitingStatus" value="{!$Label.ISSP_Submit}" rendered="{!currentStep==3}"/>
+                                <apex:commandButton action="{!saveFormAndLeave}" status="WaitingStatus" value="{!$Label.ISSP_SIS_Membership_Save_Draft_And_Leave}" styleclass="pull-right" rendered="{!OR(currentStep==1,currentStep==2,currentStep==3)}" html-novalidate="" html-formnovalidate=""/>
                             </apex:outputPanel>
                         </apex:pageBlockButtons>
 
@@ -224,7 +229,7 @@
                                 <thead>
                                     <tr>
                                         <th><div style="width:40px; height:2em;"></div></th>
-                                        <th><div>REQUIREMENTS</div></th>
+                                        <th><div>{!$Label.ISSP_SIS_Membership_Requirements}</div></th>
                                     </tr>
                                 </thead>
                                 <tbody>

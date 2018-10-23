@@ -10,15 +10,17 @@
         @page {
             margin-top: 3.5cm;
             margin-bottom: 2cm;
-            margin-left: 0.5cm;
-            margin-right: 0.5cm;
+            margin-left: 1.5cm;
+            margin-right: 1.5cm;
             @top-center {content: element(header);}
-            @bottom-left {content: element(footer);font-size: 80%;}
+            @bottom-center {content: element(footer);}
         }
 
         body {
             font-family: 'Arial Unicode MS';
-            font-size: 13px
+            font-size: 11px;
+            text-align: justify;
+            text-justify: inter-word;
         }
 
         div.header {padding: 10px;position: running(header);}
@@ -60,50 +62,141 @@
             font-weight: bold;
             border: 10px solid white;
         }
-
-    </style>
+        .bold {
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+        .underline {
+            text-decoration: underline;
+        }
+        .italic {
+            font-style: italic;
+        }
+        .justify {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .align-left{
+            text-align: left;
+        }
+        .grey-box{
+            background-color: lightgrey;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid black;
+            width: 200px;
+        }
+        .margin-3 {
+            margin-left: 3em;
+        }
+        .margin-4 {
+            margin-left: 4em;
+        }
+        .margin-6 {
+            margin-left: 6em;
+        }
+        .margin-9 {
+            margin-left: 9em;
+        }
+        .indent-1_5 {
+            text-indent: -1.5em;
+        }
+        .indent-2 {
+            text-indent: -2em;
+        }
+        .indent-2_5 {
+            text-indent: -2.5em;
+        }
+        .indent-3 {
+            text-indent: -3em;
+        }
+        .no-page-break {
+            page-break-inside: avoid;
+        }
+        .new-line {
+            page-break-before: always;
+        }
+        /** Styles for the table of contents**/
+        .table-contents {
+          width: 100%;
+        }
+        .table-contents table {
+          width: 80%;
+          margin-left: 10%;
+          margin-right: 10%;
+        }
+        .table-contents table tr td {
+          overflow: hidden;
+          white-space: nowrap;
+        }
+        .table-contents table tr td:nth-child(1) {
+          width: 4em;
+        }
+        .table-contents table tr td:nth-child(2) {
+          width: 35em;
+        }
+        .table-contents table tr td:nth-child(3) {
+          width: 4em;
+        }
+        .table-contents span:after {
+          content: " ........................................................................................................................................";
+        }
+        /** Styles for a regular table with headers**/
+        .regular-table {
+          width: 100%;
+        }
+        .regular-table table {
+          border-collapse: collapse;
+        }
+        .regular-table table,
+        .regular-table tr,
+        .regular-table td,
+        .regular-table th {
+          border: 1px solid black;
+        }
+        .regular-table-center table,
+        .regular-table-center tr,
+        .regular-table-center td,
+        .regular-table-center th {
+          text-align: center;
+        }
+        .regular-table-height-2_5 tr {
+          height: 2.5em;
+        }
+        .regular-table th {
+          font-weight: bold;
+          font-family: sans-serif;
+        }
+        .regular-table table tr th:nth-child(1),
+        .regular-table table tr td:nth-child(1) {
+          width: 10em;
+          font-weight: bold;
+          font-family: sans-serif;
+        }
+</style>
 </head>
 
 <body>
 
-    <div class="header">
-        <div><apex:image width="768" height="90" value="{!URLFOR($Resource.AP_PDF_Header)}"/></div>
+    <div class="header" style="border-bottom: 1px solid black; height: 30px;">
+        <div>
+            <div style="float: left; width: 20%;">
+                <apex:image width="54" height="36" value="{!URLFOR($Resource.IATAQuoteLogo)}"/>
+            </div>
+            <div style="float: right; width: 80%; text-align: right; font-size: 16px;">
+                SIS - Simplified Invoicing and Settlement
+            </div>
+        </div>
     </div>
 
-    <center>
-        <h2 class="panel-title"><apex:outputText escape="false" value=""/>{!$Label.ISSP_SIS_Membership_Title}</h2>
-        <h3 class="panel-title">{!$Label[sisType.MasterLabel]}</h3>
-    </center>
-
     <div class="footer">
-        <table border="0" width="100%">
-            <tr>
-                <td width="33%" align="left">
-                    {!DAY(TODAY())}&nbsp;
-                    {!CASE(MONTH(TODAY()),
-                    1, "January",
-                    2, "February",
-                    3, "March",
-                    4, "April",
-                    5, "May",
-                    6, "June",
-                    7, "July",
-                    8, "August",
-                    9, "September",
-                    10, "October",
-                    11, "November",
-                    12, "December",
-                    "None")}&nbsp;{!YEAR(TODAY())}
-                </td>
-                <td width="33%" align="center">
-                    <a href="http://www.iata.org">www.iata.org</a>
-                </td>
-                <td width="33%" align="right">
-                    <apex:outputText value="{!$Label.ISSP_AMS_PDF_Initials_Here}"/><br/>
-                    <apex:outputText value="{!$Label.ISSP_AMS_PDF_Page}"/> <span class="pagenumber"/> of <span class="pagecount"/>
-                </td>
-            </tr>
-        </table>
+        <hr />
+        <div style="float: left; width: 80%;">
+            Standard Participation Agreement for SIS e-Invoicing Services – Invoice Receiver (October 2018)
+        </div>
+        <div style="float: right; width: 20%; text-align: right;">
+            <apex:outputText value="{!$Label.ISSP_AMS_PDF_Page}"/> <span class="pagenumber"/> OF <span class="pagecount"/>
+        </div>
     </div>
 
     <apex:pageBlock id="main-block">

@@ -33,7 +33,7 @@
                                     <apex:variable var="showUploadButton" value="{!OR(NOT(onlyOne),AND(onlyOne,countFiles=0))}"/>
 
                                     <script>
-                                        if ({!countFiles}==0) {
+                                        if ({!countFiles}==0 && {!reqRequired=='Mandatory'}) {
                                             $("div.well").addClass("empty-list");
                                         } else {
                                             $("div.well").removeClass("empty-list");
