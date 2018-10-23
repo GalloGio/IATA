@@ -20,7 +20,7 @@ public class ISSP_ExternalReportHandler {
 
     private static void setExternalRecordSharing(ISSP_External_Report__c er) {
     	//Handling sharing settings for Contacts related to the givin Account
-        List<Contact> SharingContacts_List = new List<Contact>([select Id , Name , AccountID From Contact Where AccountId = :er.Account__c OR Account.Top_Parent__c = :er.Report_ID__c]);
+        List<Contact> SharingContacts_List = new List<Contact>([select Id , Name , AccountID From Contact Where AccountId = :er.Account__c OR Account.Top_Parent__c = :er.Account__c]);
 
         if (!SharingContacts_List.isEmpty()) {
                 

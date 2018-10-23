@@ -32,23 +32,22 @@ public with sharing class ISSP_TIP_External_Reports_Controller {
                         return pr;
                     }
                 }
-                else{
+                else {
                     return pr;
                 }
             }
-            else{
+            else {
                 return pr;
             }
         }
-        else{
+        else {
             return pr;
         }
+
 
 		externalReportsListAux = new List<ISSP_External_Report__c>();
 		externalReportsList = new List<ISSP_External_Report__c>();
 
-		//List<User> userList = [SELECT Id, ContactId FROM User WHERE Id = :Userinfo.getUserId()];
-		//Id contactId = userList.isEmpty() ? null : userList[0].ContactId;
 		Id accountId;
 
 		List<Contact> contactList = [SELECT Id,
@@ -60,11 +59,7 @@ public with sharing class ISSP_TIP_External_Reports_Controller {
 		Contact contact = contactList.isEmpty() ? null : contactList[0];
 
 		if(contact != null) {
-			if(contact.Account.Top_Parent__c != null) {
-				accountId = contact.Account.Top_Parent__c;
-			} else {
-				accountId = contact.Account.Id;
-			}
+			accountId = (contact.Account.Top_Parent__c != null) ? contact.Account.Top_Parent__c : contact.Account.Id;
 		}
 
 		externalReportsListAux = [SELECT Id, CreatedDate
