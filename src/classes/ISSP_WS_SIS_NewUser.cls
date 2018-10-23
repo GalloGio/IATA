@@ -88,7 +88,7 @@ global with sharing class ISSP_WS_SIS_NewUser {
         Boolean isCNS = false;
         
         // Search for parent Account
-        list<Account> listAccount = [SELECT Id, SIS_ID__c, Account.RecordType.DeveloperName FROM Account WHERE SIS_Id__c = :inputData.SISMemberID];
+        list<Account> listAccount = [SELECT Id, SIS_ID__c, Top_Parent__c, Account.RecordType.DeveloperName FROM Account WHERE SIS_Id__c = :inputData.SISMemberID];
         if (listAccount.isEmpty()) {
             throw new ISSP_WS_SIS_Common.WSException('018', '');
         }
@@ -109,7 +109,8 @@ global with sharing class ISSP_WS_SIS_NewUser {
                 Contact.SIS_Contact_Type__c,
                 Contact.SIS_ID__c,
                 Contact.Community__c,
-                Contact.Account.SIS_ID__c
+                Contact.Account.SIS_ID__c,
+                Contact.Account.Top_Parent__c
             FROM User
             WHERE Email =: inputData.EmailAddress
             AND UserType = 'PowerPartner'
@@ -132,7 +133,7 @@ global with sharing class ISSP_WS_SIS_NewUser {
             List <Contact> listContact = [SELECT Id, Email, AccountId, Account.RecordType.DeveloperName,
                                             User_Portal_Status__c, Status__c, FirstName, LastName, Community__c,
                                             Preferred_Language__c, Salutation, SIS_Contact_Type__c, SIS_ID__c,
-                                            Account.SIS_ID__c
+                                            Account.SIS_ID__c, Account.Top_Parent__c
                                         FROM Contact
                                         WHERE Email = :inputData.EmailAddress];
             
