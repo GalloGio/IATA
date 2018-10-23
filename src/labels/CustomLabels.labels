@@ -2543,6 +2543,13 @@ Payment required on receipt of this Payment Advice
         <value>View all</value>
     </labels>
     <labels>
+        <fullName>BuyNow</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BuyNow</shortDescription>
+        <value>Buy now</value>
+    </labels>
+    <labels>
         <fullName>CASSLink_Description</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
