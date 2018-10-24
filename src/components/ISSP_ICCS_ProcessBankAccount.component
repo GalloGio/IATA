@@ -77,8 +77,8 @@
 									</apex:outputPanel>
 								</apex:outputPanel>
 
-								<apex:outputLabel value="{! $Label.ICCS_Additional_Codes_Number} (*)" rendered="{! bankAccountOperation == 'Update' && selectedReason == 'Add Bank Account Codes'}"/>
-								<apex:outputPanel rendered="{! bankAccountOperation == 'Update' && selectedReason == 'Add Bank Account Codes'}">
+								<apex:outputLabel value="{! $Label.ICCS_Additional_Codes_Number} (*)" rendered="{! bankAccountOperation == 'Update' && selectedReason == 'Clone Bank Account'}"/>
+								<apex:outputPanel rendered="{! bankAccountOperation == 'Update' && selectedReason == 'Clone Bank Account'}">
 									<apex:inputText value="{! additionalBankAccountCodes}"/>
 									<apex:outputPanel styleClass="error-msg" rendered="{! caseProcessesController.displayMessages['codeNumberNull']}">
 										<apex:outputText value="{! $Label.ICCS_Additional_Codes_Number + ' ' + $Label.ICCS_Is_Mandatory}" escape="false"/>
