@@ -1130,13 +1130,13 @@
         Contact c = new Contact(FirstName= 'test', LastName= 'contact', Email= 'test.owner@contact.com');
         insert c;
 
-        ID changeRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
+        ID changeRT = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = aHo.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
         
         insert oscar;
          
-        Id oscarCommRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+        Id oscarCommRecordTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId(); 
 
         Case newCase = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
         
