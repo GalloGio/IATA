@@ -30,7 +30,7 @@
         <name>Step_1</name>
     </approvalStep>
     <description>Used for Airline Coding Application process approval</description>
-    <emailTemplate>unfiled$public/Airline_Coding_Application_Assignment</emailTemplate>
+    <emailTemplate>All/Airline_Coding_Application_Assignment</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>

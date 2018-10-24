@@ -175,8 +175,21 @@ public without sharing class ISSP_Case {
             }else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Reason1__c == 'Annual revalidation' && newCase.Owner.Name.startsWith('Annual Revalidation')){
                 PageReference pr = new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + caseId);
                 return pr;
+            } else if (newCase.RecordType.Name == 'OSCAR Communication' && newCase.Owner.Name.startsWith('Model A Onboarding')) {
+                return new PageReference('/ISSP_ModelA_Onboarding?caseId=' + caseId);
             }
 
+            // If Case is an ICCS Case, redirect to ICCS Service
+			Set<String> recordTypesSet = new Set<String>{
+				'FDS ASP Management',
+				'FDS ICCS Bank Account Management',
+				'FDS ICCS Membership Management',
+				'FDS ICCS Product Management'
+			};
+			if(newCase.Origin == 'Portal' && recordTypesSet.contains(newCase.RecordType.Name)){
+                PageReference pr = new PageReference('/ISSP_ICCS_Service?caseId=' + caseId);
+                return pr;
+			}
             showAlertMessage();
 
         }
@@ -351,7 +364,7 @@ public without sharing class ISSP_Case {
         String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
         //Verify if user is a PWC profile
         if (profileName.startsWith('ISS Portal PwC')) {  isPWCProfile = true; }
-        if (profileName.startsWith('ISS Portal DPC') ) {  isDPCUser = true; }
+        if (profileName.startsWith('ISS Portal DPC Admin') ) {  isDPCUser = true; }
         if (profileName.startsWith('ISS Portal Agency') ) {  isAgencyUser = true; }
         if (profileName.startsWith('ISS Portal GSA') ) {  isGSAUser = true; }
 
@@ -381,11 +394,12 @@ public without sharing class ISSP_Case {
                 isEditMode = true;
 
 
-            //Survey Handle
+            //Survey Handle 
             mySurveyCompletedVariable  = false ;
+            //RN-INC428791 - remove live agent chat rt
             List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
                     FROM Instant_Surveys__c
-                    WHERE Relationship_to_Case__c = :newCase.Id]);
+                    WHERE Relationship_to_Case__c = :newCase.Id and recordType.developername != 'Live_Agent_Chat']);
             if (Survey_List != null && Survey_List.size() > 0) {
                 mySurveyCompletedVariable = true ;
             }
@@ -423,7 +437,7 @@ public without sharing class ISSP_Case {
                 }
 
                 system.debug('status: ' + newCase.Status);
-                if (newCase.Status == 'Draft' || newCase.Status == 'Open - EDMC' || newCase.Status == 'Pending customer') {
+                if (newCase.Status == 'Draft' || newCase.Status == 'Open - EDMC' || newCase.Status == 'Return application to customer') {
                     List <AP_Process_Form__c> apList = [SELECT Id FROM AP_Process_Form__c WHERE Case__c = :caseId];
 
                     system.debug('apList: ' + apList);

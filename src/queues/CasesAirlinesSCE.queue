@@ -2,7 +2,7 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
-    <name>Cases - Airlines SCE</name>
+    <name>Cases - Airlines GCS MAD</name>
     <queueMembers>
         <publicGroups>
             <publicGroup>HUBMadrid</publicGroup>

@@ -112,7 +112,7 @@
         <label>Reason</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -373,7 +373,7 @@
         <externalId>false</externalId>
         <label>ICCS Currency Center Current Visit</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -383,7 +383,7 @@
         <externalId>false</externalId>
         <label>ICCS Currency Center Previous Visit</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -459,6 +459,18 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>New_Role_Requested__c</fullName>
+        <description>When the portal user has a role in the service and requests another role, this field is used to store the requested role</description>
+        <externalId>false</externalId>
+        <label>New Role Requested</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Notification_Template__c</fullName>
         <externalId>false</externalId>
         <label>Notification Template</label>
@@ -525,7 +537,8 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
 &quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
-&quot;RHC Information&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;ICCS&quot;, &quot;ICCS&quot;,
 Application_Name__c
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>
@@ -678,6 +691,19 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Top_Account__c</fullName>
+        <description>Id of the Top Account in the account hierarchy.</description>
+        <externalId>false</externalId>
+        <formula>IF(Contact__r.Account.Top_Parent__r.Id  &lt;&gt;  null, CASESAFEID(Contact__r.Account.Top_Parent__r.Id), CASESAFEID(Account__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Top Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>allowAssignFinContactFlowChange__c</fullName>
@@ -1008,6 +1034,25 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <errorMessage>The user&apos;s portal status must be validated before granting access to any application.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Internal_grant_access_by_accred_type</fullName>
+        <active>true</active>
+        <description>Services with the field ANG_Restrict_internal_selection__c = true can&apos;t be added or modified.</description>
+        <errorConditionFormula>AND(
+Portal_Application__r.ANG_Lock_access_to_accreditation_type__c,
+Text(Right__c) = &apos;Access Granted&apos;,
+NOT(CONTAINS(
+(
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Cash&apos;),&apos;Cash&apos;,NULL)+
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Cashless&apos;),&apos;Cashless&apos;,NULL)+
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Multicountry&apos;),&apos;Multicountry&apos;,NULL)
+), 
+TEXT(Contact__r.Account.ANG_Accreditation_Model__c)
+)),
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
+)</errorConditionFormula>
+        <errorMessage>Access cannot be granted since the Agency&apos;s accreditation type for this contact does not match the portal service (Restrict by Accreditation Type).</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>MR_cannot_be_approved_by_admin</fullName>
         <active>false</active>
         <errorConditionFormula>AND( 
@@ -1035,6 +1080,23 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
         <errorConditionFormula>$User.ProfileId = &apos;00ew0000001QRzC&apos; &amp;&amp; Portal_Application__r.Name = &apos;IFAP&apos; &amp;&amp; (allowAssignFinContactFlowChange__c = False) &amp;&amp;  ISCHANGED(Right__c) &amp;&amp; NOT(ISPICKVAL(PRIORVALUE(Right__c), &apos;Access Requested&apos;)) &amp;&amp; ISPICKVAL(Right__c, &apos;Access Denied&apos;)</errorConditionFormula>
         <errorDisplayField>Right__c</errorDisplayField>
         <errorMessage>Please click on &apos;Cancel&apos; and use the &apos;Assign Financial Assessment Contact&apos; button on the Contact in order to Grant or Deny IFAP access.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Restrict_Access_For_Payment_Providers</fullName>
+        <active>true</active>
+        <description>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</description>
+        <errorConditionFormula>AND( 
+Portal_Application__r.Name = &apos;Transparency in Payments (TIP)&apos;, 
+OR(Text(Right__c) = &apos;Access Granted&apos;, Text(Right__c) = &apos;Access Requested&apos;), 
+NOT(INCLUDES(Contact__r.Account.Account_Role__c,&apos;Payment Provider&apos;)), 
+AND( 
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;ISS&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;IATA Portal&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;identity&apos;)) 
+) 
+)</errorConditionFormula>
+        <errorMessage>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Restrict_IEP_request</fullName>

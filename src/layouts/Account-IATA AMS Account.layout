@@ -52,9 +52,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -232,6 +229,10 @@
                 <behavior>Edit</behavior>
                 <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Account_Role__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -323,6 +324,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Agent_Type_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Covered_Ownership__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -746,6 +751,7 @@
         <fields>Type__c</fields>
         <fields>LAST_UPDATE</fields>
         <fields>CREATED_DATE</fields>
+        <fields>Active__c</fields>
         <relatedList>Location__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
@@ -1002,6 +1008,15 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>ISSP_Web_Service_Log__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Provider_Code__c</fields>
+        <fields>Status__c</fields>
+        <fields>Effective_From_Date__c</fields>
+        <fields>Effective_To_Date__c</fields>
+        <relatedList>Account_Role__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

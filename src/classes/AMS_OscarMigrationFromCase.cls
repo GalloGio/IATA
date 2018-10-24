@@ -78,7 +78,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 			isFromPortal = true;
 		}
 
-        List<Case> caseList = Database.query('SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id, Account_Concerned__c ' + caseFieldsStr + toMigrateFields + ' , Account.IATACode__c ,  Contact.Email, ContactId, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c FROM CASE WHERE Id = :caseId');
+        List<Case> caseList = Database.query('SELECT Id, CaseNumber, account.ANG_FA_Opt_out__c, OSCAR__c , OSCAR__r.Id, Account_Concerned__c ' + caseFieldsStr + toMigrateFields + ' , Account.IATACode__c ,  Contact.Email, ContactId, Account.Category__c,Account.Location_Class__c,Account.Location_Type__c, Account.ANG_IsNewGenAgency__c, Account.Name, Account.Parent.Remittance_frequency__c, Account.Parent.ANG_Accreditation_Model__c, Account.Company_Type__c, Account.TradeName__c, Account.ParentId FROM CASE WHERE Id = :caseId');
 
 		if(caseList.isEmpty()){
 	        oscarId = '';
@@ -119,7 +119,9 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
 		System.debug('Starting SAAM case migration for case ' + caseToMigrate.Id + ' with comingFromPortal=' + isFromPortal);
 
+        AMS_OscarMigrationFromCase.changeSubject = true;
 		container = AMS_MigrationToolHelper.migratecases(container,processType);
+        AMS_OscarMigrationFromCase.changeSubject = false;
 
 		changeSubject = true;
 
@@ -143,6 +145,13 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
             }
         }
         ////
+
+        /*** AMSU-174 ***/
+        if (processType == AMS_Utils.new_TIDS) {
+            container.c.CaseArea__c = 'Accreditation Products';
+            container.c.Reason1__c = 'New TIDS';
+            update container.c;
+        }
 
 		if((container.errorMessage != null && container.errorMessage != '') || (childCaseCreationResult.get('errorMessage') != null && childCaseCreationResult.get('errorMessage') != '')){
 	        

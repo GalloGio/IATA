@@ -188,6 +188,10 @@ $(".topmenu").hover(function(){
       .panel-primary{
       min-height:314px;
       }
+      
+       .bankDetails {
+        	min-height: 142px;
+      	}
       }
 
    body{
@@ -604,7 +608,8 @@ background-color:#428bca;
             </li>
 
           <li class="topmenu">
-            <a href="/ISSP_CaseList?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M4S3&amp;admin=true{!if(communityName=='CNS','&CommunityName='+communityName,'')}" data-target="#four" id="M4" style="display:{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC' || $Profile.Name == 'ISS Portal PwC2',"","none")   }"><span class="glyphicon glyphicon-wrench"></span> {!$Label.ISSP_Company_Administration}</a>
+            <a href="/ISSP_CaseList?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M4S3&amp;admin=true
+            {!if(communityName=='CNS','&CommunityName='+communityName,'')}" data-target="#four" id="M4" style="display:{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC Admin' || $Profile.Name == 'ISS Portal PwC2',"","none")   }"><span class="glyphicon glyphicon-wrench"></span> {!$Label.ISSP_Company_Administration}</a>
             </li>
 
         <li>
@@ -696,6 +701,7 @@ background-color:#428bca;
      <li><a href="/faq_home?MainNav=resources&subNav=faq&mid=M2S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S1">{!$Label.PKB2_Category_Group_Label_1}</a></li>
       <li><a href="/ISSP_ContentPage?MainNav=resources&subNav=Contentpage&mid=M2S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S2"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Documents}<span class="sr-only">(current)</span></a></li>
       <li class="{!IF(countryRequirementPermission,'','hide')}"  ><a href="/ISSP_Country_Requirements?MainNav=resources&subNav=CountryRequirements&mid=M2S3{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S3">{!$Label.ISSP_Country_Requirements}<span class="sr-only"></span></a></li>
+      <li class="{!IF(operationalCalendarPermission,'','hide')}"  ><a href="/ISSP_OperationalCalendar?MainNav=resources&subNav=OperationalCalendar&mid=M2S4{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S4">{!$Label.ISSP_OperationalCalendar}<span class="sr-only"></span></a></li>
     </ul>
      <ul class="nav navbar-nav collapse" id="three">
 
@@ -741,7 +747,7 @@ background-color:#428bca;
         </li>
     <!-- INC262760
     <li>
-    <a href="/00O/o?MainNav=Queries&subNav=MyQueries&mid=M4S4&admin=true" id="M4S4" style="display:{!if($Profile.Name == 'ISS Portal DPC','','none')}">
+    <a href="/00O/o?MainNav=Queries&subNav=MyQueries&mid=M4S4&admin=true" id="M4S4" style="display:{!if($Profile.Name == 'ISS Portal DPC Admin','','none')}">
                 Reports
                 </a>
     </li>-->

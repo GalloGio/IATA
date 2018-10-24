@@ -91,7 +91,9 @@ public class CampaignCustomers_Ctrl
         //prodWithoutStdPrice = new List<String>();
 
         //-- Build SOQL to retrieve OrderItems 
-        String query = 'SELECT OrderId, Order.BillToContactId, Product__c, Quantity, Invoice_Date__c FROM OrderItem WHERE IsDeleted = false and Order.Type in (\'Order\', \'History\') AND Order.Status != \'New\' AND Order.Status != \'Cancelled\'';
+        String query = 'SELECT OrderId, Order.BillToContactId, Product__c, Quantity, Invoice_Date__c, Product_Number__c FROM OrderItem WHERE IsDeleted = false AND ' + 
+                        'Order.Type in (\'Order\', \'History\') AND Order.Status != \'New\' AND Order.Status != \'Cancelled\' AND ' + 
+                        'Order.BillToContact.Status__c NOT IN (\'Inactive\', \'Retired\', \'Left Company / Relocated\') ';
 
         //-- Products criteria
         if(selectedProducts != null && selectedProducts.size() > 0)

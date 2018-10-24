@@ -29,10 +29,10 @@
                                     <apex:variable var="FileIdInReviewStatuses" value="{!reqIdentifier}=true"/>
 
                                     <apex:outputText rendered="{!reqRequired!=null}">
-                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', caseOwnerNewgenPCI, !CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
+                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', caseOwnerNewgenPCI, caseOwnerModelA, !CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
                                             <input type="file" id="input-{!reqCnt}" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent'"/>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', !caseOwnerNewgenPCI, CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
+                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', !caseOwnerNewgenPCI, !caseOwnerModelA, CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
                                             <input type="file" class="input-{!reqCnt}" name="file" style="color:transparent;" disabled="true"/>
                                         </apex:outputText>
                                     </apex:outputText>
@@ -85,11 +85,11 @@
                                       <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
                                       <a class="actionLink" title="view" escape="false" target="_blank" onclick="getFileLink('{!theFile.fullName}');" style="color:#015ba7; cursor: pointer;  text-decoration: underline;"  >{!$Label.ISSP_View}</a>
                                        {!If(OR(caseStatus=='Draft',caseStatus=='Open - EDMC'),' | ','')}
-                                       <span class="glyphicon glyphicon-trash" aria-hidden="true" style="display: {!IF(OR(caseStatus=='Draft',caseStatus=='Open - EDMC', caseOwnerNewgenPCI),"inline","none")}"></span>
+                                       <span class="glyphicon glyphicon-trash" aria-hidden="true" style="display: {!IF(OR(caseStatus=='Draft',caseStatus=='Open - EDMC', caseOwnerNewgenPCI, caseOwnerModelA),"inline","none")}"></span>
                                        <apex:commandLink value="{!$Label.IDCard_Delete}"
                                             action="{!deleteThisFile}"
                                             onclick="if(!confirm('{!$Label.ISSP_Confirm_File_Delete}'))return false;"
-                                            rendered="{!OR(caseStatus=='Draft',caseStatus=='Open - EDMC', caseOwnerNewgenPCI)}"
+                                            rendered="{!OR(caseStatus=='Draft',caseStatus=='Open - EDMC', caseOwnerNewgenPCI, caseOwnerModelA)}"
                                             status="WaitingStatus"
                                             reRender="AmazonDocs"
                                            oncomplete="location.reload();"

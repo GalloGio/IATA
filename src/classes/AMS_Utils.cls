@@ -104,6 +104,8 @@ public without sharing class AMS_Utils {
     public static final String WITHDRAWAL = 'Application Withdrawal';
     public static final String SUSPENSION = 'Process suspension';
     public static final String TERMINATION = 'Process termination';
+    public static final String DUEDILIGENCE = 'Due Diligence';
+    public static final String SETUPPROCESSING = 'Setup Processing';
     public static final String SETUPFINALIZATION = 'Setup finalization';
 
     public static final String PASSED = 'Passed';
@@ -233,6 +235,9 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_IATAAGENCY   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
 
     public static final String RECTYPE_IATAEASYPAY  = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AP_Process_Form__c').get('IATA_EasyPay_Opt_in_Out');
+    public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Accreditation_Requirement__c').get('IEP_Model_A');
+
+    public static final String RECTYPE_BSP = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Settlement_System__c').get('BSP');
 
     public static final Id OSCAR_COMUNICATION = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
@@ -251,6 +256,8 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+
+    public static final Set<String> ACTIVEAGENCYSTATUS = new Set<String>{ACC_S4_LISTED, ACC_S5_CASHNOCOMMISSION, ACC_S6_CASHWITHCOMMISSION, ACC_S7_UNDERREVIEW, ACC_S8_CHANGESPROCESSED, ACC_S9_APPROVED};
 
     public static final String AACC_INPROGRESS = 'in progress';
     public static final String AACC_FINALIZED = 'finalized';
@@ -293,8 +300,11 @@ public without sharing class AMS_Utils {
     public static final String CASE_STATUS_CLOSED = 'Closed';
     public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
 
+    // Case - Reason1__c //AMSU-165
+    public static final String CASE_REASON_CHG_DATA_MAINTENANCE = 'CHG – Data Maintenance';
+
     //set with the ifap status to update the account's last financial review
-    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED,CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
+    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED};
 
     public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
@@ -316,7 +326,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
-    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
+    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X','G','D'};
     public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO','HE'};
 
     public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
@@ -1304,8 +1314,8 @@ public without sharing class AMS_Utils {
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
-                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
-                (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c
+                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode,
+                (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used to extend the role of any existing account type e.g. an airline that also acts as a payment provider. A record type should be created for each type of account role required.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <description>Account Id to account record</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Account Roles</relationshipLabel>
+        <relationshipName>Account_Roles</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Any_Other_Information__c</fullName>
+        <description>Enter any additional information related to your company (e.g. to comply with AML requirements)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter any additional information related to your company (e.g. to comply with AML requirements)</inlineHelpText>
+        <label>Any Other Information</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Effective_From_Date__c</fullName>
+        <description>Account role becomes active from this date</description>
+        <externalId>false</externalId>
+        <label>Effective From Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Effective_To_Date__c</fullName>
+        <description>Account role becomes inactive after this date.</description>
+        <externalId>false</externalId>
+        <label>Effective To Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>HQ_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Select the country where provider&apos;s headquarter is located</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the country where provider&apos;s headquarter is located</inlineHelpText>
+        <label>HQ Location</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Account Roles</relationshipLabel>
+        <relationshipName>Account_Roles</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Last_Review_Date__c</fullName>
+        <description>Date of the last review.</description>
+        <externalId>false</externalId>
+        <label>Last Review Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Contact_Count__c</fullName>
+        <description>Roll-up field that count how many primary contacts are related with the account role.</description>
+        <externalId>false</externalId>
+        <label>Primary Contact Count</label>
+        <summaryFilterItems>
+            <field>Account_Contact_Role__c.is_primary__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Account_Contact_Role__c.Account_Role__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Provider_Code__c</fullName>
+        <description>Code that identified the provider.</description>
+        <externalId>false</externalId>
+        <label>Provider Code</label>
+        <length>17</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Provider_Type__c</fullName>
+        <description>Provider type picklist. Can assume Open Loop or Close Loop values.</description>
+        <externalId>false</externalId>
+        <label>Provider Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>TIP_Provider_Type</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Satus of account role record</description>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>UniqueKey__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>used to uniquely identify a record in upsert. For TIP, is the concatenation of Account__c and RecordTypeID</description>
+        <externalId>true</externalId>
+        <label>UniqueKey</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>Account Role</label>
+    <nameField>
+        <displayFormat>AR-{0000}</displayFormat>
+        <label>Account Role Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Account Roles</pluralLabel>
+    <recordTypes>
+        <fullName>TIP_Payment_Provider</fullName>
+        <active>true</active>
+        <label>Payment Provider</label>
+        <picklistValues>
+            <picklist>Provider_Type__c</picklist>
+            <values>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Effective_Start_Date_on_Payment_Provider</fullName>
+        <active>true</active>
+        <description>Effective From Date is mandatory for Payment Provider</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, ISBLANK(Effective_From_Date__c), text(Status__c )=&quot;Active&quot;)</errorConditionFormula>
+        <errorDisplayField>Effective_From_Date__c</errorDisplayField>
+        <errorMessage>Effective From Date is mandatory for Payment Provider</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Primary_Contact_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(!(ISBLANK(TEXT(Status__c))), Primary_Contact_Count__c == 0)</errorConditionFormula>
+        <errorMessage>Please first save without the Effective From Date, ensure that a Primary Contact is identified (Account Contact Role), and only then enter the Effective From Date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>TIP_HR_LOCATION_NOT_EMPTY</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(NOT(ISPICKVAL(Status__c, &quot;&quot;)),ISBLANK(HQ_Location__c), RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;)</errorConditionFormula>
+        <errorDisplayField>HQ_Location__c</errorDisplayField>
+        <errorMessage>HR Location is mandatory for payment providers.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>TIP_PROVIDER_CODE_LENGTH</fullName>
+        <active>true</active>
+        <description>For record-type payment provider, Code is mandatory and its length must be 4 digits</description>
+        <errorConditionFormula>AND(NOT(ISPICKVAL(Status__c, &quot;&quot;)), RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, LEN( Provider_Code__c ) != 4)</errorConditionFormula>
+        <errorDisplayField>Provider_Code__c</errorDisplayField>
+        <errorMessage>Invalid Provider Code. The Provider Code must contain exactly 4 characters</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>TIP_Payment_Provider_expiration_dates</fullName>
+        <active>true</active>
+        <description>Effective To Date needs to be after Effective From Date</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;,  Effective_From_Date__c &gt; Effective_To_Date__c )</errorConditionFormula>
+        <errorDisplayField>Effective_To_Date__c</errorDisplayField>
+        <errorMessage>Effective To Date needs to be greater then Effective From Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Providers_Accreditation_Date</fullName>
+        <active>false</active>
+        <description>Can’t have active Payment Providers with Effective date From in the future</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, TEXT(Status__c)=&quot;Active&quot;, Effective_From_Date__c&gt;Today())</errorConditionFormula>
+        <errorMessage>Can’t have active Payment Providers with Effective date From in the future</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Terminate_Provider_Account</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Terminate ATM Provider</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/flow/TIP_Payment_Provider_Termination?vAccountRoleId={!Account_Role__c.Id}&amp;retURL=/{!Account_Role__c.Id}</url>
+    </webLinks>
+</CustomObject>

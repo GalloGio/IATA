@@ -45,14 +45,16 @@ public class ISSP_AvailableServices_Test {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = easyPay1.id
+                ANG_Portal_Service__c = easyPay1.id,
+                ANG_Enable_NewGen__c = true
             );
 
 
         IATA_ISO_Country__c switzerland = new IATA_ISO_Country__c (
                 Name = 'Switzerland_test',
                 ISO_Code__c = 'CH',
-                ANG_Portal_Service__c = easyPay2.id
+                ANG_Portal_Service__c = easyPay2.id,
+                ANG_Enable_NewGen__c = true
             );
 
 
@@ -75,7 +77,8 @@ public class ISSP_AvailableServices_Test {
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
-                OwnerId = UserInfo.getUserId()
+                OwnerId = UserInfo.getUserId(),
+                Location_Class__c = 'P'
             );
 
         Account a2 = new Account (
@@ -84,7 +87,8 @@ public class ISSP_AvailableServices_Test {
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
                 Location_type__c = 'HE',
-                OwnerId = UserInfo.getUserId()
+                OwnerId = UserInfo.getUserId(),
+                Location_Class__c = 'P'
             );
 
         Account a3 = new Account (
@@ -203,10 +207,13 @@ public class ISSP_AvailableServices_Test {
     
     public static testMethod void testServices_3() {
         
+		Test.startTest();
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
         Contact con = ISSP_ObjectFactory.createNewContact();
         insert con;
+		Test.stopTest();
+		
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report'); 
         insert app;
         
@@ -525,27 +532,33 @@ public class ISSP_AvailableServices_Test {
 
     public static testMethod void testnewAppsRequest2() {
         
-        Test.startTest();
-
+        
+		Test.startTest();
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.id;
         insert con;
-
+		Test.stopTest();
+		
+		
+		
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Standards Setting Workspace',
                 ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_Accredited_Agents_Only__c = false,
                 Agency__c = true); 
         insert app;
-
+		
+		
+		/*
         Portal_Applications__c easyPay1 = new Portal_Applications__c (
                 Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
                 //ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_Accredited_Agents_Only__c = false                
             );
         
-
+		
+		
         Portal_Applications__c easyPay2 = new Portal_Applications__c (
                 Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
                 //ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.CARGO_AGENT,
@@ -562,8 +575,8 @@ public class ISSP_AvailableServices_Test {
         ISSP_AvailableServices.newAppsRequest2 (easyPay2.Id, easyPay2.Name, con.Id, 'portalServiceRole', true, 'defaultPortalUserRole');
 
         ISSP_AvailableServices.newAppsRequest2 (app.Id, app.Name, con.Id, 'portalServiceRole', false, 'defaultPortalUserRole');
-
-        Test.stopTest();
+		*/
+        
 
     }
 
@@ -760,10 +773,14 @@ public class ISSP_AvailableServices_Test {
             );
 
         System.runAs(testeUser3) {
+            
+            IATA_ISO_Country__c portugal = [Select Id from IATA_ISO_Country__c where Name = 'Portugal_test'];
 
             Account acc2 = ISSP_ObjectFactory.createNewAccount();        
             acc2.ANG_IEP_Status__c = 'Open';
             acc2.Location_Type__c = 'HE';
+            acc2.Location_Class__c = 'P';
+            acc2.IATA_ISO_Country__c = portugal.Id;
 
             insert acc2;
 
