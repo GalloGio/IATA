@@ -55,9 +55,11 @@
     <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Id of the account that is associated to the external report</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
+        <relationshipLabel>External Reports</relationshipLabel>
         <relationshipName>ISSP_External_Reports</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -65,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Domain__c</fullName>
+        <description>Report domain (ex: TIP)</description>
         <externalId>false</externalId>
         <label>Domain</label>
         <length>30</length>
@@ -75,6 +78,7 @@
     </fields>
     <fields>
         <fullName>Report_ID__c</fullName>
+        <description>Id that represents the report (the valur should be configured in the custom setting &apos;ISSP_External_Reports_Config__c&apos;</description>
         <externalId>true</externalId>
         <label>Report ID</label>
         <length>30</length>
@@ -85,6 +89,7 @@
     </fields>
     <fields>
         <fullName>Source_System__c</fullName>
+        <description>System that requested the report creation</description>
         <externalId>false</externalId>
         <label>Source System</label>
         <length>30</length>
