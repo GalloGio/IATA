@@ -179,7 +179,7 @@ global class ANG_MasterData_Interface{
         public string dueDiligenceStatus;
         public boolean isNewGenAgency;
         public list<Owner> owners;
-        public list<DueDiligence> DueDiligence;
+        public list<DueDiligence> dueDiligence;
 
         
         
@@ -225,14 +225,14 @@ global class ANG_MasterData_Interface{
                 this.TradeName = acc.TradeName__c;
                 this.vatNumber = acc.VAT_Number__c;
                 this.topParentIATACode = acc.Top_Parent__r.IATACode__c;
-                this.DueDiligence = new List<DueDiligence>();
+                this.dueDiligence = new List<DueDiligence>();
 
                 /* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
                 if(dueDiligenceIEPChangeCodes.contains(changeCode) && acc.oscars__r != null && acc.oscars__r.size()>0){
                     if(changeCode == 'MaddY')
-                        this.DueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ?  'Passed' : 'Failed'  )));
+                        this.dueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ?  'Passed' : 'Failed'  )));
                     else
-                        this.DueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));                    
+                        this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));                    
                 }
 
                 //Risk Info

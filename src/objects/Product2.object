@@ -2169,6 +2169,11 @@ SIS Charge Code Type.</description>
                     <label>Airline Operational Cost Management Guidelines</label>
                 </value>
                 <value>
+                    <fullName>Airlines Magazine Subscription</fullName>
+                    <default>false</default>
+                    <label>Airlines. Magazine Subscription</label>
+                </value>
+                <value>
                     <fullName>Airport Development Reference Manual</fullName>
                     <default>false</default>
                     <label>Airport Development Reference Manual</label>
@@ -2417,6 +2422,11 @@ SIS Charge Code Type.</description>
                     <fullName>Marshalling Signals</fullName>
                     <default>false</default>
                     <label>Marshalling Signals</label>
+                </value>
+                <value>
+                    <fullName>Merchandise</fullName>
+                    <default>false</default>
+                    <label>Merchandise</label>
                 </value>
                 <value>
                     <fullName>Mileage</fullName>
@@ -3945,11 +3955,6 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <fullName>data-and-statistics</fullName>
                     <default>false</default>
                     <label>data-and-statistics</label>
-                </value>
-                <value>
-                    <fullName>Events</fullName>
-                    <default>false</default>
-                    <label>Events</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -7559,6 +7564,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airlines Magazine Subscription</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airport Development Reference Manual</fullName>
                 <default>false</default>
             </values>
@@ -10549,6 +10558,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airlines Magazine Subscription</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airport Development Reference Manual</fullName>
                 <default>false</default>
             </values>
@@ -10718,6 +10731,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13602,6 +13619,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airlines Magazine Subscription</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airport Development Reference Manual</fullName>
                 <default>false</default>
             </values>
@@ -13791,6 +13812,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14716,10 +14741,6 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
-            <values>
-                <fullName>Events</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
@@ -16657,6 +16678,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>

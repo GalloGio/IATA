@@ -939,14 +939,16 @@ public class SurveyBatchTest {
         for(Case c : cases){
           c.Status = 'Closed';
         }
+		
+		test.startTest();
         insert cases;
-      
+		test.stopTest();
 
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
         TransformationHelper.CalculateBusinessHoursAges = false;
         CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 
-        test.startTest();
+        
             //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
             SurveyBatch batch = new SurveyBatch();
             batch.ClosedDate = date.today();
@@ -957,7 +959,7 @@ public class SurveyBatchTest {
                         '0 0 0 15 3 ? 2022',
                         new SurveyBatchScheduler());
 
-        test.stopTest();
+        
     }
    }
 
@@ -1132,14 +1134,15 @@ public class SurveyBatchTest {
         for(Case c : cases){
           c.Status = 'Closed';
         }
+		test.startTest();
         insert cases;
-    
+		test.stopTest();
 
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
         TransformationHelper.CalculateBusinessHoursAges = false;
         CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 
-        test.startTest();
+        
             //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
             SurveyBatch batch = new SurveyBatch();
             batch.ClosedDate = date.today();
@@ -1150,7 +1153,7 @@ public class SurveyBatchTest {
                         '0 0 0 15 3 ? 2022',
                         new SurveyBatchScheduler());
 
-        test.stopTest();
+        
     }
    }
 
