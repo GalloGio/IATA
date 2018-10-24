@@ -1,10 +1,10 @@
 global with sharing class FREDSCIMUser extends SCIMUser {
 
 /*** 
-	Some of attributes are commented to be compliant to Mulesoft specs for FRED
+    Some of attributes are commented to be compliant to Mulesoft specs for FRED
 */
 
-	/*
+    /*
     public class Addresses {
         public String streetAddress;
         public String locality;
@@ -51,20 +51,20 @@ global with sharing class FREDSCIMUser extends SCIMUser {
         public String type;
         public String value;
     }*/
-	
-	public class enterpriseExtension{
-		public String employeeNumber;
-		public String costCenter;
-		public String organization;
-		public String division;
-		public String department;
-		public Manager manager;
-	}
+    
+    public class enterpriseExtension{
+        public String employeeNumber;
+        public String costCenter;
+        public String organization;
+        public String division;
+        public String department;
+        public Manager manager;
+    }
 
-	public class Manager{
-		public String managerId;
-		public String displayName;
-	}
+    public class Manager{
+        public String managerId;
+        public String displayName;
+    }
     //private String enterprise;
 
     // Public fields to serialize / deserialize
@@ -99,12 +99,12 @@ global with sharing class FREDSCIMUser extends SCIMUser {
         
         super.getSchemas().add('urn:scim:schemas:extension:enterprise:1.0');
  
- 		super.name = null;
-		this.name = new Name();
-		if (familyName != null) this.name.familyName = familyName;
-		if (givenName != null) this.name.givenName = givenName;
+        super.name = null;
+        this.name = new Name();
+        if (familyName != null) this.name.familyName = familyName;
+        if (givenName != null) this.name.givenName = givenName;
  
-     	if (email != null) {
+        if (email != null) {
             try { 
                 fillUpSCIMMessage(email);
 
@@ -116,24 +116,24 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 
     private void fillUpSCIMMessage(String email){
         //basto1p added new required field for IFG
-        User userIn = [SELECT Id, name, contact.account.RecordType.DeveloperName,AccountId, contact.account.ICAO_designator__c, contact.account.Country_ISO_Code__c, contact.account.name, contact.account.IATACode__c, contact.account.sector__c, contact.account.category__c,FederationIdentifier, SmallPhotoUrl ,createdDate,lastModifiedDate,contact.Phone,CommunityNickname, TimeZoneSidKey, LanguageLocaleKey, Title, Contact.MobilePhone, Contact.Fax, contact.Salutation from user where email = :email and IsActive = true limit 1];
+        User userIn = [SELECT Id, name, contact.account.RecordType.DeveloperName,AccountId, contact.account.X8585_Code__c, contact.account.Country_ISO_Code__c, contact.account.name, contact.account.IATACode__c, contact.account.sector__c, contact.account.category__c,FederationIdentifier, SmallPhotoUrl ,createdDate,lastModifiedDate,contact.Phone,CommunityNickname, TimeZoneSidKey, LanguageLocaleKey, Title, Contact.MobilePhone, Contact.Fax, contact.Salutation from user where email = :email and IsActive = true limit 1];
 
 
         Boolean isPrimaryUser;
 
-		// If there is an Invitation__c related to this provisioning request, retrieve the role from the Invitation__c record
-		// This query will have to be updated when developing One Id generics as the Invitation__c object will have an additional field for the service and the same user could receive several invitations for different services
-		List<Invitation__c> invitations = [select Role__c from Invitation__c where Email__c =: email limit 1];
+        // If there is an Invitation__c related to this provisioning request, retrieve the role from the Invitation__c record
+        // This query will have to be updated when developing One Id generics as the Invitation__c object will have an additional field for the service and the same user could receive several invitations for different services
+        List<Invitation__c> invitations = [select Role__c from Invitation__c where Email__c =: email limit 1];
 
-		if(!invitations.isEmpty()){
-			isPrimaryUser = invitations[0].Role__c == 'Primary';
-		}
-		else{
-	        // Check if the some user in the account has FRED primary permission set. If not, this user we'll be primary
-	        Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: userIn.AccountId];
-	        isPrimaryUser = nbOfPrimaryInAccount == 0;
-		}
-		
+        if(!invitations.isEmpty()){
+            isPrimaryUser = invitations[0].Role__c == 'Primary';
+        }
+        else{
+            // Check if the some user in the account has FRED primary permission set. If not, this user we'll be primary
+            Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: userIn.AccountId];
+            isPrimaryUser = nbOfPrimaryInAccount == 0;
+        }
+        
 
         if(userIn != null){
             //this.id = userIn.id; 
@@ -142,18 +142,18 @@ global with sharing class FREDSCIMUser extends SCIMUser {
             
             this.name.honorificPrefix = userIn.contact.Salutation;
             
-			PhoneNumbers mobile = new PhoneNumbers();
-			mobile.value =  userIn.Contact.MobilePhone;
-			mobile.type = 'mobile';
-			
-			PhoneNumbers work = new PhoneNumbers();
-			work.value =  userIn.Contact.Phone;
-			work.type = 'work';
-			
-			PhoneNumbers fax = new PhoneNumbers();
-			fax.value =  userIn.Contact.Fax;
-			fax.type = 'fax';
-			
+            PhoneNumbers mobile = new PhoneNumbers();
+            mobile.value =  userIn.Contact.MobilePhone;
+            mobile.type = 'mobile';
+            
+            PhoneNumbers work = new PhoneNumbers();
+            work.value =  userIn.Contact.Phone;
+            work.type = 'work';
+            
+            PhoneNumbers fax = new PhoneNumbers();
+            fax.value =  userIn.Contact.Fax;
+            fax.type = 'fax';
+            
             phoneNumbers = new List<PhoneNumbers>{mobile, work, fax};
 
             this.title = userIn.title;
@@ -188,30 +188,30 @@ global with sharing class FREDSCIMUser extends SCIMUser {
             enAccountType.type = 'ACCOUNT_TYPE';
 
             if(userIn.contact.account.RecordType.DeveloperName == 'IATA_Airline' || userIn.contact.account.RecordType.DeveloperName == 'Operator') {
-            	 enAccountType.value = 'AIRCRAFT_OPERATOR';
+                 enAccountType.value = 'AIRCRAFT_OPERATOR';
 
-            	 enIcaoCode.type = 'ICAO_CODE';
-            	 enIcaoCode.value = userIn.contact.account.ICAO_designator__c;
-            	 this.entitlements.add(enIcaoCode);
-            	
+                 enIcaoCode.type = 'ICAO_CODE';
+                 enIcaoCode.value = userIn.contact.account.X8585_Code__c;
+                 this.entitlements.add(enIcaoCode);
+                
             } else if(userIn.contact.account.RecordType.DeveloperName == 'ICAO_Member_State') {
-            	enAccountType.value = 'ICAO_MEMBER_STATE';
+                enAccountType.value = 'ICAO_MEMBER_STATE';
 
-            	enCountryCode.type = 'COUNTRY_CODE';
-            	enCountryCode.value = userIn.contact.account.Country_ISO_Code__c;
-            	this.entitlements.add(enCountryCode);
+                enCountryCode.type = 'COUNTRY_CODE';
+                enCountryCode.value = userIn.contact.account.Country_ISO_Code__c;
+                this.entitlements.add(enCountryCode);
             } else if(userIn.contact.account.RecordType.DeveloperName == 'Verifiers') {
-            	 enAccountType.value = 'VERIFIER';
+                 enAccountType.value = 'VERIFIER';
             } 
             this.entitlements.add(enAccountType);
 
             Entitlements enExtSystem = new Entitlements();
-			enExtSystem.type = 'External Systems';
+            enExtSystem.type = 'External Systems';
             enExtSystem.value = 'FRED_PLUS';
             this.entitlements.add(enExtSystem);
             
 
-			/*
+            /*
             Photos aPhoto = new Photos();
             aPhoto.type = 'photo';
             aPhoto.value = userIn.SmallPhotoUrl;
@@ -236,18 +236,18 @@ global with sharing class FREDSCIMUser extends SCIMUser {
             */
          
           if (email != null) { 
-		    SCIMUser.Emails e = new SCIMUser.Emails();
-		    e.value = email;
-		    e.type = 'home';
-		    e.primary = false;
+            SCIMUser.Emails e = new SCIMUser.Emails();
+            e.value = email;
+            e.type = 'home';
+            e.primary = false;
 
             SCIMUser.Emails e2 = new SCIMUser.Emails();
             e2.value = email;
             e2.type = 'work';
             e2.primary = true;
 
-		    super.Emails = new List<SCIMUser.Emails>{e,e2};
-		}
+            super.Emails = new List<SCIMUser.Emails>{e,e2};
+        }
         }
     }
 }

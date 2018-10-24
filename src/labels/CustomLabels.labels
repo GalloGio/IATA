@@ -4036,6 +4036,15 @@ Message: {2}</value>
         <value>FW</value>
     </labels>
     <labels>
+        <fullName>Feed_Item_Invalid_Topics</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Feed Item Invalid Topics</shortDescription>
+        <value>Your message was not posted because you are not using one of the mandatory topics.
+Please use hashtags (#) to define the topic(s) of your post.
+You can choose one or more of the following topics:</value>
+    </labels>
+    <labels>
         <fullName>File_Description</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -22946,6 +22955,13 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>No records available</value>
     </labels>
     <labels>
+        <fullName>ISSP_Not_Applicable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Not_Applicable</shortDescription>
+        <value>Not Applicable</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Not_Authorized</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -23080,11 +23096,164 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Ongoing TIP Requests</value>
     </labels>
     <labels>
-        <fullName>ISSP_OperationalCalendar_Reset</fullName>
+        <fullName>ISSP_OperationalCalendar</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_OperationalCalendar_Reset</shortDescription>
+        <shortDescription>ISSP_OperationalCalendar</shortDescription>
+        <value>Operational Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_BSPCASSFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_BSPCASSFilter</shortDescription>
+        <value>BSP/CASS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_BSPCASS_Filter_Required</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_BSPCASS_Filter_Required</shortDescription>
+        <value>Please, select a value in BSP/CASS filter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Billing_Period</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Billing_Period</shortDescription>
+        <value>Billing Period</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_CountryFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_CountryFilter</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Country_Filter_Required</shortDescription>
+        <value>Please, select a value in Country filter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_CurrencyFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_CurrencyFilter</shortDescription>
+        <value>Currency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_DownloadDate</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_DownloadDate</shortDescription>
+        <value>Download Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_EnableFilters</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_EnableFilters</shortDescription>
+        <value>Enable Filters</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</shortDescription>
+        <value>Disclaimer for Export Calendar file</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Export_Disclaimer</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Export_Disclaimer</shortDescription>
+        <value>Disclaimer for Export file to csv or pdf</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_FilterTitle</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_FilterTitle</shortDescription>
+        <value>Filters</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_FrequencyFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_FrequencyFilter</shortDescription>
+        <value>Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Full_Details</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Full_Details</shortDescription>
+        <value>Full Details and Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Header</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Header</shortDescription>
+        <value>{0} Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_LastModifiedDate</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_LastModifiedDate</shortDescription>
+        <value>Last Modified Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_No_Events</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_No_Events</shortDescription>
+        <value>No events to show</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Reset</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP OperationalCalendar Reset</shortDescription>
         <value>Reset</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Show_Calendar</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Show_Calendar</shortDescription>
+        <value>Show Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Sync_Calendar</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Sync_Calendar</shortDescription>
+        <value>Sync Calendar</value>
     </labels>
     <labels>
         <fullName>ISSP_Opt_In</fullName>
@@ -24863,6 +25032,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Showing page _PAGE_ of _PAGES_</value>
     </labels>
     <labels>
+        <fullName>ISSP_Showing_total_records</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Showing total records</shortDescription>
+        <value>Showing _MAX_ records</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Simplified_Interline_Settlement</fullName>
         <categories>Portal, S10</categories>
         <language>en_US</language>
@@ -25156,6 +25333,13 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>All unsaved changes will be discarded. Are you sure you want to leave the page?</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_EFFECTIVE_DATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_EFFECTIVE_DATE</shortDescription>
+        <value>Effective Date</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_HOLD_TO_MULTISELECT</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25254,6 +25438,20 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>New Product Country Configuration</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_PRIMARY_CONTACTS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_PRIMARY_CONTACTS</shortDescription>
+        <value>Primary Contact(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_PRIMARY_CONTACTS_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_PRIMARY_CONTACTS_MSG</shortDescription>
+        <value>Please &lt;a style=&quot;color:blue&quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to change your primary contact.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_PRODUCT_DETAILS_SECTION</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25268,11 +25466,32 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>ATM Provider Product</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_PROVIDER_DETAILS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_PROVIDER_DETAILS</shortDescription>
+        <value>Provider Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</shortDescription>
         <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;Range To must be greater or equal than Range From</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_REASON_FOR_CANCEL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_REASON_FOR_CANCEL</shortDescription>
+        <value>Reason for cancellation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_REASON_FOR_CLOSURE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_REASON_FOR_CLOSURE</shortDescription>
+        <value>Reason for Closure</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_RETURN_HOMEPAGE</fullName>
@@ -25293,7 +25512,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_SELECT_AT_LEAST_ONE_VALUE</shortDescription>
-        <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;You must select at least one value.</value>
+        <value>&lt;strong&gt;Error:&lt;/strong&gt;You must select at least one value.</value>
     </labels>
     <labels>
         <fullName>ISSP_TIP_SUBMIT_TO_IATA</fullName>
@@ -25317,11 +25536,74 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;Submit a case to IATA&lt;/a&gt; to request to update the Country Configurations for this product</value>
     </labels>
     <labels>
+        <fullName>ISSP_TIP_TERMINATE_PROD_BUTTON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_TERMINATE_PROD_BUTTON</shortDescription>
+        <value>Request Product Termination</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_TERMINATE_PROD_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_TERMINATE_PROD_MSG</shortDescription>
+        <value>Cancellation of the enrolment of your product will remove all active Airline consent. Agents will not be authorized anymore to use your product.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_TERMINATE_PROD_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_TERMINATE_PROD_TITLE</shortDescription>
+        <value>Product Termination Request</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_UPDATE_PROV_ACC_DETAILS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_UPDATE_PROV_ACC_DETAILS</shortDescription>
+        <value>Updates to your Provider Account details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1</shortDescription>
+        <value>You can view your account details on the &lt;a style=&quot;color:blue &quot; href=&quot;/apex/ISSP_CompanyInformation?mid=M5S2&quot;&gt;Company Information&lt;/a&gt; page.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2</shortDescription>
+        <value>Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;submit a case to IATA&lt;/a&gt; if you wish to make any changes.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</shortDescription>
         <value>&amp;lt;strong&amp;gt;Error:&amp;lt;/strong&amp;gt;This value is too big for this provider.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_VOLUNT_RELINQ_BUTTON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_VOLUNT_RELINQ_BUTTON</shortDescription>
+        <value>Request Voluntary Relinquishment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_VOLUNT_RELINQ_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_VOLUNT_RELINQ_MSG</shortDescription>
+        <value>By voluntarily removing yourself from the TIP program you will remove all your Products currently enrolled, and as a consequence cannot be used by Agents anymore.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_TIP_VOLUNT_RELINQ_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_TIP_VOLUNT_RELINQ_TITLE</shortDescription>
+        <value>Voluntary Relinquishment</value>
     </labels>
     <labels>
         <fullName>ISSP_TOULink</fullName>
@@ -25588,6 +25870,13 @@ CNS Customer Services</value>
         <value>These users cannot be inactivated because they currently have access to the following services:</value>
     </labels>
     <labels>
+        <fullName>ISSP_UserInactivation_ServiceMsg_5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_UserInactivation_ServiceMsg_5</shortDescription>
+        <value>The following contact is a Primary Contact for your Organization and so cannot be deactivated. Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;contact IATA Customer Service&lt;/a&gt; to designate a new Primary Contact.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_VR_Case_Submited</fullName>
         <categories>ISSP, PCI</categories>
         <language>en_US</language>
@@ -25809,6 +26098,118 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_We_sorry_you_are_unsatisfied</shortDescription>
         <value>We&apos;re sorry you are dissatisfied.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Friday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Friday</shortDescription>
+        <value>Friday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Monday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Monday</shortDescription>
+        <value>Monday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Saturday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Saturday</shortDescription>
+        <value>Saturday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Friday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Friday</shortDescription>
+        <value>Fri</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Monday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Monday</shortDescription>
+        <value>Mon</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Saturday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Saturday</shortDescription>
+        <value>Sat</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Sunday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Sunday</shortDescription>
+        <value>Sun</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Thursday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Thursday</shortDescription>
+        <value>Thu</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Tuesday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Tuesday</shortDescription>
+        <value>Tue</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Short_Wednesday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Short Wednesday</shortDescription>
+        <value>Wed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Sunday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Sunday</shortDescription>
+        <value>Sunday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Thursday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Thursday</shortDescription>
+        <value>Thursday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Tuesday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Tuesday</shortDescription>
+        <value>Tuesday</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Weekday_Wednesday</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Weekday Wednesday</shortDescription>
+        <value>Wednesday</value>
     </labels>
     <labels>
         <fullName>ISSP_Who_to_contact</fullName>
@@ -26060,6 +26461,15 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>Invalid Source Case</shortDescription>
         <value>Invalid source case</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Topic_Assignment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Topic Assignment</shortDescription>
+        <value>Your message was not posted because you are not using one of the mandatory topics.
+Please use hashtags (#) to define the topic(s) of your post.
+You can choose one or more of the following topics:</value>
     </labels>
     <labels>
         <fullName>Invoice_number</fullName>
@@ -27504,6 +27914,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>No-Reply</shortDescription>
         <value>No-Reply</value>
+    </labels>
+    <labels>
+        <fullName>No_Subsidiaries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No_Subsidiaries</shortDescription>
+        <value>No Subsidiaries</value>
     </labels>
     <labels>
         <fullName>No_account_yet_Sign_up</fullName>
@@ -30449,6 +30866,13 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>ReleaseDateMessage</shortDescription>
         <value>This title will be effective on</value>
+    </labels>
+    <labels>
+        <fullName>Remaining_Owners</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Remaining_Owners</shortDescription>
+        <value>Remaining Owners</value>
     </labels>
     <labels>
         <fullName>Renewal_Number</fullName>

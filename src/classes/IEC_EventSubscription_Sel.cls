@@ -1,13 +1,13 @@
 public without sharing class IEC_EventSubscription_Sel extends Selector {
 
-	public List<Schema.SObjectField> getSObjectFieldList()
+    public List<Schema.SObjectField> getSObjectFieldList()
     {
         return new List<Schema.SObjectField> 
         {
-        	IEC_Event_Subscription__c.Id,
+            IEC_Event_Subscription__c.Id,
             IEC_Event_Subscription__c.Active__c,
-        	IEC_Event_Subscription__c.Product__c,
-        	IEC_Event_Subscription__c.Subscriber__c 
+            IEC_Event_Subscription__c.Product__c,
+            IEC_Event_Subscription__c.Subscriber__c 
         };
     }
 
@@ -18,7 +18,7 @@ public without sharing class IEC_EventSubscription_Sel extends Selector {
 
     //Get Event subscription by Id
     public map<Id,IEC_Event_Subscription__c> getEventSubscriptionById(set<Id> subscriptionIds){
-    	String query = String.format(
+        String query = String.format(
             'SELECT {0}  ' + 
             'FROM {1} ' + 
             'WHERE Id IN :subscriptionIds ' , 
@@ -45,6 +45,23 @@ public without sharing class IEC_EventSubscription_Sel extends Selector {
                 getSObjectType().getDescribe().getName()
             }
         );
+        return Database.query(query);
+    }
+    
+    public List<IEC_Event_Subscription__c> getEventSubscriptionByProductNumbersListAndContactsList(Set<String> lstProductsNumbers, Set<Id> lstContactIds){
+
+        String query = String.format(
+            'SELECT {0}, Product__r.SAP_Material_Number__c ' +
+            'FROM {1} ' + 
+            'WHERE Product_Number__c LIKE :lstProductsNumbers ' + 
+            ' AND Subscriber__c IN :lstContactIds ' +
+            ' AND Active__c = true ' , 
+            new List<String>{
+                String.join(getDefaultFields(), ', '),
+                getSObjectType().getDescribe().getName()
+            }
+        );
+
         return Database.query(query);
     }
 
