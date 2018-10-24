@@ -61,7 +61,6 @@ public without sharing class ISSP_ICCS_ProfileController extends ISSP_ICCS_Compo
 				wrappedUsersList = new List<UserWrapper>();
 				
 				String topAccountId = (String) pageController.topAccount.Id;
-				topAccountId = topAccountId.substring(0,15);
 				
 				// List of ICCS portal user rights of the related top account
 				List<Portal_Application_Right__c> portalUsers = [select Contact__c, Contact__r.Id, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email, ANG_Portal_Service_Role__c, New_Role_Requested__c, Right__c

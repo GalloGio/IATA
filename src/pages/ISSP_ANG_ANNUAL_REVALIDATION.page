@@ -8,7 +8,9 @@
 
         <script src="{!URLFOR($Resource.bootbox)}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
         <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script-->
@@ -358,7 +360,8 @@
                                 <apex:actionFunction name="cancelUpdate" action="{!cancelUpdate}" status="WaitingStatus" reRender="treeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
                                 <apex:actionFunction name="discardDetails" action="{!discardDetails}" status="WaitingStatus" reRender="treeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
 
-                                <apex:actionFunction name="bodyRerender" status="WaitingStatus" rerender="componentsArea, buttonsArea" />
+                                <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact, ownershipMessage"/>
+                                <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany, ownershipMessage"/>
 
                                 <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact, ownershipMessage, noUpdateMessage"/>
                                 <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany, ownershipMessage, noUpdateMessage"/>
@@ -454,7 +457,7 @@
 
                                             <div>
                                                 <div>
-                                                    <apex:outputPanel id = "panel2">
+                                                    <apex:outputPanel id="panel2">
                                                         <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE}"></apex:outputText>
                                                         <div class="panel panel-default">
 
@@ -476,14 +479,14 @@
                                                                         <apex:outputpanel>{!$Label.ISSP_Status}</apex:outputpanel>
                                                                     </apex:facet-->
 
-                                                                    <apex:pageBlockSectionItem>
+                                                                    <apex:pageBlockSectionItem >
                                                                         <apex:outputLabel value="{!$Label.ISSP_AMS_MSO_GSA_IATA_Code}" />
                                                                         <apex:outputField value="{!currentAccount.account.IATACode__c}" />
                                                                     </apex:pageBlockSectionItem>
 
-                                                                    <apex:pageBlockSectionItem>
+                                                                    <apex:pageBlockSectionItem >
                                                                         <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_VAL_STATUS}" />
-                                                                        <apex:outputPanel>
+                                                                        <apex:outputPanel >
                                                                             <apex:outputText value="{!currentAccount.statusDesc}" />
 
                                                                             <apex:commandLink id="bla" style="margin-left: 20px"
@@ -562,7 +565,7 @@
                                     <apex:pageBlockButtons location="bottom" style="padding-left:218px">
                                         <apex:actionStatus id="buttonLoadingStep1">
                                             <apex:facet name="stop">
-                                                <apex:outputPanel>
+                                                <apex:outputPanel >
                                                     <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}"
                                                         immediate="true" status="buttonLoadingStep1" reRender="step1Form" />
                                                     <apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');"
@@ -571,7 +574,7 @@
                                                 </apex:outputPanel>
                                             </apex:facet>
                                             <apex:facet name="start">
-                                                <apex:outputPanel>
+                                                <apex:outputPanel >
                                                     <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true"
                                                         reRender="step1Form" />
                                                     <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form" />
@@ -593,7 +596,7 @@
                             <h3 class="panel-title">{!$Label.ISSP_ANG_ANNUAL_REVALIDATION}</h3>
                         </div>
                         <div class="panel-body" id="body-enquiries">
-                            <apex:form>
+                            <apex:form >
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
                                         <apex:commandLink status="WaitingStatus" styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_ANG_Step1_ANNUAL_REV}" id="Prev1Submit"
@@ -605,7 +608,7 @@
                                 </div>
                             </apex:form>
 
-                            <apex:pageBlock>
+                            <apex:pageBlock >
                                 <c:ISSP_ANG_ANNUAL_REV_SUBMIT_REPORT helper="{! submitHelper}" id="submitReport"/>
                             </apex:pageBlock>
                         </div>
@@ -617,11 +620,11 @@
                     <apex:form id="tCondiForm">
                         <!--apex:pageMessages /-->
 
-                        <apex:pageBlock>
+                        <apex:pageBlock >
                             <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                                 <apex:actionStatus id="buttonLoadingStep3">
                                     <apex:facet name="stop">
-                                        <apex:outputPanel>
+                                        <apex:outputPanel >
                                             <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep1}" value="{!$Label.ISSP_Back}"
                                                 immediate="true" status="buttonLoadingStep3" reRender="tCondiForm" />
 
@@ -632,7 +635,7 @@
                                         </apex:outputPanel>
                                     </apex:facet>
                                     <apex:facet name="start">
-                                        <apex:outputPanel>
+                                        <apex:outputPanel >
                                             <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true" reRender="tCondiForm" />
                                             <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
                                         </apex:outputPanel>

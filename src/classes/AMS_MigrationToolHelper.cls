@@ -42,7 +42,8 @@ public without sharing class AMS_MigrationToolHelper {
 			'ANG.NEW.AE.1.0' => AMS_Utils.RECTYPE_NEWAE,
 			'ANG.NEW.HE.STANDARD.1.0' => AMS_Utils.RECTYPE_NEWHE,
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELA,
-			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELB 
+			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELB,
+			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP 
 		};
 		}
 		set;
@@ -801,16 +802,19 @@ public without sharing class AMS_MigrationToolHelper {
 
 			Id oscarRTId = null;
 
-			if(isNewgenAccount)
+			if(isNewgenAccount || (AMS_Utils.IEP_PROCESSES.contains(processType) && oscarNewgenRTMap.containsKey(processType)))
 				oscarRTId = oscarNewgenRTMap.get(processType);
+			
+			if(oscarRTId == null){
 
-			if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
-				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
-			if(processType == 'CER.1.0')
-				oscarRTId = oscarRT.get('CERTIFICATE');
-			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
-				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
-
+				if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
+					oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
+				if(processType == 'CER.1.0')
+					oscarRTId = oscarRT.get('CERTIFICATE');
+				if(processType == 'BANK.ACCOUNT.CHANGES')
+					oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
+			}
+				
 
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
 			if(AMS_Utils.IEP_PROCESSES.contains(processType)){

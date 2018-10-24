@@ -1163,6 +1163,8 @@ private class ISSP_WS_Test {
         myInputData.serviceName = 'MYTEST';
         ISSP_WS_CreateNotification.createNotification(myInputData);
         
+		Test.startTest();
+		
         Portal_Application_Right__c newAppRight = new Portal_Application_Right__c();
         newAppRight.Portal_Application__c = newApp.Id;
         newAppRight.Contact__c = con.Id;
@@ -1174,6 +1176,8 @@ private class ISSP_WS_Test {
         emailList.add('test_createnotification1@test.com');
         myInputData.listOfUsers = emailList;
         ISSP_WS_CreateNotification.createNotification(myInputData);
+		
+		Test.stopTest();
         
     }
     
