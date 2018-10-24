@@ -616,7 +616,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			emailBody +='				<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" style="height:28px v-text-anchor: middle; width:114" strokecolor="#137CBD" arcsize="7%" fill="t">';
 			emailBody +='					<v:fill angle="180" type="gradient" color="#137CBD" color2="#137CBD"/>';
 			emailBody +='					<w:anchorlock/>';
-			emailBody +='					<center style="color: #FFFFFF; font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif;; font-size:13px;font-weight:normal;"><a style="text-decoration: none; color: #FFFFFF;" href="'+ URL.getSalesforceBaseUrl().toExternalForm() + remainingURL + '" target="_blank"><span style="white-space: nowrap;">Respond</span></a></center>';
+			emailBody +='					<center style="color: #FFFFFF; font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif;; font-size:13px;font-weight:normal;"><a style="text-decoration: none; color: #FFFFFF;" href="'+ URL.getSalesforceBaseUrl().toExternalForm() + remainingURL + '" target="_blank"><span style="white-space: nowrap;">Comment</span></a></center>';
 			emailBody +='				</v:roundrect>';
 			emailBody +='				<!--[if !mso] -->';			
 			emailBody +=' 				<a href="'+ URL.getSalesforceBaseUrl().toExternalForm() + remainingURL + '" style="font-family: Salesforce Sans, Helvetica Neue, Helvetica, Arial, Sans Serif; -webkit-text-size-adjust: none; font-size: 14px; color: #FFFFFF; background-color: #137CBD; text-decoration: none; text-align: center; border: 1px solid #137CBD; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;  background-image: linear-gradient(top, #137CBD, #137CBD); background-image: -o-linear-gradient(top, #137CBD, #137CBD); background-image: -moz-linear-gradient(top, #137CBD, #137CBD); background-image: -webkit-linear-gradient(top, #137CBD, #137CBD); background-image: -ms-linear-gradient(top, #137CBD, #137CBD); display: inline-block; line-height:28px; width:114px" class="button" target="_blank"><span class="text" style="white-space: nowrap;"><b>Respond</b></span></a>';
@@ -634,6 +634,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		emailBody +='<br/>';
 			
 		return emailBody;
+		
 	}
 
 	// this is the thin grey separator between feeditems under the same header

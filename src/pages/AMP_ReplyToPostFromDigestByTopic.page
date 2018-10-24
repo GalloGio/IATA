@@ -40,7 +40,7 @@
 
 	<apex:form >
 
-		<apex:pageBlock id="mainBlock" title="Respond to Chatter Post" >
+		<apex:pageBlock id="mainBlock" title="Comment on Chatter Post" >
 			
 			<apex:pageBlockSection columns="1" collapsible="false" >
 			
@@ -93,7 +93,7 @@
 		
 			<apex:pageMessages escape="false" />
 
-			<apex:pageBlockSection title="Step 1 - Select accounts on which you wish your response to be posted" columns="1" collapsible="false" rendered="{! step == 1}">
+			<apex:pageBlockSection title="Step 1 - Select accounts on which you wish your comment to be posted" columns="1" collapsible="false" rendered="{! step == 1}">
 		
 				<apex:pageBlockSectionItem >
 					<apex:outputPanel >
@@ -125,11 +125,11 @@
 
 			</apex:pageBlockSection>
 			
-			<apex:pageBlockSection title="Step 2 - Send your response" columns="1" collapsible="false" rendered="{! step == 2}">
+			<apex:pageBlockSection title="Step 2 - Post your comment" columns="1" collapsible="false" rendered="{! step == 2}">
 
-				<apex:inputTextarea cols="50" rows="4" value="{!message}" label="Insert Response:"/>
+				<apex:inputTextarea cols="50" rows="4" value="{!message}" label="Insert Comment:"/>
 
-				<b>Your response will be posted on the following accounts ({!numberOfAccounts}):</b>
+				<b>Your comment will be posted on the following accounts ({!numberOfAccounts}):</b>
 				
 				<br/>
 
@@ -137,7 +137,7 @@
 
 				<apex:outputPanel >
 					<apex:commandButton action="{!previousStep}" value="< Back to Account Selection" reRender="mainBlock" />
-					<apex:commandButton action="{!postReplyMessages}" value="Post Response" reRender="mainBlock" style="float: right;" status="replyStatusId"/>
+					<apex:commandButton action="{!postReplyMessages}" value="Post Comment" reRender="mainBlock" style="float: right;" status="replyStatusId"/>
 					<apex:actionStatus id="replyStatusId" >
 						<apex:facet name="start" >
 							<img src="/img/loading.gif" style="float: right;"/>
@@ -149,7 +149,7 @@
 		
 			<apex:pageBlockSection columns="1" collapsible="false" rendered="{! step == 3}">
 
-				<apex:commandButton action="{!restartFromStep1}" value="New response" reRender="mainBlock" />
+				<apex:commandButton action="{!restartFromStep1}" value="New post" reRender="mainBlock" />
 
 			</apex:pageBlockSection>
 
