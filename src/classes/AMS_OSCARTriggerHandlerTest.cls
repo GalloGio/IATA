@@ -6,12 +6,12 @@ private class AMS_OSCARTriggerHandlerTest {
         AMS_ChangeCodes__c cc = new AMS_ChangeCodes__c(Name = 'OOT', Change_Code__c = 'OOT', Billable__c = false, Integration_RecId__c='C', Billable_Location_Class__c = 'P');
         insert cc;
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true, AIMS_Area_ID__c='2') ;
         insert ctry ;
 
         Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
 
-        Account acc = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Agency HE',Short_Name__c='Agency HE', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account acc = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='12345610',Location_Type__c='HE',Name='Agency HE',Short_Name__c='Agency HE', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED, BillingCountry = 'US', Type = 'IATA Passenger Sales Agent');
 
         insert acc;
 
@@ -110,8 +110,6 @@ private class AMS_OSCARTriggerHandlerTest {
 
     @isTest static void processOscarOptinoutTest1() {
 
-        Test.startTest();
-
 
         List<String> fieldListOscar = new List<String>();
 
@@ -129,7 +127,40 @@ private class AMS_OSCARTriggerHandlerTest {
 
         AMS_Oscar__c oscar = oscars.get(0);
 
+        Contact con =new contact(lastname = 'pluto' ,
+                         firstname = 'name' ,
+                         phone = '123',
+                         accountid = oscar.Account__c,
+                         Financial_Assessment_Contact__c = true,
+                         email = 'asd.arg@wewt.et',
+                         HasOptedOutOfEmail = false
+        );
+
+        insert con;
+ 
+        Test.startTest();
+
         oscar.STEP1__c = 'Passed';
+
+        update oscar;
+
+        Case cseIfap = new Case(RecordTypeID = AMS_Utils.RECTYPE_CASEIFAP , Status = 'Open',Region__c = 'Africa', 
+            CaseArea__c = 'Accreditation', Origin= 'Internal User', Reason1__c = 'Annual revalidation',
+            Subject =  'Annual revalidation', Type_of_customer__c = 'IATA Travel Agent', AccountId = oscar.Account__c, 
+            BSPCountry__c = 'US', IFAP_Area__c = 'asda', IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+            Deadline_Date__c = Date.today().addDays(360), contactid = con.id, Assessment_Performed_Date__c = date.today()
+        );
+                         
+        insert cseIfap;
+
+        Case oscarCase = [SELECT Id, ParentId FROM Case WHERE Oscar__c = :oscar.Id];
+
+        oscarCase.ParentId = cseIfap.Id;
+
+        update oscarCase;
+
+        oscar.Status__c = 'Closed';
+        oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 
         update oscar;
 
@@ -255,6 +286,24 @@ private class AMS_OSCARTriggerHandlerTest {
         System.assertEquals(Date.today(),[SELECT Id, ANG_PCI_compliance_expiry_date__c FROM Account WHERE ID = :a1.Id].ANG_PCI_compliance_expiry_date__c);
 
         Test.stopTest();
+    }
+
+    @isTest static void testaAsyncUpdateAccPCI(){
+
+        Account a = [SELECT Id FROM Account LIMIT 1][0];
+
+        String s = String.ValueOf(Date.today())+','+'Yes';
+
+        Map<Id, String> mapValues = new Map<Id, String>{ a.Id => s};
+
+        Test.startTest();
+
+        AMS_OSCARTriggerHandler.asyncUpdateAccPCI(mapValues);
+
+        test.stopTest();
+
+        System.assertEquals('Yes',[SELECT Is_PCI_compliant__c FROM Account WHERE Id = :a.Id].Is_PCI_compliant__c);
+
     }
     
 }

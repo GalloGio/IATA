@@ -106,7 +106,7 @@ public class AMS_OSCAR_ProcessViewerController {
         get{
             return (
                 oscar != null
-                && ((oscar.STEP17__c == AMS_Utils.IN_PROGRESS && oscar.Process__c != AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oscar.STEP17__c <> AMS_Utils.PASSED))
+                && ((oscar.STEP17__c == AMS_Utils.IN_PROGRESS && oscar.Process__c != AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && (oscar.STEP17__c <> AMS_Utils.PASSED && oscar.STEP17__c <> AMS_Utils.FAILED)))
             );
         }
     }
