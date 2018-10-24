@@ -176,6 +176,8 @@ public without sharing class AMS_Utils {
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
     public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static final String IEPMODELAACCOUNTSETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
+    public static final String IEPMODELBACCOUNTSETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
     public static final String PCI_COMPLIANT    = 'PCI.COMPLIANT.1.0';
 
     //Process of type NewGen
@@ -226,6 +228,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWGENFOP   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NGFormsOfPayment').getRecordTypeId();
     public static final String RECTYPE_NEWGENOPTINOUT   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.FS.OPTINOUT').getRecordTypeId();
     public static final String RECTYPE_NEWGENANNUALREVAL   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.ANNUAL.REVALIDATION').getRecordTypeId();
+    public static final String RECTYPE_IEPMODELA   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BANK ACCOUNT SETUP').getRecordTypeId();
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');

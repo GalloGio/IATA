@@ -347,6 +347,17 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>ANG_Share_documentation_with_vendor__c</fullName>
+        <description>Used on IEP Model B Oscar. If checked the documentation is marked as shared with the vendor. Required to pass application receipt step</description>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Share documentation with vendor</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_Type_Of_Change__c</fullName>
         <description>Used for Newgen ISS project</description>
         <externalId>false</externalId>
@@ -3451,6 +3462,16 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <fullName>ANG.ANNUAL.REVALIDATION</fullName>
                     <default>false</default>
                     <label>ANG.ANNUAL.REVALIDATION</label>
+                </value>
+                <value>
+                    <fullName>IEP.MODEL.A.ACCOUNT.SETUP</fullName>
+                    <default>false</default>
+                    <label>IEP.MODEL.A.ACCOUNT.SETUP</label>
+                </value>
+                <value>
+                    <fullName>IEP.MODEL.B.ACCOUNT.SETUP</fullName>
+                    <default>false</default>
+                    <label>IEP.MODEL.B.ACCOUNT.SETUP</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -25426,6 +25447,14 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>IEP%2EBANK%2EACCOUNT%2ESETUP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IEP%2EMODEL%2EA%2EACCOUNT%2ESETUP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IEP%2EMODEL%2EB%2EACCOUNT%2ESETUP</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -49,18 +49,30 @@
                 </apex:outputpanel>
             </apex:facet-->
 
-            <apex:pageBlockSectionItem>
-                <apex:outputtext value="{0}
-                                        <br />{1}<br />{2}<br /><br />{!$Label.ISSP_Office_Email}: {3}<br /> {!$Label.ISSP_Registration_Website}: {4}<br /><br />{!$Label.ISSP_Registration_BusinessPhone}: {5}<br />{!$Label.ISSP_Registration_MobilePhone}: {6}<br />Fax: {7}" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
+            <apex:pageBlockSectionItem labelStyle="width:26%">
+                <apex:outputText value="<b>Billing Address:</b><br/>{0} <br/>{1}<br/>{2}<br/><br/>" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
                     <apex:param value="{!ca.account.BillingStreet}" />
                     <apex:param value="{!ca.account.BillingCity},&nbsp;{!ca.account.BillingPostalCode}" />
                     <apex:param value="{!IF(ca.account.BillingState!='',ca.account.BillingState + ',&nbsp;','')}{!ca.account.BillingCountry}" />
+                </apex:outputText>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem labelStyle="width:26%">
+                <apex:outputText value="<b>Shipping Address:</b><br />{0}<br />{1}<br />{2}<br /><br />" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
+                    <apex:param value="{!ca.account.ShippingStreet}" />
+                    <apex:param value="{!ca.account.ShippingCity},&nbsp;{!ca.account.ShippingPostalCode}" />
+                    <apex:param value="{!IF(ca.account.ShippingState!='',ca.account.ShippingState + ',&nbsp;','')}{!ca.account.ShippingCountry}" />
+                </apex:outputText>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem labelStyle="width:26%">
+                <apex:outputText value="{!$Label.ISSP_Office_Email}: {0}<br /> {!$Label.ISSP_Registration_Website}: {1}<br /><br />{!$Label.ISSP_Registration_BusinessPhone}: {2}<br />{!$Label.ISSP_Registration_MobilePhone}: {3}<br />Fax: {4}" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
                     <apex:param value="{!ca.account.Email__c}" />
                     <apex:param value="{!ca.account.Website}" />
                     <apex:param value="{!ca.account.Phone}" />
                     <apex:param value="{!ca.account.Mobile__c}" />
                     <apex:param value="{!ca.account.FAX}" />
-                </apex:outputtext>
+                </apex:outputText>
             </apex:pageBlockSectionItem>
 
         </apex:pageBlockSection>
