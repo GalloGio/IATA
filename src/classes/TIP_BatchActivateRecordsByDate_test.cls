@@ -175,7 +175,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 	public static void testBatchResults(){
 		
 		
-		TIP_BatchActivateRecordsByDate bt = new TIP_BatchActivateRecordsByDate(TIP_BatchActivateRecordsByDate.PROVIDER_TYPE, 'Asia & Pacific');
+		TIP_BatchActivateRecordsByDate bt = new TIP_BatchActivateRecordsByDate(TIP_BatchActivateRecordsByDate.PROVIDER_TYPE);
 		Test.startTest();
 		Database.executeBatch(bt);
 		Test.stopTest();
