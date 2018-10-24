@@ -1112,6 +1112,11 @@
         <fields>Status__c</fields>
         <relatedList>Account_Role__c.Account__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Report_ID__c</fields>
+        <relatedList>ISSP_External_Report__c.Account__c</relatedList>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
