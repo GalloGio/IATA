@@ -658,8 +658,7 @@
 
             <apex:outputPanel id="ownershipMessage" >
                 <script type="text/javascript">
-                    var $r = jQuery.noConflict();
-                    $r('[data-toggle="popover"]').popover();
+                    $('[data-toggle="popover"]').popover();
                 </script>
                 <apex:outputPanel >
                     <apex:outputLabel value="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL} " style="font-weight: bold;"/>
@@ -967,8 +966,13 @@
         }
 
         //console.log('***************** COMPONENT ******************');
-
+        
         $(document).ready(function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+            
             showCurrCorporateDetails();
             // binds on change to make checkbox function as radio buttons
             $('[data-group]').on('change', function() {
