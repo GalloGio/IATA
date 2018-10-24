@@ -4138,16 +4138,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Assign_to_Agency_Management_Europe_queue</fullName>
-        <field>OwnerId</field>
-        <lookupValue>CasesACCEuropeOffOnshore</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Assign to Agency Management Europe queue</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Assign_to_DE_BSP_queue</fullName>
         <field>OwnerId</field>
         <lookupValue>CasesGermany</lookupValue>
@@ -15038,10 +15028,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <rules>
         <fullName>ISS Key controls Dashboard AM</fullName>
         <actions>
-            <name>Assign_to_Agency_Management_Europe_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>Case_Area_Agency_Management</name>
             <type>FieldUpdate</type>
         </actions>
@@ -15068,7 +15054,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org</value>
+            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Subject</field>
