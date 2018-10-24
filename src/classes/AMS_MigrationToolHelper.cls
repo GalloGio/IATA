@@ -755,10 +755,10 @@ public without sharing class AMS_MigrationToolHelper {
 
 		caseToProcess.RecordTypeId = rtCommCase;
 
-		if(isNewgenAccount){
+		if(isNewgenAccount || AMS_Utils.IEP_PROCESSES.contains(processType)){
 			caseToProcess.CaseArea__c = 'Accreditation Process';
 			caseToProcess.Reason1__c = newgenCaseReason.get(processTypeInput);
-			caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+			caseToProcess.Subject = caseToProcess.Reason1__c +(isNewgenAccount ? ' - ' + caseToProcess.Account.ANG_Accreditation_Model__c : '')+ ' - ' + caseToProcess.Account.Name;
 		}
 
         update caseToProcess;
