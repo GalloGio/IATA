@@ -6534,6 +6534,84 @@
             ]
           }
         ]
+      },
+      {
+        "Name": "ANG.GDI.1.0",
+        "Flows": [
+          {
+            "Name": "AMS_OSCAR_GDI_fees",
+            "Steps": [
+              {
+                "Name": "STEP46",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                "New_docs_Received__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP47",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                "New_docs_Received__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP48",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                "New_docs_Received__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+
+          {
+            "Name": "AMS_OSCAR_GDI_ENDORSEMENT",
+            "Steps": [
+              {
+                "Name": "STEP49",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                "New_docs_Received__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_GDI_FINANCIAL_SECURITY",
+            "Steps": [
+              {
+                "Name": "STEP50",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                "New_docs_Received__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+
+
+        ]
       }   
     ]
   }
