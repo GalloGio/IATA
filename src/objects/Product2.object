@@ -2424,6 +2424,11 @@ SIS Charge Code Type.</description>
                     <label>Marshalling Signals</label>
                 </value>
                 <value>
+                    <fullName>Merchandise</fullName>
+                    <default>false</default>
+                    <label>Merchandise</label>
+                </value>
+                <value>
                     <fullName>Mileage</fullName>
                     <default>false</default>
                     <label>Mileage</label>
@@ -3950,11 +3955,6 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <fullName>data-and-statistics</fullName>
                     <default>false</default>
                     <label>data-and-statistics</label>
-                </value>
-                <value>
-                    <fullName>Events</fullName>
-                    <default>false</default>
-                    <label>Events</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -10734,6 +10734,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Merchandise</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Mileage</fullName>
                 <default>false</default>
             </values>
@@ -13811,6 +13815,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Merchandise</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Mileage</fullName>
                 <default>false</default>
             </values>
@@ -14733,10 +14741,6 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
-            <values>
-                <fullName>Events</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
