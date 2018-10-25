@@ -208,7 +208,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 if(!standardContacts.isEmpty()){
                     //RA 7/8/2013
                     //Shows a warning when the contact last name is update if an active IDCard is linked to the contact
-                    Profile currentUserProfile = [SELECT ID, Name FROM Profile WHERE id = : UserInfo.getProfileId() limit 1];
+                    Profile currentUserProfile = CaseHelper.currentUserProfile;
                     Set<ID> ids = Trigger.newMap.keySet();
                     ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
 

@@ -73,9 +73,6 @@ public without sharing class ISSP_FillTopParent {
 		Map<Id, Id> newTopParents = new Map<Id, Id>();
 		Map<Id, Set<Id>> hierarchies = new Map<Id, Set<Id>>();
 
-System.debug('JR Debug triggerOld: ' + triggerOld);
-
-
 		for(Account a : acctsToUpdate){
 			Id triggerOldParent = triggerOld.get(a.Id).Top_Parent__c;
 			Id oldParent = triggerOldParent == null ? a.Id : triggerOldParent;

@@ -7,6 +7,13 @@ global class ANG_OscarProcessHelper {
 
 	public static boolean isIATACodeGenerationRunning = false;
 
+	public static final Set<Id> NEW_ACCRCONTACTS_RC = new Set<Id>{
+		RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'),
+		RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner'),
+		RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company'),
+		RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner')
+	};
+
 	webservice static String[] processIATACodeGeneration(String accountId, String onlineAccreditationId, String oscarId){
 
 		// this method will provide the following funcionalities:
@@ -45,7 +52,7 @@ global class ANG_OscarProcessHelper {
 					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
-					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c,
 					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
 					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 					FROM Account
@@ -478,6 +485,103 @@ global class ANG_OscarProcessHelper {
             }
 
             updaterObj.acctMap.put(acc.Id,acc);
+
+            //Get the Accreditation Contacts to update the accounts fields Has_an_Administrator_User_Portal__c and Has_a_Financial_Assessment_Contact__c
+            List<AMS_Accreditation_Contact__c> accreditationContacts = [SELECT id, Financial_Assessment_Contact__c, Portal_administrator__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, Contact__c, Contact__r.AccountId, Contact__r.Financial_Assessment_Contact__c, Contact__r.Designated_Portal_Admin__c
+            															FROM AMS_Accreditation_Contact__c
+            															WHERE AMS_Pax_Accreditation_Form__c =: onlineAcc.Id 
+	    																	AND RecordTypeId IN: NEW_ACCRCONTACTS_RC];
+
+            if(!accreditationContacts.isEmpty()){
+
+            	Map<Id,List<AMS_Accreditation_Contact__c>> accrConPerAccount = new Map<Id,List<AMS_Accreditation_Contact__c>>();
+            	Set<Id> conIds = new Set<Id>();
+            	
+            	Id accrConAccountIdTemp;
+
+            	//get all the account Ids and contactIds from accreditation contacts
+            	for(AMS_Accreditation_Contact__c accrCon : accreditationContacts){
+
+            		if(accrCon.Contact__c == null){
+            			accrConAccountIdTemp = accrCon.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+        			} else {
+        				accrConAccountIdTemp = accrCon.Contact__r.AccountId;
+        				conIds.add(accrCon.Contact__c);
+        			}
+
+        			if(!accrConPerAccount.containsKey(accrConAccountIdTemp))
+        				accrConPerAccount.put(accrConAccountIdTemp, new List<AMS_Accreditation_Contact__c>());
+
+        			accrConPerAccount.get(accrConAccountIdTemp).add(accrCon);
+            	}
+
+            	//get all the accounts
+            	Map<Id,Account> listAccount;
+            	if(!accrConPerAccount.keySet().isEmpty() && !(accrConPerAccount.keySet().size() == 1 && accrConPerAccount.keySet().contains(acc.Id))){
+
+            		listAccount = new Map<Id,Account>([SELECT Id, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c,
+																	(SELECT Financial_Assessment_Contact__c, User_Portal_Status__c FROM Contacts WHERE Id NOT IN: conIds)
+																	FROM Account
+																	WHERE id IN: accrConPerAccount.keySet()]);
+
+            	} else if(accrConPerAccount.keySet().size() == 1 && accrConPerAccount.keySet().contains(acc.Id)){
+            		listAccount = new Map<Id,Account>{acc.Id => acc};
+            	}
+            	
+            	Boolean someFStrue = false;
+            	Boolean somePAtrue = false;
+            	//update account fields
+            	for(Id acctId : accrConPerAccount.keySet()){
+
+            		someFStrue = false;
+            		somePAtrue = false;
+
+        			for(AMS_Accreditation_Contact__c accreditationCon : accrConPerAccount.get(acctId)){
+
+        				if(accreditationCon.Financial_Assessment_Contact__c)
+        					someFStrue = true;
+
+        				if(accreditationCon.Portal_administrator__c)
+        					somePAtrue = true;
+        			}
+
+        			//There is a new financial assessment contact
+            		if(someFStrue && listAccount.get(acctId).Has_a_Financial_Assessment_Contact__c == false){
+
+            			if(!updaterObj.acctMap.containsKey(acctId))
+    						updaterObj.acctMap.put(acctId, listAccount.get(acctId));
+
+    					updaterObj.acctMap.get(acctId).Has_a_Financial_Assessment_Contact__c = true;
+            		}
+
+            		//The account had a financial assessment contact but not anymore
+            		if(!someFStrue && listAccount.get(acctId).Has_a_Financial_Assessment_Contact__c == true && !ContactHandler.calculeHasAFinancialAssessmentValue(listAccount.get(acctId).Contacts)){
+
+            			if(!updaterObj.acctMap.containsKey(acctId))
+    						updaterObj.acctMap.put(acctId, listAccount.get(acctId));
+
+    					updaterObj.acctMap.get(acctId).Has_a_Financial_Assessment_Contact__c = false;
+            		}
+
+            		//There is a new portal admin contact
+            		if(somePAtrue && listAccount.get(acctId).Has_an_Administrator_User_Portal__c == false){
+
+            			if(!updaterObj.acctMap.containsKey(acctId))
+    						updaterObj.acctMap.put(acctId, listAccount.get(acctId));
+
+    					updaterObj.acctMap.get(acctId).Has_an_Administrator_User_Portal__c = true;
+            		}
+
+            		//The account had a portal admin contact but not anymore
+            		if(!somePAtrue && listAccount.get(acctId).Has_an_Administrator_User_Portal__c == true && !ContactHandler.calculeHasAnAdminPortalUserValue(listAccount.get(acctId).Contacts)){
+
+            			if(!updaterObj.acctMap.containsKey(acctId))
+    						updaterObj.acctMap.put(acctId, listAccount.get(acctId));
+
+    					updaterObj.acctMap.get(acctId).Has_an_Administrator_User_Portal__c = false;
+            		}
+            	}
+            }
 
             stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 

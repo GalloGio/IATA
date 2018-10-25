@@ -49,6 +49,10 @@ public class ContactHandler{
 		and calls the method to update some dependent fields from child contacts
 	**/
 	public static void findParentAcountsToUpdate( list<Contact> listNews, list<Contact> listOlds) {
+
+		//if the iata code generation is running, the accounts were already updated
+		if(ANG_OscarProcessHelper.isIATACodeGenerationRunning) return;
+
 		list<Id> listAccountId = new list<Id>();
 		for (Integer i = 0; i<listNews.size(); i++) {
 			Contact newContact = listNews[i];
@@ -112,7 +116,7 @@ public class ContactHandler{
 	/**
 		Returns true if at least one of the input contacts is a Financial Assessment Contact
 	**/
-	private static Boolean calculeHasAFinancialAssessmentValue(list<Contact> listContact) {
+	public static Boolean calculeHasAFinancialAssessmentValue(list<Contact> listContact) {
 		for (Contact contact: listContact) {
 			if (contact.Financial_Assessment_Contact__c) {
 				return true;
@@ -124,7 +128,7 @@ public class ContactHandler{
 	/**
 		Returns true if at least one of the input contacts is Admin Portal
 	**/
-	private static Boolean calculeHasAnAdminPortalUserValue(list<Contact> listContact) {
+	public static Boolean calculeHasAnAdminPortalUserValue(list<Contact> listContact) {
 		for (Contact contact: listContact) {
 			if (contact.User_Portal_Status__c == 'Approved Admin') {
 				return true;
