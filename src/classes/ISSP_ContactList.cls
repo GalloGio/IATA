@@ -81,13 +81,11 @@ public with sharing class ISSP_ContactList {
             rejectionReasonOptions = new List<SelectOption>();
             rejectionReasonOptions.add(new SelectOption('Retired', Label.ISSP_RejectReason_Retired));
             rejectionReasonOptions.add(new SelectOption('LeftCompany', Label.ISSP_RejectReason_Left));
-            //rejectionReasonOptions.add(new SelectOption('AccessDenied', Label.ISSP_RejectReason_Denied));
             rejectionReasonOptions.add(new SelectOption('UnknownContact', Label.ISSP_RejectReason_Unknown));
             
             inactiveReasonOptions = new List<SelectOption>();
             inactiveReasonOptions.add(new SelectOption('Retired', Label.ISSP_RejectReason_Retired));
             inactiveReasonOptions.add(new SelectOption('LeftCompany', Label.ISSP_RejectReason_Left));
-            //inactiveReasonOptions.add(new SelectOption('AccessDenied', Label.ISSP_RejectReason_Denied));
             inactiveReasonOptions.add(new SelectOption('UnknownContact', Label.ISSP_RejectReason_Unknown));
             
             AlphaList = new list<String> {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Other', 'All'};
@@ -200,7 +198,6 @@ public with sharing class ISSP_ContactList {
     }
     
     public Pagereference refresh(){ 
-        //system.debug('selectedList: ' + selectedList);
         if(String.isNotBlank(selectedList)){
             buttonChange = contactListViewMap.get(selectedList).Button_Change__c;
             buttonActivate = contactListViewMap.get(selectedList).Button_Activate__c;
@@ -213,10 +210,8 @@ public with sharing class ISSP_ContactList {
     }
     public string getQueryConditions() {
         
-        //string t =  selectedList==null||selectedList=='' ? '' : contactListViewMap.get(selectedList).SOQL_Filter__c;
         system.debug('contactListViewMap >>> ' + contactListViewMap);
-        //String queryConditions =  String.isBlank(selectedList) ? '' : contactListViewMap.get(selectedList).SOQL_Filter__c;
-        //if (selectedList == null) selectedList = '';
+
         if(contactListViewMap == null || contactListViewMap.isEmpty())
             return 'WHERE ID = NULL';
         
@@ -382,8 +377,7 @@ public with sharing class ISSP_ContactList {
         public Boolean isDataEmpty(object oneData) {
             ISSPContactListView__c contactListViewItem = (ISSPContactListView__c)oneData;
             return String.isBlank(contactListViewItem.Profiles_Id__c);
-            //Set<string> profilesIdSet = new Set<string>(contactListViewItem.Profiles_Id__c.split(';'));
-            //return profilesIdSet.contains(profileId15);
+
         }
         
     }

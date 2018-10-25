@@ -36,7 +36,6 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 	
 	// field/label constants for EBC_Account_Notification fields
 	private static final String EBC_ACCOUNT_STATUS_ACTIVE = 'Active';
-	//private static final String EBC_ACCOUNT_STATUS_INACTIVE = 'Inactive';
 	
 	private static final String EBC_ACCOUNT_NOTIFICATION_TYPE_STATUS = 'Account Status'; // EBC_Account_Notification__c.Notification_Type__c value
 	private static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';	
@@ -56,7 +55,6 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 	
 	// ========================================================================
 	global Database.querylocator start(Database.BatchableContext BC){
-		//showQuery(query);
 		return Database.getQueryLocator(query);
 	} // end of queryLocator
 	
@@ -64,7 +62,6 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 	// ========================================================================
 	// batch execution method
 	global void execute(Database.BatchableContext BC, List<sObject> scope){
-		//System.debug( 'BtchEBCCreateNotificationOnStatus: execute(), scope length:' + scope.size());
 		
 		Map<Id, Zuora__CustomerAccount__c> billingAccountIdToObjectMap = new Map<Id, Zuora__CustomerAccount__c>();
 		
@@ -78,28 +75,10 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 						, Zuora__Subscription__r.Name
 						, Zuora__Subscription__r.Zuora__Status__c
 						, Zuora__Subscription__r.Zuora__CustomerAccount__c
-						//, Zuora__Subscription__r.Zuora__Account__c
 						, Zuora__Subscription__r.Zuora__NextRenewalDate__c
-						//, Zuora__Subscription__r.Zuora__SubscriptionEndDate__c
 						, Zuora__Subscription__r.Zuora__TermEndDate__c 
-						//, Zuora__Subscription__r.Product_Rate_Plan_Information__c
-						//, Zuora__EffectiveEndDate__c
-						//, Zuora__Price__c
-						//, Zuora__ProductName__c
-						//, Zuora__RatePlanName__c
-						//, Product_Rate_Plan_Charge__c
-						//, Product_Rate_Plan_Charge__r.zqu__ListPrice__c
-						//, Product_Rate_Plan_Charge__r.zqu__Deleted__c
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c
 						, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Name
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_Cost_Per_Email__c
-						, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_SubscriptionType__c
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.Name
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__Description__c
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.ProductCategory__c
-						
+						, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_SubscriptionType__c						
 					from Zuora__SubscriptionProductCharge__c
 					where Zuora__Subscription__r.Zuora__CustomerAccount__c in : billingAccountIdToObjectMap.keyset()
 						and Product_Rate_Plan_Charge__r.zqu__Deleted__c = false
@@ -121,9 +100,7 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 	
 	// ========================================================================
 	// when this batch is finish, call next job on the line
-	global void finish(Database.BatchableContext BC) {
-		//System.debug( 'BtchEBCCreateAccountNotificationOnStatus: finish()');
-		
+	global void finish(Database.BatchableContext BC) {	
 		// Insert error logs if applicable
 		if (!logs.isEmpty()) {
 			bErrorFound = true;
@@ -137,32 +114,20 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 	// use callBatchEBCCreateAccountNotificationOnStatus to do standard call to this batch class.
 	// this will simplify debugging and scheduling this job
 	//
-	public static void callBatchEBCCreateNotification()
-	{
-		//System.debug( 'BtchEBCCreateNotificationOnStatus.callBatchEBCCreateNotification');
-			
+	public static void callBatchEBCCreateNotification(){
+		
 		BtchEBCCreateNotificationOnStatus btchProc = new BtchEBCCreateNotificationOnStatus();
 		
 		btchProc.query =
 			'SELECT Id, Name'
 			+ ', eBroadcast_Email_Balance__c'
 			+ ', eBroadcast_Product_Access__c'
-			//+ ', eBroadcast_Storage__c'
-			//+ ', eBroadcast_Add_On_Access__c'
-			//+ ', eBroadcast_Storage_Usage__c'
 			+ ', Contact__c'
-			//+ ', Contact__r.Email'
-			//+ ', Contact__r.Name'
-			//+ ', Contact__r.IATA_Code__c'
-			//+ ', Zuora__Account__c'
-			// + ', (select Id from Zuora__Subscriptions__r)' // this part cannot be done, too complicated 
 			+ ', (select Id, Monthly_Account_Status__c, PrimaryContact_Email__c, PrimaryContact_Name__c from eBroadcast_Preferences__r order by Id) ' // for email recipient
 			+ '	FROM Zuora__CustomerAccount__c '
 			+ '	WHERE eBroadcast_Product_Access__c = true '
-			+ ' ORDER BY Name, Id'
-			;
-		
-		//System.debug( 'to exec batch ' + btchProc);
+			+ ' ORDER BY Name, Id';
+
 		Database.executeBatch(btchProc, BATCH_INSERT_SIZE);
 	} // callBatchEBCCreateNotification
 	
@@ -184,11 +149,7 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 			if (billingAcct.eBroadcast_Preferences__r.size() > 0) {
 				EBC_Account_Notification__c accNotification = new EBC_Account_Notification__c( Billing_Account__c = billingAcct.Id
 							, Name = billingAcct.Name
-							//, Email__c = billingAcct.Contact__r.Email
 							, Email_Balance__c = billingAcct.eBroadcast_Email_Balance__c
-							//, Storage_Usage__c = billingAcct.eBroadcast_Storage_Usage__c
-							//, Account_Level_Add_On__c = '' // default is none (billingAcct.eBroadcast_Add_On_Access__c) ? 'Extra Added' : ''
-							//, Service_Level_Add_On__c = ''
 							, EBC_Subscription_Type__c = EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO // default to pay as you go 
 							, EBC_Rate_Plan_Name__c = EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO // default to prepaid, to be updated by related Zuora__SubscriptionProductCharge__c
 							, Notification_Type__c = EBC_ACCOUNT_NOTIFICATION_TYPE_STATUS
@@ -200,7 +161,6 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 						);
 				
 				EBC_Preference__c ebcPref = billingAcct.eBroadcast_Preferences__r[0];
-				//accNotification.Storage_Capacity__c = (billingAcct.eBroadcast_Storage__c == null) ? billingAcct.eBroadcast_Storage__c : IECEBC_Utility.ebcSetup.Default_Storage_Capacity__c;
 				accNotification.Primary_Contact_Name__c = ebcPref.PrimaryContact_Name__c;
 				accNotification.Email__c = ebcPref.PrimaryContact_Email__c;
 				
@@ -243,7 +203,6 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 			from EBC_Activity__c
 			where Related_Billing_Account__c in : billingAccountIdToEbcAccountNotificationMap.keySet()
 				and Activity_Date_Time__c = LAST_MONTH
-				//and Activity_Type__c = 'Sent'
 				and EBC_Campaign__r.Status__c = 'SENT'
 			group by Related_Billing_Account__c
 					, calendar_year(Activity_Date_Time__c)

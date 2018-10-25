@@ -58,13 +58,11 @@ public with sharing class ISSP_PortalUserStatusChange {
         rejectionReasonOptions = new List<SelectOption>();
         rejectionReasonOptions.add(new SelectOption('Retired', Label.ISSP_RejectReason_Retired));
         rejectionReasonOptions.add(new SelectOption('LeftCompany', Label.ISSP_RejectReason_Left));
-        //rejectionReasonOptions.add(new SelectOption('AccessDenied', Label.ISSP_RejectReason_Denied));
         rejectionReasonOptions.add(new SelectOption('UnknownContact', Label.ISSP_RejectReason_Unknown));
         
         inactiveReasonOptions = new List<SelectOption>();
         inactiveReasonOptions.add(new SelectOption('Retired', Label.ISSP_RejectReason_Retired));
         inactiveReasonOptions.add(new SelectOption('LeftCompany', Label.ISSP_RejectReason_Left));
-        //inactiveReasonOptions.add(new SelectOption('AccessDenied', Label.ISSP_RejectReason_Denied));
         inactiveReasonOptions.add(new SelectOption('UnknownContact', Label.ISSP_RejectReason_Unknown));
         //CummunityOptions
         communityOptions = new List<SelectOption>();
@@ -76,8 +74,6 @@ public with sharing class ISSP_PortalUserStatusChange {
                     selectedVal = key;
             }            
         }
-
-
     }
 
     public Pagereference save(){
@@ -86,14 +82,10 @@ public with sharing class ISSP_PortalUserStatusChange {
             ApexPages.addMessage(myMsg);
             return null;
         }
-        else 
-        {    if(con.User_Portal_Status__c == 'Regional Administrator'){
+        else{    
+            if(con.User_Portal_Status__c == 'Regional Administrator'){
                 con.Regional_Administrator_Countries__c = fieldSetCtrl.fieldSet;
-              }
-              else
-              {
-                 con.Regional_Administrator_Countries__c = '';
-              }
+            }else { con.Regional_Administrator_Countries__c = '';     }
         }
         if ((con.Community__c == '' || con.Community__c == null) && communityName!='CNS'){
             con.Community__c = 'ISS Customer Portal';
@@ -181,19 +173,14 @@ public with sharing class ISSP_PortalUserStatusChange {
     @future 
     public static void futureDisabelUser(string conId) {
         
-       list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled from User u where contactId =:conId];
+        list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled from User u where contactId =:conId];
         for(User u : usersToUpdate){
             if(u.IsActive || u.IsPortalEnabled ){
                 u.IsActive = false;
-                // TF - Commented to fix SP8-28, user just needs to be inactivated. A batch has been created to change IsPortalEnabled to false
-                //u.IsPortalEnabled = false;
             }
         }
-        try{
-            update usersToUpdate;
-        }catch(Exception e){        
-          
-        } 
+        update usersToUpdate;
+        
     }
     
     @RemoteAction
@@ -264,19 +251,13 @@ public with sharing class ISSP_PortalUserStatusChange {
     
     public Pagereference sendEmailToUser(){
         
-        try{
-            User user = [select Id from User where ContactId =:contactId];
-            ISSP_Registration.password =  ISSP_Registration.generatePassword();
-            system.setPassword(user.Id, ISSP_Registration.password);
-            if(CommunityName=='CNS'){
-                ISSP_Registration.sendCNSEmail(user.Id,contactId);
-                }else{
-            ISSP_Registration.sendEmail(user.Id,contactId);
-            }
-            
-        }catch(Exception e){        
-           
-        } 
+        User user = [select Id from User where ContactId =:contactId];
+        ISSP_Registration.password =  ISSP_Registration.generatePassword();
+        system.setPassword(user.Id, ISSP_Registration.password);
+        if(CommunityName=='CNS'){
+            ISSP_Registration.sendCNSEmail(user.Id,contactId);
+        }else{ ISSP_Registration.sendEmail(user.Id,contactId); }
+        
         return null;
     }
 
@@ -294,12 +275,7 @@ public with sharing class ISSP_PortalUserStatusChange {
         Type t = Type.forName('ISSP_PortalUserStatusChange.'+actionName);
         
         IActions action = (IActions) t.newInstance();
-        try{
-            action.processAction(contactId);
-        }catch(Exception e){        
-           //return new map<String, String> { 'error' => e.getMessage() };
-        } 
-        //return new map<String, String> { 'status' => 'ok' };
+        action.processAction(contactId);
         return null;
     }
 
@@ -360,7 +336,7 @@ public with sharing class ISSP_PortalUserStatusChange {
         // create portal user
         
         
-        User newUser = createUser(  con,userProfile);
+        User newUser = createUser(con,userProfile);
         system.debug('\n\n\n newUser'+newUser+'\n\n\n');
         String UID = Comm_User_Helper.NewGuid();
         system.debug('newuser id: ' + newUser.Id);
@@ -391,13 +367,6 @@ public with sharing class ISSP_PortalUserStatusChange {
             Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
             Comm_User_Helper.permissionASS(new list<Id>{newUser.Id});
             
-            //ISSP_Registration.password =  ISSP_Registration.generatePassword();
-            //system.setPassword(newUser.Id, ISSP_Registration.password);
-            //ISSP_Registration.sendEmail(newUser.Id,con.Id);
-            
-            //System.resetPassword(newUser.Id,true);
-            //Site.createPortalUser(newUser,con.accountId,null, true);
-            // ISSP_HierarchyAccountTeamAccounts.HierarchyAccountTeamMemberAccountsacc(new set<Id>{newUser.Id}); 
         }else{
             system.debug('will update user with this profile id: ' + newUser.ProfileId);
             update newUser;
@@ -410,18 +379,12 @@ public with sharing class ISSP_PortalUserStatusChange {
         for(User u : usersToUpdate){
             if(u.IsActive || u.IsPortalEnabled ){
                 u.IsActive = false;
-                // TF - Commented to fix SP8-28, user just needs to be inactivated. A batch has been created to change IsPortalEnabled to false
-                //u.IsPortalEnabled = false;
             }
         }
-         try{
-            update usersToUpdate;
-            
-         }catch(Exception e){        
-          
-        } 
+        update usersToUpdate;
         update new Contact(Id=contactId,User_Portal_Status__c='');
     } 
+
      public static String createAlias(String pFirstName, String pLastName) {
         if(pFirstName==null)
             pFirstName='-';
@@ -898,11 +861,11 @@ public with sharing class ISSP_PortalUserStatusChange {
             }
         }
         else if (theAction == 'CreateNewUserWithCustomerProfile'){
-            system.debug('ACTION: ' + theAction);
             string userType = ISSP_Utilities.getContactTypeById(conId);
             string profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get(userType);
             string profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
             List <Contact> conList = [SELECT Id, Status__c FROM Contact WHERE Id = :conId];
+
             if (!conList.isEmpty()){
                 try{
                     conList[0].Status__c = 'Active';
