@@ -385,6 +385,14 @@
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>SOLUTION.ISSUE</fields>
+        <fields>SOLUTION.SOLUTION_NUMBER</fields>
+        <fields>Language__c</fields>
+        <fields>SOLUTION.STATUS</fields>
+        <fields>CORE.USERS.ALIAS</fields>
+        <relatedList>RelatedSolutionList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Case_Type__c</fields>
         <fields>CASES.RECORDTYPE</fields>

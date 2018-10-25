@@ -1072,6 +1072,18 @@
             <allInternalUsers></allInternalUsers>
         </sharedTo>
     </listViews>
+    <listViews>
+        <fullName>files_by_case</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case__c</field>
+            <operation>equals</operation>
+            <value>09518252</value>
+        </filters>
+        <label>files by case</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>AmazonFile Name</label>
         <trackHistory>false</trackHistory>
