@@ -1264,7 +1264,7 @@ public without sharing class AMS_Utils {
         //DT: reindented and added 3 fields for iso shipping/billin
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
                                                                     ,'IATACode__c' => 'IATACode__c'
-                                                                    //,'Short_Name__c' => 'Short_Name__c'
+                                                                    ,'Short_Name__c' => 'Short_Name__c'
                                                                     ,'TradeName__c' => 'Trade_Name__c'
                                                                     ,'License_Number__c' => 'ISSP_AMS_License_No__c'
                                                                     ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
@@ -1332,8 +1332,6 @@ public without sharing class AMS_Utils {
 
         for (AMS_OSCAR__c oscar : oscars) {
 
-            Boolean accountHasChanges = false;
-
             Account acc = accounts.get(oscar.Account__c);
 
             AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
@@ -1350,8 +1348,6 @@ public without sharing class AMS_Utils {
 
                     if( acc.get(accfield) != newValue ){
 
-                        accountHasChanges = true;
-
                         if(AMS_AccountTriggerHandler.minorChangesAccountFields.contains(accfield.toLowerCase())){
                             accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', accfield, String.valueOf(acc.get(accfield)), String.valueOf(newValue)));
                         }
@@ -1365,71 +1361,33 @@ public without sharing class AMS_Utils {
                 if(acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name){
                     accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingState', acc.ShippingState, onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null));
                     acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
-                    accountHasChanges = true;
                 }
                 if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
                     accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingCountry', acc.ShippingCountry, onlineAcc.Shipping_ISO_Country__r.Name));
                     acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                    accountHasChanges = true;
                 }
 
-                if((onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes' && acc.In_a_Airport__c != true) || (onlineAcc.ISSP_AMS_Premises_located_at_airport__c != 'Yes' && acc.In_a_Airport__c == true)){
-                    acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
-                    accountHasChanges = true;
-                }
+                acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
+                acc.Company_Type__c = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
+                acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
+                acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
+                acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
+                acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
+                acc.BillingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.IATA_ISO_State__r.Name : null;
 
-                String transformedCompanyType = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
-                if(acc.Company_Type__c != transformedCompanyType){
-                    acc.Company_Type__c = transformedCompanyType;
-                    accountHasChanges = true;
-                }
-
-                String transformedGDS = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
-                if(acc.GDS__c != transformedGDS){
-                    acc.GDS__c = transformedGDS;
-                    accountHasChanges = true;
-                }
-
-                if(acc.BillingCountry != onlineAcc.Branch_Office_Country__r.Name){
-                    acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
-                    accountHasChanges = true;
-                }
-
-                if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
-                    acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                    accountHasChanges = true;
-                }
-
-                if(onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true && (acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name || acc.BillingState != onlineAcc.IATA_ISO_State__r.Name)){
-                    acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
-                    acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
-                    accountHasChanges = true;
-                } else if(onlineAcc.IATA_ISO_State__r.Valid_for_Address__c != true && (acc.ShippingState != null || acc.BillingState != null)){
-                    acc.ShippingState = null;
-                    acc.BillingState = null;
-                    accountHasChanges = true;
-                }
-
-                String decodedAMFromOscarProcess = decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
-                if(acc.ANG_Accreditation_Model__c != decodedAMFromOscarProcess){
-                    acc.ANG_Accreditation_Model__c = decodedAMFromOscarProcess;
-                    accountHasChanges = true;
-                }
+                acc.ANG_Accreditation_Model__c = decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
 
                 if(oscar.Process__c == NEWHESTANDARD && acc.RHC_Informations__r.isEmpty()) createRHCInfo.add(acc);
 
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
                 if(oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
-                    accountHasChanges = true;
                     acc.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
                     if(acc.Is_PCI_compliant__c == 'Corporate Card')
                         acc.ANG_PCI_compliance_expiry_date__c = Date.newInstance(2099, 12, 31);
                 }
 
-                if(accountHasChanges)
-                    accountsToUpdate.add(acc);
-
+                accountsToUpdate.add(acc);
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 
 

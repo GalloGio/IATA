@@ -131,20 +131,8 @@ public class ANG_RHCInformationTriggerHandler{
 		}*/
 
 		if(!accIds.isEmpty()) {
-			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) { 
-				Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-			} else {
-				if(System.isBatch() && Limits.getQueueableJobs() == 1) {
-					String hour = String.valueOf(Datetime.now().hour());
-					String min = String.valueOf(Datetime.now().minute()); 
-					String ss = String.valueOf(Datetime.now().second() + 5);
-					String nextFireTime = ss + ' ' + min + ' ' + hour + ' * * ?';
-					System.schedule('ANG_UpdateRHCInformationScheduler ' + String.valueOf(Math.random()), nextFireTime, 
-						new ANG_UpdateRHCInformationScheduler(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-				} else {
-					System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-				}				
-			}
+			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+			else System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
 		}	
 	}
 

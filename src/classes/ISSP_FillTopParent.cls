@@ -190,7 +190,7 @@ public without sharing class ISSP_FillTopParent {
 	 * All it does is updating the node's Top_Parent.
 	 * The AfterUpdate trigger will update it's hierarchy.
 	 */
-	public static void accountsBeforeUpdateTopParent(List<Account> acctsToUpdate){
+	public static void accountsBeforeUpdateTopParent(List<Account> acctsToUpdate, Map<Id, Account> oldTrigger, Map<Id, Account> newTrigger){
 		Set<Id> parentIds = new Set<Id>();
 		for(Account acct : acctsToUpdate){
 			parentIds.add(acct.ParentId);

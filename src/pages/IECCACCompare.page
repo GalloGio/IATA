@@ -160,15 +160,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               <td></td>
               <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
             </tr>
-
             <tr>
               <td>Approval Date</td>
-              <td></td>
-              <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
-            </tr>
-
-            <tr>
-              <td>NewGen ISS Accreditation Model</td>
               <td></td>
               <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
             </tr>
@@ -201,8 +194,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </tr>
 			
            </table>
+
+
+
+
+
+
+
+
+
+
+             
+
+
         </div>
        </div>
+
+
     </div>
     </div>
   </div>
