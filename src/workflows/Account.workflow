@@ -620,6 +620,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <description>Sends a notification email when an airline becomes active for the first time</description>
         <formula>AND(  ISNEW(),  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -630,6 +631,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <description>Sends a notification email when an airline becomes inactive</description>
         <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Active Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Inactive Company&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -640,6 +642,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <description>Sends a notification email when an airline becomes re-activated</description>
         <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Inactive Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
