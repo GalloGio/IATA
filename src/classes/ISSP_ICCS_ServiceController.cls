@@ -36,7 +36,7 @@ public class ISSP_ICCS_ServiceController{
 		get{
 			if(participantId == null){
 				if(isAirline){
-					participantId = topAccount.Airline_designator__c + topAccount.IATACode__c;
+					participantId = topAccount.Airline_designator__c + (topAccount.IATACode__c == '' || topAccount.IATACode__c == null)? topAccount.Airline_Prefix__c : topAccount.IATACode__c;
 				}
 				if(isAgency){
 					participantId = topAccount.IATACode__c;
