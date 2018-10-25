@@ -204,7 +204,9 @@ public with sharing class AMS_AccountRoleCreator
         }
 
         //upsert contacts
+        AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
         upsert contactsToUpsert.values();
+        AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
 
         //upsert companies
         upsert companiesToUpsert.values();
