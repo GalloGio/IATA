@@ -1,7 +1,6 @@
 @isTest
-public class vfEBC_CampaignApproval_Test {
+private class vfEBC_CampaignApproval_Test {
 	
-
 	@testSetup static void setup(){
 
 		//Data preparation
@@ -42,7 +41,7 @@ public class vfEBC_CampaignApproval_Test {
 
 		PageReference pageApprove = clsInstance.Approve();
 
-		Test.startTest();
+		Test.stopTest();
 
 		System.assert(pageApprove.getUrl().contains('/apex/EBC_CampaignApproval?id=' + ebcCampaign.id));
 
@@ -56,7 +55,7 @@ public class vfEBC_CampaignApproval_Test {
 
 		PageReference pageApprove = clsInstance.Reject();
 
-		Test.startTest();
+		Test.stopTest();
 
 		System.assert(pageApprove.getUrl().contains('/apex/EBC_CampaignApproval?id=' + ebcCampaign.id));
 

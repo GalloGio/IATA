@@ -1,5 +1,5 @@
 @isTest
-public class AirlineSuspensionChildCasesControllerTst {
+private class AirlineSuspensionChildCasesControllerTst {
 
 	@testSetup static void setup() {
 

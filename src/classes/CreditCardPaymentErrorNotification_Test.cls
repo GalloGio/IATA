@@ -1,5 +1,5 @@
 @isTest
-public class CreditCardPaymentErrorNotification_Test {
+private class CreditCardPaymentErrorNotification_Test {
 
 	@isTest static void testOrderItemList() {
 		//Data preparation

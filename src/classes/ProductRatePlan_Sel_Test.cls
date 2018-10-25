@@ -1,5 +1,5 @@
 @isTest
-public class ProductRatePlan_Sel_Test {
+private class ProductRatePlan_Sel_Test {
 
 	@isTest public static void testGetRatePlanByCharge() {
 

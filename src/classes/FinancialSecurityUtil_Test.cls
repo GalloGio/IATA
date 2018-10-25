@@ -1,5 +1,5 @@
 @isTest
-public class FinancialSecurityUtil_Test {
+private class FinancialSecurityUtil_Test {
 
 	@isTest public static void testHandleFSBeforeUpdate() {
 
