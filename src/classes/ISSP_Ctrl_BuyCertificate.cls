@@ -40,7 +40,7 @@ public class ISSP_Ctrl_BuyCertificate {
 
     public boolean iataCertificatesVisible {get; set;}
 
-    public static final Set<String> EXCLUDEACCOUNTSTATUS = new Set<String>{'Terminted','New application pending','Not accreditated'};
+    public static final Set<String> EXCLUDEACCOUNTSTATUS = new Set<String>{'Terminated','New application pending','Not accreditated'};
     
     public String getSortDirection() {
         //if not column is selected 
