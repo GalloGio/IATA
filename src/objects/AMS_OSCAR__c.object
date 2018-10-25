@@ -2295,6 +2295,17 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Endorsement_Requested__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Ford GDI process</description>
+        <externalId>false</externalId>
+        <label>Endorsement Requested</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Fees_refund_requested__c</fullName>
         <externalId>false</externalId>
         <label>Fees refund requested</label>
@@ -2536,6 +2547,26 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Financial_Security_Information__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Security Information</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Financial_Security_Received__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Security Received</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Financial_Security_expiry_date__c</fullName>
