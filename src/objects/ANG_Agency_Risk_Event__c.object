@@ -404,8 +404,17 @@ Id
     <label>Agency Risk Event</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_AccountId__c</columns>
+        <columns>ANG_Risk_Configuration__c</columns>
+        <columns>ANG_Event_Status__c</columns>
+        <columns>ANG_Expired__c</columns>
+        <columns>ANG_Source__c</columns>
+        <columns>ANG_ChangeCode__c</columns>
+        <columns>ANG_Risk_Type__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>RE-{00000000}</displayFormat>
