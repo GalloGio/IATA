@@ -3932,6 +3932,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <default>false</default>
                     <label>Book &amp; Mobile</label>
                 </value>
+                <value>
+                    <fullName>Merchandise</fullName>
+                    <default>false</default>
+                    <label>Merchandise</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -8608,6 +8613,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Merchandise</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Mobile</fullName>
                 <default>false</default>
             </values>
@@ -11587,6 +11596,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14699,6 +14712,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Merchandise</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Mobile</fullName>
                 <default>false</default>
             </values>
@@ -17706,6 +17723,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>

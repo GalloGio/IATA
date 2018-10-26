@@ -2257,6 +2257,10 @@ la seguente procedura per completarlo :
         <name>FW</name>
     </customLabels>
     <customLabels>
+        <label><!-- Feed Item Invalid Topics --></label>
+        <name>Feed_Item_Invalid_Topics</name>
+    </customLabels>
+    <customLabels>
         <label><!-- File Description --></label>
         <name>File_Description</name>
     </customLabels>
@@ -13952,6 +13956,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>Invalid_Source_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- Invalid Topic Assignment --></label>
+        <name>Invalid_Topic_Assignment</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Invoice number --></label>
         <name>Invoice_number</name>
     </customLabels>
@@ -14662,6 +14670,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- No-Reply --></label>
         <name>No_Reply</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No_Subsidiaries --></label>
+        <name>No_Subsidiaries</name>
     </customLabels>
     <customLabels>
         <label><!-- No account yet? Sign up! --></label>
@@ -16233,6 +16245,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- ReleaseDateMessage --></label>
         <name>ReleaseDateMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Remaining_Owners --></label>
+        <name>Remaining_Owners</name>
     </customLabels>
     <customLabels>
         <label><!-- Renewal_Number --></label>
