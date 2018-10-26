@@ -247,6 +247,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Not_Applicable5__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This field is checked when it&apos;s not required to send the HOT to the test partner airline</description>
+        <externalId>false</externalId>
+        <label>Not Applicable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Request_coding_in_YMQ_to_allocate_design__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Coordinator</inlineHelpText>

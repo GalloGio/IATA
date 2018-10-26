@@ -4,6 +4,8 @@
  
 trigger trgCheckOnlyOneActiveService on Services_Rendered__c (before insert, before update, after insert, after update, after delete) {  
 
+    set<String> setValidServicesRendered = AirlineSuspensionChildCaseCreationBatch.SET_VALID_PARITICIPATIONS;
+
     if (Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)) {
         map<string,map<Id,list<Services_Rendered__c>>> IndexsPerIdAccount = new map<string,map<Id,list<Services_Rendered__c>>>();
         set<Id> accountIds = new set<Id>();
@@ -15,11 +17,8 @@ trigger trgCheckOnlyOneActiveService on Services_Rendered__c (before insert, bef
         for (Services_Rendered__c sr : Trigger.new) {
             if(trigger.isUpdate)
                     servicesUpdated.add(sr.id);  
-                    
-            if((sr.Services_Rendered_Type__c == 'BSP Representation' || 
-                sr.Services_Rendered_Type__c == 'CASS Participation' || 
-                sr.Services_Rendered_Type__c == 'BSP via IBCS' ||
-                sr.Services_Rendered_Type__c =='CASS via GSSA' ) &&
+            
+            if(setValidServicesRendered.contains(sr.Services_Rendered_Type__c) &&
                 sr.Services_Rendered_Status__c == 'Active' ){
                  
                   String   key = sr.Services_Rendered_to_Airline__c + sr.Services_Rendered_Type__c + sr.Services_Rendered_By__c;

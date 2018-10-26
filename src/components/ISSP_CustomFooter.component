@@ -232,11 +232,11 @@ function getCookie(name) {
     return null;
 }
 
+$ =  jQuery.noConflict();
 $('.sidebarCell').hide();$('.caseTab input[name="save_close"]').hide();
 
 $("#cas7_ilecell").prop("onclick", null);
 $("#cas7_ilecell").prop("ondblclick", null);
-
 
 //$('#contentWrapper').append('<div id="dvBackgroundMaster" style=""><img id="ctl00_imgBackgroundMaster" class="wwBg" title="Page Background Image" alt="Page Background Image" src="https://customer-portal-iata.force.com/resource/1389346057000/IIS_Portal/images/background_IATA.png" /></div>');
 $('#tabBar').prepend('<li> <a href="/ISSP_homePage"><span class="ico-home"> </span> </a> </li>');
