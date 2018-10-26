@@ -1000,6 +1000,10 @@
             }
         });
 
+        function toggleCurrencyCode(c) {
+            $('[id$=y2CurrencyCode]').html(' ' + c);
+        }
+
 
         function showCurrCorporateDetails() {
             if($('[id$="ownershipCheckbox"]').prop("checked")) {
