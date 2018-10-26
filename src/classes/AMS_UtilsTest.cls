@@ -59,9 +59,6 @@ private class AMS_UtilsTest {
         Map<String, IATA_ISO_State__c> iataStates = AMS_Utils.iataIsoStates;
         Map<String, IATA_ISO_Country__c> iataIsoCountries = AMS_Utils.iataIsoCountries;
 
-        //IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
-        //IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
-
         Boolean bState = AMS_Utils.isValidState('test '); //State Name = 'Test' - Res = OK
         Boolean bCountry = AMS_Utils.isValidCountry(' us '); //Country Name = 'US' - Res = OK
         Boolean bState2 = AMS_Utils.isValidState('test1'); //State Name = 'Test' - Res = NOK
@@ -76,14 +73,6 @@ private class AMS_UtilsTest {
         Test.startTest();
         //no code coverage for sending emails
         AMS_Utils.sendEmailAmsSupport( 'test subject', 'test message');
-        Test.stopTest();
-    }
-
-    @isTest
-    static void testCreateEmployeePersonFromAccountContact() {
-
-        Test.startTest();
-        AMS_Utils.createEmployeePersonFromAccountContact( '001234567891235');
         Test.stopTest();
     }
 
@@ -666,8 +655,7 @@ private class AMS_UtilsTest {
         Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Country__c, IATA_ISO_State__c, Shipping_Street__c, Shipping_Postal_Code__c, Branch_Office_Email__c, Branch_Office_Phone__c, Branch_Office_FAX__c, Shipping_City__c, Operation__c,
         Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
         Shipping_ISO_Country__c, Shipping_ISO_State__c, Link_agent_name__c, ISSP_AMS_Legal_Status__c, ISSP_AMS_GDS_with_signed_contract__c from AMS_Pax_Accreditation_Form__c where id = :oscarLst[0].AMS_Online_Accreditation__c];
-       // Id oscarAccountParent = oscarLst.get(oscarLst[0].Account__c).ParentId;
-       // Set<Id> accAffected = new Set<Id> {oscarLst[0].Account__c, oscarAccountParent};
+
         Map<Id, Account> getAccounts = new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c,Parent.IATACode__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
                 BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,

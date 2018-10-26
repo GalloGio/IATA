@@ -191,9 +191,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         Account aAccount = accounts.get(aCase.AccountId);
                         if(aAccount != null){
                             accountMap.put(aCase.id, aAccount);
-                            if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){
-                                aCase.CNSCase__c = true;
-                            }
+                            if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){ aCase.CNSCase__c = true; }
                         }
                   
                     }
@@ -544,7 +542,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
             // Prevent the closing of the ASP cases if there are related tasks still open
             // only continue if there are ASP cases getting closed
-            System.debug(loggingLevel.ERROR, '____ [CaseBeforeTrigger - trgICCS_ASP_Case_Validation] setClosingCasesIds] - ' + setClosingCasesIds);
             if (!setClosingCasesIds.isEmpty()) {
                 //create a map of open tasks related to the cases
                 Map<Id, Task> mapTasksPerCaseId = new Map<Id, Task>();

@@ -588,11 +588,6 @@ public without sharing class Utility {
         else
             return cs.Number_1__c;
     } //*** end of "getNumericSetting"
-
-    //public static Double getNumericSetting(String settingName, String fieldName) {
-    //    Apex_Setting__c cs = Apex_Setting__c.getValues(settingName);
-    //    return ((cs == null || cs.get(fieldName) == null) ? 0 : Double.valueOf(cs.get(fieldName)));
-    //} //*** end of "getNumericSetting"
     
        
     /****************************************************************************************************
@@ -607,10 +602,6 @@ public without sharing class Utility {
         else
             return cs.Text_1__c;
     } //*** end of "getTextSetting"
-    //public static String getTextSetting(String settingName, String fieldName) {
-    //    Apex_Setting__c cs = Apex_Setting__c.getValues(settingName);
-    //    return ((cs == null || cs.get(fieldName) == null) ? '' : String.valueOf(cs.get(fieldName)));
-    //} //*** end of "getTextSetting"
     
     
     /****************************************************************************************************
@@ -627,10 +618,6 @@ public without sharing class Utility {
         else
             return cs.Text_1__c.split(separator);
     } //*** end of "getTextSettingToArray"
-    //public static List<String> getTextSettingToArray(String settingName, String fieldName, String separator) {
-    //    Apex_Setting__c cs = Apex_Setting__c.getValues(settingName);
-    //    return ((cs == null || cs.get(fieldName) == null) ? new List<String>() : String.valueOf(cs.get(fieldName)).split(separator));
-    //} //*** end of "getTextSettingToArray"
     
     
     /****************************************************************************************************
@@ -666,20 +653,7 @@ public without sharing class Utility {
         
         return listSetting;
     } //*** end of "getSeqTextSettingToArray"
-    //public static List<String> getSeqTextSettingToArray(String settingName, String fieldName) {
-    //    Apex_Setting__c cs;
-    //    List<String> listSetting = new List<String>();
-    //    String fieldValues = '';
-    //    for (Integer i1 = 1; i1 > 0; i1++) {
-    //        cs = Apex_Setting__c.getValues(settingName + i1);
-    //        if (cs == null)
-    //            break;
-    //        else if (cs.get(fieldName) != null)
-    //            listSetting.add(String.valueOf(cs.get(fieldName)));
-    //    }
-        
-    //    return listSetting;
-    //} //*** end of "getSeqTextSettingToArray"
+   
     
     
     /****************************************************************************************************
