@@ -7,7 +7,6 @@ private class ISSP_EditPortalServiceAccessExt_Test {
 		insert new ISSP_CS__c(Name = 'ISS_Portal_Agency_User',Value__c = '00ew0000001QoBp');
 		insert new ISSP_CS__c(Name = 'Host',Value__c = 'Host_test');
 		
-
 		Account account = IECTestUtil.createSampleAccount();
     	insert account;
     	Contact c = IECTestUtil.createSampleContact(account);
@@ -15,19 +14,7 @@ private class ISSP_EditPortalServiceAccessExt_Test {
 		
 		User testUser = IECTestUtil.createSampleUser(c);
 		testUser.TD_Team__c = true;
-/*
-		User testUser = New User(
-            Alias = 'standt', Email='standarduser@testorg.com',
-            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-            LocaleSidKey='en_US', ProfileId = [Select Id from Profile where name = 'System Administrator'].ID,
-            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
-            License_Cost_Center__c = 'ISF005CH01',
-            IsActive = true, TD_Team__c = true
-        );
-*/
-
         insert testUser;
-
 	}
 
 

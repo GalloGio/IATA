@@ -41,7 +41,6 @@ private class AMS_AgencyContactsControllerTest {
 
         Test.startTest();
         AMS_AgencyContactsController sic = new AMS_AgencyContactsController(new ApexPages.standardController(ag));
-        sic.buildStructure();
         sic.getcontactTable();
         Test.stopTest();
     }   
