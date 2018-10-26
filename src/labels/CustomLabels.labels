@@ -235,6 +235,14 @@
         <shortDescription>AMS_OSCAR_Action18</shortDescription>
         <value>Restore Forms of Payment</value>
     </labels>
+
+    <labels>
+        <fullName>AMS_OSCAR_Action20</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action20</shortDescription>
+        <value>Open related Financial Security</value>
+    </labels>
     <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>

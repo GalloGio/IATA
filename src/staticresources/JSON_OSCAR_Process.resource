@@ -6548,7 +6548,7 @@
                 "Automations": [],
                 "DisplayFields": [
                 "New_docs_Received__c",
-                  "STEP6__c"                  
+                  "STEP46__c"                  
                 ],
                 "IsDependent": false
               },
@@ -6558,8 +6558,9 @@
                 "Actions": [],
                 "Automations": [],
                 "DisplayFields": [
-                "New_docs_Received__c",
-                  "STEP6__c"                  
+                  "Billing_Document_Number__c",
+                  "Send_invoice__c",
+                  "STEP47__c"                  
                 ],
                 "IsDependent": false
               },
@@ -6569,8 +6570,7 @@
                 "Actions": [],
                 "Automations": [],
                 "DisplayFields": [
-                "New_docs_Received__c",
-                  "STEP6__c"                  
+                  "STEP48__c"                  
                 ],
                 "IsDependent": false
               }
@@ -6586,8 +6586,8 @@
                 "Actions": [],
                 "Automations": [],
                 "DisplayFields": [
-                "New_docs_Received__c",
-                  "STEP6__c"                  
+                  "Endorsement_Requested__c",
+                  "STEP49__c"                  
                 ],
                 "IsDependent": false
               }
@@ -6599,18 +6599,25 @@
               {
                 "Name": "STEP50",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+	                {
+	                    "FunctionName": "openFS",
+	                    "ActionLabel": "AMS_OSCAR_Action20",
+	                    "args": [
+	                      "oscarid"
+	                    ]
+	          		}
+          		],
                 "Automations": [],
                 "DisplayFields": [
-                "New_docs_Received__c",
-                  "STEP6__c"                  
+                  "Financial_Security_Received__c",
+                  "Financial_Security_Information__c",
+                  "STEP50__c"                  
                 ],
                 "IsDependent": false
               }
             ]
           }
-
-
         ]
       }   
     ]

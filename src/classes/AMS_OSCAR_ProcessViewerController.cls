@@ -93,6 +93,17 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
+    public Boolean getIsGDIWithNoParentCase(){
+           
+        // NG Processes specific conditions
+        if(oscar.Process__c <> AMS_Utils.NGGDI) return false;
+        if(oscar.Oscar_Communication_Case_Id__c == null) return true;
+
+        case c = [SELECT parentid FROM CASE WHERE ID = :oscar.Oscar_Communication_Case_Id__c];
+        return (c.parentid == null);
+        
+    }
+
     public Boolean isNewGenHEProcess{
         get{
             return (
