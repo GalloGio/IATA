@@ -10384,14 +10384,6 @@ IFG Customer Services</value>
         <value>Apply for a New Branch Office</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Apply_New_Cargo_Head_Office</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Apply_New_Cargo_Head_Office</shortDescription>
-        <value>Apply for New Cargo Head Office</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Apply_New_Head_Entity</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
