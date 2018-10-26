@@ -22191,6 +22191,14 @@ this is the tiess topic help</value>
         <value>Invalid password.</value>
     </labels>
     <labels>
+        <fullName>ISSP_InvalidPostalCode</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_InvalidPostalCode</shortDescription>
+        <value>Invalid Postal Code format</value>
+    </labels>
+    <labels>
         <fullName>ISSP_IwishToComplain</fullName>
         <categories>FAQ2Case</categories>
         <language>en_US</language>
