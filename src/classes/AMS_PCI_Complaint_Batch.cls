@@ -482,7 +482,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                         if(recipient.User_Portal_Status__c == 'Approved Admin'){
 
                             //AMSU-177
-                            String sPreferred_Language = recipient.Preferred_Language__c + recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'';
+                            String sPreferred_Language = recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'');
 
                             system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
                             //system.debug('DGR sendEmailAlert: Pref Lang ' + recipient.Preferred_Language__c);
@@ -704,7 +704,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
         for(Schema.Picklistentry pe: prefLanguages){
             EmailTemplate langTemplate = auxCountryTemplates.get('AMS_' + type + '_Compliant_' + pe.getValue());
-            EmailTemplate langTemplateNoBSP = auxCountryTemplates.get('AMS_' + type + '_Compliant_NonBSP' + pe.getValue()); //AMSU-177
+            EmailTemplate langTemplateNoBSP = auxCountryTemplates.get('AMS_' + type + '_Compliant_NonBSP_' + pe.getValue()); //AMSU-177
 
             //English is default and must exist in the system
             if(langTemplate == null) langTemplate = auxCountryTemplates.get('AMS_' + type + '_Compliant_EN');
