@@ -6547,7 +6547,6 @@
                 "Actions": [],
                 "Automations": [],
                 "DisplayFields": [
-                "New_docs_Received__c",
                   "STEP46__c"                  
                 ],
                 "IsDependent": false
