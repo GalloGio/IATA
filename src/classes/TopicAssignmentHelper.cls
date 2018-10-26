@@ -5,22 +5,11 @@ public with sharing class TopicAssignmentHelper {
 	 * Applies to items posted to Airline HQ accounts that are IATA Members.
 	 */
 	public static void AccountTopicValidation(list<TopicAssignment> TriggerNew) {
-		// get the list of allowed topics
-		set<String> setAccountChatterTopics = new set<String>();
-		String strAcceptedValues = '';
-		List<AMP_Account_Topics__c> topics = AMP_Account_Topics__c.getAll().Values();
 		
-		//sort topics by name
-		List<String> topicstr = new List<String>();
-		for (AMP_Account_Topics__c at : topics){
-			topicstr.add(at.Name);
-		}
-		topicstr.sort();
+		TopicHelper.TopicsWrapper topicWrapper = TopicHelper.getTopicsInfo();
 
-		for (String at : topicstr) {
-			setAccountChatterTopics.add(at);
-			strAcceptedValues += (strAcceptedValues == '' ? '' : '; ') + at;
-		}
+		String strAcceptedValues = topicWrapper.acceptedTopics;
+		Set<String> setAccountChatterTopics = topicWrapper.topicSet;
 
 		// only continue if a set of valid topics have been defined; otherwise we would be raising errors for every single topic
 		if (!setAccountChatterTopics.isEmpty()) {
@@ -75,7 +64,7 @@ public with sharing class TopicAssignmentHelper {
 							System.debug(stBroadcastTopics.contains(ta.Topic.Name));
 
 							if (fi != null && mapAccountsPerId.get(fi.ParentId) != null && mapUnacceptableTopicsPerIds.get(ta.TopicId) != null  ) {
-								ta.addError('You have entered an invalid topic for an Account.\r\nPlease choose one or more of the following topics:\r\n' + strAcceptedValues);
+								ta.addError(Label.Invalid_Topic_Assignment + '\r\n' + strAcceptedValues);
 								system.debug('Error raised for topic: ' + mapUnacceptableTopicsPerIds.get(ta.TopicId).Name);
 							}
 						}
