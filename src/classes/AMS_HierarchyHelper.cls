@@ -9,20 +9,23 @@ global class AMS_HierarchyHelper {
 
 		system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> accountsIds ' + accountsIds);
 
-		for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c
-		                                      FROM AMS_Agencies_relationhip__c 
-		                                      WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
+		if(!accountsIds.isEmpty()){
 
-			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> trovo hierarchy ' + h.ID);
-			if (hierarchyToAccounts.get(h.Hierarchy__c) == null)
-				hierarchyToAccounts.put(h.Hierarchy__c, new Set<Id>());
+			for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c
+			                                      FROM AMS_Agencies_relationhip__c 
+			                                      WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
+
+				system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> trovo hierarchy ' + h.ID);
+				if (hierarchyToAccounts.get(h.Hierarchy__c) == null)
+					hierarchyToAccounts.put(h.Hierarchy__c, new Set<Id>());
 
 
-			if (accountsIds.contains(h.Parent_Account__c)) {
-				hierarchyToAccounts.get(h.Hierarchy__c).add(h.Parent_Account__c);
+				if (accountsIds.contains(h.Parent_Account__c)) {
+					hierarchyToAccounts.get(h.Hierarchy__c).add(h.Parent_Account__c);
 
-			}/*else */if (accountsIds.contains(h.Child_Account__c)) {
-				hierarchyToAccounts.get(h.Hierarchy__c).add(h.Child_Account__c);
+				}/*else */if (accountsIds.contains(h.Child_Account__c)) {
+					hierarchyToAccounts.get(h.Hierarchy__c).add(h.Child_Account__c);
+				}
 			}
 		}
 
@@ -34,15 +37,18 @@ global class AMS_HierarchyHelper {
 		for (Id accountId : accountsIds)
 			result.put(accountId, new List<AMS_Agencies_relationhip__c>());
 		//AMSU-134 added HO_Flag__c,Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
-		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  
-												Child_Account__r.Status__c, Parent_Account__r.Status__c, Child_Account__r.Reason__c, Parent_Account__r.Reason__c,
-												HO_Flag__c, Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
-		                                      FROM AMS_Agencies_relationhip__c
-		                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
+		if(!hierarchyToAccounts.keyset().isEmpty()){
+			
+			for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  
+													Child_Account__r.Status__c, Parent_Account__r.Status__c, Child_Account__r.Reason__c, Parent_Account__r.Reason__c,
+													HO_Flag__c, Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
+			                                      FROM AMS_Agencies_relationhip__c
+			                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
 
-			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> found relationship ' + r);
-			for (Id theAccountId : hierarchyToAccounts.get(r.Hierarchy__c)) {
-				result.get(theAccountId).add(r);
+				system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> found relationship ' + r);
+				for (Id theAccountId : hierarchyToAccounts.get(r.Hierarchy__c)) {
+					result.get(theAccountId).add(r);
+				}
 			}
 		}
 
