@@ -122,11 +122,11 @@ global class ANG_MasterData_Interface{
 
     /* Due Diligence */
     private class DueDiligence{
-        public string Type;
+        public string type;
         public string status;
         
-        public DueDiligence(string Type, string status){
-            this.Type = Type;
+        public DueDiligence(string type, string status){
+            this.type = type;
             this.status = status;
         }
     }

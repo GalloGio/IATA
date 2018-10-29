@@ -2473,6 +2473,18 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Postal_Code_Format_regEx__c</fullName>
+        <description>regEx to validate correct Postal Code format on online forms</description>
+        <externalId>false</externalId>
+        <inlineHelpText>regEx to validate correct Postal Code format on online forms</inlineHelpText>
+        <label>Postal Code Format regEx</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
         <fullName>Prevent_Portal_Trade_Name_Change__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

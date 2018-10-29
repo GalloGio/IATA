@@ -382,7 +382,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		isoCountryMap = new Map<String, IATA_ISO_Country__c>();
 
         List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, 
-        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c, Tax_Number_VAT_field_mandatory__c 
+        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c, Tax_Number_VAT_field_mandatory__c,
+        								Postal_Code_Format_regEx__c
                                         From IATA_ISO_Country__c
                                         Where ISO_Code__c In :isocodes];
 
@@ -1212,6 +1213,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		errorFound = false;
 		Pattern iso8859 = Pattern.compile(ISO_8859_1_regEx);
+		Pattern postalCodeRegex;
+
+		if (currentAccount.isocountry.Postal_Code_Format_regEx__c != null && currentAccount.isocountry.Postal_Code_Format_regEx__c != '')
+			postalCodeRegex = Pattern.compile(currentAccount.isocountry.Postal_Code_Format_regEx__c);
 
 		if(!currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Legal_Details__c &&
 			!currentAccount.fw.newForm.Confirm_Location_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Location__c &&
@@ -1316,6 +1321,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				if (currentAccount.fw.newform.Shipping_Postal_Code__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
 					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
+				} else if (postalCodeRegex != null && currentAccount.fw.newform.Shipping_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
+					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
+            		errorFound = true;
 				}
 
 				if (currentAccount.fw.newform.Shipping_ISO_State__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_ISO_State__c).matches()) {
@@ -1351,6 +1359,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				if (currentAccount.fw.newform.Branch_Office_Postal_code__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_Postal_code__c).matches()) {
 					currentAccount.fw.newform.Branch_Office_Postal_code__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
+				} else if (postalCodeRegex != null && currentAccount.fw.newform.Branch_Office_Postal_code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Branch_Office_Postal_code__c).matches()) {
+					currentAccount.fw.newform.Branch_Office_Postal_code__c.addError(Label.ISSP_InvalidPostalCode);
+            		errorFound = true;
 				}
 
 				if (currentAccount.fw.newform.State_Province__c != null && !iso8859.matcher(currentAccount.fw.newform.State_Province__c).matches()) {
@@ -1364,6 +1375,16 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				}
 
 				if (currentAccount.isocountry.Local_language_Agency_details_required__c) {
+					if (postalCodeRegex != null && currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c).matches()) {
+						currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
+            			errorFound = true;
+					}
+
+					if (postalCodeRegex != null && currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c).matches()) {
+						currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
+            			errorFound = true;
+					}
+
 					if (currentAccount.fw.newform.Local_Physical_Address_Street__c == null) {
 						currentAccount.fw.newform.Local_Physical_Address_Street__c.addError(Label.ISSP_YouMustEnter);
 						errorFound = true;

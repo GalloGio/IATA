@@ -5,8 +5,10 @@ private class TopicAssignmentHelperTest {
 		// CREATE TEST DATA
         
         // create the custom setting values
-        AMP_Account_Topics__c acceptedTopic = new AMP_Account_Topics__c(Name = 'Cargo');
-        Insert acceptedTopic;
+        AMP_Account_Topics__c cargoTopic = new AMP_Account_Topics__c(Name = 'Cargo');
+        AMP_Account_Topics__c airportsTopic = new AMP_Account_Topics__c(Name = 'Airports');
+        
+        insert new List<AMP_Account_Topics__c>{cargoTopic, airportsTopic};
 
         // Create a new ISO Country
         IATA_ISO_Country__c country_qr = new IATA_ISO_Country__c(Name = 'Qatar', ISO_Code__c = 'QR', Region__c = 'Africa & Middle East');
