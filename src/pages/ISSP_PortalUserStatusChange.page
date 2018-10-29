@@ -55,9 +55,9 @@
     }
 	</script>
 
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
  	<div class="container">
-        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-        
+        <div id="contentWrapper">
         <div class="alert alert-danger" style="display:{!if(errorMessages.size == null,'none','')}">
 	        <strong>{!$Label.ISSP_Error}</strong>
 	        <apex:repeat value="{!errorMessages}" var="er" id="theRepeat">
@@ -122,8 +122,9 @@
 		</apex:form>
             
 	</div><!-- panel -->
- <c:ISSP_CustomFooter communityName="{!communityName}"/>
+ </div>
 </div><!-- container -->
+<c:ISSP_CustomFooter communityName="{!communityName}"/>
 </body>
 </html>
 </apex:page>
