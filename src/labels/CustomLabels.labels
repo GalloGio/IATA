@@ -1325,6 +1325,47 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>&lt;br/&gt;&lt;br/&gt;As a Portal Administrator you can either update your &lt;a href=&quot;/ISSP_PersonalInformation?mid=M5S1&quot;&gt;Personal Information&lt;/a&gt; to designate yourself as a Legal Authorized Signatory, or assign the correct person from the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&amp;subNav=contacts&amp;mid=M4S1&quot;&gt;Company Administration -&gt; Contacts&lt;/a&gt; page and ask them to open your EasyPay account.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_IEP_ModelBanking_India_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ModelBanking India</shortDescription>
+        <value>For opening of an IATA Easy Pay Account please contact YES BANK &lt;br/&gt;
+Contact Details: 	Mr. Ravi Chaudhary&lt;br/&gt;
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;Tel: 97697 29769&lt;br/&gt;
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;ravi.chaudhary@yesbank.in&lt;br/&gt;&lt;br/&gt;
+
+Contact Details:	Mr. Allen Lasrado&lt;br/&gt;
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;Tel: 8286661684&lt;br/&gt;
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;allen.lasrado@yesbank.in</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_ModelBanking_SouthKorea_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ModelBanking South Korea</shortDescription>
+        <value>For opening of an IATA Easy Pay Account, please contact Woori Bank &lt;br/&gt;
+
+&amp;emsp;&amp;emsp;Contact Person: &amp;emsp;&amp;emsp; SO-YEON YOU&lt;br/&gt;
+&amp;emsp;&amp;emsp;Tel:&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;02-2002-5107&lt;br/&gt;
+&amp;emsp;&amp;emsp;Email address: &amp;emsp;&amp;emsp;&amp;emsp;soyeon.you@wooribank.com &lt;br/&gt;
+&amp;emsp;&amp;emsp;Bank address: &amp;emsp;&amp;emsp;&amp;emsp; Woori Bank, 51, Sogong-ro, Jung-gu, Seoul (04632)&lt;br/&gt;&lt;br/&gt;
+
+
+IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 담당자님과 연락하시어 필요서류 검토 바랍니다.&lt;br/&gt;
+
+&amp;emsp;&amp;emsp;담당직원: &amp;emsp;&amp;emsp;&amp;emsp; 유소연 대리&lt;br/&gt;
+&amp;emsp;&amp;emsp;전화번호: &amp;emsp;&amp;emsp;&amp;emsp; 02-2002-5107&lt;br/&gt;
+&amp;emsp;&amp;emsp;이메일 주소: &amp;emsp;&amp;emsp;soyeon.you@wooribank.com&lt;br/&gt;
+&amp;emsp;&amp;emsp;주소: &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; 서울시 중구 소공로 (회현동 1가) 우리은행 본점 영업부 (04632)</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_ModelBanking_link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ModelBanking Link Label</shortDescription>
+        <value>Bank Contact Details</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_IEP_OpeningInProgress</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -4034,6 +4075,15 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>FW</shortDescription>
         <value>FW</value>
+    </labels>
+    <labels>
+        <fullName>Feed_Item_Invalid_Topics</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Feed Item Invalid Topics</shortDescription>
+        <value>Your message was not posted because you are not using one of the mandatory topics.
+Please use hashtags (#) to define the topic(s) of your post.
+You can choose one or more of the following topics:</value>
     </labels>
     <labels>
         <fullName>File_Description</fullName>
@@ -17823,6 +17873,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>1. IATA Accredited Head Entity Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Local_Details_Copy_Address2</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Branch to Shipping</shortDescription>
+        <value>Copy Billing Address to Shipping Address</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25761,6 +25819,14 @@ CNS Customer Services</value>
         <value>Trade Name of company</value>
     </labels>
     <labels>
+        <fullName>ISSP_Trained_Staff_Certification</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Trained Staff Certification</shortDescription>
+        <value>Trained Staff Certification</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Travel</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -26452,6 +26518,15 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>Invalid Source Case</shortDescription>
         <value>Invalid source case</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Topic_Assignment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Topic Assignment</shortDescription>
+        <value>Your message was not posted because you are not using one of the mandatory topics.
+Please use hashtags (#) to define the topic(s) of your post.
+You can choose one or more of the following topics:</value>
     </labels>
     <labels>
         <fullName>Invoice_number</fullName>
@@ -27896,6 +27971,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>No-Reply</shortDescription>
         <value>No-Reply</value>
+    </labels>
+    <labels>
+        <fullName>No_Subsidiaries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No_Subsidiaries</shortDescription>
+        <value>No Subsidiaries</value>
     </labels>
     <labels>
         <fullName>No_account_yet_Sign_up</fullName>
@@ -30841,6 +30923,13 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>ReleaseDateMessage</shortDescription>
         <value>This title will be effective on</value>
+    </labels>
+    <labels>
+        <fullName>Remaining_Owners</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Remaining_Owners</shortDescription>
+        <value>Remaining Owners</value>
     </labels>
     <labels>
         <fullName>Renewal_Number</fullName>

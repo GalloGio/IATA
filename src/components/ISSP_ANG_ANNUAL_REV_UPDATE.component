@@ -213,17 +213,29 @@
             <!-- left part-->
             <apex:pageBlockSection columns="1">
                 <apex:pageBlockSectionItem labelStyle="width:26%">
-                    <apex:outputtext value="{0}
-                                            <br />{1}<br />{2}<br /><br />{!$Label.ISSP_Office_Email}: {3}<br /> {!$Label.ISSP_Registration_Website}: {4}<br /><br />{!$Label.ISSP_Registration_BusinessPhone}: {5}<br />{!$Label.ISSP_Registration_MobilePhone}: {6}<br />Fax: {7}" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
+                    <apex:outputText value="<b>Billing Address:</b><br/>{0} <br/>{1}<br/>{2}<br/><br/>" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
                         <apex:param value="{!ca.account.BillingStreet}" />
-                        <apex:param value="{!ca.account.BillingCity},&nbsp;{!ca.account.BillingPostalCode}" />
+                        <apex:param value="{!IF(ca.account.BillingCity != '', ca.account.BillingCity + ',&nbsp;', '')}{!ca.account.BillingPostalCode}" />
                         <apex:param value="{!IF(ca.account.BillingState!='',ca.account.BillingState + ',&nbsp;','')}{!ca.account.BillingCountry}" />
+                    </apex:outputText>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem labelStyle="width:26%">
+                    <apex:outputText value="<b>Shipping Address:</b><br />{0}<br />{1}<br />{2}<br /><br />" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
+                        <apex:param value="{!ca.account.ShippingStreet}" />
+                        <apex:param value="{!IF(ca.account.ShippingCity != '', ca.account.ShippingCity + ',&nbsp;', '')}{!ca.account.ShippingPostalCode}" />
+                        <apex:param value="{!IF(ca.account.ShippingState!='',ca.account.ShippingState + ',&nbsp;','')}{!ca.account.ShippingCountry}" />
+                    </apex:outputText>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem labelStyle="width:26%">
+                    <apex:outputText value="{!$Label.ISSP_Office_Email}: {0}<br /> {!$Label.ISSP_Registration_Website}: {1}<br /><br />{!$Label.ISSP_Registration_BusinessPhone}: {2}<br />{!$Label.ISSP_Registration_MobilePhone}: {3}<br />Fax: {4}" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
                         <apex:param value="{!ca.account.Email__c}" />
                         <apex:param value="{!ca.account.Website}" />
                         <apex:param value="{!ca.account.Phone}" />
                         <apex:param value="{!ca.account.Mobile__c}" />
                         <apex:param value="{!ca.account.FAX}" />
-                    </apex:outputtext>
+                    </apex:outputText>
                 </apex:pageBlockSectionItem>
             </apex:pageBlockSection>
             <!-- /left part-->
@@ -236,10 +248,17 @@
                         $(".branch_office_postal_code__c").attr('disabled','disabled');
                         $(".state_province__c").attr('disabled','disabled');
                         $(".branch_office_email__c").attr('disabled','disabled');
+                        $(".shipping_street__c").attr('disabled','disabled');
+                        $(".shipping_city__c").attr('disabled','disabled');
+                        $(".shipping_postal_code__c").attr('disabled','disabled');
+                        $(".shipping_state__c").attr('disabled','disabled');
                     }
+                    
+                    
                 </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
+                    <apex:outputLabel value="{!$Label.Billing_address}:"/>
 
                     <DSE:DS_DataQuality id="BranchAddress"
                         RecordRef="{!ca.fw.newform}"
@@ -254,6 +273,29 @@
                     </DSE:DS_DataQuality>
 
                 </apex:outputPanel>
+
+                <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
+                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
+                    <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress()" />
+                </apex:outputPanel>
+
+                <apex:outputPanel styleClass="agencyLocationComponent" id="newAddressShipping" layout="block">
+                    <apex:outputLabel value="{!$Label.ISSP_Shipping_Address}:"/>
+
+                    <DSE:DS_DataQuality id="ShippingAddress"
+                        RecordRef="{!ca.fw.newform}"
+                        FieldGroupName="Shipping Address"
+                        Edit="true"
+                        FormGroupStyle="form-group"
+                        RowStyle="row"
+                        LabelStyle="col-lg-5 adlabel adlabelpos"
+                        InputStyle="col-lg-5 col-md-1 col-sm-1 col-xs-1"
+                        StatusStyle="col-lg-2 col-md-1 col-sm-1 col-xs-1"
+                        FormControlStyle="apcontainer">
+                    </DSE:DS_DataQuality>
+
+                </apex:outputPanel>
+
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newEmail">
                     <DSE:DS_DataQuality id="BranchEmail"
@@ -888,7 +930,18 @@
 
     <script>
 
-        $('[data-toggle="popover"]').popover();
+        $(".branch_office_street_name_number__c").change(function () {
+            copyBranchAddress();
+        });
+        $(".branch_office_city__c").change(function () {
+            copyBranchAddress();
+        });
+        $(".branch_office_postal_code__c").change(function () {
+            copyBranchAddress();
+        });
+        $(".state_province__c").change(function () {
+            copyBranchAddress();
+        });
 
         function copyPhysicalAddress() {
             var checkBox = document.getElementById('copyCheckBox');
@@ -902,9 +955,24 @@
             }
         }
 
-        //console.log('***************** COMPONENT ******************');
+        function copyBranchAddress() {
+            var checkBox = document.getElementById('copyCheckBoxBranch');
+            if (checkBox.checked){
+                $(".shipping_street__c").val($(".branch_office_street_name_number__c").val());
+                $(".shipping_city__c").val($(".branch_office_city__c").val());
+                $(".shipping_postal_code__c").val($(".branch_office_postal_code__c").val());
+                $(".shipping_state__c").val($(".state_province__c").val());
+            }
+        }
 
+        //console.log('***************** COMPONENT ******************');
+        
         $(document).ready(function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+            
             showCurrCorporateDetails();
             // binds on change to make checkbox function as radio buttons
             $('[data-group]').on('change', function() {
@@ -944,6 +1012,18 @@
             $(".country__c").val("{!ca.isocountry.Name}");
             $(".country__c").attr('readonly', true);
             $(".country__c").attr('disabled','disabled');
+
+            $(".shipping_country__c").val("{!ca.isocountry.Name}");
+            $(".shipping_country__c").attr('readonly', true);
+            $(".shipping_country__c").attr('disabled','disabled');
+            
+            $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
+                return "* " + $(this).text();
+            });
+            
+            $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
+                return "* " + $(this).text();
+            });
         }
 
         function showForms() {
@@ -992,6 +1072,7 @@
             $('[id$="ISSP_AMS_GDS_with_signed_contract__c_unselected"]').prop('disabled', true);
             $('[id$="Local_Legally_Registered_Name__c"]').prop('disabled', true);
             $('[id$="copyCheckBox"]').prop('disabled', true);
+            $('[id$="copyCheckBox"]').prop('disabled', true);
             $('[id$="vatinput"]').prop('disabled', true);
 
             $('[id$="PhysicalStreet"]').prop('disabled', true);
@@ -1008,6 +1089,7 @@
             $('[id$="checkBoxAndInfo"]').prop('hidden', true);
 
             $('[id$="newAddress"]' + " :input").attr("disabled", true);
+            $('[id$="newShippingAddress"]' + " :input").attr("disabled", true);
             $('[id$="newEmail"]' + " :input").attr("disabled", true);
 
             $('[id$="multiSelectId"]' + " :input").attr("disabled", true);
@@ -1017,7 +1099,7 @@
         var natmobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemMobile.locationmobileinput}']");
         var mobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationmobile}']");
 
-        console.log(natmobileacct1);
+        //console.log(natmobileacct1);
 
         natmobileacct1.intlTelInput({
             nationalMode: true,
