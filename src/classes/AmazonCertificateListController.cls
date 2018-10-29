@@ -11,7 +11,7 @@ global with sharing class AmazonCertificateListController {
             if (this.amazonFileToUpload==null) {
                 this.amazonFileToUpload = new AmazonFile__c(
                     RecordTypeId = RT_CERTIFICATE_ID,
-                    sObject_Id__c = this.account.Id
+                    Account__c = this.account.Id
                 );
             }
             return this.amazonFileToUpload;
@@ -41,7 +41,7 @@ global with sharing class AmazonCertificateListController {
             File_Identifier_picklist__c,Source__c, Type__c, Expiry_Date__c,Expired__c,
             CreatedDate, CreatedById
             FROM AmazonFile__c
-            WHERE sObject_Id__c = :this.account.Id
+            WHERE Account__c = :this.account.Id
             AND RecordTypeId = :RT_CERTIFICATE_ID
             AND Expiry_Date__c > :DateTime.now().addYears(-4).dateGMT()
             ];
@@ -79,7 +79,7 @@ global with sharing class AmazonCertificateListController {
             AmazonFile__c amazonFile = new AmazonFile__c(
                 Name = filename,
                 RecordTypeId = RT_CERTIFICATE_ID,
-                sObject_Id__c = parentAccount.Id,
+                Account__c = parentAccount.Id,
                 Full_Name_Unique__c = amazonKey,
                 Document_Date__c = System.today(),
                 Expiry_Date__c = (String.isEmpty(expiryDate) ? null : Date.parse(expiryDate)),

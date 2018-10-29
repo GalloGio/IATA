@@ -129,7 +129,7 @@ private class AmazonFileTrgHelperTest {
             RecordTypeId=AmazonFileTrgHelper.RT_CERTIFICATE_ID,
             Full_Name_Unique__c = 'test',
             Action__c='Create Case',
-            SObject_Id__c = account.Id
+            Account__c = account.Id
         );
         insert file;
         Test.stopTest();
@@ -148,7 +148,7 @@ private class AmazonFileTrgHelperTest {
         AmazonFile__c file = new AmazonFile__c(
             RecordTypeId=AmazonFileTrgHelper.RT_CERTIFICATE_ID,
             Full_Name_Unique__c = 'test',
-            SObject_Id__c = account.Id,
+            Account__c = account.Id,
             Case__c = cse.Id
         );
         insert file;
@@ -172,7 +172,7 @@ private class AmazonFileTrgHelperTest {
         AmazonFile__c file = new AmazonFile__c(
             RecordTypeId=AmazonFileTrgHelper.RT_CERTIFICATE_ID,
             Full_Name_Unique__c = 'test',
-            SObject_Id__c = account.Id,
+            Account__c = account.Id,
             Case__c = cse.Id
         );
         insert file;

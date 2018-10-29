@@ -73,6 +73,20 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Use this lookup when the file is related to an account</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AmazonFiles</relationshipLabel>
+        <relationshipName>AmazonFiles</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Action__c</fullName>
         <description>Field to be used by a WF rule, when its value changes a trigger will perform an action</description>
         <externalId>false</externalId>

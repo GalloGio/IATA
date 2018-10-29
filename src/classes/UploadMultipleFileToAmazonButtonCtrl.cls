@@ -136,6 +136,8 @@ global class UploadMultipleFileToAmazonButtonCtrl {
 
             if (parentId.startsWith('500')) {
                 amazonFile.Case__c = parentId;
+            } else if (parentId.startsWith('001')) {
+                amazonFile.Account__c = parentId;
             } else {
                 amazonFile.sObject_Id__c = String.ValueOf(parentId);
             }

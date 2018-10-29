@@ -447,8 +447,8 @@ public class AmazonFileTrgHelper {
         list<Id> listAccountId = new list<Id>();
         // find Amazon File related objects
         for (AmazonFile__c newFile: listAmazonFiles) {
-            if (newFile.RecordTypeId==RT_CERTIFICATE_ID && newFile.Sobject_Id__c!=null) {
-                listAccountId.add(Id.ValueOf(newFile.Sobject_Id__c));
+            if (newFile.RecordTypeId==RT_CERTIFICATE_ID && newFile.Account__c!=null) {
+                listAccountId.add(newFile.Account__c);
             }
         }
         map<Id,Account> mapAccount = new map<Id,Account>(
@@ -459,8 +459,8 @@ public class AmazonFileTrgHelper {
         dmo.assignmentRuleHeader.useDefaultRule= true;
         map<Id,Case> mapCaseToCreate = new map<Id,Case>();
         for (AmazonFile__c newFile: listAmazonFiles) {
-            if (newFile.RecordTypeId==RT_CERTIFICATE_ID && newFile.Sobject_Id__c!=null) {
-                Account parentAccount = mapAccount.get(Id.ValueOf(newFile.Sobject_Id__c));
+            if (newFile.RecordTypeId==RT_CERTIFICATE_ID && newFile.Account__c!=null) {
+                Account parentAccount = mapAccount.get(newFile.Account__c);
                 Case cse = new Case(
                     RecordTypeId = RT_CASES_EUROPE_ID,
                     Subject = 'AP COMPLIANCE CHINA - ' + newFile.Type__c + ' - ' + parentAccount.Name,
