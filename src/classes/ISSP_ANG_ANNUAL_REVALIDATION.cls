@@ -425,6 +425,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 															  getForm(currentIataCode),
 															  getIsoCountry(accountsMap.get(currentIataCode).Country_ISO_Code__c),
 															  (currentIataCode == heIataCode));
+		ownershipCompleted = checkPreviousOwnership();
 		return null;
 	}
 
