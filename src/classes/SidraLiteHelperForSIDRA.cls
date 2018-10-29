@@ -19,8 +19,6 @@ public with sharing class SidraLiteHelperForSIDRA {
     **/
     public static Case createDummyCaseFirstNonCompliance(Case parentCase) {
 
-    	 System.debug('parentCase: '+parentCase);
-
         Case newCase = new Case();
         newCase.RecordTypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE;
         newCase.Subject = 'SIDRA Lite – Financial Security Non-compliance';
@@ -36,8 +34,6 @@ public with sharing class SidraLiteHelperForSIDRA {
         newCase.SIDRA_Lite_Default_Date__c = Date.today();
         newCase.Reason_for_Default__c ='Suspension - FS Non Compliance';
 
-        System.debug('new case: '+newcase);
-        
         return newCase;
     }
 
