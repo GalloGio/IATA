@@ -14,8 +14,8 @@
             <roleAndSubordinateInternal>StaffAustralia</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <roles>
-            <role>APCustomerServiceManager</role>
-            <role>APCustomerServiceStaff</role>
+            <role>APCustomerServiceManagerA</role>
+            <role>APCustomerServiceStaffA</role>
         </roles>
     </queueMembers>
     <queueSobject>

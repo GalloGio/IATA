@@ -322,13 +322,7 @@
                                           <td></td>
                                           <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
                                         </tr>
-                                        <tr>
-                                          <td>NewGen ISS Accreditation Model</td>
-                                          <td></td>
-                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
-                                        </tr>
-
-                                        
+                            
                                         <tr>
                                           <td height="40px;" colspan="3" style="background-color:#69D2BE; text-align:center; font-size:18px; font-weight:700; margin:0px; padding:0px; vertical-align:middle; color:#666;">
                                           ID Card Validation Results</td>

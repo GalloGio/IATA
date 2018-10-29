@@ -1023,13 +1023,13 @@ The value is determined by ExactTarget, and this is is only populated once a cam
     <listViews>
         <fullName>Pending_Review</fullName>
         <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
         <columns>Campaign_ID__c</columns>
         <columns>Status__c</columns>
         <columns>Audience__c</columns>
-        <columns>Billing_Account__c</columns>
         <columns>EBC_Master_Filter__c</columns>
+        <columns>Number_of_Recipients__c</columns>
         <columns>Scheduled_Date__c</columns>
-        <columns>Exact_Target_Campaign_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
@@ -1130,6 +1130,26 @@ The value is determined by ExactTarget, and this is is only populated once a cam
             <value>EMAIL RECOVER</value>
         </filters>
         <label>10 - Email Recover</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_MISC_Search</fullName>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Status__c</columns>
+        <columns>Audience__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>Scheduled_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>ProFit Leads -</value>
+        </filters>
+        <label>ZZ - MISC Search</label>
         <language>en_US</language>
     </listViews>
     <nameField>
