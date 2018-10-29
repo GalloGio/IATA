@@ -37,6 +37,8 @@
                 <apex:outputField value="{!ca.account.VAT_Number__c}" />
             </apex:pageBlockSectionItem>
 
+            <DSE:DS_DataQuality id="jqueryfix" FieldGroupName="" RecordRef="{!ca.fw.newform}"/>
+
         </apex:pageBlockSection>
 
 
