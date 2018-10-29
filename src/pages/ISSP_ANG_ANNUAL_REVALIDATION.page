@@ -360,9 +360,6 @@
                                 <apex:actionFunction name="cancelUpdate" action="{!cancelUpdate}" status="WaitingStatus" reRender="treeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
                                 <apex:actionFunction name="discardDetails" action="{!discardDetails}" status="WaitingStatus" reRender="treeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
 
-                                <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact, ownershipMessage"/>
-                                <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany, ownershipMessage"/>
-
                                 <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact, ownershipMessage, noUpdateMessage"/>
                                 <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany, ownershipMessage, noUpdateMessage"/>
 
