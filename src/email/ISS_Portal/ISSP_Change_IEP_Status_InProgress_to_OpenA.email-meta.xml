@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email to notify the Account IEP Status change from In Progress to Open for Model A</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISSP_Change_IEP_Status_InProgress_to_OpenA</name>
+    <style>none</style>
+    <subject>Confirmation of opening of your agency&apos;s IATA EasyPay Account</subject>
+    <textOnly>Dear Sir/Madam,
+
+We are glad to inform you that your IATA EasyPay account is now “Open”. Please refer to your IATA EasyPay account via the IATA Customer Portal to continue with the registration of your Bank Account details.
+
+For further information you can access to our FAQs located under the link “Help”, visible at the top right corner of the IATA EasyPay Portal.
+
+Regards,
+
+IATA Customer Service</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

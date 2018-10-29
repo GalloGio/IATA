@@ -24,8 +24,8 @@
     
     <!--page-description-->
         
-      <h4>{!$Label.ISSP_services}  <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
-         Trained Staff Certification <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+      <h4>{!$Label.ISSP_Company_Administration}  <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+         {!$Label.ISSP_Trained_Staff_Certification} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
         <small> Trained Staff Certification Description</small></h4>
       
       <style>
