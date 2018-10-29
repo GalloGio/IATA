@@ -362,9 +362,6 @@
 
                                 <apex:actionFunction name="bodyRerender" status="WaitingStatus" rerender="componentsArea, buttonsArea" />
                                 
-                                <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact, ownershipMessage"/>
-                                <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany, ownershipMessage"/>
-
                                 <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact, ownershipMessage, noUpdateMessage"/>
                                 <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany, ownershipMessage, noUpdateMessage"/>
 
