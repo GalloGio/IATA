@@ -298,7 +298,10 @@ public class ANG_AccountTriggerHandler {
 		set<id> accIdSet = new set<id>(activeAccsIdSet);
 		accIdSet.addAll(inactiveAccsIdSet);
 
-		//get all related risk Events 
+		//get all related risk Events
+		if(accIdSet.isEmpty()) 
+			return;
+			
 		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
 		
 		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
