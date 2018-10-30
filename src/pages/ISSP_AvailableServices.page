@@ -76,13 +76,20 @@
           document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';       
       } else {
           requested = 1;
-          if (appPortalRole != 'SKIP') {
+          
+          if (appPortalRole != 'SKIP' && appPortalRole != 'AUTO') {
               closeDialog();
+
+          } else if(appPortalRole == 'AUTO') {
+            closeDialog();
+            $("[id$='myModalContent']").hide();
           }
           if(isEasyPayService && flagUseDefaultRole == "true") {
             showModal('#ModalNewIepServiceRequest');
           } else {
-            showModal('#ModalNewServiceRequest');
+            if(appPortalRole != 'AUTO') {            
+            	showModal('#ModalNewServiceRequest');
+          	}
           }
                     
           if (doInsert == 1) {
@@ -118,7 +125,9 @@
 	}
 
     function newAppReqCallback(res){
-      
+      if(res == 'okauto') {
+        location.reload(true);
+	  }
     }
 
     function onCompleteUserProvisioning(redirect, page, provError) {
@@ -405,7 +414,8 @@
     <apex:actionFunction name="last" action="{!setCon.last}" rerender="Services" />
     <apex:actionFunction name="refresh" action="{!refresh}" rerender="ServiceListForm" />
 
-    <apex:actionFunction name="paraFunction" action="{!doRequest}" reRender="contactListForm,Services,myModalContent,ModalNewServiceRequest" oncomplete="javascript:dopopup();" immediate="true">      
+    <apex:actionFunction name="paraFunction" action="{!doRequest}" reRender="contactListForm,Services,myModalContent,ModalNewServiceRequest" oncomplete="javascript:dopopup();" immediate="false">      
+    
 
       <apex:param id="servId" name="servId"  value="" />
     </apex:actionFunction>
@@ -605,7 +615,7 @@
                   <span>
 
                       <apex:outputPanel rendered="{! NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay') || Serv.recordService.Name == iccsPortalApplicationName)}">
-                          <apex:outputLabel escape="false" value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c}" />
+                          <apex:outputLabel escape="false" value="{!IF(AND(isAdmin, NOT(Serv.recordService.Cannot_be_managed_by_portal_admin__c)), $Label.ISSP_ServiceAccessConfirm, $Label.ISSP_ServiceRequestConfirm + ' ' + IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name))}" rendered="{!!Serv.recordService.Confirm_Box__c}"/>
 
                         <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
                       </apex:outputPanel>
@@ -739,12 +749,12 @@
                 <apex:commandButton rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" 
                   value="{!$Label.ISSP_Confirm}" 
                   styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" 
-                  oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');}" 
+                  oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!AND(isAdmin, Serv.addUsersEnable)}' == 'true' ? 'AUTO' : 'SKIP', '', 'false');}" 
                   rerender="display_messages"/>
             
                 <apex:outputPanel rendered="{!Serv.recordService.Name<>'Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay') || Serv.recordService.Name == iccsPortalApplicationName)}"
                   id="serviceSubmitButton">
-                  <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');"
+                  <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!AND(isAdmin, Serv.addUsersEnable)}' == 'true' ? 'AUTO' : 'SKIP', '', 'false');"
                      class="btn_iata_success btn-block btn">
                      {!$Label.ISSP_Confirm}
                   </a>

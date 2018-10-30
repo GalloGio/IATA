@@ -2149,7 +2149,7 @@ SIS Charge Code Type.</description>
                     <label>20 Year Passenger Forecast</label>
                 </value>
                 <value>
-                    <fullName>Aircraft Reliability</fullName>
+                    <fullName>Aircraft Reliability Guidelines</fullName>
                     <default>false</default>
                     <label>Aircraft Reliability Guidelines</label>
                 </value>
@@ -2167,6 +2167,11 @@ SIS Charge Code Type.</description>
                     <fullName>Airline Operational Cost Management Guidelines</fullName>
                     <default>false</default>
                     <label>Airline Operational Cost Management Guidelines</label>
+                </value>
+                <value>
+                    <fullName>Airlines Magazine Subscription</fullName>
+                    <default>false</default>
+                    <label>Airlines. Magazine Subscription</label>
                 </value>
                 <value>
                     <fullName>Airport Development Reference Manual</fullName>
@@ -2417,6 +2422,11 @@ SIS Charge Code Type.</description>
                     <fullName>Marshalling Signals</fullName>
                     <default>false</default>
                     <label>Marshalling Signals</label>
+                </value>
+                <value>
+                    <fullName>Merchandise</fullName>
+                    <default>false</default>
+                    <label>Merchandise</label>
                 </value>
                 <value>
                     <fullName>Mileage</fullName>
@@ -3922,6 +3932,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <default>false</default>
                     <label>Book &amp; Mobile</label>
                 </value>
+                <value>
+                    <fullName>Merchandise</fullName>
+                    <default>false</default>
+                    <label>Merchandise</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -3947,9 +3962,9 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <label>data-and-statistics</label>
                 </value>
                 <value>
-                    <fullName>Events</fullName>
+                    <fullName>IATA Branded Merchandise</fullName>
                     <default>false</default>
-                    <label>Events</label>
+                    <label>IATA Branded Merchandise</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -7284,6 +7299,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Family</picklist>
             <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ATC%2FATS Licence Fee</fullName>
                 <default>false</default>
             </values>
@@ -7376,6 +7395,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fees</fullName>
                 <default>false</default>
             </values>
@@ -7400,6 +7423,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IFG %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Interest</fullName>
                 <default>false</default>
             </values>
@@ -7409,6 +7436,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Lighting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER %28MER Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7476,6 +7507,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>SFO %28SFO Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Security</fullName>
                 <default>false</default>
             </values>
@@ -7531,11 +7566,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aircraft Reliability Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Industry Freight Forecast</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8576,6 +8619,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10521,11 +10568,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aircraft Reliability Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Industry Freight Forecast</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10698,6 +10753,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11550,6 +11609,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13391,6 +13454,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fees</fullName>
                 <default>false</default>
             </values>
@@ -13562,7 +13629,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Aircraft Reliability</fullName>
+                <fullName>Aircraft Reliability Guidelines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13575,6 +13642,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13767,6 +13838,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14650,6 +14725,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Merchandise</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Mobile</fullName>
                 <default>false</default>
             </values>
@@ -14692,10 +14771,6 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
-            <values>
-                <fullName>Events</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
@@ -16353,6 +16428,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Family</picklist>
             <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ATC%2FATS Licence Fee</fullName>
                 <default>false</default>
             </values>
@@ -16445,11 +16524,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fees</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Financial Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAP</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16616,11 +16703,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aircraft Reliability Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Industry Freight Forecast</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17645,6 +17740,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>

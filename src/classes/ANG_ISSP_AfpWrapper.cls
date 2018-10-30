@@ -16,6 +16,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	public Boolean isSearch {get; set;}
 	public Boolean isIEPFlag {get; set;}
 	public Boolean isCashFlag {get; set;}
+	public String iepModel {get; set;}
 
 	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, List<Portal_Application_Right__c> services, Account account, Boolean isSearch) {
 		this.isCash = NO;
@@ -27,6 +28,11 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.isSearch = isSearch;
 		this.isIEPFlag = false;
 		this.isCashFlag = false;
+		this.iepModel = '';
+
+		if (account.IATA_ISO_Country__r.ANG_IEP_Model__c != null) {
+			this.iepModel = account.IATA_ISO_Country__r.ANG_IEP_Model__c;
+		}
 
 		this.isCashless = (contact != null && 
 						   account.ANG_Accreditation_Model__c != null && 
@@ -86,7 +92,17 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			}
 		}
 
-		if(account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
+		if (this.iepModel == 'Banking Model') {
+			this.iepLink = '#';
+			this.iepLinkLabel = Label.ANG_ISSP_IEP_ModelBanking_link;
+			this.modalErrorMessageFlag = '-';
+			if (account.IATA_ISO_Country__r.Iso_Code__c == 'IN') {
+				this.modalErrorMessage = Label.ANG_ISSP_IEP_ModelBanking_India_msg;
+			}
+			if (account.IATA_ISO_Country__r.Iso_Code__c == 'KR') {
+				this.modalErrorMessage = Label.ANG_ISSP_IEP_ModelBanking_SouthKorea_msg;
+			}	
+		} else if (account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
 			this.isIEP = YES;
 			this.isIEPFlag = true;
 			Boolean hasAccess = false;
@@ -140,19 +156,17 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	            } else if (account.Location_Type__c == 'AO' || account.Top_Parent__r.Location_Type__c == 'AO') {
 	                this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
 	            }
-        	}
+	            this.iepLink = '#';
+        	} else 
+				this.iepLink = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';				
+			
         	if(modalErrorMessage != '') {
         		this.modalErrorMessageFlag = '-';
         	}		       
 
 			this.iepLinkLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
 
-			if(!isIEPAccountEnable) {
-				this.iepLink = '#';								
-			} else {
-				this.iepLink = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';				
-			}
-
+			
 		}
 	}
 }

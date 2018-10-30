@@ -364,7 +364,7 @@ public without sharing class ISSP_Case {
         String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
         //Verify if user is a PWC profile
         if (profileName.startsWith('ISS Portal PwC')) {  isPWCProfile = true; }
-        if (profileName.startsWith('ISS Portal DPC') ) {  isDPCUser = true; }
+        if (profileName.startsWith('ISS Portal DPC Admin') ) {  isDPCUser = true; }
         if (profileName.startsWith('ISS Portal Agency') ) {  isAgencyUser = true; }
         if (profileName.startsWith('ISS Portal GSA') ) {  isGSAUser = true; }
 
@@ -394,11 +394,12 @@ public without sharing class ISSP_Case {
                 isEditMode = true;
 
 
-            //Survey Handle
+            //Survey Handle 
             mySurveyCompletedVariable  = false ;
+            //RN-INC428791 - remove live agent chat rt
             List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
                     FROM Instant_Surveys__c
-                    WHERE Relationship_to_Case__c = :newCase.Id]);
+                    WHERE Relationship_to_Case__c = :newCase.Id and recordType.developername != 'Live_Agent_Chat']);
             if (Survey_List != null && Survey_List.size() > 0) {
                 mySurveyCompletedVariable = true ;
             }
