@@ -146,6 +146,13 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         }
         ////
 
+        /*** AMSU-174 ***/
+        if (processType == AMS_Utils.new_TIDS) {
+            container.c.CaseArea__c = 'Accreditation Products';
+            container.c.Reason1__c = 'New TIDS';
+            update container.c;
+        }
+
 		if((container.errorMessage != null && container.errorMessage != '') || (childCaseCreationResult.get('errorMessage') != null && childCaseCreationResult.get('errorMessage') != '')){
 	        
 	        result.put('oscarId',oscarId);

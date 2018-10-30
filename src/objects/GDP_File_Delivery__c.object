@@ -366,7 +366,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <operation>equals</operation>
             <value>Failed</value>
         </filters>
-        <label>01-Failed</label>
+        <label>02-Failed</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -388,7 +388,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <operation>equals</operation>
             <value>In Progress</value>
         </filters>
-        <label>02-In Progress</label>
+        <label>01-In Progress</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -476,7 +476,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <filters>
             <field>GSS_Subscription_Detail__c</field>
             <operation>equals</operation>
-            <value>A-S00001865</value>
+            <value>A-S00018003</value>
         </filters>
         <filters>
             <field>Subscription__c</field>

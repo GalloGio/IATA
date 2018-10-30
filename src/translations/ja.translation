@@ -837,6 +837,18 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ModelBanking India --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ModelBanking South Korea --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_SouthKorea_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ModelBanking Link Label --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_IEP_OpeningInProgress --></label>
         <name>ANG_ISSP_IEP_OpeningInProgress</name>
     </customLabels>
@@ -2254,6 +2266,10 @@
     <customLabels>
         <label><!-- FW --></label>
         <name>FW</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Feed Item Invalid Topics --></label>
+        <name>Feed_Item_Invalid_Topics</name>
     </customLabels>
     <customLabels>
         <label><!-- File Description --></label>
@@ -9521,6 +9537,10 @@ and
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- Branch to Shipping --></label>
+        <name>ISSP_ANG_Local_Details_Copy_Address2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
         <name>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</name>
     </customLabels>
@@ -9683,6 +9703,14 @@ and
     <customLabels>
         <label><!-- Approved --></label>
         <name>ISSP_ANG_STATUS_APPROVED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- DEFAULT/SUSPENSION --></label>
+        <name>ISSP_ANG_STATUS_CASHNOCOMMISSION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- REVIEW/STDS REMOVAL/NOTICE OF TERMINATION --></label>
+        <name>ISSP_ANG_STATUS_CASHWITHCOMMISSION</name>
     </customLabels>
     <customLabels>
         <label><!-- Terminated --></label>
@@ -11107,6 +11135,10 @@ and
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>サービスを有効化する</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -12115,6 +12147,10 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_No_records_available</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Not_Applicable --></label>
+        <name>ISSP_Not_Applicable</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Not_Authorized --></label>
         <name>ISSP_Not_Authorized</name>
     </customLabels>
@@ -12183,8 +12219,84 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_Ongoing_TIP_Requests</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar --></label>
+        <name>ISSP_OperationalCalendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_BSPCASSFilter --></label>
+        <name>ISSP_OperationalCalendar_BSPCASSFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_BSPCASS_Filter_Required --></label>
+        <name>ISSP_OperationalCalendar_BSPCASS_Filter_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Billing_Period --></label>
+        <name>ISSP_OperationalCalendar_Billing_Period</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_CountryFilter --></label>
+        <name>ISSP_OperationalCalendar_CountryFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Country_Filter_Required --></label>
+        <name>ISSP_OperationalCalendar_Country_Filter_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_CurrencyFilter --></label>
+        <name>ISSP_OperationalCalendar_CurrencyFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_DownloadDate --></label>
+        <name>ISSP_OperationalCalendar_DownloadDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_EnableFilters --></label>
+        <name>ISSP_OperationalCalendar_EnableFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Export_Calendar_Disclaimer --></label>
+        <name>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Export_Disclaimer --></label>
+        <name>ISSP_OperationalCalendar_Export_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_FilterTitle --></label>
+        <name>ISSP_OperationalCalendar_FilterTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_FrequencyFilter --></label>
+        <name>ISSP_OperationalCalendar_FrequencyFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Full_Details --></label>
+        <name>ISSP_OperationalCalendar_Full_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Header --></label>
+        <name>ISSP_OperationalCalendar_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_LastModifiedDate --></label>
+        <name>ISSP_OperationalCalendar_LastModifiedDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_No_Events --></label>
+        <name>ISSP_OperationalCalendar_No_Events</name>
+    </customLabels>
+    <customLabels>
         <label>リセット</label>
         <name>ISSP_OperationalCalendar_Reset</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Show_Calendar --></label>
+        <name>ISSP_OperationalCalendar_Show_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Sync_Calendar --></label>
+        <name>ISSP_OperationalCalendar_Sync_Calendar</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
@@ -13067,6 +13179,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_Service</name>
     </customLabels>
     <customLabels>
+        <label>本当にサービスを有効化してもよろしいですか？</label>
+        <name>ISSP_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
         <label>こちらへ接続されますか</label>
         <name>ISSP_ServiceRequestConfirm</name>
     </customLabels>
@@ -13101,6 +13217,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
     <customLabels>
         <label>表示されている画面</label>
         <name>ISSP_Showing_page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Showing total records --></label>
+        <name>ISSP_Showing_total_records</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
@@ -13253,6 +13373,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ISSP_TIP_Discard_Unsaved_Changes</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_TIP_EFFECTIVE_DATE --></label>
+        <name>ISSP_TIP_EFFECTIVE_DATE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_TIP_HOLD_TO_MULTISELECT --></label>
         <name>ISSP_TIP_HOLD_TO_MULTISELECT</name>
     </customLabels>
@@ -13309,6 +13433,14 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ISSP_TIP_NEW_PROD_COUNTRY_CONFIG</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_TIP_PRIMARY_CONTACTS --></label>
+        <name>ISSP_TIP_PRIMARY_CONTACTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_PRIMARY_CONTACTS_MSG --></label>
+        <name>ISSP_TIP_PRIMARY_CONTACTS_MSG</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_TIP_PRODUCT_DETAILS_SECTION --></label>
         <name>ISSP_TIP_PRODUCT_DETAILS_SECTION</name>
     </customLabels>
@@ -13317,8 +13449,20 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ISSP_TIP_PRODUCT_ENROLLMENT_TITLE</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_TIP_PROVIDER_DETAILS --></label>
+        <name>ISSP_TIP_PROVIDER_DETAILS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM --></label>
         <name>ISSP_TIP_RANGE_TO_GREATER_RANGE_FROM</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_REASON_FOR_CANCEL --></label>
+        <name>ISSP_TIP_REASON_FOR_CANCEL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_REASON_FOR_CLOSURE --></label>
+        <name>ISSP_TIP_REASON_FOR_CLOSURE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_TIP_RETURN_HOMEPAGE --></label>
@@ -13345,8 +13489,44 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ISSP_TIP_Submit_case_to_IATA_to_update_country_Config</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_TIP_TERMINATE_PROD_BUTTON --></label>
+        <name>ISSP_TIP_TERMINATE_PROD_BUTTON</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_TERMINATE_PROD_MSG --></label>
+        <name>ISSP_TIP_TERMINATE_PROD_MSG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_TERMINATE_PROD_TITLE --></label>
+        <name>ISSP_TIP_TERMINATE_PROD_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_UPDATE_PROV_ACC_DETAILS --></label>
+        <name>ISSP_TIP_UPDATE_PROV_ACC_DETAILS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1 --></label>
+        <name>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2 --></label>
+        <name>ISSP_TIP_UPDATE_PROV_ACC_DETAILS_MSG2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER --></label>
         <name>ISSP_TIP_VALUE_TOO_BIG_TO_PROVIDER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_VOLUNT_RELINQ_BUTTON --></label>
+        <name>ISSP_TIP_VOLUNT_RELINQ_BUTTON</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_VOLUNT_RELINQ_MSG --></label>
+        <name>ISSP_TIP_VOLUNT_RELINQ_MSG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_TIP_VOLUNT_RELINQ_TITLE --></label>
+        <name>ISSP_TIP_VOLUNT_RELINQ_TITLE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_TOULink --></label>
@@ -13432,6 +13612,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ISSP_Trade_name_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- Trained Staff Certification --></label>
+        <name>ISSP_Trained_Staff_Certification</name>
+    </customLabels>
+    <customLabels>
         <label>旅客</label>
         <name>ISSP_Travel</name>
     </customLabels>
@@ -13482,6 +13666,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label>これらのユーザーは次のサービスへのアクセス権があるため、不使用にすることが出来ません。</label>
         <name>ISSP_UserInactivation_ServiceMsg_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_UserInactivation_ServiceMsg_5 --></label>
+        <name>ISSP_UserInactivation_ServiceMsg_5</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_VR_Case_Submited --></label>
@@ -13606,6 +13794,62 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label>ご不満がありましたことお詫び申し上げます</label>
         <name>ISSP_We_sorry_you_are_unsatisfied</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Friday --></label>
+        <name>ISSP_Weekday_Friday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Monday --></label>
+        <name>ISSP_Weekday_Monday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Saturday --></label>
+        <name>ISSP_Weekday_Saturday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Short Friday --></label>
+        <name>ISSP_Weekday_Short_Friday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Short Monday --></label>
+        <name>ISSP_Weekday_Short_Monday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Short Saturday --></label>
+        <name>ISSP_Weekday_Short_Saturday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Short Sunday --></label>
+        <name>ISSP_Weekday_Short_Sunday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Short Thursday --></label>
+        <name>ISSP_Weekday_Short_Thursday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Short Tuesday --></label>
+        <name>ISSP_Weekday_Short_Tuesday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Short Wednesday --></label>
+        <name>ISSP_Weekday_Short_Wednesday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Sunday --></label>
+        <name>ISSP_Weekday_Sunday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Thursday --></label>
+        <name>ISSP_Weekday_Thursday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Tuesday --></label>
+        <name>ISSP_Weekday_Tuesday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Weekday Wednesday --></label>
+        <name>ISSP_Weekday_Wednesday</name>
     </customLabels>
     <customLabels>
         <label><!-- Who to contact --></label>
@@ -13734,6 +13978,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- Invalid Source Case --></label>
         <name>Invalid_Source_Case</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invalid Topic Assignment --></label>
+        <name>Invalid_Topic_Assignment</name>
     </customLabels>
     <customLabels>
         <label><!-- Invoice number --></label>
@@ -14446,6 +14694,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- No-Reply --></label>
         <name>No_Reply</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No_Subsidiaries --></label>
+        <name>No_Subsidiaries</name>
     </customLabels>
     <customLabels>
         <label><!-- No account yet? Sign up! --></label>
@@ -16019,6 +16271,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ReleaseDateMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- Remaining_Owners --></label>
+        <name>Remaining_Owners</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Renewal_Number --></label>
         <name>Renewal_Number</name>
     </customLabels>
@@ -16689,6 +16945,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customTabs>
         <label><!-- Annual Revalidation Campaign --></label>
         <name>ANG_Anual_Revalidation_Tool</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- RHC Mass Calculation --></label>
+        <name>ANG_RHC_Mass_Calculation</name>
     </customTabs>
     <customTabs>
         <label><!-- AWS Explorer --></label>

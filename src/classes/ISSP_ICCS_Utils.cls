@@ -365,7 +365,7 @@ public without sharing class ISSP_ICCS_Utils{
 				System.debug('Portal_Service_Access__r.Top_Account__c : ' + userPreference.Portal_Service_Access__r.Top_Account__c);
 				System.debug('accountId : ' + accountId);
 				
-				if(userPreference.Portal_Service_Access__r.Top_Account__c == accountId.substring(0,15)){
+				if(userPreference.Portal_Service_Access__r.Top_Account__c == accountId){
 					usersToNotify.add(userPreference.Portal_Service_Access__c);
 				}
 			}

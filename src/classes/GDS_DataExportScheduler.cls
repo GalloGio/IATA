@@ -106,6 +106,10 @@ global with sharing class GDS_DataExportScheduler implements Schedulable{
             doc.Title = title;
             doc.PathOnClient = title;
             doc.VersionData = Blob.valueOf(content);
+            doc.Country_visibilty__c = 'All - Globally';
+            doc.Country_of_publication__c = 'All - Globally';
+            doc.Language__c = 'English';
+            doc.User_status_access__c = 'Approved User;Approved Admin';
             insert doc;
             
             doc = [select ContentDocumentId from ContentVersion where id = :doc.id];

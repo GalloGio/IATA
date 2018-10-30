@@ -1100,7 +1100,7 @@ public with sharing class AMS_XML_Generator {
                     billingAdd.City__c = AMS_Utils.cleanSpecialChars(ag.BillingCity);
                     billingAdd.State__c = ag.Iso_State__c;
                     billingAdd.Country__c = ag.IATA_ISO_Country__c;
-                    billingAdd.AMS_ZipCode__c = ag.BillingPostalCode;
+                    billingAdd.AMS_ZipCode__c = ag.BillingPostalCode == null ? '' : AMS_Utils.cleanSpecialChars(ag.BillingPostalCode);//AMSU-178
 
                     List<String> lPhone = splitPhone(ag.Phone, ag.IATA_ISO_Country__r.Name);
                     if(lPhone != null){
@@ -1171,7 +1171,7 @@ public with sharing class AMS_XML_Generator {
                             }                            
                         }
 
-                        shippingAdd.AMS_ZipCode__c = ag.ShippingPostalCode;
+                        shippingAdd.AMS_ZipCode__c = ag.ShippingPostalCode == null ? '' : AMS_Utils.cleanSpecialChars(ag.ShippingPostalCode);//AMSU-178
                         
                         System.debug(loggingLevel.Debug, '____ [cls AMS_XML_Generator - getAgencyDetail] shippingAdd - ' + shippingAdd);
                         lAddresses.add(shippingAdd);
@@ -1693,8 +1693,11 @@ public with sharing class AMS_XML_Generator {
             
             getElementNode(agencyNode, 'solicit', agency.GDP_Opt_In__c == True ? 'Y' : 'N');
             
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Tax_Reference_Number__c', 'tax_ref_1', agency.VAT_Number__c);
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Other_Tax_Reference_Number__c', 'tax_ref_2', agency.VAT_Number_2__c);
+            /*** AMSU-178 ***/
+            String vat1 = String.isBlank(agency.VAT_Number__c) ? '' : AMS_Utils.cleanSpecialChars(agency.VAT_Number__c);
+            String vat2 = String.isBlank(agency.VAT_Number_2__c) ? '' : AMS_Utils.cleanSpecialChars(agency.VAT_Number_2__c);               
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Tax_Reference_Number__c', 'tax_ref_1', vat1);
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Other_Tax_Reference_Number__c', 'tax_ref_2', vat2);
             
             getElementNode(agencyNode, 'bsp_code', agency.BSP_CASS_Code__c);
             
@@ -2121,7 +2124,7 @@ public with sharing class AMS_XML_Generator {
                                         String sCountryCode = '';
                                         if(sValue.length() == 4){
                                             sISO_code = sValue.substring(0,2);
-                                            sCountryCode = sValue.substring(2,4);
+                                            sCountryCode = sValue.substring(2,4).replace('-','');//AMSU-178
                                         //Test to check US, Canada and Australia states
                                         }else if(sValue.indexOf('-') > 1){
                                             sISO_code = sValue.substring(sValue.indexOf('-')+1,sValue.length());

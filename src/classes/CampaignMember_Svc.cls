@@ -22,7 +22,7 @@ public class CampaignMember_Svc
         //get the list of campaign member product base on the contact Id
         map<Id,List<Campaign_Member_Product__c>> contactId_campaignMemberPrd = new campaignMemberProduct_sel().getCampaignMemberPrdByContactId(campaignId,contactIds);
         map<Id,List<Campaign_Member_Product__c>> contactId_newCampaignMemberPrd = new map<Id,List<Campaign_Member_Product__c>>();
-        map<Id, Campaign_Member_Product__c> productId_newCampaignMemberPrd = new map<Id, Campaign_Member_Product__c>();
+        map<Id,Campaign_Member_Product__c> productId_newCampaignMemberPrd = new map<Id, Campaign_Member_Product__c>();
 
         //Get the last version of product form campaign product object
         map<Id,Id> old_NewProds = new CampaignProduct_Sel().getLastVersionProductIdById(campaignId);
@@ -31,12 +31,10 @@ public class CampaignMember_Svc
         
         //Make sure that the contact do not have duplicated product
         for(Id contactId : contactId_campaignMemberPrd.keySet()){
-            if (contactId_campaignMemberPrd.containsKey(contactId))
-            {
+            if (contactId_campaignMemberPrd.containsKey(contactId)){
                 productId_newCampaignMemberPrd.clear();
                 mapProduct_Version.clear();
-                for (Campaign_Member_Product__c cmp : contactId_campaignMemberPrd.get(contactId))
-                {
+                for (Campaign_Member_Product__c cmp : contactId_campaignMemberPrd.get(contactId)){
                     Id newVersion = old_NewProds.get(cmp.Product__c);
                     String strActivity = String.valueOf(cmp.Product__r.SAP_Material_Number__c).left(4);
                     String strVersion = String.valueOf(cmp.Product__r.SAP_Material_Number__c).right(2);
@@ -307,8 +305,7 @@ public class CampaignMember_Svc
 
     }
 
-    public static List<CampaignMember> generateCampaignMembers(Id campaignId, List<OrderItem> items)
-    {
+    public static List<CampaignMember> generateCampaignMembers(Id campaignId, List<OrderItem> items){
         //-- List to return 
         List<CampaignMember> campaignMembers2Save = new List<CampaignMember>();
 
@@ -320,32 +317,61 @@ public class CampaignMember_Svc
         map<Id,Contact> contactsById = new map<Id,Contact>();
         List<IEC_Renewal_notice_log__c> lstErrorLog = new List<IEC_Renewal_notice_log__c>();
         
+        //Set order items product ids
+        Set<String> setProductsNumbers = new Set<String>();
+
         for(OrderItem item : items){
             contactIds.add(item.Order.BillToContactId);
+            setProductsNumbers.add(item.Product_Number__c.substringBefore('-')+'%');
         }
-		
+
+        System.debug('JJ setProductsNumbers : ' + setProductsNumbers);
+
+        //get the subscriptions for this products and contacts
+        List<IEC_Event_Subscription__c> lstEventSubscriptions = new IEC_EventSubscription_Sel().getEventSubscriptionByProductNumbersListAndContactsList(setProductsNumbers,contactIds);
+        System.debug('JJ lstEventSubscriptions: ' + lstEventSubscriptions);
+        
+        Map<String,List<IEC_Event_Subscription__c>> mapSubscriptionByProductNbrWoVersion = IEC_EventSubscription_Svc.buildMapWithSubscByProductNbrWoVersion(lstEventSubscriptions);
+
+
+        System.debug('JJ mapSubscriptionByProductNbrWoVersion : ' + mapSubscriptionByProductNbrWoVersion);
+        
         contactsById = Contact_Sel.getContactById(contactIds);
         
-        for(OrderItem item : items)
-        {
+        for(OrderItem item : items){
             if(item.Order.BillToContactId == null) continue;
             
-            Contact contact = contactsById.get(item.Order.BillToContactId);
-            //If contact is not deleted create CampaignMember
-            if(contact != null && !contact.IsDeleted){
-                List<OrderItem> tmp = (itemsByContactId.containsKey(contact.Id)) 
-                    ?   itemsByContactId.get(contact.Id)
-                    :   new List<OrderItem>(); 
-    
-                tmp.add(item);
-                itemsByContactId.put(contact.Id, tmp);
-                
-                cmSearchKeys.add(campaignId + '_' + contact.Id);
-            }else{
-                //If Contact is deleted log it
-                lstErrorLog.add(
-                    IEC_RenewalNotice_Svc.logError('Trying to create campaignMember for deleted contact', JSON.serialize(contact), null, campaignId, null, false)
-                );
+            IEC_Event_Subscription__c iecEventSubsAux = null;
+            if(mapSubscriptionByProductNbrWoVersion.containsKey(item.Product_Number__c.substringBefore('-'))){
+                List<IEC_Event_Subscription__c>  lstIecEventSubsAux = mapSubscriptionByProductNbrWoVersion.get(item.Product_Number__c.substringBefore('-'));
+                for(IEC_Event_Subscription__c iecAux : lstIecEventSubsAux){
+                    if(iecAux.Subscriber__c == item.Order.BillToContactId){
+                        iecEventSubsAux = iecAux;
+                    }
+                }
+            }
+            System.debug('JJ iecEventSubsAux : ' + iecEventSubsAux);
+
+            //If have an subscription that is active, then remove them from renewal notice
+            if( iecEventSubsAux == null || !(iecEventSubsAux != null && iecEventSubsAux.Active__c)){
+                System.debug('JJ does not have active subscription');
+                Contact contact = contactsById.get(item.Order.BillToContactId);
+                //If contact is not deleted create CampaignMember
+                if(contact != null && !contact.IsDeleted){
+                    List<OrderItem> tmp = (itemsByContactId.containsKey(contact.Id))
+                        ?   itemsByContactId.get(contact.Id)
+                        :   new List<OrderItem>(); 
+        
+                    tmp.add(item);
+                    itemsByContactId.put(contact.Id, tmp);
+                    
+                    cmSearchKeys.add(campaignId + '_' + contact.Id);
+                }else{
+                    //If Contact is deleted log it
+                    lstErrorLog.add(
+                        IEC_RenewalNotice_Svc.logError('Trying to create campaignMember for deleted contact', JSON.serialize(contact), null, campaignId, null, false)
+                    );
+                }
             }
             
         }
@@ -353,16 +379,13 @@ public class CampaignMember_Svc
         Map<String,CampaignMember> existingCampaignMemberByKey = new CampaignMember_sel().getExistingCampaignMemberByKey(cmSearchKeys);
         Set<String> cmKeysToInsert = new Set<String>();
 
-        for(Id contactId : itemsByContactId.keySet())
-        {
+        for(Id contactId : itemsByContactId.keySet()){
             String key = campaignId + '_' + contactId; 
 
             //Ensure that there is no duplicate Campaign Member
-            if(!cmKeysToInsert.contains(key))
-            {
+            if(!cmKeysToInsert.contains(key)){
                 cmKeysToInsert.add(key);
-                if(!existingCampaignMemberByKey.containsKey(key))
-                {
+                if(!existingCampaignMemberByKey.containsKey(key)){
                     campaignMembers2Save.add(new CampaignMember(
                         CampaignId = campaignId, 
                         ContactId = contactId,
@@ -372,7 +395,7 @@ public class CampaignMember_Svc
                 }                       
             }
         }
-		
+        
         //insert new CampaignMembers and update existing ones base on the campaign and contact
         try{
             if(campaignMembers2Save.size() > 0) upsert campaignMembers2Save Key__c;
@@ -383,7 +406,7 @@ public class CampaignMember_Svc
         }
         
         //Log renewal notice errors
-	   	if(lstErrorLog.size() > 0) insert lstErrorLog;
+        if(lstErrorLog.size() > 0) insert lstErrorLog;
 
 
         return campaignMembers2Save;
