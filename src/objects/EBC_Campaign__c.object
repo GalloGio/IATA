@@ -1143,11 +1143,18 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <columns>EBC_Master_Filter__c</columns>
         <columns>Number_of_Recipients__c</columns>
         <columns>Scheduled_Date__c</columns>
+        <columns>Google_Analytics_Tracking_Code__c</columns>
+        <columns>Is_Google_Analytics_Tracker_Active__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>NAME</field>
-            <operation>startsWith</operation>
-            <value>ProFit Leads -</value>
+            <field>Billing_Account__c</field>
+            <operation>equals</operation>
+            <value>HotelsPro DMCC</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>PENDING_APPROVAL</value>
         </filters>
         <label>ZZ - MISC Search</label>
         <language>en_US</language>

@@ -11129,6 +11129,10 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>Активировать услугу</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13177,6 +13181,10 @@ GSA - 3 буквы.
     <customLabels>
         <label>Услуга</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы действительно хотите активировать эту услугу?</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>Подтверждаете запрос доступа к</label>

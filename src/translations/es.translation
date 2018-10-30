@@ -11161,6 +11161,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>Activar Servicio</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13201,6 +13205,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label>Servicios</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>¿ESTÁ SEGURO DE QUE QUIERE ACTIVAR ESTE SERVICIO?</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>Confirma que está solicitando acceso a</label>

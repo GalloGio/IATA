@@ -2193,7 +2193,7 @@ SIS Charge Code Type.</description>
                     <label>20 Year Passenger Forecast</label>
                 </value>
                 <value>
-                    <fullName>Aircraft Reliability</fullName>
+                    <fullName>Aircraft Reliability Guidelines</fullName>
                     <default>false</default>
                     <label>Aircraft Reliability Guidelines</label>
                 </value>
@@ -4004,6 +4004,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <fullName>data-and-statistics</fullName>
                     <default>false</default>
                     <label>data-and-statistics</label>
+                </value>
+                <value>
+                    <fullName>IATA Branded Merchandise</fullName>
+                    <default>false</default>
+                    <label>IATA Branded Merchandise</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -7605,6 +7610,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aircraft Reliability Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Industry Freight Forecast</fullName>
                 <default>false</default>
             </values>
@@ -10600,6 +10609,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Reliability Guidelines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13660,7 +13673,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Aircraft Reliability</fullName>
+                <fullName>Aircraft Reliability Guidelines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16731,6 +16744,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Reliability Guidelines</fullName>
                 <default>false</default>
             </values>
             <values>
