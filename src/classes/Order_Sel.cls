@@ -901,7 +901,7 @@ public without sharing class Order_Sel extends Selector{
     ****************************************************************************************************/
     public List<Order> getMyOrdersForOrderHistory(Id contactId) {
 
-        List<String> expiredStatus = IECConstants.expiredStatus;
+        List<String> expiredStatus = IECConstants.expiredStatusForOrderHistory;
         List<String> expiredTypes = IECConstants.expiredTypes;
         Date dateToCompare = Date.today().addYears(-THREE_YEARS);
         String query = String.format(
