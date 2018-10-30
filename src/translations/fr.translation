@@ -11173,6 +11173,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>Activer le service</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13213,6 +13217,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
     <customLabels>
         <label>Service</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>êtes- vous sûr de vouloir activer ce service?</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>Confirmez-vous que vous demandez accès à</label>
