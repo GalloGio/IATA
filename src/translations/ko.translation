@@ -11137,6 +11137,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>서비스 활성화하기</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13176,6 +13180,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>서비스</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>이 서비스를 활성화하시겠습니까?</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>다음 웹에 대한 액세스를 요청하시는 것이 맞는지 확인 해 주시기 바랍니다.</label>
