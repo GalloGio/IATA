@@ -11135,6 +11135,10 @@ and
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>サービスを有効化する</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13173,6 +13177,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
     <customLabels>
         <label>サービス</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>本当にサービスを有効化してもよろしいですか？</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>こちらへ接続されますか</label>
