@@ -1442,7 +1442,7 @@ public without sharing class AMS_Utils {
 
             return ACCREDITATIONMODEL_CASHLESS;
 
-        }else if(oscarProcess == NEWHESTANDARD){
+        }else if(oscarProcess == NEWHESTANDARD || oscarProcess == NEWGESTANDARD){
 
             return ACCREDITATIONMODEL_CASH;
 
