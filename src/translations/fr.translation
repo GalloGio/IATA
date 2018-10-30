@@ -837,6 +837,18 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ModelBanking India --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ModelBanking South Korea --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_SouthKorea_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ModelBanking Link Label --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_IEP_OpeningInProgress --></label>
         <name>ANG_ISSP_IEP_OpeningInProgress</name>
     </customLabels>
@@ -9561,6 +9573,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- Branch to Shipping --></label>
+        <name>ISSP_ANG_Local_Details_Copy_Address2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
         <name>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</name>
     </customLabels>
@@ -11155,6 +11171,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label><!-- EmailsFailure --></label>
         <name>ISSP_EmailsFailure</name>
+    </customLabels>
+    <customLabels>
+        <label>Activer le service</label>
+        <name>ISSP_Enable_Service</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
@@ -13199,6 +13219,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Service</name>
     </customLabels>
     <customLabels>
+        <label>êtes- vous sûr de vouloir activer ce service?</label>
+        <name>ISSP_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
         <label>Confirmez-vous que vous demandez accès à</label>
         <name>ISSP_ServiceRequestConfirm</name>
     </customLabels>
@@ -13626,6 +13650,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
     <customLabels>
         <label>Nom commercial de la compagnie</label>
         <name>ISSP_Trade_name_of_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Trained Staff Certification --></label>
+        <name>ISSP_Trained_Staff_Certification</name>
     </customLabels>
     <customLabels>
         <label>Voyage</label>
@@ -16957,6 +16985,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customTabs>
         <label><!-- Annual Revalidation Campaign --></label>
         <name>ANG_Anual_Revalidation_Tool</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- RHC Mass Calculation --></label>
+        <name>ANG_RHC_Mass_Calculation</name>
     </customTabs>
     <customTabs>
         <label><!-- AWS Explorer --></label>
