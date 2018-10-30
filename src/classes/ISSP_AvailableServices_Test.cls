@@ -217,14 +217,14 @@ public class ISSP_AvailableServices_Test {
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report'); 
         insert app;
         
-        Test.startTest();
+
         ISSP_AvailableServices cttr = new ISSP_AvailableServices();
         Apexpages.currentPage().getParameters().put('ServId', app.Id);
         
         cttr.initialization();
         cttr.doRequest();
         ISSP_AvailableServices.newAppsRequest(app.Id, app.Name, con.Id);
-        Test.stopTest();
+
     }
 
 
