@@ -9,7 +9,7 @@ public with sharing class SidraLiteHelperForSIDRA {
 
 		if(parentCase.GDI_Premium__c == null || parentCase.GDI_Premium__c == 0) throw new SidraLiteException('Conditions are not met to create a Financial security non-compliance case: GDI Premium cannot be 0.');
 		if(parentCase.Short_Payment_Amount__c == null || parentCase.Short_Payment_Amount__c == null || parentCase.IATA_Charges__c == null || parentCase.Agency_Fees__c == null
-				|| parentCase.Region__c == null || parentCase.ContactId == null || parentCase.BSPCountry__c == null) throw new SidraLiteException('Conditions are not met to create a Financial security non-compliance case: A value is required for Short Payment Amount, IATA Charges, Agency Fees fields, IATA Country, Contact Name and Region.');
+				|| parentCase.Region__c == null || parentCase.ContactId == null || parentCase.BSPCountry__c == null) throw new SidraLiteException('Conditions are not met to create a Financial security non-compliance case: A value is required for fields: Short Payment Amount, IATA Charges, Agency Fees, IATA Country, Contact Name and Region.');
 		if(parentCase.Short_Payment_Amount__c > (parentCase.Short_Payment_Amount__c + parentCase.IATA_Charges__c + parentCase.Agency_Fees__c)) throw new SidraLiteException('Conditions are not met to create a Financial security non-compliance case: Short Payment Amount cannot exceed GDI Premium + IATA Charges + Agency Fees.');
 		if(!ALLOWED_ACCOUNT_STATUS.contains(parentCase.Account.Status__c)) throw new SidraLiteException('Conditions are not met to create a Financial security non-compliance case: Invalid Account Status: '+parentCase.Account.Status__c+'.');
 	}
