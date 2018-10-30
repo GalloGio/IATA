@@ -42,10 +42,18 @@ global class AMS_ValidateAccSpecialChars_Batch implements Database.Batchable<sOb
 	ValidateAccSpecialChars_Batch - query: 
 		SELECT IATACode__c, Name, CASS_Number__c, Short_Name__c, License_Number__c, VAT_Number__c, BillingStreet, BillingState, BillingCity, ShippingStreet, ShippingPostalCode, ShippingCity, Email__c, Website, 
 				Abbreviated_name__c, Abbreviated_address__c, VAT_Number_2__c, 
-				tatus__c,Region_formula__c,Location_Class__c,Location_Type__c, IATA_ISO_Country__r.name
+				status__c,Region_formula__c,Location_Class__c,Location_Type__c, IATA_ISO_Country__r.name
 		FROM ACCOUNT 
 		WHERE IATA_ISO_Country__c in :countriesIds
 		AND RecordType.DeveloperName = \'IATA_Agency\'
+
+		OR 
+
+		SELECT IATACode__c, Name, CASS_Number__c, Short_Name__c, License_Number__c, VAT_Number__c, BillingStreet, BillingState, BillingCity, ShippingStreet, ShippingPostalCode, ShippingCity, Email__c, Website, 
+				Abbreviated_name__c, Abbreviated_address__c, VAT_Number_2__c, 
+				status__c,Region_formula__c,Location_Class__c,Location_Type__c, IATA_ISO_Country__r.name
+		FROM ACCOUNT 
+		WHERE RecordType.DeveloperName = \'IATA_Agency\'		
 	*/
 	global AMS_ValidateAccSpecialChars_Batch() {
 
@@ -59,8 +67,13 @@ global class AMS_ValidateAccSpecialChars_Batch implements Database.Batchable<sOb
 			query += field.getFieldPath()+', ';			
 		}
 		
-		query += 'Status__c,Region_formula__c,Location_Class__c,Location_Type__c, IATA_ISO_Country__r.name FROM ACCOUNT WHERE IATA_ISO_Country__c in :countriesIds AND RecordType.DeveloperName = \'IATA_Agency\'';
+		query += 'Status__c,Region_formula__c,Location_Class__c,Location_Type__c, IATA_ISO_Country__r.name FROM ACCOUNT WHERE ';
 
+		System.debug('AMS_ValidateAccSpecialChars_Batch - countriesIds: ' + countriesIds);
+		if(countriesIds != null && countriesIds.size() > 0){
+			query += 'IATA_ISO_Country__c in :countriesIds AND ';
+		}
+		query += 'RecordType.DeveloperName = \'IATA_Agency\'';
 		
 	}
 	
@@ -165,9 +178,9 @@ global class AMS_ValidateAccSpecialChars_Batch implements Database.Batchable<sOb
 		
 		String body = ' Country : #Records : #Errors \n';
 		for (String countryName : countriesInfoAux.keySet()){
-			body += countryName + ': ' + countriesInfoAux.get(countryName) + ' : ' + countriesErrorsAux.get(countryName) +' \n';
+			body += countryName + ': ' + countriesInfoAux.get(countryName) + ' : ' + (countriesErrorsAux.get(countryName) == null ? 0 : countriesErrorsAux.get(countryName)) +' \n';
 			countryCountTotal = countryCountTotal + countriesInfoAux.get(countryName);
-			countryErrorsTotal = countryErrorsTotal + countriesErrorsAux.get(countryName);
+			countryErrorsTotal = countryErrorsTotal + (countriesErrorsAux.get(countryName) == null ? 0 : countriesErrorsAux.get(countryName));
 
             System.debug('field name is ' + countryName);
             System.debug('countriesInfoAux.get(countryName) is ' + countriesInfoAux.get(countryName));
