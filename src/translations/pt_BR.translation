@@ -11134,6 +11134,10 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>Habilitar serviço</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13173,6 +13177,10 @@ Se desejar redefinir a sua senha, volte à tela de login e use a função Esquec
     <customLabels>
         <label>Serviço</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Tem certeza que você quer habilitar este serviço?</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>Você confirma que você está solicitando acesso a</label>

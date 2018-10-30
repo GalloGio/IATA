@@ -11131,6 +11131,10 @@ and
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>تفعيل الخدمة</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13161,6 +13165,10 @@ and
     <customLabels>
         <label>الخدمة</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>هل أنت متأكد أنك تريد تفعيل هذه الخدمة؟</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>هل تؤكد بأنك تطلب الإذن بالدخول إلى</label>

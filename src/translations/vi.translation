@@ -11133,6 +11133,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>Kích hoạt dịch vụ</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13172,6 +13176,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label>Dịch vụ</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn có chắc chắn muốn kích hoạt dịch vụ này không?</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>Xác nhận cấp quyền đăng nhập cho</label>
