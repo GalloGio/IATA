@@ -9,7 +9,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 	}
 
 
-	private Set<String> oscarFields{
+	public Set<String> oscarFields{
 		get{
 			if(oscarFields == null){
 				oscarFields = new Set<String>{
@@ -18,13 +18,13 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					, 'Step6__c'
 					, 'Step45__c'
 				};
-			}
+			} 
 			return oscarFields;
 		}
 		set;
 	}
 
-	private Set<String> accountFields{
+	public Set<String> accountFields{
 		//DO NOT include Id on this Set
 		get{
 			if(accountFields == null){
@@ -49,7 +49,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		set;
 	}
 
-	private Set<String> notes{
+    private Set<String> notes{
 		get{
 			Set<String> toReturn = new Set<String>();
 			toReturn.add('This page will allow the user to select the Hierarchy of the multi-country hierarchy.');
@@ -63,28 +63,6 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		}
 		set;
 	}
-
-
-	private Map<String, String> errorMessages{
-		get{
-			if(errorMessages == null){
-				errorMessages = new Map<String, String>();					
-			}
-			return errorMessages;
-		}
-		set;
-	}
-
-	private Map<String, Boolean> errorChecks{
-		get{
-			if(errorChecks == null){
-				errorChecks = new Map<String, Boolean>();
-			}
-			return errorChecks;
-		}
-		set;
-	}
-
 
 	private Map<Id, AMS_Process_Detail__c> processDetails{
 		get{
@@ -281,38 +259,11 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		oscarId = stdController.getId();
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
+
+        if(Test.isRunningTest()) oscar =  [Select Id, Account__c, Process__c, Step6__c, STEP45__c, ANG_Hierarchy_Created__c from AMS_OSCAR__c where Id =:oscarId];
 	}
 
 
-	@TestVisible private Boolean updateRelatedRecords() {
-
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
-		List<AMS_Process_Detail__c> newProcessHierarchy = new List<AMS_Process_Detail__c>();
-		for(HierarchyItem hi : hierarchyValues){
-			if(hi.selected && !hi.main){
-				newProcessHierarchy.add(new AMS_Process_Detail__c(Oscar__c = oscarId, Account__c = hi.acc.Id, recordtypeid = rtAgencyInvolved));
-			}
-		}
-
-		try{
-
-		
-		}catch(Exception e){
-			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
-			return false;
-		}
-
-		return true;
-	}
-
-	public Boolean getDisablePrevious() { 
-		//this will disable the previous and beginning buttons
-		return (currentPage <= 0);
-	}
-
-	public Boolean getDisableNext() { //this will disable the next and end buttons
-		return (currentPage >= hierarchyValuesForDisplay.size()-1);
-	}
 
 
 	// ***********************************
@@ -470,7 +421,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 	}
 
-	private void adjustHierarchy(){
+	@TestVisible private void adjustHierarchy(){
 
 		for(HierarchyItem item: hierarchyValues){
 
