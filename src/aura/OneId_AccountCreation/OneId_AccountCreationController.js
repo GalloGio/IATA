@@ -62,12 +62,13 @@
 
         //reset validation
         c.set("v.valid"+addressType, 0);
+        c.set("v.suggestionsMode", "hidden");
         
         // if copy checkbox is selectected copy billing to shipping
         h.copyBillingToShipping(c);
     },
 
-    validateAddress : function (c, e, h) {
+    validateAddress : function (c, e) {
         var mode = e.currentTarget.dataset.mode;
         c.set("v.valid"+mode, 2); //set spinner
 
@@ -75,19 +76,37 @@
             street : c.get("v.account."+mode+"Street"),
             locality : c.get("v.account."+mode+"City"),
             postalCode : c.get("v.account."+mode+"PostalCode"),
-            province : c.get("v.account."+mode+"State")
+            province : c.get("v.account."+mode+"State"),
+            countryCode : c.get("v.country.ISO_Code__c")
         };
         var action = c.get("c.checkAddress");
-        action.setParams({
-            "info": $A.util.json.encode(addressInfo),
-            "countryCode": c.get("v.country.ISO_Code__c")
-        });
+        action.setParams({"info": $A.util.json.encode(addressInfo)});
 
         action.setCallback(this, function(a) {
-            var isValidAddress = a.getReturnValue();
+            var addresses = a.getReturnValue();
+
+            var isValidAddress = addresses.length > 0;
+
             c.set("v.valid"+mode, isValidAddress ? 1 : -1);
 
-            if(mode == 'Billing') h.copyBillingToShipping(c);
+            if(isValidAddress){
+                if(addresses.length == 1){
+                    var cmpEvent = c.getEvent("addressSelected");
+                    cmpEvent.setParams({
+                        "addressType" : mode,
+                        "addressSelected" : addresses[0] });
+                    cmpEvent.fire();  
+
+                    c.set("v.valid"+mode, 1);
+                }else{
+                    c.set("v.suggestions", addresses);
+                    c.set("v.suggestionsMode", mode);
+                }
+            }else{
+                
+                c.set("v.suggestionsMode", "hidden");
+                c.set("v.valid"+mode, -1);
+            }
         });
         $A.enqueueAction(action);
     },
@@ -165,5 +184,23 @@
         }
         
         return isAllFilled;        
+    },
+    closeModal: function(c){
+        c.set("v.suggestionsMode", "hidden");
+    },
+    suggestionSelected: function(c, e) {
+        
+        // Set input with selected value
+        var response = c.get("v.suggestions");
+
+        var index = parseInt(e.currentTarget.dataset.rowIndex);
+        var addressType = c.get("v.suggestionsMode");
+        
+        var cmpEvent = c.getEvent("addressSelected");
+        cmpEvent.setParams({
+            "addressType" : addressType,
+            "addressSelected" : response[index] });
+        cmpEvent.fire();
+        c.set("v.suggestionsMode", "hidden");   
     }
 })
