@@ -1,0 +1,70 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style=""><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size:10.0pt;line-height:107%;color:#1F4E79">Dear Sir/Madam,</span><span style="color:red;mso-bidi-font-weight:bold"> <o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size:10.0pt;line-height:107%;color:#1F4E79">IATA
+Code:&nbsp;{!Case.IATA_Code__c} - No BSP</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size:10.0pt;line-height:107%;color:#1F4E79"><span style="background:yellow;mso-highlight:yellow"><br></span></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79">With reference to communication sent earlier
+reminding you to renew your compliance certification for Payment Card Industry
+(PCI) Data Security Standard (DSS), please note we have still <b style="mso-bidi-font-weight:normal"><u>not</u></b> received your new Attestation
+of Compliance (AoC).<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79"><br></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79">We would like to remind you again that your
+compliance certification for Payment Card Industry (PCI) Data Security Standard
+(DSS) will expire on&nbsp;{!Account.ANG_PCI_compliance_expiry_date__c}<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79"><br></span></p>
+
+<p class="MsoNormal" style="text-align: justify;"><span style="color: rgb(31, 78, 121); font-family: arial; font-size: 10pt; line-height: 107%;">In light of the above and as a second reminder,
+you are kindly requested to provide us with your new <b style="mso-bidi-font-weight:
+normal"><u>Attestation of Compliance</u></b> to indicate your company’s
+compliance within <b style="mso-bidi-font-weight:normal"><u>next 30 days</u></b>
+but no later than&nbsp;</span><font color="#1f4e79" face="arial"><span style="font-size: 13.3333px;"><b><u>{!Account.ANG_PCI_compliance_expiry_date__c}</u></b></span></font></p><p class="MsoNormal" style="text-align: justify;"><font color="#1f4e79" face="arial"><span style="font-size: 13.3333px;"><b><u><br></u></b></span></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; vertical-align: baseline;"><span style="font-size:10.0pt;line-height:107%;
+color:#1F4E79">In case you fail to submit your new compliance certification,
+IATA will proceed with issuing of notification of non-compliance and inform the
+member airlines.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; vertical-align: baseline;"><span style="font-size:10.0pt;line-height:107%;
+color:#1F4E79"><br></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; vertical-align: baseline;"><span style="font-size:10.0pt;line-height:107%;
+color:#1F4E79">We must remind you that credit card form of payment will be
+restricted upon migration of&nbsp;</span><span style="background-color: rgb(255, 255, 255); color: rgb(31, 78, 121); font-size: 13.3333px;">{!Case.BSPCountry__c}&nbsp;</span><span style="color: rgb(31, 78, 121); font-size: 10pt;">under Resolution 812, unless the evidence is provided prior to
+the specified date.</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; vertical-align: baseline;"><span style="font-size:10.0pt;line-height:107%;
+color:#1F4E79"><br></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79">In case you are currently not processing any
+transactions through BSP utilizing credit card form of payment or not intending
+to continue using credit card form of payment, you can submit the Nil Credit
+Card Self-Declaration, attached to this communication.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79"><br></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79">It should be noted that upon completion of such
+declaration no further proof of compliance will be requested from your agency,
+however credit card form of payment will be disabled for your Agency upon
+migration of your country of operation under NewGen environment and resolution
+812<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79">You can visit our PCI DSS compliance dedicated
+page for more information on the process. </span><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx"><span style="font-size:10.0pt;line-height:107%">http://www.iata.org/services/finance/Pages/pci-dss.aspx</span></a><span style="font-size:10.0pt;line-height:107%;color:#1F4E79"> <o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79">We would appreciate you will give this matter
+your immediate attention. Please do not hesitate to contact us if you have any
+queries on this matter via our Customer Service</span><span style="font-size:
+10.0pt;line-height:107%;color:#1F497D"> </span><span style="font-size:10.0pt;
+line-height:107%;color:#1F4E79">Portal at </span><a href="http://www.iata.org/cs"><span style="font-size:10.0pt;line-height:107%">http://www.iata.org/cs</span></a><span style="font-size:10.0pt;line-height:107%;color:#1F497D"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><o:p>&nbsp;</o:p></p><br></p>]]></td>
+</tr>
+</table>

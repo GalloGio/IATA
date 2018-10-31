@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_PCI Compliant NonBSP EN</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} – PCI Compliant</subject>
+    <textOnly>Dear Sir/Madam,
+
+IATA Code: {!Case.IATA_Code__c} - No BSP
+
+In reference to advice given to IATA concerning the risks associated with payment card transactions and potential data breaches, there is a need to confirm the compliance of Accredited Agencies operating within the BSP to be Payment Card Industry (PCI) Data Security Standard (DSS) compliant.
+
+Under the Passenger Sales Agency Rules, all IATA Accredited Agencies must ensure its full compliance with the PCI DSS.
+
+The PCI DSS, is a global standard aimed at helping merchants (Agency) understand and implement standards for security policies, technologies and ongoing processes that protect their payment systems from breaches and theft of cardholder data.
+
+In light of the above, you are kindly requested to provide us with your Attestation of Compliance to indicate your company’s compliance.
+
+We would like to inform you that as per the PCI DSS guidelines, compliance certificates are not recognized for PCI DSS validation. The only documentation recognized for PCI DSS validation are the official documents from the PCI SSC website. Any other form of certificate or documentation issued for the purposes of illustrating compliance to PCI DSS or any other PCI standard are not authorized or validated.
+
+The Attestation of Compliance is the document used to indicate that the appropriate Report on Compliance or Self-assessment Questionnaire has been performed, and to attest to your organization’s compliance status with PCI DSS.
+
+For further information about how to become PCI DSS compliance please visit our PCI DSS dedicated web page: http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+In case you are currently not processing any transactions through BSP utilizing Credit Card form of payment and not intending to do so, you can submit the Nil Credit Card Self-Declaration, attached to this communication.
+
+It should be noted that upon completion of such declaration no further proof of compliance will be requested from your Agency, however Credit Card form of payment will be disabled for your Agency upon migration of your country of operation under NewGen environment and resolution 812.
+
+The above requested documentation (Attestation of Compliance or Nil Credit Card Self-Declaration) should be sent to IATA through our Customer Service Portal web page: http://www.iata.org/cs to arrive no later than {!Today()+30}. Please attach a scanned copy to case {!Case.CaseNumber} (https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}) visible on your portal home page under ‘My recent cases’ section.
+
+The instructions about how to submit your documentation can be found as an attachment to this communication.
+
+The Agency Management Department will carry out a review, and make a decision based upon the evidence available.
+
+-----------------------------------------------------------------------------------------------------------------
+Please note that failure to comply with this requirement per IATA’s request will result in a Notice of Non-Compliance / Administrative Non-Compliance being issued against the Agency.
+-----------------------------------------------------------------------------------------------------------------
+
+We would appreciate you will give this matter your immediate attention. Should you need any further information from IATA, please do not hesitate to login a new query via our Customer Portal: www.iata.org/cs.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
