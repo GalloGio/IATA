@@ -21002,6 +21002,29 @@ Please add below all your company valid email domains, including different ones 
         <value>dev@balink.net</value>
     </labels>
     <labels>
+        <fullName>ISSP_Enable_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Enable_Service</shortDescription>
+        <value>Enable this service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Emergency_Support</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Emergency Support</shortDescription>
+        <value>Emergency Support</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Emergency_Support_Subtitle</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Emergency Support Subtitle</shortDescription>
+        <value>Our GDC locations now offer 24x7 Emergency Support in English for critical situation. Of your request is not related to an emergency, please use the "Ask a Question" tab</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Encolment_page_Office_address</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25011,6 +25034,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_ServiceAccessConfirm</fullName>
+        <categories>ISSP, services</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ServiceAccessConfirm</shortDescription>
+        <value>Are you sure you want to enable this service?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ServiceRequestConfirm</fullName>
         <categories>ISSP, services</categories>
         <language>en_US</language>
@@ -27120,6 +27151,22 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <protected>false</protected>
         <shortDescription>LVA_CallUsAvailableHours</shortDescription>
         <value>Available Period:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsEmergencyAvailableHours</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsEmergencyAvailableHours</shortDescription>
+        <value>24/7</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsEmergencyPhoneNumber</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsEmergencyPhoneNumber</shortDescription>
+        <value>*************</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>
@@ -32175,20 +32222,5 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Enable_Service</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Enable_Service</shortDescription>
-        <value>Enable this service</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ServiceAccessConfirm</fullName>
-        <categories>ISSP, services</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ServiceAccessConfirm</shortDescription>
-        <value>Are you sure you want to enable this service?</value>
     </labels>
 </CustomLabels>
