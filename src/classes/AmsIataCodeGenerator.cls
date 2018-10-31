@@ -125,8 +125,9 @@ global class AmsIataCodeGenerator{
             System.debug('[generatedAgencyIATACode] theAccreditation is ' + theAccreditation);
             System.debug('[generatedAgencyIATACode] isImportAgentWithLink flag set to ' + isImportAgentWithLink);
 
-            if(longCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) && theAccreditation.CASS_Number__c == null)
-            {
+            /*** AMSU-173 ***/
+            Boolean isGSA = theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP;
+            if(AMS_Utils.CLASS_REQ_CASS_NUMBER.contains(theAccreditation.Location_Class__c) && !isGSA && theAccreditation.CASS_Number__c == null) { /*** AMSU-173 ***/
                 System.debug(LoggingLevel.ERROR,'[generatedAgencyIATACode] C, I, R, Q and G Location Types must have a CASS number defined before generating the IATA code.');
 
                 updaterObj.isFaulty=true;
@@ -163,8 +164,7 @@ global class AmsIataCodeGenerator{
             
             // For Cargo Agency branches, the IATA code should be the same as for the top-level Agency
             // So if the account has a top-level parent with IATA Code, we shall use it and utilize the C, A and N codes based on the IATA Code.
-            if( longCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) && theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c != null)
-            {
+            if(AMS_Utils.CLASS_REQ_CASS_NUMBER.contains(theAccreditation.Location_Class__c) && !isGSA && theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c != null) { /*** AMSU-173 ***/
                 System.debug('*** Entered based on longCodePrograms with value ' + theAccreditation.Location_Class__c + '-' + theAccount.Sector__c);
 
                 theAccreditation.IATACode__c = theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c.subString(0, 7)+theAccreditation.CASS_Number__c;
@@ -651,7 +651,8 @@ global class AmsIataCodeGenerator{
     {
         checkDigitCreation(agt, act, false);
         
-        if(agt.Location_Class__c.equalsIgnoreCase('P') || agt.Location_Class__c.equalsIgnoreCase('M') || (agt.Location_Class__c.equalsIgnoreCase('G') && act.Sector__c == 'Travel Agent') || agt.Location_Class__c.equalsIgnoreCase('X') || agt.Location_Class__c.equalsIgnoreCase('T') || agt.Location_Class__c.equalsIgnoreCase('D'))
+        Boolean isGSA = agt.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA || agt.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP;   
+        if(agt.Location_Class__c.equalsIgnoreCase('P') || agt.Location_Class__c.equalsIgnoreCase('M') || (agt.Location_Class__c.equalsIgnoreCase('G') && isGSA) || agt.Location_Class__c.equalsIgnoreCase('X') || agt.Location_Class__c.equalsIgnoreCase('T') || agt.Location_Class__c.equalsIgnoreCase('D'))
         {
             agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.Chk_Dgt__c;
             act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c;
@@ -744,9 +745,9 @@ global class AmsIataCodeGenerator{
             nCCode = agt.C_code__c;
         }
         
-        
-        if( (agt.Location_Class__c.equalsIgnoreCase('C') || agt.Location_Class__C.equalsIgnoreCase('R') || agt.Location_Class__C.equalsIgnoreCase('Q') || agt.Location_Class__C.equalsIgnoreCase('I') || (agt.Location_Class__c.equalsIgnoreCase('G') && act.Sector__c == 'Cargo Agent')) && agt.CASS_Number__c != null)
-        {
+        /*** AMSU-173 ***/
+        Boolean isGSA = agt.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA || agt.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP;        
+        if(AMS_Utils.CLASS_REQ_CASS_NUMBER.contains(agt.Location_Class__c) && !isGSA &&  agt.CASS_Number__c != null) {
             cCassNumber = resizeNumericString(agt.CASS_Number__c+'',3);
         }
         

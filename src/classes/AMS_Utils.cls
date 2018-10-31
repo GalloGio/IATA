@@ -3123,4 +3123,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     };
     /*** AMSU-166 End ***/
 
+
+    /*** AMSU-173 ***/
+    public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
 }
