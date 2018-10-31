@@ -45,7 +45,7 @@ public class ISSP_FillTopParentTest {
         acct.ParentId = child.ParentId;
         child.ParentId = parent2.Id;
         accountsToChange = ISSP_FillTopParent.getAcctsToUpdate(new map<Id,Account>(new list<Account>{(Account)child}),new map<Id,Account>(new list<Account>{(Account)acct}));
-        ISSP_FillTopParent.accountsBeforeUpdateTopParent(accountsToChange, new map<Id,Account>(new list<Account>{(Account)child}), new map<Id,Account>(new list<Account>{(Account)acct}));
+        ISSP_FillTopParent.accountsBeforeUpdateTopParent(accountsToChange);
         update child;
         
         ISSP_FillTopParent.accountsAfterUpdateTopParent(accountsToChange, new map<Id,Account>(new list<Account>{(Account)child}), new map<Id,Account>(new list<Account>{(Account)child}));
