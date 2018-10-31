@@ -11133,6 +11133,10 @@ and
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>เปิดใช้บริการ</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13173,6 +13177,10 @@ GSA - ตัวอักษร 3 ตัว
     <customLabels>
         <label>บริการ</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณแน่ใจหรือไม่ว่าต้องการเปิดใช้งานบริการนี้</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>ยืนยันว่าต้องการขอสิทธิ์เข้า</label>

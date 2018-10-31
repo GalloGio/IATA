@@ -11144,6 +11144,10 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>aktifkan layanan</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13184,6 +13188,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label>Layanan</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda yakin ingin mengaktifkan layanan ini?</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>Mohon konfirmasi bahwa Anda membutuhkan akses ke</label>
