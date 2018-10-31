@@ -131,21 +131,22 @@ public class ANG_RHCInformationTriggerHandler{
 		}*/
 
 		if(!accIds.isEmpty()) {
-			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) { 
-				Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-			} else {
-				if(System.isBatch() && Limits.getQueueableJobs() == 1) {
-					String hour = String.valueOf(Datetime.now().hour());
-					String min = String.valueOf(Datetime.now().minute()); 
-					String ss = String.valueOf(Datetime.now().second() + 5);
-					String nextFireTime = ss + ' ' + min + ' ' + hour + ' * * ?';
-					System.schedule('ANG_UpdateRHCInformationScheduler ' + String.valueOf(Math.random()), nextFireTime, 
-						new ANG_UpdateRHCInformationScheduler(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-				} else {
-					System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-				}				
-			}
-		}	
+            if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) { 
+                Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+            } else {
+                if(System.isBatch() && Limits.getQueueableJobs() == 1) {
+                    Datetime execTime = Datetime.now().addSeconds(5);
+                    String hour = String.valueOf(execTime.hour());
+                    String min = String.valueOf(execTime.minute()); 
+                    String ss = String.valueOf(execTime.second());
+                    String nextFireTime = ss + ' ' + min + ' ' + hour + ' * * ?';
+                    System.schedule('ANG_UpdateRHCInformationScheduler ' + String.valueOf(Math.random()), nextFireTime, 
+                        new ANG_UpdateRHCInformationScheduler(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+                } else {
+                    System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+                }               
+            }
+        }        	
 	}
 
 	/* as per NEWGEN-1085
