@@ -239,7 +239,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	private Boolean checkPreviousOwnership() {
 		Decimal percentage = 0;
 
-		for (AMS_Account_Role__c ar: [SELECT Percentage__c FROM AMS_Account_Role__c WHERE Account__c = :currentAccount.account.Id AND Active__c = true AND RecordTypeId = :ownershipId])
+		for (AMS_Account_Role__c ar: [SELECT Percentage__c FROM AMS_Account_Role__c WHERE Account__c = :currentAccount.account.Id AND Active__c = true AND (RecordTypeId = :rtAccreditContPreviousOwner OR RecordTypeId = :rtAccreditContPreviousCompanyOwner)])
 			percentage += ar.Percentage__c;
 
 		return percentage == 100;
@@ -426,6 +426,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 															  getForm(currentIataCode),
 															  getIsoCountry(accountsMap.get(currentIataCode).Country_ISO_Code__c),
 															  (currentIataCode == heIataCode));
+		ownershipCompleted = checkPreviousOwnership();
 		return null;
 	}
 
@@ -2059,6 +2060,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                             ' \r\n' + AMS_Utils.notNull(TravelAgentPrevAccount.BillingCountry);
 
 			companyModalNameOfEmployer = AMS_Utils.notNull(generalAccount.Name);
+			companyModalAddress = agentAddress;
 
             currentAccount.newContact.Prev_Job2_Address__c = agentAddress;
             currentAccount.newContact.Prev_Job2_Employer__c = TravelAgentPrevAccount.Name;

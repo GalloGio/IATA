@@ -4138,16 +4138,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Assign_to_Agency_Management_Europe_queue</fullName>
-        <field>OwnerId</field>
-        <lookupValue>CasesACCEuropeOffOnshore</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Assign to Agency Management Europe queue</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Assign_to_DE_BSP_queue</fullName>
         <field>OwnerId</field>
         <lookupValue>CasesGermany</lookupValue>
@@ -13784,7 +13774,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and  6 and 7 and 8</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and  6 and 7 and 8 and 9</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -13821,6 +13811,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Total_Irregularities__c</field>
             <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.ANG_IsNewGenAgency__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
         </criteriaItems>
         <description>key account management in Europe</description>
         <triggerType>onAllChanges</triggerType>
@@ -15038,10 +15033,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <rules>
         <fullName>ISS Key controls Dashboard AM</fullName>
         <actions>
-            <name>Assign_to_Agency_Management_Europe_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>Case_Area_Agency_Management</name>
             <type>FieldUpdate</type>
         </actions>
@@ -15068,7 +15059,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org</value>
+            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Subject</field>
@@ -15274,7 +15265,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>PCI DSS Compliant</value>
+            <value>PCI DSS Compliant,New HE multicountry</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
@@ -15405,7 +15396,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Annual revalidation</value>
+            <value>Annual revalidation,New HE multicountry</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>

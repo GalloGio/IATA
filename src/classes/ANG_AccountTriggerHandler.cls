@@ -86,7 +86,7 @@ public class ANG_AccountTriggerHandler {
 	private void updateRiskStatus() {
 
 		List<Account> accs = new List<Account>();
-		Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
+		Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.GE, AMS_Utils.HO, AMS_Utils.AO};
 
 		for(Account acc : triggerNew){
 			if(topLocationTypes.contains(acc.Location_Type__c) && (Trigger.isInsert || hasChangedValuesAccount(oldMap.get(acc.Id), acc))){

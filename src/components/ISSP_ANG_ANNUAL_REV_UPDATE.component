@@ -974,11 +974,6 @@
         //console.log('***************** COMPONENT ******************');
         
         $(document).ready(function() {
-            if(!window.location.hash) {
-                window.location = window.location + '#loaded';
-                window.location.reload();
-            }
-            
             showCurrCorporateDetails();
             // binds on change to make checkbox function as radio buttons
             $('[data-group]').on('change', function() {
