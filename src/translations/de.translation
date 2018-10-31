@@ -11136,6 +11136,10 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label>Service aktivieren</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -13176,6 +13180,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label>Services</label>
         <name>ISSP_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Möchten Sie diesen Service wirklich aktivieren</label>
+        <name>ISSP_ServiceAccessConfirm</name>
     </customLabels>
     <customLabels>
         <label>Bestätigen Sie, dass Zugang anfordern für</label>
