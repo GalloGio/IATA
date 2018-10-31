@@ -837,6 +837,18 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ModelBanking India --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ModelBanking South Korea --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_SouthKorea_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ModelBanking Link Label --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_IEP_OpeningInProgress --></label>
         <name>ANG_ISSP_IEP_OpeningInProgress</name>
     </customLabels>
@@ -9528,6 +9540,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- Branch to Shipping --></label>
+        <name>ISSP_ANG_Local_Details_Copy_Address2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
         <name>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</name>
     </customLabels>
@@ -11120,6 +11136,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label><!-- EmailsFailure --></label>
         <name>ISSP_EmailsFailure</name>
+    </customLabels>
+    <customLabels>
+        <label>Attiva il servizio</label>
+        <name>ISSP_Enable_Service</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
@@ -13163,6 +13183,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_Service</name>
     </customLabels>
     <customLabels>
+        <label>Confermi che vuoi attivare il servizio?</label>
+        <name>ISSP_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
         <label>Confermi che sta richiedendo accesso per</label>
         <name>ISSP_ServiceRequestConfirm</name>
     </customLabels>
@@ -13590,6 +13614,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label>Nome commerciale azienda</label>
         <name>ISSP_Trade_name_of_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Trained Staff Certification --></label>
+        <name>ISSP_Trained_Staff_Certification</name>
     </customLabels>
     <customLabels>
         <label>Viaggi</label>
@@ -16921,6 +16949,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customTabs>
         <label><!-- Annual Revalidation Campaign --></label>
         <name>ANG_Anual_Revalidation_Tool</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- RHC Mass Calculation --></label>
+        <name>ANG_RHC_Mass_Calculation</name>
     </customTabs>
     <customTabs>
         <label><!-- AWS Explorer --></label>

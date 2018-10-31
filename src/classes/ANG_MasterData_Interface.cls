@@ -1,5 +1,7 @@
 @RestResource(urlMapping='/ANG_GetMasterData/*')
 global class ANG_MasterData_Interface{
+
+    public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY'};
     
     @HttpGet
     global static void doGet(){
@@ -8,6 +10,7 @@ global class ANG_MasterData_Interface{
             String IATACode = req.requestURI.substring(req.requestURI.lastIndexOf('/')+1);
             string sMode = req.params.get('mode');
             boolean bContinue = true;
+            String changeCode = req.params.get('ChangeCode');
             
             if(IATACode==null || IATACode== ''){
                 GenerateResponse(json.serialize(new ErrorPayload('400', 'No IATA Code received')), 400);
@@ -16,7 +19,7 @@ global class ANG_MasterData_Interface{
             
             if(sMode == null || sMode=='') sMode = 's';
             
-            list<Account> lsAccnt = [select ANG_IsNewGenAgency__c, Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,
+            list<Account> lsAccnt = [select Due_Diligence_Status__c, ANG_IsNewGenAgency__c, Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,
                                             billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, 
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
@@ -24,6 +27,7 @@ global class ANG_MasterData_Interface{
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
                                             (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r), //RHC Information
+                                            (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId = :AMS_Utils.RECTYPE_IEPMODELA ORDER BY LastModifiedDate DESC), //OSCAR
                                             (Select Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name From AMS_Account_Roles1__r where Active__c = true and RecordType.Name = 'Ownership') // List of Ownwer
                                      from Account 
                                      where recordtype.developername = 'IATA_Agency' and IATACode__c =:IATACode];
@@ -40,7 +44,7 @@ global class ANG_MasterData_Interface{
             }
             
             //All is good. Proceeding in generating payload
-            GenerateResponse(json.serialize(new MasterDataPayload(lsAccnt[0], sMode=='F'),true), 200);
+            GenerateResponse(json.serialize(new MasterDataPayload(lsAccnt[0], sMode=='F', changeCode),true), 200);
         }
         catch(exception e){
             GenerateResponse(json.serialize(new ErrorPayload('500', e.getMessage()) ), 500);
@@ -115,6 +119,17 @@ global class ANG_MasterData_Interface{
             this.percentage = percentage == null ? 0 : percentage; 
         }
     }
+
+    /* Due Diligence */
+    private class DueDiligence{
+        public string type;
+        public string status;
+        
+        public DueDiligence(string type, string status){
+            this.type = type;
+            this.status = status;
+        }
+    }
        
 
     private static final set<string> IGNORE_FIELDS_SET = new set<string>{'FormOfPayment'};
@@ -161,21 +176,24 @@ global class ANG_MasterData_Interface{
         public list<FOP> FormOfPayment;
         public RHCInfoClass RHCInfo;    //Risk Information
         public list<string> lsChildren; //List of Children IATA Code
+        public string dueDiligenceStatus;
         public boolean isNewGenAgency;
         public list<Owner> owners;
+        public list<DueDiligence> dueDiligence;
 
         
         
 
 
         /*Constructor*/
-        public MasterDataPayload(Account acc, boolean getChildren){
+        public MasterDataPayload(Account acc, boolean getChildren, String changeCode){
             try{
                 this.isBranchAbroad = acc.Is_Branch_Abroad__c;
                 this.PurgeCode = acc.Purge_Flag__c;
                 this.AccreditationDate = FormatDateMS(acc.Accreditation_date__c);
                 this.DefaultDate = FormatDateMS(acc.Default_date__c);
                 this.LastStatusChangeDate = String.ValueOf(acc.Date_Organisation_Status_attained__c) ;
+                this.dueDiligenceStatus = acc.Due_Diligence_Status__c;
                 this.AccreditationType = acc.ANG_Accreditation_Model__c;
                 this.agencyType = '';
                 this.billingCity = acc.billingCity;
@@ -207,7 +225,16 @@ global class ANG_MasterData_Interface{
                 this.TradeName = acc.TradeName__c;
                 this.vatNumber = acc.VAT_Number__c;
                 this.topParentIATACode = acc.Top_Parent__r.IATACode__c;
-                
+                this.dueDiligence = new List<DueDiligence>();
+
+                /* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
+                if(dueDiligenceIEPChangeCodes.contains(changeCode) && acc.oscars__r != null && acc.oscars__r.size()>0){
+                    if(changeCode == 'MaddY')
+                        this.dueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ?  'Passed' : 'Failed'  )));
+                    else
+                        this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));                    
+                }
+
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r)
                     this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, rhc.ANG_Financial_Security__c);
