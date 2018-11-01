@@ -18,6 +18,74 @@
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_Emergency_BJS_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;01:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emergency_SIN_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>OR(
+  AND(
+    RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
+    ISPICKVAL(Priority , &quot;Emergency&quot;),
+    OR(
+      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;23:00:00.000&quot;),
+      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;13:00:00.000&quot;)
+    )
+  ),
+  AND(
+    OR(
+      RecordType.DeveloperName = &quot;CasesEurope&quot;,
+      RecordType.DeveloperName = &quot;CasesAmericas&quot;,
+      RecordType.DeveloperName = &quot;CasesMENA&quot;
+    ),
+    ISPICKVAL(Priority , &quot;Emergency&quot;),
+    OR(
+      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;22:00:00.000&quot;),
+      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;05:00:00.000&quot;)
+    )
+  ),
+  AND(  
+    RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
+    ISPICKVAL(Priority , &quot;Emergency&quot;),
+    OR(
+      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;09:00:00.000&quot;),
+      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;01:00:00.000&quot;)
+    )
+  )
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emergency_MAD_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>OR(
+  AND(
+    OR(
+      RecordType.DeveloperName = &quot;CasesEurope&quot;,
+      RecordType.DeveloperName = &quot;CasesAmericas&quot;,
+      RecordType.DeveloperName = &quot;CasesMENA&quot;
+    ),
+    ISPICKVAL(Priority , &quot;Emergency&quot;),
+    TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;05:00:00.000&quot;),
+    TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;22:00:00.000&quot;)
+  ),
+  AND(
+    OR(
+      RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
+      RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;
+    ),
+    ISPICKVAL(Priority , &quot;Emergency&quot;),
+    TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;13:00:00.000&quot;),
+    TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
+  )
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 OR 2</booleanFilter>
