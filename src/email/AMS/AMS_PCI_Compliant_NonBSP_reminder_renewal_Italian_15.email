@@ -1,0 +1,68 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT">Gentile&nbsp;</span><span style="color: rgb(31, 78, 121); font-family: Arial, sans-serif; font-size: 13.3333px; background-color: rgb(255, 255, 255);">{!Case.Contact},</span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT">Codice
+IATA:&nbsp;<o:p></o:p></span><span style="background-color: rgb(255, 255, 255); color: rgb(31, 78, 121); font-size: 13.3333px;">{!Case.IATA_Code__c} - No BSP,</span></p><p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT"><br></span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT">ci
+permettiamo di ricordarle che siamo ancora in attesa di ricevere l’attestato di
+conformità PCI DSS o l’autocertificazione nessuna carta di credito. Le
+rammentiamo che la scadenza per la presentazione è il&nbsp;<span style="font-family: Arial, sans-serif; font-size: 13.3333px; background-color: rgb(255, 255, 255);">{!Case.CreatedDate+30}</span>. <o:p></o:p></span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT">Nel caso in
+cui ha già fornito uno dei documenti richiesti, la invitiamo a non considerare
+il presente messaggio.<o:p></o:p></span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT">Per saperne
+di più su come ottenere la conformità agli standard PCI DSS la invitiamo a
+visitare la nostra pagina web:<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span lang="IT"><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx"><span style="font-size:10.0pt;line-height:107%;mso-bidi-language:IT">http://www.iata.org/services/finance/Pages/pci-dss.aspx</span></a><o:p></o:p></span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT">Qualora le
+occorressero ulteriori informazioni da IATA non esiti a trasmettere una nuova
+richiesta attraverso il nostro Portale clienti <a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span style="color:#1F4E79;text-decoration:none;text-underline:none">www.iata.org/cs</span></a>.&nbsp;<o:p></o:p></span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT">Cordiali
+saluti,<o:p></o:p></span></p><div style="font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font size="2"><span style="font-size: 11pt;"><font color="#333399" face="Arial, sans-serif">Agency Management</font></span></font></div><div style="font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font size="2"><span style="font-size: 11pt;"><font color="#333399" face="Arial, sans-serif">International Air Transport Association</font></span></font></div><div style="font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font size="2" face="Arial, sans-serif"><span style="font-size: 11pt;">-----------------------------------------------------------------------------<font color="navy">&nbsp;</font></span></font></div><p class="MsoNormal" style="font-size: 12pt;"><font face="Arial, sans-serif"><span style="font-size: 10pt; line-height: 14.2667px; color: rgb(31, 78, 121);"></span></font></p><p class="MsoNormal" style="font-size: 12pt; background: white;"><span lang="FR-CA" style="font-size: 10pt; line-height: 14.2667px; color: rgb(31, 78, 121);"></span></p><p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+10.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-bidi-language:IT"></span></p><div style="font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><font size="2" face="Arial, sans-serif"><span style="font-size: 11pt;"><font color="navy">In order to obtain information or assistance from IATA, do not hesitate to access at any time our&nbsp;</font><a href="http://www.iata.org/cs" target="_blank">Customer Portal</a></span></font></div>]]></td>
+</tr>
+</table>
