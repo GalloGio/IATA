@@ -316,6 +316,14 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
       String RoleName = c.WhoClosedCase__r.UserRole.Name != null ? c.WhoClosedCase__r.UserRole.Name : 'none';
       String ProfileName = c.WhoClosedCase__r.Profile.Name != null ? c.WhoClosedCase__r.Profile.Name : 'none';
+      System.debug('::: RoleName : ' + RoleName + 'ProfileName : ' + ProfileName);
+
+      // Conditions requested on INC428523
+      if((c.Reason1__c == 'Debt Recovery' && RoleName.contains('E&F')) || (c.Origin == 'E&F Client – Email to Case') || (RoleName.contains('E&F Client Services'))){
+        System.debug('Bypass case due to match conditions : c.Reason1__c = Debt Recovery AND RoleName.contains(E&F) OR c.Origin = E&F Client – Email to Case OR RoleName.contains(E&F Client Services)');
+        continue;
+      }
+      // End of requested conditions on INC428523 
 
       // Using the country data from the contact's account and not from the  AccountCountry anymore, to minimize the risk of select the wrong language
       String AccountCountry = '';
