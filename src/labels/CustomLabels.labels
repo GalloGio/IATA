@@ -2546,7 +2546,7 @@ Payment required on receipt of this Payment Advice
         <fullName>BuyNow</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>BuyNow</shortDescription>
+        <shortDescription>Buy Now</shortDescription>
         <value>Buy now</value>
     </labels>
     <labels>
