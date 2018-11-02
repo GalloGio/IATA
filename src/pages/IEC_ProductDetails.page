@@ -279,25 +279,25 @@
                                                 </tr>
 
                                                 <!-- Media -->
-                                                <tr>
+                                                <tr style="{! IF(isBlank(product.Media), 'display:none', '')}">
                                                     <th scope="row">{!$Label.Media}</th>
                                                     <td>{!product.Media}</td>
                                                 </tr>
 
                                                 <!-- Language -->
-                                                <tr>
+                                                <tr style="{! IF(isBlank(product.Language), 'display:none', '')}">
                                                     <th scope="row">{!$Label.Language}</th>
                                                     <td>{!product.Language}</td>
                                                 </tr>
 
                                                 <!-- Edition -->
-                                                <tr>
+                                                <tr style="{! IF(isBlank(product.Edition), 'display:none', '')}">
                                                     <th scope="row">{!$Label.Edition}</th>
                                                     <td>{!product.Edition}</td>
                                                 </tr>
 
                                                 <!-- Effective Dates -->
-                                                <tr>
+                                                <tr style="{! IF(isBlank(product.EffectiveFrom), 'display:none', '')}">
                                                     <th scope="row">{!$Label.Effective_Date}</th>
                                                     <td>
                                                         <apex:outputText value="{0, date, medium}" >
@@ -377,7 +377,7 @@
 
                                 <section class="group-container product-description">
                                     <h2 class="group-title">{!$Label.Description}</h2>
-                                    <h3 class="title">Edition {!product.Edition}</h3>
+                                    <h3 class="title" style="{! IF(isBlank(product.Edition), 'display:none', '')}">Edition {!product.Edition}</h3>
                                     <p>{!product.ProductDesc}</p> 
                                 </section>
                             </section>
