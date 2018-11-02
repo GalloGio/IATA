@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>ANG Financial Assesment Opt-out DIS EN</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Financial Assesment Opt-out declined</subject>
+    <textOnly>{!Account.Name}
+
+{!Account.TradeName__c}
+
+{!Account.BillingStreet}
+
+{!Account.BillingCity} {!Account.BillingPostalCode}
+
+{!Account.BillingCountry}
+
+IATA Numeric Code: {!Account.IATACode__c}
+
+
+Dear Sir/Madam,
+
+
+FINANCIAL ASSESSMENT OPT OUT - REJECTED
+
+
+We regret to advise that your request for opt out from financial statements evaluation by IATA cannot be accepted at this time as:
+
+
+- Your agency is at this time not providing a financial security to IATA.
+
+
+Please note that you are therefore requested to provide your financial statements as per provisions of local financial criteria for {!Account.BillingCountry}.
+
+
+
+Sincerely,
+
+IATA Global Delivery Center</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -35,14 +35,16 @@ Constant Class
                 'ISS Portal Agency Delegated Admin User' => customSetingMap.get('ISS_Portal_Agency_Delegated_Admin'),
                 'ISS Portal Airline Delegated Admin User' => customSetingMap.get('ISS_Portal_Airline_Delegated_Admin'),
                 'ISS Portal GSA Delegated Admin User' => customSetingMap.get('ISS_Portal_GSA_Delegated_Admin'),
-                'ISS Portal Delegated Admin User' => customSetingMap.get('ISS_Portal_Delegated_Admin')
-                };
+                'ISS Portal Delegated Admin User' => customSetingMap.get('ISS_Portal_Delegated_Admin'),
+                'ISS Portal DPC Admin' => customSetingMap.get('ISS_Portal_DPC_Admin')
+            };
                     
                     
     public static set<Id> adminIdSet = new set<Id>{ customSetingMap.get('ISS_Portal_Agency_Delegated_Admin'),
         customSetingMap.get('ISS_Portal_Airline_Delegated_Admin'),
         customSetingMap.get('ISS_Portal_GSA_Delegated_Admin'),
-        customSetingMap.get('ISS_Portal_Delegated_Admin')
+        customSetingMap.get('ISS_Portal_Delegated_Admin'),
+        customSetingMap.get('ISS_Portal_DPC_Admin')
         };
                             
     public static set<Id> ISSProfileSet = new set<Id>{ customSetingMap.get('ISS_Portal_Agency_Delegated_Admin'),
@@ -89,6 +91,7 @@ Constant Class
             'Agency'=>'ISS Portal Agency Delegated Admin User',
             'Airline'=>'ISS Portal Airline Delegated Admin User',
             'GSA'=>'ISS Portal GSA Delegated Admin User',
+            'DPC' => 'ISS Portal DPC Admin',
             'Other'=>'ISS Portal Delegated Admin User'
         }
     };
@@ -106,8 +109,14 @@ Constant Class
     {
         'Cargo Agent'=>'Agency',
         'Travel Agent'=>'Agency',
-        'Airline'=>'Airline'
+        'Airline'=>'Airline',
+        'Internal Use'=>null
         };
+    
+    public static Map<String,String> accountCategoryType =  new Map<String,String>
+    {
+        'DPC'=>'DPC'
+    };
                                             
     public static Map<String, Set<String>> accountRecordTypeByUserType = new Map<String, Set<String>>
     {
@@ -115,7 +124,7 @@ Constant Class
         'GloballSalesAgent' => new set<string>{'IATA_GSA'},
         'Agency' => new set<string>{'IATA_Agency'},
         'NonIATAAgent' => new set<string>{'Others', 'Standard_Account'},
-        'OtherCompany' => new set<string>{'Others', 'Standard_Account'},
+        'OtherCompany' => new set<string>{'Others', 'Standard_Account','TIP_Payment_Provider'},
         'TIESS' => new set<string>{'Others', 'IATA_Agency', 'IATA', 'Standard_Account'},
         'GeneralPublic' => new set<string>{'Standard_Account'}
     };
@@ -148,6 +157,7 @@ Constant Class
     // Case RecordType Names map
     public static final Map<String,String> caseTypeMap = new Map<String,String>{
         'DPC Service Request'   => 'DPCSR',
+        'Inter DPCs'   => 'DPCSR',
             'IATA Service Request'  => 'IATASR',
             'IATA Financial Review' => 'IFAP',
             'Application Change Request (DPC Systems - locked)' => 'ACR',

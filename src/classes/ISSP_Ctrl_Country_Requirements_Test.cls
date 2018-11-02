@@ -6,9 +6,9 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 	public static list<IATA_ISO_Country__c> populateCountries() {
 		if(listCountries == null) {
 			listCountries = new list<IATA_ISO_Country__c>();
-			listCountries.add( new IATA_ISO_Country__c( Name = 'Switzerland', ISO_Code__c = 'CH'));
+			listCountries.add( new IATA_ISO_Country__c( Name = 'Switzerland', ISO_Code__c = 'CH', ANG_Enable_NewGen__c = true));
 			listCountries.add( new IATA_ISO_Country__c( Name = 'Canada', ISO_Code__c = 'CA'));
-			listCountries.add( new IATA_ISO_Country__c( Name = 'Portugal', ISO_Code__c = 'PT'));
+			listCountries.add( new IATA_ISO_Country__c( Name = 'Portugal', ISO_Code__c = 'PT',ANG_Enable_NewGen__c = true));
 			insert listCountries;
 		}
 		return listCountries;
@@ -35,12 +35,27 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 		);		
 		insert listRequirements;
 
+		list<AMS_Accreditation_Country_CheckList__c> ll = new List<AMS_Accreditation_Country_CheckList__c>();
 		AMS_Accreditation_Country_CheckList__c cc = new AMS_Accreditation_Country_CheckList__c(
 				IATA_ISO_Country__c = listCountries.get(2).id,
 				Operation__c = 'Airline'
 			);
 
-		insert cc;
+		AMS_Accreditation_Country_CheckList__c cc2 = new AMS_Accreditation_Country_CheckList__c(
+				IATA_ISO_Country__c = listCountries.get(2).id,
+				Operation__c = 'Travel Agent'
+			);
+
+		AMS_Accreditation_Country_CheckList__c cc3 = new AMS_Accreditation_Country_CheckList__c(
+				IATA_ISO_Country__c = listCountries.get(0).id,
+				Operation__c = 'Travel Agent'
+			);
+
+		ll.add(cc);
+		ll.add(cc2);
+		ll.add(cc3);
+
+		insert ll;
 
 		List<AMS_Accreditation_Requirement__c> lst = new List<AMS_Accreditation_Requirement__c>();
 
@@ -68,6 +83,23 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 				ANG_Accreditation_Model__c = 'Cashless',
 				Language__c = 'de'
 			));
+		lst.add(new AMS_Accreditation_Requirement__c(
+				AMS_Accreditation_Country_CheckList__c = cc2.id,
+				Name = 'Name3',
+				Requirement_text__c = 'Text3',
+				Location_type__c = 'HO',
+				ANG_Accreditation_Model__c = 'Legacy',
+				Language__c = 'de'
+			));		
+		lst.add(new AMS_Accreditation_Requirement__c(
+				AMS_Accreditation_Country_CheckList__c = cc3.id,
+				Name = 'Name3',
+				Requirement_text__c = 'Text3',
+				Location_type__c = 'HO',
+				ANG_Accreditation_Model__c = 'Legacy',
+				Language__c = 'de'
+			));		
+
 		insert lst;
 
 	}
@@ -214,7 +246,8 @@ private class ISSP_Ctrl_Country_Requirements_Test {
                 IATA_ISO_Country__c = listCountries.get(2).id,
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
-                Location_type__c = 'HE'
+                Location_type__c = 'HE',
+				Location_Class__c = 'P'
             );
 
         insert topParent;
@@ -226,7 +259,8 @@ private class ISSP_Ctrl_Country_Requirements_Test {
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
                 status__c = 'Approved',
-                Top_Parent__c = topParent.id
+                Top_Parent__c = topParent.id,
+				Location_Class__c = 'P'
             );
 
         insert a;
@@ -240,10 +274,74 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 
         System.runAs(testUser) {
             ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
+
+            controller.getLanguagesMap();
+            controller.getCountryRequirementsList();
         }	
 
         Test.stopTest();
 
         System.assert(result==null);
-    }    
+    } 
+
+    @isTest static void test_getCountryRequirementsList() {
+    	list<IATA_ISO_Country__c> listCountries =  populateCountries();
+
+    	populateRequirements();
+
+        User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
+
+        Account acc = [Select Sector__c from Account limit 1];
+        acc.Sector__c = 'Travel Agent';
+        acc.IATACode__c = '1234567890';
+        acc.Location_type__c = 'HO';
+        acc.IATA_ISO_Country__c = listCountries.get(2).id;
+        update acc;
+
+        PageReference result;
+        Test.startTest();
+
+        System.runAs(testUser) {
+            ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
+            result = controller.checkAccess();
+            controller.getNewLayout();
+            controller.getCountryRequirementsList();
+            controller.getAccreditationTypes();
+            controller.refreshRequirementsList();
+        }	
+
+        Test.stopTest();
+    }
+
+    @isTest static void test_getCountryRequirementsList2() {
+    	list<IATA_ISO_Country__c> listCountries =  populateCountries();
+
+    	populateRequirements();
+
+        User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
+
+        Account acc = [Select Sector__c from Account limit 1];
+        acc.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        acc.Sector__c = 'Travel Agent';
+        acc.IATACode__c = '1234567890';
+        acc.Location_type__c = 'HO';
+        acc.Status__c = 'Approved';
+        acc.Category__c = AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT;
+        acc.IATA_ISO_Country__c = listCountries.get(0).id;
+        update acc;
+
+        PageReference result;
+        Test.startTest();
+
+        System.runAs(testUser) {
+            ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
+            result = controller.checkAccess();
+            controller.getNewLayout();
+            controller.getCountryRequirementsList();
+            controller.getAccreditationTypes();
+            controller.refreshRequirementsList();
+        }	
+
+        Test.stopTest();
+    }
 }

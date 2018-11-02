@@ -80,10 +80,11 @@ public without sharing class  ISSP_First_Login{
         
 	private PageReference home(){
         system.debug('GOING HOME');
-		Pagereference pr = Page.ISSP_Login;
+	    //Pagereference pr = Page.ISSP_Login;
+        //pr.setRedirect(true);
+        PageReference pr = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/login/?serviceName=ISSP'));
 
-		pr.setRedirect(true);
-		return pr;   
+    	return pr;   
 
     }
    
@@ -92,7 +93,7 @@ public without sharing class  ISSP_First_Login{
     private PageReference changePassword(){
 		system.debug('CHANGING PASS');
         //updateUsers(ids);
-        Pagereference pr =  !test.isRunningTest() ? site.login(userName,passWord,'/ISSP_ChangePassword'): Page.ISSP_ChangePassword;
+        Pagereference pr =  !test.isRunningTest() ? site.login(userName,passWord,OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/OneId_ChangePassword?serviceName=ISSP')): Page.ISSP_ChangePassword;
         if(CommunityName=='CNS'){
            pr =  !test.isRunningTest() ? site.login(userName,passWord,'/ISSP_ChangePassword?CommunityName=CNS'): Page.ISSP_ChangePassword; 
         }

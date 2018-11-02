@@ -25,6 +25,7 @@ private class AMP_ChatterBroadcastToolControllerTest {
         	system.assertEquals(1, ctrl.lstAccounts.size());
         	system.assertEquals(6, ctrl.getlstRegions().size());
 
+        	ctrl.GoToStep2();
         	ctrl.lstAccounts[0].isSelected = true;
         	ctrl.GoToStep2();
         	ctrl.GoBackToStep1();
@@ -47,6 +48,15 @@ private class AMP_ChatterBroadcastToolControllerTest {
 
         	system.assertEquals(1, lstTAs.size());
 
+        	ctrl.RestartFromStep1();
+        	
+        	ctrl.lstAccounts[0].isSelected = true;
+        	
+    		ctrl.message = null;
+        	ctrl.BroadcastMessage();
+        	
+        	ctrl.message = 'Invalid Topic';
+        	ctrl.BroadcastMessage();
 
         test.stopTest();
 	}

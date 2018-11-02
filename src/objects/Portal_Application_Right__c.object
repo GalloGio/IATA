@@ -112,7 +112,7 @@
         <label>Reason</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -346,6 +346,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Favourite_Service__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox used to know which services are the users favourites</description>
+        <externalId>false</externalId>
+        <label>Favourite Service</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>IATA_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__r.IATA_Code__c</formula>
@@ -363,7 +373,7 @@
         <externalId>false</externalId>
         <label>ICCS Currency Center Current Visit</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -373,7 +383,7 @@
         <externalId>false</externalId>
         <label>ICCS Currency Center Previous Visit</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -449,6 +459,18 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>New_Role_Requested__c</fullName>
+        <description>When the portal user has a role in the service and requests another role, this field is used to store the requested role</description>
+        <externalId>false</externalId>
+        <label>New Role Requested</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Notification_Template__c</fullName>
         <externalId>false</externalId>
         <label>Notification Template</label>
@@ -514,8 +536,9 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;IFACP Endorsement &amp; Changes&quot;, $Label.ISSP_IFACP_Endorsement_Changes,
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
-&quot;MSO Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
-&quot;RHC Information&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
+&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;ICCS&quot;, &quot;ICCS&quot;,
 Application_Name__c
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>
@@ -647,6 +670,19 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Terms_Acceptance_Version__c</fullName>
+        <description>Service Terms and Condition version that the user accepted</description>
+        <externalId>false</externalId>
+        <label>Terms Acceptance Version</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Terms_Acceptance__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Indicates if terms and conditions have been accepted</description>
@@ -655,6 +691,19 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Top_Account__c</fullName>
+        <description>Id of the Top Account in the account hierarchy.</description>
+        <externalId>false</externalId>
+        <formula>IF(Contact__r.Account.Top_Parent__r.Id  &lt;&gt;  null, CASESAFEID(Contact__r.Account.Top_Parent__r.Id), CASESAFEID(Account__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Top Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>allowAssignFinContactFlowChange__c</fullName>
@@ -673,6 +722,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
         <columns>Right__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Restricted_App__c</field>
@@ -984,6 +1034,25 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <errorMessage>The user&apos;s portal status must be validated before granting access to any application.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Internal_grant_access_by_accred_type</fullName>
+        <active>true</active>
+        <description>Services with the field ANG_Restrict_internal_selection__c = true can&apos;t be added or modified.</description>
+        <errorConditionFormula>AND(
+Portal_Application__r.ANG_Lock_access_to_accreditation_type__c,
+Text(Right__c) = &apos;Access Granted&apos;,
+NOT(CONTAINS(
+(
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Cash&apos;),&apos;Cash&apos;,NULL)+
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Cashless&apos;),&apos;Cashless&apos;,NULL)+
+IF(INCLUDES( Portal_Application__r.ANG_Restrict_by_Accreditation_Type__c ,&apos;Multicountry&apos;),&apos;Multicountry&apos;,NULL)
+), 
+TEXT(Contact__r.Account.ANG_Accreditation_Model__c)
+)),
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
+)</errorConditionFormula>
+        <errorMessage>Access cannot be granted since the Agency&apos;s accreditation type for this contact does not match the portal service (Restrict by Accreditation Type).</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>MR_cannot_be_approved_by_admin</fullName>
         <active>false</active>
         <errorConditionFormula>AND( 
@@ -1011,6 +1080,36 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
         <errorConditionFormula>$User.ProfileId = &apos;00ew0000001QRzC&apos; &amp;&amp; Portal_Application__r.Name = &apos;IFAP&apos; &amp;&amp; (allowAssignFinContactFlowChange__c = False) &amp;&amp;  ISCHANGED(Right__c) &amp;&amp; NOT(ISPICKVAL(PRIORVALUE(Right__c), &apos;Access Requested&apos;)) &amp;&amp; ISPICKVAL(Right__c, &apos;Access Denied&apos;)</errorConditionFormula>
         <errorDisplayField>Right__c</errorDisplayField>
         <errorMessage>Please click on &apos;Cancel&apos; and use the &apos;Assign Financial Assessment Contact&apos; button on the Contact in order to Grant or Deny IFAP access.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Restrict_Access_For_Payment_Providers</fullName>
+        <active>true</active>
+        <description>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</description>
+        <errorConditionFormula>AND( 
+Portal_Application__r.Name = &apos;Transparency in Payments (TIP)&apos;, 
+OR(Text(Right__c) = &apos;Access Granted&apos;, Text(Right__c) = &apos;Access Requested&apos;), 
+NOT(INCLUDES(Contact__r.Account.Account_Role__c,&apos;Payment Provider&apos;)), 
+AND( 
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;ISS&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;IATA Portal&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;identity&apos;)) 
+) 
+)</errorConditionFormula>
+        <errorMessage>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Restrict_IEP_request</fullName>
+        <active>true</active>
+        <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
+        <errorConditionFormula>and(
+Text(Right__c) = &apos;Access Requested&apos;,
+CONTAINS(Application_Name__c, &apos;IATA EasyPay&apos;),
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
+$Profile.Name != &apos;ISS Portal Agency Delegated Admin User&apos;,
+$Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
+)</errorConditionFormula>
+        <errorMessage>Access to an IATA EasyPay portal service cannot be requested internally. Please ask the user to request access from the CS Portal, or the portal admin to add this user to the service.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Restrict_internal_selection</fullName>
@@ -1062,7 +1161,7 @@ NOT(CONTAINS($Profile.Name,&quot;System administrator&quot;))
         <errorConditionFormula>AND(
  OR (ISCHANGED(Right__c) , ISNEW() ),
  Application_Name__c = &apos;Treasury Dashboard&apos;,
- OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)),
+ OR(AND(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)),NOT(ISPICKVAL(PRIORVALUE(Right__c),&apos;Access Requested&apos;))), 
   $User.TD_Team__c = false
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by IATA ‘Treasury Dashboard’ team.</errorMessage>

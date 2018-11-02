@@ -6,6 +6,7 @@
     function errorMessageModal(flag) {
       if(flag == '-') {
         showModal('#ModalErrorMessage');
+        $('[id$="ModalErrorMessage"]').css('display', 'block');
       }
     }
 
@@ -18,33 +19,50 @@
     function hideModal(modalName) {
       if ($(modalName).is(":visible")) {
         $(modalName).modal('hide');  
+      } else {
+        $(modalName).modal('hide');
+        $('[id$="ModalErrorMessage"]').css('display', 'none');
       }
     }  
   </script>
   <apex:attribute name="wrapperClass" type="ANG_ISSP_AfpWrapper" description="Wrapper" assignTo="{! wrapper}" />
   <section name="payment-forms" class="row">
-    <header class="col-xs-12">
+    <header class="col-xs-12" style="margin-bottom: 10px;">
       <div class="section-header">
-        <i class="fa fa-google-wallet" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP}</strong>
+        <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/Payment.png')}"/>
+        <!--i class="fa fa-google-wallet" aria-hidden="true"></i--> 
+        <strong>{!$Label.ISSP_RHC_HUB_AFP}</strong>
       </div>
     </header>
-    <div class="col-md-4 col-sm-12 text-center">
-      <i class="fa fa-money fa-5x show" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
-      <i class="{! wrapper.isCash}" aria-hidden="true"></i>
-      <apex:outputPanel rendered="{! wrapper.isCashless}">
-      	<apex:outputText escape="false" value="{! wrapper.cashlessMessage}"/>
+    <div class="col-md-4 col-sm-12 text-center">      
+      <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/Cash.png')}" width="100" height="100"/>
+      <strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
+      <i class="{! wrapper.isCash}" aria-hidden="true" style="color:{!IF(wrapper.isCashFlag,'green','red')};"></i>
+  
+      <!--i class="fa fa-money fa-5x show" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
+      <i class="{! wrapper.isCash}" aria-hidden="true"></i-->
+      <apex:outputPanel rendered="{! AND(wrapper.isCashless, NOT(wrapper.isSearch))}">
+        <apex:outputText escape="false" value="{! wrapper.cashlessMessage}"/>
       </apex:outputPanel>      
     </div>
     <div class="col-md-4 col-sm-12 text-center">
-      <i class="fa fa-credit-card-alt fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
-      <i class="{! wrapper.isIEP}" aria-hidden="true"></i>
-      <a id="iepLink" href="{! wrapper.iepLink}" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{! wrapper.iepLinkLabel}</a>
+      <img id="theImage" src="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/IEP.png')}" width="100" height="100"/>
+      <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
+      <i class="{! wrapper.isIEP}" aria-hidden="true" style="color:{!IF(wrapper.isIEPFlag,'green','red')}; display: {!IF(wrapper.iepModel == 'Banking Model', 'none', 'block')}"></i>
+
+      <!--i class="fa fa-credit-card-alt fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
+      <i class="{! wrapper.isIEP}" aria-hidden="true"></i-->
+      <a style="display:{!IF(wrapper.isSearch,'none','')};" id="iepLink" href="{! wrapper.iepLink}" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{! wrapper.iepLinkLabel}</a>
     </div>
     <div class="col-md-4 col-sm-12 text-center">
-      <i class="fa fa-credit-card fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Credit_Card}</strong>
-      <i class="{! wrapper.isCreditCard}" aria-hidden="true"></i>
-      <apex:outputPanel rendered="{! NOT wrapper.isCreditCardFlag}">
-        <apex:outputText escape="false" value="{! $Label.ANG_ISSP_AFP_NoCreditCardMessage}"/>
+      <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/CreditCard.png')}" width="100" height="100"/>
+      <strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Credit_Card}</strong>
+      <i class="{! wrapper.isCreditCard}" aria-hidden="true" style="color:{!IF(wrapper.isCreditCardFlag,'green','red')};"></i>
+
+      <!--i class="fa fa-credit-card fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Credit_Card}</strong>
+      <i class="{! wrapper.isCreditCard}" aria-hidden="true"></i-->
+      <apex:outputPanel rendered="{! AND(NOT(wrapper.isCreditCardFlag), NOT(wrapper.isSearch))}">
+        <apex:outputText escape="false" value="{!wrapper.creditCardMessage}"/>
       </apex:outputPanel>      
     </div>
   </section>
@@ -69,8 +87,8 @@
         <div class="modal-footer">
           <div class="row">
             <div class="col-md-12">
-              <a onclick="hideModal('#ModalErrorMessage')" class="btn_iata_cancel btn-block btn">
-                {!$label.ISSP_Cancel}
+              <a onclick="hideModal('#ModalErrorMessage')" class="{!IF(wrapper.iepModel == 'Banking Model', 'btn_iata_success', 'btn_iata_cancel')}  btn-block btn">
+                {!IF(wrapper.iepModel == 'Banking Model', $Label.IFAP_close, $Label.ISSP_Cancel)}
               </a>
             </div>
           </div>            

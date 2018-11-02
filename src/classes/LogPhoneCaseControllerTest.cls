@@ -100,7 +100,7 @@ private class LogPhoneCaseControllerTest {
             LogPhoneCaseController controller = new LogPhoneCaseController();
             controller.getCaseLanguageOptions();
             controller.getlstRecordTypes();
-            
+            controller.getlstCaseTypes();
             controller = new LogPhoneCaseController();
             controller.newcase.CaseArea__c = 'Airline Management';
             controller.newcase.Reason1__c = 'Airline data changes';
@@ -178,6 +178,7 @@ private class LogPhoneCaseControllerTest {
             controller.isNewTaskRequested = true;
             
             controller.Save();
+            controller.cancel();
             
             // Test that the case has been created and not closed
             cases = [SELECT Id, Status FROM Case ORDER BY Id DESC];

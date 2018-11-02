@@ -9,14 +9,18 @@ public with sharing class ANG_Risk_Helper{
 	public static final String RISK_STATUS_B = 'B';
 	public static final String RISK_STATUS_C = 'C';
 
-	//RECORDTYPES
-	public static final String RECTYPE_ADJUSTMENT           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Adjustment');          
-	public static final String RECTYPE_RISKSTATUSASSESSMENT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Risk_Status_Assessment');
-	public static final String RECTYPE_RULES                = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules');
+    //RHC Information standard record type
+    public static final String RHC_INFO_STD_RT = 'RHC_Information';
+
+    //RECORDTYPES
+    public static final String RECTYPE_ADJUSTMENT           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Adjustment');          
+    public static final String RECTYPE_RISKSTATUSASSESSMENT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Risk_Status_Assessment');
+    public static final String RECTYPE_RULES                = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules');
+    public static final String RECTYPE_STDRHCINFO           = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_RHC_Information__c').get(RHC_INFO_STD_RT);
 
 
 	//Account - Financial_Review_Result__c
-	public static final String FR_SATISFACTORY = 'Satisfactory';
+	public static final String FR_SATISFACTORY = 'Satisfactory - No Action';
 	public static final String FR_UNSATISFACTORY = 'Unsatisfactory - No action';
 
 
@@ -27,6 +31,7 @@ public with sharing class ANG_Risk_Helper{
 	public static final String STATUS_WITHDRAWN        = 'Inactive_Withdrawn';
 	public static final String STATUS_REVOKED          = 'Inactive_Revoked';
 	public static final String STATUS_CHANGE_OWNERSHIP = 'Inactive_CHO';
+	public static final String STATUS_INACTIVE_CASHLESS = 'Inactive_Cashless';
 	public static final String STATUS_MIGRATED         = 'Inactive_Migrated';
 
 	//RISK EVENT TYPES
@@ -41,19 +46,20 @@ public with sharing class ANG_Risk_Helper{
 	public static final String RISK_TYPE_PREJUDICED_COLLECTION     = 'Prejudiced collection';
 
 
-	//CHANGE CODES
-	public static final String CHANGE_CODE_FIN = 'FIN';
-	public static final String CHANGE_CODE_IRR = 'IRR';
-	public static final String CHANGE_CODE_RCR = 'RCR';
-	public static final String CHANGE_CODE_NOT = 'NOT';
-	public static final String CHANGE_CODE_MCF = 'MCF';
-	public static final String CHANGE_CODE_RVW = 'RVW';
-	public static final String CHANGE_CODE_IRW = 'IRW';
-	public static final String CHANGE_CODE_NTW = 'NTW';
-	public static final String CHANGE_CODE_CCF = 'CCF';
-	public static final String CHANGE_CODE_CHF = 'CHF';
-	public static final String CHANGE_CODE_CNF = 'CNF';
-	public static final String CHANGE_CODE_CSF = 'CSF';
+    //CHANGE CODES
+    public static final String CHANGE_CODE_FIN = 'FIN';
+    public static final String CHANGE_CODE_IRR = 'IRR';
+    public static final String CHANGE_CODE_RCR = 'RCR';
+    public static final String CHANGE_CODE_NOT = 'NOT';
+    public static final String CHANGE_CODE_MCF = 'MCF';
+    public static final String CHANGE_CODE_RVW = 'RVW';
+    public static final String CHANGE_CODE_IRW = 'IRW';
+    public static final String CHANGE_CODE_NTW = 'NTW';
+    public static final String CHANGE_CODE_CCF = 'CCF';
+    public static final String CHANGE_CODE_CHF = 'CHF';
+    public static final String CHANGE_CODE_CNF = 'CNF';
+    public static final String CHANGE_CODE_CSF = 'CSF';
+	public static final String CHANGE_CODE_RWD = 'RWD';
 
 	//CHANGE CODES REASON DESCRIPTION 
 	public static final String CHANGE_CODE_DESCRIPTION_NCAC                  = 'NON COMPLIANCE TO ACCREDITATION CRITERIA';
@@ -61,9 +67,11 @@ public with sharing class ANG_Risk_Helper{
 	public static final String CHANGE_CODE_DESCRIPTION_PREJUDICED_COLLECTION = 'PREJUDICED COLLECTION OF FUNDS';
 	public static final String CHANGE_CODE_DESCRIPTION_NCFC                  = 'NON COMPLIANCE TO FINANCIAL CRITERIA' ;
 
-	//CHANGE CODE IRREGULARITY TYPE
-	public static final String CHANGE_CODE_IRR_OV1 = 'OV1';
-	public static final String CHANGE_CODE_IRR_OV2 = 'OV2';
+    //CHANGE CODE IRREGULARITY TYPE
+    public static final String CHANGE_CODE_IRR_OV1 = 'OV1';
+    public static final String CHANGE_CODE_IRR_OV2 = 'OV2';
+	public static final String CHANGE_CODE_IRR_FC2 = 'FC2';
+    public static final String CHANGE_CODE_IRR_SC2 = 'SC2';
 
 	//Contact - User_Portal_Status__c
 	public static final String USER_PORTAL_STATUS_APPROVED_ADIM = 'Approved Admin';
@@ -74,9 +82,13 @@ public with sharing class ANG_Risk_Helper{
 	//Case - CaseArea__c
 	public static final String CASE_AREA_RISK_MANAGEMENT_PROCESS = 'Risk Management Process';
 	public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
+	public static final String CASE_AREA_CUSTOMER_SERVICE = 'Customer Service';
 
 	//Case - Reason1__c
 	public static final String CASE_REASON_FINANCIAL_SECURITY_UPDATE = 'Financial Security Update';
+	public static final String CASE_REASON_RHC_75 = 'RHC 75 Follow up';
+	public static final String CASE_REASON_ADOC_REVIEW = 'Adhoc review';
+	public static final String CASE_REASON_YEARLY_REVIEW = 'Yearly review';
 
 	//Case - BSP_CASS__c
 	public static final String CASE_BSP = 'BSP';    
@@ -84,8 +96,8 @@ public with sharing class ANG_Risk_Helper{
 
 
 	//Account - Remittance_frequency__c
-	public static final String REMITTANCE_FREQUENCY_MONTHLY = 'Monthly';
-	public static final String REMITTANCE_FREQUENCY_DAILY = 'Daily';
+	public static final String REMITTANCE_FREQUENCY_MONTHLY = 'M';
+	public static final String REMITTANCE_FREQUENCY_DAILY = 'D';
 
 	// ANG_Agency_Risk_Calculation__c - ANG_Adjusted__c
 	public static final String ADJ_YES   = 'Yes';
@@ -103,10 +115,13 @@ public with sharing class ANG_Risk_Helper{
 	//Account - ANG_HE_RiskHistoryAssessment__c
 	public static final String SECURITY_STATUS_ACTIVE = 'Active';
 	public static final String SECURITY_STATUS_CLOSE_EXPIRY_DATE = 'Close to Expiry Date';
+	public static final String SECURITY_STATUS_NOT_ACTIVE_YET = 'Not Active yet';
 
 	//set with the status of the FS to be summed
 	public static final Set<String> FS_STATUS_FOR_SUM_SET = new Set<String>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE};
 	
+	//set with the status of the FS to be moved
+	public static final Set<String> FS_STATUS_FOR_MOVE_SET = new Set<String>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE,SECURITY_STATUS_NOT_ACTIVE_YET};
 
 	//Currency Conversion Rates
 	public static Map<String,CurrencyType> convertionsRateMap{
@@ -154,37 +169,52 @@ public with sharing class ANG_Risk_Helper{
 	}
 	
 	public static void moveRiskHE(Map<Id,Id> newParents){
-		List<ANG_Agency_Risk_Event__c> updateHE = new List<ANG_Agency_Risk_Event__c>();                 
+		List<ANG_Agency_Risk_Event__c> updateREsHE = new List<ANG_Agency_Risk_Event__c>();                 
+		List<Financial_Security__c> updateFSsHE = new List<Financial_Security__c>();                 
 		
-		for(ANG_Agency_Risk_Event__c risk : [Select id, ANG_HE_AccountId__c, ANG_AccountId__c, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c where ANG_HE_AccountId__c in :newParents.keySet()]){                
-			risk.ANG_HE_AccountId__c = newParents.get(risk.ANG_HE_AccountId__c);             
-			updateHE.add(risk);                             
-		}       
+		for(account acc :[select id, (Select id, ANG_HE_AccountId__c FROM All_Risk_Events__r ), (select id,Account__c from Financial_Securities__r where Security_Status__c in:FS_STATUS_FOR_MOVE_SET) from account where id in :newParents.keySet()]){
+			for(ANG_Agency_Risk_Event__c risk :  acc.All_Risk_Events__r){                
+				risk.ANG_HE_AccountId__c = newParents.get(risk.ANG_HE_AccountId__c);             
+				updateREsHE.add(risk);                             
+			}
+			for(Financial_Security__c fs : acc.Financial_Securities__r){
+				fs.account__c = newParents.get(fs.account__C);  
+				updateFSsHE.add(fs);  
+			}    
+		}  
 
-		if(!updateHE.isEmpty()) update updateHE;
+		if(!updateREsHE.isEmpty()) update updateREsHE;
+		if(!updateFSsHE.isEmpty()) update updateFSsHE;
 	}
 
-	public static List<Account> updateRiskStatus(List<Account> accs){
+	public static Map<String,ANG_Agency_Risk_Calculation__c> calculationTable{
+		get{
+			if(calculationTable == null || calculationTable.isEmpty()){
+				calculationTable = new Map<String,ANG_Agency_Risk_Calculation__c>();
 
-		Id riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
-		
-		Map<String,ANG_Agency_Risk_Calculation__c> calculationTable = new Map<String,ANG_Agency_Risk_Calculation__c>();
-		for(ANG_Agency_Risk_Calculation__c arc: [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c,ANG_Limit_Cash_Condition__c from ANG_Agency_Risk_Calculation__c where recordTypeId = :riskStatusAssessmentRT]){
-			calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc);
-		}
-
-		System.debug(loggingLevel.FINE, '____ [cls ANG_Risk_Helper - updateRiskStatus] calculationTable - ' + calculationTable);
-
-		if(!calculationTable.isEmpty()){
-			for(Account acc : accs){
-				ANG_Agency_Risk_Calculation__c arc = calculationTable.get(acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c);
-				acc.ANG_HE_RiskStatus__c = arc==null?null:arc.ANG_Risk_History__c;
-				acc.ANG_Limit_Cash_Condition__c = arc==null?false:arc.ANG_Limit_Cash_Condition__c;
-			   
+				Id riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
+				for(ANG_Agency_Risk_Calculation__c arc: [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c,ANG_Limit_Cash_Condition__c FROM ANG_Agency_Risk_Calculation__c WHERE recordTypeId = :riskStatusAssessmentRT]){
+					calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc);
+				}
+				System.debug(loggingLevel.FINE, '____ [cls ANG_Risk_Helper - updateRiskStatus] calculationTable - ' + calculationTable);
 			}
+			return calculationTable;
 		}
+		private set;
+	}
+	
 
-		return accs;
+	public static void updateRiskStatus(List<Account> accs){
+
+		if(calculationTable.isEmpty()) return;
+
+		for(Account acc : accs){
+			System.debug(loggingLevel.FINE, '____ [cls ANG_Risk_Helper - updateRiskStatus] key - ' + (acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c));
+			ANG_Agency_Risk_Calculation__c arc = calculationTable.get(acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c);
+			acc.ANG_HE_RiskStatus__c = arc==null?null:arc.ANG_Risk_History__c;
+			acc.ANG_Limit_Cash_Condition__c = arc==null?false:arc.ANG_Limit_Cash_Condition__c;
+			if(acc.ANG_Limit_Cash_Condition__c) acc.ANG_HE_CashCondition__c = true;
+		}
 	}
 
 	public static void sumFSAmount(List<Account> accounts){
@@ -236,7 +266,9 @@ public with sharing class ANG_Risk_Helper{
 	}
 	
 
-	public static Decimal currencyConverter(String currentCurIso,Decimal ammount,String targetCurIso){
+	public static Decimal currencyConverter(String currentCurIso,Decimal amount,String targetCurIso){
+
+		if(currentCurIso == targetCurIso) return amount;
 
 		if(!convertionsRateMap.containsKey(currentCurIso.toUpperCase())) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
 		if(!convertionsRateMap.containsKey(targetCurIso.toUpperCase()))  throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+targetCurIso);
@@ -245,7 +277,7 @@ public with sharing class ANG_Risk_Helper{
 		CurrencyType targetCur = convertionsRateMap.get(targetCurIso.toUpperCase());
 		Decimal toRate = targetCur==null?fromRate:targetCur.ConversionRate;
 
-		Decimal result = ammount==null?0:ammount * toRate/fromRate;
+		Decimal result = amount==null?0:amount * toRate/fromRate;
 		return result.setScale(targetCur.DecimalPlaces, System.RoundingMode.HALF_UP);
 	}
 
@@ -270,4 +302,5 @@ public with sharing class ANG_Risk_Helper{
 			if(process == 'Change of Ownership - Risk') moveRiskHE(riskMap);
 		}
 	}
+
 }

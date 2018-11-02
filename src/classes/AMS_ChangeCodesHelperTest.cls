@@ -45,32 +45,37 @@ private class AMS_ChangeCodesHelperTest {
     }
 
 	static testMethod void VR_Change_Codes() {
-		List<Account> accountLst = [SELECT ID, Status__c, Location_Class__c from Account ];
+		Account acc = [SELECT ID, Status__c, Location_Class__c from Account LIMIT 1];
 
-		Account acc = accountLst.get(0);
-		Set<Id> accountsInvolved = new Set<Id>{acc.Id};
-		Map<Id, Account> accounts = new Map<Id, Account>{acc.Id => acc};
+		String JSONOscar = JSON.serialize(new Map<String, Object>{
+			'Process__c' => AMS_Utils.VOLRELINQUISH,
+			'Account__c' => acc.Id,
+			'Termination_Date__c' => System.today()+30,
+			'Change_Effective_as_of__c' => system.today(),
+			'Business_Process__c' => 'AMS'
+		});
+		AMS_OSCAR__c oscar = (AMS_OSCAR__c)JSON.deserialize(JSONOscar, AMS_OSCAR__c.class);
 
-		AMS_OSCAR__c oscar = new AMS_Oscar__c(Process__c = AMS_Utils.VOLRELINQUISH, Account__c = acc.Id, Termination_Date__c = System.today()+30, Change_Effective_as_of__c = system.today());
+		insert new Agency_Applied_Change_Code__c(Reason_code__c = '91', Reason_Description__c = 'ACCREDITED-MEET-STANDARDS', Account__c = acc.Id);
 
-		Agency_Applied_Change_Code__c aacc = new Agency_Applied_Change_Code__c(Reason_code__c = '91', Reason_Description__c = 'ACCREDITED-MEET-STANDARDS');
+		List<Account> accounts = [SELECT ID, Status__c, Location_Class__c, (SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r) from Account LIMIT 1];
+		Agency_Applied_Change_code__c aacc = accounts[0].Agencies_Applied_Change_codes__r[0];
 
-		Map<Id, Agency_Applied_Change_Code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_Code__c>{acc.Id => aacc};
 
 		Test.startTest();
 
-		AMS_utils.Container sanityCheck = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SANITYCHECK, oscar, accountsInvolved, accounts, accountsChangeCode);
-		AMS_utils.Container suspension = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SUSPENSION, oscar, accountsInvolved, accounts, accountsChangeCode);
-		AMS_utils.Container termination = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.TERMINATION, oscar, accountsInvolved, accounts, accountsChangeCode);
+		AMS_utils.Container sanityCheck = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SANITYCHECK, oscar, accounts);
+		AMS_utils.Container suspension = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SUSPENSION, oscar, accounts);
+		AMS_utils.Container termination = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.TERMINATION, oscar, accounts);
 
 
-		AMS_utils.Container sanityCheckWithDrawal = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, oscar, accountsInvolved, accounts, accountsChangeCode);
+		AMS_utils.Container sanityCheckWithDrawal = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, oscar, accounts);
 		oscar.Suspension_result__c = AMS_Utils.PASSED;
-		AMS_utils.Container suspensionWithdrawal = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, oscar, accountsInvolved, accounts, accountsChangeCode);
+		AMS_utils.Container suspensionWithdrawal = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, oscar, accounts);
 		acc.Status__c = AMS_Utils.ACC_S8_CHANGESPROCESSED;
-		AMS_utils.Container suspensionWithdrawalChanges = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, oscar, accountsInvolved, accounts, accountsChangeCode);
+		AMS_utils.Container suspensionWithdrawalChanges = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, oscar, accounts);
 		oscar.Termination_result__c = AMS_Utils.PASSED;
-		AMS_utils.Container terminationWithdrawal = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, oscar, accountsInvolved, accounts, accountsChangeCode);
+		AMS_utils.Container terminationWithdrawal = AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, oscar, accounts);
 
 		Test.stopTest();
 
@@ -87,7 +92,7 @@ private class AMS_ChangeCodesHelperTest {
     static testMethod void TestChangesCodesCreation() {
 
 
-        List<Account> accountLst = [SELECT ID, Status__c from Account ];
+        List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c from Account ];
 
         if(accountLst.isEmpty())
             System.assert(true,false);

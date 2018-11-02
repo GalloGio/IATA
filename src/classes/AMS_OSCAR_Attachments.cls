@@ -7,6 +7,9 @@ global class AMS_OSCAR_Attachments {
     public Boolean isReadOnly {get; set;}
     public Boolean isEmbedded {get; set;}
 
+    /*** AMSU-154 ***/
+    public Id caseOwnerId {get;set;}
+
     public Id caseId{
         get{
             return cse.Id;
@@ -63,10 +66,10 @@ global class AMS_OSCAR_Attachments {
     public AMS_OSCAR_Attachments() {
 
         String sObjId = ApexPages.currentPage().getParameters().get('Id');
-        // CB - 6 APR 2017 - AMS Enhancements AMSU-2
-        cse = [Select Id, Status, ParentId, Parent.RecordType.Name from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication']; // AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
-
-        AMS_OSCAR__c oscar = [SELECT Id, Process__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c WHERE Id = :sObjId];
+        // CB - 6 APR 2017 - AMS Enhancements AMSU-2 //AMSU-154 added ownerId
+        cse = [Select Id, Status, ParentId, Parent.RecordType.Name, OwnerId from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication']; // AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
+        /*** AMSU-154 ***/
+        AMS_OSCAR__c oscar = [SELECT Id, Process__c, AMS_Online_Accreditation__c, OwnerId FROM AMS_OSCAR__c WHERE Id = :sObjId];
         // for child cases in banck account details changes OSCARs show the attachments on the parent case (the HO case)
         if (cse.ParentId != null && cse.Parent.RecordType.Name == 'OSCAR Communication' && oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null) {
             cse = [SELECT Id, Status FROM Case WHERE Id = :cse.ParentId];
@@ -78,6 +81,9 @@ global class AMS_OSCAR_Attachments {
 
         isReadOnly = ApexPages.currentPage().getParameters().get('readOnly') == 'true' ? true : false;
         isEmbedded = ApexPages.currentPage().getParameters().get('isEmbedded') == 'true' ? true : false;
+
+        /*** AMSU-154 ***/
+        caseOwnerId = cse.OwnerId;
     }
 
     /*
@@ -281,6 +287,29 @@ global class AMS_OSCAR_Attachments {
             }
         }
         return listFileDef;
+    }
+
+    /*** AMSU-168 ***/
+    public PageReference acceptFiles() {
+        for(WrapperAttach attach : listAttachments) {            
+            if(attach.isSelected && attach.fileAmazon != null && attach.fileAmazon.amazonFile != null) {
+                attach.reviewStatus = 'Accepted';
+                attach.isSelected = false;
+                attach.fileAmazon.amazonFile.Review_Status__c = 'Accepted';
+            }
+        }
+        return null;
+    }
+
+    public PageReference rejectFiles() {
+        for(WrapperAttach attach : listAttachments) {            
+            if(attach.isSelected && attach.fileAmazon != null && attach.fileAmazon.amazonFile != null) {
+                attach.reviewStatus = 'Rejected';
+                attach.isSelected = false;
+                attach.fileAmazon.amazonFile.Review_Status__c = 'Rejected';
+            }
+        }
+        return null;
     }
 
     global class FileDef {

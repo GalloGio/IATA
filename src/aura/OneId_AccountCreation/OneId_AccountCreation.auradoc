@@ -1,0 +1,9 @@
+<aura:documentation>
+	<aura:description>
+        <p>Component that allows for the creation of a new account </p>
+        <p>You need to provide an account (to receive information back) and a Country (it's going t be used both on the AddressDoctor AND phone flags)</p>
+        <p>This component DOES NOT handle insertion of the account, only creation.</p>
+        
+        <!-- TODO: send account back as an event. Make sector and category as force:inputfields (not possible right now). -->
+    </aura:description>
+</aura:documentation>

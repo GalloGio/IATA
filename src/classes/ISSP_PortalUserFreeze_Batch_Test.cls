@@ -58,6 +58,7 @@ private class ISSP_PortalUserFreeze_Batch_Test {
 	        ISSP_PortalUserFreeze_Batch ctrl = new ISSP_PortalUserFreeze_Batch();
 	        database.executebatch(ctrl);
 	        Test.stopTest();
+			ISSP_PortalUserFreeze_Batch.scheduleIt('0 0 0 ? * * *');
         }
     }
 }

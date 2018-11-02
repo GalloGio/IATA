@@ -321,6 +321,20 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Group_Administrator__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Person designated by the Group Owner to maintain the group information (TORs and participants). FOR MORE DETAILS, CONTACT AMT</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Person designated by the Group Owner to maintain the group information (TORs and participants).</inlineHelpText>
+        <label>Group Administrator</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Industry_Groups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Group_Owner_Text__c</fullName>
         <description>Group owner in free text for Reg/Div Groups</description>
         <externalId>false</externalId>
@@ -550,6 +564,32 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Managed_in_SSW__c</fullName>
+        <description>Indicates if the group is managed in the Standard Setting Workspace (SSW) or not. FOR MORE DETAILS, CONTACT AMT.</description>
+        <externalId>false</externalId>
+        <label>Managed in SSW</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Maximum_Number_of_Participiants__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Excluding Observers</inlineHelpText>
@@ -571,6 +611,28 @@
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Number_of_local_group_meetings__c</fullName>
+        <description>Total number of local group meetings</description>
+        <externalId>false</externalId>
+        <label>Number of local group meetings</label>
+        <summaryForeignKey>LocalGovernance_Meeting__c.Local_Governance__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_participants__c</fullName>
+        <description>The total number of participants</description>
+        <externalId>false</externalId>
+        <label>Number of participants</label>
+        <summaryForeignKey>Participant__c.Local_Governance__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
     </fields>
     <fields>
         <fullName>Open_to__c</fullName>
@@ -1029,21 +1091,6 @@ Record Type + Group Type + ISO_Country_Name</description>
         <label>All Active Reg/Div Groups</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>Reg_Div_Groups_Pending_Approval</fullName>
-        <columns>NAME</columns>
-        <columns>Group_Owner__c</columns>
-        <columns>Reporting_to__c</columns>
-        <columns>AM_Under__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>LocalGovernance__c.Draft_Reg_Div_Group</value>
-        </filters>
-        <label>Reg / Div Groups Pending Approval</label>
-        <language>en_US</language>
-    </listViews>
     <nameField>
         <label>Group Name</label>
         <trackHistory>false</trackHistory>
@@ -1051,302 +1098,6 @@ Record Type + Group Type + ISO_Country_Name</description>
     </nameField>
     <pluralLabel>Industry Groups</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <recordTypes>
-        <fullName>Draft_Reg_Div_Group</fullName>
-        <active>true</active>
-        <description>Represents a new Reg/Div group before it has been approved</description>
-        <label>Draft Reg/Div Group</label>
-        <picklistValues>
-            <picklist>Cargo_Passenger__c</picklist>
-            <values>
-                <fullName>Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Division__c</picklist>
-            <values>
-                <fullName>APCS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MER</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>SFO</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Frequency_of_Face_to_Face_Meetings__c</picklist>
-            <values>
-                <fullName>At least 1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At least 2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At least 3</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At least 4</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At least 5</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At least 6</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Local_Governance_type__c</picklist>
-            <values>
-                <fullName>ALWG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>APJC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>APJC %2F FAG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAPJC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CEC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CGA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ICAP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JALWG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>LCAG-C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>LCAG-P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>LCAG-P %2F Credit Card WG</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Open_to__c</picklist>
-            <values>
-                <fullName>IATA Member Airlines</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industry Stakeholders</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Airlines</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Strategic Partners</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Open_to_non_IATA_Airlines_and_Others__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Permanent_or_Temporary_Group__c</picklist>
-            <values>
-                <fullName>Permanent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Temporary</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Region__c</picklist>
-            <values>
-                <fullName>Africa %26 Middle East</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Asia %26 Pacific</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>China %26 North Asia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Resolution__c</picklist>
-            <values>
-                <fullName>800</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>801</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>801r</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>801re</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>801rr</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>801z</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>803</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>804</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>805</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>805zz</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>807</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>809</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>809zz</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>810</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>810i</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>810j</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>811</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>813</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>814</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>815</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>817</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>818g</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>851</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>853</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Restricted_of_Participants__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
     <recordTypes>
         <fullName>Local_Groups</fullName>
         <active>true</active>
@@ -1415,6 +1166,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <fullName>At least 6</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Local_Governance_type__c</picklist>
@@ -1464,6 +1219,17 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>LCAG-P %2F Credit Card WG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Managed_in_SSW__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1784,6 +1550,17 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Managed_in_SSW__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
                 <fullName>IATA Member Airlines</fullName>
@@ -1994,6 +1771,29 @@ Record Type + Group Type + ISO_Country_Name</description>
   )
 )</errorConditionFormula>
         <errorMessage>It&apos;s not possible to change this record because it is inactive</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Delete_group_meetings</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Local_Groups&apos;, 
+PRIORVALUE(Number_of_local_group_meetings__c) &gt; Number_of_local_group_meetings__c, 
+NOT($Permission.Modify_Local_Group_Owners) 
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to delete meetings from this group</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Delete_participants</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(AND(RecordType.DeveloperName = &apos;Reg_Div_Groups&apos;,
+PRIORVALUE(Number_of_participants__c) &gt; Number_of_participants__c,
+NOT($Permission.Modify_Reg_Div_Group_Owners)
+),
+AND(RecordType.DeveloperName = &apos;Local_Groups&apos;,
+PRIORVALUE(Number_of_participants__c) &gt; Number_of_participants__c,
+NOT($Permission.Modify_Local_Group_Owners)
+)
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to delete participants from this group</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Either_a_Division_or_a_Region</fullName>

@@ -2,16 +2,19 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>ExactTarget for AppExchange with Campaign Support</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>ExactTarget</label>
-    <tab>AboutExactTargetforAppExchange</tab>
-    <tab>standard-Lead</tab>
-    <tab>standard-Contact</tab>
-    <tab>standard-Campaign</tab>
-    <tab>ExactTarget</tab>
-    <tab>xtma_Email_Result__c</tab>
-    <tab>standard-report</tab>
-    <tab>standard-Dashboard</tab>
-    <tab>CSS_Tracking__c</tab>
-    <tab>Operational_Improvements__c</tab>
-    <tab>AMS_Account_Role__c</tab>
+    <tabs>AboutExactTargetforAppExchange</tabs>
+    <tabs>standard-Lead</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Campaign</tabs>
+    <tabs>ExactTarget</tabs>
+    <tabs>xtma_Email_Result__c</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>standard-Dashboard</tabs>
+    <tabs>CSS_Tracking__c</tabs>
+    <tabs>Operational_Improvements__c</tabs>
+    <tabs>AMS_Account_Role__c</tabs>
 </CustomApplication>

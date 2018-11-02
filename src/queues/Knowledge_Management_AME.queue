@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>kalajil@iata.org</email>
     <name>Knowledge Management - AME</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAfricaMECustomerService</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

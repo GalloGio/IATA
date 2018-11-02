@@ -92,11 +92,11 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
 		for(AMS_eBulletin_Profile__c eBprof : scope){
 			
-			AMS_EBulletinReportWebservice.recordTypeName =Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBprof.RecordTypeId).Name;
+			AMS_EBulletinReportHelper.recordTypeName =Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBprof.RecordTypeId).Name;
 
 			if(eBprof.Last_NotificationBatch_Run__c == null) eBprof.Last_NotificationBatch_Run__c = Date.today();
 
-			AMS_EBulletinReportWebservice.AMSEBulletinFilters filters = new AMS_EBulletinReportWebservice.AMSEBulletinFilters(eBprof, eBprof.Last_NotificationBatch_Run__c , system.now() );
+			AMS_EBulletinReportHelper.AMSEBulletinFilters filters = new AMS_EBulletinReportHelper.AMSEBulletinFilters(eBprof, eBprof.Last_NotificationBatch_Run__c , system.now() );
 
 
 			//Recover Ebulletin Sections

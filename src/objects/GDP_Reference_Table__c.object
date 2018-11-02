@@ -47,6 +47,7 @@
         <fields>Name</fields>
         <fields>Code__c</fields>
         <fields>Definition__c</fields>
+        <fields>Table__c</fields>
         <label>Compact layout</label>
     </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
@@ -131,34 +132,18 @@
         <columns>NAME</columns>
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
-        <columns>System__c</columns>
-        <columns>System_ID__c</columns>
-        <columns>Table__c</columns>
         <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>System_ID__c</field>
             <operation>startsWith</operation>
             <value>AIRSYS</value>
         </filters>
-        <label>AIRSYS (GDS)</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>APPRAC</fullName>
-        <columns>NAME</columns>
-        <columns>Code__c</columns>
-        <columns>Definition__c</columns>
-        <columns>System__c</columns>
-        <columns>System_ID__c</columns>
-        <columns>Table__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>System_ID__c</field>
-            <operation>startsWith</operation>
-            <value>APPRAC</value>
-        </filters>
-        <label>APPRAC</label>
+        <label>08 - AIRSYS - GDS</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -182,18 +167,19 @@
         <fullName>Agency_Principal_Destination</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
-        <columns>Code__c</columns>
         <columns>System_ID__c</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Table__c</field>
             <operation>equals</operation>
             <value>APDEST</value>
         </filters>
-        <label>Agency Principal Destination</label>
+        <label>10 - APDEST - Principal Destination</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -217,68 +203,71 @@
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
-        <columns>Code__c</columns>
         <columns>System_ID__c</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>Valid_for_GDP__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <label>00 - All Tables</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Caterory_Table</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
-        <columns>Code__c</columns>
         <columns>System_ID__c</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Table__c</field>
             <operation>equals</operation>
             <value>LOCCAT</value>
         </filters>
-        <label>Category Table</label>
+        <label>07 - LOCCAT - Location Category</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Class_Table</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
-        <columns>Code__c</columns>
         <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Table__c</field>
             <operation>equals</operation>
             <value>ORGCLASS</value>
         </filters>
-        <label>Class Table</label>
+        <label>02 - ORGCLASS - Accreditation Class</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>LOCTYP</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
+        <columns>Code__c</columns>
         <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
-        <columns>Code__c</columns>
         <columns>System_ID__c</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Table__c</field>
             <operation>equals</operation>
             <value>LOCTYP</value>
         </filters>
-        <label>LOCTYP</label>
+        <label>04 - LOCTYP - Location Type</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -295,7 +284,7 @@
             <operation>startsWith</operation>
             <value>ORGABB</value>
         </filters>
-        <label>ORGABB</label>
+        <label>20 - ORGABB - Accredit. Org. Abbrev.</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -319,18 +308,191 @@
     <listViews>
         <fullName>Status_Table</fullName>
         <columns>NAME</columns>
-        <columns>System__c</columns>
-        <columns>Table__c</columns>
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
         <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Table__c</field>
             <operation>equals</operation>
             <value>STATUS</value>
         </filters>
-        <label>Status Table</label>
+        <label>01 - STATUS - Accreditation Status</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X03_ACCTYP_Accreditation_Model</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>ACCTYP</value>
+        </filters>
+        <label>03 - ACCTYP - Accreditation Model</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X05_REMITFREQ_Remittance_Frequency</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>REMITFREQ</value>
+        </filters>
+        <label>05 - REMITFREQ - Remittance Frequency</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X06_EPSTAT_EasyPay_Status</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>EPSTAT</value>
+        </filters>
+        <label>06 - EPSTAT - EasyPay Status</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X09_LGLTYP_Legal_Type</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>LGLTYP</value>
+        </filters>
+        <label>09 - LGLTYP - Legal Type</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X11_APSALE_Sales_Volumes</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>APSALE</value>
+        </filters>
+        <label>11 - APSALE - Sales Volumes</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X12_APPRAC_Main_Activity</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>APPRAC</value>
+        </filters>
+        <label>12 - APPRAC - Main Activity</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X13_APSPEC_Main_Market_Specialization</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>APSPEC</value>
+        </filters>
+        <label>13 - APSPEC - Main Market Specialization</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X14_APDEST_Main_Destination_Specializ</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>APDEST</value>
+        </filters>
+        <label>14 - APDEST - Main Destination Specializ</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X15_APEN_Sales_Focus</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>startsWith</operation>
+            <value>APEN</value>
+        </filters>
+        <label>15 - APEN - Sales Focus</label>
         <language>en_US</language>
     </listViews>
     <nameField>

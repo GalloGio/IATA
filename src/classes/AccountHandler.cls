@@ -12,6 +12,7 @@ public class AccountHandler{
 	**/
 	public static void afterUpdate( list<Account> listNews, list<Account> listOlds) {
 		findParentAcountsToUpdate(listNews, listOlds);
+		terminateMSOAppointments(listNews, (Map<Id, Account>) Trigger.oldMap);
 	}
 
 	/**
@@ -132,5 +133,42 @@ public class AccountHandler{
 		}
 		return false;
 	}
+	
+	/*** AMSU-128 Start ***/
+	public static void terminateMSOAppointments(List<Account> listAccount, Map<Id, Account> oldMap) {
+		if(Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters') == null || Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency') == null) {
+			return;
+		}
 
+		Id airlineHQRT = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
+		Id agencyRT = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+		List<Account> accountsToCheck = new List<Account>();
+		for(Account acc : listAccount) {
+			Account oldAcc = oldMap.get(acc.Id);
+			if(!String.isBlank(oldAcc.Airline_designator__c) && String.isBlank(acc.Airline_designator__c) && acc.RecordTypeId == airlineHQRT) {
+				accountsToCheck.add(acc);
+			}
+		}
+
+		if(accountsToCheck.isEmpty()) {
+			return;
+		}
+
+		List<AMS_Inspection__c> appointments = [SELECT Account__c, Airline__c, Accreditation_Endorsement_Status_code__c
+												FROM AMS_Inspection__c
+												WHERE Account__r.RecordTypeId = :agencyRT AND Account__r.Location_Class__c = 'M' AND Airline__c IN :accountsToCheck];
+
+		//Set<Account> agenciesToUpdate = new Set<Account>();
+
+		for(AMS_Inspection__c appointment : appointments) {
+			appointment.Accreditation_Endorsement_Status_code__c = '0';
+			//agenciesToUpdate.add(new Account(Id= appointment.Account__c, Status__c= 'Terminated', Reason__c= '0-Terminated'));
+		}
+
+		update appointments;
+
+		//update new List<Account>(agenciesToUpdate);
+
+	}
+	/*** AMSU-128 End ***/
 }

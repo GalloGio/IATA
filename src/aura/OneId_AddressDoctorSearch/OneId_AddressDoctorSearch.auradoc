@@ -1,0 +1,12 @@
+<aura:documentation>
+	<aura:description>
+        <p>Component that allows for the search of addresses typed on the input. Search is a callout to Informatica webservice with defined parameters on the APEX controller </p>
+        <p>Input is a pure SLDS combobox, placing and other styling must be done externally</p>
+        <p>This component must receive a country ISO code (2-char) to be used on the search</p>
+        <p>Component sends the OneId_AddressSelected_EVT event with an object containing the selected result</p>
+        
+        <!-- TODO: 
+			create a form to search all fields.
+		-->
+    </aura:description>
+</aura:documentation>

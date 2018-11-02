@@ -3,6 +3,7 @@ private class LightningRegistrationProcess_Test {
     
     static testMethod void testAuraMethods() {
         
+		Test.startTest();
         Account oAccount = IECTestUtil.createSampleAccount();
         insert oAccount;
         Contact oContact = TestDataGenerator.generateContacts(oAccount.Id, 1, true)[0];
@@ -42,6 +43,8 @@ private class LightningRegistrationProcess_Test {
         oAccount.BillingCountry='test';
         oAccount.Iata_Iso_Country__c=ISO_Country.id;
         update oAccount;
+		Test.stopTest();
+		
         LightningRegistrationProcess.createContactAndAccount(oContact, oAccount, 'Airline');
         LightningRegistrationProcess.getHostURL();
         LightningRegistrationProcess.setFederationId(anUser.id, anUser.email);

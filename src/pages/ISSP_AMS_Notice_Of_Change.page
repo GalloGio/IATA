@@ -1070,7 +1070,7 @@
 							</apex:outputPanel>
 							
 							<apex:pageBlockSectionItem labelStyleClass="agencyLocationComponent pageBlockSectionItem" dataStyleClass="agencyLocationComponent pageBlockSectionItem" id="locationItemWebsite">
-                                <apex:outputLabel value="* {!$Label.ISSP_Registration_Website}"/>
+                                <apex:outputLabel value="{!$Label.ISSP_Registration_Website}"/>
                                 <apex:inputField value="{!newForm.Website__c}" style="width:60%"/>
                              </apex:pageBlockSectionItem>
 
@@ -1551,8 +1551,8 @@
 								</apex:selectRadio>
 							</apex:pageBlockSectionItem>
                             
-                            <apex:outputPanel id="r1c1" layout="block" style="display:{!IF(newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes', '', 'none')}">
-                            <apex:pageBlockSection columns="2">
+                            <!--<apex:outputPanel id="r1c1" layout="block" style="display:{!IF(newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes', '', 'none')}">
+                            <apex:pageBlockSection columns="2">-->
                             	<apex:pageBlockSectionItem >
 									<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_New_HO_Code}"/>
 									<apex:inputField value="{!newForm.New_Head_Office_IATA_Code__c}" onblur="fetchTravelAgent4(this.value.trim())"/>
@@ -1569,8 +1569,6 @@
 									<span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_Agency_name} </span>{!companyModalNameOfEmployer} <br/>
 									<span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_AMS_Address} </span> {!companyModalAddress}
 								</apex:outputPanel>
-							</apex:outputPanel>
-                            </apex:pageBlockSection>
                             </apex:outputPanel>
 
 							<apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">

@@ -5,11 +5,11 @@
         <description>AME: Complaint out of Complaint team notification</description>
         <protected>false</protected>
         <recipients>
-            <recipient>shalbakf@iata.org</recipient>
+            <recipient>suwal@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/AME_Complaint_out_of_Complaint_Team</template>
+        <template>All/AME_Complaint_out_of_Complaint_Team</template>
     </alerts>
     <alerts>
         <fullName>BJS_Complaint_Notification_email_to_Complaint_Owner</fullName>
@@ -20,7 +20,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/BJS_Complaintassignment</template>
+        <template>All/BJS_Complaintassignment</template>
     </alerts>
     <alerts>
         <fullName>BJS_Complaint_out_of_Complaint_team_notification</fullName>
@@ -31,7 +31,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/BJS_Complaint_out_of_Complaint_Team</template>
+        <template>All/BJS_Complaint_out_of_Complaint_Team</template>
     </alerts>
     <alerts>
         <fullName>SCA_Complaint_Notification_email_to_Complaint_Owner</fullName>
@@ -42,7 +42,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/SCA_Complaintassignment</template>
+        <template>All/SCA_Complaintassignment</template>
     </alerts>
     <alerts>
         <fullName>SCA_Complaint_out_of_Complaint_team_notification</fullName>
@@ -61,7 +61,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/SCA_Complaint_out_of_Complaint_Team</template>
+        <template>All/SCA_Complaint_out_of_Complaint_Team</template>
     </alerts>
     <alerts>
         <fullName>SIN_Complaint_Notification_email_to_Complaint_Owner</fullName>
@@ -72,7 +72,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/SIN_Complaintassignment</template>
+        <template>All/SIN_Complaintassignment</template>
     </alerts>
     <alerts>
         <fullName>SIN_Complaint_out_of_Complaint_team_notification</fullName>
@@ -91,7 +91,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/SIN_Complaint_out_of_Complaint_Team</template>
+        <template>All/SIN_Complaint_out_of_Complaint_Team</template>
     </alerts>
     <rules>
         <fullName>AME%3A COMPLAINT_Notify Complaint Owner</fullName>

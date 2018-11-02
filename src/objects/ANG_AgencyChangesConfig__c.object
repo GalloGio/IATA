@@ -53,7 +53,7 @@
         <fullName>TC_Accreditation_Type__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Accreditation Type</label>
+        <label>Accreditation type</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -69,7 +69,7 @@
         <fullName>TC_Legal_Name__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Legal Name</label>
+        <label>Legal name</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -77,7 +77,7 @@
         <fullName>TC_Legal_Status__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Legal Status</label>
+        <label>Legal status</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -85,7 +85,7 @@
         <fullName>TC_Location_Type__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Location Type</label>
+        <label>Location type</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -109,7 +109,7 @@
         <fullName>TC_Major_Shareholding__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Major Shareholding</label>
+        <label>Major shareholding</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -117,7 +117,7 @@
         <fullName>TC_Minor_Shareholding__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Minor Shareholding</label>
+        <label>Minor shareholding</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -130,6 +130,14 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>TC_Trade_name__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Trade name</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>TC_VMFR__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -138,5 +146,26 @@
         <type>Checkbox</type>
     </fields>
     <label>ANG Agency Changes Configuration</label>
+    <listViews>
+        <fullName>Multiple_Changes_ANG</fullName>
+        <columns>NAME</columns>
+        <columns>SETUP_TYPE</columns>
+        <columns>TC_Accreditation_Type__c</columns>
+        <columns>TC_Ownership__c</columns>
+        <columns>TCA_Not_Applicable_Steps__c</columns>
+        <columns>TC_Legal_Name__c</columns>
+        <columns>TC_Legal_Status__c</columns>
+        <columns>TC_Location__c</columns>
+        <columns>TC_Location_Type__c</columns>
+        <columns>TC_Major_Shareholding__c</columns>
+        <columns>TC_Minor_Shareholding__c</columns>
+        <columns>TC_Hierarchy__c</columns>
+        <columns>TC_Trade_name__c</columns>
+        <columns>TCA_Sanity_check__c</columns>
+        <columns>TCA_Manager_approval__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Multiple Changes ANG</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Protected</visibility>
 </CustomObject>

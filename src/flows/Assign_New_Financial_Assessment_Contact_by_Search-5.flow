@@ -726,6 +726,8 @@
 This Contact has {!sobjNewFinancialContact.User_Portal_Status__c} access to the Customer Portal.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Assignment_Confirmation_Porta_user_0</name>
@@ -743,6 +745,8 @@ This Contact currently DOES NOT have access to the Customer Portal:
 Please use the &apos;Change User Portal Status&apos; button on the contact record to assign access.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Fault</name>
@@ -757,6 +761,8 @@ Please use the &apos;Change User Portal Status&apos; button on the contact recor
             <fieldText>A - {!$Flow.FaultMessage}</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Fault_0</name>
@@ -771,6 +777,8 @@ Please use the &apos;Change User Portal Status&apos; button on the contact recor
             <fieldText>{!$Flow.FaultMessage}</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Fault_0_0</name>
@@ -785,6 +793,8 @@ Please use the &apos;Change User Portal Status&apos; button on the contact recor
             <fieldText>{!$Flow.FaultMessage}</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Fault_1</name>
@@ -799,6 +809,8 @@ Please use the &apos;Change User Portal Status&apos; button on the contact recor
             <fieldText>A - {!$Flow.FaultMessage}</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Message_New_Contact_Not_Found</name>
@@ -816,6 +828,8 @@ Please use the &apos;Change User Portal Status&apos; button on the contact recor
             <fieldText>The contact could not be found. Please try again or else create a new Contact for this account.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>New_Financial_Contact_Data_Entry</name>
@@ -853,6 +867,8 @@ Please use the &apos;Change User Portal Status&apos; button on the contact recor
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/SPAN&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;*Only contacts located at your Organization&amp;apos;s HQ can be assigned as Financial Assessment Contacts.&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <startElementReference>Get_IFAP_PS</startElementReference>
     <variables>

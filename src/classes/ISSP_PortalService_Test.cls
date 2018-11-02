@@ -73,7 +73,7 @@ public class ISSP_PortalService_Test {
 		
 	public static testMethod void unitTest3() {
 
-		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test', ANG_Enable_NewGen__c=true);
         insert ISO_Country;
 
 		Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -135,6 +135,10 @@ public class ISSP_PortalService_Test {
         
         ctrl3.getContacts();
 
+        ctrl3.SelectedContacts = con.id;
+
+        ctrl3.activateUsers();
+
         Apexpages.currentPage().getParameters().put('id', appReq.Id);
         Apexpages.currentPage().getParameters().put('PSid', app.Id);
         Apexpages.currentPage().getParameters().put('PSname', 'test');
@@ -145,6 +149,7 @@ public class ISSP_PortalService_Test {
 
         Test.stopTest();
 	}
+	
 	
 	public static testMethod void unitTest4() {
 		ISSP_PortalService_Test.createTestData();
@@ -185,9 +190,7 @@ public class ISSP_PortalService_Test {
 		);
 
 		insert car;
-        
-		Test.startTest();
-        
+        	       
         IECTestUtil.trgPortalUserAfterInserUpdate = true;
 			
 		List<Contact> cl = new List<Contact>();
@@ -206,6 +209,8 @@ public class ISSP_PortalService_Test {
 		con2.Community__c = 'ISS Customer Portal';
 		cl.add(con2);
 		
+		
+		
 		Contact con3 = ISSP_ObjectFactory.createNewContact();
 		con3.AccountId = acc.Id;
 		con3.Email = 'con3@test.test';
@@ -213,6 +218,8 @@ public class ISSP_PortalService_Test {
 		cl.add(con3);		
 
 		insert cl;		
+		
+		Test.startTest();
 
         Portal_Applications__c app = new Portal_Applications__c(Name = 'IATA Accreditation'); 
         insert app;
@@ -230,7 +237,87 @@ public class ISSP_PortalService_Test {
         //ctrl3.CreateNewPortalAccess();
         test.stopTest();
 	}
+	
 
+	public static testMethod void unitTest5() {
+
+		ISSP_PortalService_Test.createTestData();
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+        insert ISO_Country;
+
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '1111';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.BillingCity = 'Test';
+		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		insert acc;
+		
+		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
+        ISSP_CS__c profileCS = new ISSP_CS__c();
+        profileCS.Name = 'ISS_Portal_Agency_User';
+        profileCS.Value__c = agencyProfileId;
+        insert profileCS;
+        ISSP_CS__c profileCS2 = new ISSP_CS__c();
+        profileCS2.Name = 'Host';
+        profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
+        insert profileCS2;
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+		
+		//Contact con = [Select id from Contact where LastName = 'test123'];		
+
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = acc.Id;
+		con.Community__c = '123';
+		insert con;
+
+		Test.startTest();
+
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
+        insert app;
+        
+        Portal_Application_Right__c appReq = new Portal_Application_Right__c();
+        appReq.Portal_Application__c = app.Id;
+        appReq.Right__c = 'Access Granted';
+        appReq.Contact__c = con.Id;
+        
+        insert appReq;
+
+
+        ISSP_PortalService ctrl4 = new ISSP_PortalService();
+
+        ctrl4.psId = app.id;
+        ctrl4.serviceId =  app.Id;
+        ctrl4.contactId = con.Id;
+
+        ctrl4.contactStatus = 'PA';
+
+        ctrl4.getAppsGrantedListAux();
+
+        Pagereference p = ctrl4.denyAccess();
+
+        p = ctrl4.grantAccess();
+
+        ctrl4.contactStatus = 'NO';
+
+		p = ctrl4.grantAccess();
+
+        p = ctrl4.permissionSetPoller();
+
+        p = ctrl4.refreshList();
+
+        // force errors
+		ctrl4.contactId = null;
+
+		p = ctrl4.denyAccess();
+
+		p = ctrl4.grantAccess();
+
+        p = ctrl4.permissionSetPoller();
+
+        Test.stopTest();
+
+	}
 
 	public static void createTestData(){
 		

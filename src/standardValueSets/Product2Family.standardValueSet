@@ -27,6 +27,11 @@
         <label>Airsat</label>
     </standardValue>
     <standardValue>
+        <fullName>APCS Products</fullName>
+        <default>false</default>
+        <label>APCS Products</label>
+    </standardValue>
+    <standardValue>
         <fullName>Application Charges</fullName>
         <default>false</default>
         <label>Application Charges</label>
@@ -64,7 +69,7 @@
     <standardValue>
         <fullName>Cargo IS</fullName>
         <default>false</default>
-        <label>Cargo IS</label>
+        <label>CargoIS</label>
     </standardValue>
     <standardValue>
         <fullName>CASS</fullName>
@@ -127,6 +132,11 @@
         <label>Financial Charges</label>
     </standardValue>
     <standardValue>
+        <fullName>FSS (FDS Division)</fullName>
+        <default>false</default>
+        <label>FSS Products</label>
+    </standardValue>
+    <standardValue>
         <fullName>GAP</fullName>
         <default>false</default>
         <label>GAP</label>
@@ -144,12 +154,17 @@
     <standardValue>
         <fullName>ICCS</fullName>
         <default>false</default>
-        <label>ICCS</label>
+        <label>ICCS Products</label>
     </standardValue>
     <standardValue>
         <fullName>ID Cards/TIDS</fullName>
         <default>false</default>
         <label>ID Cards/TIDS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IFG (FDS Division)</fullName>
+        <default>false</default>
+        <label>IFG Products</label>
     </standardValue>
     <standardValue>
         <fullName>Interest</fullName>
@@ -175,6 +190,11 @@
         <fullName>Meetings and Conferen</fullName>
         <default>false</default>
         <label>Meetings and Conferen</label>
+    </standardValue>
+    <standardValue>
+        <fullName>MER (MER Division)</fullName>
+        <default>false</default>
+        <label>MER Products</label>
     </standardValue>
     <standardValue>
         <fullName>Meteorology</fullName>
@@ -222,6 +242,11 @@
         <label>Pax IS</label>
     </standardValue>
     <standardValue>
+        <fullName>PBI (FDS Division)</fullName>
+        <default>false</default>
+        <label>PBI (FDS Division)</label>
+    </standardValue>
+    <standardValue>
         <fullName>Penalty</fullName>
         <default>false</default>
         <label>Penalty</label>
@@ -250,6 +275,11 @@
         <fullName>Security</fullName>
         <default>false</default>
         <label>Security</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SFO (SFO Division)</fullName>
+        <default>false</default>
+        <label>SFO Products</label>
     </standardValue>
     <standardValue>
         <fullName>Strategic Partnerships</fullName>
@@ -300,10 +330,5 @@
         <fullName>Training: Self Study</fullName>
         <default>false</default>
         <label>Training: Self Study</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Weblink</fullName>
-        <default>false</default>
-        <label>Weblink</label>
     </standardValue>
 </StandardValueSet>

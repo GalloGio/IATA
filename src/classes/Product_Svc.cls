@@ -129,10 +129,30 @@ public class Product_Svc
         Created by CGI - David D
            Call saveZProducts in Future mode
     *****************************************************************************************************/
+    //UNUSED - replaced by saveZProductsQueueable
     @future(callout=true)
     public static void saveZProductsFuture(Set<Id> productIds)
     {
         String result = saveZProducts(productIds);
+    }
+
+    /****************************************************************************************************
+        INC375801 - Susana Alves
+           Call saveZProducts in queueable mode
+    *****************************************************************************************************/
+
+     public class saveZProductsQueueable implements Queueable, Database.AllowsCallouts {
+
+        private Set<Id> productIds;
+
+        public saveZProductsQueueable(Set<Id> productIds){
+            this.productIds = productIds;
+        }
+
+        public void execute(QueueableContext context) {
+
+            String result = saveZProducts(productIds);
+        }
     }
 
     /****************************************************************************************************

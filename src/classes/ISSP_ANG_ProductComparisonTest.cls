@@ -70,7 +70,7 @@ public class ISSP_ANG_ProductComparisonTest {
         insert prcb1;
 
         Pricebook2 standard = new Pricebook2(Id = Test.getStandardPricebookId(), isActive=true);
-        
+
         update standard;
 
         PricebookEntry prceST1 = new PricebookEntry (
@@ -118,14 +118,15 @@ public class ISSP_ANG_ProductComparisonTest {
             UnitPrice = 1,
             IsActive = true,
             UseStandardPrice = false
-        );     
+        );
 
-        insert new List<PricebookEntry>{prce1, prce2, prce3};       
+        insert new List<PricebookEntry>{prce1, prce2, prce3};
 
         test.startTest();
-        
+
         ISSP_ANG_ProductComparison ctrl = new ISSP_ANG_ProductComparison();
 
+        ctrl.headers = new List<String>();
         String aux = ctrl.communityName;
 
         //System.debug(LoggingLevel.ERROR, '---->' + ctrl);

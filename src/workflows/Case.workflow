@@ -19,7 +19,7 @@
         <description>ACCA: Notification on new Application Change Request ISIS2 &amp; ISIS2D</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/ACCA_Notification_on_new_Application_Change_Request</template>
+        <template>All/ACCA_Notification_on_new_Application_Change_Request</template>
     </alerts>
     <alerts>
         <fullName>ACCA_Notification_on_new_Customer_Service_Request</fullName>
@@ -30,7 +30,7 @@
         <protected>false</protected>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/ACCA_Notification_on_new_customer_service_request</template>
+        <template>All/ACCA_Notification_on_new_customer_service_request</template>
     </alerts>
     <alerts>
         <fullName>ACCA_Send_email_alert_on_changed_Escalated_Status_ACCA_to_Case_Owner</fullName>
@@ -44,7 +44,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/ACCA_Changed_Escalated_Status_ACCA_by_ACCA</template>
+        <template>All/ACCA_Changed_Escalated_Status_ACCA_by_ACCA</template>
     </alerts>
     <alerts>
         <fullName>ACCA_Send_notification_on_case_being_older_than_1hr_and_not_taken_ownership_of</fullName>
@@ -52,7 +52,7 @@
         <description>ACCA: Send notification on case being older than 1hr and not taken &apos;ownership&apos; of</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/ACCA_Notification_on_New_Case_open_for_more_than_1hr</template>
+        <template>All/ACCA_Notification_on_New_Case_open_for_more_than_1hr</template>
     </alerts>
     <alerts>
         <fullName>AlertsRSMADHub</fullName>
@@ -131,7 +131,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+        <template>All/IDFS_Caseassignmentqueue</template>
     </alerts>
     <alerts>
         <fullName>AlertsRSNBLocaloffice</fullName>
@@ -139,11 +139,11 @@
         <description>SCE: Alerts R&amp;S N&amp;B Local office</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+        <template>All/IDFS_Caseassignmentqueue</template>
     </alerts>
     <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
-        <ccEmails>iccso@iata.org,efs@iata.org</ccEmails>
+        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
         <protected>false</protected>
         <recipients>
@@ -153,7 +153,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Calendar_Change_Approval_Confimation</template>
+        <template>All/Calendar_Change_Approval_Confimation</template>
     </alerts>
     <alerts>
         <fullName>Approved_airline_coding_application</fullName>
@@ -163,7 +163,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Airline_Coding_Application_Approved</template>
+        <template>All/Airline_Coding_Application_Approved</template>
     </alerts>
     <alerts>
         <fullName>BPSlink_New_Case_comment</fullName>
@@ -174,7 +174,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/New_Case_Comment_BSPlink_CSR</template>
+        <template>All/New_Case_Comment_BSPlink_CSR</template>
     </alerts>
     <alerts>
         <fullName>BSPlink_Email_alert</fullName>
@@ -186,7 +186,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/ACR_for_BSPlink</template>
+        <template>All/ACR_for_BSPlink</template>
     </alerts>
     <alerts>
         <fullName>Bankingcase</fullName>
@@ -197,7 +197,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/EUR_CaseassignmentBanking</template>
+        <template>All/EUR_CaseassignmentBanking</template>
     </alerts>
     <alerts>
         <fullName>Cases_Russia</fullName>
@@ -208,7 +208,7 @@
             <type>group</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/IDFS_Caseassignmentstaff</template>
+        <template>All/IDFS_Caseassignmentstaff</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CN</fullName>
@@ -220,7 +220,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CN</template>
+        <template>All/Clicktools_Contact_Email_CN</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_AP_EN</fullName>
@@ -232,7 +232,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_AP_EN</template>
+        <template>All/Clicktools_Contact_Email_CX_AP_EN</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_DE</fullName>
@@ -244,7 +244,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_DE</template>
+        <template>All/Clicktools_Contact_Email_CX_DE</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_EN</fullName>
@@ -256,7 +256,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_EN</template>
+        <template>All/Clicktools_Contact_Email_CX_EN</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_EN_FR</fullName>
@@ -268,7 +268,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_EN_FR</template>
+        <template>All/Clicktools_Contact_Email_CX_EN_FR</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_ES</fullName>
@@ -280,7 +280,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_ES</template>
+        <template>All/Clicktools_Contact_Email_CX_ES</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_FR</fullName>
@@ -292,7 +292,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_FR</template>
+        <template>All/Clicktools_Contact_Email_CX_FR</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_GR</fullName>
@@ -304,7 +304,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_GR</template>
+        <template>All/Clicktools_Contact_Email_CX_GR</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_ID</fullName>
@@ -316,7 +316,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_ID</template>
+        <template>All/Clicktools_Contact_Email_CX_ID</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_IT</fullName>
@@ -328,7 +328,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_IT</template>
+        <template>All/Clicktools_Contact_Email_CX_IT</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_JA</fullName>
@@ -340,7 +340,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_JA</template>
+        <template>All/Clicktools_Contact_Email_CX_JA</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_KO</fullName>
@@ -352,7 +352,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_KO</template>
+        <template>All/Clicktools_Contact_Email_CX_KO</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_PT</fullName>
@@ -364,7 +364,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_PT</template>
+        <template>All/Clicktools_Contact_Email_CX_PT</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_RO</fullName>
@@ -376,7 +376,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_RO</template>
+        <template>All/Clicktools_Contact_Email_CX_RO</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_TH</fullName>
@@ -388,7 +388,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_TH</template>
+        <template>All/Clicktools_Contact_Email_CX_TH</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_TR</fullName>
@@ -400,7 +400,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_TR</template>
+        <template>All/Clicktools_Contact_Email_CX_TR</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_VI</fullName>
@@ -412,7 +412,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_VI</template>
+        <template>All/Clicktools_Contact_Email_CX_VI</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_ZH</fullName>
@@ -424,7 +424,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_CX_ZH</template>
+        <template>All/Clicktools_Contact_Email_CX_ZH</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_DE</fullName>
@@ -436,7 +436,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_DE</template>
+        <template>All/Clicktools_Contact_Email_DE</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_EN</fullName>
@@ -448,7 +448,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_EN</template>
+        <template>All/Clicktools_Contact_Email_EN</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_EN_FR</fullName>
@@ -460,7 +460,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_EN_FR</template>
+        <template>All/Clicktools_Contact_Email_EN_FR</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_ES</fullName>
@@ -472,7 +472,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_ES</template>
+        <template>All/Clicktools_Contact_Email_ES</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_FR</fullName>
@@ -484,7 +484,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_FR</template>
+        <template>All/Clicktools_Contact_Email_FR</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_GR</fullName>
@@ -496,7 +496,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_GR</template>
+        <template>All/Clicktools_Contact_Email_GR</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_ID</fullName>
@@ -508,7 +508,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_ID</template>
+        <template>All/Clicktools_Contact_Email_ID</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_IT</fullName>
@@ -520,7 +520,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_IT</template>
+        <template>All/Clicktools_Contact_Email_IT</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_JP</fullName>
@@ -532,7 +532,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_JP</template>
+        <template>All/Clicktools_Contact_Email_JP</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_KO</fullName>
@@ -544,7 +544,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_KO</template>
+        <template>All/Clicktools_Contact_Email_KO</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_PT</fullName>
@@ -556,7 +556,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_PT</template>
+        <template>All/Clicktools_Contact_Email_PT</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_RO</fullName>
@@ -568,7 +568,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_RO</template>
+        <template>All/Clicktools_Contact_Email_RO</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_TH</fullName>
@@ -580,7 +580,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_TH</template>
+        <template>All/Clicktools_Contact_Email_TH</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_TR</fullName>
@@ -592,7 +592,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_TR</template>
+        <template>All/Clicktools_Contact_Email_TR</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_VN</fullName>
@@ -604,7 +604,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Clicktools_Contact_Email_VN</template>
+        <template>All/Clicktools_Contact_Email_VN</template>
     </alerts>
     <alerts>
         <fullName>DPC_Close_Notification_to_Contact</fullName>
@@ -648,7 +648,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/New_CSR_Case</template>
+        <template>All/New_CSR_Case</template>
     </alerts>
     <alerts>
         <fullName>Email_for_Timba_Survey_upon_case_closure</fullName>
@@ -660,7 +660,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Timba_Survey_template</template>
+        <template>All/Timba_Survey_template</template>
     </alerts>
     <alerts>
         <fullName>Email_notification_dispute_Airline</fullName>
@@ -672,7 +672,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/EUR_Dispute_Notification_Airline_Agent_Israel_only</template>
+        <template>All/EUR_Dispute_Notification_Airline_Agent_Israel_only</template>
     </alerts>
     <alerts>
         <fullName>FSM_Email_Reminder</fullName>
@@ -708,7 +708,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_suggestion_final_approval_to_GVA_CHANGE</template>
+        <template>All/FAQ_suggestion_final_approval_to_GVA_CHANGE</template>
     </alerts>
     <alerts>
         <fullName>Global_approval_of_FAQ_change_to_champion_NOTIFIED</fullName>
@@ -719,7 +719,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_suggestion_final_approval_to_Champion_NOTIFIED</template>
+        <template>All/FAQ_suggestion_final_approval_to_Champion_NOTIFIED</template>
     </alerts>
     <alerts>
         <fullName>Global_approval_of_FAQ_change_to_submitter</fullName>
@@ -730,7 +730,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_change_final_approval_to_submitter</template>
+        <template>All/FAQ_change_final_approval_to_submitter</template>
     </alerts>
     <alerts>
         <fullName>Global_approval_of_FAQ_suggestion_to_champion_CREATE</fullName>
@@ -741,7 +741,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_suggestion_final_approval_to_Champion_CREATE</template>
+        <template>All/FAQ_suggestion_final_approval_to_Champion_CREATE</template>
     </alerts>
     <alerts>
         <fullName>Global_approval_of_FAQ_suggestion_to_submitter</fullName>
@@ -752,7 +752,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_suggestion_final_approval_to_submitter</template>
+        <template>All/FAQ_suggestion_final_approval_to_submitter</template>
     </alerts>
     <alerts>
         <fullName>Global_rejection_of_FAQ_proposal_to_Champion</fullName>
@@ -763,7 +763,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_proposal_rejection_to_champion</template>
+        <template>All/FAQ_proposal_rejection_to_champion</template>
     </alerts>
     <alerts>
         <fullName>Global_rejection_of_FAQ_proposal_to_Submitter</fullName>
@@ -774,7 +774,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_proposal_rejection_to_submitter</template>
+        <template>All/FAQ_proposal_rejection_to_submitter</template>
     </alerts>
     <alerts>
         <fullName>IAPP_Notify_team_leader_case_has_been_set_as_Not_eligible</fullName>
@@ -796,6 +796,16 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>AP_notification/IAPP_Notification_of_new_docs_received</template>
+    </alerts>
+    <alerts>
+        <fullName>IATA_iiNet_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetCare@iata.org</ccEmails>
+        <description>IATA iiNet Service Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>IATA_iiNet/IATA_iiNet_Create_Service_Now_Incident</template>
     </alerts>
     <alerts>
         <fullName>ICCS_Contact_Notification_case_open_for_15_days</fullName>
@@ -965,7 +975,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/complaint_out_of_query</template>
+        <template>All/complaint_out_of_query</template>
     </alerts>
     <alerts>
         <fullName>IDFS_SIDRA_CS_request_feedback_to_R_S</fullName>
@@ -1267,15 +1277,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>al-maanis@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>armientoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>batagliaf@iata.org</recipient>
+            <recipient>badanovam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1291,11 +1297,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>farisd@iata.org</recipient>
+            <recipient>girondoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>girondoe@iata.org</recipient>
+            <recipient>guzmanro@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1339,6 +1345,14 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>naumenkoy@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>navar@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>ogandoi@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1347,15 +1361,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pommiers@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rajputf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1383,7 +1389,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>tadrosc@iata.org</recipient>
+            <recipient>taverasr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2233,7 +2243,7 @@
         <ccEmails>fonterayj@iata.org</ccEmails>
         <description>ITDI Email Alert</description>
         <protected>false</protected>
-        <senderAddress>iataglobalidcardprogram@iata.org</senderAddress>
+        <senderAddress>idcard@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ID_Card_templates/IDCARD_ITDI_Email</template>
     </alerts>
@@ -2243,7 +2253,7 @@
         <description>IW: Inform Deskom of new case assignment/escalation</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/IW_Caseassignmentqueue</template>
+        <template>All/IW_Caseassignmentqueue</template>
     </alerts>
     <alerts>
         <fullName>InstantSurveyEmail</fullName>
@@ -2265,7 +2275,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/EUR_CaseassignmentALMSCE</template>
+        <template>All/EUR_CaseassignmentALMSCE</template>
     </alerts>
     <alerts>
         <fullName>NewInvoicingcase</fullName>
@@ -2276,7 +2286,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/EUR_CaseassignmentITInvoicing</template>
+        <template>All/EUR_CaseassignmentITInvoicing</template>
     </alerts>
     <alerts>
         <fullName>NewReportingBillingcase</fullName>
@@ -2287,7 +2297,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/EUR_CaseassignmentITSCE</template>
+        <template>All/EUR_CaseassignmentITSCE</template>
     </alerts>
     <alerts>
         <fullName>New_DPC_ACR_Case_Notification</fullName>
@@ -2295,7 +2305,7 @@
         <description>New DPC ACR Case Notification</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/New_DPC_ACR_Case_Notification</template>
+        <template>All/New_DPC_ACR_Case_Notification</template>
     </alerts>
     <alerts>
         <fullName>New_DPC_ACR_for_ILDS_Notification</fullName>
@@ -2303,7 +2313,7 @@
         <description>New DPC ACR for ILDS Notification</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/New_DPC_ACR_for_ILDS_Notification</template>
+        <template>All/New_DPC_ACR_for_ILDS_Notification</template>
     </alerts>
     <alerts>
         <fullName>Notification_on_Priority_1_Case_for_InvoiceWorks</fullName>
@@ -2514,7 +2524,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_Global_notification_for_creation_to_submitter</template>
+        <template>All/FAQ_Global_notification_for_creation_to_submitter</template>
     </alerts>
     <alerts>
         <fullName>Notification_to_original_Submitter_MAJOR_CHANGE</fullName>
@@ -2525,7 +2535,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_Global_notification_for_major_change_to_submitter</template>
+        <template>All/FAQ_Global_notification_for_major_change_to_submitter</template>
     </alerts>
     <alerts>
         <fullName>Notification_to_original_Submitter_for_minor_change</fullName>
@@ -2536,7 +2546,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_Global_notification_for_minor_change_to_submitter</template>
+        <template>All/FAQ_Global_notification_for_minor_change_to_submitter</template>
     </alerts>
     <alerts>
         <fullName>Notify_case_owner</fullName>
@@ -2580,7 +2590,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/FDS_Ad_hoc_Calendar_change_Rejection</template>
+        <template>All/FDS_Ad_hoc_Calendar_change_Rejection</template>
     </alerts>
     <alerts>
         <fullName>Rejected_airline_coding_application</fullName>
@@ -2590,7 +2600,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Airline_Coding_Application_Rejected</template>
+        <template>All/Airline_Coding_Application_Rejected</template>
     </alerts>
     <alerts>
         <fullName>Rejection_of_FAQ_proposal</fullName>
@@ -2601,7 +2611,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/FAQ_proposal_rejection</template>
+        <template>All/FAQ_proposal_rejection</template>
     </alerts>
     <alerts>
         <fullName>SAForderGreecenotification</fullName>
@@ -2612,7 +2622,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/EUR_CaseassignementSAFsGreece</template>
+        <template>All/EUR_CaseassignementSAFsGreece</template>
     </alerts>
     <alerts>
         <fullName>SCE_New_Communciation_Web_Upload_case</fullName>
@@ -2624,7 +2634,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/EUR_Case_assignment_Communication_WUpload_SCE</template>
+        <template>All/EUR_Case_assignment_Communication_WUpload_SCE</template>
     </alerts>
     <alerts>
         <fullName>SCE_New_Serial_Number_Allocation_case</fullName>
@@ -2635,7 +2645,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/EUR_CaseassignmentITSCE_NumberAllocation</template>
+        <template>All/EUR_CaseassignmentITSCE_NumberAllocation</template>
     </alerts>
     <alerts>
         <fullName>SCE_Notify_CS_queue_communication</fullName>
@@ -2658,7 +2668,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/IDFS_Caseassignmentqueue</template>
+        <template>All/IDFS_Caseassignmentqueue</template>
     </alerts>
     <alerts>
         <fullName>SEDA_Adjustment_done_Mail_to_CS</fullName>
@@ -2710,7 +2720,7 @@
             <type>caseTeam</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/SEDA_Customer_Feedback_refund_inform_to_R_S_for_Refund</template>
+        <template>All/SEDA_Customer_Feedback_refund_inform_to_R_S_for_Refund</template>
     </alerts>
     <alerts>
         <fullName>SEDA_IRIS_Updated_email_to_R_S</fullName>
@@ -2864,10 +2874,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rajputf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sadiqs@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2993,10 +2999,6 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rajputf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3233,7 +3235,7 @@
             <type>caseTeam</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/IRIS_Client_Balance</template>
+        <template>All/IRIS_Client_Balance</template>
     </alerts>
     <alerts>
         <fullName>SIDRA_IRRDEF02_IrregularityDefaultapprovedby2hoursMailtoRSESPTCY</fullName>
@@ -3769,11 +3771,7 @@
         <description>Salesforce Change Request - Evaluation required</description>
         <protected>false</protected>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>parkyr@iata.org</recipient>
+            <recipient>larivaa@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3808,14 +3806,14 @@
     </alerts>
     <alerts>
         <fullName>Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application</fullName>
-        <ccEmails>iataglobalidcardprogram@1eblad3slqosu6nr7jwp5q87o.2-8tfeay.eu3.case.salesforce.com</ccEmails>
+        <ccEmails>idcard@t-gh8qpfqgjc5oow1a4obnxk33.2-8tfeay.2.case.salesforce.com</ccEmails>
         <description>Send an email as soon as a case is created for IDCard Application</description>
         <protected>false</protected>
         <recipients>
             <field>SuppliedEmail</field>
             <type>email</type>
         </recipients>
-        <senderAddress>iataglobalidcardprogram@iata.org</senderAddress>
+        <senderAddress>idcard@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ID_Card_templates/IDCard_ConfirmationEmail</template>
     </alerts>
@@ -3857,6 +3855,16 @@
         <template>ISS_Portal/Owner_notification_of_new_comment</template>
     </alerts>
     <alerts>
+        <fullName>Send_notification</fullName>
+        <ccEmails>chauhanm@iata.org</ccEmails>
+        <ccEmails>ndc@iata.org</ccEmails>
+        <description>Send notification</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/New_Case_Assigned_to_the_Queue</template>
+    </alerts>
+    <alerts>
         <fullName>Status_Approved</fullName>
         <description>ACR: Informs that Status of ACR is changed</description>
         <protected>false</protected>
@@ -3869,7 +3877,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/ACCA_Changed_Escalated_Status_ACCA</template>
+        <template>All/ACCA_Changed_Escalated_Status_ACCA</template>
     </alerts>
     <alerts>
         <fullName>TEST_Email_Alert_on_IS_for_AM</fullName>
@@ -3986,7 +3994,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/sMAP_Inform_to_CM_Case_Owner</template>
+        <template>All/sMAP_Inform_to_CM_Case_Owner</template>
     </alerts>
     <alerts>
         <fullName>sMAP_New_Inform_to_CM_CM_Backup</fullName>
@@ -4005,7 +4013,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/sMAP_Inform_to_CM_Backup_Contact</template>
+        <template>All/sMAP_Inform_to_CM_Backup_Contact</template>
     </alerts>
     <fieldUpdates>
         <fullName>ACCA_CSR_Case_field_update</fullName>
@@ -4119,11 +4127,12 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Assign_to_Agency_Management_Europe_queue</fullName>
-        <field>OwnerId</field>
-        <lookupValue>CasesACCEuropeOffOnshore</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Assign to Agency Management Europe queue</name>
+        <fullName>Assign_NFE_ACR_to_system_manager</fullName>
+        <description>Assign to NFE system owner/manager</description>
+        <field>Product_Manager_ACR__c</field>
+        <lookupValue>hyokcholk@iata.org</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Assign NFE ACR to system manager</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -4785,6 +4794,17 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Change_owner_to_queue</fullName>
+        <description>Changes case owner to the support queue.</description>
+        <field>OwnerId</field>
+        <lookupValue>AIR_Tech_Zone_Support</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Change owner to queue</name>
+        <notifyAssignee>true</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Change_owner_to_regional_AMM_KM_queue</fullName>
         <field>OwnerId</field>
         <lookupValue>Knowledge_Management_AME</lookupValue>
@@ -4901,6 +4921,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Check</fullName>
+        <description>For R&amp;S to confirm that all up-to-date outstanding amounts are paid using the case field &quot;Confirm ALL Outs. Amounts Paid&quot;.</description>
+        <field>R_S_feedback_pending__c</field>
+        <literalValue>Confirm outs. amounts</literalValue>
+        <name>SIDRA R&amp;S - Confirm ALL outs. amounts</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Chg_owner_to_Airline_Suspension_Head</fullName>
         <description>change the case owner to Airline Suspension - Head if the outstanding amount &gt; USD1000</description>
         <field>OwnerId</field>
@@ -4923,6 +4953,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Clear_interaction_date</fullName>
+        <description>clear interaction date when clearing the new interaction</description>
+        <field>New_Interaction_Date__c</field>
+        <name>Clear interaction date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Close_Case</fullName>
         <field>Status</field>
         <literalValue>Closed</literalValue>
@@ -4935,7 +4974,7 @@
         <fullName>ComplaintUpdateowner</fullName>
         <description>assigns the case flagged as complaint to the OCIT queue</description>
         <field>OwnerId</field>
-        <lookupValue>CasesOCITComplaints</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner</name>
         <notifyAssignee>false</notifyAssignee>
@@ -4946,7 +4985,7 @@
         <fullName>Complaint_Update_owner_AME</fullName>
         <description>Change case ownership to AME Complaints queue</description>
         <field>OwnerId</field>
-        <lookupValue>CasesComplaintsAME</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner - AME</name>
         <notifyAssignee>true</notifyAssignee>
@@ -4968,7 +5007,7 @@
         <fullName>Complaint_Update_owner_SCA</fullName>
         <description>Change case ownership to SCA Complaints queue</description>
         <field>OwnerId</field>
-        <lookupValue>Cases_Complaints_Americas</lookupValue>
+        <lookupValue>Cases_Complaints_GDC_MAD</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Complaint Update owner - SCA</name>
         <notifyAssignee>true</notifyAssignee>
@@ -5471,12 +5510,14 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
 (IF(CONTAINS($UserRole.Name, &quot;ARM staff&quot;),&quot;Risk Management&quot;, 
 (IF(CONTAINS( $UserRole.Name, &quot;R&amp;S staff&quot;),&quot;Remittance &amp; Settlement&quot;, 
 (IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
+(IF(CONTAINS($UserRole.Name,&quot;E&amp;F Client Services&quot;),&quot;E&amp;F Client services&quot;, 
+(IF(CONTAINS($UserRole.Name,&quot;E&amp;F &quot;),&quot;E&amp;F Staff&quot;,
 (IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
 (IF(CONTAINS($UserRole.Name, &quot;Acc Staff&quot;),&quot;Agency Management&quot;, 
 (IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;)),&quot;IATA Partner&quot;,
 (IF(AND(CONTAINS($UserRole.Name, &quot;Record owner&quot;),ISPICKVAL(Origin,&quot;Voicemail&quot;)),&quot;Voicemail&quot;,
 (IF(CONTAINS($UserRole.Name, &quot;Record owner&quot;),&quot;IATA System&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;)))))))))))))))))))))))))))))))))</formula>
+(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -5657,11 +5698,11 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <fullName>IDFS_SIDRA_Update_nbr_IRR_for_DEF</fullName>
         <description>SIDRA</description>
         <field>Acc_IRR_leading_to_DEF__c</field>
-        <formula>CASE( Region__c , 
-&quot;Europe&quot;, IF(AND(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4), 
+        <formula>CASE( Region__c ,
+&quot;Europe&quot;, IF(AND(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4),
 &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(OR(ISPICKVAL( BSPCountry__c , &quot;India&quot;)),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),
 &quot;China &amp; North Asia&quot;, IF(AND(OR(ISPICKVAL(BSPCountry__c , &quot;China (People&apos;s Republic of)&quot;),(ISPICKVAL(BSPCountry__c , &quot;People&apos;s Republic of China&quot;))),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),
-&quot;Americas&quot;, IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1 
+&quot;Americas&quot;, IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1
 )</formula>
         <name>IDFS_SIDRA_Update nbr IRR for DEF</name>
         <notifyAssignee>false</notifyAssignee>
@@ -5760,7 +5801,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <fieldUpdates>
         <fullName>IFAP_Update_FA_Submitted_Date</fullName>
         <field>Submitted_Date__c</field>
-        <formula>IF(Value(Mid(text(now()),12,2))&gt;21,DATEVALUE(Now()+1), DATEVALUE(Now()))</formula>
+        <formula>IF(Value(Mid(text(now()),12,2))&gt;14, if(Value(Mid(text(now()),0,2)) != day(DATEVALUE(Now())), DATEVALUE(Now()), DATEVALUE(Now()+1)), DATEVALUE(Now()))</formula>
         <name>IFAP Update FA Submitted Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -6291,11 +6332,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <fieldUpdates>
         <fullName>SARA_Termination_date_manual_update</fullName>
         <field>Termination_date_manual_entry__c</field>
-        <formula>DATETIMEVALUE(TEXT(IF(MONTH(datevalue(now()))=12, 
-DATE(YEAR(datevalue(now())) +1, 1, 31), 
-DATE(YEAR(datevalue(now()) ), MONTH(datevalue(now())) +1, 
+        <formula>DATETIMEVALUE(TEXT(IF(MONTH(datevalue(now()))=12,
+DATE(YEAR(datevalue(now())) +1, 1, 31),
+DATE(YEAR(datevalue(now()) ), MONTH(datevalue(now())) +1,
 
-Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,31,11,30,12,31,30) 
+Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,31,11,30,12,31,30)
 )))&amp;&quot;:16:00&quot;)</formula>
         <name>SARA Termination date (manual entry)</name>
         <notifyAssignee>false</notifyAssignee>
@@ -7296,7 +7337,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>Update_previous_owner</fullName>
         <description>Updates the &quot;Previous Case Owner&quot; field with the name of the current owner (this field update will no longer be called when the owner will be changed).</description>
         <field>Previous_case_owner__c</field>
-        <formula>IF ( 
+        <formula>IF (
   LEFT( OwnerId , 3 ) = &apos;005&apos;,
   Owner:User.FirstName + &apos; &apos; + Owner:User.LastName,
   Owner:Queue.QueueName
@@ -7353,13 +7394,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
 (IF(CONTAINS($UserRole.Name,&quot;IDO Industry Solutions&quot;),&quot;ID Card team&quot;,
 (IF(OR(CONTAINS($Profile.Name,&quot;Agency Management&quot;),CONTAINS($Profile.Name,&quot;Hub Analyst ARM&quot;)),&quot;Agency Management&quot;,
 (IF(CONTAINS($Profile.Name,&quot;Hub Staff R&amp;S&quot;),&quot;Remittance &amp; Settlement&quot;,
-(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
+(IF(CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;),&quot;SIS Help Desk&quot;,
+(IF(CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;),&quot;DPC External&quot;,
+(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;,
+(IF(CONTAINS($UserRole.Name,&quot;E&amp;F &quot;),&quot;E&amp;F Staff&quot;,
+(IF(CONTAINS($UserRole.Name,&quot;IATAN&quot;),&quot;IATAN&quot;, 
 (IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
 (IF(CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;),&quot;Invoicing &amp; Collection&quot;,
 (IF(CONTAINS( $UserRole.Name, &quot;Operations Manager&quot;),&quot;Operations&quot;,
 (IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;, 
 (IF(CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;))))))))))))))))))))))))</formula>
+(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;))))))))))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -7953,7 +7998,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Update_previous_owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -8303,6 +8348,25 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>workflow rule that can automatically populate the Service Leve field with the value 2 when a case is Escalated.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Assign to AIR Tech Zone Queue</fullName>
+        <actions>
+            <name>Send_notification</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Change_owner_to_queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>AIR Tech Zone</value>
+        </criteriaItems>
+        <description>Rule to assign Case created via AIR Tech Zone community to their support queue.</description>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Automatic type of customer - Cargo</fullName>
@@ -9905,7 +9969,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -9913,7 +9977,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
-            <operation>contains</operation>
+            <operation>equals</operation>
             <value>Closed</value>
         </criteriaItems>
         <criteriaItems>
@@ -9934,6 +9998,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <field>Case.OwnerId</field>
             <operation>notEqual</operation>
             <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.ParentId</field>
+            <operation>equals</operation>
         </criteriaItems>
         <description>Workflow rule used to send IS for Airline participation processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -11527,7 +11595,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>CASSlink</value>
+            <value>CASSlink,PASS</value>
         </criteriaItems>
         <description>Designate the Product Manager ACR based on the DPC System - CASSlink to Nektarios Chazirakis</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -11801,12 +11869,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <rules>
         <fullName>FDS Delete New Interaction Info</fullName>
         <actions>
+            <name>Clear_interaction_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
             <name>New_interaction_Blank</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
-        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, RecordType.DeveloperName =&quot;ID_Card_Application&quot;, RecordType.DeveloperName =&apos;Airline_Coding_Application&apos;) , OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
+        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, RecordType.DeveloperName =&quot;ID_Card_Application&quot;, RecordType.DeveloperName =&apos;Airline_Coding_Application&apos;,RecordType.DeveloperName =&apos;DPC_Service_Request&apos;) , OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -11898,6 +11970,67 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>GDC MAD complaint queue assignment</fullName>
+        <actions>
+            <name>Case_status_Open</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>ComplaintUpdateowner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Complaint_open_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Reset_Reopened_case</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Reset_reopen_reason2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_previous_owner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 AND 2 AND (3 OR 6)) AND (4 AND 5)</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,SAAM,Internal Cases (IDFS ISS),Process</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Region__c</field>
+            <operation>equals</operation>
+            <value>Africa &amp; Middle East,Americas,Europe</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsComplaint__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Topic__c</field>
+            <operation>notContain</operation>
+            <value>IATA Codes not applicable to Agents,TIESS,ICCS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Subtopic__c</field>
+            <operation>notContain</operation>
+            <value>MITA Interline Agreements</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Customer_recovery__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>the query is reopened and assigned to GDC MAD complaint queue</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>I%26C_Update_Status to Action Needed</fullName>
         <active>true</active>
         <formula>AND( RecordType.DeveloperName = &quot;Invoicing_Collection_Cases&quot;,  ISPICKVAL(Status, &quot;Pending customer&quot;), OR( AND(ISPICKVAL(What_is_the_reason_for_non_payment__c, &quot;Will pay&quot;), ISBLANK(POP_Received_Date__c)), AND(ISPICKVAL(What_is_the_reason_for_non_payment__c, &quot;Needs to check invoices&quot;)), AND(ISPICKVAL(Has_the_agent_paid_invoice__c, &quot;Already paid&quot;),ISBLANK(POP_Received_Date__c))  ))</formula>
@@ -11922,7 +12055,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>IAPP_change_IAPP_case_owner_to_AP_HO_Q</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Eligibility_Documents_Checklist_approved__c</field>
             <operation>equals</operation>
@@ -12792,7 +12925,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SAAM,SIDRA,Process,OSCAR Communication,IATA Financial Review</value>
+            <value>SAAM,SIDRA,Process,OSCAR Communication,IATA Financial Review,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsComplaint__c</field>
@@ -13641,7 +13774,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and  6 and 7 and 8</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and  6 and 7 and 8 and 9</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -13650,7 +13783,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Account.Region_formula__c</field>
             <operation>equals</operation>
-            <value>Europe,Africa &amp; Middle East</value>
+            <value>Europe,Africa &amp; Middle East,Americas</value>
         </criteriaItems>
         <criteriaItems>
             <field>Account.CCG_Participant__c</field>
@@ -13678,6 +13811,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Total_Irregularities__c</field>
             <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.ANG_IsNewGenAgency__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
         </criteriaItems>
         <description>key account management in Europe</description>
         <triggerType>onAllChanges</triggerType>
@@ -14176,7 +14314,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>Alert</type>
         </actions>
         <actions>
-            <name>SIDRA_R_S_feedback_Check_repayment</name>
+            <name>Check</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
@@ -14594,7 +14732,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <operation>equals</operation>
             <value>Agent to be Notified</value>
         </criteriaItems>
-        <description>If “FA Letter Sent” is checked 
+        <description>If “FA Letter Sent” is checked
 Change the case status to “Agent Notified (mail)” if case status was “Agent to be Notified”.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -14895,10 +15033,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <rules>
         <fullName>ISS Key controls Dashboard AM</fullName>
         <actions>
-            <name>Assign_to_Agency_Management_Europe_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>Case_Area_Agency_Management</name>
             <type>FieldUpdate</type>
         </actions>
@@ -14925,7 +15059,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org</value>
+            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Subject</field>
@@ -14971,7 +15105,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org,shalbakf@iata.org</value>
+            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -15032,7 +15166,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17)) AND 16 AND 18) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20 AND (NOT(23) AND 15))) AND 16 AND 18 AND 19 AND 21 AND 22 AND NOT(23 AND 24)) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15051,7 +15185,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
-            <value>Invoicing Collection Cases,Process,FDS ICCS Generic Request Management</value>
+            <value>Invoicing Collection Cases,Process,FDS ICCS Generic Request Management,Airline Coding Application,Inter DPCs</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15106,7 +15240,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Customer Charge Request</value>
+            <value>Customer Charge Request,CHG – Data Maintenance</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15116,12 +15250,42 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>Request of PSSA / Agreement,GSA / MSO / Handling Agent,New GSA</value>
+            <value>Request of PSSA / Agreement,GSA / MSO / Handling Agent,New GSA,Massive e-mail,Accreditation Type</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
             <value>IEP Bank account setup</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>FoP Management</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>PCI DSS Compliant</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>Annual revalidation</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Portal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
@@ -15133,7 +15297,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12))) AND (5 AND 6)) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19 OR 20 OR (23 AND 24)))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15152,7 +15316,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>IATA Service Request,Airline Coding Application</value>
+            <value>IATA Service Request,Airline Coding Application,Inter DPCs</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Origin</field>
@@ -15192,7 +15356,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS,New MSO,New HE lite,New HE standard,New AE,GSA / MSO / Handling Agent</value>
+            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,New TIDS,New MSO,New HE lite,New HE standard,New AE,GSA / MSO / Handling Agent</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
@@ -15208,6 +15372,51 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
             <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>FoP Management,Accreditation Type</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>PCI DSS Compliant</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Internal Case</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Annual revalidation</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>IDFS Airline Participation Process</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>notEqual</operation>
+            <value>IATA Easy Pay</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Portal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>CHG – Data Maintenance</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -15777,6 +15986,21 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>NFE System to product owner</fullName>
+        <actions>
+            <name>Assign_NFE_ACR_to_system_manager</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>NFE</value>
+        </criteriaItems>
+        <description>Assign NFE ACRs to the product owner Kang</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>New External Case %28InvoiceWork%29</fullName>
         <actions>
             <name>Invoice_Direction_Empty</name>
@@ -16244,7 +16468,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>Update_previous_owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND 7 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -16383,12 +16607,12 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>Update_previous_owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND (2 OR 6)) AND (3 AND 4 AND 5)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -16910,8 +17134,8 @@ For cases coming from web forms</description>
             <operation>lessOrEqual</operation>
             <value>5000</value>
         </criteriaItems>
-        <description>SEDA :, the case be assigned to Airline Suspension Team automatically. 
-1) airline unpaid amount is greater than USD5000 (changed on the 8th Feb 2017, before it was 1000) 
+        <description>SEDA :, the case be assigned to Airline Suspension Team automatically.
+1) airline unpaid amount is greater than USD5000 (changed on the 8th Feb 2017, before it was 1000)
 2) Recurrence Negative Settlement no matter the amount</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

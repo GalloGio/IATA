@@ -195,6 +195,8 @@ public class ANG_RiskEventGenerator {
 						risk.ANG_Event_Status__c = config.ANG_Risk_Event_Status__c;
 						risk.put(sourceFields.get(objectName), o.Id);
 						risk.ANG_UniqueKey__c = uniqueKey;
+						
+						if(config.ANG_Activate_In__c != null) risk.ANG_Issued_Date__c = System.today().addDays(Integer.valueOf(config.ANG_Activate_In__c));
 
 						riskEvents .add(risk);
 					}
@@ -259,23 +261,30 @@ public class ANG_RiskEventGenerator {
 			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+(re.ANG_TargetAgency__c == 'Selected Accounts' ? String.valueOf(Id.valueOf(re.ANG_AccountId__c)) : '')+re.ANG_Risk_ID__c;
 		}
 
-		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
+		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c, Limit_Cash_conditions__c, ANG_Delay_Cash_Condition__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
 		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Top_Parent__c FROM Account WHERE Id IN :accountIds]);
 
 		for(Case c : [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscars.keySet() AND RecordType.DeveloperName = 'OSCAR_Communication']) oscars.put(c.OSCAR__c, c.Id);
 
 		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects){
-
-			//fetch HE account
+			//fetch HE account and Risk Event Type
 			Account mainAccount = accounts.get(re.ANG_AccountId__c);
-			if(Trigger.isExecuting && Trigger.isInsert) re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;
-			if(re.ANG_TargetAgency__c == 'HE Account') re.ANG_AccountId__c = re.ANG_HE_AccountId__c;
+			ANG_Risk_Event_Type__c rType = types.get(re.ANG_Risk_Type__c);
 
+			if(Trigger.isExecuting && Trigger.isInsert){
+				re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;
+				re.ANG_Limit_Cash_Conditions__c = rType.Limit_Cash_conditions__c;
+
+				if(rType.ANG_Delay_Cash_Condition__c != null) re.ANG_Cash_Conditions_Activation__c = re.ANG_Issued_Date__c.addDays(Integer.valueOf(rType.ANG_Delay_Cash_Condition__c));
+			}
+
+			if(re.ANG_TargetAgency__c == 'HE Account') re.ANG_AccountId__c = re.ANG_HE_AccountId__c;
 			if(re.ANG_OscarId__c != null) re.ANG_CaseId__c = oscars.get(re.ANG_OscarId__c);
 
 			//correct expiration date
-			re.ANG_Expiration_Date__c = re.ANG_Issued_Date__c.addMonths(Integer.valueOf(types.get(re.ANG_Risk_Type__c).ANG_Expiration__c));
+			re.ANG_Expiration_Date__c = re.ANG_Issued_Date__c.addMonths(Integer.valueOf(rType.ANG_Expiration__c));
 
+			if(Trigger.isInsert && re.ANG_isCashlessAgency__c) re.ANG_Event_Status__c=ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
 			if((String.isEmpty(re.ANG_Event_Status__c) || !re.ANG_Event_Status__c.contains('_')) && !skipStatusAssignment ){
 				if(re.ANG_Issued_Date__c > System.today() || re.ANG_Expiration_Date__c <= System.today()) re.ANG_Event_Status__c = ANG_Risk_Helper.STATUS_INACTIVE;
 				else re.ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE;

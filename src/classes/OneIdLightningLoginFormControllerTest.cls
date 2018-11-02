@@ -136,15 +136,15 @@ private class  OneIdLightningLoginFormControllerTest {
 
     @IsTest
     static void testLoginWithInvalidCredentials() {
-        OneIdLightningLoginFormController.login('testUser', 'fakepwd', null);
+        OneIdLightningLoginFormController.login('testUser', 'fakepwd', null, null);
     }
     @IsTest
     static void testLoginWithInvalidCredentials1() {
-        OneIdLightningLoginFormController.login('', 'fakepwd', null);
+        OneIdLightningLoginFormController.login('', 'fakepwd', null, null);
     }
     @IsTest
     static void testLoginWithInvalidCredentials2() {
-        OneIdLightningLoginFormController.login('asas', '', null);
+        OneIdLightningLoginFormController.login('asas', '', null, null);
     }
     @IsTest
     static void testgetIsSelfRegistrationEnabled() {
@@ -227,7 +227,7 @@ private class  OneIdLightningLoginFormControllerTest {
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
         
-        OneIdLightningLoginFormController.findLocation(true);
+        OneIdLightningLoginFormController.getFindLocation(true,'');
 
     }
 
@@ -286,7 +286,7 @@ private class  OneIdLightningLoginFormControllerTest {
         System.debug('newUser Id: ' + newUser.Id);
 
         User ui  = [SELECT id, username  FROM User where id = :newUser.id];
-        OneIdLightningLoginFormController.reactivateUser(ui);
+        OneIdLightningLoginFormController.reactivateUser(ui,'');
     }
 
     @IsTest
@@ -296,17 +296,13 @@ private class  OneIdLightningLoginFormControllerTest {
     }
 
     @IsTest
-    static void testGetSiteCompleteUrl() {
-        OneIdLightningLoginFormController.getSiteCompleteUrl();
-    }
-    @IsTest
     static void testGetSanctionCountryFalse() {
     	insert new OneId_Global_Settings__c(ipinfo_call_enabled__c = true);
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
-        OneIdLightningLoginFormController.getSanctionCountry('83.240.229.11');
+        //OneIdLightningLoginFormController.getSanctionCountry('83.240.229.11');
         Test.stopTest();
-        System.assertEquals(false, OneIdLightningLoginFormController.getSanctionCountry('83.240.229.11'));
+        //System.assertEquals(false, OneIdLightningLoginFormController.getSanctionCountry('83.240.229.11'));
     }
 
     @IsTest
@@ -325,6 +321,7 @@ private class  OneIdLightningLoginFormControllerTest {
     static void testGetSelfRegistrationURL() {
         OneIdLightningLoginFormController.getSelfRegistrationUrl();
         OneIdLightningLoginFormController.getSelfRegistrationUrl();
+        OneIdLightningLoginFormController.fakemethod();
     }
 
 

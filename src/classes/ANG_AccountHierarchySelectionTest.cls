@@ -48,7 +48,7 @@ private class ANG_AccountHierarchySelectionTest {
 		HE.Location_Class__c = 'P';
 		HE.Location_Type__c = 'HE';
 		HE.ANG_Accreditation_Model__c = 'Cashless';
-
+		HE.IATA_ISO_Country__c = ctry.Id;
 		HE.ANG_IEP_HE_AccntNum__c = '1232132323';
 		HE.ANG_IEP_Status__c = 'Suspended' ;
 		HE.ANG_HE_CashCondition__c = true;
@@ -197,7 +197,7 @@ private class ANG_AccountHierarchySelectionTest {
 	static testMethod void test_controller() {
 
 		Account HE = [SELECT Id FROM Account WHERE Name = 'Main HE Account HE'];
-		AMS_OSCAR__c oscar = [SELECT Account__c, ANG_Type_Of_Change__c, New_parent__c, Change_of_location_type_behavior__c, STEP6__c, Process__c FROM AMS_OSCAR__c LIMIT 1];
+		AMS_OSCAR__c oscar = [SELECT Account__c, ANG_Type_Of_Change__c, New_parent__c, Change_of_location_type_behavior__c, STEP6__c, Process__c, RecordTypeId FROM AMS_OSCAR__c LIMIT 1];
 
 		Test.startTest();
 

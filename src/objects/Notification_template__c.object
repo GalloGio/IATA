@@ -84,6 +84,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Alert_Contact_By_Push_Notification__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Alert contacts with a push notification on NewGen mobile app</description>
+        <externalId>false</externalId>
+        <label>Alert Contact By Push Notification</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CriticalNotification__c</fullName>
         <defaultValue>false</defaultValue>
         <description>wf : to check send email box.
@@ -118,6 +127,45 @@ notifications with this box checked will be first in the list of notification on
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Identifier__c</fullName>
+        <description>Unique identifier used internally so the template can be found on code in all environments</description>
+        <externalId>true</externalId>
+        <label>Identifier</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LanguageLocaleKey__c</fullName>
+        <description>Used when trying to match a user&apos;s local with a template, as the user LanguageLocaleKey value might be translated in apex depending on the user&apos;s settings</description>
+        <externalId>false</externalId>
+        <formula>CASE(
+Language__c , 
+&apos;English&apos;, &apos;en&apos;, 
+&apos;Chinese (Simplified)&apos;, &apos;zh&apos;,
+&apos;French&apos;,&apos;fr&apos;,
+&apos;Italian&apos;,&apos;it&apos;,
+&apos;Japanese&apos;,&apos;ja&apos;,
+&apos;Korean&apos;,&apos;ko&apos;,
+&apos;Portuguese (Brazilian)&apos;,&apos;pt&apos;,
+&apos;Russian&apos;,&apos;ru&apos;,
+&apos;Spanish&apos;,&apos;es&apos;,
+&apos;German&apos;,&apos;de&apos;,
+&apos;Thai&apos;,&apos;th&apos;,
+&apos;Indonesian&apos;,&apos;in&apos;,
+&apos;Vietnamese&apos;,&apos;vi&apos;,
+&apos;Arabic&apos;,&apos;ar&apos;,
+&apos;en&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LanguageLocaleKey</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>

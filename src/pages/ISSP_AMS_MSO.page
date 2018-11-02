@@ -219,7 +219,30 @@
 				</div>
 			</div>
 
+            <apex:outputPanel id="introPanel" rendered="{!strRenderAs<>'PDF'}" >
 			<div class="col-xs-12 introduction-text">{!$Label.ISSP_AMS_MSO_GSA_MSO_Introduction_Text}</div><!--ISSP_AMS_MSO_GSA_GSA_Introduction_Text-->
+            </apex:outputPanel>
+        </div>
+            
+        <div class="row hm-table" style="width: 300px">
+            <div class="col-xs-12">    
+                <apex:outputPanel id="numbersPanel" >
+                    <apex:outputLabel value="Summary of MSO Codes"  style="font: bold"/>
+                    <table class="table table-bordered">
+
+                        <thead><tr>
+                        <apex:repeat value="{!data}" var="i">
+                            <th>{!i.name}</th>
+                        </apex:repeat>
+                        </tr></thead>
+                        <tbody><tr>
+                        <apex:repeat value="{!data}" var="i">
+                            <td>{!i.data1}</td>
+                        </apex:repeat>
+                        </tr></tbody>
+                    </table>
+                </apex:outputPanel>
+            </div>
 		</div>
 			
 		<div class="row hm-table">
@@ -242,19 +265,19 @@
 										<apex:param name="SortBy" value="IATACode__c" assignTo="{!SortBy}"/>
 									</apex:commandLink>
 								</th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Account_Name_MSO}
+                                <!-- FM AMSU-119 th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Account_Name_MSO}
 										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Name', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
 										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Name', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Name',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="Name" assignTo="{!SortBy}"/>
-									</apex:commandLink></th>
+                                    </apex:commandLink></th>-->
 								<th><apex:commandLink >{!$Label.ISSP_AMS_MSO_GSA_Appointment_Status}</apex:commandLink></th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Category}
+                                <!-- FM AMSU-119 th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Category}
 										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Category__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
 										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Category__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Category__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="Category__c" assignTo="{!SortBy}"/>
-									</apex:commandLink></th>
+                                    </apex:commandLink></th-->
 								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Street_Address}
 										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingStreet', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
 										<apex:image value="/img/s.gif" rendered="{! AND(SortBy=='BillingStreet', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
@@ -273,6 +296,20 @@
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCountry',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="BillingCountry" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
+                                <!-- FM AMSU-119 -->
+                                <th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Open_Date}
+                                        <apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Accreditation_date__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+                                        <apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Accreditation_date__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+                                        <apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Accreditation_date__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+                                        <apex:param name="SortBy" value="Accreditation_date__c" assignTo="{!SortBy}"/>
+                                    </apex:commandLink></th>
+                                
+                                <th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Close_Date}
+                                        <apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Expiry_Date__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
+                                        <apex:image value="/img/s.gif" rendered="{! AND(SortBy=='Expiry_Date__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
+                                        <apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Expiry_Date__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+                                        <apex:param name="SortBy" value="Expiry_Date__c" assignTo="{!SortBy}"/>
+                                    </apex:commandLink></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -289,17 +326,20 @@
 										</ul>
 									</div>
 								</td>
-								<td>{!a.appointment.Account__r.IATACode__c}</td>
-								<td>{!a.appointment.Account__r.Name}</td>
+                                <td><a href="{!'/ISSP_AMS_MSO_Update?msoId=' + a.appointment.Account__r.Id + '&action=correction&step=view' }">{!a.appointment.Account__r.IATACode__c}</a> </td>
+                                <!-- FM AMSU-119 <td>{!a.appointment.Account__r.Name}</td> -->
 								<td>
 									<!--{!CASE(a.appointment.Accreditation_Endorsement_Status_code__c, '0', $Label.ISSP_AMS_MSO_GSA_Appointment_Terminated, '9', $Label.ISSP_AMS_MSO_GSA_Appointment_Active, a.appointment.Accreditation_Endorsement_Status_code__c)}-->
+                                    <!--{!a.appointment.Account__r.Status__c}
+                                    <img src="/img/msg_icons/info16.png" title="{! $Label.ISSP_AMS_MSO_GSA_Date_of_Appointment+ ': ' + TEXT(a.appointment.Account__r.Accreditation_date__c)}{!IF(a.appointment.Account__r.Status__c == 'Terminated', '  |  ' + $Label.ISSP_AMS_MSO_GSA_Date_Appointment_Terminated + ': ' + TEXT(a.appointment.Account__r.Expiry_Date__c), '') }" style="float: right;"  class="hidden-print" />  -->
 									{!a.appointment.Account__r.Status__c}
-									<img src="/img/msg_icons/info16.png" title="{! $Label.ISSP_AMS_MSO_GSA_Date_of_Appointment+ ': ' + TEXT(a.appointment.Account__r.Accreditation_date__c)}{!IF(a.appointment.Account__r.Status__c == 'Terminated', '  |  ' + $Label.ISSP_AMS_MSO_GSA_Date_Appointment_Terminated + ': ' + TEXT(a.appointment.Account__r.Expiry_Date__c), '') }" style="float: right;"  class="hidden-print" />
 									</td>
-								<td>{!a.appointment.Account__r.Category__c}</td>
+                                <!-- FM AMSU-119 <td>{!a.appointment.Account__r.Category__c}</td>-->
 								<td>{!a.appointment.Account__r.BillingStreet}</td>
 								<td>{!a.appointment.Account__r.BillingCity}</td>
 								<td>{!a.appointment.Account__r.BillingCountry}</td>
+                                <td>{!TEXT(a.dAccreditation_date)}</td>
+                                <td>{!TEXT(a.dExpiry_Date)}</td>
 							</tr>
 							</apex:repeat>
 						</tbody>

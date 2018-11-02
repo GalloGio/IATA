@@ -45,21 +45,29 @@ private class AMS_OSCAR_TriggerICCTest {
                 SAAM_Case__c = theCommunicationCase.Id);
 
         insert stagingArea;
+
+        Apex_Setting__c idAccountOwner = new Apex_Setting__c(Name = 'Stop Owner Alignment');
+        idAccountOwner.Text_1__c = '005w000000688eeAAA';
+        insert idAccountOwner;
         
         List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Change1', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Change1', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
                            
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Change2', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Change2', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
                                             
         insert customsettings;
+
+         AMS_ChangeCodes__c cc1 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'DIS-AMS', Change_Code__c = 'DIS');
+         AMS_ChangeCodes__c cc2 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CADM', Change_Code__c = 'CAD');
+         upsert new List<AMS_ChangeCodes__c>{cc1, cc2};
 
         List<AMS_OSCAR_HistoryFields__c> cs = new List<AMS_OSCAR_HistoryFields__c> {
             new AMS_OSCAR_HistoryFields__c(
@@ -100,6 +108,7 @@ private class AMS_OSCAR_TriggerICCTest {
         oscar.STEP25__c = 'Passed';
         oscar.STEP2__c = 'Passed';
         oscar.STEP1__c = 'Passed';
+		oscar.STEP2__c = 'Passed';
         
         update oscar;
 

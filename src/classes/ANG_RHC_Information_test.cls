@@ -19,7 +19,7 @@ public class ANG_RHC_Information_test{
             Type = 'IATA Cargo Agent',
             IATA_ISO_Country__c=country.id,
             IATACode__c ='1234567',
-			Remittance_frequency__c='Monthly',
+			Remittance_frequency__c='M',
             billingCountry = 'fr',
 			ANG_Accreditation_Model__c ='Cash',
             category__c = 'IATA Passenger Sales Agent',
@@ -88,6 +88,27 @@ public class ANG_RHC_Information_test{
             Reasonforrequest__c = 'New Application'
         );
         insert fs;
+
+        
+        AMS_ChangeCodes__c ccPca= new AMS_ChangeCodes__c(
+            Name = 'PCA',
+            Integration_RecId__c='2',
+            Change_Code__c='PCA',
+            Reason_Code__c='',
+            Reason_Code_Description__c='description',
+            Account_status_change__c=''        
+        );
+        
+         AMS_ChangeCodes__c ccPcr= new AMS_ChangeCodes__c(
+            Name ='PCR',
+            Change_Code__c='PCR',
+            Integration_RecId__c='1',
+            Reason_Code__c='',
+            Reason_Code_Description__c='description',
+            Account_status_change__c=''        
+        );
+        
+        insert new list<AMS_ChangeCodes__c>{ccPcr,ccPca};
 
 	}
 
@@ -201,7 +222,7 @@ public class ANG_RHC_Information_test{
             Type = 'IATA Cargo Agent',
             IATA_ISO_Country__c=[select id from IATA_ISO_Country__c limit 1].get(0).id,
             IATACode__c ='1234567',
-            Remittance_frequency__c='Monthly',
+            Remittance_frequency__c='M',
             billingCountry = 'fr',
             ANG_Accreditation_Model__c ='Cash',
             category__c = 'IATA Passenger Sales Agent',
@@ -248,5 +269,96 @@ public class ANG_RHC_Information_test{
         test.StopTest();
     }
 
+    @isTest static void testRHCInfoIncrement() {
 
+        Account a = [Select Id from Account LIMIT 1];
+
+        IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+
+        Id accountRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+
+        Map<String,Object> fieldsOfObject;
+
+        fieldsOfObject = new Map<String,Object>();
+        fieldsOfObject.put('Name','NewGenAgencyAE');
+        fieldsOfObject.put('Short_Name__c','NewGenAgency');
+        fieldsOfObject.put('Location_Class__c','P');
+        fieldsOfObject.put('Location_Type__c','AE');
+        fieldsOfObject.put('Remittance_frequency__c','M');
+        fieldsOfObject.put('Sector__C','Travel Agent');
+        fieldsOfObject.put('Category__C','IATA Passenger Sales Agent');
+        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+        fieldsOfObject.put('Company_Type__c','A');
+        fieldsOfObject.put('ParentId',a.Id);
+
+        Account ae = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
+        insert ae;
+
+        AMS_Agencies_Hierarchy__c H1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+        insert H1;
+        
+        List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = a.Id, Child_Account__c = ae.Id, HO_Flag__c = 'true'));
+
+        insert rels;
+
+        Id formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+        authorizations.add(new Agency_Authorization__c(Account__c = a.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = formOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = a.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = formOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = a.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = formOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = ae.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = formOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = ae.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = formOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = ae.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = formOfPaymentRT));
+
+        insert authorizations;
+
+        Test.startTest();
+         
+        ANG_RHC_Information__c rhcInfo = [ Select Id from ANG_RHC_Information__c];
+
+        ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
+                recordtypeid=ANG_RHCHelper.RECTYPE_RISKALERT_RHC,
+                ANG_Account__c=a.Id,
+                ANG_RHC_Information__c=rhcInfo.id,
+                ANG_Direction__c='UP',
+                ANG_Threshold_Level__c='100%'
+            );
+
+        insert ara;
+
+        authorizations = [Select Id , Status__c,Account__c,  ANG_FormOfPayment_ID__c from Agency_Authorization__c];
+
+        for(Agency_Authorization__c aa: authorizations){
+
+            if(aa.ANG_FormOfPayment_ID__c == 'CA'){
+                System.assertEquals('Non-Active',aa.Status__c);
+            }else
+                System.assertEquals('Active',aa.Status__c);
+        }
+
+
+         ANG_Risk_Alert__c ara2 = new ANG_Risk_Alert__c(
+                recordtypeid=ANG_RHCHelper.RECTYPE_RISKALERT_RHC,
+                ANG_Account__c=a.Id,
+                ANG_RHC_Information__c=rhcInfo.id,
+                ANG_Direction__c='DOWN',
+                ANG_Threshold_Level__c='100%'
+            );
+
+        insert ara2;
+        
+        authorizations = [Select Id , Status__c,Account__c,  ANG_FormOfPayment_ID__c from Agency_Authorization__c];
+
+        for(Agency_Authorization__c aa: authorizations){
+
+            if(aa.ANG_FormOfPayment_ID__c == 'CA')
+                System.assertEquals('Active',aa.Status__c);
+        }
+        
+        Test.stopTest();
+
+    }
 }

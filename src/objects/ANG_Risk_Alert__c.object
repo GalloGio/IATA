@@ -225,6 +225,16 @@
         <type>Checkbox</type>
     </fields>
     <label>Risk Alert</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Account__c</columns>
+        <columns>ANG_Direction__c</columns>
+        <columns>ANG_Threshold_Level__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>RA-{00000000}</displayFormat>
         <label>Risk Alert</label>
@@ -235,7 +245,7 @@
         <fullName>Risk_Alert</fullName>
         <active>true</active>
         <description>Used to receive RHC information alerts from the external system</description>
-        <label>Risk Alert</label>
+        <label>Risk Alert RHC</label>
         <picklistValues>
             <picklist>ANG_Direction__c</picklist>
             <values>

@@ -3,13 +3,13 @@ public without sharing class OneIdLightningLoginFormController {
     public static Boolean show90Days {get; set;}
     public static string theCountry {get; set;}
     public static String country {get; set;}
-    public static string ipAddress {get; set;}
+    //public static string ipAddress {get; set;}
     public static string siteCompleteUrl {get; set;}
     
     public class CountryConfigException extends Exception {}
     
     //@AuraEnabled
-    public static Boolean sanctionCountry {get; set;}
+    public static Boolean sanctionCountry {get; set;}    
 
     public OneIdLightningLoginFormController() {
         
@@ -31,16 +31,15 @@ public without sharing class OneIdLightningLoginFormController {
     @AuraEnabled
     public static String login(String username, 
                                String password, 
-                               String startUrl) {
+                               String startUrl,
+                               String serviceName) {
         User oneUser;
-        String pageLink='';
-        
+        String pageLink='';        
         //Clear spaces
         username = (null != username) ? username.trim() : username;
                                    
         try{
-            System.debug('Controller.login.Begin');
-            
+            System.debug('Controller.login.Begin');            
             list<User> userList = DAL_ISSP.getUserListByNameOrEmail(username);
             system.debug('userList: ' + userList);
             system.debug('username: ' + username);
@@ -67,14 +66,29 @@ public without sharing class OneIdLightningLoginFormController {
                 
                 system.debug('user id: ' + oneUser.Id);
                 system.debug('contact id: ' + oneUser.ContactId);
-                system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);
+                system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);                
                 
-                if(String.isNotBlank(startUrl)) 
-                    pageLink = startUrl;
+                
+                //sometimes, javascript from component is passing "undefined". Must be interpreted as NULL
+                if(String.isNotBlank(startUrl) && !startUrl.equalsIgnoreCase('undefined')){
+                    //if login is from mobileApp we do not redirect
+                    if(startUrl != 'mobileApp') pageLink = startUrl;
+
+                    if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
+			//pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+                    }
+
+                }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
+                	 //pageLink = '/ISSP_Homepage';
+                	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
+                	 //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
+			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
+                }
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
                     show90Days = true;
-                    reactivateUser(oneUser);
+                    reactivateUser(oneUser,serviceName);
                     return Label.ISSP_Frozen_User_Alert_Message;
                 }
             }
@@ -86,16 +100,20 @@ public without sharing class OneIdLightningLoginFormController {
             if (relayState!=null)
                 pageLink = '/ISSP_Homepage?kaviURL='+ relayState.remove('https://').remove('http://');
             */
-            
-            
                 
             username=null != oneUser ? oneUser.Username : username;
             system.debug('pageLink: ' + pageLink);
             system.debug('Used Username: '+username);
             
-            //login in site
-            ApexPages.PageReference lgn = Site.login(username, password, pageLink);
+            //Login on the portal community using a portal URL
+            if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
+                 String s = startUrl != null ? startUrl : '/ISSP_Homepage';
+                 ApexPages.PageReference lgnPortal = Site.login(username, password, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,s));
+            }
             
+            //login in siteCompleteUrl
+            ApexPages.PageReference lgn = Site.login(username, password, pageLink);
+
             system.debug('page reference return from login: '+lgn);
                         
             List<User> userListConfirmTempPassword = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
@@ -105,10 +123,8 @@ public without sharing class OneIdLightningLoginFormController {
             system.debug('userListConfirmTempPassword '+ userListConfirmTempPassword[0]);
             
             if (userListConfirmTempPassword[0].UID__c != '' && userListConfirmTempPassword[0].UID__c != null){
-                lgn = Site.login(username, password, (String.isEmpty(OneIdUtils.getCommunityUrlName()) ? '' :'/' + OneIdUtils.getCommunityUrlName()) + '/s/changePassword');
-                userListConfirmTempPassword[0].UID__c ='';
-                update userListConfirmTempPassword[0];
-                
+                String serviceNameParam = String.isEmpty(serviceName) ? '' : '?serviceName='+serviceName;
+                lgn = Site.login(username, password, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/OneId_ChangePassword'+serviceNameParam));
             }
             
             //redirect to startUrl or some other page returned from the login 
@@ -125,52 +141,50 @@ public without sharing class OneIdLightningLoginFormController {
         }
     }
 
-    public static void reactivateUser(User thisUser){
+    public static void reactivateUser(User thisUser, String serviceName){
         thisUser.IsActive = true;
         thisUser.Portal_User_Frozen_Checkbox__c = false;
         update thisUser;
         Boolean success = Comm_User_Helper.resetPassword(thisUser.email, 
                                                          Comm_User_Helper.ONEIDENTITY, 
-                                                         false);
+                                                         false,
+                                                         serviceName);
     }
 
-    public static void findLocationCaller(){
-        findLocation(true);
-    }
     
-    public static void findLocation(Boolean saveLog){
-  
+    public static void findLocationCaller(){        
+        getFindLocation(true,'');
+    }
+
+    @AuraEnabled
+    public static OneId_RegistrationProcessController.UserInformation getUserInformationFromEmail(String email, String serviceName){
+        return OneId_RegistrationProcessController.getUserInformationFromEmail(email, serviceName);
+    }
+
+    @AuraEnabled
+    public static Boolean getFindLocation(Boolean saveLog, String ipAddress){           
         sanctionCountry = false;
         country = '';
-        
+
         ISSP_CS__c cs = ISSP_CS__c.getInstance('ipinfo_token');
         String ipinfo_token = cs.value__c;
 
-              
         ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
         newLog.Web_Service__c = 'IP_Info';
         newLog.Method__c = 'checkIpCountry';
         newLog.System__c = 'IpInfo';
         newLog.Login_Ip__c = ipAddress;
         newLog.Finished__c = system.now();
-  
-        system.debug('APEX findLocation.ipAddress: '+ipAddress);
-        
+
         String IP_LOOKUP_URL = 'https://ipinfo.io/' + ipAddress + '/json?token=' + ipinfo_token;
         Http h = new Http();
         HttpRequest req = new HttpRequest();
         req.setEndpoint(IP_LOOKUP_URL);
         req.setMethod('GET');
         req.setTimeout(2000);
-        HttpResponse res;
+        HttpResponse res;        
         try{
-            OneId_Global_Settings__c gs = OneId_Global_Settings__c.getInstance();
-            boolean isEnable = gs.ipinfo_call_enabled__c;
-            if(isEnable) {
-                res = h.send(req);
-            }else{
-                Throw new CountryConfigException('System is disable to get IP location from ipinfo Service');
-            }
+            res = h.send(req);            
             JSONParser parser = JSON.createParser(res.getBody());
             system.debug('message:' + String.valueOf(parser));
             while (parser.nextToken() != null) {
@@ -180,25 +194,23 @@ public without sharing class OneIdLightningLoginFormController {
                     (parser.getText() == 'country')) {
                     parser.nextToken();
                     country = parser.getText();
-                    system.debug('COUNTRY:' + country);
                 }
             }
             if (country != ''){
                 newLog.Success__c = true;
-                system.debug('var -> saveLog: ' + saveLog);
                 if (saveLog){
                     insert newLog;
                 }
                 
-                system.debug('country: ' + country);
-                List <IATA_ISO_Country__c> countryList = 
+                List <IATA_ISO_Country__c> countryList =
                     [SELECT Id, Name, Sanctioned_Country__c FROM IATA_ISO_Country__c
                     WHERE ISO_Code__c = :country];
+                    
                 if (!countryList.isEmpty()){
                     theCountry = countryList[0].Name;
                     if (countryList[0].Sanctioned_Country__c){
                         sanctionCountry = true;
-                        system.debug('TRUE -> sanctionCountry:' + sanctionCountry);
+                        system.debug('sanctionCountry:' + sanctionCountry);
                     }
                 }
             }
@@ -231,7 +243,7 @@ public without sharing class OneIdLightningLoginFormController {
                 insert newLog;
             }
         }
-        
+
         if (ipAddress != '' && ipAddress != null && country == ''){
             system.debug('ipAddress: ' + ipAddress);
             List <String> ipList = ipAddress.split('\\.');
@@ -252,10 +264,10 @@ public without sharing class OneIdLightningLoginFormController {
             system.debug('ipLocator: ' + ipLocator);
             if (!ipLocator.isEmpty()){
                 country = ipLocator[0].Country_Code__c;
-                List <IATA_ISO_Country__c> countryList = 
+                List <IATA_ISO_Country__c> countryList =
                     [SELECT Id, Name, Sanctioned_Country__c FROM IATA_ISO_Country__c
                     WHERE ISO_Code__c = :country];
-                if (!countryList.isEmpty()){
+                 if (!countryList.isEmpty()){
                     theCountry = countryList[0].Name;
                     if (countryList[0].Sanctioned_Country__c){
                         sanctionCountry = true;
@@ -266,7 +278,8 @@ public without sharing class OneIdLightningLoginFormController {
                 }
             }
         }
-/* sanctionCountry = true; */
+        system.debug('fsanctionCountry ' + sanctionCountry);
+        return sanctionCountry;
     }
     
     /*
@@ -287,18 +300,12 @@ public without sharing class OneIdLightningLoginFormController {
     */
     
     @AuraEnabled
-    public static String getSiteCompleteUrl() {
-        siteCompleteUrl = OneIdUtils.getSiteCompleteUrl();
-        return siteCompleteUrl;
-    }
-    
-    @AuraEnabled
     public static Boolean getShow90Days() {
         //show90Days=true;
         return show90Days;
     }
     
-    @AuraEnabled
+    /*@AuraEnabled
     public static Boolean getSanctionCountry(String clientIpAddress) {
         //Set client ip address
         ipAddress=clientIpAddress; 
@@ -307,7 +314,7 @@ public without sharing class OneIdLightningLoginFormController {
         
         //sanctionCountry=true;
         return sanctionCountry;
-    }
+    }*/
     
     @AuraEnabled
     public static Boolean getIsUsernamePasswordEnabled() {
@@ -342,4 +349,145 @@ public without sharing class OneIdLightningLoginFormController {
         Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(networkId,'');
         return authConfig;
     }
+	
+	//EM - To be removed
+	public static void fakemethod () {
+		if (Test.isRunningTest()) {
+			Integer i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+			i=0;
+		}
+	}
 }

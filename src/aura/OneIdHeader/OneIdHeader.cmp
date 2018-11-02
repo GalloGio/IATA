@@ -1,22 +1,64 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">
-	<aura:attribute name="greeting" type="String" default="OneId" access="global" />
-	<aura:attribute name="vfHost" type="String" default=""/>
-	<aura:attribute name="commName" type="String" default="{!$Label.c.OneId_Community_Name}"/>
-	<!--aura:handler name="init" value="{!this}" action="{!c.doInit}" /-->
+<aura:component extends="c:Base" implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">
+
+    <aura:attribute type="String" name="greeting" default="OneId" access="global" />
+
+    <aura:attribute type="Boolean" name="loaded" default="false" />
 	
-    <div class="oiHeader">
-		<a class="homeIcon" href="{!'/' + v.commName}">
-			<span class="icon icon-logo"></span>
-			<span class="subLogo"></span>
-		</a>
-		<div id="suiteBar">
-			<div id="headerBar">
-				&nbsp;
-			</div>
-		</div>	
-	</div>
-	<div id="miniTopNav">
-		<span class="tnContainer centralLimiter">
-		</span>
-	</div>
+    <aura:attribute type="String" name="vfHost" default=""/>	
+    <aura:attribute type="String" name="serviceName" default="" />
+	<aura:attribute type="Boolean" name="blockLogo" default="false" />
+    
+    <aura:attribute type="List" name="langPickerOptions" />
+    <aura:attribute type="String" name="selectedLanguage" default="en_US" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />    
+    <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
+	<aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
+	
+	<aura:if isTrue="{!v.loaded}">
+
+		<div class="oiHeader slds-grid slds-wrap slds-grid_align-spread slds-size_1-of-1">
+                     
+            <div id="headerBar" class="slds-col slds-size_1-of-1">&nbsp;</div>
+
+			<div class="slds-col slds-max-small-size_1-of-1" id="suiteBar">
+		        
+
+                <aura:if isTrue="{!v.blockLogo}">
+                    <a class="homeIcon loginIcon" >
+                        <span class="icon icon-logo"></span>
+                        <span class="{!'subLogo' + v.serviceName}"></span>
+                    </a>
+                    <aura:set attribute="else">
+                        <a class="homeIcon loginIcon" href="{!'/' + (empty(v.serviceName) ? $Label.c.OneId_Community_Name : v.serviceName)}">
+                            <span class="icon icon-logo"></span>
+                            <span class="{!'subLogo' + v.serviceName}"></span>
+                        </a>
+                    </aura:set>
+                </aura:if>
+
+                <aura:if isTrue="{!equals(v.serviceName,'FRED')}">                        
+                    <a class="homeIcon" href="{!'/'+ $Label.c.OneId_Community_Name+'/login/?language=en_US&amp;serviceName='+v.serviceName}">
+                        <span class="icon icon-logo"></span>
+                        <span class="{!'subLogo' + v.serviceName}"></span>
+                    </a>
+                </aura:if>
+		    </div>
+
+            <div class="slds-col slds-max-small-size_1-of-1 slds-align-bottom slds-p-horizontal_large">
+                <aura:if isTrue="{!equals(v.serviceName, 'ISSP')}">
+                    <lightning:select class="noLabel" value="{!v.selectedLanguage}" onchange="{!c.langPickerChange}">
+                        <aura:iteration items="{!v.langPickerOptions}" var="item">
+                            <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/>
+                        </aura:iteration>
+                    </lightning:select>
+                </aura:if>
+            </div>
+            
+		</div>
+    	
+        <aura:set attribute="else">
+            <lightning:spinner variant="brand" size="large"/>
+        </aura:set>
+    </aura:if>
 </aura:component>

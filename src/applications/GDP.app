@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>GDP</label>
-    <tab>standard-Chatter</tab>
-    <tab>standard-Account</tab>
-    <tab>standard-Contact</tab>
-    <tab>standard-Opportunity</tab>
-    <tab>standard-report</tab>
-    <tab>standard-Dashboard</tab>
-    <tab>CSS_Tracking__c</tab>
-    <tab>Zuora__CustomerAccount__c</tab>
-    <tab>Operational_Improvements__c</tab>
-    <tab>AMS_Account_Role__c</tab>
+    <tabs>standard-Chatter</tabs>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Opportunity</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>standard-Dashboard</tabs>
+    <tabs>CSS_Tracking__c</tabs>
+    <tabs>Zuora__CustomerAccount__c</tabs>
+    <tabs>Operational_Improvements__c</tabs>
+    <tabs>AMS_Account_Role__c</tabs>
 </CustomApplication>

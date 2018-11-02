@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>mayh@iata.org</email>
     <name>Remittance &amp; Settlement - China &amp; N.A</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSChinaNAsiaallusers</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

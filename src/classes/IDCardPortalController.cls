@@ -53,7 +53,7 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 
             selected = tempContact[0];
             Integer days = 90;
-            ID_Card__c[] last_IdCard = [Select Id, Valid_To_Date__c, createdDate, Card_Status__c , Agency_IATA_Code__c From ID_Card__c c WHERE c.Related_Contact__r.Id = :selected.Id AND (c.Card_Status__c = : IDCardUtil.CARDSTATUS_PRINTED_DELIVERED or c.Card_Status__c = : IDCardUtil.CARDSTATUS_CANCELED)
+            ID_Card__c[] last_IdCard = [Select Id, Valid_To_Date__c, createdDate, Card_Status__c , Agency_IATA_Code__c From ID_Card__c c WHERE c.Related_Contact__r.Id = :selected.Id AND (c.Card_Status__c = : IDCardUtil.CARDSTATUS_VALID or c.Card_Status__c = : IDCardUtil.CARDSTATUS_CANCELED or c.Card_Status__c = : IDCardUtil.CARDSTATUS_Expired or c.Card_Status__c = : IDCardUtil.CARDSTATUS_APPROVED)
                                         order by c.Valid_To_Date__c desc ];
 
             system.debug('**** PORTAL CONTROLLER 5.2***** ' + last_IdCard.size());

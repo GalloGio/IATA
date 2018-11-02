@@ -35,6 +35,11 @@
         <default>false</default>
         <label>Inactive_TER</label>
     </customValue>
+    <customValue>
+        <fullName>Inactive_Cashless</fullName>
+        <default>false</default>
+        <label>Inactive_Cashless</label>
+    </customValue>
     <masterLabel>Risk Status</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

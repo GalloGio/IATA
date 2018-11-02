@@ -499,7 +499,8 @@
         //alert("Company type: " +companyType);
 
         var action = component.get("c.createContactAndAccount");
-        action.setParams({ con: contact, acc: account, customerType: companyType });
+        var servName = component.get("v.serviceName");
+        action.setParams({ con: contact, acc: account, customerType: companyType, servName: servName });
         action.setCallback(this, function(a) {
             //alert("Saving");
             var state = a.getState();
@@ -558,12 +559,13 @@
         }
         var account = results[index];
         var companyType = component.get("v.AccountT");
+        var servName = component.get("v.serviceName");
         var action = component.get("c.createContactAndAccount");
         console.log("Customer type: " + companyType);
         console.log("contact: " + contact);
         console.log("account: " + account);
 
-        action.setParams({ con: contact, acc: account, customerType: companyType });
+        action.setParams({ con: contact, acc: account, customerType: companyType, servName: servName });
         action.setCallback(this, function(a) {
             console.log("Execute");
             var state = a.getState();
@@ -822,12 +824,13 @@
             } else if (event.data.action == 'callIframeResizeCallback') {
                 jQuery('.captchaIframe').removeAttr('height');
                 var captchaIframeHeight;
-                if (event.data.height == '' || event.data.height == null) {
+                if (event.data.height == null)  {
                     captchaIframeHeight = "height: 0px;";
-                } else {
+                }
+                if(event.data.height && event.data.height.length>0){ 
                     captchaIframeHeight = "height:" + event.data.height + "px;";
                 }
-                component.set("v.captchaIframeHeight", captchaIframeHeight);
+                component.set("v.captchaIframeHeight", captchaIframeHeight); 
             }
         }, false);
     },

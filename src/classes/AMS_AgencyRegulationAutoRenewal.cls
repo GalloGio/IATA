@@ -149,7 +149,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfActiveDGR, minDgrHO, minDgrBR,agReg.Type_Of_Certificate__c)){
 
 					system.debug('creating renewal for DGR');
-					
+
 					//FM 07-07-2017 - AMSU-14 - only create OSCAR on the 90 days notification otherwise we need to query the existing one
 					AMS_OSCAR__c oscar = null;
 					if(is90DaysNotif){
@@ -265,24 +265,28 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
     public static AMS_OSCAR__c createStagingArea(AMS_Agency_Regulation__c agReg, Account accountData, List<AMS_Agency_Regulation__c> regulations, Contact communicationCaseContact){
 
-        AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_CERT, Account__c = agReg.Account__c,
-                                    Process__c = AMS_Utils.CERTIFICATION, Status__c='Accepted_Future Date', Change_effective_as_of__c = regulations[0].Expiry_Date__c);
-        insert theOscar;
+        //Fetching the assignment rules on case
+		AssignmentRule AR = new AssignmentRule();
+		AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
 
-        system.debug('createStagingArea oscar: '+ theOscar);
+		//Creating the DMLOptions for "Assign using active assignment rules" checkbox
+		Database.DMLOptions dmlOpts = new Database.DMLOptions();
+		dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+		
         Case theCommunicationCase = new Case();
 
         theCommunicationCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
-        theCommunicationCase.OSCAR__c = theOscar.Id;
         theCommunicationCase.CaseArea__c = 'Accreditation Process';
         theCommunicationCase.AccountId = agReg.Account__c;
         theCommunicationCase.Account_Concerned__c = agReg.Account__c;
         theCommunicationCase.BSPCountry__c = accountData.BillingCountry;
         theCommunicationCase.Reason1__c = 'Certificate ' + agReg.Type_of_certificate__c;
         theCommunicationCase.Region__c = accountData.Region_formula__c;
+        theCommunicationCase.SAAM_Deadline_Date__c = agReg.Expiry_Date__c; //FM - AMSU-32
         if(communicationCaseContact != null)
             theCommunicationCase.ContactId = communicationCaseContact.Id;
         //theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Name + ' - ' + accountData.IATACode__c;
+        theCommunicationCase.setOptions(dmlOpts);
 
         insert theCommunicationCase;
 
@@ -329,10 +333,24 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
         insert theStagingArea;
 
+        Case caseOscar = [SELECT OwnerId FROM Case WHERE Id =: theCommunicationCase.Id LIMIT 1];
+
+        AMS_OSCAR__c theOscar = new AMS_OSCAR__c();
+        theOscar.RecordTypeId = AMS_Utils.RECTYPE_CERT;
+        theOscar.Account__c = agReg.Account__c;
+        theOscar.Process__c = AMS_Utils.CERTIFICATION; 
+        theOscar.Status__c='Accepted_Future Date'; 
+        theOscar.Change_effective_as_of__c = regulations[0].Expiry_Date__c;
         theOscar.Oscar_Communication_Case_Id__c = theCommunicationCase.Id;
         theOscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), theCommunicationCase.Id);
         theOscar.AMS_Online_Accreditation__c = theStagingArea.Id;
-        update theOscar;
+        theOscar.OwnerId = caseOscar.OwnerId;
+        insert theOscar;
+
+        system.debug('createStagingArea oscar: '+ theOscar);
+
+        theCommunicationCase.OSCAR__c = theOscar.Id;
+        update theCommunicationCase;
 
         convertExistingAgencyRegulationsToAccContact(theStagingArea.Id, regulations);
 
@@ -376,6 +394,11 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
     }
 
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
+
+		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, null);
+    }
+
+    public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments) {
         
         Id templateId;
         Boolean templateToIATA = false;
@@ -415,6 +438,11 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
             List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
 
+            //FM 24/10/2017 - AMSU-32 - when DGR case use only one mail message for all the Portal Admin, instead of a mail message per each
+            List<String> lPortalAdminsEmailsDGR = new List<String>();
+            Map<String, List<String>> mPortalAdminsEmailsDGR = new Map<String, List<String>>();
+            Map<String, Contact> mRecipientPortalAdminsEmailsDGR = new Map<String, Contact>();
+
             for(Contact recipient: recipents){
 
                 if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
@@ -429,6 +457,9 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                     }
                     mail.setTargetObjectId(recipient.Id);
                     
+                    if(attachments != null){
+                    	mail.setFileAttachments(attachments);
+					}
                     mail.setWhatId(oscarId);
                    
                     mail.setOrgWideEmailAddressId(owea.Id);
@@ -438,6 +469,33 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                 //FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
                 //PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
                 }else if(isDGR){
+
+                	system.debug('DGR sendEmailAlert: isDGR ' + isDGR);
+
+                	//FM 24/10/2017 - AMSU-32 
+					if(recipient.User_Portal_Status__c == 'Approved Admin'){
+
+						system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
+						system.debug('DGR sendEmailAlert: Pref Lang ' + recipient.Preferred_Language__c);
+
+						//lPortalAdminsEmailsDGR.add(recipient.Email);
+						if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
+							system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + recipient.Preferred_Language__c);
+							List<String> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
+							aux.add(recipient.Email);
+							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
+						}else{
+							system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + recipient.Preferred_Language__c);
+							List<String> aux = new List<String>();
+							aux.add(recipient.Email);
+							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
+							mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
+						}
+
+						system.debug('DGR sendEmailAlert: mPortalAdminsEmailsDGR ' + mPortalAdminsEmailsDGR);
+
+
+					}else{
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.saveAsActivity = true;
                     mail.setToAddresses(new List<String>{recipient.Email});
@@ -449,12 +507,42 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                     mail.setTargetObjectId(recipient.Id);
                     
                     mail.setWhatId(oscarId);
+	                   
                     mail.setOrgWideEmailAddressId(owea.Id);
 
                     mailsToSend.add(mail);
                 }
+                }
 
             }
+
+            //FM 24/10/2017 - AMSU-32 
+            if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
+            	for(String key : mPortalAdminsEmailsDGR.keySet()){
+            		
+					system.debug('DGR sendEmailAlert: key : ' + key);
+					system.debug('DGR sendEmailAlert: List : mPortalAdminsEmailsDGR.get(key) : ' + mPortalAdminsEmailsDGR.get(key));
+
+	            	Messaging.SingleEmailMessage mailPortalAdmin = new Messaging.SingleEmailMessage();
+					mailPortalAdmin.saveAsActivity = true;
+	                mailPortalAdmin.setToAddresses(mPortalAdminsEmailsDGR.get(key));
+	                if(templateToIATA){
+	                	mailPortalAdmin.setTemplateId(tempIata.get(0).Id);
+	                } else {
+	                	mailPortalAdmin.setTemplateId(getSpecificLangTemplate(key, countryTemplates));
+	                }
+
+	                Contact auxCont = mRecipientPortalAdminsEmailsDGR.get(key);
+	                mailPortalAdmin.setTargetObjectId(auxCont.Id);
+
+	                mailPortalAdmin.setWhatId(oscarId);
+	               
+	                mailPortalAdmin.setOrgWideEmailAddressId(owea.Id);
+	            	mailsToSend.add(mailPortalAdmin);
+            }
+            }
+
+            system.debug('DGR sendEmailAlert: mailsToSend : ' + mailsToSend);
 
             if(!mailsToSend.isEmpty()){
                 if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend);

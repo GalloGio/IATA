@@ -712,6 +712,306 @@ public class SurveyBatchTest {
             IATA_ISO_Country__c isoCountry6 = new IATA_ISO_Country__c(name = 'suisse5',ISO_Code__c ='CH',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'People\'s Republic of China' );
             isoList.add(isoCountry6);
 
+            IATA_ISO_Country__c isoCountrySpain = new IATA_ISO_Country__c(
+                    name = 'Spain',ISO_Code__c = 'ES',AIMS_Area_Name__c='Spain');
+               isoList.add(isoCountrySpain);
+
+            insert isoList;
+
+            //List Account
+            List<Account> acc = new List<Account>();
+            Account a = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234567',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'China',Location_Type__c = 'AO');
+
+
+            Account a2 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234567',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO');
+
+            Account a3 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234567',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO',
+                                     Source_System__c = 'WEBSTAR',
+                                     status__c='Approved',
+                                     CNS_Account__c = false);
+
+
+            
+
+            acc.add(a);
+            acc.add(a2);
+            acc.add(a3);
+            
+            insert acc;
+
+            //List Contact
+            List<Contact> cont = new List<Contact>();
+
+            Contact con =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et1', HasOptedOutOfEmail = false);
+            Contact con2 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a2.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et2', HasOptedOutOfEmail = false);
+            
+            cont.add(con);
+            cont.add(con2);
+            
+            insert cont;
+
+            date dead = date.today().addDays(40);
+
+            Date twoweeksAgo = date.today().addDays(- 14);
+
+            u2.UserRoleId = r1.Id;
+            update u2;
+
+            List<Case> cases = new List<Case>();
+                        cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a.id,
+                              Region__c = 'China & North Asia',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
+                              Reason1__c = 'CHC – Change of Shareholding'
+                              ));
+
+                        cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a.id,
+                              Region__c = 'China & North Asia',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding'
+                              ));
+
+
+                         cases.add(new Case(recordtypeID = processRTId,
+                               Status = 'Financial Security Requested',
+                               FS_Submitted_Date__c = date.today(),
+                               FS_Deadline_Date__c = twoweeksAgo,
+                               Origin = 'asd',
+                               IFAP_Area__c = 'asda',
+                               Financial_Review_Type__c ='Annual',
+                               IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                               Deadline_Date__c = dead,
+                               contactid = con2.id,
+                               AccountId = a2.id,
+                               BSPCountry__c = 'Italy',
+                               Assessment_Performed_Date__c = date.today(),
+                               Financial_Review_Result__c = 'Satisfactory',
+                               Reason1__c = 'CHC – Change of Shareholding'
+                               ));
+
+                         cases.add(new Case(recordtypeID = processRTId,
+                               Status = 'Financial Security Requested',
+                               FS_Submitted_Date__c = date.today(),
+                               FS_Deadline_Date__c = twoweeksAgo,
+                               Origin = 'asd',
+                               IFAP_Area__c = 'asda',
+                               Financial_Review_Type__c ='Annual',
+                               IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                               Deadline_Date__c = dead,
+                               contactid = con2.id,
+                               AccountId = a2.id,
+                               BSPCountry__c = 'Japan',
+                               Assessment_Performed_Date__c = date.today(),
+                               Financial_Review_Result__c = 'Satisfactory',
+                               Reason1__c = 'CHC – Change of Shareholding'
+                               ));
+
+                         cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a2.id,
+                              BSPCountry__c = 'Bermuda',
+                              Region__c = 'Africa & Middle East',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding'
+                              ));
+
+                         cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                               AccountId = a3.id,
+                               BSPCountry__c = 'United States',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding',
+                              CNSCase__c =false
+                              ));
+/*
+                         cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a2.id,
+                              BSPCountry__c = 'Sri Lanka',
+                              Region__c = 'Asia & Pacific',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding'
+                              ));
+                          cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a2.id,
+                              BSPCountry__c = 'Sri Lanka',
+                              Region__c = 'Europe',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding'
+                              ));
+
+                           cases.add(new Case(recordtypeID = processRTId,
+                              Status = 'Financial Security Requested',
+                              FS_Submitted_Date__c = date.today(),
+                              FS_Deadline_Date__c = twoweeksAgo,
+                              Origin = 'asd',
+                              IFAP_Area__c = 'asda',
+                              Financial_Review_Type__c ='Annual',
+                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+                              Deadline_Date__c = dead,
+                              contactid = con.id,
+                              AccountId = a2.id,
+                              BSPCountry__c = 'Turks and Caicos Islands',
+                              Region__c = 'Americas',
+                              Assessment_Performed_Date__c = date.today(),
+                              Financial_Review_Result__c = 'Satisfactory',
+                              Reason1__c = 'CHC – Change of Shareholding'
+                              ));*/
+                        
+                        
+
+        for(Case c : cases){
+          c.Status = 'Closed';
+        }
+		
+		test.startTest();
+        insert cases;
+		test.stopTest();
+
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+
+        
+            //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
+            SurveyBatch batch = new SurveyBatch();
+            batch.ClosedDate = date.today();
+            batch.CreatedDate = date.today();
+            Database.executeBatch(batch, 50);
+
+          string jobId = System.schedule('SurveyCustomWorkflowTest',
+                        '0 0 0 15 3 ? 2022',
+                        new SurveyBatchScheduler());
+
+        
+    }
+   }
+
+       static testMethod void SurveyEmailTest3() {
+
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        TransformationHelper.CalculateBusinessHoursAges = true;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+
+        UserRole r1 = new UserRole(Name = 'China & N. Asia Customer Service');
+        insert r1;
+
+
+        User u1 = new User(FirstName='Ángel',
+           Division='UnitTest',
+           License_Cost_Center__c='AAA000AA00',
+           Username='test1@iata.org.amsdev11',
+           LastName='Peña', Email='test1@iata.org',
+           Alias='Test1', CommunityNickname='Test11',
+           TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
+           EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ',
+           LanguageLocaleKey='en_US');
+
+        list<User> listUser = new list<User>();
+        listUser.add(u1);
+        insert listUser;
+
+        System.runAs (u1) {
+            //List ISO Country
+            List<IATA_ISO_Country__c> isoList = new List<IATA_ISO_Country__c>();
+            IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1');
+            isoList.add(isoCountry);
+
+            IATA_ISO_Country__c isoCountry2 = new IATA_ISO_Country__c(name = 'suisse1',ISO_Code__c ='GE',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'Germany' );
+            isoList.add(isoCountry2);
+
+            IATA_ISO_Country__c isoCountry3 = new IATA_ISO_Country__c(name = 'suisse2',ISO_Code__c ='IN',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'India' );
+            isoList.add(isoCountry3);
+
+            IATA_ISO_Country__c isoCountry4 = new IATA_ISO_Country__c(name = 'suisse3',ISO_Code__c ='IR',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'Iran' );
+            isoList.add(isoCountry4);
+
+            IATA_ISO_Country__c isoCountry5 = new IATA_ISO_Country__c(name = 'suisse4',ISO_Code__c ='JA',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'Jamaica' );
+            isoList.add(isoCountry5);
+
+            IATA_ISO_Country__c isoCountry6 = new IATA_ISO_Country__c(name = 'suisse5',ISO_Code__c ='CH',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1', Case_BSP_Country__c  = 'People\'s Republic of China' );
+            isoList.add(isoCountry6);
+
+            IATA_ISO_Country__c isoCountrySpain = new IATA_ISO_Country__c(
+                    name = 'Spain',ISO_Code__c = 'ES',AIMS_Area_Name__c='Spain');
+               isoList.add(isoCountrySpain);
+
             insert isoList;
 
             //List Account
@@ -768,12 +1068,21 @@ public class SurveyBatchTest {
                                      Type = 'IATA Cargo Agent',
                                      billingCountry = 'ss',Location_Type__c = 'AO');
 
+           Account a7 = new Account( name ='IFAP ACCT',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountrySpain.id,
+                                     recordtypeID = hqrt,
+                                     IATACode__c ='1234556',
+                                     Type = 'IATA Cargo Agent',
+                                     billingCountry = 'ss',Location_Type__c = 'AO');
+
             acc.add(a);
             acc.add(a2);
             acc.add(a3);
             acc.add(a4);
             acc.add(a5);
             acc.add(a6);
+            acc.add(a7);
             insert acc;
 
             //List Contact
@@ -785,6 +1094,7 @@ public class SurveyBatchTest {
             Contact con4 =new contact(firstname = 'Name', lastname = 'pluto',phone = '123', accountid = a4.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et4',HasOptedOutOfEmail = false);
             Contact con5 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a5.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et5', HasOptedOutOfEmail = false);
             Contact con6 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a6.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et6', HasOptedOutOfEmail = false);
+            Contact con7 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a7.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et6', HasOptedOutOfEmail = false);
 
             cont.add(con);
             cont.add(con2);
@@ -792,14 +1102,13 @@ public class SurveyBatchTest {
             cont.add(con4);
             cont.add(con5);
             cont.add(con6);
+            cont.add(con7);
             insert cont;
 
             date dead = date.today().addDays(40);
 
             Date twoweeksAgo = date.today().addDays(- 14);
 
-            u2.UserRoleId = r1.Id;
-            update u2;
 
             List<Case> cases = new List<Case>();
                         cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
@@ -816,169 +1125,24 @@ public class SurveyBatchTest {
                               Region__c = 'China & North Asia',
                               Assessment_Performed_Date__c = date.today(),
                               Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-                              Reason1__c = 'CHC – Change of Shareholding'
+                              Reason1__c = 'CHC – Change of Shareholding',
+                              OwnerId = u1.Id
                               ));
 
-                        cases.add(new Case(recordtypeID = processRTId,
-                              Status = 'Financial Security Requested',
-                              FS_Submitted_Date__c = date.today(),
-                              FS_Deadline_Date__c = twoweeksAgo,
-                              Origin = 'asd',
-                              IFAP_Area__c = 'asda',
-                              Financial_Review_Type__c ='Annual',
-                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                              Deadline_Date__c = dead,
-                              contactid = con.id,
-                              AccountId = a.id,
-                              Region__c = 'China & North Asia',
-                              Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'Satisfactory',
-                              Reason1__c = 'CHC – Change of Shareholding'
-                              ));
-
-
-                        // cases.add(new Case(recordtypeID = processRTId,
-                        //       Status = 'Financial Security Requested',
-                        //       FS_Submitted_Date__c = date.today(),
-                        //       FS_Deadline_Date__c = twoweeksAgo,
-                        //       Origin = 'asd',
-                        //       IFAP_Area__c = 'asda',
-                        //       Financial_Review_Type__c ='Annual',
-                        //       IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                        //       Deadline_Date__c = dead,
-                        //       contactid = con2.id,
-                        //       AccountId = a2.id,
-                        //       Region__c = 'Europe',
-                        //       Assessment_Performed_Date__c = date.today(),
-                        //       Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-                        //       Reason1__c = 'CHC – Change of Shareholding'
-                        //       ));
-                        //
-                        //
-                        // cases.add(new Case(recordtypeID = processRTId,
-                        //       Status = 'Financial Security Requested',
-                        //       FS_Submitted_Date__c = date.today(),
-                        //       FS_Deadline_Date__c = twoweeksAgo,
-                        //       Origin = 'asd',
-                        //       IFAP_Area__c = 'asda',
-                        //       Financial_Review_Type__c ='Annual',
-                        //       IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                        //       Deadline_Date__c = dead,
-                        //       contactid = con3.id,
-                        //       AccountId = a3.id,
-                        //       Region__c = 'Asia & Pacific',
-                        //       Assessment_Performed_Date__c = date.today(),
-                        //       Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-                        //       Reason1__c = 'CHC – Change of Shareholding'
-                        //       ));
-                        //
-                        //  cases.add(new Case(recordtypeID = processRTId,
-                        //       Status = 'Financial Security Requested',
-                        //       FS_Submitted_Date__c = date.today(),
-                        //       FS_Deadline_Date__c = twoweeksAgo,
-                        //       Origin = 'asd',
-                        //       IFAP_Area__c = 'asda',
-                        //       Financial_Review_Type__c ='Annual',
-                        //       IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                        //       Deadline_Date__c = dead,
-                        //       contactid = con4.id,
-                        //       AccountId = a4.id,
-                        //       Region__c = 'Africa & Middle East',
-                        //       Assessment_Performed_Date__c = date.today(),
-                        //       Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-                        //       Reason1__c = 'CHC – Change of Shareholding'
-                        //       ));
-                        //
-                        //
-                        //  cases.add(new Case(recordtypeID = processRTId,
-                        //       Status = 'Financial Security Requested',
-                        //       FS_Submitted_Date__c = date.today(),
-                        //       FS_Deadline_Date__c = twoweeksAgo,
-                        //       Origin = 'asd',
-                        //       IFAP_Area__c = 'asda',
-                        //       Financial_Review_Type__c ='Annual',
-                        //       IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                        //       Deadline_Date__c = dead,
-                        //       contactid = con5.id,
-                        //       AccountId = a5.id,
-                        //       Region__c = 'Americas',
-                        //       Assessment_Performed_Date__c = date.today(),
-                        //       Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-                        //       Reason1__c = 'CHC – Change of Shareholding'
-                        //       ));
-                        //
-                        //  cases.add(new Case(recordtypeID = processRTId,
-                        //       Status = 'Financial Security Requested',
-                        //       FS_Submitted_Date__c = date.today(),
-                        //       FS_Deadline_Date__c = twoweeksAgo,
-                        //       Origin = 'asd',
-                        //       IFAP_Area__c = 'asda',
-                        //       Financial_Review_Type__c ='Annual',
-                        //       IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                        //       Deadline_Date__c = dead,
-                        //       contactid = con.id,
-                        //       AccountId = a.id,
-                        //       Region__c = 'China & North Asia',
-                        //       Assessment_Performed_Date__c = date.today(),
-                        //       Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-                        //       Reason1__c = 'CHO / CHS – Change of Ownership / Legal Status'
-                        //       ));
-                        //
-                        //  cases.add(new Case(recordtypeID = processRTId,
-                        //       Status = 'Financial Security Requested',
-                        //       FS_Submitted_Date__c = date.today(),
-                        //       FS_Deadline_Date__c = twoweeksAgo,
-                        //       Origin = 'asd',
-                        //       IFAP_Area__c = 'asda',
-                        //       Financial_Review_Type__c ='Annual',
-                        //       IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                        //       Deadline_Date__c = dead,
-                        //       contactid = con.id,
-                        //       AccountId = a.id,
-                        //       Region__c = 'China & North Asia',
-                        //       Assessment_Performed_Date__c = date.today(),
-                        //       Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-                        //       Reason1__c = 'New SA / CHV – New Code'
-                        //       ));
-                        //
-                        // cases.add(new Case(recordtypeID = processRTId,
-                        //       Status = 'Financial Security Requested',
-                        //       FS_Submitted_Date__c = date.today(),
-                        //       FS_Deadline_Date__c = twoweeksAgo,
-                        //       Origin = 'asd',
-                        //       IFAP_Area__c = 'asda',
-                        //       Financial_Review_Type__c ='Annual',
-                        //       IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                        //       Deadline_Date__c = dead,
-                        //       contactid = con6.id,
-                        //       AccountId = a6.id,
-                        //       Region__c = 'China & North Asia',
-                        //       Assessment_Performed_Date__c = date.today(),
-                        //       Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-                        //       Reason1__c = 'New SA / CHV – New Code',
-                        //       WhoClosedCase__c  = u2.Id
-                        //       ));
+                   
 
         for(Case c : cases){
           c.Status = 'Closed';
         }
+		test.startTest();
         insert cases;
-        /*
-        insert cases;
-
-        list<id> caseids = new list<id>();
-        for(Case c : cases){
-            c.Status = 'Closed';
-            caseids.add(c.id);
-        }
-        update cases;
-        */
+		test.stopTest();
 
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
         TransformationHelper.CalculateBusinessHoursAges = false;
         CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 
-        test.startTest();
+        
             //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
             SurveyBatch batch = new SurveyBatch();
             batch.ClosedDate = date.today();
@@ -989,9 +1153,10 @@ public class SurveyBatchTest {
                         '0 0 0 15 3 ? 2022',
                         new SurveyBatchScheduler());
 
-        test.stopTest();
+        
     }
    }
+
     static void prepareTestForCountries(Integer countriesLimit, Integer offsetLimit){
       list<IATA_ISO_Country__c> listCountries = new list<IATA_ISO_Country__c>();
       if(offsetLimit!=null){
@@ -1107,10 +1272,10 @@ public class SurveyBatchTest {
        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
     User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
     System.runAS(u) {
       prepareTestForCountries(5,null);
       }
-   test.startTest();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);
@@ -1124,10 +1289,10 @@ public class SurveyBatchTest {
      CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
       User u = [SELECT Id, FirstName, LastName FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
     System.runAS(u) {
        prepareTestForCountries(5,5);
     }
-   test.startTest();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);
@@ -1140,10 +1305,11 @@ static testMethod void testForCountries3() {
      CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
       User u = [SELECT Id, FirstName, LastName FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
     System.runAS(u) {
        prepareTestForCountries(6,10);
     }
-   test.startTest();
+   
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);
@@ -1912,6 +2078,192 @@ System.runAS(u) {
        test.stopTest();
     }
 
+    static testMethod void testForRoles11() {
+
+       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+       TransformationHelper.CalculateBusinessHoursAges = true;
+       CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
 
+       User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+
+       UserRole uRole = new UserRole(Name = 'Distribution - Airline Coding & MITA');
+
+       insert uRole;
+       u.UserRoleId = uRole.Id;
+       update u;
+
+    System.runAS(u) {
+
+        Account a = [SELECT Id, Name FROM Account WHERE  name ='IFAP ACCT' LIMIT 1];
+        a.billingCountry = 'People\'s Republic of China';
+        update a;
+
+        Contact con = [SELECT Id, Name FROM Contact WHERE email = 'asd.arg@wewt.et' LIMIT 1];
+
+
+        Case c = new Case();
+        c.RecordTypeId = chinaRTID;
+        c.OwnerId = u.Id;
+        c.Reason1__c = 'CHC – Change of Shareholding';
+        c.BSPCountry__c='People\'s Republic of China';
+        c.Status = 'Financial Security Requested';
+        c.FS_Submitted_Date__c = date.today();
+        c.FS_Deadline_Date__c = date.today().addDays(-14);
+        c.Origin = 'asd';
+        c.IFAP_Area__c = 'asda';
+        c.Financial_Review_Type__c ='bla';
+        c.IFAP_Financial_Year__c =  String.valueOF(date.today().month());
+        c.Deadline_Date__c = date.today().addDays(-14);
+        c.contactid = con.id;
+        c.AccountId = a.id;
+        c.Assessment_Performed_Date__c = date.today();
+        c.Financial_Review_Result__c = 'Satisfactory' ;
+        c.Subject = 'wrthsrthjr';
+        // OwnerId = us.Id
+        insert c;
+
+        c.Region__c = 'China & North Asia';
+        c.Status = 'Closed';
+        update c;
+
+       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+       TransformationHelper.CalculateBusinessHoursAges = false;
+       CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+    }
+       test.startTest();
+       //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
+       SurveyBatch batch = new SurveyBatch();
+       batch.ClosedDate = date.today();
+       Database.executeBatch(batch, 50);
+
+
+       test.stopTest();
+    }
+
+
+    static testMethod void testForRoles12() {
+
+       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+       TransformationHelper.CalculateBusinessHoursAges = true;
+       CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+
+
+       User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+
+       UserRole uRole = new UserRole(Name = 'A&P Customer Service Staff');
+
+       insert uRole;
+       u.UserRoleId = uRole.Id;
+       update u;
+
+    System.runAS(u) {
+
+        Account a = [SELECT Id, Name FROM Account WHERE  name ='IFAP ACCT' LIMIT 1];
+        a.billingCountry = 'People\'s Republic of China';
+        update a;
+
+        Contact con = [SELECT Id, Name FROM Contact WHERE email = 'asd.arg@wewt.et' LIMIT 1];
+
+
+        Case c = new Case();
+        c.RecordTypeId = Cases_SIS_Help_DeskRecordTypeID;
+        c.OwnerId = u.Id;
+        c.Reason1__c = 'CHC – Change of Shareholding';
+        c.BSPCountry__c='Philippines';
+        c.Status = 'Financial Security Requested';
+        c.FS_Submitted_Date__c = date.today();
+        c.FS_Deadline_Date__c = date.today().addDays(-14);
+        c.Origin = 'asd';
+        c.IFAP_Area__c = 'asda';
+        c.Financial_Review_Type__c ='bla';
+        c.IFAP_Financial_Year__c =  String.valueOF(date.today().month());
+        c.Deadline_Date__c = date.today().addDays(-14);
+        c.contactid = con.id;
+        c.AccountId = a.id;
+        c.Assessment_Performed_Date__c = date.today();
+        c.Financial_Review_Result__c = 'Satisfactory' ;
+        c.Subject = 'wrthsrthjr';
+        c.CaseArea__c = 'ICH';
+        insert c;
+
+        c.Region__c = 'Asia & Pacific';
+        c.Status = 'Closed';
+        update c;
+
+       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+       TransformationHelper.CalculateBusinessHoursAges = false;
+       CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+    }
+       test.startTest();
+       //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
+       SurveyBatch batch = new SurveyBatch();
+       batch.ClosedDate = date.today();
+       Database.executeBatch(batch, 50);
+
+
+       test.stopTest();
+    }
+
+    static testMethod void testProcessCustomerRecovery() {
+       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+       TransformationHelper.CalculateBusinessHoursAges = true;
+       CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+
+       User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+
+       UserRole uRole = new UserRole(Name = 'Americas Customer Service Staff');
+
+       insert uRole;
+       u.UserRoleId = uRole.Id;
+       update u;
+
+    System.runAS(u) {
+
+        Account a = [SELECT Id, Name FROM Account WHERE  name ='IFAP ACCT' LIMIT 1];
+        a.billingCountry = 'People\'s Republic of China';
+        update a;
+
+        Contact con = [SELECT Id, Name FROM Contact WHERE email = 'asd.arg@wewt.et' LIMIT 1];
+
+
+        Case c = new Case();
+        c.RecordTypeId = chinaRTID;
+        c.OwnerId = u.Id;
+        c.Reason1__c = 'CHC – Change of Shareholding';
+        c.BSPCountry__c='HAITI';
+        c.Status = 'Financial Security Requested';
+        c.FS_Submitted_Date__c = date.today();
+        c.FS_Deadline_Date__c = date.today().addDays(-14);
+        c.Origin = 'asd';
+        c.IFAP_Area__c = 'asda';
+        c.Financial_Review_Type__c ='bla';
+        c.IFAP_Financial_Year__c =  String.valueOF(date.today().month());
+        c.Deadline_Date__c = date.today().addDays(-14);
+        c.contactid = con.id;
+        c.AccountId = a.id;
+        c.Assessment_Performed_Date__c = date.today();
+        c.Financial_Review_Result__c = 'Satisfactory' ;
+        c.Subject = 'wrthsrthjr';
+        // OwnerId = us.Id
+        insert c;
+
+        c.Instant_Survey_Feedback_requested__c = true;
+        c.Region__c = 'Americas';
+        c.Status = 'Closed';
+        update c;
+
+        Instant_Surveys__c is = new Instant_Surveys__c(Name = 'is', X2015_Overall_Satisfaction__c = '3', Relationship_to_Case__c = c.Id);
+        insert is;
+
+       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+       TransformationHelper.CalculateBusinessHoursAges = false;
+       CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+    }
+       test.startTest();
+       SurveyBatch batch = new SurveyBatch();
+       batch.ClosedDate = date.today();
+       Database.executeBatch(batch, 50);
+       test.stopTest();
+    }
 }

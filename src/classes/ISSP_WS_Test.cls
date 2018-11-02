@@ -1020,8 +1020,8 @@ private class ISSP_WS_Test {
         Map<Id, String> sisLastNameMap = new Map<Id, String>();
         sisLastNameMap.put(con.id, '1234');
         ISSP_WS_Utilities.invokeSisModifyUser(sisFedIdMap, sisEmailMap, sisFirstNameMap, sisLastNameMap);
-    }
-    
+    } 
+    */
     static testMethod void createNotification_1() {
         List <ISSP_Int_Error__c> errorList = ISSP_WS_Test.createErrors();
         insert errorList;
@@ -1163,6 +1163,8 @@ private class ISSP_WS_Test {
         myInputData.serviceName = 'MYTEST';
         ISSP_WS_CreateNotification.createNotification(myInputData);
         
+		Test.startTest();
+		
         Portal_Application_Right__c newAppRight = new Portal_Application_Right__c();
         newAppRight.Portal_Application__c = newApp.Id;
         newAppRight.Contact__c = con.Id;
@@ -1174,6 +1176,8 @@ private class ISSP_WS_Test {
         emailList.add('test_createnotification1@test.com');
         myInputData.listOfUsers = emailList;
         ISSP_WS_CreateNotification.createNotification(myInputData);
+		
+		Test.stopTest();
         
     }
     
@@ -1313,7 +1317,7 @@ private class ISSP_WS_Test {
         myInputData.listOfUsers = emailList;
         ISSP_WS_CreateNotification.createNotification(myInputData);
     }
-    */
+    
     public static List <ISSP_Int_Error__c> createErrors(){
         List <ISSP_Int_Error__c> errorList = new List <ISSP_Int_Error__c>();
         ISSP_Int_Error__c newError1 = new ISSP_Int_Error__c();

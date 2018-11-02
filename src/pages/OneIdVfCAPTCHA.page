@@ -62,11 +62,18 @@
             }
             
             if(event.data.action == "alohaCallingCAPTCHA"){  
-                var message = document.getElementById("g-recaptcha-response").value;
-                if (message == ""){
+                
+                if(event.data.country != 'CN'){
+                    var message = document.getElementById("g-recaptcha-response").value;                                    
+                }
+                
+                if(event.data.country == 'CN'){                    
+                    parent.postMessage({ action: "alohaCallingCAPTCHA", alohaResponseCAPTCHA : "OK" },  hostURL);
+                }
+                else if (message == ''){                    
                     parent.postMessage({ action: "alohaCallingCAPTCHA", alohaResponseCAPTCHA : "NOK" }, hostURL);
                 }
-                else{
+                else{                    
                     parent.postMessage({ action: "alohaCallingCAPTCHA", alohaResponseCAPTCHA : "OK" },  hostURL);
                 }
             }

@@ -51,6 +51,19 @@
         <unique>false</unique>
     </fields>
     <label>LVA_CallUsConfig</label>
+    <listViews>
+        <fullName>All_filtering_values</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>NamespacePrefix</columns>
+        <columns>IsoCountry__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Business_Hours_Name__c</columns>
+        <columns>AvailableHours__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All filtering values</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>LVA_CallUsConfig</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>

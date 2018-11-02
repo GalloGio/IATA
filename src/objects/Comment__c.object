@@ -1112,6 +1112,11 @@ Object to store comments related to objectives, or independent comments that we 
                     <default>false</default>
                     <label>Canceled</label>
                 </value>
+                <value>
+                    <fullName>Not Delivered</fullName>
+                    <default>false</default>
+                    <label>Not Delivered</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -2407,6 +2412,10 @@ Object to store comments related to objectives, or independent comments that we 
             </values>
             <values>
                 <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Delivered</fullName>
                 <default>false</default>
             </values>
             <values>

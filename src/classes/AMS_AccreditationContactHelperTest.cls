@@ -8,7 +8,8 @@ private class AMS_AccreditationContactHelperTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Account acc1 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account acc1 = new Account(RecordTypeId=agencyRT, Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
         insert acc1;
 
 		Contact c1 = new Contact(AccountId = acc1.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);

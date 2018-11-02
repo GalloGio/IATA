@@ -3,6 +3,7 @@
         helper.fetchIssues(component);
         helper.getCanEdit(component);
         helper.getReportId(component);
+        helper.fetchDivisionValues(component);
     },
     refreshIssues : function(component, event, helper) {
         helper.refreshIssues(component);

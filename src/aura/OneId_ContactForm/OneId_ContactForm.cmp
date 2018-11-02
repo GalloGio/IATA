@@ -1,0 +1,85 @@
+<aura:component controller="OneId_RegistrationProcessController">
+
+    <aura:attribute name="contactLabels" type="Map"/>
+    <aura:attribute name="jobFunctionOptions" type="String[]"/>
+    <aura:attribute name="userCountry" type="String"/>
+    <aura:attribute name="hasJquery" type="Boolean"/>
+    <aura:attribute name="contact" type="Contact" default="{'sObjectType':'Contact'}"/>
+    <aura:attribute name="serviceName" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:OneId_RequestCompletionCheck_EVT" action="{!c.checkCompletion}"/>
+    <aura:handler name="change" value="{!v.userCountry}" action="{!c.changedCountry}"/>
+
+    <aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
+    
+    <ltng:require 
+        styles="{!$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/css/intlTelInput.css'}"
+        afterScriptsLoaded="{!c.jsLoaded}"
+    />
+    
+    <div class="slds-grid slds-wrap ">
+        <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1">
+            <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Salutation}</label>
+            <ui:inputSelect aura:id="salutation" class="slds-select" value="{!v.contact.Salutation}">
+                <ui:inputSelectOption text="" label="{!$Label.c.ISSP_Registration_None}"/>
+                <ui:inputSelectOption text="Mr." label="{!$Label.c.ISSP_Registration_MR}"/>
+                <ui:inputSelectOption text="Mrs." label="{!$Label.c.ISSP_Registration_MRS}"/>
+                <ui:inputSelectOption text="Ms." label="{!$Label.c.ISSP_Registration_MS}"/>
+            </ui:inputSelect>
+        </div>
+    
+        <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.FirstName}</label>
+            <ui:inputText aura:id="firstName" value="{!v.contact.FirstName}" class="slds-input"/>
+        </div>
+        
+        <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.LastName}</label>
+            <ui:inputText aura:id="lastName" value="{!v.contact.LastName}" class="slds-input"/>
+        </div>
+        
+        <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1">
+            <label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_Registration_JobTitle}</label>
+            <ui:inputText aura:id="title" value="{!v.contact.Title}" class="slds-input"/>
+        </div>
+        
+        <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1">
+            <label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Membership_Function__c}</label>
+            <ui:inputSelect multiple="true" class="multiple required" aura:id="membershipFunction" value="{!v.contact.Membership_Function__c}" required="true">
+                <aura:iteration items="{!v.jobFunctionOptions}" var="function" indexVar="index" aura:id="function">
+                    <ui:inputSelectOption text="{!function}" label="{!function}" /><!-- value="true" -->
+                </aura:iteration>
+            </ui:inputSelect>
+            <ul aura:id="jobHelp" >
+                <li class="slds-form-element__help">{!$Label.c.OneId_JobFunction_Help_Msg}</li>
+            </ul>
+        </div>
+        
+        
+        <div aura:id="phoneContainer" class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label" >
+				<aura:if isTrue="{! v.serviceName != 'FRED'}">
+                	<abbr class="slds-required" title="required">*</abbr>
+                </aura:if>
+                {!v.contactLabels.Phone}
+            </label>
+            <ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="phoneFormat slds-input" required="{! v.serviceName != 'FRED'}" updateOn="keyup" keyup="{!c.validateNumber}" />
+        </div>
+        
+        <div aura:id="mobilePhoneContainer" class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label" >
+				<aura:if isTrue="{! v.serviceName == 'FRED'}">
+                	<abbr class="slds-required" title="required">*</abbr>
+                </aura:if>
+				{!v.contactLabels.MobilePhone}
+            </label>
+            <ui:inputPhone aura:id="contactMobilePhone" value="{!v.contact.MobilePhone}" class="mobileFormat slds-input" required="{! v.serviceName == 'FRED'}" updateOn="keyup" keyup="{!c.validateNumber}" />
+        </div>
+        
+        <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label" >{!v.contactLabels.Fax}</label>
+            <ui:inputPhone aura:id="contactFaxPhone" value="{!v.contact.Fax}" class="phoneFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}" />
+        </div>
+    </div>
+</aura:component>

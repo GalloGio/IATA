@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>solorzanoj@iata.org</email>
+    <email>saremyt@iata.org</email>
     <name>Cases - Complaints Americas</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAmericasallusers</publicGroup>
+            <publicGroup>IDFSAmericasHUB</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>MADHubCSManagerA</role>
+            <role>MADHubCSstaffA</role>
+        </roles>
+        <users>
+            <user>amaralf@iata.org</user>
+            <user>solorzanoj@iata.org</user>
+            <user>medeirosk@iata.org</user>
+            <user>montielk@iata.org</user>
+            <user>marquezl@iata.org</user>
+            <user>taverasv@iata.org</user>
+            <user>politx@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

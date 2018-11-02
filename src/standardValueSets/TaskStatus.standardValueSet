@@ -67,4 +67,10 @@
         <label>Cancelled</label>
         <closed>true</closed>
     </standardValue>
+    <standardValue>
+        <fullName>Not Delivered</fullName>
+        <default>false</default>
+        <label>Not Delivered</label>
+        <closed>false</closed>
+    </standardValue>
 </StandardValueSet>

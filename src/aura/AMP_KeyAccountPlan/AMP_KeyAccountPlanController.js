@@ -4,6 +4,7 @@
         helper.filterView(component);
         helper.getTasks(component);
         helper.getCanEdit(component);
+        helper.fetchDivisionValues(component);
 
     },
     setActivityId : function(component, event, helper) {

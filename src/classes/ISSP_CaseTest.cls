@@ -28,13 +28,18 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('topic', 'test');
         ApexPages.currentPage().getParameters().put('subtopic', 'test1');
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        
         Test.startTest();
+        ISSP_Case.articleWrapper wrapper = new ISSP_Case.articleWrapper();
         system.runAs(thisUser){
         	ISSP_Case cttr = new ISSP_Case();
         	cttr.pageLoad();
 
         	cttr.AddComment();
         	cttr.edit();
+        	ISSP_Case.getFieldMappedValue('test','test');
+            cttr.updateCase();
+            String fullname = cttr.fullnameNOCFile;
         }
         Test.stopTest();
 	}
@@ -199,6 +204,12 @@ public class ISSP_CaseTest {
 	}
 
 	public static testMethod void testISSP_Case_4() {
+		dgAI2__DG_Disable_Features__c dg = dgAI2__DG_Disable_Features__c.getOrgDefaults();
+		dg.dgAI2__Disable_Case_Predictions__c = true;
+		dg.dgAI2__Disable_Case_Feedback__c = true;
+		dg.dgAI2__Disable_Prediction_On_Update__c = true;
+		upsert dg;
+		
 		Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
@@ -515,8 +526,6 @@ public class ISSP_CaseTest {
         Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'test');
         cttr.getCaseDefectItems();
 
-        cttr.getCaseSubTypeItems();
-
         //cttr.retCaseClassificationItems();
 
         cttr.newCase.CaseArea__c = 'ICH';
@@ -535,9 +544,11 @@ public class ISSP_CaseTest {
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
+        contact.User_Portal_Status__c = 'Approved Admin';
+        contact.Email = 'teamcontact@email.com';
         insert contact;
         Contact teamContact = ISSP_ObjectFactory.createNewContact();
-        teamContact.Email = 'teamcontact@email.com';
+        teamContact.Email = 'teamcontact2@email.com';
         insert teamContact;
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
@@ -553,6 +564,7 @@ public class ISSP_CaseTest {
         c.CaseArea__c = 'test';
         c.Reason1__c = 'test';
         c.Visible_on_ISS_Portal__c = true;
+        c.Account_Concerned__c = contact.AccountId;
         insert c;
 
         ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
@@ -569,7 +581,7 @@ public class ISSP_CaseTest {
             System.assert(result1.isEmpty(),'wrong result ' + result1);
             
             //insert one cc other
-            cttr.inputccotheremail = teamContact.Email;
+            cttr.inputccotheremail = contact.Email;
             cttr.addCCOther();
             // insert one fake cc other
             cttr.inputccotheremail = 'noemail';
@@ -577,10 +589,10 @@ public class ISSP_CaseTest {
             
             // check a cc other was inserted
             set<String> result2 = new set<String>(cttr.getListCCOther());
-            System.assert(result2.contains(teamContact.Email),'wrong result ' + result2);
+            System.assert(result2.contains(contact.Email),'wrong result ' + result2);
             
             //remove ccother
-            cttr.inputDelCCOther = teamContact.Email;
+            cttr.inputDelCCOther = contact.Email;
             cttr.delCCOther();
             // del one fake cc other
             cttr.inputDelCCOther = 'noemail';
@@ -591,5 +603,213 @@ public class ISSP_CaseTest {
         }
         Test.stopTest();
     }
+
+    public static testMethod void testDCPnewCase() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.User_Portal_Status__c = 'Approved Admin';
+        contact.status__c = 'Active';
+        contact.Email = 'teamcontact@email.com';
+        insert contact;
+
+       Id p = [select id from profile where name='ISS Portal DPC Admin'].id;
+
+        User user = new User(alias = 'test123', email=contact.Email,
+                emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
+                localesidkey='en_US', profileid = p, country='United States',IsActive =true,
+                ContactId = contact.Id, FederationIdentifier = contact.Id,
+                timezonesidkey='America/Los_Angeles', username=contact.Email);
+
+        insert user;
+
+       List<ISSP_DPC__c> mcs = new List<ISSP_DPC__c>();
+       ISSP_DPC__c accaRoleIds = new ISSP_DPC__c(name='ACCA Roles', Value__c=null);
+       ISSP_DPC__c accaAccounts = new ISSP_DPC__c(name='ACCA Accounts', Value__c=null);
+       ISSP_DPC__c nonAccaAccounts = new ISSP_DPC__c(name='Non-ACCA Accounts', Value__c=null);
+       ISSP_DPC__c dpcRecordType = new ISSP_DPC__c(name='DPC Recordtype', Value__c='test');
+       ISSP_DPC__c dpcSector = new ISSP_DPC__c(name='DPC Sector', Value__c='test');
+       ISSP_DPC__c dpcCategory = new ISSP_DPC__c(name='DPC Category', Value__c='test');
+       mcs.add(accaRoleIds);
+       mcs.add(accaAccounts);
+       mcs.add(nonAccaAccounts);
+       mcs.add(dpcRecordType);
+       mcs.add(dpcSector);
+       mcs.add(dpcCategory);
+       insert mcs;
+        // String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Inter_DPCs'].Id;
+        // Case c = new Case();
+        // c.Subject = 'test 1';
+        // c.Status = 'Open';
+        // c.AccountId = account.id;
+        // c.ContactId = contact.id;
+        // c.Region__c = 'Europe';
+        // c.RecordTypeId = recordTypeId;
+        // c.CaseArea__c = 'test';
+        // c.Reason1__c = 'test';
+        // c.Visible_on_ISS_Portal__c = true;
+        // insert c;
+        //
+        // ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        // ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        // ApexPages.currentPage().getParameters().put('topic', 'test');
+        // ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        // ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        ApexPages.currentPage().getParameters().put('caseArea', 'Area1');
+        Test.startTest();
+        // system.runAs(thisUser){
+           system.runAs(user) {
+            ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
+            cttr.whoToContact = account.Id;
+            cttr.save();
+            cttr.saveAttach();
+            // test insert cc other
+            cttr.inputccotheremail = user.Email;
+            cttr.addCCOther();
+            set<String> result1 = new set<String>(cttr.getListCCOther());
+            System.assert(result1.contains(user.Email),'wrong result ' + result1);
+
+            cttr.inputDelCCOther = user.Email;
+            cttr.delCCOther();
+            cttr.InterDPCAccept();
+            cttr.getCustomLabel('ISSP_NewCase');
+            // test delete cc other
+            list<String> result2 = cttr.getListCCOther();
+            System.assert(result2.isEmpty(),'wrong result ' + result2);
+        }
+        Test.stopTest();
+    }
+
+    public static testMethod void testDPC() {
+        List<ISSP_DPC__c> mcs = new List<ISSP_DPC__c>();
+        ISSP_DPC__c accaRoleIds = new ISSP_DPC__c(name='ACCA Roles', Value__c=null);
+        ISSP_DPC__c accaAccounts = new ISSP_DPC__c(name='ACCA Accounts', Value__c=null);
+        ISSP_DPC__c nonAccaAccounts = new ISSP_DPC__c(name='Non-ACCA Accounts', Value__c=null);
+        ISSP_DPC__c dpcRecordType = new ISSP_DPC__c(name='DPC Recordtype', Value__c='test');
+        ISSP_DPC__c dpcSector = new ISSP_DPC__c(name='DPC Sector', Value__c='test');
+        ISSP_DPC__c dpcCategory = new ISSP_DPC__c(name='DPC Category', Value__c='test');
+        mcs.add(accaRoleIds);
+        mcs.add(accaAccounts);
+        mcs.add(nonAccaAccounts);
+        mcs.add(dpcRecordType);
+        mcs.add(dpcSector);
+        mcs.add(dpcCategory);
+        insert mcs;
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        Contact teamContact = ISSP_ObjectFactory.createNewContact();
+        teamContact.Email = 'teamcontact@email.com';
+        insert teamContact;
+
+       Id p = [select id from profile where name='ISS Portal DPC Admin'].id;
+       ISSP_UserTriggerHandler.preventTrigger = true;
+        User user = new User(alias = 'test123', email=teamContact.Email,
+                emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
+                localesidkey='en_US', profileid = p, country='United States',IsActive =true,
+                ContactId = contact.Id, FederationIdentifier = contact.Id,
+                timezonesidkey='America/Los_Angeles', username=teamContact.Email);
+
+        insert user;
+        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Inter_DPCs'].Id;
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.Status = 'Open';
+        c.AccountId = account.id;
+        c.ContactId = contact.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = recordTypeId;
+        c.CaseArea__c = 'test';
+        c.Reason1__c = 'test';
+        c.Visible_on_ISS_Portal__c = true;
+        insert c;
+
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        // ApexPages.currentPage().getParameters().put('topic', 'test');
+        // ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        // ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        system.runAs(user) {
+            ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
+            cttr.whoToContact = account.Id;
+            cttr.additionalRecipients=user.Email;
+            cttr.save();
+            cttr.getListCaseHistory();
+            System.assertEquals(true,cttr.getIsInterDPCCase());
+            cttr.getAccountConcernedName();
+            cttr.getCaseContactName();
+            cttr.newCase.Account_Concerned__c = null;
+            cttr.newCase.ContactId = null;
+            update cttr.newCase;
+            cttr.getAccountConcernedName();
+            cttr.getCaseContactName();
+        }
+        Test.stopTest();
+    }
+
+
+    public static testMethod void tesTIP() {
+      
+       
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = account.Id;
+        insert con;
+
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.AccountId = account.id;
+        c.ContactId = con.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
+        c.Reason1__c = TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT;
+        c.status = TIP_Utils.CASE_STATUS_DRAFT;
+        c.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS;
+        c.Visible_on_ISS_Portal__c = true;
+       
+       
+
+       User user = ISSP_ObjectFactory.createPortalUser(con);
+
+       Portal_Applications__c pa = new Portal_Applications__c(name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
+       insert pa;
+         
+          ISSP_Portal_Service_Ids__c psi = new ISSP_Portal_Service_Ids__c(
+
+        TIP_Portal_Service_Id__c=pa.id
+        );
+       insert psi;
+
+       Portal_Application_Right__c appRight = new Portal_Application_Right__c (
+           Right__c = 'Access Granted', 
+           Contact__c = user.ContactId, 
+           Portal_Application__c = pa.id);
+       insert appRight;
+
+       con.OwnerId = user.Id;
+       update con;
+
+       
+       Test.startTest();
+        system.runAs(user) {
+             insert c;
+            ISSP_Case cttr = new ISSP_Case();
+            ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+            cttr.pageLoad();
+        }
+       Test.stopTest();
+     }
 
  }

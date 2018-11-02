@@ -55,12 +55,16 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 
         system.debug('AMS_2_MDM_Batch: countryIsoCodes - ' + countryIsoCodes);    
 
-        List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c 
+        //FM AMSU-116
+        //List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c 
+        //                                                                        FROM AMS_Change_Codes_Billable_Setup__c where Country_To_Exclude__c in :countryIsoCodes];
+        List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c, Location_Type_To_Exclude__c 
                                                                                 FROM AMS_Change_Codes_Billable_Setup__c where Country_To_Exclude__c in :countryIsoCodes];
 
         system.debug('AMS_2_MDM_Batch: lChangeCodesBillableSetup - ' + lChangeCodesBillableSetup);
 
-        lstAccount = [SELECT Id, Name, Location_Class__c,Country_ISO_Code__c FROM Account WHERE id in :setAccountKeys];
+        //lstAccount = [SELECT Id, Name, Location_Class__c, Country_ISO_Code__c FROM Account WHERE id in :setAccountKeys];
+        lstAccount = [SELECT Id, Name, Location_Class__c, Location_Type__c,Country_ISO_Code__c FROM Account WHERE id in :setAccountKeys]; //FM AMSU-116
         system.debug('AMS_2_MDM_Batch: lstAccount - ' + lstAccount);
         for(Account auxAccount :lstAccount){
             //system.debug('AMS_2_MDM_Batch: auxAccount - ' + auxAccount);
@@ -95,10 +99,17 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 
                 //cycle throught the AMS_Change_Codes_Billable_Setup__c in order to check if it's valid to send the sales order
                 for(AMS_Change_Codes_Billable_Setup__c ccbs : lChangeCodesBillableSetup){
-                    //Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c
+                    //Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c, Location_Type_To_Exclude__c
+
+                    //FM AMSU-116
+                    Boolean bLocation_Type_To_Exclude_Empty = ccbs.Location_Type_To_Exclude__c == null ? true : false;
+                    Boolean bLocation_Type_To_Exclude_Contains = false;
+                    if(!bLocation_Type_To_Exclude_Empty) bLocation_Type_To_Exclude_Contains = ccbs.Location_Type_To_Exclude__c.containsIgnoreCase(auxAccAccount.Location_Type__c) ? true : false;
+
                     if(au.Change_Code__c == ccbs.Change_Code__c 
                         && auxAccAccount.Country_ISO_Code__c == ccbs.Country_To_Exclude__c 
-                        && auxAccAccount.Location_Class__c == ccbs.Location_Class_To_Exclude__c){
+                        && auxAccAccount.Location_Class__c == ccbs.Location_Class_To_Exclude__c
+                        && ( bLocation_Type_To_Exclude_Empty || bLocation_Type_To_Exclude_Contains)){  //FM AMSU-116
                         
                         bToSend = false;                            
                     }

@@ -1,0 +1,202 @@
+<apex:page standardController="Case" extensions="AMS_DemoTreeview" showHeader="false" sidebar="false">  
+    <!-- Mobile View -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- jQuery CDN Reference -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <apex:includeScript value="/support/console/34.0/integration.js"/>
+
+    <!-- Bootstarp css & Combined Css -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" />
+    <style>
+        a {
+            font-size: 12px;
+        }
+
+        .highlighted  {
+            background-color: #01AAE8;
+             border: 5px;
+        }
+        .tree {
+            min-height: 20px;
+            padding: 19px;  
+            margin-bottom: 20px;
+            background-color: #fbfbfb;
+            border: 0px solid #999;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05)
+        }
+
+        .tree li {
+            list-style-type: none;
+            margin: 0;
+            padding: 10px 5px 0 5px;
+            position: relative;
+            font-size: 12px;
+        }
+
+        .tree li::before,
+        .tree li::after {
+            content: '';
+            left: -20px;
+            position: absolute;
+            right: auto;
+        }
+
+        .tree li::before {
+            border-left: 1px solid #999;
+            bottom: 50px;
+            height: 100%;
+            top: 0;
+            width: 1px;
+        }
+
+        .tree li::after {
+            border-top: 1px solid #999;
+            height: 20px;
+            top: 25px;
+            width: 25px;
+        }
+
+        .tree li span {
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border: 1px solid #999;
+            border-radius: 5px;
+            display: inline-block;
+            padding: 3px 8px;
+            text-decoration: none;
+        }
+
+        .tree li.parent_li>span {
+            cursor: pointer !important;
+        }
+
+        .tree>ul>li::before,
+        .tree>ul>li::after {
+            border: 0;
+        }
+
+        .tree li:last-child::before {
+            height: 30px;
+        }
+
+        .tree li.parent_li>span:hover,
+        .tree li.parent_li>span:hover+ul li span {
+            background: #eee;
+            border: 1px solid #94a0b4;
+            color: #000;
+        }
+    </style>
+    <script type="text/javascript">
+        /*$(document).ready(function() {
+            var changeTabIcon = function(result){
+                if(!{!isHQ})
+                    sforce.console.setTabIcon('servlet/servlet.FileDownload?file=015g0000000tjx4', result.id);
+            };
+            sforce.console.getEnclosingPrimaryTabId(changeTabIcon);
+        });*/
+        function testOpenPrimaryTab(tabId,tabName) {
+            var changeTab = function(result){
+                if(result.success == false){
+                    sforce.console.focusPrimaryTabByName(tabId);
+                }
+            };
+            //Open a new agency primary tab
+           
+            sforce.console.openPrimaryTab(null, tabId, true,tabName, changeTab, tabId);
+        }
+    </script>
+
+
+
+
+<apex:outputPanel rendered="{!AND(parentAccount != null, currentAccount != null)}">
+<apex:form >
+    <div class="tree well">
+        <ul>
+                <li>
+                    <apex:outputPanel styleClass="{!IF(currentAccount.id != parentAccount.id,'','highlighted')}"><i class="icon-folder-open icon-minus-sign"></i>{!parentAccount.Location_Type__c} ({!parentAccount.Location_Class__c})
+</apex:outputPanel>
+
+					
+                   <div style="display:inline;" title=""> <apex:image value="{!URLFOR($Resource.AMS_Icons, 'passed.png')}" /> </div>
+
+                    <br></br>
+                    <apex:commandLink onclick="testOpenPrimaryTab('/{!parentAccount.Id}','');return false;" rendered="{!currentAccount.id != parentAccount.id}">{!parentAccount.Name}</apex:commandLink>
+                    <apex:outputText style="font-weight:bold;margin: 0;border: 0" rendered="{!not(currentAccount.id != parentAccount.id)}" value="{!parentAccount.Name}"/>
+                    <br></br>
+                    {!parentAccount.IATACode__c}<br></br>{!parentAccount.BillingCountry} - {!parentAccount.BillingCity}<br></br>{!parentAccount.Status__c}
+                    <ul>
+                    <apex:repeat value="{!HierchyChilds}" var="c">
+                        <li>
+                         <apex:outputPanel styleClass="{!IF(currentAccount.id != c.id,'','highlighted')}"><i class="icon-folder-open icon-minus-sign"></i>{!c.Location_Type__c} ({!c.Location_Class__c})</apex:outputPanel>
+                         <br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!c.Id}','');return false;" rendered="{!currentAccount.id != c.id}">{!c.Name}</apex:commandLink>
+                        <apex:outputText style="font-weight:bold;margin: 0;border: 0" rendered="{!not(currentAccount.id != c.id)}" value="{!c.Name}"/>
+                         <br></br>{!c.IATACode__c}<br></br>{!c.BillingCountry} - {!c.BillingCity}<br></br>{!c.Status__c}
+                        <ul>
+                            <apex:repeat value="{!HierchyChilds[c]}" var="ca">
+                                <li>
+                                    <apex:outputPanel styleClass="{!IF(currentAccount.id != ca.id,'','highlighted')}"><i class="icon-folder-open icon-minus-sign"></i>{!ca.Location_Type__c} ({!ca.Location_Class__c})</apex:outputPanel>
+                                    <br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Id}','');return false;" rendered="{!currentAccount.id != ca.id}">{!ca.Name}</apex:commandLink>
+                                    <apex:outputText style="font-weight:bold;margin: 0;border: 0" rendered="{!not(currentAccount.id != ca.id)}" value="{!ca.Name}"/>
+                                    <br></br>{!ca.IATACode__c}<br></br>{!ca.BillingCountry} - {!ca.BillingCity}<br></br>{!ca.Status__c}
+                                </li>
+                            </apex:repeat>
+                         </ul>
+                        </li>
+                    </apex:repeat>
+                    </ul>
+                </li>
+        </ul>
+    </div>
+    </apex:form>
+</apex:outputPanel>
+
+    <script>
+    $(function() {
+        $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+        //$('.tree li:has(ul)').addClass('parent_li').find(' > ul > li').hide('slow');
+        $('.tree li.parent_li > span').on('click', function(e) {
+            //alert('clicked');
+            var children = $(this).parent('li.parent_li').find(' > ul > li');
+            if (children.is(":visible")) {
+                children.hide('fast');
+                $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+            } else {
+                children.show('fast');
+                $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+            }
+            e.stopPropagation();
+        });
+    });
+    </script>
+
+
+<script>
+
+    $('.hasTooltip').each(function() {
+        $(this).qtip({
+            content: {
+                text: $(this).next('div') // Use the "div" element next to this for the content
+            },
+            position: {
+                viewport: $(window),
+                my: 'top left',
+                at: 'bottom left',
+            },
+            style: {
+                classes: 'qtip-light'
+            }
+        });
+    });
+
+
+
+</script>
+
+</apex:page>

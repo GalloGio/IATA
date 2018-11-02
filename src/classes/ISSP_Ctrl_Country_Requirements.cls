@@ -127,7 +127,13 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             countryIsoCode = user.contact.Account.IATA_ISO_Country__r.ISO_Code__c;
             
             category = user.contact.Account.Category__c;
-            sector = user.contact.Account.Sector__c;
+            
+            if(user.contact.Account.Sector__c == 'Cargo Agent') {
+                sector = 'Travel Agent';
+            } else {
+                sector = user.contact.Account.Sector__c;
+            }
+
             countryName = user.contact.Account.IATA_ISO_Country__r.Name; 
             amsCountryLabel = countryName;
             isHOAccredited = false;
@@ -204,9 +210,9 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         return null;
     }
 
-	/**
-		Fill the filter countries picklist
-	**/
+    /**
+        Fill the filter countries picklist
+    **/
     public List<SelectOption> getCountries() {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('', '--None--'));
@@ -216,9 +222,9 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         return options;
     }
 
-	/**
-		Fill the filter PArticipation Types picklist
-	**/
+    /**
+        Fill the filter PArticipation Types picklist
+    **/
     public List<SelectOption> getParticipationTypes() {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('', '--None--'));
@@ -229,20 +235,20 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         return options;
     }
 
-	/**
-		Set to empty all filters and search the Country Requirements
-	**/
-	public PageReference clearFilters(){
-	    this.typeFilter = '';
-	    this.countryFilter = '';
-	    this.searchFilter = '';
-	    runSearch();
-	    return null ;
-	}
+    /**
+        Set to empty all filters and search the Country Requirements
+    **/
+    public PageReference clearFilters(){
+        this.typeFilter = '';
+        this.countryFilter = '';
+        this.searchFilter = '';
+        runSearch();
+        return null ;
+    }
 
-	/**
-		Search the country Requirements aplying any active filter
-	**/
+    /**
+        Search the country Requirements aplying any active filter
+    **/
     public PageReference runSearch() {
         list<AP_Country_Requierment__c> listCountryReqments = [
             SELECT Id, Name, Local_Representation_Mandatory__c, Local_accountant_mandatory__c, Local_VAT_Mandatory__c,
@@ -269,7 +275,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
 
     public boolean getNewLayout() {
-        return (sector == 'Travel Agent');
+        return ((sector == 'Travel Agent' && category != 'GSA General Sales Agent') || sector == 'Cargo Agent');
     }
 
     public List<AMS_Accreditation_Requirement__c> getCountryRequirementsList() {

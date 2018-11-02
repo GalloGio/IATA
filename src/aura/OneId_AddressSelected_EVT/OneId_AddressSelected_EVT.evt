@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event sent when address is selected" >
+	<aura:attribute name="addressSelected" type="Object"/>
+	<aura:attribute name="addressType" type="String"/>
+</aura:event>

@@ -47,7 +47,7 @@
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
-    <enableFeeds>false</enableFeeds>
+    <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
@@ -58,6 +58,7 @@
         <externalId>false</externalId>
         <label>Action 1 - Closure Date</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -67,6 +68,7 @@
         <externalId>false</externalId>
         <label>Action 1 - Comment</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -77,6 +79,7 @@
         <externalId>false</externalId>
         <label>Action 1 - Description</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -87,6 +90,7 @@
         <externalId>false</externalId>
         <label>Action 1 - Due Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -97,6 +101,7 @@
         <inlineHelpText>Evidence that will be produced to prove the action was taken and allows milestone to be closed</inlineHelpText>
         <label>Action 1 - Evidence</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -107,6 +112,7 @@
         <externalId>false</externalId>
         <label>Action 2 - Closure Date</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -116,6 +122,7 @@
         <externalId>false</externalId>
         <label>Action 2 - Comment</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -126,6 +133,7 @@
         <externalId>false</externalId>
         <label>Action 2 - Description</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -136,6 +144,7 @@
         <externalId>false</externalId>
         <label>Action 2 - Due Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -146,6 +155,7 @@
         <inlineHelpText>Evidence that will be produced to prove the action was taken and allows milestone to be closed</inlineHelpText>
         <label>Action 2 - Evidence</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -156,6 +166,7 @@
         <externalId>false</externalId>
         <label>Action 3 - Closure Date</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -165,6 +176,7 @@
         <externalId>false</externalId>
         <label>Action 3 - Comment</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -175,6 +187,7 @@
         <externalId>false</externalId>
         <label>Action 3 - Description</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -185,6 +198,7 @@
         <externalId>false</externalId>
         <label>Action 3 - Due Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -195,6 +209,7 @@
         <inlineHelpText>Evidence that will be produced to prove the action was taken and allows milestone to be closed</inlineHelpText>
         <label>Action 3 - Evidence</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -205,6 +220,7 @@
         <externalId>false</externalId>
         <label>Action 4 - Closure Date</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -214,6 +230,7 @@
         <externalId>false</externalId>
         <label>Action 4 - Comment</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -224,6 +241,7 @@
         <externalId>false</externalId>
         <label>Action 4 - Description</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -234,6 +252,7 @@
         <externalId>false</externalId>
         <label>Action 4 - Due Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -244,6 +263,7 @@
         <inlineHelpText>Evidence that will be produced to prove the action was taken and allows milestone to be closed</inlineHelpText>
         <label>Action 4 - Evidence</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -254,6 +274,7 @@
         <externalId>false</externalId>
         <label>Action 5 - Closure Date</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -263,6 +284,7 @@
         <externalId>false</externalId>
         <label>Action 5 - Comment</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -273,6 +295,7 @@
         <externalId>false</externalId>
         <label>Action 5 - Description</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -283,6 +306,7 @@
         <externalId>false</externalId>
         <label>Action 5 - Due Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -293,6 +317,7 @@
         <inlineHelpText>Evidence that will be produced to prove the action was taken and allows milestone to be closed</inlineHelpText>
         <label>Action 5 - Evidence</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -303,6 +328,7 @@
         <externalId>false</externalId>
         <label>Action 6 - Closure Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -312,6 +338,7 @@
         <externalId>false</externalId>
         <label>Action 6 - Comment</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -322,6 +349,7 @@
         <externalId>false</externalId>
         <label>Action 6 - Description</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -332,6 +360,7 @@
         <externalId>false</externalId>
         <label>Action 6 - Due Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -342,6 +371,7 @@
         <inlineHelpText>Evidence that will be produced to prove the action was taken and allows milestone to be closed</inlineHelpText>
         <label>Action 6 - Evidence</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -354,6 +384,7 @@
         <label>Action 1 - Email</label>
         <length>2</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -381,6 +412,7 @@ IF (Action1_Closure_Date__c &lt;= Action1_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <referenceTo>User</referenceTo>
         <relationshipName>Quality1</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -392,6 +424,7 @@ IF (Action1_Closure_Date__c &lt;= Action1_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <label>Action 2 - Email</label>
         <length>2</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -420,6 +453,7 @@ IF (Action2_Closure_Date__c &lt;= Action2_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <referenceTo>User</referenceTo>
         <relationshipName>Quality2</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -431,6 +465,7 @@ IF (Action2_Closure_Date__c &lt;= Action2_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <label>Action 3 - Email</label>
         <length>2</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -459,6 +494,7 @@ IF (Action3_Closure_Date__c &lt;= Action3_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <referenceTo>User</referenceTo>
         <relationshipName>Quality3</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -470,6 +506,7 @@ IF (Action3_Closure_Date__c &lt;= Action3_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <label>Action 4 - Email</label>
         <length>2</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -498,6 +535,7 @@ IF (Action4_Closure_Date__c &lt;= Action4_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <referenceTo>User</referenceTo>
         <relationshipName>Quality4</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -509,6 +547,7 @@ IF (Action4_Closure_Date__c &lt;= Action4_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <label>Action 5 - Email</label>
         <length>2</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -537,6 +576,7 @@ IF (Action5_Closure_Date__c &lt;= Action5_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <referenceTo>User</referenceTo>
         <relationshipName>Quality5</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -548,6 +588,7 @@ IF (Action5_Closure_Date__c &lt;= Action5_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <label>Action 6 - Email</label>
         <length>2</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -576,6 +617,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <referenceTo>User</referenceTo>
         <relationshipName>Quality6</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -586,6 +628,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <inlineHelpText>Depends on &quot;SOP&quot;. Filled manually by recommender</inlineHelpText>
         <label>Activity</label>
         <length>2500</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -596,6 +639,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Additional analysis (optional)</label>
         <length>3000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -606,6 +650,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Africa &amp; MENA - Countries Concerned</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -966,6 +1011,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Africa &amp; MENA - Evidences Needed</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -1316,6 +1362,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Agree to Bypass Input</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -1326,6 +1373,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <inlineHelpText>Check this field if Exception is extend to all HUB operations</inlineHelpText>
         <label>All HUB</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -1335,6 +1383,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Americas - Countries Concerned</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -1585,6 +1634,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Americas - Evidences Needed</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -1825,6 +1875,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Apparent Cause</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -2106,6 +2157,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Apparent Cause (if other)</label>
         <length>3000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -2116,6 +2168,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Approval Status</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -2151,6 +2204,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Approval Time</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -2160,6 +2214,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Asia &amp; Pacific - Countries Concerned</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -2365,6 +2420,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <externalId>false</externalId>
         <label>Asia &amp; Pacific - Evidences Needed</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -2571,6 +2627,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <inlineHelpText>Depends on &quot;SOP&quot;. Indicate the number of the Business rule and describe it as per SOP documentation. Filled manually by recommender</inlineHelpText>
         <label>Business Rule</label>
         <length>2500</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -2583,6 +2640,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <inlineHelpText>Enter here the CPC&apos;s feedback</inlineHelpText>
         <label>CPC Comments</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -2593,6 +2651,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Case in Auto Update</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -2605,6 +2664,7 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <referenceTo>User</referenceTo>
         <relationshipName>Exceptions3</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -2635,6 +2695,7 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
         <externalId>false</externalId>
         <label>China &amp; North Asia - Countries Concerned</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -2685,6 +2746,7 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
         <externalId>false</externalId>
         <label>China &amp; North Asia - Evidences Needed</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -2730,6 +2792,7 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
         <externalId>false</externalId>
         <label>Compensating Control Present</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -2754,6 +2817,7 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
         <externalId>false</externalId>
         <label>Countries - Exception</label>
         <length>16384</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -2767,6 +2831,7 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
         <referenceTo>User</referenceTo>
         <relationshipName>Exceptions1</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -2777,6 +2842,7 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
         <inlineHelpText>To be filed to close the EXE when action plan has been completed and evidence of alignment has been provided</inlineHelpText>
         <label>Closure Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -2786,6 +2852,7 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
         <externalId>false</externalId>
         <label>Comment</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -2813,6 +2880,7 @@ IF (DA_Closure_Date__c &lt;= Deadline_for_Alignment__c ,&quot;Met&quot;,&quot;&q
         <inlineHelpText>Date of consultation sent to CPC</inlineHelpText>
         <label>Date CPC Consulted</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -2824,6 +2892,7 @@ IF (DA_Closure_Date__c &lt;= Deadline_for_Alignment__c ,&quot;Met&quot;,&quot;&q
         <inlineHelpText>Enter the date of feedback received from CPC</inlineHelpText>
         <label>Date of CPC answer</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -2835,6 +2904,7 @@ IF (DA_Closure_Date__c &lt;= Deadline_for_Alignment__c ,&quot;Met&quot;,&quot;&q
         <inlineHelpText>Deadline to receive CPC Feedback</inlineHelpText>
         <label>Date of CPC expected answer</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -2855,6 +2925,7 @@ IF (DA_Closure_Date__c &lt;= Deadline_for_Alignment__c ,&quot;Met&quot;,&quot;&q
         <externalId>false</externalId>
         <label>Date of Last Input Request Sent</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -2885,6 +2956,7 @@ Deadline_for_Alignment__c - Today(),
         <inlineHelpText>Date as to when the process will be aligned again with SOP/Resolution and EXE can be closed</inlineHelpText>
         <label>Deadline for Alignment</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -2895,6 +2967,7 @@ Deadline_for_Alignment__c - Today(),
         <inlineHelpText>Date and time by which a decision is needed for the exception. Please consider time difference.</inlineHelpText>
         <label>Deadline for Approval</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -2904,6 +2977,7 @@ Deadline_for_Alignment__c - Today(),
         <externalId>false</externalId>
         <label>Deadline for Input CM</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -2913,6 +2987,7 @@ Deadline_for_Alignment__c - Today(),
         <externalId>false</externalId>
         <label>Deadline for Input CQ</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -2922,6 +2997,7 @@ Deadline_for_Alignment__c - Today(),
         <externalId>false</externalId>
         <label>Deadline for Input GPO</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -2931,6 +3007,7 @@ Deadline_for_Alignment__c - Today(),
         <externalId>false</externalId>
         <label>Deadline for Input HL</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -2962,6 +3039,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
         <externalId>false</externalId>
         <label>Deadline for Input Leg</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -2971,6 +3049,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
         <externalId>false</externalId>
         <label>Deadline for Input Other</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -2980,6 +3059,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
         <externalId>false</externalId>
         <label>Deadline for Input RCMHO</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -2989,6 +3069,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
         <externalId>false</externalId>
         <label>Deadline for Input RCMR</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -2998,6 +3079,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
         <externalId>false</externalId>
         <label>Deadline for Input RQ</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -3007,6 +3089,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
         <externalId>false</externalId>
         <label>Deadline for Input Sec</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -3016,6 +3099,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
         <externalId>false</externalId>
         <label>Description (Internal Case)</label>
         <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -3027,6 +3111,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
         <inlineHelpText>Extra control put in place during the duration of the exception in order to mitigate the risks taken by IATA for tolerating the misalignment. Evidence of implementation of compensation control should be readily available if requested at a later stage.</inlineHelpText>
         <label>Description, Plan and Evidence</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -3037,6 +3122,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
         <externalId>false</externalId>
         <label>Description of Evidence</label>
         <length>2500</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -3047,6 +3133,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
         <externalId>false</externalId>
         <label>Dir of Dist Input</label>
         <length>3000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -3092,6 +3179,7 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
         <externalId>false</externalId>
         <label>DistributionList</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
@@ -3102,6 +3190,7 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>DoA Reminder sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -3135,6 +3224,7 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
         <externalId>false</externalId>
         <label>Europe - Countries Concerned</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -3410,6 +3500,7 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
         <externalId>false</externalId>
         <label>Europe - Evidences Needed</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -3646,6 +3737,7 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
         <inlineHelpText>Evidence that will be produced to prove alignment and allows EXE to be closed</inlineHelpText>
         <label>Evidence of Alignment</label>
         <length>2000</length>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -3656,6 +3748,7 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
         <externalId>false</externalId>
         <label>Exception Classification Type</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3710,6 +3803,7 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
         <externalId>false</externalId>
         <label>Exception Priority</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3748,6 +3842,7 @@ Temporary: Cover several occuences of misalignment
 Permanent: Relates to a country specific legal or regulatory matter, outsourcing concerns, or is outside IATA&apos;s control.</inlineHelpText>
         <label>Exception Type</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3797,6 +3892,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <inlineHelpText>If the activity in SOP is fully or partially performed in the region then Regional Execution; if performed fully centrally, then Central Execution</inlineHelpText>
         <label>SOP Execution Category</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3833,6 +3929,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <inlineHelpText>Check this field if this case is an extension request</inlineHelpText>
         <label>Extension</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -3843,6 +3940,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <inlineHelpText>Financial, Legal or other risks involved with the exception request. For more information refer to document ‘Guide to Risk Assessment’ on http://goo.gl/q8iYvw. If not applicable, fill with N/A.</inlineHelpText>
         <label>Risk of Approving Exe: Impact&amp;Likelihood</label>
         <length>2500</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -3853,6 +3951,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>GPO Input</label>
         <length>3000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -3866,6 +3965,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <referenceTo>User</referenceTo>
         <relationshipName>Exceptions5</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -3878,6 +3978,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <referenceTo>User</referenceTo>
         <relationshipName>Exceptions</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -3899,6 +4000,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Implementation Plan</label>
         <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -3909,6 +4011,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>In BCP Scope?</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3934,6 +4037,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Input CM</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -3943,6 +4047,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Input CQ</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -3952,6 +4057,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Input GPO</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -3961,6 +4067,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Input HL</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -3970,6 +4077,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Input Leg</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -3979,6 +4087,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Input Other</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -3988,6 +4097,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Input RCMHO</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -3997,6 +4107,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Input RCMR</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -4006,6 +4117,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Input RQ</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -4015,6 +4127,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Input Sec</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -4024,6 +4137,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Is OI logged?</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -4033,6 +4147,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <externalId>false</externalId>
         <label>Key Control Type</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -4058,6 +4173,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <inlineHelpText>Depends on &quot;SOP&quot;</inlineHelpText>
         <label>Key Control</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -5125,6 +5241,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <referenceTo>User</referenceTo>
         <relationshipName>Exceptions4</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -5299,6 +5416,7 @@ ISPICKVAL( Exception_Classification_Type__c , &quot;CaConf - Default of Major Ca
         <label>Process Map Other</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -5310,6 +5428,7 @@ ISPICKVAL( Exception_Classification_Type__c , &quot;CaConf - Default of Major Ca
         <inlineHelpText>Depends on &quot;SOP&quot;</inlineHelpText>
         <label>Process Map</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -9458,6 +9577,7 @@ AND(Mandatory_Sec__c = &quot;YES&quot;, Responded_Sec__c = FALSE)
         <externalId>false</externalId>
         <label>Number of Evidences to be Collected</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -9973,6 +10093,7 @@ AND(Mandatory_Sec__c = &quot;YES&quot;, Responded_Sec__c = FALSE)
         <inlineHelpText>AG for AM/ARM, AL for AP</inlineHelpText>
         <label>Number of affected customers</label>
         <length>3000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -9987,6 +10108,7 @@ AND(Mandatory_Sec__c = &quot;YES&quot;, Responded_Sec__c = FALSE)
         <relationshipLabel>Exceptions</relationshipLabel>
         <relationshipName>Exceptions</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -9999,6 +10121,7 @@ AND(Mandatory_Sec__c = &quot;YES&quot;, Responded_Sec__c = FALSE)
 To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <label>Object Type</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -10036,6 +10159,7 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <inlineHelpText>Enter additional data related with the Operation</inlineHelpText>
         <label>Operation Additional Data</label>
         <length>1500</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -10048,6 +10172,7 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <inlineHelpText>Specify the operation</inlineHelpText>
         <label>Operation</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -10086,6 +10211,7 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <referenceTo>User</referenceTo>
         <relationshipName>Exceptions9</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -10095,6 +10221,7 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <externalId>false</externalId>
         <label>Pending Evidences to be Collected</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -10621,6 +10748,7 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>R&amp;S Legacy / R&amp;S EXE Log (2011-2012)</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -10630,6 +10758,7 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <externalId>false</externalId>
         <label>Reason for Exception</label>
         <length>2500</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -10641,6 +10770,7 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <inlineHelpText>Provide an explanation for the lack of a compensation control</inlineHelpText>
         <label>Reason for lack of Compensating Control</label>
         <length>2500</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -10651,6 +10781,7 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <externalId>false</externalId>
         <label>Reason for requesting exception</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -10731,6 +10862,7 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <externalId>false</externalId>
         <label>Reason for requesting exe (if other)</label>
         <length>3000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -10757,6 +10889,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <referenceTo>User</referenceTo>
         <relationshipName>Exceptions7</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -10769,6 +10902,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <referenceTo>User</referenceTo>
         <relationshipName>Exceptions8</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -10781,6 +10915,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <referenceTo>User</referenceTo>
         <relationshipName>Exceptions2</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -10793,6 +10928,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <referenceTo>Case</referenceTo>
         <relationshipName>Quality</relationshipName>
         <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -10836,6 +10972,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Requested CM</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -10845,6 +10982,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Requested CQ</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -10854,6 +10992,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Requested GPO</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -10863,6 +11002,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Requested HL</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -10872,6 +11012,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Requested Leg</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -10881,6 +11022,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Requested Other</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -10890,6 +11032,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Requested RCMHO</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -10899,6 +11042,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Requested RCMR</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -10908,6 +11052,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Requested RQ</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -10917,6 +11062,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Requested Sec</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11050,6 +11196,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <referenceTo>User</referenceTo>
         <relationshipName>Quality</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -11062,6 +11209,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <referenceTo>User</referenceTo>
         <relationshipName>Quality9</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -11075,6 +11223,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <referenceTo>User</referenceTo>
         <relationshipName>QualityPsfC</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -11087,6 +11236,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <referenceTo>User</referenceTo>
         <relationshipName>Quality7</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -11099,6 +11249,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <referenceTo>User</referenceTo>
         <relationshipName>Quality8</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -11109,6 +11260,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <inlineHelpText>Explain the the risk of a rejection decision for the approver</inlineHelpText>
         <label>Risk of not approving the EXE</label>
         <length>2500</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -11121,6 +11273,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <inlineHelpText>Fill this field with the process triggering the need for the exception (if applicable). Otherwise fill with same as SOP.</inlineHelpText>
         <label>Trigger Process</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -11361,6 +11514,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <externalId>false</externalId>
         <inlineHelpText>Check this field if exceptions approved by SISS process</inlineHelpText>
         <label>SISS Hand Over</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11372,6 +11526,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <inlineHelpText>The department/SOP in which the misalignment to the process is going to take place</inlineHelpText>
         <label>SOP</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -11549,6 +11704,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <referenceTo>User</referenceTo>
         <relationshipName>Exceptions6</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -11558,6 +11714,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Send Input Request CM</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11567,6 +11724,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Send Input Request CQ</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11576,6 +11734,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Send Input Request GPO</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11585,6 +11744,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Send Input Request HL</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11594,6 +11754,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Send Input Request Leg</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11603,6 +11764,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Send Input Request Other</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11612,6 +11774,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Send Input Request RCMHO</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11621,6 +11784,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Send Input Request RCMR</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11630,6 +11794,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Send Input Request RQ</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11639,6 +11804,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Send Input Request Sec</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -11649,6 +11815,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <inlineHelpText>Summary of recommendation to be sent to the approver (after incorporating input)</inlineHelpText>
         <label>Exe Summary (optional)</label>
         <length>2500</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -11661,6 +11828,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <inlineHelpText>Choose Under Investigation. Status will switch automatically at later stages.</inlineHelpText>
         <label>Status</label>
         <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -11791,6 +11959,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <label>Sub Process Other</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -11802,6 +11971,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <inlineHelpText>Depends on &quot;SOP&quot;</inlineHelpText>
         <label>Sub Process</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -12911,6 +13081,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <columns>Exe_Category_New__c</columns>
         <columns>Exe_Category__c</columns>
         <columns>Exception_Type__c</columns>
+        <columns>DA_Closure_Date__c</columns>
         <columns>Region__c</columns>
         <columns>IATA_Country__c</columns>
         <columns>SOP_Type__c</columns>
@@ -13049,6 +13220,45 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>EXE2014_Actionneeded</fullName>
+        <booleanFilter>(1 AND 2) or (3 and 4)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Status__c</columns>
+        <columns>Deadline_for_Alignment__c</columns>
+        <columns>Deadline_for_Approval__c</columns>
+        <columns>SOP_Type__c</columns>
+        <columns>Exe_Category_New__c</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Exe_Category__c</columns>
+        <columns>Exception_Type__c</columns>
+        <columns>IATA_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Pending Closure,Pending Evidence Validation,Accepted - Active</value>
+        </filters>
+        <filters>
+            <field>Deadline_for_Alignment__c</field>
+            <operation>equals</operation>
+            <value>TODAY,NEXT_N_DAYS:15</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>contains</operation>
+            <value>Input,Approval,recommendation</value>
+        </filters>
+        <filters>
+            <field>Deadline_for_Approval__c</field>
+            <operation>equals</operation>
+            <value>TODAY,TOMORROW</value>
+        </filters>
+        <label>EXE2014 - Action needed soon</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>EXE2014_All</fullName>
         <columns>NAME</columns>
         <columns>Status__c</columns>
@@ -13110,29 +13320,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <value>Closed</value>
         </filters>
         <label>EXE2014 - All Closed</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>EXE2014_All_Expired</fullName>
-        <columns>NAME</columns>
-        <columns>Status__c</columns>
-        <columns>Related_Case_Number__c</columns>
-        <columns>Exe_Category_New__c</columns>
-        <columns>Exe_Category__c</columns>
-        <columns>Exception_Type__c</columns>
-        <columns>Region__c</columns>
-        <columns>IATA_Country__c</columns>
-        <columns>SOP_Type__c</columns>
-        <columns>Deadline_for_Approval__c</columns>
-        <columns>Deadline_for_Alignment__c</columns>
-        <columns>OWNER.LAST_NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Expired</value>
-        </filters>
-        <label>EXE2014 - All Expired</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -14179,10 +14366,12 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
     <nameField>
         <displayFormat>EXE-{000000}</displayFormat>
         <label>Request #</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Exceptions</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Exception_to_Resolutions</fullName>

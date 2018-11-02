@@ -157,5 +157,44 @@ public class AMS_AccreditationOnlineTriggerHelperTest {
         
     }
 
+    static testMethod void testISOStates() {
+        Account a = new Account(Name = 'n');
+        insert a;
+        
+        Contact c = new Contact(AccountId = a.Id, FirstName = 'Contact', LastName = 'Contact', Email = 'cont@act.com');
+        insert c;
+        
+        Case cs = new Case(AccountId = a.Id, ContactId = c.Id, Subject = 'TEST Case');
+        insert cs;      
+
+        IATA_ISO_Country__c country1 = new IATA_ISO_Country__c(Name= 'c_one', ISO_Code__c= 'c1', ISO_Code_Numeric__c= 123);  
+        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(Name= 'c_two', ISO_Code__c= 'c2', ISO_Code_Numeric__c= 456, AMS_Default_State__c= 's1');
+
+        insert new List<IATA_ISO_Country__c> {country1, country2};
+
+        IATA_ISO_State__c state = new IATA_ISO_State__c(Name= 's_one', ISO_Code__c= 's1', IATA_ISO_Country__c= country2.Id);
+
+        insert state;
+        
+        AMS_Pax_Accreditation_Form__c accr = new  AMS_Pax_Accreditation_Form__c(
+            SAAM_Case__c = cs.Id,
+            Account_Name__c = 'AccountNameWhichIsDefinitelyTooLongToBeStoredAsAbbreviatedName', 
+            Branch_Office_Street_name_number__c = 'AccountNameWhichIsDefinitelyTooLongToBeStoredAsAbbreviatedAddress',
+            Location_Class__c = 'P',
+            Location_Type__c = 'R',
+            Shipping_ISO_Country__c = country2.Id
+        );
+        
+        insert accr;
+
+        accr.Shipping_ISO_Country__c = country1.Id;
+
+        update accr;
+
+        accr.Shipping_ISO_Country__c = country2.Id;
+
+        update accr;
+    }
+
 
 }

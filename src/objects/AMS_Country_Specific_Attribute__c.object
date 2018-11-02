@@ -53,11 +53,11 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>ANG_Create_Process_Case__c</fullName>
+    <fields>
+        <fullName>ANG_Block_Cut_Cash_Form_of_Payment__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>If an alert match this config, should it create a process case? (Creation is done by the ANG_RHCAlertTriggerHandler)</description>
         <externalId>false</externalId>
-        <label>Create Process Case</label>
+        <label>Block Cut Cash Form of Payment</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -67,6 +67,15 @@
         <description>Controls the sidra lite/ SMAP case and Change code creation action on RTS</description>
         <externalId>false</externalId>
         <label>Create Sidra Lite and Parent Case</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Create_Process_Case__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If an alert match this config, should it create a process case? (Creation is done by the ANG_RHCAlertTriggerHandler)</description>
+        <externalId>false</externalId>
+        <label>Create Process Case</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -116,6 +125,18 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Minimum_RHC_Amount__c</fullName>
+        <description>Defines a minimum RHC amount to be used in the RHC Amount calculation.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Minimum RHC Amount</inlineHelpText>
+        <label>Minimum RHC Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>ANG_Percentage__c</fullName>
@@ -197,6 +218,16 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Disabled__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>When this is true, no Push Notifications will be sent from the selected country [NewGen APP]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When this is true, no Push Notifications will be sent from the selected country [NewGen APP]</inlineHelpText>
+        <label>Disabled</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
@@ -387,6 +418,39 @@ J-Joint Vent</description>
         <unique>false</unique>
     </fields>
     <label>AMS Country Specific Attribute</label>
+    <listViews>
+        <fullName>Minimum_RHC_Amount</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ANG_Minimum_RHC_Amount__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>AMS_Country_Specific_Attribute__c.Minimum_RHC_Amount</value>
+        </filters>
+        <label>Minimum RHC Amount</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>RHC_Risk_Alerts</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ANG_Percentage__c</columns>
+        <columns>ANG_Direction__c</columns>
+        <columns>ANG_Create_Process_Case__c</columns>
+        <columns>ANG_EmailTemplate_Legacy__c</columns>
+        <columns>ANG_EmailTemplate_NG__c</columns>
+        <columns>ANG_PortalNotificationTemplate__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>AMS_Country_Specific_Attribute__c.RHC_Risk_Alert</value>
+        </filters>
+        <label>RHC Risk Alerts</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>ACSA-{00000000}</displayFormat>
         <label>AMS Country Specific Attribute Name</label>
@@ -801,9 +865,185 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_RTS_Severity__c</picklist>
+            <picklist>Location_Class__c</picklist>
             <values>
-                <fullName>Yellow</fullName>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Minimum_RHC_Amount</fullName>
+        <active>true</active>
+        <description>Record type to associate the Minimum RHC amount page layout.</description>
+        <label>Minimum RHC Amount</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Push_Notification</fullName>
+        <active>true</active>
+        <label>Push Notification</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

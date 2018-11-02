@@ -6,15 +6,32 @@
 			<apex:pageBlockButtons >
                 <apex:commandButton value="Save without closing" action="{!Save}" />
                 <apex:commandButton value="Save & Close" action="{!SaveAndClose}" />
+                <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" />
             </apex:pageBlockButtons>
             
-			<apex:pageBlockSection columns="1" collapsible="false">
+			<apex:pageBlockSection columns="2" collapsible="false">
 			
 				<apex:inputField value="{!newcase.CaseArea__c}" required="true" />
+				<apex:pageBlockSectionItem>
+					<apex:outputLabel value="Case Type"/>
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+					<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:selectList id="Case_type" value="{!newCase.Type}" size="1" multiselect="false" required="true" >
+							<apex:selectOptions value="{!lstCaseTypes}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
 				
 				<apex:inputField value="{!newcase.Reason1__c}" required="true" />
-				
-				<apex:inputField value="{!newcase.Type_of_customer__c}" required="true" />
+				<apex:pageBlockSectionItem>
+					<apex:outputLabel value="{!$ObjectType.Case.fields.Case_Language__c.label}"/>
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+					<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:selectList value="{!newcase.Case_Language__c}" size="1" multiselect="false" required="true" >
+							<apex:selectOptions value="{!CaseLanguageOptions}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
 				
 			</apex:pageBlockSection>
 			
@@ -33,27 +50,10 @@
 				<apex:outputField value="{!con.Email}" />
 				
 				<apex:inputField value="{!newcase.BSPCountry__c}" required="true" />
-				<apex:inputField value="{!newcase.SuppliedPhone}" />
-								
-				<apex:inputField value="{!newcase.Origin}" required="true" />
-				<apex:pageBlockSectionItem />
-				
-				<apex:pageBlockSectionItem>
-					<apex:outputLabel value="{!$ObjectType.Case.fields.Case_Language__c.label}"/>
-					<apex:outputPanel layout="block" styleClass="requiredInput">
-					<apex:outputPanel layout="block" styleClass="requiredBlock"/>
-						<apex:selectList value="{!newcase.Case_Language__c}" size="1" multiselect="false" required="true" >
-							<apex:selectOptions value="{!CaseLanguageOptions}" />
-						</apex:selectList>
-					</apex:outputPanel>
-				</apex:pageBlockSectionItem>
-				<apex:pageBlockSectionItem />
-
-				<apex:inputField value="{!newcase.Phone_Redirected_to_Web__c}" />
-				<apex:pageBlockSectionItem />
+				<apex:inputField value="{!newcase.Type_of_customer__c}" required="true" />
 				
 				<apex:inputField value="{!newcase.Visible_on_ISS_Portal__c}" />
-				<apex:pageBlockSectionItem />
+				<apex:inputField value="{!newcase.SuppliedPhone}" />
 				
 				<apex:pageBlockSectionItem>
 					<apex:outputLabel value="Case Record Type"/>
@@ -65,7 +65,7 @@
 					</apex:outputPanel>
 				</apex:pageBlockSectionItem>
 				<apex:pageBlockSectionItem />
-				
+
 			</apex:pageBlockSection>
 			
 			<apex:pageBlockSection columns="1" collapsible="false" title="Create New Related Task (optional)">

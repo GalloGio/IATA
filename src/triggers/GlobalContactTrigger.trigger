@@ -13,6 +13,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
     boolean ISSP_ContactStatusTrigger = true;
     boolean ISSP_ContactAfterInsert = true;
     boolean trgIECContact = true;
+    boolean sendPushNotificationsToAdmin = true;
 
     /*Values of flags can be found inside the custom setting Global Case Trigger, created for case project and reused for contacts GM*/
     if(!Test.isRunningTest()){
@@ -27,6 +28,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
         ISSP_ContactStatusTrigger = GlobalCaseTrigger__c.getValues('CON ISSP_ContactStatusTrigger').ON_OFF__c;
         ISSP_ContactAfterInsert = GlobalCaseTrigger__c.getValues('CON ISSP_ContactAfterInsert').ON_OFF__c;
         trgIECContact = GlobalCaseTrigger__c.getValues('CON trgIECContact').ON_OFF__c;
+        sendPushNotificationsToAdmin = NewGenApp_Custom_Settings__c.getOrgDefaults().Push_Notifications_State__c;
     }
     
     /*BEFORE*/
@@ -135,6 +137,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     }else if (c.Ver_Number_2__c != '' && c.Ver_Number_2__c != null && !c.Ver_Number_2__c.startswith('Z')) {
                         c.Ver_Number__c = Decimal.valueOf(c.Ver_Number_2__c);
                     }
+                    // update available services field if IdCard Holder is active
+                    if (c.ID_Card_Holder__c) {
+                        c.Available_Services__c = IdCardUtil.IDCARD_SERVICE_NAME;
+                        c.Available_Services_Images__c = IdCardUtil.getCardHolderImageHtml();
+                    }
                 }
             }
             /*trgIDCard_Contact_BeforeUpdate Trigger.BeforeInsert*/  
@@ -173,6 +180,34 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     }
                     if(c.RecordTypeId == standardContactRecordTypeID) 
                         standardContacts.add(c);
+                    // check id card service image if id card holder is active
+                    if (c.Available_Services__c==null) c.Available_Services__c = '';
+                    if (c.ID_Card_Holder__c && !c.Available_Services__c.contains(IdCardUtil.IDCARD_SERVICE_NAME)) {
+                        list<String> listServices = c.Available_Services__c.split(';');
+                        listServices.add(IdCardUtil.IDCARD_SERVICE_NAME);
+                        c.Available_Services__c = String.join(listServices,';');
+                        if (c.Available_Services_Images__c==null) c.Available_Services_Images__c='';
+                        c.Available_Services_Images__c += IdCardUtil.getCardHolderImageHtml();
+                    }
+                    // if ID card service is in the list but id card holder is false we need to remove it (both service value and image)
+                    else if (!c.ID_Card_Holder__c && c.Available_Services__c.contains(IdCardUtil.IDCARD_SERVICE_NAME)) {
+                        // remove from multipicklist
+                        list<String> listServices = new list<String>();
+                        for (String service: c.Available_Services__c.split(';')) {
+                            if (service!=IdCardUtil.IDCARD_SERVICE_NAME) {
+                                listServices.add(service);
+                            }
+                        }
+                        c.Available_Services__c = String.join(listServices,';');
+                        // remove from images
+                        list<String> listImages = new list<String>();
+                        for (String image: c.Available_Services_Images__c.split('<img')) {
+                            if (image!='' && !image.contains(IdCardUtil.IDCARD_SERVICE_NAME)) {
+                                listImages.add('<img' + image);
+                            }
+                        }
+                        c.Available_Services_Images__c = String.join(listImages,'');
+                    }
                 }
                 if(!standardContacts.isEmpty()){
                     //RA 7/8/2013
@@ -180,7 +215,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     Profile currentUserProfile = [SELECT ID, Name FROM Profile WHERE id = : UserInfo.getProfileId() limit 1];
                     Set<ID> ids = Trigger.newMap.keySet();
                     ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
-                    List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Printed/Delivered' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
+                    List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Valid ID Card' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
                     for (Contact CurrentContact : standardContacts) {                
                         IDCardUtil.isFirstTime = false;
                         Boolean isAdmin = false;
@@ -396,6 +431,16 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             } 
             /*ISSP_CreateNotificationForContact Trigger.AfterInsert*/
 
+            // NewGen Mobile APP Start
+            if(sendPushNotificationsToAdmin){
+                for (Contact con : Trigger.new) {
+                    if(con.User_Portal_Status__c == ISSP_Constant.NEW_CONTACT_STATUS || (con.Community__c != null && con.Community__c.startswith('ISS'))){
+                        NewGen_Account_Statement_Helper.sendPushNotificationToAdmins(trigger.new);
+                    }
+                }
+            }
+            // NewGen Mobile APP End
+
             /*Contacts Trigger.AfterInsert*/
             if(Contacts) {
                 system.debug('Contacts AfterInsert');
@@ -432,6 +477,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 Set<Id> actListToReview = new Set<Id>();
                 /*IFG deployment*/
                 set<Id> conIdSet = new set<Id>();
+                //WMO-234 for user with SIS application changing its account
+                set<Id> setSISContactChangingAccount = new set<Id>();
 
                 for(Contact con : trigger.new){
                     if((con.User_Portal_Status__c == 'Regional Administrator' && trigger.oldMap.get(con.Id).User_Portal_Status__c != 'Regional Administrator')
@@ -454,6 +501,10 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                             conFirstNameMap.put(con.Id, con.FirstName);
                             conLastNameMap.put(con.Id, con.LastName);
                         }
+                    }
+                    //WMO-234
+                    if (con.S_SIS__c>0 && con.AccountId != trigger.oldMap.get(con.Id).AccountId) {
+                        setSISContactChangingAccount.add(con.Id);
                     }
                     /*IFG deployment
                     if(con.accountId != null) 
@@ -478,6 +529,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     SCIMServProvManager.reviewIFGAccountSharing(actListToReview);
                 }
                 /*IFG deployment*/
+                
+                //WMO-234
+                if (!setSISContactChangingAccount.isEmpty()) {
+                    ISSP_UserTriggerHandler.alertSISContactsChangingAccount(setSISContactChangingAccount);
+                }
             }
             /*ISSP_ContactUpdaetPortalUser Trigger.AfterUpdate*/
 
@@ -573,7 +629,6 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             }
             /*ISSP_UpdateContacKaviIdOnUser AfterUpdate*/
 
-
         }
         /*Trigger.AfterUpdate*/
 
@@ -600,6 +655,9 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             /*Contacts Trigger.AfterUndelete*/
         }
         /*Trigger.AfterUndelete*/
+    
+    	//Publish the platform events
+    	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Contact__e', 'Contact', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
     }
     /*AFTER*/
 }

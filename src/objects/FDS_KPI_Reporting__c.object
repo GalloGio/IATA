@@ -75,6 +75,11 @@
                     <label>Airline Suspension</label>
                 </value>
                 <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
+                </value>
+                <value>
                     <fullName>CPS</fullName>
                     <default>false</default>
                     <label>CPS</label>
@@ -90,6 +95,16 @@
                     <label>DPC Management</label>
                 </value>
                 <value>
+                    <fullName>ICCS</fullName>
+                    <default>false</default>
+                    <label>ICCS</label>
+                </value>
+                <value>
+                    <fullName>ICH</fullName>
+                    <default>false</default>
+                    <label>ICH</label>
+                </value>
+                <value>
                     <fullName>Invoicing &amp; Collection</fullName>
                     <default>false</default>
                     <label>Invoicing &amp; Collection</label>
@@ -103,6 +118,11 @@
                     <fullName>Remittance &amp; Settlement</fullName>
                     <default>false</default>
                     <label>Remittance &amp; Settlement</label>
+                </value>
+                <value>
+                    <fullName>SIS</fullName>
+                    <default>false</default>
+                    <label>SIS</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

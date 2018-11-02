@@ -130,7 +130,7 @@ public without sharing class IECUserManager {
      } catch (exception ex) {
        // String , String sPassword, String sReturnUrl
 
-       transformationHelper.sendSFDevsAlertMessage('error ' ,   '   sReturnUrl' +    sReturnUrl+ '   sPassword' +    sPassword +  '   sUsername' +    sUsername  +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org'});
+       transformationHelper.sendSFDevsAlertMessage('error ' ,   '   sReturnUrl' +    sReturnUrl+ '   sUsername' +    sUsername  +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'sfdcadmin@iata.org'});
 
             System.debug('IECUserManager.login end');
 

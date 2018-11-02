@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Newgen Annual Revalidation Campaign</description>
+    <label>Annual Revalidation Campaign</label>
+    <mobileReady>false</mobileReady>
+    <motif>Custom26: Flag</motif>
+    <page>ANG_AnualRevalCaseCreation</page>
+</CustomTab>

@@ -38,7 +38,7 @@
         <div>
             <table id="content">
                 <tr>
-                    <td class="label" >
+                    <td class="label" style="font-family: Arial Unicode MS">
                         <apex:outputField value="{!lva.body}"/>
                         
                     </td>

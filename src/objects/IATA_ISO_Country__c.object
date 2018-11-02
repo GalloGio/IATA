@@ -181,7 +181,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <relationshipLabel>IATA ISO Countries</relationshipLabel>
         <relationshipName>IATA_ISO_Countries</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -218,6 +218,37 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_IEP_Model__c</fullName>
+        <description>Defines the EasyPay Model to use by agencies from this country.</description>
+        <externalId>false</externalId>
+        <label>EasyPay Model</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Model A</fullName>
+                    <default>false</default>
+                    <label>Model A</label>
+                </value>
+                <value>
+                    <fullName>Model B</fullName>
+                    <default>true</default>
+                    <label>Model B</label>
+                </value>
+                <value>
+                    <fullName>Banking Model</fullName>
+                    <default>false</default>
+                    <label>Banking Model</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>ANG_Portal_Service__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>EasyPay portal service that can be subscribed in the country.</description>
@@ -244,6 +275,17 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_EasyPay_Opt_Out_Date__c</fullName>
+        <description>Airlines will be able to Opt-Out of IEP on the CS Portal as from this date. Country not available for Opt-out if left empty.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Airlines will be able to Opt-Out of IEP on the CS Portal as from this date. Country not available for Opt-out if left empty.</inlineHelpText>
+        <label>Airline EasyPay Opt-Out Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>BSP_Country_free_text__c</fullName>
@@ -2724,6 +2766,29 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>fred_icaomemberstate__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>FRED ICAO Member State</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>That value does not exist or is not a valid ICAO Member State.</errorMessage>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>ICAO Member State</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>ISO Country / Territory Name</relationshipLabel>
+        <relationshipName>IATA_ISO_Countries</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>original_bank_details_not_required__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2751,6 +2816,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <columns>CASS_Export__c</columns>
         <columns>CASS_Import__c</columns>
         <columns>CASS_Country_free_text__c</columns>
+        <columns>Country_Manager__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>NAME</field>
@@ -2871,6 +2937,30 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>New_and_Old_Acc_Model</fullName>
+        <columns>NAME</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>Enable_Minor_Changes_from_Portal__c</columns>
+        <columns>Enable_Notice_of_Change__c</columns>
+        <columns>OSCAR_enabled__c</columns>
+        <columns>Region__c</columns>
+        <columns>Sub_Region__c</columns>
+        <columns>Country_Manager__c</columns>
+        <columns>ANG_Enable_NewGen__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ANG_Enable_NewGen__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>NGISS enabled Countries</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Account_management_team</group>
+            <group>IDFSAllusersexcludingIWandACCA</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>RU_EG_IN</fullName>
         <columns>NAME</columns>
         <columns>BSP_Country_free_text__c</columns>
@@ -2942,5 +3032,13 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <searchResultsAdditionalFields>Country_Manager__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>IEP_Model_required_for_Portal_Service</fullName>
+        <active>true</active>
+        <description>Makes ANG_IEP_Model__c mandatory when populating ANG_Portal_Service__c</description>
+        <errorConditionFormula>AND( ISBLANK(TEXT(ANG_IEP_Model__c)) ,  OR(ISCHANGED(ANG_Portal_Service__c),ISCHANGED(ANG_IEP_Model__c)) , NOT(ISBLANK(ANG_Portal_Service__c)))</errorConditionFormula>
+        <errorDisplayField>ANG_IEP_Model__c</errorDisplayField>
+        <errorMessage>EasyPay Model is required when enabling this country for the EasyPay Portal Service</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

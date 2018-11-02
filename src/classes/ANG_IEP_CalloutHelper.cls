@@ -7,6 +7,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 	public static final Integer THRESHOLD = 40;
 	public static boolean isRunningTestForThreshold = false;
 	public static String INTEGRATIONSYSTEM_MULESOFT = 'Mulesoft';
+	public static String INTEGRATIONSYSTEM_SAPPI = 'SAP PI';
 	public static String MULESOFTPREFIX = 'MS_';
 
 
@@ -60,7 +61,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 		list<ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper> records2SendList = new list<ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper>();
 		for(AMS_Agency_Updates__c ae: agencyEventsList){
-			if(ae.Integration_System__c==INTEGRATIONSYSTEM_MULESOFT){
+			if((ae.Integration_System__c==INTEGRATIONSYSTEM_MULESOFT || ae.Integration_System__c==INTEGRATIONSYSTEM_SAPPI) && calloutMappingMap.keySet().contains(ae.ConfigurationID__c)){
 				ANG_IEP_CalloutHelper.AgencyEvent2Send tempchw =new ANG_IEP_CalloutHelper.AgencyEvent2Send((ae.ANG_Account_Portal_Service__c!=null?ae.ANG_Account_Portal_Service__c+'.':'')+ae.Update_Type__c.replace(MULESOFTPREFIX,''),ae.Change_Code__c,ae.IATACode__c);
 				records2SendList.add( new ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper(calloutMappingMap.get(ae.ConfigurationID__c),tempchw,ae.Agency_Applied_Change_code__c,ae.id));
 			}
@@ -72,7 +73,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 		system.debug('ANG_IEP_CalloutHelper records2SendList'+records2SendList);
 		
-		if(records2SendList.size() < THRESHOLD && !isRunningTestForThreshold){
+		if((records2SendList.size() + System.Limits.getFutureCalls()) < THRESHOLD && !isRunningTestForThreshold){
 
 			System.debug('The change codes size is bellow THRESHOLD ('+THRESHOLD+'). Running future method process.');
 

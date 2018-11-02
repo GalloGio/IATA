@@ -108,7 +108,7 @@ private class ANG_ConversionHelperTest {
 
 		// now the update part.
 
-		List<ANG_ConversionHelper.HierarchyStructure> migratedStructures = ANG_ConversionHelper.migrateStructures(validStruct.values());
+		ANG_ConversionHelper.migrateStructures(validStruct.values());
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> newStructure = ANG_ConversionHelper.buildHierarchyStructure('US');
 

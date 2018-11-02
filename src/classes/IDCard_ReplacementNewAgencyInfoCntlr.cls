@@ -211,7 +211,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
             confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('1'));
             confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(idCardAppID));
             // INC199297
-            confPage.getParameters().put(IDCardUtil.ACCOUNT_STATUS_TERMINATED, IDCardUtil.EncryptEncodeParameter('Terminated'));
+            //confPage.getParameters().put(IDCardUtil.ACCOUNT_STATUS_TERMINATED, IDCardUtil.EncryptEncodeParameter('Terminated'));
             confPage.setRedirect(true);
             return confPage;
         }

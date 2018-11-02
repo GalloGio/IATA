@@ -3,6 +3,15 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>bspbolivia@iata.org</email>
     <name>Cases - Bolivia</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IATABolivia</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAmericasCustomerService</publicGroup>
+            <publicGroup>IDFSAmericasRS</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

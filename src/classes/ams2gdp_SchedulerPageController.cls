@@ -51,6 +51,7 @@ public with sharing class ams2gdp_SchedulerPageController
 			availableJobs.add(new SelectOption('ams2gdp_Batch_AMS_Account_Role','Job 7: Agency Owner'));
 			availableJobs.add(new SelectOption('ams2gdp_Batch_AMS_Agency_Airport','Job 8: Adjacent Airport'));
 			availableJobs.add(new SelectOption('ams2gdp_Batch_AMS_Agency_Profile','Job 9: Agency Profile and Specialization'));
+			availableJobs.add(new SelectOption('ams2gdp_Batch_AMS_Agency_Authorization','Job 10: Agency Authorization'));
 
 			availableJobs.add(new SelectOption('ams2gdp_Batch_Update','=== Clear Error Logs ==='));
 	}
@@ -123,6 +124,11 @@ public with sharing class ams2gdp_SchedulerPageController
 	            if(ids9.isEmpty()) ids9.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Profile(false,ids9, isManual)));
 
+	            //Start Job 10
+	            List<String> ids10 = specificRecordIds;
+	            if(ids10.isEmpty()) ids10.add('none');
+	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Authorization(false,ids10, isManual)));
+
 	            //Start Job 1 again
 				jobIds.add(Database.executeBatch(new ams2gdp_Batch_Account(false,specificRecordIds,isManual)));
             	
@@ -161,6 +167,12 @@ public with sharing class ams2gdp_SchedulerPageController
 		else if(jobName == 'ams2gdp_Batch_AMS_Agency_Airport')
 		{
 			ams2gdp_Batch_AMS_Agency_Airport batch = new ams2gdp_Batch_AMS_Agency_Airport(false,specificRecordIds, isManual);
+			query = batch.query;
+			jobIds.add(Database.executeBatch(batch));
+		}
+		else if(jobName == 'ams2gdp_Batch_AMS_Agency_Authorization')
+		{
+			ams2gdp_Batch_AMS_Agency_Authorization batch = new ams2gdp_Batch_AMS_Agency_Authorization(false,specificRecordIds, isManual);
 			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}

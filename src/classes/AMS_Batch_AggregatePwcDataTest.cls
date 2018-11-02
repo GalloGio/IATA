@@ -298,14 +298,14 @@ private class AMS_Batch_AggregatePwcDataTest {
         System.assertEquals(currentDateTime, resultAccount1.AMS_PWC_INT_OWNSHA_LASTDATE__c);
 
     }
-	
-	
-	@isTest
+      
+      
+      @isTest
     public static void testBatchScheduler(){
-    	Test.startTest();
-    	AMS_BatchScheduler_AggregatePwcData sh1 = new AMS_BatchScheduler_AggregatePwcData();
-    	String sch = '0 0 23 * * ?'; 
-    	system.schedule('Test Aggregate PwC data scheduler', sch, sh1);
-    	test.StopTest();
+      Test.startTest();
+      AMS_BatchScheduler_AggregatePwcData sh1 = new AMS_BatchScheduler_AggregatePwcData();
+      String sch = '0 0 23 * * ?'; 
+      system.schedule('Test Aggregate PwC data scheduler', sch, sh1);
+      test.StopTest();
     }
 }

@@ -19,7 +19,13 @@ public class SidraLiteSendEmailControllerTest {
         APXTConga4__Conga_Merge_Query__c cm2 = new APXTConga4__Conga_Merge_Query__c();
         cm2.APXTConga4__Name__c = 'Parent Account';
         insert cm2;
-
+        APXTConga4__Conga_Merge_Query__c cm3 = new APXTConga4__Conga_Merge_Query__c();
+        cm3.APXTConga4__Name__c = 'Forms Of Payment';
+        insert cm3;
+        APXTConga4__Conga_Merge_Query__c cm4 = new APXTConga4__Conga_Merge_Query__c();
+        cm4.APXTConga4__Name__c = 'RHC Information';
+        insert cm4;
+        
         Account account = new Account(
             Name = 'test account',
             Sector__c = 'Travel Agent',
@@ -49,6 +55,14 @@ public class SidraLiteSendEmailControllerTest {
         cm2.APXTConga4__Name__c = 'Parent Account';
         insert cm2;
 
+        APXTConga4__Conga_Merge_Query__c cm3 = new APXTConga4__Conga_Merge_Query__c();
+        cm3.APXTConga4__Name__c = 'Forms Of Payment';
+        insert cm3;
+
+        APXTConga4__Conga_Merge_Query__c cm4 = new APXTConga4__Conga_Merge_Query__c();
+        cm4.APXTConga4__Name__c = 'RHC Information';
+        insert cm4;
+        
         Account acc = new Account(Name='test');
         insert acc;
 

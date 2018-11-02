@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_Registration" showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}">
+<apex:page controller="ISSP_Registration" showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}" action="{!redirectID}">
     
   <head>
       <title>{!CASE(communityName, 'CNS', 'CNS', 'IATA')}</title>

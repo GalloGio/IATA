@@ -3,7 +3,6 @@ public class ANG_AgencyChangesHelperTest {
 
 	 @testSetup static void testSetup(){
 		
-
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
@@ -20,7 +19,7 @@ public class ANG_AgencyChangesHelperTest {
 		account.Location_Class__c = 'P';
 		account.Location_Type__c = 'HE';
 		account.ANG_Accreditation_Model__c = 'Cashless';
-
+		account.IATA_ISO_Country__c = ctry.Id;
 		account.ANG_IEP_HE_AccntNum__c = '1232132323';
 		account.ANG_IEP_Status__c = 'Suspended' ;
 		account.ANG_HE_CashCondition__c = true;
@@ -288,7 +287,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -416,7 +415,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -533,7 +532,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -651,7 +650,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -764,7 +763,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = [Select Id,ANG_Enable_NewGen__c from IATA_ISO_Country__c];
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
@@ -785,6 +784,7 @@ public class ANG_AgencyChangesHelperTest {
 		newHeSingle.ANG_HE_RiskStatus__c = 'Not Applicable';
 		newHeSingle.RecordTypeId = accountAgencyRT;
 		newHeSingle.ANG_Accreditation_Model__c = 'Cashless';
+		newHeSingle.IATA_ISO_Country__c = ctry.Id;
 
 		insert newHeSingle;
 
@@ -866,7 +866,8 @@ public class ANG_AgencyChangesHelperTest {
 
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = [Select Id,ANG_Enable_NewGen__c from IATA_ISO_Country__c];
+
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
@@ -887,6 +888,7 @@ public class ANG_AgencyChangesHelperTest {
 		newHeSingle.ANG_HE_RiskStatus__c = 'Not Applicable';
 		newHeSingle.RecordTypeId = accountAgencyRT;
 		newHeSingle.ANG_Accreditation_Model__c = 'Cashless';
+		newHeSingle.IATA_ISO_Country__c = ctry.Id;
 
 		insert newHeSingle;
 
@@ -897,7 +899,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '15520003454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -1867,6 +1869,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
 
 		update oscar;
@@ -1910,6 +1913,7 @@ public class ANG_AgencyChangesHelperTest {
 	@isTest static void test_getChangeCodes(){
 
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
 		EF_AttachmentListController.runningForEF = false;
 		loadCredentials();
 
@@ -2055,6 +2059,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');
@@ -2077,15 +2082,6 @@ public class ANG_AgencyChangesHelperTest {
 		ANG_AgencyChangesHelper.AChangeStructure changesContainer = new ANG_AgencyChangesHelper.AChangeStructure();
 
 		ANG_AgencyChangesHelper.generateLNFChangeCode(oscar, new Map<Id, Agency_Applied_Change_code__c>{a1.Id => aacc1}, changesContainer);
-
-		Map<String, String> configCC = new Map<String, String>();
-		configCC.put('Manager approval','MA');
-		configCC.put('Manager disapproval','MD');
-		configCC.put('Application withdrawal','AW');
-
-		ANG_AgencyChangesConfigHelper.getManagerApprovalChangeCode(configCC);
-		ANG_AgencyChangesConfigHelper.getManagerDisapprovalChangeCode(configCC);
-		ANG_AgencyChangesConfigHelper.getWithdrawalChangeCode(configCC);
 
 		Test.stopTest();
 
@@ -2154,13 +2150,21 @@ public class ANG_AgencyChangesHelperTest {
 		Account a1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE1 H1'];
 		Account he1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Main HE Account H1'];
 
+		List<AMS_Oscar__c> oscars = new List<AMS_Oscar__c>();
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = AMS_Utils.RECTYPE_NGCORRECTION, Process__c = AMS_Utils.NGCORRECTION );
-		insert oscar;
+		AMS_OSCAR__c oscar2 = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = AMS_Utils.RECTYPE_NGCORRECTION, Process__c = AMS_Utils.NGCORRECTION );
+		
+		oscars.add(oscar);
+		oscars.add(oscar2);
+
+		insert oscars;
 
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
 		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+
+		List<Case> cases = new List<Case>();
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -2174,9 +2178,28 @@ public class ANG_AgencyChangesHelperTest {
 		oscarCase.BSPCountry__c = 'US';
 		oscarCase.Account_Concerned__c = he1.Id;
 		oscarCase.Region__c = 'Europe';
-        insert oscarCase;
+
+		cases.add(oscarCase);
+
+	    Case oscarCase2 = new Case(Oscar__c = oscar2.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
+        oscarCase2.AccountId = a1.Id;
+        oscarCase2.ContactId = co1.Id;
+        oscarCase2.Reason = 'Product Inquiry';
+        oscarCase2.Type = 'Case';
+        oscarCase2.subject = 'Changes - WEBER VOYAGES SARL';
+    	oscarCase2.CaseArea__c = 'Accreditation Process';
+     	oscarCase2.Reason1__c = 'Changes';
+		oscarCase2.Type_of_customer__c = 'IATA Travel Agent';
+		oscarCase2.BSPCountry__c = 'US';
+		oscarCase2.Account_Concerned__c = he1.Id;
+		oscarCase2.Region__c = 'Europe';
+
+		cases.add(oscarCase2);
+
+        insert cases;
 
 		// let's start !!
+
 
 		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
 
@@ -2212,7 +2235,6 @@ public class ANG_AgencyChangesHelperTest {
         oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
         update oscar;
 
-		Test.startTest();
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
@@ -2221,13 +2243,17 @@ public class ANG_AgencyChangesHelperTest {
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
         insert accreditationContacts;
+		
+		Test.startTest();
 
         PageReference pg = Page.ANG_AccountHierarchySelection;
         pg.getParameters().put('Id', oscar.Id);
 
+
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
 		oscar.AMS_Correction_change_code__c = 'COR';
   	    
@@ -2242,11 +2268,257 @@ public class ANG_AgencyChangesHelperTest {
 
 		insert att;
 		
+		
 		update oscar;
 
 		Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = a1.Id, Change_Code__c = 'IEP',  Sent_to_external_system__c = false);
 
 		insert aacc1;
+		
+
+		ANG_AgencyChangesHelper.AChangeStructure changesContainer = new ANG_AgencyChangesHelper.AChangeStructure();
+
+		ANG_AgencyChangesHelper.generateLNFChangeCode(oscar, new Map<Id, Agency_Applied_Change_code__c>{a1.Id => aacc1}, changesContainer);
+
+		List<Id> accountsIds = new List<Id>();
+		accountsIds.add(a1.Id);
+		accountsIds.add(he1.Id);
+
+		ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accountsIds);
+
+		
+		//2nd oscar - CAD
+
+		AMS_Pax_Accreditation_Form__c stagingArea2 = new  AMS_Pax_Accreditation_Form__c(
+        		RecordTypeId = rtChangesStagingId,
+                IATAcode__c = a1.IATAcode__c,
+                Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+                Location_Class__c = a1.Location_Class__c,
+                Location_Type__c = a1.Location_Type__c,
+                SAAM_Case__c = oscarCase2.Id,
+				Account_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_Legal_Status__c = 'Association',
+				Short_Name__c = 'Lisbon Travel Gods',
+				TradeName__c = 'Lisbon Travel Gods',
+				Trade_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_License_No__c = '111222333',
+				ISSP_AMS_VAT_Number_Input__c = '111222333',
+				Branch_Office_Email__c = 'ltg23@fefff2.com',
+				Website__c = 'wwww.asdasidsss12233.pt',
+				Branch_Office_Phone__c = '123456780',
+				Branch_Office_Phone_National__c = '123456780',
+				Branch_Office_FAX__c = '123456780',
+				Branch_Office_Fax_National__c = '123456780',
+				Abbreviated_name__c = 'Lisbon Travel Gods',
+				VAT_Number_2__c = '111222333',
+				ANG_Accreditation_type__c = 'Cashless'
+                );
+
+        insert stagingArea2;
+		
+
+        oscar2.AMS_Online_Accreditation__c = stagingArea2.Id;
+        oscar2.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
+        update oscar2;
+
+        accreditationContacts = new List<AMS_Accreditation_Contact__c>();
+
+        personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea2.Id, Company__c = he1.Id, First_name__c='NameToUse2', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique2@email1.com', RecordTypeId=personAccreditationRT));
+
+        insert accreditationContacts;
+
+        pg = Page.ANG_AccountHierarchySelection;
+        pg.getParameters().put('Id', oscar2.Id);
+
+        oscar2.STEP6__c = 'Passed';
+		oscar2.Change_effective_as_of__c = System.today();
+		oscar2.Is_PCI_compliant__c = 'Yes';
+		oscar2.ANG_PCI_compliance_expiry_date__c = System.today();
+		oscar2.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
+		oscar2.AMS_Correction_change_code__c = 'CAD';
+  	    
+		pdfArchive = Blob.valueOf('Test content');
+
+		System.debug('Case Id is:'+oscarCase2.Id);
+
+		//Attachment att2 = new Attachment();
+		//att2.Name = 'Certificates '+oscarCase2.Id+'.pdf';
+		//att2.Body = pdfArchive;
+		//att2.ParentId = oscarCase2.Id;
+		//insert att2;
+		
+		update oscar2;
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void testOscarNGCorrection2(){
+
+		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
+		EF_AttachmentListController.runningForEF = false;
+		loadCredentials();
+
+				//Agency changes configuration settings
+        List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();
+        customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeName', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = false, 
+                           TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
+                           TC_Major_Shareholding__c = false,  TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
+        customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocationType', TC_Location_type__c = true,
+                           TC_Legal_status__c = false, TC_Location__c = false, 
+                           TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
+                           TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
+        customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocation', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = true, 
+                           TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
+                           TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD'));
+        customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnership', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = false, 
+                           TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = true, TC_Hierarchy__c = false,
+                           TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD'));
+        customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLegal', TC_Location_type__c = false,
+                           TC_Legal_status__c = true, TC_Location__c = false, 
+                           TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
+                           TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD'));
+        customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnershipNonIATA', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = false, 
+                           TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
+                           TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD'));
+        customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = false, 
+                           TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
+                           TC_Major_Shareholding__c = true, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
+
+        customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMix', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = true, 
+                           TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false,
+                           TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF'));
+
+        customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMixAll', TC_Location_type__c = false,
+                   TC_Legal_status__c = false, TC_Location__c = true, TC_Accreditation_Type__c = false,
+                   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
+                   TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = false));
+
+        insert customsettings;
+
+		AMS_Agencies_Hierarchy__c originalHierarchy =  [Select Id from AMS_Agencies_Hierarchy__c];
+
+		Account a1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE1 H1'];
+		Account he1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Main HE Account H1'];
+
+		List<AMS_Oscar__c> oscars = new List<AMS_Oscar__c>();
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = AMS_Utils.RECTYPE_NGCORRECTION, Process__c = AMS_Utils.NGCORRECTION );
+		
+		insert oscar;
+
+		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+
+		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
+        oscarCase.AccountId = a1.Id;
+        oscarCase.ContactId = co1.Id;
+        oscarCase.Reason = 'Product Inquiry';
+        oscarCase.Type = 'Case';
+        oscarCase.subject = 'Changes - WEBER VOYAGES SARL';
+    	oscarCase.CaseArea__c = 'Accreditation Process';
+     	oscarCase.Reason1__c = 'Changes';
+		oscarCase.Type_of_customer__c = 'IATA Travel Agent';
+		oscarCase.BSPCountry__c = 'US';
+		oscarCase.Account_Concerned__c = he1.Id;
+		oscarCase.Region__c = 'Europe';
+
+        insert oscarCase;
+
+		// let's start !!
+
+		Test.startTest();
+
+		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+
+		// Create the Staging area for the Account
+        AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
+        		RecordTypeId = rtChangesStagingId,
+                IATAcode__c = a1.IATAcode__c,
+                Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+                Location_Class__c = a1.Location_Class__c,
+                Location_Type__c = a1.Location_Type__c,
+                SAAM_Case__c = oscarCase.Id,
+				Account_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_Legal_Status__c = 'Association',
+				Short_Name__c = 'Lisbon Travel Gods',
+				TradeName__c = 'Lisbon Travel Gods',
+				Trade_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_License_No__c = '111222333',
+				ISSP_AMS_VAT_Number_Input__c = '111222333',
+				Branch_Office_Email__c = 'ltg23@fefff2.com',
+				Website__c = 'wwww.asdasidsss12233.pt',
+				Branch_Office_Phone__c = '123456780',
+				Branch_Office_Phone_National__c = '123456780',
+				Branch_Office_FAX__c = '123456780',
+				Branch_Office_Fax_National__c = '123456780',
+				Abbreviated_name__c = 'Lisbon Travel Gods',
+				VAT_Number_2__c = '111222333',
+				ANG_Accreditation_type__c = 'Cashless'
+                );
+
+        insert stagingArea;
+
+        oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
+        update oscar;
+
+		
+		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
+
+        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
+
+        insert accreditationContacts;
+
+        PageReference pg = Page.ANG_AccountHierarchySelection;
+        pg.getParameters().put('Id', oscar.Id);
+
+
+        oscar.STEP6__c = 'Passed';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
+		oscar.AMS_Correction_change_code__c = 'LET';
+  	    
+		Blob pdfArchive = Blob.valueOf('Test content');
+
+		System.debug('Case Id is:'+oscarCase.Id);
+
+		Attachment att = new Attachment();
+		att.Name = 'Certificates '+oscarCase.Id+'.pdf';
+		att.Body = pdfArchive;
+		att.ParentId = oscarCase.Id;
+
+		insert att;
+		
+		
+		update oscar;
+
+		Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = a1.Id, Change_Code__c = 'IEP',  Sent_to_external_system__c = false);
+
+		insert aacc1;
+		
 
 		ANG_AgencyChangesHelper.AChangeStructure changesContainer = new ANG_AgencyChangesHelper.AChangeStructure();
 
@@ -2263,6 +2535,8 @@ public class ANG_AgencyChangesHelperTest {
 	}
 
 	@isTest static void testANGAccountHierarchyChange(){
+
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
 
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		EF_AttachmentListController.runningForEF = false;
@@ -2282,8 +2556,8 @@ public class ANG_AgencyChangesHelperTest {
 
 		AMS_Agencies_Hierarchy__c originalHierarchy =  [Select Id from AMS_Agencies_Hierarchy__c];
 
-		Account a1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE1 H1'];
-		Account he1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Main HE Account H1'];
+		Account a1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, ANG_FA_Opt_out__c from Account where Name = 'Account AE1 H1'];
+		Account he1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, ANG_FA_Opt_out__c from Account where Name = 'Main HE Account H1'];
 
 		a1.ANG_Accreditation_Model__c = 'Cash';
 		he1.ANG_Accreditation_Model__c = 'Cashless';
@@ -2369,6 +2643,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');
@@ -2392,6 +2667,148 @@ public class ANG_AgencyChangesHelperTest {
             Boolean expectedExceptionThrown =  e.getMessage().contains('Cannot close the OSCAR until the Manager Approval Step is not completed.') ? true : false;
             System.assertEquals(expectedExceptionThrown, true);
         }
+        
+
+		Test.stopTest();
+
+	}
+
+		@isTest static void testANGAccountHierarchyChange2(){
+
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
+
+		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
+		EF_AttachmentListController.runningForEF = false;
+		loadCredentials();
+
+				//Agency changes configuration settings
+        List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();
+
+
+        customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'Change~Hierarchy', TC_Location_type__c = false,
+                   TC_Legal_status__c = false, TC_Location__c = false, TC_Accreditation_Type__c = false,
+                   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
+                   TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true));
+
+        insert customsettings;
+
+		AMS_Agencies_Hierarchy__c originalHierarchy =  [Select Id from AMS_Agencies_Hierarchy__c];
+
+		Account a1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, ANG_FA_Opt_out__c from Account where Name = 'Account AE1 H1'];
+		Account he1 = [Select Id, ANG_Accreditation_Model__c, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, ANG_FA_Opt_out__c from Account where Name = 'Main HE Account H1'];
+
+		a1.ANG_Accreditation_Model__c = 'Cash';
+		he1.ANG_Accreditation_Model__c = 'Cashless';
+
+		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
+		insert oscar;
+
+		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+
+        List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = he1.Id));
+		
+		insert agenciesinvolved;
+
+
+		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+
+		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
+        oscarCase.AccountId = a1.Id;
+        oscarCase.ContactId = co1.Id;
+        oscarCase.Reason = 'Product Inquiry';
+        oscarCase.Type = 'Case';
+        oscarCase.subject = 'Changes - WEBER VOYAGES SARL';
+    	oscarCase.CaseArea__c = 'Accreditation Process';
+     	oscarCase.Reason1__c = 'Changes';
+		oscarCase.Type_of_customer__c = 'IATA Travel Agent';
+		oscarCase.BSPCountry__c = 'US';
+		oscarCase.Account_Concerned__c = he1.Id;
+		oscarCase.Region__c = 'Europe';
+        insert oscarCase;
+
+		// let's start !!
+
+		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+
+		// Create the Staging area for the Account
+        AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
+        		RecordTypeId = rtChangesStagingId,
+                IATAcode__c = a1.IATAcode__c,
+                Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+                Location_Class__c = a1.Location_Class__c,
+                Location_Type__c = a1.Location_Type__c,
+                SAAM_Case__c = oscarCase.Id,
+				Account_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_Legal_Status__c = 'Association',
+				Short_Name__c = 'Lisbon Travel Gods',
+				TradeName__c = 'Lisbon Travel Gods',
+				Trade_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_License_No__c = '111222333',
+				ISSP_AMS_VAT_Number_Input__c = '111222333',
+				Branch_Office_Email__c = 'ltg23@fefff2.com',
+				Website__c = 'wwww.asdasidsss12233.pt',
+				Branch_Office_Phone__c = '123456780',
+				Branch_Office_Phone_National__c = '123456780',
+				Branch_Office_FAX__c = '123456780',
+				Branch_Office_Fax_National__c = '123456780',
+				Abbreviated_name__c = 'Lisbon Travel Gods',
+				VAT_Number_2__c = '111222333',
+				ANG_Accreditation_type__c = 'Cashless'
+                );
+
+        insert stagingArea;
+
+        oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscar;
+
+		Test.startTest();
+		
+		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
+
+        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
+
+        insert accreditationContacts;
+
+        oscar.STEP6__c = 'Passed';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+  	    
+		Blob pdfArchive = Blob.valueOf('Test content');
+
+		System.debug('Case Id is:'+oscarCase.Id);
+
+		Attachment att = new Attachment();
+		att.Name = 'Certificates '+oscarCase.Id+'.pdf';
+		att.Body = pdfArchive;
+		att.ParentId = oscarCase.Id;
+
+		insert att;		
+
+        oscar.ANG_FA_Opt_out__c = 'Opt-Out';
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		oscar.STEP15__c = AMS_Utils.PASSED;
+		oscar.STEP12__c = AMS_Utils.PASSED;
+		update oscar;
+       
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
+        update oscar;
+
+        oscar.ANG_FA_Opt_out__c = 'Not Applicable';
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        update oscar;
+        
 
 		Test.stopTest();
 

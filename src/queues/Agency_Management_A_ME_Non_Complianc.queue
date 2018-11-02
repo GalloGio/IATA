@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>AGM Non Compliance - A&amp;ME</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAfricaMEallusers</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>AMS_OSCAR__c</sobjectType>
     </queueSobject>

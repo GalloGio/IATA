@@ -124,7 +124,7 @@
       <table border="0" cellpadding="0" cellspacing="0">
       <tr>
       <td>
-      <img class="homeIcon" src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w00000057bD1&oid=00D2000000008TF&lastMod=1491942665000">
+      <img class="homeIcon" src="{!Community_Header}">
       </td>
       </tr>
       </table>
@@ -155,7 +155,7 @@
             Welcome to {!Community_Name}.<br />Your e-mail address is
             {!Receiving_User.Email} <br />
 Your temporary password is
-            {!Contact.Password} <br />
+           <span>{!Contact.Password}</span><br />
           </p>
           <p>Please click on the button below to finalize your registration process:<br>
           </p>

@@ -1,0 +1,52 @@
+<apex:page standardController="Account" extensions="AMS_AccountOwnersController">
+	<apex:includeScript value="/soap/ajax/43.0/connection.js"/>
+	<apex:includeScript value="/support/console/43.0/integration.js"/>
+	<script src="//code.jquery.com/jquery-1.12.3.min.js"/>
+	<script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css"/>
+
+	<script>
+		$(document).ready(function() {
+			$(".result-table").DataTable({
+				"searching": false,
+				"pagingType": "simple",
+				"lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
+				"order": [[ 8, "desc" ]],
+				"columnDefs": [
+					{
+						"targets": [ 8 ],
+                		"visible": false
+                	}
+                ]
+			});
+		});
+
+		function openRecord(recordId) {
+			if(!sforce.console.isInConsole()) {
+				window.top.location = '/'+recordId+'?retURL=/{!Account.Id}';
+			} else {
+				sforce.console.getEnclosingPrimaryTabId(function(result) {
+					sforce.console.openSubtab(result.id, '/'+recordId, true, '', null);
+				});				
+			}
+		}
+	</script>
+
+	<apex:pageBlock>
+		<apex:pageBlockTable value="{!owners}" var="owner" styleclass="result-table">
+			<apex:column headerValue="Name">
+				<apex:outputLink value="javascript:openRecord('{!owner.Id}')">{!owner.Name}</apex:outputLink>
+			</apex:column>
+			<apex:column headerValue="Active"  value="{!owner.Active__c}"/>
+			<apex:column headerValue="Record Type" value="{!owner.RecordType.Name}"/>
+			<apex:column headerValue="Owner Name" value="{!owner.Owner_Name__c}"/>
+			<apex:column headerValue="Owner Account" value="{!owner.Owner_Account__r.Name}"/>
+			<apex:column headerValue="Contact">
+				<apex:outputLink value="javascript:openRecord('{!owner.Contact__c}')">{!owner.Contact__r.Name}</apex:outputLink>
+			</apex:column>
+			<apex:column headerValue="Percentage" value="{!owner.Percentage__c}"/>
+			<apex:column headerValue="Termination Date" value="{!owner.Termination_Date__c}"/>
+			<apex:column headerValue="Sort Order" value="{!owner.Sort_Order__c}"/>
+		</apex:pageBlockTable>
+	</apex:pageBlock>
+</apex:page>

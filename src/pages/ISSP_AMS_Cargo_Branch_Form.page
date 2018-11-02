@@ -339,6 +339,38 @@
         }
     }
 
+    //FM - AMSU-20
+    function togglePointA(v, fldId) {
+        var el = document.getElementById(fldId)
+        if(v=='DGR' || v=='BCH' || v=='DGA') {
+            el.style.display='block';
+        } else {
+            el.style.display='none';
+        }
+        //$j("#awarenessCertificate").hide();
+    }
+
+    //FM - AMSU-20
+    function togglePointB(v, fldId) {
+        var el = document.getElementById(fldId)
+        if(v=='DGR') {
+            el.style.display='block';
+            $j("#handlingDangerousGoods").show();
+            $j("#validUntilQuestion").show();
+        } else {
+            el.style.display='none';
+            $j("#handlingDangerousGoods").hide();
+            $j("#validUntilQuestion").hide();
+        }
+
+        if(v=='DGR' || v=='DGA' || v=='BCH') {
+            $j("#Experience").hide();
+        }else{
+            $j("#Experience").show();
+        }
+        //$j("#awarenessCertificate").hide();
+    }
+
     function toggleItemByCheckbox(currId,fldId) {
         if ($j('[id$='+currId+']').is(":checked")) {
             $j('[id$='+fldId+']').css('display', 'block');
@@ -853,49 +885,100 @@
        
       <div class="modal-body">
           <apex:pageBlock id="trainedStaffBlock">
-              <table>
+              <table style="width:100%">
                   <tr>
-                      <td style="width:25%">
-                        <table>
-                            <tr><td class="modalrow">
+                      <td style="width:100%">
+                        <table style="width:100%">
+                            <tr><td class="modalrow" style="width:50%">
                                 <apex:outputText value="{!$Label.ISSP_MyProfile_FIRSTNAME}" /><br/>
-                                <apex:inputField value="{!trainedStaffContact.First_name__c}" />
+                                <apex:inputField required="true" value="{!trainedStaffContact.First_name__c}" />
+                                </td>
+                                <td class="modalrow">
+                                <apex:outputText value="{!$Label.ISSP_MyProfile_LASTNAME}" />
+                                <apex:inputField required="true" value="{!trainedStaffContact.Last_name__c}" />
                                 </td></tr>
-                            <tr><td class="modalrow">
-                                <apex:outputText value="{!$Label.ISSP_MyProfile_LASTNAME}" /><br/>
-                                <apex:inputField value="{!trainedStaffContact.Last_name__c}" />
-                                </td></tr>
-                            <tr><td class="modalrow">
-                                <apex:outputText value="{!$Label.ISSP_AMS_Position}" /><br/>
+                                
+                            <tr><td class="modalrow"><!-- FM 19-07-2017 - AMSU-20-->
+                                <apex:outputText value="Training Type" />
+                                <apex:inputField id="TrainingType" required="true" value="{!trainedStaffContact.Type_Of_Certificate__c}" onchange="togglePointA(this.value,'point_a');togglePointB(this.value,'point_b');" />
+                                </td>
+                                <td class="modalrow">
+                                <apex:outputText value="{!$Label.ISSP_AMS_Position}" />
                                 <apex:inputField required="true" value="{!trainedStaffContact.Position_trained_staff__c}" />
                                 </td></tr>
-                            <tr><td class="modalrow">
-                                <apex:outputLabel value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT2}"/><br/>
-                                <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT3}" /><br/>
-                                <apex:inputField value="{!trainedStaffContact.IATA_FIATA_training_history__c}" />
+                            <tr><td class="modalrow"><!-- FM 19-07-2017 - AMSU-20-->
+                        <table>
+                                <tr><td>
+                                    <apex:outputText value="Organization / Training School" />
+                                <apex:inputField required="true" value="{!trainedStaffContact.Certificate_Issuer__c}" />
+                                </td><td class="modalrow">
+                                    <apex:image value="/img/msg_icons/info16.png" style="margin-top:13px; " title="{!txtHelpTrainedStaffOrganization}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                                 </td></tr>
-                            <tr id="handlingDangerousGoods" style="display:{!IF(NOT(AND(isocountry.EACP_Country__c,newForm.Is_your_firm_handling_Dangerous_Goods__c=='No')),'','none')}" ><td class="modalrow" colspan="2">
-                                <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT4}" /></td></tr>
+                                </table>
+                                </td>
+                                <td class="modalrow"><!-- FM 19-07-2017 - AMSU-20-->
+                                <!--table>
+                                <tr><td>
+                                <apex:outputText value="Reference" />
+                                <apex:inputField required="true" value="{!trainedStaffContact.Registration_number__c}" />
+                                </td><td class="modalrow">
+                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:13px;margin-top:13px" title="{!txtHelpTrainedStaffReference}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                </td></tr>
+                                </table-->
+                                </td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                  <tr>
+                      <td style="width:30%">
+                        <table>
+                            <!--tr id="Experience" style="display:{!IF(NOT(AND(trainedStaffContact.Type_Of_Certificate__c<>'DGR',AND(trainedStaffContact.Type_Of_Certificate__c<>'DGA',trainedStaffContact.Type_Of_Certificate__c<>'BCH'))),'','none')}" -->
+                            <tr id="Experience" style="display:{!IF(trainedStaffContact.Type_Of_Certificate__c == 'TSA' || trainedStaffContact.Type_Of_Certificate__c =='Experience','','none')}" >
+                                <td class="modalrow" colspan="2">
+                                <apex:outputLabel value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT2}"/><br/>
+                                <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT7}" /><br/>
+                                <apex:inputField value="{!trainedStaffContact.Air_cargo_transport_business_exp__c}" style="width:400px"/><br/><br/>
+                            </td></tr>
+
+                            <tr id="point_a" style="display:{!IF(trainedStaffContact.Type_Of_Certificate__c=='DGR' || trainedStaffContact.Type_Of_Certificate__c=='DGA' || trainedStaffContact.Type_Of_Certificate__c=='BCH','','none')}" >
+                                <td class="modalrow" colspan="2">    
+                                <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT3}" /><br/>
+                                <apex:inputField value="{!trainedStaffContact.IATA_FIATA_training_history__c}" style="width:400px"/>
+                                </td></tr>
+
+                            <tr id="point_b" style="display:{!IF(trainedStaffContact.Type_Of_Certificate__c=='DGR','','none')}" >
+                                <td class="modalrow" colspan="2">  
+                                <table>
+                                    <tr id="handlingDangerousGoods" style="display:{!IF(NOT(AND(isocountry.EACP_Country__c,newForm.Is_your_firm_handling_Dangerous_Goods__c=='No')),'','none')}" >
+                                    <td class="modalrow" colspan="2">
+                                    <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT4}" />
+                                    </td></tr>
+                            
                             <tr id="validUntilQuestion" style="display:{!IF(NOT(AND(isocountry.EACP_Country__c,newForm.Is_your_firm_handling_Dangerous_Goods__c=='No')),'','none')}"><td class="modalrow">
-                                    <apex:selectRadio id="validUntilDate"  style="width:100px;{!IF(trainedStaffContact.Training_dangerous_goods_completed__c==null, 'border:2px red solid;', '')}" value="{!trainedStaffContact.Training_dangerous_goods_completed__c}" onchange="togglePageItem(this.value,'validUntil')" >
-                                        <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}"/>
-                                        <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"/>
+                                        <apex:selectRadio id="validUntilDate"  style="border-collapse:separate;padding-left:5px;width:100px;{!IF(trainedStaffContact.Training_dangerous_goods_completed__c==null, 'border:2px red solid;', '')}" value="{!trainedStaffContact.Training_dangerous_goods_completed__c}" onchange="togglePageItem(this.value,'validUntil')" >
+                                            <apex:selectOption itemValue="Yes" itemLabel="   {!$Label.ISSP_Yes}"/>
+                                            <apex:selectOption itemValue="No" itemLabel="   {!$Label.ISSP_No}"/>
                                     </apex:selectRadio>
                                 </td>
                                 <td class="modalrow" id="validUntil" style="vertical-align:bottom;{!IF(trainedStaffContact.Training_dangerous_goods_completed__c == 'Yes', 'border: 0px !important;', 'display:none')}">
-                                    <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT5}" />
+                                        <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT5}   " />
                                     <apex:inputField value="{!trainedStaffContact.Valid_until__c}" showDatePicker="true" onclick="showFutureDates()" />
                                     </td>
                             </tr>
+                                </table>
+                            </td></tr>
                            
                             <tr id="awarenessCertificate" style="display:{!IF(AND(isocountry.EACP_Country__c,newForm.Is_your_firm_handling_Dangerous_Goods__c=='No'),'','none')}"><td class="modalrow" colspan="2">
                                 <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT6}" /><br/>
                                 <apex:inputField value="{!trainedStaffContact.list_Dangerous_Goods_Awareness__c}" />
                                 </td></tr>
    
-
-
-
+                            <!--tr id="typeCertificate" style="display:{!IF(AND(isocountry.EACP_Country__c,newForm.Is_your_firm_handling_Dangerous_Goods__c=='No'),'','none')}"><td class="modalrow" colspan="2">
+                                <apex:outputText value="Type Of Certificate" /><br/>
+                                <!--apex:inputField value="{-!trainedStaffContact.Type_Of_Certificate__c}" /- ->
+                                </td></tr-->
                           
                         </table>
 

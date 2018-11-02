@@ -15,6 +15,19 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Account_plan_visible_to_all</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Account plan visible to all</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Key Account Plan</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Public_Account_Issues_and_Priorities</fullName>
         <accessLevel>Read</accessLevel>
         <description>Shares to all users the records with the Account Issues and Priorities record type that have been marked as public.</description>
@@ -348,18 +361,6 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Account_Management_France</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>Share Account Issues and Priorities and Key Account Plan items between the Country Manager for France and the Staff  - France members</description>
-        <label>Account Management France</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerFrance</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerFrance</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
         <fullName>Account_Management_Germany</fullName>
         <accessLevel>Edit</accessLevel>
         <description>Share Account Issues and Priorities and Key Account Plan items between the Country Manager for Germany and the Staff  - Germany members</description>
@@ -515,17 +516,6 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Account_Management_Levant</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management Levant</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerLevant</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerLevant</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
         <fullName>Account_Management_Malaysia</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Malaysia</label>
@@ -600,17 +590,6 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerNordicBaltic</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Account_Management_North_Africa</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management North Africa</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerNorthAfrica</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerNorthAfrica</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -702,17 +681,6 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Account_Management_Saudi_Arabia_Yemen</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management Saudi Arabia &amp; Yemen</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerSaudiArabiaYemen</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerSaudiArabiaYemen</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
         <fullName>Account_Management_Serbia_Montenegro</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Serbia &amp; Montenegro</label>
@@ -746,17 +714,6 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Account_Management_South_West_Africa</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management South West Africa</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerSouthWestAfrica</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerSouthWestAfrica</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
         <fullName>Account_Management_South_West_Pacific</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management South West Pacific</label>
@@ -765,17 +722,6 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>Country_Manager_South_West_Pacific_BKP</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Account_Management_Southern_Africa</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management Southern Africa</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerSouthernAfrica</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerSouthernAfrica</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -963,6 +909,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerVietnam</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Country_Manager_France_Belgium_and_The_Netherlands</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Country Manager - France, Belgium and The Netherlands</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_France_Belgium_and_The_Netherlands</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_France_Belgium_and_The_Netherlands</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>

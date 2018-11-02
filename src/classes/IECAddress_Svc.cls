@@ -249,11 +249,20 @@ public class IECAddress_Svc
 						if (isCreating)
 							if (forPartnerType == SAPPartnerType.SOLD)
 							{
+
 								loc.SAP_Id__c = response.SAP_SoldTo.SAPSoldToID;
-								if (lstAccountToUpdate == null)
+								if (lstAccountToUpdate == null){
 									lstAccountToUpdate = new List<Account>();
-								lstAccountToUpdate.add(new Account(Id = loc.Account__c, Sales_Office__c = response.SAP_SoldTo.SalesOffice
+								}
+
+								if(String.isBlank(response.SAP_SoldTo.PaymentTerms)){
+									lstAccountToUpdate.add(new Account(Id = loc.Account__c));
+								}else{
+									lstAccountToUpdate.add(new Account(Id = loc.Account__c, Sales_Office__c = response.SAP_SoldTo.SalesOffice
 								                                 , Payment_Term__c = response.SAP_SoldTo.PaymentTerms, Price_Group__c = response.SAP_SoldTo.PriceGroup));
+								}
+
+
 							}
 							else if (forPartnerType == SAPPartnerType.BILL)
 								loc.SAP_Id__c = response.SAP_BillTo.SAPBillToID;

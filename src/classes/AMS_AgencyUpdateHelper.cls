@@ -75,7 +75,7 @@ public without sharing class AMS_AgencyUpdateHelper {
 
         List<Account> aulist = [select id,  Name, IATACode__c,BillingStreet,IATA_ISO_Country__c,BillingCity,BillingPostalCode,
                                             Top_Parent__c,Location_Type__c,Status__c,CASS_Number__c,Check_Digit__c,Location_Class__c,
-                (select id,Update_Type__c,Change_Code__c,Account__c from AMS_Agency_Updates__r where Integration_System__c = 'SAP PI' ), 
+                (select id,Update_Type__c,Change_Code__c,Account__c,Status__c from AMS_Agency_Updates__r where Integration_System__c = 'SAP PI' ), 
                 (SELECT Account__c,Account__r.IATACode__c,Active__c,Change_Code__c,For_Integration__c from Agencies_Applied_Change_codes__r WHERE Change_Code__c != null AND For_Integration__c = true)
                 from Account where id in :agencyIds];
 
@@ -146,7 +146,13 @@ System.debug('sRecIdB: ' + sRecIdB);
                             if(sRecIdA != sRecIdB){
 
                                 String sRecIdRes = AMS_Utils.getRecIdFromIntegrationMatriz( sRecIdA, sRecIdB );
-System.debug('sRecIdRes: ' + sRecIdRes);                                
+System.debug('sRecIdRes: ' + sRecIdRes);
+                                //RB 10-11-2017 - If the determined recId is 'D' check the account status, and if not Terminated, force recId = 'C'
+                                //RB 16-04-2018 this validation should only be applied when checking against an already existing agency update record.
+                                /*if(sRecIdRes == 'D' && au.Status__c != 'Terminated'){
+                                    sRecIdRes = 'C';
+                                }*/
+System.debug('sRecIdRes after D: ' + sRecIdRes);                              
                                 //Check if the agency update record is to delete or not save at all!!
                                 if(sRecIdRes == 'F'){
                                     //remove entry
@@ -192,6 +198,11 @@ System.debug('sRecIdWinner: ' + sRecIdWinner);
                                 sRecIdWinner = sRecIdRes;
 System.debug('sRecIdRes: ' + sRecIdRes);
 System.debug('setToRemoveAgencyUpdate: ' + setToRemoveAgencyUpdate);
+                                //RB 10-11-2017 - If the determined recId is 'D' check the account status, and if not Terminated, force recId = 'C'
+                                if(sRecIdRes == 'D' && au3.Status__c != 'Terminated'){
+                                    sRecIdRes = 'C';
+                                }
+System.debug('sRecIdRes after D: ' + sRecIdRes);
                                 //Check if the agency update record is to delete or not save at all!!
                                 if(sRecIdRes == 'F'){
                                     //remove entry

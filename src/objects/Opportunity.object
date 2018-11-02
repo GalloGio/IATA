@@ -3115,6 +3115,10 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>IqScore</fullName>
+        <trackTrending>false</trackTrending>
+    </fields>
+    <fields>
         <fullName>IsMine__c</fullName>
         <description>Used for filtering purposes in list views, for the RCRM project. Field is TRUE if the opportunity &quot;is linked&quot; to the current user, FALSE otherwise. The formula describes when an Opp is considered linked to the current user.</description>
         <externalId>false</externalId>
@@ -3478,6 +3482,11 @@
                     <label>Airsat</label>
                 </value>
                 <value>
+                    <fullName>APCS Products</fullName>
+                    <default>false</default>
+                    <label>APCS Products</label>
+                </value>
+                <value>
                     <fullName>Cargo IS</fullName>
                     <default>false</default>
                     <label>Cargo IS</label>
@@ -3493,9 +3502,24 @@
                     <label>E&amp;F Services</label>
                 </value>
                 <value>
+                    <fullName>FSS Products</fullName>
+                    <default>false</default>
+                    <label>FSS Products</label>
+                </value>
+                <value>
                     <fullName>GDP</fullName>
                     <default>false</default>
                     <label>GDP</label>
+                </value>
+                <value>
+                    <fullName>ICCS Products</fullName>
+                    <default>false</default>
+                    <label>ICCS Products</label>
+                </value>
+                <value>
+                    <fullName>IFG Products</fullName>
+                    <default>false</default>
+                    <label>IFG Products</label>
                 </value>
                 <value>
                     <fullName>Market IS</fullName>
@@ -3503,9 +3527,19 @@
                     <label>Market IS</label>
                 </value>
                 <value>
+                    <fullName>MER Products</fullName>
+                    <default>false</default>
+                    <label>MER Products</label>
+                </value>
+                <value>
                     <fullName>Pax IS</fullName>
                     <default>false</default>
                     <label>Pax IS</label>
+                </value>
+                <value>
+                    <fullName>SFO Products</fullName>
+                    <default>false</default>
+                    <label>SFO Products</label>
                 </value>
                 <value>
                     <fullName>Strategic Partnerships</fullName>
@@ -3793,9 +3827,9 @@
                     <label>Daniel Shemi</label>
                 </value>
                 <value>
-                    <fullName>Elena Chernousova</fullName>
+                    <fullName>Dominic Freienstein</fullName>
                     <default>false</default>
-                    <label>Elena Chernousova</label>
+                    <label>Dominic Freienstein</label>
                 </value>
                 <value>
                     <fullName>Gurjit Gill</fullName>
@@ -3816,16 +3850,6 @@
                     <fullName>Joyce Goh</fullName>
                     <default>false</default>
                     <label>Joyce Goh</label>
-                </value>
-                <value>
-                    <fullName>Joy Gallowitsch</fullName>
-                    <default>false</default>
-                    <label>Joy Gallowitsch</label>
-                </value>
-                <value>
-                    <fullName>Karim Ayari</fullName>
-                    <default>false</default>
-                    <label>Karim Ayari</label>
                 </value>
                 <value>
                     <fullName>Laetitia Slottved</fullName>
@@ -3911,6 +3935,11 @@
                     <fullName>Shane McCorley</fullName>
                     <default>false</default>
                     <label>Shane McCorley</label>
+                </value>
+                <value>
+                    <fullName>Shanil Perera</fullName>
+                    <default>false</default>
+                    <label>Shanil Perera</label>
                 </value>
                 <value>
                     <fullName>Tanya McKay</fullName>
@@ -6201,6 +6230,33 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Product_Family__c</picklist>
+            <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO Products</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Region__c</picklist>
             <values>
                 <fullName>Africa</fullName>
@@ -6270,7 +6326,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Elena Chernousova</fullName>
+                <fullName>Dominic Freienstein</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6286,15 +6342,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Joy Gallowitsch</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Joyce Goh</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Karim Ayari</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6363,6 +6411,10 @@
             </values>
             <values>
                 <fullName>Shane McCorley</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shanil Perera</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8002,6 +8054,33 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Product_Family__c</picklist>
+            <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO Products</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Region__c</picklist>
             <values>
                 <fullName>Africa</fullName>
@@ -8051,10 +8130,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Karim Ayari</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Louise Denis</fullName>
                 <default>false</default>
             </values>
@@ -8072,6 +8147,10 @@
             </values>
             <values>
                 <fullName>Scott Gilmore</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shanil Perera</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9769,6 +9848,10 @@
         <picklistValues>
             <picklist>Product_Family__c</picklist>
             <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airport IS</fullName>
                 <default>false</default>
             </values>
@@ -9789,7 +9872,23 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>GDP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9798,6 +9897,10 @@
             </values>
             <values>
                 <fullName>Pax IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9910,10 +10013,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Elena Chernousova</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Gurjit Gill</fullName>
                 <default>false</default>
             </values>
@@ -9926,15 +10025,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Joy Gallowitsch</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Joyce Goh</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Karim Ayari</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9991,6 +10082,10 @@
             </values>
             <values>
                 <fullName>Shane McCorley</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shanil Perera</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11698,6 +11793,33 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Product_Family__c</picklist>
+            <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO Products</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Region__c</picklist>
             <values>
                 <fullName>Africa</fullName>
@@ -11739,10 +11861,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Elena Chernousova</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Gurjit Gill</fullName>
                 <default>false</default>
             </values>
@@ -11756,10 +11874,6 @@
             </values>
             <values>
                 <fullName>Joyce Goh</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Karim Ayari</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11800,6 +11914,10 @@
             </values>
             <values>
                 <fullName>Scott Gilmore</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shanil Perera</fullName>
                 <default>false</default>
             </values>
             <values>

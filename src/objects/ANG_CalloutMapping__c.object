@@ -66,6 +66,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Integration_System__c</fullName>
+        <externalId>false</externalId>
+        <label>Integration System</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Named_Credential__c</fullName>
         <externalId>false</externalId>
         <label>Named Credential</label>
@@ -107,5 +117,23 @@
         <unique>false</unique>
     </fields>
     <label>Newgen ISS Callout Mapping</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Action__c</columns>
+        <columns>Type__c</columns>
+        <columns>Field__c</columns>
+        <columns>Event_Type__c</columns>
+        <columns>CalloutClass__c</columns>
+        <columns>client_id__c</columns>
+        <columns>client_secret__c</columns>
+        <columns>Credential__c</columns>
+        <columns>Named_Credential__c</columns>
+        <columns>SETUP_TYPE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

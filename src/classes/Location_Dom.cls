@@ -1,4 +1,4 @@
-public without sharing class Location_Dom {
+public with sharing class Location_Dom {
 	/****************************************************************************************************
 	        Call trigger method corresponding to trigger event
 	****************************************************************************************************/
@@ -85,32 +85,35 @@ public without sharing class Location_Dom {
 		// Sync location updates to SAP and Zuora
 	    Location_Svc.syncLocationsUpdateWithExternalSystems(newList, oldMap);
 	    
-	    // Sync location updates to Order object
-	    //Location_Svc.syncLocationsUpdateWithNewOrders(newMap, oldMap);
-
 	    //Sync to SAP the location billTo and ShipTo
         List<Location__c> locationsToSync = new List<Location__c>();
-        //for (Location__c location : newList){
-        //	Location__c oldLocation = oldMap.get(location.Id);
-        //	//Make sure that the trigger will not fire again if the SAP update the SAP_Id__c
-        //	String methodName = Utility.idsInTriggers.get(location.Id);
-        //	if(methodName != null && methodName == 'syncLocationToSAP'){
-        //		//if(location.SAP_Id__c == oldLocation.SAP_Id__c)
-        //		{
-	       // 		locationsToSync.add(location);
-	       // 	}
-        //	}else{
-        //		Utility.idsInTriggers.put(location.Id,'syncLocationToSAP');
-        //	}
-        	
-        //}
-        for (Integer i = 0; i < newList.size(); i++)
+        //Set to keep the locations that were deactivated
+        Set<Id> deactivatedlocationsList = new Set<Id>();
+
+        for (Integer i = 0; i < newList.size(); i++){
             if (newList[i].Active__c == true && oldList[i].SAP_Id__c == newList[i].SAP_Id__c &&
                 (oldList[i].Address__c != newList[i].Address__c || oldList[i].Email__c != newList[i].Email__c ||
-                 oldList[i].Phone__c != newList[i].Phone__c || oldList[i].VAT_Number__c != newList[i].VAT_Number__c))
+                 oldList[i].Phone__c != newList[i].Phone__c || oldList[i].VAT_Number__c != newList[i].VAT_Number__c)){
+             
                 locationsToSync.add(newList[i]);
-        if(locationsToSync.size() > 0)
+            }
+            //Check if the location was deactivated by a Standard Type of user- INC376899
+            if(!newList[i].Active__c && UserInfo.getUserType().equals('Standard')){
+            	deactivatedlocationsList.add(newList[i].Id);
+            }
+        }
+
+        if(locationsToSync.size() > 0){
             Location_Svc.SendLocationToSAP(locationsToSync);
+        }
+
+		//Verifies if there are deactivated locations - INC376899
+		if(deactivatedlocationsList.size() > 0 ){
+			//Retrieves the orders that have this locations and delete them
+			List<Order> ordersToDelete = Order_Sel.getNewOrdersByLocation(deactivatedlocationsList);
+			delete ordersToDelete;
+		}
+
 	}
 
 	private void onBeforeDelete(){

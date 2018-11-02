@@ -48,6 +48,10 @@
                 <behavior>Edit</behavior>
                 <field>Limit_Cash_conditions__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Delay_Cash_Condition__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

@@ -295,8 +295,13 @@ public class SIDRAliteMassActionControllerTest {
         Case oscarCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_OSCAR_ID);
         oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
         insert oscarCase;
+        
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+            Account__c = account.Id,
             RPM_Approval__c = 'Authorize Disapproval'
         );
         insert oscar;
@@ -336,7 +341,11 @@ public class SIDRAliteMassActionControllerTest {
         oscarCase.Documentation_Complete__c = null;
         insert oscarCase;
 
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = account.Id);
         insert oscar;
 
         Test.startTest();

@@ -217,11 +217,6 @@
         <label>E-mail to Case - Americas R&amp;S Bulletins</label>
     </standardValue>
     <standardValue>
-        <fullName>E-mail to Case - Americas TAC</fullName>
-        <default>false</default>
-        <label>E-mail to Case - Americas TAC</label>
-    </standardValue>
-    <standardValue>
         <fullName>E-mail to Case - AP central team email</fullName>
         <default>false</default>
         <label>E-mail to Case - AP central team email</label>
@@ -357,6 +352,11 @@
         <label>E-mail to Case - CNS Endorsement</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - Commissioner</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Commissioner</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - Costa Rica</fullName>
         <default>false</default>
         <label>E-mail to Case - Costa Rica</label>
@@ -437,6 +437,11 @@
         <label>E-mail to Case - Finland</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - FoP notification</fullName>
+        <default>false</default>
+        <label>E-mail to Case - FoP notification</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - France</fullName>
         <default>false</default>
         <label>E-mail to Case - France</label>
@@ -450,6 +455,11 @@
         <fullName>Email to case – GDI risk</fullName>
         <default>false</default>
         <label>Email to case – GDI risk</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - GDS FOP Support</fullName>
+        <default>false</default>
+        <label>E-mail to Case - GDS FOP Support</label>
     </standardValue>
     <standardValue>
         <fullName>E-mail to Case - Georgia</fullName>
@@ -932,6 +942,11 @@
         <label>E-mail to Case - QMS - Zimbabwe</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - Reporting and Billing</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Reporting and Billing</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - Romania &amp; Moldova</fullName>
         <default>false</default>
         <label>E-mail to Case - Romania &amp; Moldova</label>
@@ -1142,6 +1157,11 @@
         <label>Financial Security Monitoring</label>
     </standardValue>
     <standardValue>
+        <fullName>FoP automatic renewal</fullName>
+        <default>false</default>
+        <label>FoP automatic renewal</label>
+    </standardValue>
+    <standardValue>
         <fullName>Funds Management</fullName>
         <default>false</default>
         <label>Funds Management</label>
@@ -1165,6 +1185,11 @@
         <fullName>Letter</fullName>
         <default>false</default>
         <label>Letter</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Massive FOP Creation</fullName>
+        <default>false</default>
+        <label>Massive FOP Creation</label>
     </standardValue>
     <standardValue>
         <fullName>Monthly Report</fullName>

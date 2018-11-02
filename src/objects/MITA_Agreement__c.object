@@ -760,7 +760,8 @@ IF(Airline_1__r.BIETA_One_way_Intermodal_Participating__c&gt; Airline_2__r.BIETA
         <description>Prevents &quot;junior&quot; MITA members from requesting agreements to senior airlines.
 The seniorship is calculate on a different date for each agreement type.</description>
         <errorConditionFormula>AND(
- Active__c,ISPICKVAL(Cancellation_Reason__c, &quot;&quot;),
+AND(OR(NOT(ISBLANK(Withdrawal_Request_Reception_Date__c)),NOT(ISBLANK(Cancellation_date__c)),NOT(ISBLANK(Cancellation_processed_date__c))),
+Active__c,ISPICKVAL(Cancellation_Reason__c, &quot;&quot;)),
 IF(CASE(TEXT(Agreement_type__c), 
 &apos;The Passenger and Cargo Interline Traffic Agreement&apos;, 
 IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c, Airline_1__r.MITA_IATA_Interline_Cargo__c &lt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;,&apos;f&apos;), 

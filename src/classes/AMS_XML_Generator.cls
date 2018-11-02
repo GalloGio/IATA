@@ -31,10 +31,10 @@ public with sharing class AMS_XML_Generator {
     public Map<Id, String> mAg_VS_DPCSystem;
     public Map<Id, Id> mAg_VS_HO;
     
-/*  NEWGEN-801
+/*  NEWGEN-801 */
     public Map<Id, List<Agency_Authorization__c>> mAgencyAuthorizations;
     public Map<Id, List<ANG_RHC_Information__c>> mAgencyRHCInfos;
-*/
+/* EOF NEWGEN-801 */
     public List<AMS_Agency_Updates__c> lAgencyUpdates;  
     public List<Agency_Applied_Change_code__c> lAgencyChangeCode; 
 
@@ -76,12 +76,13 @@ public with sharing class AMS_XML_Generator {
     public List<Agency_Applied_Change_code__c> lAgAppChangeCode;
     public List<Agency_Applied_Change_code__c> lAgAppChangeCodeDEF;
 
-/*  NEWGEN-801
+/*  NEWGEN-801 */
 
     public List<Agency_Authorization__c> lAgencyAuthorizations;
     public List<ANG_RHC_Information__c> lAgencyRHCInfos;
 
-*/
+/* EOF NEWGEN-801 */
+
     public List<String> orderedAgencyIds;
     
     
@@ -164,6 +165,25 @@ public with sharing class AMS_XML_Generator {
         Datetime dtFirstDayOfMonth = datetime.newInstance(dFirstDayOfMonth.year(), dFirstDayOfMonth.month(),dFirstDayOfMonth.day());
         Datetime dtLastDayOfMonth = datetime.newInstance(dLastDayOfMonth.year(), dLastDayOfMonth.month(),dLastDayOfMonth.day());
 
+        /*NEWGEN-3267 START - Discarded from Release 6 NEWGEN
+        Map<Id,Id> changeCodeOscarMap = new Map<Id,Id>();
+        Map<Id,String> changeCodeCaseNumber = new Map<Id,String>();
+
+        for(Agency_Applied_Change_code__c aacc: agencies){
+            if(aacc.OSCAR__c <> null && aacc.OSCAR__r.Oscar_Communication_Case_Id__c <> null){
+                changeCodeCaseNumber.put(aacc.Id,aacc.OSCAR__r.Oscar_Communication_Case_Id__c);
+            }
+            else if(aacc.OSCAR__c <> null)
+                changeCodeOscarMap.put(aacc.OSCAR__c,aacc.Id);
+        }
+
+
+        for(Case c: [Select Id, CaseNumber from Case where RecordTypeId = :AMS_Utils.OSCAR_COMUNICATION and OSCAR__c in: changeCodeOscarMap.Values() and ( ParentId = null or Parent.RecordTypeId != :AMS_Utils.OSCAR_COMUNICATION)]){
+            changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c),c.Id);
+        }
+        NEWGEN-3267 END*/
+        
+
         //for(Account ag : agencies){
         for(Agency_Applied_Change_code__c ag : agencies){
             Dom.Xmlnode liNode = rootNode.addChildElement('line_item', null, null);
@@ -179,6 +199,11 @@ public with sharing class AMS_XML_Generator {
 
             getElementNode(liNode, 'product_id', ag.Account__r.Location_Class__c + ag.Change_Code__c); 
             getElementNode(liNode, 'quantity', '1');
+
+            /*NEWGEN-3267 START - Discarded from Release 6 NEWGEN
+            if(changeCodeCaseNumber.get(ag.Id) <> null)
+                getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
+            NEWGEN-3267 END*/
         }
 
         system.debug('--------- doc: ' + doc.toXmlString());        
@@ -371,7 +396,7 @@ public with sharing class AMS_XML_Generator {
         }
         
 
-/*  NEWGEN-801
+/*  NEWGEN-801 */
 
         lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c, CreatedDate, Created_Date_To_Show__c,Reason_Code__c,Reason_Description__c 
                                 FROM Agency_Applied_Change_code__c 
@@ -379,13 +404,16 @@ public with sharing class AMS_XML_Generator {
                                 AND Active__c = true 
                                 AND Account__c in :setAgencyKeys];
 
-*/
+/*  EOF NEWGEN-801 */
+
+/*
         lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c, CreatedDate, Created_Date_To_Show__c 
                                 FROM Agency_Applied_Change_code__c 
                                 WHERE Change_Code__c != null 
                                 AND Active__c = true 
                                 AND Account__c in :setAgencyKeys];
-        
+  */
+
         for (Agency_Applied_Change_code__c agChgCode : lAgencyChangeCode) {
             mAg_VS_AgChangeCode.put(agChgCode.Account__c,agChgCode);
         }                            
@@ -707,7 +735,7 @@ public with sharing class AMS_XML_Generator {
 
         Id formOfPaymentRTId   = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
 
-/*  NEWGEN-801
+/*  NEWGEN-801 */
 
         lAgencyAuthorizations = [SELECT Id, ANG_FormOfPayment_ID__c,Account__c from Agency_Authorization__c where Account__c in :setAgencyKeys and RecordTypeId =:formOfPaymentRTId and Status__c = 'Active' ];
 
@@ -733,7 +761,7 @@ public with sharing class AMS_XML_Generator {
             else
                 mAgencyRHCInfos.get(rhcInfo.ANG_AccountId__c).add(rhcInfo);
         }
-*/
+/* EOF NEWGEN-801 */
 
         //MAIN
         lFieldsTranslation = [SELECT Address__c,Agency_Hierarchy__c,Account__c,AMSAirport__c,AMSEmployee__c,AMSOwner__c,
@@ -1067,7 +1095,7 @@ public with sharing class AMS_XML_Generator {
                     billingAdd.City__c = AMS_Utils.cleanSpecialChars(ag.BillingCity);
                     billingAdd.State__c = ag.Iso_State__c;
                     billingAdd.Country__c = ag.IATA_ISO_Country__c;
-                    billingAdd.AMS_ZipCode__c = ag.BillingPostalCode;
+                    billingAdd.AMS_ZipCode__c = ag.BillingPostalCode == null ? '' : AMS_Utils.cleanSpecialChars(ag.BillingPostalCode);//AMSU-178
 
                     List<String> lPhone = splitPhone(ag.Phone, ag.IATA_ISO_Country__r.Name);
                     if(lPhone != null){
@@ -1138,7 +1166,7 @@ public with sharing class AMS_XML_Generator {
                             }                            
                         }
 
-                        shippingAdd.AMS_ZipCode__c = ag.ShippingPostalCode;
+                        shippingAdd.AMS_ZipCode__c = ag.ShippingPostalCode == null ? '' : AMS_Utils.cleanSpecialChars(ag.ShippingPostalCode);//AMSU-178
                         
                         System.debug(loggingLevel.Debug, '____ [cls AMS_XML_Generator - getAgencyDetail] shippingAdd - ' + shippingAdd);
                         lAddresses.add(shippingAdd);
@@ -1678,8 +1706,11 @@ public with sharing class AMS_XML_Generator {
             
             getElementNode(agencyNode, 'solicit', agency.GDP_Opt_In__c == True ? 'Y' : 'N');
             
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Tax_Reference_Number__c', 'tax_ref_1', agency.VAT_Number__c);
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Other_Tax_Reference_Number__c', 'tax_ref_2', agency.VAT_Number_2__c);
+            /*** AMSU-178 ***/
+            String vat1 = String.isBlank(agency.VAT_Number__c) ? '' : AMS_Utils.cleanSpecialChars(agency.VAT_Number__c);
+            String vat2 = String.isBlank(agency.VAT_Number_2__c) ? '' : AMS_Utils.cleanSpecialChars(agency.VAT_Number_2__c);               
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Tax_Reference_Number__c', 'tax_ref_1', vat1);
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Other_Tax_Reference_Number__c', 'tax_ref_2', vat2);
             
             getElementNode(agencyNode, 'bsp_code', agency.BSP_CASS_Code__c);
             
@@ -1726,15 +1757,16 @@ public with sharing class AMS_XML_Generator {
             getElementNode(agencyNode, 'eth_2', Null); //Empty, reserved field
             getElementNode(agencyNode, 'eth_3', Null); //Empty, reserved field
 
-/*  NEWGEN-801
+/*  NEWGEN-801 */
 
 
-            Dom.Xmlnode nodeAT = agencyNode.addChildElement('accreditation_types', null, null);
+            //Dom.Xmlnode nodeAT = agencyNode.addChildElement('accreditation_types', null, null);
             List<String> lAT = agency.ANG_Accreditation_Model__c == null ? new List<String>() : agency.ANG_Accreditation_Model__c.split(';');
 
             if(!lAT.isEmpty()){
                 for (String at : lAT) {
-                    getElementNode(nodeAT, 'accreditation_type', at);
+                    //getElementNode(nodeAT, 'accreditation_type', at);
+                    getElementNode(agencyNode, 'accreditation_type', at);
                 }
             }
 
@@ -1821,7 +1853,7 @@ public with sharing class AMS_XML_Generator {
                 }
             }
 
-*/
+/* EOF NEWGEN-801 */
         }
 
     }
@@ -2105,7 +2137,7 @@ public with sharing class AMS_XML_Generator {
                                         String sCountryCode = '';
                                         if(sValue.length() == 4){
                                             sISO_code = sValue.substring(0,2);
-                                            sCountryCode = sValue.substring(2,4);
+                                            sCountryCode = sValue.substring(2,4).replace('-','');//AMSU-178
                                         //Test to check US, Canada and Australia states
                                         }else if(sValue.indexOf('-') > 1){
                                             sISO_code = sValue.substring(sValue.indexOf('-')+1,sValue.length());

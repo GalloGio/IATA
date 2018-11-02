@@ -56,6 +56,10 @@
                 <behavior>Edit</behavior>
                 <field>Group_Owner__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Group_Administrator__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -114,6 +118,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Managed_in_SSW__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

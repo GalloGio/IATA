@@ -303,7 +303,7 @@ private class AMS_XML_GeneratorTest {
         ownershipList.add(o4);
         insert ownershipList;
 
-		system.debug(Logginglevel.ERROR, 'ALEX 18 --> Query issued: ' + Limits.getQueries());
+        system.debug(Logginglevel.ERROR, 'ALEX 18 --> Query issued: ' + Limits.getQueries());
 
         List< AMS_Agency_Segment__c > agsgts = new List< AMS_Agency_Segment__c >();
         for(Account a:accountList){
@@ -438,7 +438,7 @@ private class AMS_XML_GeneratorTest {
         
         r[5] = ag1.Id;
 
-/*  NEWGEN-801
+/*  NEWGEN-801 */
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
         
@@ -461,7 +461,7 @@ private class AMS_XML_GeneratorTest {
         
         insert rhcInfo;
 
-*/
+/* EOF NEWGEN-801 */
         
         system.debug(Logginglevel.ERROR, 'ALEX 29 --> Query issued: ' + Limits.getQueries());        
 

@@ -43,6 +43,10 @@ global class WrapperAttach implements Comparable {
     public Archived_Attachment__c fileArchived {get;set;}
     public AmazonFile fileAmazon {get;set;}
 
+    /*** AMSU-139 ***/
+    public String updatedBy {get;set;}
+    public DateTime updatedDate {get;set;}
+
     public WrapperAttach(Attachment file, ISSPAttachmentPermission__c permission) {
         this.isSelected = false;
         this.fileAttachment = file;
@@ -112,6 +116,8 @@ global class WrapperAttach implements Comparable {
         this.efExpired = file.getEFExpired();
         this.efPrivate = file.getEFPrivate();
         this.efSkipValidation = file.getEFSkipValidation();
+        this.updatedBy = file.getUpdatedBy();
+        this.updatedDate = file.getUpdatedDate();
     }
 
     private void setPermission() {

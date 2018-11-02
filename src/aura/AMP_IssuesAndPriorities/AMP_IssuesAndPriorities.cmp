@@ -2,6 +2,7 @@
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="reportId" type="String" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
+    <aura:attribute name="divisionValues" type="String[]"/>
     <aura:attribute name="showPopup" type="Boolean" default="false" />
     <aura:attribute name="showDeletionCheck" type="Boolean" default="false" />
     <!-- 'sobjectType': 'Objective__c',-->
@@ -13,6 +14,7 @@
                     default="{     'sobjectType' : 'Objective__c',
                              'Account__c' : 'accountId',
                              'Name': '',
+                             'Division__c': '',
                              'AM_Source_Text__c': '',
                              'Details__c': '',
                              'AM_Level_of_importance__c': 'medium',
@@ -83,6 +85,20 @@
                                         <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
                                     </aura:renderIf>
                                     <aura:renderIf isTrue="{!v.sortOrder=='Namedesc'}">
+                                        <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+                                    </aura:renderIf>
+                                </div>
+                        </th>
+                        <th scope="col">
+                            <!-- <span class="slds-truncate">Name</span> -->
+
+                                <ui:outputText value="Division" title="Division__c" click="{!c.sortList}" class="slds-th__action slds-text-link--reset noUpperCase slds-truncate" />
+                                <span class="slds-assistive-text">Sort Column</span>
+                                <div class="slds-icon_container" title="Sort Column">
+                                    <aura:renderIf isTrue="{!v.sortOrder=='Division__c'}">
+                                        <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+                                    </aura:renderIf>
+                                    <aura:renderIf isTrue="{!v.sortOrder=='NDivision__cdesc'}">
                                         <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
                                     </aura:renderIf>
                                 </div>
@@ -211,7 +227,7 @@
                 <tbody>
                     <aura:iteration items="{!v.issues}" var="issue" indexVar="index">
                         <tr>
-                            <c:AMP_IssueOrPriority issue="{!issue}" index="{!index}" canEdit="{!v.canEdit}"/>
+                            <c:AMP_IssueOrPriority issue="{!issue}" index="{!index}" canEdit="{!v.canEdit}" divisionValues="{!v.divisionValues}"/>
                         </tr>
                     </aura:iteration>
                 </tbody>

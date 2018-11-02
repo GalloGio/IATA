@@ -755,6 +755,16 @@
         <default>false</default>
         <label>ZWD</label>
     </customValue>
+    <customValue>
+        <fullName>SRD</fullName>
+        <default>false</default>
+        <label>SRD</label>
+    </customValue>
+    <customValue>
+        <fullName>BYN</fullName>
+        <default>false</default>
+        <label>BYN</label>
+    </customValue>
     <masterLabel>Currency Center Currency Codes</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

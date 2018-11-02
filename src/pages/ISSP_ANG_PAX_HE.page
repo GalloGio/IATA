@@ -172,7 +172,7 @@
             
             .email-input {width: 180px;float:left;margin-left:11px}
             .email-label {
-         		font-size:91%;
+                font-size:91%;
                 float:left;
                 padding-left:18px;
                 width:185px
@@ -195,7 +195,7 @@
             }
                    
             .phone-input {width: 173px;float:left;margin-left:105px}
-         	.phone-label {
+            .phone-label {
                 width: 182px;
                 text-align: left;
                 font-size:91%;
@@ -204,11 +204,11 @@
            
            .branch_office_email__c {
                width: 178px;
-          	}
+            }
             
             .email__c {
                width: 174px;
-          	}
+            }
                    
            label {
               float: left;
@@ -240,7 +240,7 @@
         $j(".country__c").val("{!isocountry.Name}");
         $j(".country__c").attr('readonly', true);
         $j(".country__c").attr('disabled','disabled');
-        $j(".email-label label").text("{!$Label.OneId_Profile_OfficeEmail} *");
+        $j(".email-label label").text("{!$Label.ISSP_Office_Email} *");        
         $j(".phoneLabelText").hide();
         $j("#phone").hide();
         $j("#branch_office_phone__c").hide();
@@ -607,8 +607,8 @@
         
         inputs.each(function() {
     // do something exciting with each div
-    		$(this).val("abc");
-		});
+            $(this).val("abc");
+        });
     }
 
     function togglePreviousEmploy(p) {
@@ -847,7 +847,7 @@
                                     <apex:inputField style="width: 174.4px;"  value="{!hqAccount.FAXNational__c}" onblur="setInternationalAccountPhoneNo('fax');" id="companyfaxinput"/>
                                 </apex:pageBlockSectionItem>
 
-                    	<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
+                        <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
                             <apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}"/>
                           <apex:outputpanel id="VATNumberInput">
                             <span style="margin-left:{!If(isEUcountry,'-20px', '-2px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
@@ -913,14 +913,14 @@
                             document.onload = showUpdateAgencyDialog();
                             document.onload = removeReq();
                         
-                        	var target = $j('.hophonestatusBox #recordstatuscontainer')[0],
-                            	observer = new MutationObserver(function (mutations) {
+                            var target = $j('.hophonestatusBox #recordstatuscontainer')[0],
+                                observer = new MutationObserver(function (mutations) {
                                 $j('#div-verify-office-phone').html($j('.hophonestatusBox input')[0]);
                                 }),
                             config = { attributes: true, childList: true, characterData: true };
                             
                             if(target !== undefined) {
-                            	observer.observe(target, config);
+                                observer.observe(target, config);
                             }
 
                             var natphoneacct = $j("[id$=companyphoneinput]"),
@@ -929,7 +929,7 @@
                                 faxacct = $j("[id$=companyfax]"),
                                 natmobileacct = $j("[id$=companymobileinput]"),
                                 mobileacct = $j("[id$=companymobile]");
-							
+                            
                             natphoneacct.intlTelInput({
                                 nationalMode: true,
                                 defaultCountry: defaultHQCountry,
@@ -1034,18 +1034,18 @@
                             </apex:pageBlockSectionItem>
                              
                             <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                        		<apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" for="VATInput"/>
-                        		<apex:outputpanel id="VATNumberInput">
-                            		<span style="margin-left:{!If(isEUcountry,'-19px', '-2px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
-                            		<apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:178px"/>
-                            		<apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                            		<apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
-                                	<apex:facet name="start">
+                                <apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" for="VATInput"/>
+                                <apex:outputpanel id="VATNumberInput">
+                                    <span style="margin-left:{!If(isEUcountry,'-19px', '-2px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
+                                    <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" id="VATInput" style="width:178px"/>
+                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                    <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
+                                    <apex:facet name="start">
                                     {!$Label.ISSP_PAX_Validating_VAT_Number}
-                                	</apex:facet>
-                            	</apex:actionstatus>
-                        	</apex:outputpanel>
-                    	</apex:pageblocksectionitem>
+                                    </apex:facet>
+                                </apex:actionstatus>
+                            </apex:outputpanel>
+                        </apex:pageblocksectionitem>
                             
                             <apex:pageBlockSection id="BranchPhoneSection">
                                 <DSE:DS_DataQuality id="BranchPhone"
@@ -1095,10 +1095,10 @@
                             $j('#div-verify-office-phone-term').html($j('.hophonestatusBox2 input')[0]);
                         }),
                         
-                	config = { attributes: true, childList: true, characterData: true };
+                    config = { attributes: true, childList: true, characterData: true };
                     
                     if(target !== undefined) {
-                  		observer.observe(target, config);
+                        observer.observe(target, config);
                     }
                       
                     function mandatoryLabels() {
@@ -1569,20 +1569,20 @@
                             </apex:outputpanel>
                         </apex:pageblocksectionitem>
 
-                     	<apex:pageBlockSectionItem id="y1" rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
-                     		<apex:outputLabel id="section5-first-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
+                        <apex:pageBlockSectionItem id="y1" rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
+                            <apex:outputLabel id="section5-first-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
                             <apex:outputPanel >
-                           		<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+                                <apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
                                 <apex:outputText id="y1CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
                             </apex:outputPanel>
-                   		</apex:pageBlockSectionItem>       
-                       	<apex:pageBlockSectionItem id="y2" rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
-                       		<apex:outputLabel id="section5-second-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
+                        </apex:pageBlockSectionItem>       
+                        <apex:pageBlockSectionItem id="y2" rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
+                            <apex:outputLabel id="section5-second-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
                             <apex:outputPanel >                            
-                            	<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+                                <apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
                                 <apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
                             </apex:outputPanel>                            
-                   		</apex:pageBlockSectionItem>
+                        </apex:pageBlockSectionItem>
                                
                        <apex:pageblocksectionitem labelStyle="width:20%">
                            <apex:outputlabel id="section5-cargo-code-radio" value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />
@@ -1593,7 +1593,7 @@
                        </apex:pageblocksectionitem>
                 
                     <apex:outputPanel id="iatacode" style="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes', 'border: 0px !important;', 'display:none')}">
-                	<apex:pageBlockSection columns="2">
+                    <apex:pageBlockSection columns="2">
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel id="section5-cargo-code" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" />
                         <apex:inputField value="{!newForm.IATA_Cargo_Code__c}" onblur="if(this.value!='') {fetchCargoAgent(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}"/>
@@ -1617,12 +1617,12 @@
                 
                 <!--NG-663 START -->    
                 <apex:pageblocksectionitem >
-               		<apex:outputlabel id="section5-iatan-code-radio" value="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" />
+                    <apex:outputlabel id="section5-iatan-code-radio" value="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" />
                        <apex:selectradio style="width:100px;" value="{!newForm.IATA_Registered_IATAN_Agent__c}" styleclass="{!IF(AND(isValError, newForm.IATA_Registered_IATAN_Agent__c==null), 'requiredIndicator', '')}" id="isregiatantravel" onchange="toggleIATANCode('{!$Component.isregiatantravel}');">
                            <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
                            <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
                        </apex:selectradio>
-             	</apex:pageblocksectionitem>
+                </apex:pageblocksectionitem>
                 <apex:outputPanel id="iatacodeIATAN" style="{!IF(newForm.IATA_Registered_IATAN_Agent__c == 'Yes', 'border: 0px !important;', 'display:none')}">
                 <apex:pageBlockSection columns="2">
                     <apex:pageBlockSectionItem dataStyle="width:20%">
@@ -1645,11 +1645,11 @@
                 </apex:pageBlockSection>
                 </apex:outputPanel>
             <!-- NG-663 END -->
-				
+                
                 <apex:pageblocksectionitem >
-               		<apex:outputlabel id="section5-gds" value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
-                  	<apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}"/>
-              	</apex:pageblocksectionitem>
+                    <apex:outputlabel id="section5-gds" value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
+                    <apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}"/>
+                </apex:pageblocksectionitem>
                     
                 </apex:pageBlockSection>    
                 </apex:pageBlock>

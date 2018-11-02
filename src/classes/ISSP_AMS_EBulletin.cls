@@ -60,6 +60,20 @@ public with sharing class ISSP_AMS_EBulletin {
     public List <ISSP_PDF_Per_Region__c> pdfUserGuide {get; set;}
     
     public IATA_ISO_Country__c isocountry {get; set;}
+
+    public static String objectBaseQuery = 'Agency_Applied_Change_code__c';
+    public static String objectHistBaseQuery = 'AMS_Agency_A_Change_code_History__c';
+    public static String eBulletinCSVFormat = '","';
+    public static AMS_EBulletinReportHelper.AMSEBulletinFilters filters;
+    public Id batchRecordsId {get;set;}
+    public Boolean isBatchProcessing {get;set;}
+    @TestVisible private static Set<String> ccNamesToRecoverAux;
+    @TestVisible private static List<String> countriesFilterAux;
+    @TestVisible private static List<String> locClsListAux;
+    private static Datetime filterFromCCDateAux;
+    private static Datetime filterToCCDateAux;
+    public Boolean isGettingReportDaily {get;set;}
+    public Boolean isGettingReportWeekly {get;set;}
     
     public ISSP_AMS_EBulletin() {
 
@@ -202,6 +216,11 @@ public with sharing class ISSP_AMS_EBulletin {
             weekDay = dtWeekEnd.format('EEEE');
         }
         week = dtWeekStart.format('dd/MM/yyyy')+ '-' +dtWeekEnd.format('dd/MM/yyyy');
+
+        batchRecordsId = null;
+        isBatchProcessing = false;
+        isGettingReportDaily = false;
+        isGettingReportWeekly = false;
     }
 
     public PageReference checkRedirect(){
@@ -977,11 +996,12 @@ public with sharing class ISSP_AMS_EBulletin {
         //System.debug('dailyReportDownload');
 
         //'dd/MM/yyyy'
+
         List<String> splitDate = pDateStart.split('/');
         System.debug('splitDate - ' + splitDate);
 
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitDate.get(2)), Integer.valueOf(splitDate.get(1)), Integer.valueOf(splitDate.get(0)));
-        Datetime endDate;
+        Datetime endDate = startDate.addDays(1);
         String period = todayPeriod == null?'':todayPeriod;
 
         //System.debug('startDate - ' + startDate);
@@ -989,41 +1009,29 @@ public with sharing class ISSP_AMS_EBulletin {
 
         Id res;
         try{
-            res = callGenerateEBulletinReportWS( newFormDaily, startDate, startDate.addDays(1), period);
-            fetchAMSProcessForm();
-        }catch(Exception e){
-            System.debug('dailyFileDownload Exception - ' + e);
-            System.debug('dailyFileDownload Exception - ' + e.getTypeName());
-            //AMS_EBulletinReportHelper.AMS_EBulletinException
-            if(e.getTypeName().contains('AMS_EBulletinException')){
 
-                string labelValue = '';
+            if(period == 'last' && newFormDaily.Last_Run__c != null && newFormDaily.Last_Run__c > startDate)
+                startDate = newFormDaily.Last_Run__c;
 
-                if(e.getMessage().equalsIgnoreCase('00')){
-                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_00;
-                }else if(e.getMessage().equalsIgnoreCase('01')){
-                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_01;
-                }else{
-                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_00;
-                }                
+            filters = new AMS_EBulletinReportHelper.AMSEBulletinFilters(newFormDaily, startDate, endDate);
 
-                //System.debug('dailyFileDownload Exception addMessages - entrei');
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, labelValue);
-                 
-                ApexPages.addMessage(myMsg);
-            }
-        }
+            System.debug('Initializing...');
 
-        if(res == null){
+            String header = getHeader();
+            System.debug('ISSP_AMS_EBulletin - dailyReportDownload - header: ' + header);
             dailyFileDownload = '';
-        }else{
-            dailyFileDownload = '/servlet/servlet.FileDownload?file=' + res;
-        }
+            getRecords(header, newFormDaily, endDate, startDate);
 
-        //System.debug('dailyFileDownload - ' + dailyFileDownload);
+        }catch(Exception e){
+            dailyFileDownload = '';
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage());
+            ApexPages.addMessage(myMsg);
+            isGettingReportDaily = false;
+        }
 
         return null;
     }
+
     
     public Pagereference weeklyReportDownload() {
 
@@ -1046,44 +1054,180 @@ public with sharing class ISSP_AMS_EBulletin {
 
         Id res;
         try{
-            res = callGenerateEBulletinReportWS( newFormWeekly , startDate, endDate, period);
-        }catch(Exception e){
-            //AMS_EBulletinReportHelper.AMS_EBulletinException
-            if(e.getTypeName().contains('AMS_EBulletinException')){
-                string labelValue = '';
+            //get header of the pdf
+            if(period == 'last' && newFormWeekly.Last_Run__c != null && newFormWeekly.Last_Run__c > startDate)
+                startDate = newFormWeekly.Last_Run__c;
 
-                if(e.getMessage().equalsIgnoreCase('00')){
-                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_00;
-                }else if(e.getMessage().equalsIgnoreCase('01')){
-                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_01;
-                }else{
-                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_00;
-                }                
+            filters = new AMS_EBulletinReportHelper.AMSEBulletinFilters(newFormWeekly, startDate, endDate);
 
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, labelValue);
-                ApexPages.addMessage(myMsg);
+            System.debug('Initializing...');
 
-            }
-        }
-
-        if(res == null){
+            String header = getHeader();
+            System.debug('ISSP_AMS_EBulletin - weeklyReportDownload - header: ' + header);
             weeklyFileDownload = '';
-        }else{
-            weeklyFileDownload = '/servlet/servlet.FileDownload?file=' + res;
-        }         
+            getRecords(header, newFormWeekly, endDate, startDate);
 
-        //System.debug('weeklyFileDownload - ' + weeklyFileDownload);
+        }catch(Exception e){
+            weeklyFileDownload = '';
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage());
+            ApexPages.addMessage(myMsg);
+            isGettingReportWeekly = false;
+        }
 
         return null;
     }
 
 
-    public static Id callGenerateEBulletinReportWS( AMS_eBulletin_Profile__c eBulletinProfile, Datetime startDate, Datetime endDate, String period){
+    @TestVisible private static String getHeader(){
 
-        Id res = AMS_EBulletinReportWebservice.generateEBulletinReport(eBulletinProfile, startDate, endDate, period);
+        System.debug('Get CSV Header...');
         
-        return res;
+        AMS_EBulletinReportHelper.getEBulletinFields(filters,objectBaseQuery,eBulletinCSVFormat);
+
+        return AMS_EBulletinReportHelper.headerCSV;
     }
+
+
+    private void getRecords(String header, AMS_eBulletin_Profile__c eBulletinProfile, Datetime endDate, Datetime startDate){
+        
+        System.debug('Get CSV Records...');
+
+        String query = getQuery();
+
+        System.debug('ISSP_AMS_EBulletin - getRecords - query: ' + query);
+        System.debug('ISSP_AMS_EBulletin - getRecords - ccNamesToRecoverAux: ' + ccNamesToRecoverAux);
+        System.debug('ISSP_AMS_EBulletin - getRecords - countriesFilterAux: ' + countriesFilterAux);
+        System.debug('ISSP_AMS_EBulletin - getRecords - locClsListAux: ' + locClsListAux);
+
+        AMS_EBulletinRecordsBatch batchRecords = new AMS_EBulletinRecordsBatch(header, query, eBulletinProfile, endDate, startDate, ccNamesToRecoverAux, countriesFilterAux, locClsListAux, false);
+        isBatchProcessing = true;
+        batchRecordsId = Database.executeBatch(batchRecords, 200);
+    }
+
+    @TestVisible private static String getQuery(){
+
+        System.debug('Get query...');
+        
+        return AMS_EBulletinReportHelper.getEBulletinRecordsQuery(filters,objectBaseQuery,eBulletinCSVFormat,false);
+
+    }
+
+    public static void updateQueryVariables(Set<String> ccNamesToRecover, List<String> countriesFilter, List<String> locClsList) {
+
+        ccNamesToRecoverAux = ccNamesToRecover;
+        countriesFilterAux = countriesFilter;
+        locClsListAux = locClsList;
+    }
+
+
+    public void isGettingReportStartDaily(){
+        isGettingReportDaily = true;
+    }
+
+    public void isGettingReportStartWeekly(){
+        isGettingReportWeekly = true;
+    }
+
+
+    public PageReference checkBatchStatus() {
+
+        System.debug('ISSP_AMS_EBulletin - checkBatchStatus');
+
+        List<AsyncApexJob> aaj = [SELECT Id, Status, ExtendedStatus FROM AsyncApexJob WHERE Id = :batchRecordsId];
+
+        System.debug('ISSP_AMS_EBulletin - checkBatchStatus - aaj: ' + aaj);
+
+        if(!aaj.isEmpty()){
+
+            if(aaj.get(0).Status == 'Completed' && aaj.get(0).ExtendedStatus != null && aaj.get(0).ExtendedStatus.contains('01')){
+
+                jobCompletedWithoutAttachment('01');
+
+                System.debug('ISSP_AMS_EBulletin - checkBatchStatus - job completed without records');
+
+            } else if(aaj.get(0).Status == 'Completed') {
+
+                String nameAtt = String.valueOf(batchRecordsId) + '%';
+                System.debug('ISSP_AMS_EBulletin - checkBatchStatus - nameAtt: ' + nameAtt);
+                List<Attachment> attachment = new List<Attachment>();
+                attachment = [SELECT Id, Name FROM Attachment WHERE Name LIKE :nameAtt];
+
+                if(!attachment.isEmpty()) { 
+
+                    isBatchProcessing = false;
+                    isGettingReportWeekly = false;
+                    isGettingReportDaily = false;   
+                    System.debug('ISSP_AMS_EBulletin - checkBatchStatus - job completed with records');
+
+                    String name = attachment.get(0).Name;
+                    attachment.get(0).Name = name.removeStart(batchRecordsId + '_');
+                    update attachment;
+
+                    if(name.containsIgnoreCase('weekly')) {
+
+                        AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormWeekly.Id, attachment.get(0).id);
+                        weeklyFileDownload = '/servlet/servlet.FileDownload?file=' + attachment.get(0).id;
+
+                    } else {
+
+                        fetchAMSProcessForm();
+                        AMS_EBulletinReportHelper.updateEbulletinProfile(system.now(), newFormDaily.Id, attachment.get(0).id);
+                        dailyFileDownload = '/servlet/servlet.FileDownload?file=' + attachment.get(0).id;
+                    }
+                } else {
+
+                    isBatchProcessing = true;
+                    isGettingReportWeekly = true;
+                    isGettingReportDaily = true;
+                    System.debug('ISSP_AMS_EBulletin - checkBatchStatus - job completed waiting for attachment');
+
+                }
+
+            } else if(aaj.get(0).Status == 'Aborted' || aaj.get(0).Status == 'Failed') {
+
+                jobCompletedWithoutAttachment('00');
+
+                System.debug('ISSP_AMS_EBulletin - checkBatchStatus - job failed or aborted with message : ' + aaj.get(0).ExtendedStatus);
+
+            } else {
+
+                isBatchProcessing = true;
+                isGettingReportWeekly = true;
+                isGettingReportDaily = true;
+                System.debug('ISSP_AMS_EBulletin - checkBatchStatus - job processing');
+
+            }
+
+        } else {
+
+            jobCompletedWithoutAttachment('00');
+
+            System.debug('ISSP_AMS_EBulletin - checkBatchStatus - job not found');
+        }
+
+        return null;
+    }
+
+    private void jobCompletedWithoutAttachment(String error) {
+
+        isBatchProcessing = false;
+        isGettingReportWeekly = false;
+        isGettingReportDaily = false;
+
+        weeklyFileDownload = '';
+        dailyFileDownload = '';
+
+        ApexPages.Message myMsg;
+
+        if(error.equals('01')){
+            myMsg = new ApexPages.Message(ApexPages.Severity.INFO, Label.ISSP_AMS_eBulletin_ErrorMsg_01);
+        } else {
+            myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_eBulletin_ErrorMsg_00);
+        }
+        
+        ApexPages.addMessage(myMsg);
+    }
+
     
     public IATA_ISO_Country__c fetchISOCountry(string isocode) {
 
@@ -1098,6 +1242,37 @@ public with sharing class ISSP_AMS_EBulletin {
                                          ];
 
         return isocountry;
+    }
+
+    /*** AMSU-62 ***/
+    public PageReference clearAllDaily() {
+        dailyCountrySelected = new List<SelectOption>();
+        dailyCountrySelectAll = false;
+
+        Id userId = Userinfo.getUserId();
+        TimeZone tz = UserInfo.getTimeZone();
+        Boolean editDaily = newFormDaily.Opt_in__c;
+        Id recordId = newFormDaily.Id;
+
+        newFormDaily = new AMS_eBulletin_Profile__c(Id= recordId, Opt_in__c= editDaily, RecordTypeId= DAILY_RECORD_TYPE_ID, 
+            User__c= userId, TimeZone__c= tz.toString());
+
+        return null;
+    }
+
+    public PageReference clearAllWeekly() {
+        weeklyCountrySelected = new List<SelectOption>();
+        weeklyCountrySelectAll = false;
+
+        Id userId = Userinfo.getUserId();
+        TimeZone tz = UserInfo.getTimeZone();
+        Boolean editWeekly = newFormWeekly.Opt_in__c;
+        Id recordId = newFormWeekly.Id;
+        
+        newFormWeekly = new AMS_eBulletin_Profile__c(Id= recordId, Opt_in__c= editWeekly, RecordTypeId= WEEKLY_RECORD_TYPE_ID, 
+            User__c= userId, TimeZone__c= tz.toString());
+
+        return null;
     }
 
 }

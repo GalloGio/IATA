@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>ANG PCI RENEWAL NonCompliance EN</name>
+    <style>freeForm</style>
+    <subject>Non compliance - Request for PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration - {!Account.IATACode__c} - {!Account.Name}</subject>
+    <textOnly>Dear {!Contact.Name},
+
+
+IATA Code: {!Account.IATACode__c}
+
+
+
+Under the Passenger Sales Agency Rules, all IATA Accredited Agents must ensure its full compliance with the Payment Card Industry Data Security Standards (PCI DSS) on annual basis.
+
+
+
+Despite several reminders, we regret to inform you that according to our records we have not received evidence of your agency’s compliance with PCI DSS.
+
+
+
+In accordance with the provisions of the IATA Passenger Sales Agency Rules, we have no alternative but to send you this Administrative of Non-Compliance. We urge you to remedy the situation within 30 days of this notice.
+
+
+
+In case the evidence of PCI compliance is not submitted within the timeframe specified above, IATA will in those cases where the form of payment feature in the Electronic Ticketing System is enabled, immediately restrict the Agent’s use of the Customer Card Payment Method; such restriction will remain in place until the Agent has demonstrated to IATA’s satisfaction that the reason for the Administrative Non-Compliance has been remedied and the Agent is compliant with all applicable requirements for authorization to use the Customer Card Payment Method.
+
+
+
+Please do not hesitate to contact us if you have any queries on this matter via our Customer Service Portal at http://www.iata.org/cs
+
+
+
+Yours sincerely,
+
+
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

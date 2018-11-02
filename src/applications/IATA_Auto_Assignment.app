@@ -2,13 +2,16 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Used by the Spanish Team to assign Cases</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>IATA - Auto Assignment</label>
-    <tab>standard-Chatter</tab>
-    <tab>Agents__c</tab>
-    <tab>My_Status</tab>
-    <tab>Skill_Types__c</tab>
-    <tab>System_Settings__c</tab>
-    <tab>Auto_Queue__c</tab>
-    <tab>Operational_Improvements__c</tab>
-    <tab>AMS_Account_Role__c</tab>
+    <tabs>standard-Chatter</tabs>
+    <tabs>Agents__c</tabs>
+    <tabs>My_Status</tabs>
+    <tabs>Skill_Types__c</tabs>
+    <tabs>System_Settings__c</tabs>
+    <tabs>Auto_Queue__c</tabs>
+    <tabs>Operational_Improvements__c</tabs>
+    <tabs>AMS_Account_Role__c</tabs>
 </CustomApplication>

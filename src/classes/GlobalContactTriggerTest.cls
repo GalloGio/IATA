@@ -76,8 +76,8 @@ private class GlobalContactTriggerTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         ctrl.initialization();
-        List <Contact> testContactList = ctrl.getContacts();
-        System.AssertEquals(testContactList.size(), 1);
+        //List <Contact> testContactList = ctrl.getContacts();
+        //System.AssertEquals(testContactList.size(), 1);
         System.AssertEquals(ctrl.isAdmin, true);
         ctrl.refresh();
         ctrl.getContactList();
@@ -115,8 +115,8 @@ private class GlobalContactTriggerTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         ctrl.initialization();
-        List <Contact> testContactList = ctrl.getContacts();
-        System.AssertEquals(testContactList.size(), 1);
+        //List <Contact> testContactList = ctrl.getContacts();
+        //System.AssertEquals(testContactList.size(), 1);
         System.AssertEquals(ctrl.isAdmin, true);
         ctrl.setSortDirection('DESC');
         system.assertEquals('DESC', ctrl.getSortDirection());
@@ -152,6 +152,8 @@ private class GlobalContactTriggerTest {
         con2.User_Portal_Status__c = 'Active';
         insert con2;
         String newContactId2 = con2.Id;
+		
+		Test.startTest();
 
         Portal_Applications__c app1 = new Portal_Applications__c(Name = 'MyTest', Critical_Service__c = true);
         insert app1;
@@ -173,10 +175,10 @@ private class GlobalContactTriggerTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         
-        Test.startTest();
+        
         
         ctrl.initialization();
-        List <Contact> testContactList = ctrl.getContacts();
+        //List <Contact> testContactList = ctrl.getContacts();
         ctrl.refresh();
         ctrl.getContactList();
         ctrl.contactList[0].selected = true;
@@ -219,7 +221,7 @@ private class GlobalContactTriggerTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         ctrl.initialization();
-        List <Contact> testContactList = ctrl.getContacts();
+        //List <Contact> testContactList = ctrl.getContacts();
         ctrl.refresh();
         ctrl.getContactList();
         ctrl.changeUserPortalStatus();
@@ -260,7 +262,7 @@ private class GlobalContactTriggerTest {
         idCard.Related_Contact__c = con.id;
         idCard.Valid_To_Date__c = date.today().addMonths(5);
         idCard.Name_on_ID_Card__c = 'test';
-        idCard.Card_status__c = 'Approved';
+        idCard.Card_status__c = 'Sent ID Card';
         idCard.VER_Number__c = '1234';
         insert idCard;
 
@@ -452,29 +454,34 @@ private class GlobalContactTriggerTest {
         con.status__c = 'Inactive';
         con.Kavi_User__c = testUser.id;
 
+        Test.startTest();
+        list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
         Portal_Applications__c PA = new Portal_Applications__c(
             Name = 'Test'
         );
-        insert PA;
+        listApps.add(PA);
 
         Portal_Applications__c PA2 = new Portal_Applications__c(
             Name = 'Standards Setting Workspace'
         );
-        insert PA2;
+        listApps.add(PA2);
+        insert listApps;
 
+        list<Portal_Application_Right__c> listAppRights = new list<Portal_Application_Right__c>();
         Portal_Application_Right__c PAR = new Portal_Application_Right__c(
             Contact__c = con.Id,
             Portal_Application__c = PA.id,
             Right__c = 'Access Granted'
         );
-        insert PAR;
+        listAppRights .add(PAR);
 
         Portal_Application_Right__c PAR2 = new Portal_Application_Right__c(
             Contact__c = con.Id,
             Portal_Application__c = PA2.id,
             Right__c = 'Access Granted'
         );
-        insert PAR2;
+        listAppRights .add(PAR2);
+        insert listAppRights ;
 
         try{
             update con;
@@ -483,6 +490,7 @@ private class GlobalContactTriggerTest {
             Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
             //System.AssertEquals(expectedExceptionThrown, true);
         }
+        Test.stopTest();
     }
 
     static testMethod void triggerTestAdd5() {
@@ -513,5 +521,76 @@ private class GlobalContactTriggerTest {
             //System.AssertEquals(expectedExceptionThrown, true);
         }
 
+    }
+    
+    static testMethod void triggerTestIdCardAvailableService1() {
+        Contact contact = new Contact();
+        contact.FirstName = 'first875454';
+        contact.LastName = 'last2343246';
+        contact.ID_Card_Holder__c = true;
+        
+        Test.startTest();
+        insert contact;
+        Test.stopTest();
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME));
+    }
+    
+    static testMethod void triggerTestIdCardAvailableService2() {
+        Contact contact = new Contact();
+        contact.FirstName = 'first55667';
+        contact.LastName = 'last2344237';
+        contact.email = 'test98329832@email.com';
+        contact.ID_Card_Holder__c = false;
+        insert contact;
+        
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(true,String.isBlank(contact.Available_Services__c));
+        System.assertEquals(true,String.isBlank(contact.Available_Services_Images__c));
+        System.debug('*** TEST START');
+        IDCardUtil.isFirstTime = true;
+        Test.startTest();
+        contact.ID_Card_Holder__c = true;
+        update contact;
+        Test.stopTest();
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME), contact.Available_Services_Images__c);
+    }
+    
+    static testMethod void triggerTestIdCardAvailableService3() {
+        Contact contact = new Contact();
+        contact.FirstName = 'first123123';
+        contact.LastName = 'last31232131';
+        contact.email = 'test98329833@email.com';
+        contact.ID_Card_Holder__c = true;
+        insert contact;
+        
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+        System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME));
+        
+        IDCardUtil.isFirstTime = true;
+        Test.startTest();
+        contact.ID_Card_Holder__c = false;
+        update contact;
+        Test.stopTest();
+
+        contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
+            FROM Contact
+            WHERE id = :contact.Id];
+        System.assertEquals(true,String.isBlank(contact.Available_Services__c));
+        System.assertEquals(true,String.isBlank(contact.Available_Services_Images__c));
     }
 }

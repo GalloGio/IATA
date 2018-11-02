@@ -66,6 +66,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Case_subject__c</fullName>
+        <description>Formula to get the Subject field from the parent Case</description>
+        <externalId>false</externalId>
+        <formula>Local_Charge_Request__r.Subject</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case subject</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Country_ISO_Code__c</fullName>
         <externalId>false</externalId>
         <label>Country ISO Code</label>
@@ -817,6 +830,7 @@
                 <controllingFieldValue>NDC</controllingFieldValue>
                 <controllingFieldValue>Other</controllingFieldValue>
                 <controllingFieldValue>WebLink</controllingFieldValue>
+                <controllingFieldValue>CNS</controllingFieldValue>
                 <valueName>USD</valueName>
             </valueSettings>
             <valueSettings>
@@ -825,6 +839,20 @@
                 <valueName>EUR</valueName>
             </valueSettings>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to IATA ISO Country to replace old picklist Country_ISO_Code__c</description>
+        <externalId>false</externalId>
+        <label>ISO Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Charge Requests</relationshipLabel>
+        <relationshipName>Charge_Requests</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>IATA_Membership__c</fullName>
@@ -879,6 +907,18 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
         </valueSet>
     </fields>
     <fields>
+        <fullName>ISO_Country_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ISO Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Local_Charge_Request__c</fullName>
         <externalId>false</externalId>
         <label>Local Charge Request</label>
@@ -903,66 +943,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
         <valueSet>
             <valueSetDefinition>
                 <sorted>false</sorted>
-                <value>
-                    <fullName>201701</fullName>
-                    <default>false</default>
-                    <label>201701</label>
-                </value>
-                <value>
-                    <fullName>201702</fullName>
-                    <default>false</default>
-                    <label>201702</label>
-                </value>
-                <value>
-                    <fullName>201703</fullName>
-                    <default>false</default>
-                    <label>201703</label>
-                </value>
-                <value>
-                    <fullName>201704</fullName>
-                    <default>false</default>
-                    <label>201704</label>
-                </value>
-                <value>
-                    <fullName>201705</fullName>
-                    <default>false</default>
-                    <label>201705</label>
-                </value>
-                <value>
-                    <fullName>201706</fullName>
-                    <default>false</default>
-                    <label>201706</label>
-                </value>
-                <value>
-                    <fullName>201707</fullName>
-                    <default>false</default>
-                    <label>201707</label>
-                </value>
-                <value>
-                    <fullName>201708</fullName>
-                    <default>false</default>
-                    <label>201708</label>
-                </value>
-                <value>
-                    <fullName>201709</fullName>
-                    <default>false</default>
-                    <label>201709</label>
-                </value>
-                <value>
-                    <fullName>201710</fullName>
-                    <default>false</default>
-                    <label>201710</label>
-                </value>
-                <value>
-                    <fullName>201711</fullName>
-                    <default>false</default>
-                    <label>201711</label>
-                </value>
-                <value>
-                    <fullName>201712</fullName>
-                    <default>false</default>
-                    <label>201712</label>
-                </value>
                 <value>
                     <fullName>201801</fullName>
                     <default>false</default>
@@ -1022,6 +1002,66 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <fullName>201812</fullName>
                     <default>false</default>
                     <label>201812</label>
+                </value>
+                <value>
+                    <fullName>201901</fullName>
+                    <default>false</default>
+                    <label>201901</label>
+                </value>
+                <value>
+                    <fullName>201902</fullName>
+                    <default>false</default>
+                    <label>201902</label>
+                </value>
+                <value>
+                    <fullName>201903</fullName>
+                    <default>false</default>
+                    <label>201903</label>
+                </value>
+                <value>
+                    <fullName>201904</fullName>
+                    <default>false</default>
+                    <label>201904</label>
+                </value>
+                <value>
+                    <fullName>201905</fullName>
+                    <default>false</default>
+                    <label>201905</label>
+                </value>
+                <value>
+                    <fullName>201906</fullName>
+                    <default>false</default>
+                    <label>201906</label>
+                </value>
+                <value>
+                    <fullName>201907</fullName>
+                    <default>false</default>
+                    <label>201907</label>
+                </value>
+                <value>
+                    <fullName>201908</fullName>
+                    <default>false</default>
+                    <label>201908</label>
+                </value>
+                <value>
+                    <fullName>201909</fullName>
+                    <default>false</default>
+                    <label>201909</label>
+                </value>
+                <value>
+                    <fullName>201910</fullName>
+                    <default>false</default>
+                    <label>201910</label>
+                </value>
+                <value>
+                    <fullName>201911</fullName>
+                    <default>false</default>
+                    <label>201911</label>
+                </value>
+                <value>
+                    <fullName>201912</fullName>
+                    <default>false</default>
+                    <label>201912</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1135,6 +1175,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <label>BSPFEE_RFABA</label>
                 </value>
                 <value>
+                    <fullName>BSPFEE_RJOIN</fullName>
+                    <default>false</default>
+                    <label>BSPFEE_RJOIN</label>
+                </value>
+                <value>
                     <fullName>BSPFEE_RPACT</fullName>
                     <default>false</default>
                     <label>BSPFEE_RPACT</label>
@@ -1185,9 +1230,34 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <label>CASFEE_JOIN</label>
                 </value>
                 <value>
+                    <fullName>CASFEE_JOINS - 801032</fullName>
+                    <default>false</default>
+                    <label>CASFEE_JOINS - 801032</label>
+                </value>
+                <value>
+                    <fullName>CASFEE_RJOIN</fullName>
+                    <default>false</default>
+                    <label>CASFEE_RJOIN</label>
+                </value>
+                <value>
                     <fullName>CASFEE_SEMNR</fullName>
                     <default>false</default>
                     <label>CASFEE_SEMNR</label>
+                </value>
+                <value>
+                    <fullName>CASITC_JOIN</fullName>
+                    <default>false</default>
+                    <label>CASITC_JOIN</label>
+                </value>
+                <value>
+                    <fullName>CASLNK_MSG</fullName>
+                    <default>false</default>
+                    <label>CASLNK_MSG</label>
+                </value>
+                <value>
+                    <fullName>CNSFEE_JOIN</fullName>
+                    <default>false</default>
+                    <label>CNSFEE_JOIN</label>
                 </value>
                 <value>
                     <fullName>Code A4A Assignment Fee - 752539</fullName>
@@ -1303,6 +1373,16 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <fullName>MITA application fee - 701910</fullName>
                     <default>false</default>
                     <label>MITA application fee - 701910</label>
+                </value>
+                <value>
+                    <fullName>MITA Information Message Service Fee - 701921</fullName>
+                    <default>false</default>
+                    <label>MITA Information Message Service Fee - 701921</label>
+                </value>
+                <value>
+                    <fullName>MITA Reinstatement Fee - 701912</fullName>
+                    <default>false</default>
+                    <label>MITA Reinstatement Fee - 701912</label>
                 </value>
                 <value>
                     <fullName>NDCFEE_NSUCR</fullName>
@@ -1466,6 +1546,10 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSP</controllingFieldValue>
+                <valueName>BSPFEE_RJOIN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BSP</controllingFieldValue>
                 <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>BSPFEE_RPACT</valueName>
             </valueSettings>
@@ -1607,7 +1691,23 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>CASFEE_JOINS - 801032</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>CASFEE_RJOIN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>CASFEE_SEMNR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>CASITC_JOIN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>CASLNK_MSG</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Coding/MITA</controllingFieldValue>
@@ -1655,6 +1755,14 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Coding/MITA</controllingFieldValue>
+                <valueName>MITA Information Message Service Fee - 701921</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Coding/MITA</controllingFieldValue>
+                <valueName>MITA Reinstatement Fee - 701912</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Coding/MITA</controllingFieldValue>
                 <valueName>PDP / PTA Assignment Fee - 701924</valueName>
             </valueSettings>
             <valueSettings>
@@ -1676,6 +1784,10 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>WebLink</controllingFieldValue>
                 <valueName>WebLink - Implementation Fee (752545)</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CNS</controllingFieldValue>
+                <valueName>CNSFEE_JOIN</valueName>
             </valueSettings>
         </valueSet>
     </fields>
@@ -1704,6 +1816,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <fullName>Discover the World</fullName>
                     <default>false</default>
                     <label>Discover the World</label>
+                </value>
+                <value>
+                    <fullName>Aviareps</fullName>
+                    <default>false</default>
+                    <label>Aviareps</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1790,6 +1907,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <fullName>Other</fullName>
                     <default>false</default>
                     <label>Other</label>
+                </value>
+                <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1966,6 +2088,26 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                     <default>false</default>
                     <label>7400.00</label>
                 </value>
+                <value>
+                    <fullName>250.00</fullName>
+                    <default>false</default>
+                    <label>250.00</label>
+                </value>
+                <value>
+                    <fullName>1300.00</fullName>
+                    <default>false</default>
+                    <label>1300.00</label>
+                </value>
+                <value>
+                    <fullName>23000.00</fullName>
+                    <default>false</default>
+                    <label>23000.00</label>
+                </value>
+                <value>
+                    <fullName>2250.00</fullName>
+                    <default>false</default>
+                    <label>2250.00</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>TEST_FILE</controllingFieldValue>
@@ -2004,10 +2146,13 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_JOINS</controllingFieldValue>
                 <controllingFieldValue>Code Reinstatement Fee - 701927</controllingFieldValue>
+                <controllingFieldValue>MITA Reinstatement Fee - 701912</controllingFieldValue>
+                <controllingFieldValue>CNSFEE_JOIN</controllingFieldValue>
                 <valueName>4500.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASFEE_JOIN</controllingFieldValue>
+                <controllingFieldValue>CASITC_JOIN</controllingFieldValue>
                 <valueName>2500.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2021,6 +2166,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>CASFEE_DGRVA</controllingFieldValue>
                 <controllingFieldValue>IBCS_JOINE</controllingFieldValue>
                 <controllingFieldValue>GSSA_APPL</controllingFieldValue>
+                <controllingFieldValue>CASLNK_MSG</controllingFieldValue>
                 <valueName>200.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2050,6 +2196,9 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>CASFEE_DGRR2</controllingFieldValue>
                 <controllingFieldValue>PDP / PTA Assignment Fee - 701924</controllingFieldValue>
+                <controllingFieldValue>CASFEE_JOINS - 801032</controllingFieldValue>
+                <controllingFieldValue>CASFEE_RJOIN</controllingFieldValue>
+                <controllingFieldValue>BSPFEE_RJOIN</controllingFieldValue>
                 <valueName>1500.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2063,6 +2212,11 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>FDS_TDPMS</controllingFieldValue>
+                <controllingFieldValue>Code Assignment Fee - 701907</controllingFieldValue>
+                <controllingFieldValue>Code Annual Retention Fee-  701900</controllingFieldValue>
+                <controllingFieldValue>MITA application fee - 701910</controllingFieldValue>
+                <controllingFieldValue>Code A4A Assignment Fee - 752539</controllingFieldValue>
+                <controllingFieldValue>Code Annual A4A Retention Fee - 701903</controllingFieldValue>
                 <valueName>4000.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2072,15 +2226,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_STATM</controllingFieldValue>
                 <valueName>50.00</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Code Assignment Fee - 701907</controllingFieldValue>
-                <controllingFieldValue>Code Annual Retention Fee-  701900</controllingFieldValue>
-                <controllingFieldValue>MITA application fee - 701910</controllingFieldValue>
-                <controllingFieldValue>Code A4A Assignment Fee - 752539</controllingFieldValue>
-                <controllingFieldValue>Location Identifier Assignment Fee - 701920</controllingFieldValue>
-                <controllingFieldValue>Code Annual A4A Retention Fee - 701903</controllingFieldValue>
-                <valueName>3800.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_JOIN</controllingFieldValue>
@@ -2093,20 +2238,32 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>Code Annual Administration Fee - 701899</controllingFieldValue>
                 <controllingFieldValue>Code Application Fee - 752537</controllingFieldValue>
-                <valueName>1200.00</valueName>
+                <valueName>1300.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>MITA annual fee - 701909</controllingFieldValue>
-                <valueName>22000.00</valueName>
+                <valueName>23000.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Location Identifier Assignment Fee - 701920</controllingFieldValue>
+                <valueName>3800.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Code Voluntary Change Request Fee - 701929</controllingFieldValue>
                 <valueName>7400.00</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>AISTLM_FILE</controllingFieldValue>
+                <valueName>250.00</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>GSSA_REGI</controllingFieldValue>
                 <controllingFieldValue>GSSA_FEEN</controllingFieldValue>
                 <valueName>400.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MITA Information Message Service Fee - 701921</controllingFieldValue>
+                <valueName>1200.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>TSF_ADPX</controllingFieldValue>
@@ -2115,6 +2272,11 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>TSF_AGTD</controllingFieldValue>
                 <valueName>0.14</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASFEE_RJOIN</controllingFieldValue>
+                <controllingFieldValue>BSPFEE_RJOIN</controllingFieldValue>
+                <valueName>2250.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>WEBLK_SCUX</controllingFieldValue>

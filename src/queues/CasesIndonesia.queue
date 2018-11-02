@@ -3,6 +3,14 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases - Indonesia</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAIndonesia</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAsiaPacificallusers</publicGroup>
+            <publicGroup>IDFSAsiaPacificRegionalOffice</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

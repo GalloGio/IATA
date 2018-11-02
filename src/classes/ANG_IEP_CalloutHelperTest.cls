@@ -22,13 +22,24 @@ private class ANG_IEP_CalloutHelperTest {
 		public HTTPResponse respond(HTTPRequest req) {
 			// Optionally, only send a mock response for a specific endpoint
 			// and method.
-			System.assertEquals('PUT', req.getMethod());
+            if (req.getEndpoint().contains('Mulesoft_Credential_Masterdata')) 
+				System.assertEquals('PUT', req.getMethod());
 			
 			// Create a fake response
 			HttpResponse res = new HttpResponse();
 			res.setHeader('Content-Type', 'application/json');
 			res.setStatusCode(400);
 			return res;
+		}
+	}
+	public class UnauthorizedEndpointMockHttpResponseGenerator implements HttpCalloutMock {
+		// Implement this interface method
+		public HTTPResponse respond(HTTPRequest req) {
+		
+			CalloutException e = (CalloutException)CalloutException.class.newInstance();
+	        e.setMessage('Unauthorized endpoint!');
+	        throw e;
+
 		}
 	}
 
@@ -49,9 +60,10 @@ private class ANG_IEP_CalloutHelperTest {
 
 		//create custom setting
 		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
-		customsettings.add(new ANG_CalloutMapping__c(Name = 'IEP_1', Action__c = 'PUT' , CalloutClass__c = 'ANG_CalloutIEPMasterdata', Event_Type__C = 'Update', Change_code__c = 'IEP' ,Credential__c = '/agencies/v1/' , Named_Credential__c = 'Mulesoft_Credential_Masterdata',Type__c='ChangeCode',Field__c='' ));
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'IEP_1',Integration_System__c='Mulesoft', Action__c = 'PUT' , CalloutClass__c = 'ANG_CalloutIEPMasterdata', Event_Type__C = 'Update', Change_code__c = 'IEP' ,Credential__c = '/agencies/v1/' , Named_Credential__c = 'Mulesoft_Credential_Masterdata',Type__c='ChangeCode',Field__c='' ));
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'IEP_2',Integration_System__c='SAP PI', Action__c = 'PUT' , CalloutClass__c = 'ANG_CalloutSAPMasterdata', Event_Type__C = 'Update', Change_code__c = 'IEP' ,Credential__c = '/agencies/v1/' , Named_Credential__c = 'Mulesoft_Credential_Masterdata',Type__c='ChangeCode',Field__c='' ));
 
-		insert customsettings;
+		insert customsettings; 
 
 	
 	}
@@ -69,7 +81,7 @@ private class ANG_IEP_CalloutHelperTest {
 
 		insert aacc1;
 		Test.stopTest();
-		list<AMS_Agency_Updates__c> agencyEventsList = [select id,Update_Type__c,Integration_System__c from AMS_Agency_Updates__c where  Agency_Applied_Change_code__c =:aacc1.id];
+		list<AMS_Agency_Updates__c> agencyEventsList = [select id,Update_Type__c,Integration_System__c from AMS_Agency_Updates__c where  Agency_Applied_Change_code__c =:aacc1.id and Integration_System__c = 'Mulesoft'];
 
 		system.assertEquals(1,agencyEventsList.size());
 
@@ -77,6 +89,23 @@ private class ANG_IEP_CalloutHelperTest {
 		system.assertEquals('Update_Sent',agencyEventsList.get(0).Update_Type__c);
 
 		
+	}
+	@isTest static void unauthorizedEndpointResponse() {
+		
+		Test.startTest();
+
+		Test.setMock(HttpCalloutMock.class, new UnauthorizedEndpointMockHttpResponseGenerator());
+
+		Account acct = [Select Id, ANG_IEP_Status__c, IATACode__c, Location_Type__c from Account LIMIT 1];
+		
+		Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = acct.Id, Change_Code__c = 'IEP',  Sent_to_external_system__c = false);
+
+		insert aacc1;
+		Test.stopTest();
+		list<AMS_Agency_Updates__c> agencyEventsList = [select id,Update_Type__c,Integration_System__c from AMS_Agency_Updates__c where  Agency_Applied_Change_code__c =:aacc1.id and Integration_System__c = 'Mulesoft'];
+
+		system.assertEquals(1,agencyEventsList.size());
+		system.assertEquals('Error',agencyEventsList.get(0).Update_Type__c);
 	}
 	
 	@isTest static void validateIncorrectResponse() {
@@ -95,7 +124,7 @@ private class ANG_IEP_CalloutHelperTest {
 		}
 
 		Test.stopTest();		
-		list<AMS_Agency_Updates__c> agencyEventsList = [select id,Update_Type__c from AMS_Agency_Updates__c where  Agency_Applied_Change_code__c =:aacc1.id];
+		list<AMS_Agency_Updates__c> agencyEventsList = [select id,Update_Type__c from AMS_Agency_Updates__c where  Agency_Applied_Change_code__c =:aacc1.id and Integration_System__c = 'Mulesoft'];
 
 		system.assertEquals(1,agencyEventsList.size());
 		system.assertEquals('Error',agencyEventsList.get(0).Update_Type__c);

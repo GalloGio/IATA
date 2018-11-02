@@ -131,6 +131,32 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>ANG_Cash_Conditions_Activation_FF__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ANG_Risk_ID__c == &apos;5&apos;,
+				IF(NOT(ISBLANK(TEXT(ANG_CaseId__r.Parent.Financial_Review_Result__c))),
+							null,
+							ANG_Cash_Conditions_Activation__c
+				),
+				ANG_Cash_Conditions_Activation__c
+)</formula>
+        <label>Cash Conditions Real Activation Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Cash_Conditions_Activation__c</fullName>
+        <description>Day in which Limit Cash Conditions will be copied from Risk Event Type (only works from false to true). Activation will be controlled by a daily batch</description>
+        <externalId>false</externalId>
+        <label>Cash Conditions Activation Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>ANG_ChangeCode__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -207,6 +233,16 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Limit_Cash_Conditions__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Enforces Cash Conditions on account (previously set on Risk Event Type). Meaning if an account has one active risk event with Limit Cash Conditions, Cash Conditions will be true.</description>
+        <externalId>false</externalId>
+        <label>Limit Cash Conditions</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>ANG_Manual__c</fullName>
@@ -356,11 +392,29 @@ Id
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+    <fields>
+        <fullName>ANG_isCashlessAgency__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(ANG_AccountId__r.ANG_Accreditation_Model__c,&apos;Cashless&apos;)</formula>
+        <label>Is Cashless Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Agency Risk Event</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_AccountId__c</columns>
+        <columns>ANG_Risk_Configuration__c</columns>
+        <columns>ANG_Event_Status__c</columns>
+        <columns>ANG_Expired__c</columns>
+        <columns>ANG_Source__c</columns>
+        <columns>ANG_ChangeCode__c</columns>
+        <columns>ANG_Risk_Type__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>RE-{00000000}</displayFormat>
@@ -386,6 +440,10 @@ Id
             </values>
             <values>
                 <fullName>Inactive_CHO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Cashless</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -298,6 +298,11 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>AFN</fullName>
+                    <default>false</default>
+                    <label>AFN</label>
+                </value>
+                <value>
                     <fullName>BSF</fullName>
                     <default>false</default>
                     <label>BSF</label>
@@ -318,9 +323,19 @@
                     <label>CAS</label>
                 </value>
                 <value>
+                    <fullName>CCA</fullName>
+                    <default>false</default>
+                    <label>CCA</label>
+                </value>
+                <value>
                     <fullName>CCF</fullName>
                     <default>false</default>
                     <label>CCF</label>
+                </value>
+                <value>
+                    <fullName>CCR</fullName>
+                    <default>false</default>
+                    <label>CCR</label>
                 </value>
                 <value>
                     <fullName>CHC</fullName>
@@ -458,9 +473,24 @@
                     <label>FIN</label>
                 </value>
                 <value>
+                    <fullName>FOP</fullName>
+                    <default>false</default>
+                    <label>FOP</label>
+                </value>
+                <value>
+                    <fullName>FPR</fullName>
+                    <default>false</default>
+                    <label>FPR</label>
+                </value>
+                <value>
                     <fullName>FPY</fullName>
                     <default>false</default>
                     <label>FPY</label>
+                </value>
+                <value>
+                    <fullName>IAF</fullName>
+                    <default>false</default>
+                    <label>IAF</label>
                 </value>
                 <value>
                     <fullName>IRR</fullName>
@@ -493,6 +523,16 @@
                     <label>LRR</label>
                 </value>
                 <value>
+                    <fullName>LSP</fullName>
+                    <default>false</default>
+                    <label>LSP</label>
+                </value>
+                <value>
+                    <fullName>LSW</fullName>
+                    <default>false</default>
+                    <label>LSW</label>
+                </value>
+                <value>
                     <fullName>MCH</fullName>
                     <default>false</default>
                     <label>MCH</label>
@@ -513,6 +553,11 @@
                     <label>NCA</label>
                 </value>
                 <value>
+                    <fullName>NCW</fullName>
+                    <default>false</default>
+                    <label>NCW</label>
+                </value>
+                <value>
                     <fullName>NEP</fullName>
                     <default>false</default>
                     <label>NEP</label>
@@ -521,6 +566,11 @@
                     <fullName>NEW</fullName>
                     <default>false</default>
                     <label>NEW</label>
+                </value>
+                <value>
+                    <fullName>NFS</fullName>
+                    <default>false</default>
+                    <label>NFS</label>
                 </value>
                 <value>
                     <fullName>NOT</fullName>
@@ -536,6 +586,31 @@
                     <fullName>NWD</fullName>
                     <default>false</default>
                     <label>NWD</label>
+                </value>
+                <value>
+                    <fullName>OIN</fullName>
+                    <default>false</default>
+                    <label>OIN</label>
+                </value>
+                <value>
+                    <fullName>OOT</fullName>
+                    <default>false</default>
+                    <label>OOT</label>
+                </value>
+                <value>
+                    <fullName>PCA</fullName>
+                    <default>false</default>
+                    <label>PCA</label>
+                </value>
+                <value>
+                    <fullName>PCN</fullName>
+                    <default>false</default>
+                    <label>PCN</label>
+                </value>
+                <value>
+                    <fullName>PCR</fullName>
+                    <default>false</default>
+                    <label>PCR</label>
                 </value>
                 <value>
                     <fullName>RCM</fullName>
@@ -556,6 +631,16 @@
                     <fullName>REI</fullName>
                     <default>false</default>
                     <label>REI</label>
+                </value>
+                <value>
+                    <fullName>REW</fullName>
+                    <default>false</default>
+                    <label>REW</label>
+                </value>
+                <value>
+                    <fullName>RNC</fullName>
+                    <default>false</default>
+                    <label>RNC</label>
                 </value>
                 <value>
                     <fullName>RPY</fullName>
@@ -631,6 +716,11 @@
                     <fullName>VRW</fullName>
                     <default>false</default>
                     <label>VRW</label>
+                </value>
+                <value>
+                    <fullName>WCP</fullName>
+                    <default>false</default>
+                    <label>WCP</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -816,6 +906,19 @@ AND(
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Forms_of_Payment__c</fullName>
+        <description>FOPs to show on eBulletin</description>
+        <externalId>false</externalId>
+        <inlineHelpText>FOPs to show on eBulletin</inlineHelpText>
+        <label>Forms of Payment</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IATA_Code_Top_Parent__c</fullName>
         <externalId>false</externalId>
         <formula>IF(Account__r.Top_Parent__c &lt;&gt; null , Account__r.Top_Parent__r.IATACode__c,Account__r.IATACode__c)</formula>
@@ -946,20 +1049,20 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <fullName>Irregularity_Type_Description__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(TEXT(Irregularity_Type__c) ), &quot;&quot;,
-	  CASE( TEXT(Irregularity_Type__c) ,
-	    &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
-	    &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
-	    &quot;FC1&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
-	    &quot;FC2&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
-	    &quot;NPA&quot;,&quot;NON-PAYMENT OF ANNUAL FEE&quot;,
-	    &quot;OV1&quot;,&quot;OVERDUE REMITTANCE&quot;,
-	    &quot;OV2&quot;,&quot;OVERDUE REMITTANCE&quot;,
-	    &quot;SC1&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
-	    &quot;SC2&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
-	    &quot;WD1&quot;,&quot;WITHDRAWN&quot;,
-	    &quot;WD2&quot;,&quot;WITHDRAWN&quot;,
-	  &quot;&quot;)
-	)</formula>
+      CASE( TEXT(Irregularity_Type__c) ,
+        &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
+        &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
+        &quot;FC1&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
+        &quot;FC2&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
+        &quot;NPA&quot;,&quot;NON-PAYMENT OF ANNUAL FEE&quot;,
+        &quot;OV1&quot;,&quot;OVERDUE REMITTANCE&quot;,
+        &quot;OV2&quot;,&quot;OVERDUE REMITTANCE&quot;,
+        &quot;SC1&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
+        &quot;SC2&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
+        &quot;WD1&quot;,&quot;WITHDRAWN&quot;,
+        &quot;WD2&quot;,&quot;WITHDRAWN&quot;,
+      &quot;&quot;)
+    )</formula>
         <label>Irregularity Type Description</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -2137,6 +2240,10 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <picklistValues>
             <picklist>Change_Code__c</picklist>
             <values>
+                <fullName>AFN</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BSF</fullName>
                 <default>false</default>
             </values>
@@ -2153,7 +2260,15 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <default>false</default>
             </values>
             <values>
+                <fullName>CCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CCF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCR</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2265,7 +2380,19 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <default>false</default>
             </values>
             <values>
+                <fullName>FOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>FPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IAF</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2278,6 +2405,14 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>LRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LSW</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2297,11 +2432,19 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <default>false</default>
             </values>
             <values>
+                <fullName>NCW</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEP</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>NEW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2314,6 +2457,26 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>NWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OIN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCR</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2330,6 +2493,14 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>REI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RNC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2390,6 +2561,10 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>VRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WCP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2670,5 +2845,12 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>ANG_Block_Irregularity_Change_Codes</fullName>
+        <active>true</active>
+        <description>blocks the creation of irregularity change codes on newgen agencies</description>
+        <errorConditionFormula>AND( RecordType.Name = &apos;Irregularities&apos;,  Account__r.ANG_IsNewGenAgency__c,  ISNEW()  )</errorConditionFormula>
+        <errorMessage>Irregularity change codes cannot be created on newgen agencies.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

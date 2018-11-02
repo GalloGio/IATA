@@ -205,4 +205,40 @@
         <label>DIP/Insurance Bond Provider Review</label>
         <cssExposed>false</cssExposed>
     </standardValue>
+    <standardValue>
+        <fullName>DIP New Application - Tier 1</fullName>
+        <default>false</default>
+        <label>DIP New Application - Tier 1</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP New Application - Tier 2</fullName>
+        <default>false</default>
+        <label>DIP New Application - Tier 2</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP New Application - Tier 3</fullName>
+        <default>false</default>
+        <label>DIP New Application - Tier 3</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP Annual Review - Tier 1</fullName>
+        <default>false</default>
+        <label>DIP Annual Review - Tier 1</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP Annual Review - Tier 2</fullName>
+        <default>false</default>
+        <label>DIP Annual Review - Tier 2</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>DIP Annual Review - Tier 3</fullName>
+        <default>false</default>
+        <label>DIP Annual Review - Tier 3</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
 </StandardValueSet>

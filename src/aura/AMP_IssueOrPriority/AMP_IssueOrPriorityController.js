@@ -1,9 +1,11 @@
 ({
     doInit: function(component, event, helper) {
         var issue = component.get("v.issue");
+        var divisionValues = component.get("v.divisionValues");
 
         if(issue.Id === undefined) {
             component.set("v.isEditMode", true);
+            helper.fillDivisionOptions(component, divisionValues, issue.Division__c);
         } else {
             component.set("v.isEditMode", false);
         }
@@ -47,6 +49,9 @@
 		// if(status === undefined) status = 'On Track';
 		console.log(status);
 
+        var divisionValues = component.get("v.divisionValues");
+        var division = issue.Division__c;
+        helper.fillDivisionOptions(component, divisionValues, division);
 
     },
     cancelEditMode : function(component, event, helper) {
@@ -132,6 +137,10 @@
         var status = component.find("statusList").get("v.value");
         console.log(status);
         var levelOfImportance = component.find("levelOfImportance").get("v.value");
+
+         //division
+        var division = component.find("divisionList").get("v.value");
+        issue.Division__c = division;
 
         // if the picklists are not changed, the previous variables may be empty
         // so we take the first values of the lists

@@ -4924,6 +4924,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_Of_OSCAR_Process} = {
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:14px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;{!didNotFoundAnyAccounts}&lt;/B&gt;&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>AccountBRNameSearchScreen_0</name>
@@ -4987,6 +4989,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_Of_OSCAR_Process} = {
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:14px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;{!didNotFoundAnyAccounts}&lt;/B&gt;&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>AccountNameSearch</name>
@@ -5013,6 +5017,8 @@ Please input the Account&apos;s Legal Name to begin search.</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>BranchAbroadCountrySearch</name>
@@ -5042,6 +5048,8 @@ Please input the Account&apos;s Legal Name to begin search.</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>CreateNewAccountScreen</name>
@@ -5120,6 +5128,8 @@ V - Co-operative</helpText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>CreateNewAccountScreen_0</name>
@@ -5187,6 +5197,8 @@ V - Co-operative</helpText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>CreateNewContact</name>
@@ -5279,6 +5291,8 @@ V - Co-operative</helpText>
                 <formulaExpression>REGEX({!ContactInputHomePhone}, &quot;^[(]?[+]?\\d*[)]?\\s?[-]?\\s?\\d{8,11}$&quot;)</formulaExpression>
             </validationRule>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>CreateNewContact_0</name>
@@ -5371,6 +5385,8 @@ V - Co-operative</helpText>
                 <formulaExpression>REGEX({!ContactBRInputHomePhone}, &quot;^[(]?[+]?\\d*[)]?\\s?[-]?\\s?\\d{8,11}$&quot;)</formulaExpression>
             </validationRule>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>EmailAlreadyExistsScreen</name>
@@ -5388,6 +5404,8 @@ V - Co-operative</helpText>
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;The email selected already exists and belongs to the contact with the Name {!EmailSearchedName}. Please choose another email.&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>EmailAlreadyExistsScreen_0</name>
@@ -5405,6 +5423,8 @@ V - Co-operative</helpText>
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;The email selected already exists and belongs to the contact with the Name {!EmailSearchedName}. Please choose another email.&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Is_the_contact_related_to_the_HO</name>
@@ -5436,6 +5456,8 @@ V - Co-operative</helpText>
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;If you choose to &lt;FONT COLOR=&quot;#FF0000&quot;&gt;discard&lt;/FONT&gt; the contact, it will be deactivated, otherwise the wizard will use the contact&amp;apos;s information to create Accreditation process.&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>IsCorrectAccountScreen</name>
@@ -5472,6 +5494,8 @@ V - Co-operative</helpText>
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;If you choose to &lt;/B&gt;&lt;FONT COLOR=&quot;#FF0000&quot;&gt;&lt;B&gt;discard&lt;/B&gt;&lt;/FONT&gt;&lt;B&gt; the Account, the contact you&amp;apos;ve searched will be deactivated.&lt;/B&gt;&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>IsCorrectAccountScreen_0</name>
@@ -5503,6 +5527,8 @@ V - Co-operative</helpText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>IsCorrectAccountScreen_1</name>
@@ -5534,6 +5560,8 @@ V - Co-operative</helpText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Please_select_the_Contact_you_want_to_use</name>
@@ -5560,6 +5588,8 @@ V - Co-operative</helpText>
             <fieldText>This list represents the list of active contacts (represented by email) either from the choosen Account or it&apos;s respective HO Account.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ResultPage</name>
@@ -5574,6 +5604,8 @@ V - Co-operative</helpText>
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:14px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;We are all set !&lt;/B&gt;&lt;/FONT&gt;&lt;/SPAN&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:14px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:14px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;You&amp;apos;ve completed the wizard.&lt;/FONT&gt;&lt;/DIV&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>SearchContactScreen</name>
@@ -5602,6 +5634,8 @@ V - Co-operative</helpText>
                 <formulaExpression>!ISBLANK({!EmailContactSearchInput}) &amp;&amp; !ISNULL({!EmailContactSearchInput})</formulaExpression>
             </validationRule>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>SearchContactScreen_0</name>
@@ -5630,6 +5664,8 @@ V - Co-operative</helpText>
                 <formulaExpression>!ISBLANK({!EmailContactBRSearchInput}) &amp;&amp; !ISNULL({!EmailContactSearchInput})</formulaExpression>
             </validationRule>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Select_the_Account_Both_Filled</name>
@@ -5651,6 +5687,8 @@ V - Co-operative</helpText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Select_the_Account_Both_Filled_0</name>
@@ -5671,6 +5709,8 @@ V - Co-operative</helpText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Select_the_Account_By_IATACode</name>
@@ -5692,6 +5732,8 @@ V - Co-operative</helpText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Select_the_Account_By_IATACode_1</name>
@@ -5712,6 +5754,8 @@ V - Co-operative</helpText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Select_the_Account_using_Account</name>
@@ -5733,6 +5777,8 @@ V - Co-operative</helpText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Select_the_Account_using_Account_1</name>
@@ -5753,6 +5799,8 @@ V - Co-operative</helpText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>WelcomeScreen</name>
@@ -5781,6 +5829,8 @@ V - Co-operative</helpText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <startElementReference>WelcomeScreen</startElementReference>
     <variables>

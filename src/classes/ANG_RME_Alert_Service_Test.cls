@@ -1,5 +1,5 @@
 @isTest
-private class ANG_RME_Alert_Service_Test {
+public class ANG_RME_Alert_Service_Test {
 
 	private static RestRequest req;
 
@@ -7,6 +7,13 @@ private class ANG_RME_Alert_Service_Test {
 		req = new RestRequest();
 		req.httpMethod = 'PUT';
 		req.requestURI = System.URL.getSalesforceBaseUrl() + '/services/apexrest/RME_ALERT_BALANCEUPDATE/';
+	}
+
+	public static void createRMEMappings(){
+		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'BTN_Prov', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/calculatedrhc/{agencyId}/v1', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'BTN_Bal', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/consumedrhc/{agencyId}/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+		insert customsettings;
 	}
 
 	@testSetup static void createData() {
@@ -17,6 +24,8 @@ private class ANG_RME_Alert_Service_Test {
 		insert a;
 
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{a.Id}, false);
+
+		createRMEMappings();
 	}
 	
 	static testMethod void test_wrongJSON() {
@@ -176,14 +185,13 @@ private class ANG_RME_Alert_Service_Test {
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '1234562';
 		message.eventTime = System.now();
-		message.consumedRHCAmount = 200;
-		message.consumedRHCPercentage = 0.5;
+		message.storedRHCValue = 200;
 
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.BalanceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
+		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestProvisionalRHC([SELECT IATACode__c FROM Account][0].Id, false);
 
 		Test.stopTest();
 
@@ -196,11 +204,11 @@ private class ANG_RME_Alert_Service_Test {
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.BalanceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
+		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
-
-		System.assertEquals('There was an error', result.description);
+        
+		System.assertEquals('An unexpected error ocurred while contacting the external system. An incident has been raised on Service Now.', result.description);
 		System.assert(!result.isSuccess);
 	}
 	
@@ -209,7 +217,7 @@ private class ANG_RME_Alert_Service_Test {
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.BalanceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
+		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
 
@@ -305,10 +313,6 @@ private class ANG_RME_Alert_Service_Test {
 		message.iataCode = '1234562';
 		message.eventId = 'testRTSAlert3';
 		message.eventType = 'RTSAlert';
-		message.schemaVersion = 2;
-		message.eventTime = System.now();
-
-		message.storedBaseCurrency = 'USD';
 		message.rtsSeverity = 'Orange';
 
 		req.requestBody = Blob.valueOf(JSON.serialize(message));
@@ -326,4 +330,37 @@ private class ANG_RME_Alert_Service_Test {
 		System.assert(result.description.contains('Required values missing'));
 
 	}
+
+	static testMethod void testDoPost() {
+		List <Account> accountList = new List <Account> ([SELECT Id FROM Account LIMIT 1]);
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventId = 'AlertRequest';
+		message.eventType = 'TestCall';
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+
+		message.storedBaseCurrency = 'USD';
+
+		message.storedRHCValue = 0;
+		message.consumedRHCAmount = 200;
+		message.consumedRHCPercentage = 0.5;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', 'TestCall');
+
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
+
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        req.requestURI = '/RME_ALERT_BALANCEUPDATE';
+        req.httpMethod = 'POST';
+
+        RestContext.request = req;
+        RestContext.response= res;
+
+        Test.startTest();
+            ANG_RME_Alert_Service.doPost(accountList[0].Id);
+        Test.stopTest();
+    }
 }

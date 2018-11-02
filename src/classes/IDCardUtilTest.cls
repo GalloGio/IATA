@@ -516,14 +516,14 @@ private class IDCardUtilTest {
         ID_Card__c newCard = IDCardUtil.CreateIDCardObjectFromApplication(application);     
         
         newCard.Valid_To_Date__c = date.today().addDays(10);
-        newCard.Card_Status__c = IDCardUtil.CARDSTATUS_PRINTED_DELIVERED;       
+        newCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;       
         ID_Card__c[] card1 = IDCardUtil.getRenewableIDCard (contactId);
         
         insert newCard;
         
         newCard.Related_Contact__c = contactId;     
         newCard.Valid_To_Date__c = date.today().addDays(150);
-        newCard.Card_Status__c = IDCardUtil.CARDSTATUS_PRINTED_DELIVERED;
+        newCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
         
         update newCard;
         System.debug('***************************************** contact IDDDDDDDd ' +contactId);
@@ -603,7 +603,7 @@ private class IDCardUtilTest {
         idCard.Approving_Manager_s_Name__c = 'IAM the manager'; 
         idCard.Approving_Manager_s_Email__c = 'me@me.com';
         idCard.Blacklisted__c = false;
-        idCard.Card_Status__c = IDCardUtil.CARDSTATUS_PRINTED_DELIVERED; 
+        idCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID; 
         idCard.CurrencyIsoCode = 'CAD';
         idCard.Date_of_Birth__c = date.newInstance(1980, 1, 1); //('01-01-1980')           
         idCard.Duties__c = 'Director';
@@ -688,7 +688,7 @@ private class IDCardUtilTest {
        ID_Card__c idc = new ID_Card__c(Related_Contact__c = cont.id,
                                     Valid_To_Date__c = date.today().addMonths(5),
                                     Name_on_ID_Card__c = 'MARWA',
-                                    Card_status__c = 'Approved',
+                                    Card_status__c = 'Sent ID Card',
                                     VER_Number__c = String.valueOf(cont.VER_Number__c),
                                     Agency_IATA_Code__c = acc.IATACode__c,
                                     Photo__c = 'useless string',

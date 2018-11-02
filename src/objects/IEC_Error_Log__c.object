@@ -165,17 +165,6 @@
     </fields>
     <label>IEC Error Log</label>
     <listViews>
-        <fullName>DataLoader_All_Errors</fullName>
-        <columns>NAME</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>IATACODE__c</columns>
-        <columns>Source__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All Error Logs</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>DataLoader_GDS_Errors</fullName>
         <columns>NAME</columns>
         <columns>Type__c</columns>
@@ -198,12 +187,7 @@
         <columns>Displayed_Message__c</columns>
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <label>DataLoader - GSS Errors</label>
+        <label>00 - ALL</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -226,25 +210,6 @@
             <value>GSS,CAC</value>
         </filters>
         <label>Errors for GSS &amp; CACWEB</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Errors_by_Date</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Source__c</columns>
-        <columns>Displayed_Message__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Data__c</columns>
-        <columns>Stack_Trace__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </filters>
-        <label>Errors by Date</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -380,6 +345,22 @@
             <value>DataLoader_AIMS_Accreditations</value>
         </filters>
         <label>Webstar Accreditation Errors</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_AdHoc_Search</fullName>
+        <columns>NAME</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>IATACODE__c</columns>
+        <columns>Source__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Errror_Message__c</field>
+            <operation>contains</operation>
+            <value>term</value>
+        </filters>
+        <label>ZZ-AdHoc Search</label>
         <language>en_US</language>
     </listViews>
     <listViews>

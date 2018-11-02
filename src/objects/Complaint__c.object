@@ -928,6 +928,15 @@ IF(ISPICKVAL( Object_type__c, &quot;Customer Recovery&quot;), IMAGE(&quot;/servl
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Cases_Complaints_GDC_MAD_Complaint</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Complaints GDC MAD</label>
+        <queue>Cases_Complaints_GDC_MAD</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Complaint_objects_closed_in_queue</fullName>
         <columns>Image__c</columns>
         <columns>NAME</columns>

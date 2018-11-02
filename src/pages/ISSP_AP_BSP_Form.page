@@ -3,15 +3,21 @@
      
     <script>
     function hideTextECCB(myValue){
+        var isNewProcess={!IsNewCountryProcess};
         var theValue = document.getElementById(myValue).value; 
-        if (theValue == 'Yes'){
-            document.getElementById('merchantnumbers').style.display='block';
-            document.getElementById('noECCB').style.display='none';
-            
-        }
-        else{
-            document.getElementById('merchantnumbers').style.display='none';
-            document.getElementById('noECCB').style.display='block';
+        if (isNewProcess) {
+            var display = theValue == 'No'? 'block': 'none';
+            document.getElementById('noECCBNewProcess').style.display=display;
+        } else {
+            if (theValue == 'Yes'){
+                document.getElementById('merchantnumbers').style.display='block';
+                document.getElementById('noECCB').style.display='none';
+                
+            }
+            else{
+                document.getElementById('merchantnumbers').style.display='none';
+                document.getElementById('noECCB').style.display='block';
+            }
         }
     }
     
@@ -58,6 +64,15 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+    
+    function showCommisionSection(obj) {
+        var value = $(obj).val();
+        if (value == "Yes") {
+            $("#commision-section").show();
+        } else {
+            $("#commision-section").hide();
+        }
+    }
     </script>
     
     <!-- Modal -->
@@ -515,7 +530,7 @@
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Does your Airline wish to participate in any Commission Control?" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:outputPanel >
-                            <apex:inputField value="{!newForm.Participate_in_any_Commission_Control__c}" />
+                            <apex:inputField value="{!newForm.Participate_in_any_Commission_Control__c}" onchange="showCommisionSection(this);"/>
                             <apex:image value="/img/msg_icons/info16.png" title="If YES please contact IATA for details" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
@@ -525,8 +540,19 @@
                             <apex:inputField value="{!newForm.Participate_in_any_Remit_scheme__c}" />
                             <apex:image value="/img/msg_icons/info16.png" title="If YES please contact IATA for details" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
                         </apex:outputPanel>
-                    </apex:pageBlockSectionItem>                
+                    </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
+                
+                <span id="commision-section" style="{!IF(newForm.Participate_in_any_Commission_Control__c=='Yes','','display:none')}">
+                    <apex:pageBlockSection columns="1">
+                        <apex:repeat value="{!MandatoryFieldsForCommission}" var="fieldName">
+                            <apex:pageBlockSectionItem>
+                                <apex:outputLabel value="* {!$ObjectType.AP_Process_Form__c.fields[fieldName].label}" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm[fieldName]}"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:repeat>
+                    </apex:pageBlockSection>
+                </span>
                 
                 <span id="nav_five"></span>
                 <apex:pageBlockSection title="5. Credit Card Processing Information" columns="1">
@@ -537,18 +563,22 @@
                     </apex:facet>
                 <tr class="aplabel">
                         <td colspan="2">Please complete this section if your airline accepts credit card transactions.
-                            <div class="bg-info" style="margin-top:10px;">Please note that if you accept credit cards but do not wish to participate in the BSP ECCB, we will instruct our Data Processing Centre to send you a file to your BSPLink inbox. It will be your responsibility to send this information to your bank or credit card acquirer.
-                            </div><br/></td>
+                            <div class="bg-info" style="margin-top:10px;">
+                                <apex:outputText rendered="{!NOT(IsNewCountryProcess)}" value="Please note that if you accept credit cards but do not wish to participate in the BSP ECCB, we will instruct our Data Processing Centre to send you a file to your BSPLink inbox. It will be your responsibility to send this information to your bank or credit card acquirer."></apex:outputText>
+                                <apex:outputText rendered="{!IsNewCountryProcess}" value="Please note that Credit Card acceptance and ECCB configuration are now self-service in BSPLink, this configuration should be done by the airline in order to receive and process the Credit Card Sales as per the airline's desire once the activation in the BSPLink is completed"></apex:outputText>
+                            </div>
+                            <br/>
+                        </td>
                  </tr>
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Does your Airline accept Payment Cards for BSP ticket issuance by Travel Agents?" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:inputField value="{!newForm.Accept_payment_Cards_for_BSP_ticket__c}" />
                     </apex:pageBlockSectionItem>                   
-                   <apex:pageBlockSectionItem >
+                   <apex:pageBlockSectionItem rendered="{!NOT(IsNewCountryProcess)}">
                        <apex:outputLabel value="Which Card brand does your Airline accept for BSP ticket issuance by Travel Agents?"/>
                        <apex:inputField value="{!newForm.Card_brand_accepted_for_BSP_ticket__c}" />
                    </apex:pageBlockSectionItem>          
-                    <apex:inputField value="{!newForm.Other_Card_brand_accepted_for_BSP_ticket__c}" label="Other card brand"/>
+                    <apex:inputField rendered="{!NOT(IsNewCountryProcess)}" value="{!newForm.Other_Card_brand_accepted_for_BSP_ticket__c}" label="Other card brand"/>
                     </apex:pageBlockSection>
                     <apex:pageBlockSection >
                         <apex:pageBlockSectionItem >
@@ -564,10 +594,13 @@
                     </apex:pageBlockSectionItem>
                     </apex:pageBlockSection>
                   
-                <div id="noECCB" class="bg-warning" style="{!IF (newForm.Join_BSP_ECCB__c == 'No', 'border: 0px !important;', 'display:none')}">
+                <div id="noECCB" class="bg-warning" style="{!IF (AND(NOT(IsNewCountryProcess),newForm.Join_BSP_ECCB__c == 'No'), 'border: 0px !important;', 'display:none')}">
                     Note! if NO, it will be the airline's sole responsibility to process any eventual credit card payment based on the DPC report (= HOT file if subscribed as indicated above).<br/>
                 </div>
-                <div class="aplabel" id="merchantnumbers" style="{!IF (newForm.Join_BSP_ECCB__c == 'Yes', 'border: 0px !important;', 'display:none')}">        
+                <div id="noECCBNewProcess" class="bg-warning" style="{!IF (AND(IsNewCountryProcess,newForm.Join_BSP_ECCB__c == 'No'), 'border: 0px !important;', 'display:none')}">
+                    Please remember that ECCB is now self-service in BSPLink. If the airline does not want to use ECCB; it will be the airline’s sole responsibility to process any eventual credit card payment based on the DPC reports<br/>
+                </div>
+                <div class="aplabel" id="merchantnumbers" style="{!IF (AND(NOT(IsNewCountryProcess),newForm.Join_BSP_ECCB__c == 'Yes'), 'border: 0px !important;', 'display:none')}">        
                     
                     <div>Please provide Merchant number for each card brand accepted and the name of your acquirer or processor to which BSP shall send the data for your card sales:</div>
                     

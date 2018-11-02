@@ -32,14 +32,16 @@
                   <apex:variable value="{!ticker*-1}" var="ticker" />
                   <tr class="headerRow">
                     <th>Activity</th>
+                    <th>Division</th>
                     <th>Description</th>
                     <th>Overall Status</th>
                     <th>Account Issue or Priority</th>
-                    <th>Benefits to the Account</th>
+                    <th>Comment</th>
                     <th>End Date</th>
                   </tr>
                   <tr class="dataRow {!IF(ticker==1, 'odd', 'even')}">
                   <td class="dataCell" ><apex:outputField value="{!objective.Name}"  /></td>
+                  <td class="dataCell"><apex:outputField value="{!objective.Division__c}"  /></td>
                   <td class="dataCell"><apex:outputField value="{!objective.Details__c}"  /></td>
                   <td class="dataCell"><apex:outputField value="{!objective.Status__c}"  /></td>
                   <td class="dataCell"><apex:outputField value="{!objective.Account_Issue_or_Priority__c}"  /></td>

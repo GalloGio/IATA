@@ -379,6 +379,30 @@
     </fields>
     <label>IEC Subscription History</label>
     <listViews>
+        <fullName>AGM_Certificates</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription_Number__c</columns>
+        <columns>Accepted_Terms_and_Conditions__c</columns>
+        <columns>Billing_Account_Number__c</columns>
+        <columns>Invoice_Number__c</columns>
+        <columns>Purchased_Product_Category__c</columns>
+        <columns>Purchased_Product_Information__c</columns>
+        <columns>Purchased_Product_Rate_Plan_Information__c</columns>
+        <columns>Purchased_Product_SKU__c</columns>
+        <columns>Rate_Plan_Quantity__c</columns>
+        <columns>Selected_Payment_Method__c</columns>
+        <columns>Action__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Purchased_Product_Category__c</field>
+            <operation>contains</operation>
+            <value>Certificat</value>
+        </filters>
+        <label>AGM Certificates</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Subscription_Number__c</columns>

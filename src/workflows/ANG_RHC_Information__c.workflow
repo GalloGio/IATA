@@ -24,7 +24,7 @@
             <name>Set_Effective_Date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>ISCHANGED(ANG_RHC_Amount__c)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>

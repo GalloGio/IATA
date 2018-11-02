@@ -159,7 +159,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     if(Trigger.isInsert || Trigger.isUpdate){
 	
 		/*DigitalGenius trigger - turn off*/
-		if (Trigger.isUpdate)  dgAI2.DG_PredictionTriggerHandler.doFeedback(trigger.new);
+		//if (Trigger.isUpdate)  dgAI2.DG_PredictionTriggerHandler.doFeedback(trigger.new);
+        
         
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ //FLAG
@@ -191,14 +192,16 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         contacts = [Select c.Id, c.Agent_Type__c, c.AccountId From Contact c where Id IN : contactIds];
                     }
                     if(!IFAPaccountIds.isEmpty()){
-                        accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type From Account a where Id IN : IFAPaccountIds];
+                        accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type, a.RecordType.DeveloperName, a.CNS_Account__c From Account a where Id IN : IFAPaccountIds];
                     }
                     System.debug('QUERY DEBUG' + Limits.getQueryRows());
                     //GM - IMPRO - START
                     //emailtemplate query from isinsert and isupdate to the share code
                     IFAPemailtemplate = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.recordType.Name = 'IFAP'];
                     //GM - IMPRO - END
+
                     //Ifap Authorized users have a specific permission set
+                    /* START comment: fix too many soql queries - NEWGEN-3429
                     List<PermissionSet> PSet = [SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users'];
                     if(PSet <> null && PSet.size()>0){
                         ID PSetID = PSet[0].Id;
@@ -208,6 +211,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                 isIfapAuthorizedUser = true;
                         }
                     }
+                    */ // END comment - fix too many soql queries - NEWGEN-3429
+
+                    //START fix too many soql queries - NEWGEN-3429
+                    List<PermissionSetAssignment> psaList = [SELECT AssigneeId FROM PermissionSetAssignment WHERE Assignee.IsActive = true 
+                        AND AssigneeId = :UserInfo.GetUserId() AND PermissionSetId IN (SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users')];
+                        if (!psaList.isEmpty()){
+                            isIfapAuthorizedUser = true;
+                        }
+                    //END fix too many soql queries - NEWGEN-3429
+
+
                     // Create Account and contact Map (in order to decrease the number of SOQL queries executed)
                     for (Case aCase : trigger.New) {
                         // Search for the contact related to the case
@@ -221,6 +235,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         for (Account aAccount : accounts) {
                             if (aAccount.Id == aCase.AccountId) {
                                 accountMap.put(aCase.id, aAccount);
+                                if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){
+                                    aCase.CNSCase__c = true;
+                                }
                                 break;
                             }
                         }
@@ -567,8 +584,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // Mod from 2016/04/05: this restriction is only when the case has the same Reason1__c
                     if (c.RecordTypeId == AirlineCodingRTId && mapACCasesPerAccountId.get(c.AccountId) != null) {
                         system.debug('##ROW##');
+                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form'};
                         for (Case cse: mapACCasesPerAccountId.get(c.AccountId) ) {
-                            if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id) {
+                            if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id && setInvalidReasons.contains(c.Reason1__c)) {
                                 c.addError('There is already an open Airline Coding Application case with Reason "' + c.Reason1__c + '" on the selected Account. There can be only one open case of this type on an Account.');
                             }
                         }
@@ -934,7 +952,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // get parent case
                     //GM - IMPRO - START
                     Case[] parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, 
-                            c.secondFAnonComplianceDate__c, c.Account.Type, c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c 
+                            c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.ANG_IsNewGenAgency__c, c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c 
                             from Case c where c.Id =: newCase.ParentId];
                     if (parentCase != null && parentCase.size() > 0) {
                         // check if parent case is an IFAP case
@@ -979,10 +997,16 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                                         }
                                         parentCase[0].firstFSnonComplianceDate__c = Date.today();
                                         // set 2nd FS deadline date for PAX and Domestic agents
+                                        
                                         if (isPassengerDomestic) {
                                             system.debug('##ROW##');
-                                            // business rule: 31 days after the non-compliance case is raised
-                                            parentCase[0].FS_Second_Deadline_Date__c = parentCase[0].firstFSnonComplianceDate__c.addDays(31);
+
+                                            //NEWGEN-3394 - deadline for NewGen to 60 days
+                                            if(parentCase[0].Account.ANG_IsNewGenAgency__c)
+                                                // business rule: 31 days after the non-compliance case is raised
+                                                parentCase[0].FS_Second_Deadline_Date__c = parentCase[0].firstFSnonComplianceDate__c.addDays(60);
+                                            else
+                                                parentCase[0].FS_Second_Deadline_Date__c = parentCase[0].firstFSnonComplianceDate__c.addDays(31);
                                             // business rule changed: the last day of the following month after the non-compliance case is raised
                                             //Date inTwoMonths = parentCase[0].firstFSnonComplianceDate__c.addMonths(2);
                                             //Date newDeadline = Date.newInstance(inTwoMonths.year(), inTwoMonths.month(), 1);
@@ -1230,6 +1254,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if ((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == caseSEDARecordTypeID) && c.Currency__c != null) {//INC200638 - added SEDA record type
                     setCurrencies.add(c.Currency__c);
                 }
+                if (c.RecordTypeId == caseSEDARecordTypeID) {
+                    if (c.Demand_by_Email_Fax__c!=null) {
+                        c.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
+                    }
+                }
             }
             map<String, CurrencyType> mapCurrencyTypePerCurrencyCode = new map<String, CurrencyType>(); 
             if (! setCurrencies.isEmpty()) {
@@ -1369,9 +1398,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
             //Gavinho - 27-03-2017 
             for(IATA_ISO_Country__c iso : [select Id,ISO_Code__c,Name,Region__c,Case_BSP_Country__c from IATA_ISO_Country__c where Name in:CountryNameSet OR Case_BSP_Country__c IN :CountryNameSet]){
-                IATAISOCountryMap.put(iso.Name,iso);
-                if(iso.Case_BSP_Country__c != null && !IATAISOCountryMap.containsKey(iso.Case_BSP_Country__c)) //same cases the country has different name that the bsp iso country) 
-                    IATAISOCountryMap.put(iso.Case_BSP_Country__c ,iso);
+                IATAISOCountryMap.put(iso.Name,iso); //RN-INC392800
+              /*  if(iso.Case_BSP_Country__c != null && !IATAISOCountryMap.containsKey(iso.Case_BSP_Country__c)) //same cases the country has different name that the bsp iso country) 
+                    IATAISOCountryMap.put(iso.Case_BSP_Country__c ,iso);*/
             }
             for(Case newCase : trigger.new){
                 if(IATAISOCountryMap.get(newCase.Country_concerned_by_the_query__c)!=null){
@@ -1639,9 +1668,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         if (IFAPupdatedCase.Financial_Review_Result__c <> IFAPoldCase.Financial_Review_Result__c && !isIfapAuthorizedUser && !IFAPcurrentUserProfile.Name.toLowerCase().contains('system administrator')) {
                             IFAPupdatedCase.addError('Your user does not have the permission to change the Financial Review Result field.');
                         }
-                        //when case has an OSCAR attached must synchronize fields
-                        if(IFAPupdatedCase.Oscar__c != null)
-                            AMS_Utils.syncOSCARwithIFAP(IFAPoldCase, IFAPupdatedCase);
                     }
                 }
             }
@@ -1693,6 +1719,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                     accountIds.add(aCase.AccountId);
                 }     
+                if (aCase.RecordTypeId == caseSEDARecordTypeID) {
+                    Case aCaseOld = Trigger.oldMap.get(aCase.Id);
+                    if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
+                        aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
+                    }
+                }
             }
             
             if(accountIds.size() > 0){ // This list should be empty if all of the cases aren't related to the Sidra Small amount process
@@ -1756,10 +1788,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
                 //Here we calculate the first contact with client in business hours
                 Case oldCase = System.Trigger.oldMap.get(updatedCase.Id);
-                if(updatedCase.BusinessHoursId <> null && updatedCase.First_Contact_with_Client__c <> null 
-                    && (updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c 
-                    || updatedCase.First_Contact_w_Client_in_Business_Hours__c == null))
+                if(
+                    updatedCase.BusinessHoursId <> null
+                    && updatedCase.First_Contact_with_Client__c <> null 
+                    && (
+                        updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c 
+                        || updatedCase.First_Contact_w_Client_in_Business_Hours__c == null
+                        || updatedCase.First_Contact_w_Client_in_Business_Hours__c < 0
+                    )
+                ) {
                     updatedCase.First_Contact_w_Client_in_Business_Hours__c = BusinessHours.diff(updatedCase.BusinessHoursId, updatedCase.CreatedDate, updatedCase.First_Contact_with_Client__c) / 3600000.0;
+                }
             }
             if (Trigger.isUpdate && (!transformationHelper.CalculateBusinessHoursAgesGet() || BusinessDays.isAllowedRunTwice)) { // we are on the update so we have the caseIDS!Hurra!!
                 system.debug('##ROW##');
@@ -2010,7 +2049,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             // Change the status of the old card to "Cancelled" (only on reissue => Lost/stolen) 
                             if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE){
                                 //find old card to cancel it
-                                ID_Card__c[] idCards = [Select Card_Status__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c =: IDCardUtil.CARDSTATUS_PRINTED_DELIVERED order by CreatedDate desc];
+                                ID_Card__c[] idCards = [Select Card_Status__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c =: IDCardUtil.CARDSTATUS_VALID order by CreatedDate desc];
                                 if (idCards != null && idCards.size() > 0) {
                                     idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
                                     update idcards[0];
@@ -2052,6 +2091,32 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'CaseBeforeTrigger')){ 
                 AMS_OscarCaseTriggerHelper.blockForbbidenActions(trigger.New, trigger.oldMap);
                 AMS_OscarCaseTriggerHelper.copyDataFromOscar();
+
+                List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
+                Map<Id,Case> oscarIdcases = new Map<Id,Case>();
+
+                for(Case c: (List<Case>)Trigger.new){
+                    if(c.RecordTypeId == IFAPcaseRecordTypeID && c.Oscar__c != null){
+                        oscarIdcases.put(c.Oscar__c,c);
+                    }
+                }
+
+                for(AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, 
+                                            Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c, 
+                                            Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c 
+                                            from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]){
+
+                    oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id),oscarIdcases.get(oscar.Id),oscar,false);
+
+                    if(oscar != null) {
+                        oscarsToUpdate.add(oscar);
+                    }
+                }
+                    
+                if(!oscarsToUpdate.isEmpty()){
+                    update oscarsToUpdate;
+                }
+                    
             }
         }
         /*AMS_OSCARCaseTrigger Trigger.isUpdate*/

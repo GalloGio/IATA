@@ -54,6 +54,17 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_IATA_EasyPay_Opt_out__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Opt-out from IATA EasyPay</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Opt-out from IATA EasyPay?</inlineHelpText>
+        <label>IATA EasyPay Opt-out</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>BSP_Country__c</fullName>
         <externalId>false</externalId>
         <formula>Services_Rendered_to_Airline__r.IATA_ISO_Country__r.BSP_Country_free_text__c</formula>
@@ -311,6 +322,30 @@
         <type>Lookup</type>
     </fields>
     <label>Services Rendered</label>
+    <listViews>
+        <fullName>ZZ_BSP_Participation_Search_by_Airline</fullName>
+        <columns>NAME</columns>
+        <columns>Services_Rendered_Type__c</columns>
+        <columns>Services_Rendered_By__c</columns>
+        <columns>Services_Rendered_to_Airline__c</columns>
+        <columns>Services_Rendered_Status__c</columns>
+        <columns>BSP_Country__c</columns>
+        <columns>CASS_Country__c</columns>
+        <columns>Pax_Cargo__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Services_Rendered_Type__c</field>
+            <operation>equals</operation>
+            <value>CASS Participation,BSP Participation</value>
+        </filters>
+        <filters>
+            <field>Services_Rendered_to_Airline__c</field>
+            <operation>equals</operation>
+            <value>Air France</value>
+        </filters>
+        <label>ZZ-BSP Participation - Search by Airline</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Service Name</label>
         <trackHistory>false</trackHistory>

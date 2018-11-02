@@ -1,8 +1,6 @@
 public without sharing class OneIdUtils {
 	
-    public static final String GET_POR_URL_FROM_SITE='GET_POR_URL_FROM_SITE';
-    public static final String GET_POR_URL_FROM_ISSP_CS='GET_POR_URL_FROM_ISSP_CS';
-    public static final String GET_POR_URL_FROM_ORG_AND_CUM_NAME_CS='GET_POR_URL_FROM_ORG_AND_CUM_NAME_CS';
+    public Enum Mode {CURRENT, ISSP, IDENTITY}
     
 	@AuraEnabled
 	public static String ORG_URL {get; set;}
@@ -26,37 +24,74 @@ public without sharing class OneIdUtils {
         System.debug('getCommunityUrlName() RESULT='+COMMUNITY_URL_NAME);
         return COMMUNITY_URL_NAME;
     }
+
+    private static Map<String, String> networks{
+        get{
+            if(networks == null){
+                networks = new Map<String, String>();
+                for(Network n : [SELECT Id, Name FROM Network]) networks.put(n.Name, String.valueOf(n.Id).substring(0, 15));
+            }
+            return networks;
+        }
+        set;
+    }
     
     @AuraEnabled
     public Static String getSiteCompleteUrl (){
-        return getSiteCompleteUrl(getSiteCompleteUrl(''));
-    }
-    
+        return getSiteCompleteUrl(Mode.CURRENT);
+    }    
+   
     @AuraEnabled
-    public Static String getSiteCompleteUrl (String methodToUse){
-    	String CustSetIndentityPortal=String.ValueOF(ISSP_CS__c.getValues('IdentityPortal').value__c);
+    public Static String getCommunityRedirection (Mode m, String startUrl){
+        String networdUrl = '/servlet/networks/switch?networkId=';
+        String sUrl = '';
         
-        System.debug('getSiteCompleteUrl methodToUse='+methodToUse);
+        if(startUrl != '') sUrl = '&startURL='+EncodingUtil.urlEncode(startUrl, 'UTF-8');        
+
+        System.debug(loggingLevel.FINE, '____ [cls OneIdUtils - getSiteCompleteUrl] Mode - ' + m);
+        if(m == Mode.CURRENT) COMMUNITY_COMPLETE_URL = Site.getBaseUrl();
+        else{            
+            String netMode;
+            
+            if(m == Mode.ISSP) netMode = 'IATA Portal';
+            if(m == Mode.IDENTITY) netMode = 'identity';
+            
+            String networkId = networks.get(netMode);
+            
+            System.debug('final url ' + networdUrl+networkId+sUrl);
+            
+            COMMUNITY_COMPLETE_URL = networdUrl+networkId+sUrl;
+
+        }
         
-        if ( ((methodToUse=='')||(methodToUse==GET_POR_URL_FROM_SITE ))
-            && Site.getBaseUrl() != null && Site.getBaseUrl() != ''){
-            System.debug('SITE URL: Site.getBaseUrl()');
-            COMMUNITY_COMPLETE_URL=Site.getBaseUrl();
-        }
-        else if ( ((methodToUse=='')||(methodToUse==GET_POR_URL_FROM_ISSP_CS ))
-                 && CustSetIndentityPortal != null &&  CustSetIndentityPortal!= ''){
-            System.debug('SITE URL: CustSetIndentityPortal');
-            COMMUNITY_COMPLETE_URL='https://'+CustSetIndentityPortal + (String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
-        }
-        //GET_POR_URL_FROM_ORG_AND_CUM_NAME_CS
-        else
-        {
-            System.debug('SITE URL: getOrgUrl()/getCommunityUrlName()');
-            COMMUNITY_COMPLETE_URL='https://'+getOrgUrl()+(String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
+        if(String.isEmpty(COMMUNITY_COMPLETE_URL)){
+            COMMUNITY_COMPLETE_URL= getOrgUrl()+(String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
         }
         
-        System.debug('FINAL url: '+COMMUNITY_COMPLETE_URL);
+        System.debug('____ [cls OneIdUtils - getCommunityRedirection] final URL - ' + COMMUNITY_COMPLETE_URL);
         
         return COMMUNITY_COMPLETE_URL;
     }
+
+     public static String getSiteCompleteUrl(Mode m){
+        String identityPortal =String.ValueOF(ISSP_CS__c.getValues('IdentityPortal').value__c);
+        String csPortal =String.ValueOF(ISSP_CS__c.getValues('Host').value__c);
+        String defaultProtocol = 'https://';
+        
+        System.debug(loggingLevel.FINE, '____ [cls OneIdUtils - getSiteCompleteUrl] Mode - ' + m);
+        
+        if(m == Mode.IDENTITY && String.isNotEmpty(identityPortal)) COMMUNITY_COMPLETE_URL = defaultProtocol+identityPortal;
+        else if (m == Mode.ISSP && String.isNotEmpty(csPortal)) COMMUNITY_COMPLETE_URL = defaultProtocol+csPortal;
+        else if (m == Mode.CURRENT) COMMUNITY_COMPLETE_URL = Site.getBaseUrl();
+        
+        if(String.isEmpty(COMMUNITY_COMPLETE_URL)){
+            COMMUNITY_COMPLETE_URL= defaultProtocol+getOrgUrl()+(String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
+        }
+        
+        System.debug(loggingLevel.FINE, '____ [cls OneIdUtils - getSiteCompleteUrl] final URL - ' + COMMUNITY_COMPLETE_URL);
+        
+        return COMMUNITY_COMPLETE_URL;
+    }
+
+
 }

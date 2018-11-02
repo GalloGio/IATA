@@ -60,6 +60,26 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
+    <fieldSets>
+        <fullName>TrackingHistory</fullName>
+        <description>used for tracking purposes</description>
+        <displayedFields>
+            <field>ToU_accepted__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Date_ToU_accepted__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Title</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>TrackingHistory</label>
+    </fieldSets>
     <fields>
         <fullName>AMP_Digest_Daily_or_Weekly__c</fullName>
         <description>option to receive the Chatter topic digest either daily or weekly</description>
@@ -684,6 +704,17 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Federation_ID__c</fullName>
+        <description>Shows the federation Id to the permission set manage external users</description>
+        <externalId>false</externalId>
+        <formula>FederationIdentifier</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Federation ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Functional_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>Functional Expertise</label>
@@ -917,6 +948,15 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <externalId>false</externalId>
         <label>Is Kavi Internal User</label>
         <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_TIP_User__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Contact.Account.Category__c, &apos;Payment Provider&apos;)
+&amp;&amp; ISPICKVAL(Contact.Account.Sector__c , &apos;Financial Institution&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is TIP User</label>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -2333,7 +2373,7 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <filters>
             <field>FULL_NAME</field>
             <operation>contains</operation>
-            <value>Andrija</value>
+            <value>Weydath</value>
         </filters>
         <label>User with name</label>
         <language>en_US</language>
@@ -2976,6 +3016,27 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Kavi_Users</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Kavi_Internal_User__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Kavi internal users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Knowledge_Users</fullName>
         <columns>FULL_NAME</columns>
         <columns>CORE.USERS.USERNAME</columns>
@@ -3113,6 +3174,30 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <value>P</value>
         </filters>
         <label>Partner community users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Read_Only_Dev</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>MARKETING_USER</columns>
+        <columns>CORE.USERS.DIVISION</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>License_Cost_Center__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>equals</operation>
+            <value>Dev - Read Only</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Read Only Dev</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -3389,41 +3474,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>TD</fullName>
-        <columns>FULL_NAME</columns>
-        <columns>CORE.USERS.DIVISION</columns>
-        <columns>CORE.USERS.ACTIVE</columns>
-        <columns>CORE.USERS.LAST_LOGIN</columns>
-        <columns>CORE.USER_ROLE.NAME</columns>
-        <columns>CORE.PROFILE.NAME</columns>
-        <columns>CREATED_BY_NAME</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.NAME</columns>
-        <columns>License_Cost_Center__c</columns>
-        <columns>CORE.USERS.USERNAME</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>CORE.USERS.EMAIL</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CORE.USERS.ACTIVE</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>CORE.PROFILE.NAME</field>
-            <operation>contains</operation>
-            <value>ISS Portal Airline User (Partner)</value>
-        </filters>
-        <filters>
-            <field>LANGUAGE</field>
-            <operation>notEqual</operation>
-            <value>1</value>
-        </filters>
-        <label>TD</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>TTBS_Users</fullName>
         <columns>FULL_NAME</columns>
         <columns>CORE.USERS.ALIAS</columns>
@@ -3448,8 +3498,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
     <searchLayouts>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CORE.USER_ROLE.NAME</lookupDialogsAdditionalFields>
-        <lookupFilterFields>FULL_NAME</lookupFilterFields>
-        <lookupFilterFields>CORE.USER_ROLE.NAME</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CORE.USER_ROLE.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CORE.USERS.PHONE</lookupPhoneDialogsAdditionalFields>
@@ -3478,15 +3526,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <errorConditionFormula>AND(
     ISPICKVAL(UserType, &apos;Standard&apos;),
     IsActive,
-    NOT(
-        OR(
-            REGEX(License_Cost_Center__c , &quot;[A-Z]{3}[0-9]{3}[A-Z]{2}[0-9]{2}&quot;),
-            REGEX(License_Cost_Center__c , &quot;[A-Z]{4}[0-9]{2}[A-Z]{2}[0-9]{2}&quot;),
-            REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{2}&quot;),
-            REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{4}[A-Z]{2}[0-9]{2}&quot;)
+    NOT(REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[A-Z0-9]{4}[A-Z]{2}[0-9]{2}&quot;)
         )
-    )
-)</errorConditionFormula>
+    )</errorConditionFormula>
         <errorDisplayField>License_Cost_Center__c</errorDisplayField>
         <errorMessage>The format for cost center is - &lt;2/4 Alphabets(Uppercase)&gt;&lt;2/4 Numeric&gt;&lt;2/4 Alphabets(Uppercase)&gt;&lt;2 Numeric&gt;, with a total of 10 characters. For example, ISF005CH01, XSMW01JO01.</errorMessage>
     </validationRules>

@@ -46,6 +46,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Link_agent_name__c</field>
             </layoutItems>
             <layoutItems>
@@ -69,8 +73,12 @@
                 <field>ANG_IEP_Status_FF__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ANG_Accreditation_Model__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Purge_Flag__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -503,6 +511,7 @@
         <fields>Type__c</fields>
         <fields>LAST_UPDATE</fields>
         <fields>CREATED_DATE</fields>
+        <fields>Active__c</fields>
         <relatedList>Location__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
@@ -685,14 +694,20 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Change_Code__c</fields>
+        <fields>Integration_System__c</fields>
+        <fields>Update_Type__c</fields>
+        <fields>Status__c</fields>
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -3,6 +3,14 @@
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>India BG queue</name>
+    <queueMembers>
+        <users>
+            <user>shahb@iata.org</user>
+            <user>vitharanai@iata.org</user>
+            <user>boonsinsup@iata.org</user>
+            <user>rodrigos@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

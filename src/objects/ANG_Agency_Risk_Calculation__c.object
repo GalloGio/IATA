@@ -243,6 +243,23 @@
     </fields>
     <label>Agency Risk Calculation</label>
     <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Accreditation_Model__c</columns>
+        <columns>ANG_Adjusted__c</columns>
+        <columns>ANG_Financial_Review_Result__c</columns>
+        <columns>ANG_Limit_Cash_Condition__c</columns>
+        <columns>ANG_Occurrence_Num__c</columns>
+        <columns>ANG_Order__c</columns>
+        <columns>ANG_Remittance_Frequency__c</columns>
+        <columns>ANG_Risk_History__c</columns>
+        <columns>ANG_Risk_History_Assessment__c</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Risk_Assessment</fullName>
         <columns>NAME</columns>
         <columns>ANG_Financial_Review_Result__c</columns>
@@ -361,35 +378,35 @@
         <picklistValues>
             <picklist>ANG_Remittance_Frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -508,35 +525,35 @@
         <picklistValues>
             <picklist>ANG_Remittance_Frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -655,35 +672,35 @@
         <picklistValues>
             <picklist>ANG_Remittance_Frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

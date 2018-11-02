@@ -1,0 +1,354 @@
+<apex:page controller="ISSP_ANG_CodeSearch" language="en" cache="false"
+           sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false"
+           docType="html-5.0"
+           standardStylesheets="false">
+
+  <head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <c:ISSP_Header ></c:ISSP_Header>
+    <c:iss_ap_css />
+
+  </head>
+    <style>
+      .section-header {
+        background-color: rgb(43, 120, 228);
+        color: white;
+        line-height: 1.42857143;
+        padding: 8px;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+      }
+
+      .section-header>i {
+        color: black;
+        margin-right: 5px;
+      }
+
+      .section-body {
+        margin: 8px;
+      }
+
+      .table {
+        width: 95%;
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .search {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+
+      .searchResults {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+
+      .tableFormat {
+        padding-left : 5px !important;
+        padding-right : 15px !important;
+        padding-bottom: 2px !important;
+        padding-top :  2px !important;
+        vertical-align: middle !important;
+      }
+
+      div.customTable2 {
+        width: 100%;
+      }
+
+      div.customTable2>div:nth-child(2n-1) {
+        padding-top: 5px;
+        width: 20%;
+        float: left;
+      }
+
+      div.customTable2>div:nth-child(2n) {
+        padding-top: 5px;
+        width: 80%;
+        float: left;
+      }
+
+      main {
+        background-color: white;
+      }
+
+    </style>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $(window).keydown(function(event){
+          if(event.keyCode == 13) {
+            event.preventDefault();
+            doPreSearch();
+            return false;
+          }
+        });
+      });
+
+      function doPreSearch() {
+        var searchString = $('[id$="searchInputId"]').val();
+        doSearchServer(searchString);
+      }
+    </script>
+
+  <body>
+    <main class="container">
+      <c:ISSP_CustomNavigation />
+      <apex:form id="mainFrm">
+
+      <apex:actionFunction action="{!doSearch}" name="doSearchServer" rerender="searchResults">
+        <apex:param id="searchStringId" name="searchString" value="" />
+      </apex:actionFunction>
+
+        <div id="page-wrapper" class="col-lg-12">
+          <div class="row">
+            <div class="section-header">
+              <strong>IATA Code Search</strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="panel panel-default">
+              <div class="search">
+                <span>
+                  <apex:outputLabel value="{!$Label.OneId_IATA_Code}"/>
+                  <span>
+                    <apex:input id="searchInputId" value="{!iataCode}"/>
+                    <a href="#" onclick="doPreSearch();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                  </span>
+                </span>
+
+                <p>
+                  <span>
+                    <apex:outputText escape="false" value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_CHECK_A_CODE_LINK}"/>
+                  </span>
+                </p>
+
+                <apex:pageBlock id="searchResults">
+
+                  <apex:outputPanel rendered="{!activeError}">
+                    <div class="alert alert-warning">
+                      <apex:outputText value="{!errorMessage}" style="margin-top: 15px;"/>
+                    </div>
+                  </apex:outputPanel>
+
+                  <hr></hr> 
+
+                  <apex:outputPanel id="searchResults" rendered="{!activeSearch}">
+
+                    <table style="margin-top: 30px;">
+                      <tr style="display:{!IF(NOT(showParent),'','none')};">
+                        <td>
+                          <apex:outputLabel value="{!$Label.OneId_IATA_Code}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! agency.IATACode__c}"/>
+                        </td>
+                      </tr>
+
+                      <tr style="display:{!IF(showParent,'','none')};">
+                        <td colspan="2">
+                          <apex:outputText escape="false" value="{! heMessage}"/>
+                        </td>
+                      </tr>
+
+                      <tr style="display:{!IF(showParent,'','none')};">
+                        <td colspan="2">
+                            &nbsp;
+                        </td>
+                      </tr>
+
+                      <tr style="display:{!IF(showParent,'','none')};">
+                        <td>
+                          <apex:outputLabel value="{!ho_he}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! agency.IATACode__c}"/>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <apex:outputLabel value="{!$Label.ISSP_AMS_Noc_Legal_Name}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! agency.name}"/>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <apex:outputLabel value="{!$Label.ISSP_MyProfile_TradeName}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! agency.TradeName__c}"/>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <apex:outputLabel value="{!$Label.ISSP_Status}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! status}"/>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <apex:outputLabel value="{!$Label.Country}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! agency.IATA_ISO_Country__r.Name}"/>
+                        </td>
+                      </tr>
+
+                      <tr style="display:{!IF(AND(agency.ANG_IsNewGenAgency__c, isTravel),'','none')}">
+                        <td>
+                          <apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! accreditationModel}"/>
+                        </td>
+                      </tr>
+
+                      <tr style="display:{!IF(AND(agency.ANG_IsNewGenAgency__c, isTravel),'','none')}">
+                        <td>
+                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! riskStatus}"/>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY}"/>
+                        </td>
+                        <td>
+                          <i style="display:{!IF(financialSecurityExists,'','none')}; margin-left: 15px; color: green;" class="glyphicon glyphicon-ok"></i>
+                          <i style="display:{!IF(NOT(financialSecurityExists),'','none')}; margin-left: 15px; color: red;" class="glyphicon glyphicon-remove"></i>
+                        </td>
+                      </tr>
+
+                      <tr style="display:{!IF(showIrregularities,'','none')}">
+                        <td>
+                          <apex:outputLabel value="{!$Label.ISSP_Homepage_Irregularities}"/>
+                        </td>
+                        <td>
+                          <apex:outputText style="margin-left: 15px;" value="{! agency.Accumulated_Irregularities__c}"/>
+                        </td>
+                      </tr>
+
+                      <tr style="display: {!IF(AND(isTravel, agency.ANG_IsNewGenAgency__c, rhcAgencyInfo != null), '', 'none')};">
+                        <td style="width: 20%;">
+                          <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RHC}"/>
+                        </td>
+                        <td style="vertical-align: top !important;">
+                          <apex:outputText style="display:{!IF(rhcAgencyInfo.ANG_CashCondition__c,'','none')}; margin-left: 15px;" value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC}"/>
+                          <apex:outputText style="display:{!IF(NOT(rhcAgencyInfo.ANG_CashCondition__c),'','none')}; margin-left: 15px;" value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_FORMULA}"/>
+                        </td>
+                      </tr>
+
+                    </table>
+
+                    <br/>
+
+                  <!--<div name="right-side" class="col-md-4 col-sm-12">-->
+                    <div style="min-height: 225px; display:{!IF(AND(isTravel, afpWrapper != null, agency.ANG_IsNewGenAgency__c),'','none')};">
+                      <c:AFP_Component wrapperClass="{!afpWrapper}"/>
+                    </div>
+                  <!--</div>-->
+
+                    <apex:outputPanel rendered="{!AND(agency.ANG_IsNewGenAgency__c, isTravel)}">
+
+                      <br></br>
+
+                      <div class="section-header">
+                        <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskEventsHistory.png')}"/>
+                        <!--i class="fa fa-line-chart" aria-hidden="true"></i-->
+                        <strong>{!$Label.ISSP_RHC_HUB_RH}</strong>
+                      </div>
+
+                      <div class="customTable2">
+                        <div>
+                          <strong>{!$Label.ISSP_ANG_RHC_Risk_Event_Status}</strong>
+                        </div>
+
+                        <div>
+                          <apex:outputPanel layout="block" styleClass="text-normal">
+                              <apex:selectRadio value="{!riskStatusFilter}" layout="pageDirection" id="riskStatusFilter" onchange="riskStatusFilterChange();">
+                                <apex:selectOption itemValue="Active" itemLabel="{!$Label.ISSP_AMS_eBulletin_Enabled}"/>
+                                <apex:selectOption itemValue="Expired" itemLabel="{!$Label.Warning_Expired}"/>
+                                <apex:selectOption itemValue="Inactive" itemLabel="{!$Label.ISSP_AMS_eBulletin_Disabled}"/>
+                                <apex:selectOption itemValue="All" itemLabel="{!$Label.ISSP_All}"/>
+                              </apex:selectRadio>
+                          </apex:outputPanel>
+                          <apex:actionFunction action="{!refreshRiskEventsTable}" name="riskStatusFilterChange" rerender="riskHistoryPanel">
+                          </apex:actionFunction>
+                        </div>
+                      </div>
+
+                      <apex:outputPanel id="riskHistoryPanel">
+                        <table id="riskHistoryTable" class="table table-striped" cellspacing="0">
+                          <thead>
+                              <tr>
+                                  <th class="tableFormat">{!$Label.ANG_ISSP_REH_RiskDescription}</th>
+                                  <th class="tableFormat" style="display:{!IF(isAll,'','none')}">{!$Label.ISSP_Status}</th>
+                                  <th class="tableFormat">{!$ObjectType.ANG_Agency_Risk_Event__c.fields.ANG_Issued_Date__c.Label}</th>
+                                  <th class="tableFormat">{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4}</th>
+                                  <th class="tableFormat">{!$Label.IDCard_IATA_Code_Of_Location}</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            <apex:repeat value="{! riskEventsList}" var="riskEvent">
+                              <tr>
+                                <td class="tableFormat">{! riskEvent.description}</td>
+                                <td class="tableFormat" style="display:{!IF(isAll,'','none')}">{! riskEvent.status}</td>
+                                <td class="tableFormat">
+                                  <apex:outputText value="{0, date, d MMM yyyy}">
+                                    <apex:param value="{! riskEvent.dateAssigned}" />
+                                  </apex:outputText>
+                                </td>
+                                <td class="tableFormat">
+                                  <apex:outputText value="{0, date, d MMM yyyy}">
+                                    <apex:param value="{! riskEvent.dateExpired}" />
+                                  </apex:outputText>
+                                </td>
+                                <td class="tableFormat">{! riskEvent.iataCode}</td>
+                              </tr>
+                            </apex:repeat>
+                          </tbody>
+                        </table>
+                        <script type="text/javascript">
+                          $('#riskHistoryTable').dataTable( {
+                            "pageLength": 5,
+                            "lengthMenu": [ 5, 10, 25, 50 ],
+                            "searching": false
+                          } );
+                        </script>
+                      </apex:outputPanel>
+                    </apex:outputPanel>
+                  </apex:outputPanel>
+                </apex:pageBlock>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <c:ISSP_CustomFooter />
+      </apex:form>
+    </main>
+
+    <script src="{!URLFOR($Resource.DataTablesBootstrap)}"></script>
+    <script src="{!URLFOR($Resource.JqueryDataTables)}"></script>
+    <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.DataTablesBootstrapCSS,'dataTables.bootstrap.min.css')}" />
+
+  </body>
+
+</apex:page>

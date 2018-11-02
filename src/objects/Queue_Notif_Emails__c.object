@@ -24,5 +24,16 @@
         <unique>true</unique>
     </fields>
     <label>Custom Queue Notification Emails</label>
+    <listViews>
+        <fullName>All_Notifications</fullName>
+        <columns>NAME</columns>
+        <columns>Queue_Name__c</columns>
+        <columns>Email_Adresses__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Notifications</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

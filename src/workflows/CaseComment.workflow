@@ -8,7 +8,7 @@
         <description>ACCA: New comment on case (ISIS2 &amp; ISIS2D)</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/New_Case_Comment</template>
+        <template>All/New_Case_Comment</template>
     </alerts>
     <alerts>
         <fullName>ACCA_Notification_on_new_Customer_Service_Request_Comment</fullName>
@@ -16,7 +16,7 @@
         <description>ACCA: Notification on new Customer Service Request Comment</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/New_Case_Comment</template>
+        <template>AMS/New_Case_Comment2</template>
     </alerts>
     <alerts>
         <fullName>ICH_Help_Desk_New_Case_Comment_notification_to_ICH_customer_support</fullName>
@@ -62,7 +62,7 @@
             <type>portalRole</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/New_Case_Comment_iata</template>
+        <template>All/New_Case_Comment_iata</template>
     </alerts>
     <alerts>
         <fullName>New_comment_notification_on_ACR_ISIS2_D_to_IATA_migration_team</fullName>
@@ -70,7 +70,7 @@
         <description>New comment notification on ACR ISIS2-D to IATA migration team</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/New_Case_Comment_iata</template>
+        <template>All/New_Case_Comment_iata</template>
     </alerts>
     <alerts>
         <fullName>New_comment_on_case</fullName>
@@ -78,7 +78,7 @@
         <description>ACCA: New comment on case</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/New_Case_Comment</template>
+        <template>All/New_Case_Comment</template>
     </alerts>
     <alerts>
         <fullName>SIS_Help_Desk_New_Case_Comment_notification_to_SIS_customer_support</fullName>
@@ -594,16 +594,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND ( $User.Id &lt;&gt; Parent.Owner:User.Id, ISPICKVAL(Parent.Status, &apos;Closed&apos; ), 
-OR ( 
-Parent.RecordType.DeveloperName = &apos;CasesEurope&apos;, 
-Parent.RecordType.DeveloperName = &apos;CasesAmericas&apos;, 
-Parent.RecordType.DeveloperName = &apos;CasesMENA&apos;, 
-Parent.RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;, 
-Parent.RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;, 
-Parent.RecordType.DeveloperName = &apos;ComplaintIDFS&apos;, 
-Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos; ),
-DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
+        <formula>AND ( $User.Id &lt;&gt; Parent.Owner:User.Id, ISPICKVAL(Parent.Status, &apos;Closed&apos; ),  OR (  Parent.RecordType.DeveloperName = &apos;CasesEurope&apos;,  Parent.RecordType.DeveloperName = &apos;CasesAmericas&apos;,  Parent.RecordType.DeveloperName = &apos;CasesMENA&apos;,  Parent.RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;,  Parent.RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;,  Parent.RecordType.DeveloperName = &apos;ComplaintIDFS&apos;,  Parent.RecordType.DeveloperName = &apos;Inter_DPCs&apos;, Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName = &apos;Cases_SIS_Help_Desk&apos; ), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -613,7 +604,7 @@ DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND( CreatedById &lt;&gt;  Parent.OwnerId ,  not(Parent.IsClosed),  OR( Parent.RecordType.Name = &quot;Cases - Europe&quot;,  Parent.RecordType.Name = &quot;Cases - Americas&quot;,  Parent.RecordType.Name = &quot;Cases - Africa &amp; Middle East&quot;,  Parent.RecordType.Name = &quot;Cases - Asia &amp; Pacific&quot;,  Parent.RecordType.Name = &quot;Cases - China &amp; North Asia&quot;,  Parent.RecordType.Name = &quot;Cases - SIS Help Desk&quot;,   Parent.RecordType.Name = &quot;Complaint (IDFS ISS)&quot;, Parent.RecordType.Name = &quot;Invoicing Collection Cases&quot; ))</formula>
+        <formula>AND( CreatedById &lt;&gt;  Parent.OwnerId ,  not(Parent.IsClosed),  OR( Parent.RecordType.Name = &quot;Cases - Europe&quot;,  Parent.RecordType.Name = &quot;Cases - Americas&quot;,  Parent.RecordType.Name = &quot;Cases - Africa &amp; Middle East&quot;,  Parent.RecordType.Name = &quot;Cases - Asia &amp; Pacific&quot;,  Parent.RecordType.Name = &quot;Cases - China &amp; North Asia&quot;,  Parent.RecordType.Name = &quot;Cases - SIS Help Desk&quot;,   Parent.RecordType.Name = &quot;Complaint (IDFS ISS)&quot;, Parent.RecordType.Name = &quot;Invoicing Collection Cases&quot;, Parent.RecordType.Name = &quot;Cases - IFG&quot; ))</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -649,19 +640,7 @@ DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
         </actions>
         <active>true</active>
         <description>Used in SIDRA Cases when a comment is received from E2C to trigger CS Actions</description>
-        <formula>AND( 
-
-CreatedDate=NOW(),
-
-OR(CreatedById=&apos;00520000000h6AU&apos;,
-AND(ISPICKVAL(Parent.New_interaction__c,&quot;New Comment&quot;),CONTAINS(Parent.LastModifiedBy.Profile.Name,&quot;ISS Portal&quot;))),
-
-Parent.RecordType.DeveloperName=&quot;SIDRA&quot;,   
-
-OR   (ISBLANK(Parent.Update_AIMS_DEF__c),   
-        DATEVALUE(Parent.Update_AIMS_DEF__c)&gt;(TODAY()-1),   
-        ISPICKVAL(Parent.Status,&quot;Closed&quot;),   
-        CONTAINS(Parent.Owner:Queue.QueueName,&quot;Cases&quot;)))</formula>
+        <formula>AND(   CreatedDate=NOW(),  OR(CreatedById=&apos;00520000000h6AU&apos;, AND(ISPICKVAL(Parent.New_interaction__c,&quot;New Comment&quot;),CONTAINS(Parent.LastModifiedBy.Profile.Name,&quot;ISS Portal&quot;))),  Parent.RecordType.DeveloperName=&quot;SIDRA&quot;,     OR   (ISBLANK(Parent.Update_AIMS_DEF__c),            DATEVALUE(Parent.Update_AIMS_DEF__c)&gt;(TODAY()-1),            ISPICKVAL(Parent.Status,&quot;Closed&quot;),            CONTAINS(Parent.Owner:Queue.QueueName,&quot;Cases&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

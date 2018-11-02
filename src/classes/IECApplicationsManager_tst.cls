@@ -113,7 +113,7 @@ private class IECApplicationsManager_tst {
         insert lstGDPAccounts;
         
         // create ID_Card records
-        oIDCard = IECTestUtil.createSampleIDCard('John', 'Doe', AGENT_VER_NUMBER, AGENCY1_NAME, AGENCY1_CODE, 'Printed/Delivered');
+        oIDCard = IECTestUtil.createSampleIDCard('John', 'Doe', AGENT_VER_NUMBER, AGENCY1_NAME, AGENCY1_CODE, 'Valid ID Card');
         oIDCard.Valid_To_Date__c = Date.today().addYears(1);
         oIDCard.Valid_From_Date__c = Date.today();
         insert oIDCard;

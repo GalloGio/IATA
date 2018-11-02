@@ -58,6 +58,19 @@ two record types:
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Agency_Accreditation_Class__c</fullName>
+        <description>Agency Accreditation Class taken from the related GDP Account View</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.Accreditation_Class__c</formula>
+        <inlineHelpText>Agency Accreditation Class taken from the related GDP Account View</inlineHelpText>
+        <label>Agency Accreditation Class</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Agency_IATA_Code__c</fullName>
         <externalId>false</externalId>
         <label>Agency IATA Code</label>
@@ -80,14 +93,26 @@ two record types:
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Approving_Manager_s_Email__c</fullName>
+        <fullName>Agency_Status__c</fullName>
+        <description>Agency Accreditation Status taken from the related GDP Account View</description>
         <externalId>false</externalId>
-        <label>Approving Manager&apos;s Email</label>
-        <length>50</length>
+        <formula>GDP_Products_Account_View__r.Agency_Status__c</formula>
+        <inlineHelpText>Agency Accreditation Status taken from the related GDP Account View</inlineHelpText>
+        <label>Agency Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Approving_Manager_s_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Approving Manager&apos;s Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -173,21 +198,6 @@ two record types:
                     <label>Preapproved</label>
                 </value>
                 <value>
-                    <fullName>Approved</fullName>
-                    <default>false</default>
-                    <label>Approved</label>
-                </value>
-                <value>
-                    <fullName>Printed/Delivered</fullName>
-                    <default>false</default>
-                    <label>Printed/Delivered</label>
-                </value>
-                <value>
-                    <fullName>Cancelled</fullName>
-                    <default>false</default>
-                    <label>Cancelled</label>
-                </value>
-                <value>
                     <fullName>Cancelled ID Card</fullName>
                     <default>false</default>
                     <label>Cancelled ID Card</label>
@@ -221,6 +231,11 @@ two record types:
                     <fullName>ERROR Missing Information</fullName>
                     <default>false</default>
                     <label>ERROR Missing Information</label>
+                </value>
+                <value>
+                    <fullName>ID Card Pending/In Progress</fullName>
+                    <default>false</default>
+                    <label>ID Card Pending/In Progress</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -306,14 +321,26 @@ two record types:
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EBC_Agency_Name__c</fullName>
+        <description>EBC Agency Name taken from the related GDP Account View</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.EBC_Agency_Name__c</formula>
+        <inlineHelpText>EBC Agency Name taken from the related GDP Account View. Displays Agency Trading Name OR Legal Name IF Trading Name is Blank.</inlineHelpText>
+        <label>EBC Agency Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Email__c</fullName>
         <externalId>false</externalId>
         <label>Email</label>
-        <length>100</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
+        <type>Email</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -330,7 +357,7 @@ two record types:
     <fields>
         <fullName>FirstName__c</fullName>
         <externalId>false</externalId>
-        <label>FirstName</label>
+        <label>First Name</label>
         <length>50</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -355,12 +382,25 @@ two record types:
         <fullName>Gender__c</fullName>
         <externalId>false</externalId>
         <label>Gender</label>
-        <length>10</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>FEMALE</fullName>
+                    <default>false</default>
+                    <label>FEMALE</label>
+                </value>
+                <value>
+                    <fullName>MALE</fullName>
+                    <default>false</default>
+                    <label>Male</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>HourWorkedCode__c</fullName>
@@ -453,13 +493,41 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>JSON_WS_Complex__c</fullName>
         <description>CAC Web Service Complex Response for IDCard</description>
         <externalId>false</externalId>
-        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;
-+ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+
-&quot;\&quot;cardholder-name\&quot;:\&quot;&quot;
-+  FirstName__c +&quot; &quot;+ LastName__c  + &quot;\&quot;,&quot;+
-&quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ &quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ &quot;\&quot;agency-name\&quot;:\&quot;&quot;+Agency_Name__c + &quot;\&quot;&quot;</formula>
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;+ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+
+&quot;\&quot;cardholder-name\&quot;:\&quot;&quot;+ FirstName__c +&quot; &quot;+ LastName__c + &quot;\&quot;,&quot;+
+&quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-name\&quot;:\&quot;&quot;+EBC_Agency_Name__c + &quot;\&quot;&quot;</formula>
         <inlineHelpText>CAC Web Service Complex Response for IDCard</inlineHelpText>
         <label>JSON WS Complex</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>JSON_WS_IDCard_App__c</fullName>
+        <description>CAC Web Service Response for IDCard App</description>
+        <externalId>false</externalId>
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;+ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-first-name\&quot;:\&quot;&quot;+ FirstName__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-last-name\&quot;:\&quot;&quot;+ LastName__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-idcard-name\&quot;:\&quot;&quot;+ Name_on_ID_Card__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-name\&quot;:\&quot;&quot;+EBC_Agency_Name__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-photo\&quot;:\&quot;&quot;+Photo__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;card-type\&quot;:\&quot;&quot;+TEXT(Type_of_ID_Card__c) + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-gender\&quot;:\&quot;&quot;+TEXT(Gender__c) + &quot;\&quot;,&quot;+ 
+&quot;\&quot;weekly-hours\&quot;:\&quot;&quot;+Hours_per_week__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-duties\&quot;:\&quot;&quot;+Duties__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;cardholder-position\&quot;:\&quot;&quot;+Position__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;industry-start-year\&quot;:\&quot;&quot;+Start_Date_Industry__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-start-year\&quot;:\&quot;&quot;+Start_Date_Agency_Year__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-start-month\&quot;:\&quot;&quot;+Start_Date_Agency_Month__c + &quot;\&quot;&quot;</formula>
+        <inlineHelpText>CAC Web Service Response for IDCard App</inlineHelpText>
+        <label>JSON WS IDCard App</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -503,7 +571,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
     <fields>
         <fullName>LastName__c</fullName>
         <externalId>false</externalId>
-        <label>LastName</label>
+        <label>Last Name</label>
         <length>50</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -964,13 +1032,14 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>Card_Status__c</columns>
         <columns>Is_Expedite__c</columns>
         <columns>Missing_Information__c</columns>
+        <columns>CREATEDBY_USER</columns>
         <columns>CIN__c</columns>
         <columns>Sent_to_AIMS_on__c</columns>
         <columns>Valid_To_Date__c</columns>
-        <columns>CREATEDBY_USER</columns>
         <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
-        <columns>Nature_of_ID_Card__c</columns>
+        <columns>Agency_Name__c</columns>
+        <columns>Agency_IATA_Code__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Card_Status__c</field>
@@ -1032,24 +1101,25 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>must_synch_with_aims</fullName>
+        <fullName>XX_GDP_Products_Account_View_BLANK</fullName>
         <columns>NAME</columns>
-        <columns>MustSyncWithAIMS__c</columns>
-        <columns>Sent_to_AIMS_on__c</columns>
-        <columns>CREATED_DATE</columns>
         <columns>Card_Status__c</columns>
+        <columns>Json_Is_Active__c</columns>
+        <columns>Is_Active_Card__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>RECORDTYPE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>MustSyncWithAIMS__c</field>
+            <field>GDP_Products_Account_View__c</field>
             <operation>equals</operation>
-            <value>1</value>
         </filters>
         <filters>
             <field>Card_Status__c</field>
             <operation>equals</operation>
-            <value>Cancelled,Cancelled ID Card</value>
+            <value>Preapproved,Sent ID Card,Valid ID Card,ID Card Pending/In Progress</value>
         </filters>
-        <label>Must Sync on Cancelled Cards</label>
+        <label>XX-GDP Products - Account View = BLANK</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -1078,11 +1148,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <picklistValues>
             <picklist>Card_Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cancelled</fullName>
+                <fullName>Cancelled ID Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1098,11 +1164,26 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Preapproved</fullName>
+                <fullName>Expired ID Card</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Printed%2FDelivered</fullName>
+                <fullName>Sent ID Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valid ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Gender__c</picklist>
+            <values>
+                <fullName>FEMALE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MALE</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1196,14 +1277,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <picklistValues>
             <picklist>Card_Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cancelled ID Card</fullName>
                 <default>false</default>
             </values>
@@ -1212,11 +1285,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Preapproved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Printed%2FDelivered</fullName>
+                <fullName>ID Card Pending%2FIn Progress</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1225,6 +1294,17 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             </values>
             <values>
                 <fullName>Valid ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Gender__c</picklist>
+            <values>
+                <fullName>FEMALE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MALE</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1341,12 +1421,12 @@ var cardStatus = &apos;{!ID_Card__c.Card_Status__c}&apos;;
 var sentToAIMSon = &apos;{!ID_Card__c.Sent_to_AIMS_on__c}&apos;;
 
 
-if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;) 
+if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Valid ID Card&apos;) 
 { 
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
      card.id =&quot;{!ID_Card__c.Id}&quot;;
-     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Card_Status__c = &apos;Cancelled ID Card&apos;;
      card.Cancellation_Date__c = new Date();
      card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);
@@ -1356,12 +1436,12 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      window.location.reload();
 } 
 
-else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Approved&apos;) 
+else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Sent ID Card&apos;) 
 { 
      var cardToUpdate= [];
      var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
      card.id =&quot;{!ID_Card__c.Id}&quot;;
-     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Card_Status__c = &apos;Cancelled ID Card&apos;;
      card.Cancellation_Date__c = new Date();
      card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);

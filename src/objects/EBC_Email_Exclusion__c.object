@@ -328,11 +328,12 @@
         <columns>Event_Date_Timestamp__c</columns>
         <columns>Source_Campaign__c</columns>
         <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Email__c</field>
             <operation>contains</operation>
-            <value>@iata.org</value>
+            <value>iata.org</value>
         </filters>
         <label>iata.org Domain Exclusions</label>
         <language>en_US</language>
@@ -407,14 +408,18 @@
         <columns>NAME</columns>
         <columns>Email__c</columns>
         <columns>Type__c</columns>
-        <columns>Event_Date_Timestamp__c</columns>
-        <columns>Source_Campaign__c</columns>
+        <columns>Is_Active__c</columns>
         <columns>Is_Relation_Created__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Unsubscribe_From__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Event_Date__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Email__c</field>
             <operation>contains</operation>
-            <value>h.spechtenhauser@reisewelt.at</value>
+            <value>normanstravel@aol.com</value>
         </filters>
         <label>Use for Search by Specific Email Address</label>
         <language>en_US</language>

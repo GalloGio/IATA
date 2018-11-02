@@ -3,6 +3,24 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>CQM - Geneva</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>A_P_Business_Delivery_Manager</role>
+            <role>A_P_Business_Delivery_Staff</role>
+            <role>Africa_ME_Business_Delivery_Manager</role>
+            <role>Africa_ME_Business_Delivery_Staff</role>
+            <role>Americas_Business_Delivery_Manager</role>
+            <role>Americas_Business_Delivery_Staff</role>
+            <role>China_N_Asia_Business_Delivery_Manager</role>
+            <role>China_N_Asia_Business_Delivery_Staff</role>
+            <role>Distribution_Business_Delivery_HO</role>
+            <role>MAD_Hub_Business_Delivery_Manager</role>
+            <role>MAD_Hub_Business_Delivery_Staff</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Operational_Improvements__c</sobjectType>
     </queueSobject>

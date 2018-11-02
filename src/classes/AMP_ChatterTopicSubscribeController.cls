@@ -154,7 +154,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			[SELECT Id, Body, ParentId, Type, CreatedDate, CreatedById,
 				CreatedBy.FirstName, CreatedBy.LastName
 			FROM FeedItem
-			WHERE Type='TextPost' AND ParentId IN :lsAccounts AND CreatedDate > LAST_WEEK
+			WHERE Type='TextPost' AND ParentId IN :lsAccounts AND CreatedDate = LAST_N_DAYS:7
 			ORDER By CreatedDate Desc, Body
 			LIMIT 10000];
 
@@ -167,7 +167,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			[SELECT Id, Body, ParentId, Type, CreatedDate, CreatedById,
 				CreatedBy.FirstName, CreatedBy.LastName
 			FROM FeedItem
-			WHERE Type='TextPost' AND ParentId IN :lsAccounts AND CreatedDate > YESTERDAY
+			WHERE Type='TextPost' AND ParentId IN :lsAccounts AND CreatedDate = YESTERDAY
 			ORDER By CreatedDate Desc, Body
 			LIMIT 10000];
 

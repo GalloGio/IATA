@@ -22,7 +22,8 @@ public class ANG_agencyEventTriggerHandler {
 
 
 	private void senRequestToMulesoft(){
-		ANG_IEP_CalloutHelper.invokeCustomImpl(triggerNew);
+		if(!ANG_ConversionHelper.isMigrationTool)
+			ANG_IEP_CalloutHelper.invokeCustomImpl(triggerNew);
 	}
 
 	

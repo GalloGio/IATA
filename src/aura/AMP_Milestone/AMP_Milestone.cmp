@@ -48,10 +48,10 @@
                 </div>
             </aura:if>
         </td>
-        <td><ui:inputTextArea value="{!v.milestone.Subject__c}" class="slds-textarea required" rows="5" /></td>
-        <td><ui:inputTextArea value="{!v.milestone.AM_Responsible__c}" class="slds-textarea" rows="5"/></td>
-        <td><ui:inputTextArea value="{!v.milestone.AM_Involved__c}" class="slds-textarea" rows="5"/></td>
-        <td><ui:inputTextArea value="{!v.milestone.AM_Support_Required_from_Account__c}" class="slds-textarea" rows="5"/></td>
+        <td><ui:inputTextArea value="{!v.milestone.Subject__c}" class="slds-textarea required" rows="5" maxlength = "255"/></td>
+        <td><ui:inputTextArea value="{!v.milestone.AM_Responsible__c}" class="slds-textarea" rows="5" maxlength = "255"/></td>
+        <td><ui:inputTextArea value="{!v.milestone.AM_Involved__c}" class="slds-textarea" rows="5" maxlength = "255"/></td>
+        <td><ui:inputTextArea value="{!v.milestone.AM_Support_Required_from_Account__c}" class="slds-textarea" rows="5" maxlength = "255"/></td>
         <td>
             <ui:inputSelect aura:id="statusList" class="slds-select required" >
 
@@ -73,7 +73,7 @@
             </ui:inputSelect> -->
         </td>
         <td><ui:inputDate value="{!v.milestone.ActivityDate}"   class="slds-input required" displayDatePicker="true"/></td>
-        <td><ui:inputTextArea value="{!v.milestone.Description}" class="slds-textarea" rows="5"/></td>
+        <td><ui:inputTextArea value="{!v.milestone.Description}" class="slds-textarea" rows="5" maxlength = "32000"/></td>
 
         <aura:set attribute="else">
             <td>

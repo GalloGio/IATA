@@ -25,6 +25,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 			+', Location_Class__c, Check_Digit__c, IATACode__c '
 			+', Organization_Last_Change_Date__c,  Original_Approval_DAte__c, Accreditation_date__c '
 			+', Main_Accreditation_Organization__c, Verification_Date__c '
+			+', ANG_IsNewGenAgency__c, ANG_Accreditation_Model__c, ANG_RiskStatus__c, ANG_CashCondition__c, Due_Diligence_Status__c'
 			+', IATA_ISO_Billing_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AIMS_Area_ID__c,CNS_Agency__c' ;
 
 		//-- Query conditions
@@ -64,7 +65,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 			{
 				//Run only on the deltas
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-1).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 
 				if(String.isNotBlank(batchInfo.Failed_Records__c))
 				{

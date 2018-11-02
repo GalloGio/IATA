@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>bog-support@iata.org</email>
     <name>Local Office - Colombia</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAColombia</publicGroup>
+            <publicGroup>IDFSAmericasCustomerService</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

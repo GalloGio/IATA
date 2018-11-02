@@ -22,7 +22,7 @@ global without sharing class restIECEBC_RecipientsCount {
         String cntQuery = IECEBC_Utility.getSOQLFromMasterFilter(null, masterFilterId,elastic_switch);
         if (!elastic_switch) return Integer.valueOf(Database.Query(cntQuery)[0].get('expr0'));
         IECEBCNew_eBroadcast_Counter req = new IECEBCNew_eBroadcast_Counter();
-        return req.execute(cntQuery,'counter',false);
+        return req.execute(cntQuery,false);
         //only query salesforce and return counter when elastic switch is false
         
     }
@@ -39,7 +39,7 @@ global without sharing class restIECEBC_RecipientsCount {
         String cntQuery = IECEBC_Utility.getSOQLFromMasterFilter(null, masterFilterId,elastic_switch);
         if (!elastic_switch) return Integer.valueOf(Database.Query(cntQuery)[0].get('expr0'));
         IECEBCNew_eBroadcast_Counter req = new IECEBCNew_eBroadcast_Counter();
-        return req.execute(cntQuery,'counter',false);
+        return req.execute(cntQuery,false);
         //only query salesforce and return counter when elastic switch is false 
         
     }

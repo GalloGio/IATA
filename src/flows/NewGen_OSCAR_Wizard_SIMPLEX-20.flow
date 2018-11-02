@@ -1455,6 +1455,8 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessHECashValue} , false , false))</ex
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;{!errormessagecontactlookup}&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ContactChooserScreen</name>
@@ -1480,6 +1482,8 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessHECashValue} , false , false))</ex
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>In_development</name>
@@ -1494,6 +1498,8 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessHECashValue} , false , false))</ex
             <fieldText>This process is not yet available</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>No_Process_Available</name>
@@ -1508,6 +1514,8 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessHECashValue} , false , false))</ex
             <fieldText>No process available</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Process_Chooser_AE</name>
@@ -1537,6 +1545,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Process_Chooser_HE</name>
@@ -1567,6 +1577,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ResultPage</name>
@@ -1581,6 +1593,8 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;We are all set !&lt;/B&gt;&lt;/FONT&gt;&lt;/SPAN&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;You&amp;apos;ve completed the wizard.&lt;/FONT&gt;&lt;/DIV&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <startElementReference>AccountToProcessLookup_1</startElementReference>
     <variables>

@@ -11,7 +11,6 @@
         <members>Activity</members>
         <members>Asset</members>
         <members>Campaign</members>
-        <members>CampaignMember</members>
         <members>Case</members>
         <members>CaseContactRole</members>
         <members>Contact</members>
@@ -35,7 +34,23 @@
     </types>
     <types>
         <members>*</members>
+        <name>CustomPermission</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>EmailTemplate</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>FlowDefinition</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>Workflow</name>
     </types>
-    <version>40.0</version>
+    <version>43.0</version>
 </Package>

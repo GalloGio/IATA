@@ -54,5 +54,16 @@ Check class: sendEmailToSenderWhenCaseClosed.cls, method sendEmailToSenderWhenCa
         <unique>false</unique>
     </fields>
     <label>Case Closed Templates</label>
+    <listViews>
+        <fullName>All_Templates</fullName>
+        <columns>NAME</columns>
+        <columns>Language__c</columns>
+        <columns>Template_Id__c</columns>
+        <columns>Source_System__c</columns>
+        <columns>CNS_Contact__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Templates</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

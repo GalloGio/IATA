@@ -4,6 +4,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public String step {get; set;}
     public String countrySelected {get; set;}
     public String billingState {get; set;}
+    public Static String generatedIATACODE {get; set;}
+    public String reason {get; set;}
     public List<SelectOption> billingStatesList {get; set; }
 
     private map<String,list<IATA_ISO_State__c>> mapBillingStatesPerCountry;
@@ -21,10 +23,13 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     public String commParamFirst { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
-	
+    
     public ISSP_AMS_MSO_Request_Controller() {
         step = ApexPages.currentPage().getParameters().get('step');
         Id caseId = ApexPages.currentPage().getParameters().get('caseId');
+        generatedIATACODE = ApexPages.currentPage().getParameters().get('iatacode');
+        reason = ApexPages.currentPage().getParameters().get('reason');
+
         if (String.isBlank(step)) step = 'form';
 
         mapBillingStatesPerCountry = new map<String,list<IATA_ISO_State__c>>();
@@ -44,6 +49,13 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 oscarCase = [SELECT Id, CaseNumber, IATAcode__c, OSCAR__c, OSCAR__r.Account__c FROM Case WHERE Id = :caseId];
             }
         }
+        
+        if(step == 'issue'){
+            if(reason == 'airline_designator'){
+                ApexPages.addmessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Request_Issue_Airline_Designator));
+            }
+        }
+        
 
         if (msoAccount == null) msoAccount = new Account(Id = oscarCase.OSCAR__r.Account__c);
 
@@ -53,7 +65,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             if (oscarCase.Id == null)
                 accreditationForm = new AMS_Pax_Accreditation_Form__c();
             else {
-                accreditationForm = [SELECT Id, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name, Accept_terms_and_conditions__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id];
+                accreditationForm = [SELECT Id, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name,Branch_Office_Country__r.Region__c, Accept_terms_and_conditions__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id limit 1];
                 countrySelected = accreditationForm.Branch_Office_Country__c;
                 refreshStates();
                 billingState = accreditationForm.IATA_ISO_State__c;
@@ -69,16 +81,20 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         User u = [SELECT Id, ContactId From User WHERE Id =: UserInfo.getUserId()];
         if(u != null){
             List<Portal_Application_Right__c> par;
-            par = [SELECT Id, Terms_Acceptance__c FROM Portal_Application_Right__c 
-                        WHERE Contact__c =: u.ContactId 
-                        AND Right__c = 'Access Granted'
-                        AND (Contact_User_Portal_Status__c = 'Approved User' OR Contact_User_Portal_Status__c = 'Approved Admin')
-                        AND Application_Start_URL__c = '/ISSP_AMS_MSO'];
+            par = [SELECT Id, Terms_Acceptance__c FROM Portal_Application_Right__c WHERE Contact__c =: u.ContactId  AND Right__c = 'Access Granted' AND (Contact_User_Portal_Status__c = 'Approved User' OR Contact_User_Portal_Status__c = 'Approved Admin') AND Application_Start_URL__c = '/ISSP_AMS_MSO'];
 
             if(par.size()==0) // No access right => return to home page
                 return new PageReference('/ISSP_Homepage');
         }
-
+		system.debug('step: ' + step);
+        if (step == 'form' || step == '') {
+            Account airlineHO = [Select Airline_designator__c from Account where id = :currentUserContact.AccountId];
+            system.debug('airlineHO.Airline_designator__c: ' + airlineHO.Airline_designator__c);
+            if(airlineHO.Airline_designator__c == Null || airlineHO.Airline_designator__c == ''){
+                ApexPages.addmessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Request_Issue_Airline_Designator));
+                return new PageReference('/ISSP_AMS_MSO_Request?step=issue&reason=airline_designator');
+            } 
+        }
 
         // check if success step -> then close the OSCAR
         if (step == 'success' && oscarCase != null && oscarCase.OSCAR__c != null) {
@@ -97,32 +113,11 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             list<IATA_ISO_Country__c> isoList;
 
             if (applyLanguage == 'es') {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                           IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                           IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c,
-                           (SELECT Id, Name FROM IATA_ISO_States__r)
-                           FROM IATA_ISO_Country__c
-                           WHERE Case_BSP_Country__c != null
-                           AND Case_BSP_Country__c != ''
-                           ORDER BY IATA_Country_SP__c];
+                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, (SELECT Id, Name FROM IATA_ISO_States__r) FROM IATA_ISO_Country__c WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' ORDER BY IATA_Country_SP__c];
             } else if (applyLanguage == 'fr') {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                           IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                           IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c,
-                           (SELECT Id, Name FROM IATA_ISO_States__r)
-                           FROM IATA_ISO_Country__c
-                           WHERE Case_BSP_Country__c != null
-                           AND Case_BSP_Country__c != ''
-                           ORDER BY IATA_Country_FR__c];
+                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, (SELECT Id, Name FROM IATA_ISO_States__r) FROM IATA_ISO_Country__c WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' ORDER BY IATA_Country_FR__c];
             } else {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c,
-                (SELECT Id, Name FROM IATA_ISO_States__r)
-                FROM IATA_ISO_Country__c
-                WHERE Case_BSP_Country__c != null
-                AND Case_BSP_Country__c != ''
-                ORDER BY Name];
+                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, (SELECT Id, Name FROM IATA_ISO_States__r) FROM IATA_ISO_Country__c WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' ORDER BY Name];
             }
             
             for (IATA_ISO_Country__c c : isoList) {
@@ -169,7 +164,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public Pagereference cancel() {
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
         if (retURL == null) {
-            return new Pagereference('/ISSP_Homepage');
+            return new Pagereference('/ISSP_AMS_MSO');
         } else {
             return new Pagereference(retURL);
         }
@@ -180,6 +175,10 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         // validate selection
         Boolean isValid = true;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
+
+        System.debug('accreditationForm: ' + accreditationForm);
+        System.debug('countrySelected: ' + countrySelected);
+
 
         if (countrySelected == null) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Country_ErrMsg));
@@ -221,6 +220,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         }
 
         try {
+            IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
+          	
             if (oscarCase.Id == null) {
                 msoAccount.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('Standard_Account');//acctRT.Id;
                 msoAccount.Name = currentUserContact.Account.Name;
@@ -248,13 +249,16 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
                 oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
-                oscarCase.Subject = 'GSA / MSO / Handling Agent - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                //oscarCase.Subject = 'New MSO Code - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                oscarCase.Subject = 'New MSO Code - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'GSA / MSO / Handling Agent';
                 oscarCase.Origin = 'Portal';
                 oscarCase.Type_of_customer__c = 'IATA Travel Agent';
                 oscarCase.OSCAR__c = oscar.Id;
                 oscarCase.Status = 'Draft';
+                oscarCase.Region__c = selectedCountryInfo.Region__c;
+                oscarCase.Country_concerned_by_the_query__c = selectedCountryInfo.Name;
                 insert oscarCase;
 
                 oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id =:oscarCase.Id];
@@ -288,6 +292,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 upsert accreditationForm;
             }
         } catch (Exception ex) {
+            System.debug('ex' + ex);
+            System.debug('ex' + ex.getStackTraceString());
             ApexPages.addMessages(ex);
             return null;
         }
@@ -307,7 +313,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             // it just fails to be automatically processed, so it will have to be processed manually
         }
 
-        return new PageReference('/ISSP_AMS_MSO_Request?step=success&caseId=' + oscarCase.Id);
+        //return new PageReference('/ISSP_AMS_MSO_Request?step=success&caseId=' + oscarCase.Id);
+        return new PageReference('/ISSP_AMS_MSO_Request?step=success&iatacode='+generatedIATACODE+'&caseId=' + oscarCase.Id);
     }
 
     public PageReference cancelRequest() {
@@ -318,7 +325,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
         //if (retURL == null) {
-            return new Pagereference('/ISSP_Homepage');
+            //return new Pagereference('/ISSP_Homepage');
+            return new Pagereference('/ISSP_AMS_MSO_Request?step=form&caseId=' + oscarCase.Id);
         /*} else {
             return new Pagereference(retURL);
         }*/
@@ -346,10 +354,23 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(accountId, accreditationId,oscarId);
         if (result[0] != '0') return false;
 
+        
+        system.debug('generateMsoIataCode: after iata code before case update');
+        ANG_OscarProcessHelper.checkSFDCLimits();
+        
+        
         // update case with IATA Code and correct Contact 
+        //oscar = [SELECT Id, AMS_Online_Accreditation__r.IATACode__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
+        //Case c = new Case(Id = caseId, IATAcode__c = oscar.AMS_Online_Accreditation__r.IATACode__c, ContactId = currentUser.ContactId);
+        //update c;
         oscar = [SELECT Id, AMS_Online_Accreditation__r.IATACode__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
-        Case c = new Case(Id = caseId, IATAcode__c = oscar.AMS_Online_Accreditation__r.IATACode__c, ContactId = currentUser.ContactId);
-        update c;
+        generatedIATACODE = oscar.AMS_Online_Accreditation__r.IATACode__c;
+        
+        updateCaseContact(caseId, currentUser.ContactId);
+
+        system.debug('generateMsoIataCode: after case update');
+        
+        ANG_OscarProcessHelper.checkSFDCLimits();
 
         // send confirmation email
         sendConfirmationEmail(caseId, currentUser.ContactId, true);
@@ -372,7 +393,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             CaseComment successComment = new CaseComment();
             successComment.ParentId = c.Id;
             successComment.isPublished = true;
-            successComment.CommentBody = Label.ISSP_AMS_MSO_Request_Successfull + ' ' + c.IATAcode__c;
+            successComment.CommentBody = Label.ISSP_AMS_MSO_Request_Successfull + ' ' + (c.IATAcode__c==null? generatedIATACODE : c.IATAcode__c);
             
             if (!Test.isRunningTest())
                 insert successComment;
@@ -390,21 +411,28 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         }
     }
 
-    /*@future
-    public static void updateCaseContact(Id caseId, Id contactId) {
+    @future
+    public static void updateCaseContact(Id caseId, Id ContactId) {
         try {
-            Case c = new Case(Id = caseId, ContactId = contactId);
-            //update c;
+            //Case c = new Case(Id = caseId, ContactId = contactId);
+ 
+            
+            Case c = new Case(Id = caseId, IATAcode__c = generatedIATACODE, ContactId = ContactId);
+            update c;
+            
         }  catch (DmlException ex) {
             system.debug('Error updating the OSCAR Communication case contact: ' + ex.getMessage());
         }
-    }*/
+    }
 
 
     public void sendConfirmationEmail(Id caseId, Id contactId, Boolean success) {
         String emailTemplateName = success ? 'IDFS_Case confirmation - MSO self-service' : 'IDFS_Case confirmation - phone, e-mail HTML (English)';
 
         SYSTEM.DEBUG('Selected template: ' + emailTemplateName);
+        SYSTEM.DEBUG('caseId: ' + caseId);
+        SYSTEM.DEBUG('contactId: ' + contactId);
+        SYSTEM.DEBUG('success: ' + success);
 
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
         List<EmailTemplate> ets = [SELECT Name, Id FROM EmailTemplate WHERE Name = :emailTemplateName];

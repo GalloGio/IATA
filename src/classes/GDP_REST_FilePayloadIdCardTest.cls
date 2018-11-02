@@ -350,7 +350,7 @@ private class GDP_REST_FilePayloadIdCardTest {
 					, Name_on_ID_Card__c = 'Test ' + String.valueOf(idx).trim()
 					//, Agency_IATA_Code__c = '00000001' 
 					, Related_Contact__c = relatedContact.Id
-					, Card_Status__c = 'Approved'
+					, Card_Status__c = 'Sent ID Card'
 					, Blacklisted__c = false
 					, Valid_To_Date__c = Date.today().addMonths(5).addDays(idx)
 					);

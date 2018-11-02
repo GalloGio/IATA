@@ -14,6 +14,7 @@ private class ISSP_LoginTest {
 		String communityName = controller.communityName;
         ApexPages.currentPage().getHeaders().put('USER-AGENT','MSIE');
         isIE = controller.isIe;
+		ISSP_Login.fakemethod();
 	}
 
 	public static testMethod void testLanguage() {
@@ -29,7 +30,7 @@ private class ISSP_LoginTest {
 
 	public static testMethod void testISSP_Login_3() {
 
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -64,7 +65,7 @@ private class ISSP_LoginTest {
 
 	public static testMethod void testISSP_Login_4() {
 
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();

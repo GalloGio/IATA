@@ -86,6 +86,10 @@
                 <behavior>Edit</behavior>
                 <field>OSCAR__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accreditation_Endorsement_organisation__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

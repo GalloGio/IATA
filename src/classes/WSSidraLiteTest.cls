@@ -672,7 +672,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoReason() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c( Validation_Status__c = AMS_Utils.FAILED, RPM_Approval__c = 'Authorize Disapproval');
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c( Validation_Status__c = AMS_Utils.FAILED, RPM_Approval__c = 'Authorize Disapproval', Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -692,7 +696,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoValidReason() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c( Validation_Status__c = AMS_Utils.FAILED, RPM_Approval__c = 'Authorize Disapproval');
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+
+        AMS_Oscar__c oscar = new AMS_Oscar__c( Validation_Status__c = AMS_Utils.FAILED, RPM_Approval__c = 'Authorize Disapproval',Account__c=Account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -714,13 +722,18 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoOSCARReason() {
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
         AMS_Oscar__c oscar = new AMS_Oscar__c(
             Step6__c = '',
             Step9__c = '',
             Step11__c = '',
             Step12__c = '',
             Step14__c = '',
-            RPM_Approval__c = '');
+            RPM_Approval__c = '',
+            Account__c = account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -742,9 +755,14 @@ public class WSSidraLiteTest {
     public static void testCreateCaseOSCAR_OK1() {
         insert new AMS_Trigger_Execution_Manager__c(All__c = true);
 
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
         AMS_Oscar__c oscar = new AMS_Oscar__c();
         oscar.Status__c = oscarCase.Status;
+        oscar.Account__c = account.Id;
         insert oscar;
 
         oscarCase.Reason1__c = OSCARValidReasons.get(0);
@@ -761,7 +779,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK2() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -779,7 +801,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK3() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -797,7 +823,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK4() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -815,7 +845,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK5() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -833,7 +867,11 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK6() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c=account.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -1545,10 +1583,10 @@ public class WSSidraLiteTest {
         Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
         insert ifapCase;
 
+        Test.startTest();
         Case childCase = createSIDRALite(ifapCase);
         insert childCase;
-
-        Test.startTest();
+        
         try {
             WSSidraLite.updateSidraLiteAndParent(ifapCase, childCase);
         } catch (SidraLiteHelperForIFAP.SidraLiteException e) {
@@ -1985,6 +2023,7 @@ public class WSSidraLiteTest {
         Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
         insert ifapCase;
 
+        Test.startTest();
         Case sidraLiteCase = createSIDRALite(ifapCase);
         insert sidraLiteCase;
         
@@ -1992,7 +2031,7 @@ public class WSSidraLiteTest {
         account.Status__c = new list<string>(SidraLiteUtil.ACCOUNT_INACTIVE_STATUS)[0];
         update account;
 
-        Test.startTest();
+       
         list<CaseComment> result = WSSidraLite.newCaseComments(sidraLiteCase, account);
         System.assert(result.size()==1, 'Expected 1 case comment');
         Test.stopTest();
@@ -2003,6 +2042,7 @@ public class WSSidraLiteTest {
         Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
         insert ifapCase;
 
+        Test.startTest();
         Case sidraLiteCase1 = createSIDRALite(ifapCase);
         Case sidraLiteCase2 = createSIDRALite(ifapCase);
         insert new list<Case>{sidraLiteCase1, sidraLiteCase2};
@@ -2014,7 +2054,7 @@ public class WSSidraLiteTest {
         account.Status__c = new list<string>(SidraLiteUtil.ACCOUNT_INACTIVE_STATUS)[0];
         update account;
 
-        Test.startTest();
+        
         list<CaseComment> result = WSSidraLite.newCaseComments(sidraLiteCase1, account);
         System.assert(result.size()==2, 'Expected 2 case comments');
         Test.stopTest();

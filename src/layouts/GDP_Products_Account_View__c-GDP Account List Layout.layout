@@ -5,7 +5,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Information</label>
+        <label>Agency Information</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -26,10 +26,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EBC_Agency_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Last_Date_of_Update__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -60,11 +56,10 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Agency Status, Type &amp; Class</label>
+        <label>Accreditation Status, Model, Type &amp; Class</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Accredited_By__c</field>
+                <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -78,8 +73,34 @@
                 <behavior>Readonly</behavior>
                 <field>Agency_Status_Code_Interpreted__c</field>
             </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accreditation_Class__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Related_Accreditation_Class_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Is_NewGen_Agency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accreditation_Model__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accredited_By__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Location_Type__c</field>
@@ -90,11 +111,97 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Related_Accreditation_Class_Code__c</field>
+                <field>Location_Type_Code_Interpreted__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Agency Risk &amp; Settlement Profile</label>
+        <layoutColumns>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Accreditation_Class__c</field>
+                <field>Risk_Status_Formula__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Cash_Conditions_Override__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Remittance_Frequency_1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Remittance_Frequency_2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EasyPay_Account_Status__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Authorized Forms Of Payment</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CA_FoP_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CC_FoP_Status__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EP_FoP_Status__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Agency Compliance Profile</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Due_Diligence_Status_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Due_Diligence_Status__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PCI_Compliance__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PCI_compliance_expiry_date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -297,18 +404,21 @@
         <label>Advanced Accreditation Details</label>
         <layoutColumns>
             <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_Code__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Passenger_And_Cargo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BSP_CASS_Code__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Airline_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -458,6 +568,10 @@
                 <behavior>Readonly</behavior>
                 <field>Now_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Total_Ownership_Percentage__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -521,11 +635,30 @@
         <fields>NAME</fields>
         <fields>Class__c</fields>
         <fields>Status__c</fields>
-        <fields>Original_approval_date__c</fields>
-        <fields>Date__c</fields>
-        <fields>Last_change_date__c</fields>
+        <fields>Is_NewGen_Agency__c</fields>
+        <fields>Accreditation_Model__c</fields>
+        <fields>Risk_Status__c</fields>
         <fields>AMS_GDP_Key__c</fields>
+        <fields>Last_change_date__c</fields>
         <relatedList>Accreditation__c.Related_GDP_Products_Account_View__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Form_of_Payment_Code__c</fields>
+        <fields>Status__c</fields>
+        <fields>Status_Code__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>Authorized_Forms_Of_Payment__c.Related_GDP_Products_Account_View__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Percent__c</fields>
+        <fields>Owner_ID__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>AMS_GDP_Key__c</fields>
+        <relatedList>Agency_Owner__c.Related_GDP_Products_Account_View__c</relatedList>
+        <sortField>Percent__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -548,14 +681,6 @@
         <relatedList>GDP_Phone__c.Related_GDP_Products_Account_View__c</relatedList>
         <sortField>Phone_Type__c</sortField>
         <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Percent__c</fields>
-        <fields>Owner_ID__c</fields>
-        <relatedList>Agency_Owner__c.Related_GDP_Products_Account_View__c</relatedList>
-        <sortField>Percent__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -607,6 +732,17 @@
         <fields>Assoc_Affiliation_ID__c</fields>
         <fields>Assoc_Affiliation_Code__c</fields>
         <relatedList>Assoc_Affiliation_Membership__c.Related_GDP_Products_Account_View__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>VER_Number__c</fields>
+        <fields>Json_Is_Active__c</fields>
+        <fields>Valid_To_Date__c</fields>
+        <fields>FirstName__c</fields>
+        <fields>LastName__c</fields>
+        <relatedList>ID_Card__c.GDP_Products_Account_View__c</relatedList>
+        <sortField>Valid_To_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>

@@ -44,7 +44,7 @@
         <criteriaItems>
             <field>Account.Status__c</field>
             <operation>notEqual</operation>
-            <value>Terminated</value>
+            <value>Terminated,New application pending,Not accreditated</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>

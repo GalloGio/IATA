@@ -1,4 +1,4 @@
-public with sharing class ObjectiveHandler {
+public without sharing class ObjectiveHandler {
 	//public static final map<String,Schema.RecordTypeInfo> MAP_RT = Schema.SObjectType.Objective__c.getRecordTypeInfosByName();
 	public static final map<String,Recordtype> MAP_RT = new map<String,Recordtype>();
 	static {

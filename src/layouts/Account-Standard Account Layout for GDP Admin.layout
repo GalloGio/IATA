@@ -718,6 +718,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Change_Code__c</fields>
+        <fields>Integration_System__c</fields>
+        <fields>Update_Type__c</fields>
+        <fields>Status__c</fields>
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -747,10 +751,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>

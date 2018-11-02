@@ -1,49 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Monthly</fullName>
+        <fullName>M</fullName>
         <default>false</default>
         <label>Monthly</label>
     </customValue>
     <customValue>
-        <fullName>Fortnightly</fullName>
+        <fullName>F</fullName>
         <default>false</default>
         <label>Fortnightly</label>
     </customValue>
     <customValue>
-        <fullName>Every 10 days</fullName>
+        <fullName>R</fullName>
         <default>false</default>
         <label>Every 10 days</label>
     </customValue>
     <customValue>
-        <fullName>4 times per month</fullName>
+        <fullName>W</fullName>
         <default>false</default>
         <label>4 times per month</label>
     </customValue>
     <customValue>
-        <fullName>Weekly</fullName>
+        <fullName>V</fullName>
         <default>false</default>
         <label>Weekly</label>
     </customValue>
     <customValue>
-        <fullName>Every 3 days</fullName>
+        <fullName>B</fullName>
         <default>false</default>
         <label>Every 3 days</label>
     </customValue>
     <customValue>
-        <fullName>Every 5 days</fullName>
+        <fullName>S</fullName>
         <default>false</default>
         <label>Every 5 days</label>
     </customValue>
     <customValue>
-        <fullName>Daily</fullName>
+        <fullName>D</fullName>
         <default>false</default>
         <label>Daily</label>
-    </customValue>
-    <customValue>
-        <fullName>Daily (China)</fullName>
-        <default>false</default>
-        <label>Daily (China)</label>
     </customValue>
     <masterLabel>Remittance Frequency</masterLabel>
     <sorted>false</sorted>

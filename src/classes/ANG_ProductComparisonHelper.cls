@@ -12,6 +12,7 @@ public with sharing class ANG_ProductComparisonHelper {
     set<string> setAllFeatures = new set<string>();	//used for uniqueness
     set<Id> setProdId = new set<id>();
     public String type {get; set;}
+    public String costTooltip {get; set;}
        
     public ANG_ProductComparisonHelper(String type) {
 
@@ -32,6 +33,12 @@ public with sharing class ANG_ProductComparisonHelper {
 			lsPB = [select id from Pricebook2 where name='NewGen Accreditation Models test'];
 		}
 
+		if(Type == 'A') {
+			this.costTooltip = Label.ISSP_ANG_ProdCompCostTooltip;
+		} else {
+			this.costTooltip = Label.ISSP_ANG_ProdCompCostTooltipConvert;
+		}
+
     	if(!lsPB.isEmpty())	thePricebook = lsPB.get(0);
     	
     	allFeaturesPerProduct = new map<string, list<ProdFeature>>();
@@ -42,12 +49,13 @@ public with sharing class ANG_ProductComparisonHelper {
 	    	}
 	    	
 	    	if(!setProdId.isEmpty()) {
-	    		list<Product2> lsProd = [select Id, Name, ANG_Description_Label__c, ANG_Tooltip__c,	    										
+	    		list<Product2> lsProd = [select Id, Name, ANG_Description_Label__c, ANG_Tooltip__c,
+	    										ANG_HE_Annual_fees__c, ANG_AE_Annual_fees__c,
 										    	ANG_HE_Application_Registration_Fees__c, ANG_HE_AnnualFees_Small_Agents__c, ANG_HE_AnnualFees_Medium_Agents__c,
 										    	ANG_HE_AnnualFees_Large_Agents__c, ANG_AE_Application_Registration_Fees__c, ANG_AE_Fees_First_10_locations__c,
 										    	ANG_AE_Fees_Next_15_Locations__c, ANG_AE_Fees_Additional_Locations__c,
 										    	ANG_Fees_GoStandard_GoLite__c, ANG_Fees_GoLite_GoStandard__c,
-	    									    (select id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c from Product_BOM__r)
+	    									    (select id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c, Order__c from Product_BOM__r ORDER BY Order__c)
 	    								  from Product2 where id in:setProdId];
 	    		
 	    		if(!lsProd.isEmpty()) {
@@ -83,7 +91,9 @@ public with sharing class ANG_ProductComparisonHelper {
     						}
     						lsTmp.add(new ProdFeature(sf,
     												  bExists,
-    												  new Fees(prod.ANG_HE_Application_Registration_Fees__c,
+    												  new Fees(prod.ANG_HE_Annual_fees__c,
+															   prod.ANG_AE_Annual_fees__c,
+    												  		   prod.ANG_HE_Application_Registration_Fees__c,
 														       prod.ANG_HE_AnnualFees_Small_Agents__c,
 														       prod.ANG_HE_AnnualFees_Medium_Agents__c,
 														       prod.ANG_HE_AnnualFees_Large_Agents__c,
@@ -169,7 +179,7 @@ public with sharing class ANG_ProductComparisonHelper {
 	    			
 	    			lst = new List<TableCell>();	 
 	    			
-	    			lst.add(new TableCell(Label.ANG_ISSP_ProductComparisonCost,
+	    			lst.add(new TableCell('Cost',
 	    								  '',
 	    								  Label.ANG_ISSP_ProductComparisonCost,
 	    								  ''));
@@ -189,11 +199,13 @@ public with sharing class ANG_ProductComparisonHelper {
     }
 
     public class Fees {
+    	public String HE_Annual_Fees {get;set;}
 	    public String HE_Application_Registration_Fees {get;set;}
 	    public String HE_AnnualFees_Small_Agents {get;set;}
 	    public String HE_AnnualFees_Medium_Agents {get;set;}
 	    public String HE_AnnualFees_Large_Agents {get;set;}
 
+		public String AE_Annual_Fees {get;set;}
 	    public String AE_Application_Registration_Fees {get;set;}
 	    public String AE_Fees_First_10_locations {get;set;}
 	    public String AE_Fees_Next_15_Locations {get;set;}
@@ -206,15 +218,17 @@ public with sharing class ANG_ProductComparisonHelper {
 	    public String ConversionFeesLabel {get; set;}
 	    public String ConversionFeesTooltip {get; set;}
 
-    	public Fees(String HE_Application_Registration_Fees, String HE_AnnualFees_Small_Agents, String HE_AnnualFees_Medium_Agents, String HE_AnnualFees_Large_Agents,
+    	public Fees(String HE_Annual_Fees, String AE_Annual_Fees, String HE_Application_Registration_Fees, String HE_AnnualFees_Small_Agents, String HE_AnnualFees_Medium_Agents, String HE_AnnualFees_Large_Agents,
     			    String AE_Application_Registration_Fees, String AE_Fees_First_10_locations, String AE_Fees_Next_15_Locations, String AE_Fees_Additional_Locations,
     			    String Fees_GoStandard_GoLite, String Fees_GoLite_GoStandard) {
 
+    		this.HE_Annual_Fees = HE_Annual_Fees;
 		    this.HE_Application_Registration_Fees = HE_Application_Registration_Fees;
 		    this.HE_AnnualFees_Small_Agents = HE_AnnualFees_Small_Agents;
 		    this.HE_AnnualFees_Medium_Agents = HE_AnnualFees_Medium_Agents;
 		    this.HE_AnnualFees_Large_Agents = HE_AnnualFees_Large_Agents;
 
+			this.AE_Annual_Fees = AE_Annual_Fees;
 		    this.AE_Application_Registration_Fees =	AE_Application_Registration_Fees;
 		    this.AE_Fees_First_10_locations = AE_Fees_First_10_locations;
 		    this.AE_Fees_Next_15_Locations = AE_Fees_Next_15_Locations;

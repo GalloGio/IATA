@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>TTBS</label>
-    <tab>standard-Account</tab>
-    <tab>standard-Contact</tab>
-    <tab>standard-Case</tab>
-    <tab>CSS_Tracking__c</tab>
-    <tab>Operational_Improvements__c</tab>
-    <tab>AMS_Account_Role__c</tab>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Case</tabs>
+    <tabs>CSS_Tracking__c</tabs>
+    <tabs>Operational_Improvements__c</tabs>
+    <tabs>AMS_Account_Role__c</tabs>
 </CustomApplication>

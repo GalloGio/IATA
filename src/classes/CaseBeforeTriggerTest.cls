@@ -123,7 +123,7 @@ private class CaseBeforeTriggerTest {
         update cas1;
 
         Case cas3 = new Case(recordtypeID = AmericacaseRecordTypeID,
-                          Status = 'Assessment Performed',
+                          Status = 'Action Needed',
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
@@ -138,7 +138,7 @@ private class CaseBeforeTriggerTest {
         update cas3;
 
         Case cas4 = new Case(recordtypeID = AmericacaseRecordTypeID,
-                          Status = 'Assessment Performed',
+                          Status = 'Action Needed',
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
@@ -153,7 +153,7 @@ private class CaseBeforeTriggerTest {
         update cas4;
 
         Case cas5 = new Case(recordtypeID = AmericacaseRecordTypeID,
-                          Status = 'Assessment Performed',
+                          Status = 'Action Needed',
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
@@ -675,8 +675,7 @@ private class CaseBeforeTriggerTest {
         //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
         Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
         Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD', 
-                        Accelerated_Function__c = true);  
+                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
         insert cs;
         
         List<Case> lstCases = [SELECT Id FROM Case];
@@ -1019,6 +1018,102 @@ private class CaseBeforeTriggerTest {
         
         test.stopTest();
     }
+    
+    @istest static void testInsertSeda() {
+    
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+        
+        Id RT_SEDA = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+        insert country;
+        
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
+        insert a;
+        
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
+        insert c;
+        
+        //////////////////////////
+        test.startTest();
+        
+        // Insert correctly a case
+        Case cas = new Case(recordtypeID = RT_SEDA,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          Casearea__c = 'FDS - Create Authorized Signatories Package',
+                          IFAP_Area__c = 'asda',
+                          Country_concerned__c = 'Italy',
+                          contactid = c.id,
+                          AccountId = a.id,
+                          CS_Contact_Result__c = 'Agent closed',
+                          Demand_by_Email_Fax__c = DateTime.now()
+        );
+        insert cas;
+        test.stopTest();
+        
+        Case resultCase = [Select Id, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
+        System.assertEquals(UserInfo.getUserId(),resultCase.CS_Rep_Contact_Customer__c);
+    }
+    
+    @istest static void testUpdateSeda() {
+    
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+        
+        Id RT_SEDA = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
+        insert country;
+        
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
+        insert a;
+        
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
+        insert c;
+        
+        // Insert correctly a case
+        Case cas = new Case(recordtypeID = RT_SEDA,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          Casearea__c = 'FDS - Create Authorized Signatories Package',
+                          IFAP_Area__c = 'asda',
+                          Country_concerned__c = 'Italy',
+                          contactid = c.id,
+                          AccountId = a.id,
+                          CS_Contact_Result__c = 'Agent closed',
+                          Demand_by_Email_Fax__c = null
+        );
+        insert cas;
+        
+        Case resultCase = [Select Id, Demand_by_Email_Fax__c, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
+        System.assertEquals(null,resultCase.CS_Rep_Contact_Customer__c);
+        
+        test.startTest();
+        cas.Demand_by_Email_Fax__c = DateTime.now();
+        update cas;
+        test.stopTest();
+        
+        resultCase = [Select Id, CS_Rep_Contact_Customer__c FROM Case WHERE Id = :cas.Id];
+        System.assertEquals(UserInfo.getUserId(),resultCase.CS_Rep_Contact_Customer__c);
+    }
 
     @isTest static void trgICCS_ASP_CaseTest() {
       
@@ -1051,7 +1146,7 @@ private class CaseBeforeTriggerTest {
         
         // create an Airline Coding Application case on the account
         ID AirlineCodingRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
-        Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1');
+        Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1',Reason1__c='Designator Form');
         insert cs_coding1;
         
         //////////////////////////
@@ -1091,7 +1186,7 @@ private class CaseBeforeTriggerTest {
         // try to open a new Airline Coding case on the same account, check that it is not inserted 
         Boolean isExceptionRaised = false;
         try {
-          Case cs_coding2 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs2');
+          Case cs_coding2 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs2',Reason1__c='Designator Form');
           insert cs_coding2;
         } catch(Exception e) {
           isExceptionRaised = true;

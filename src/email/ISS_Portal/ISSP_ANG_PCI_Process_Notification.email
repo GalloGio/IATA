@@ -1,0 +1,42 @@
+<messaging:emailTemplate subject="Receipt of PCI DSS Renewal Confirmation - {!relatedTo.Account.IATACode__c} - {!relatedTo.Account.Name}" recipientType="User" relatedToType="Case" language="{!CASE(relatedTo.Contact.Preferred_Language__c, 'Arabic', 'ar', 'Chinese','zh_CN', 'English','en_US', 'German','de', 'French','fr', 'Italian','it', 'Indonesian', 'in', 'Japanese','ja',  'Korean', 'ko', 'Portuguese','pt_BR', '
+ish', 'es', 'Thai', 'th', 'Vietnamese', 'vi', 'en_US')}">
+    <messaging:emailHeader name="CaseId">
+        {!relatedTo.Id}
+     </messaging:emailHeader>
+<messaging:htmlEmailBody >
+
+
+<div style="margin:auto; width:600px">
+
+<span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;"> 
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+</span>
+
+
+{!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}
+<br/><br/>
+
+IATA Code: {!relatedTo.Account.IATACode__c}
+<br/><br/>
+
+<apex:outputText escape="false" value="{!$Label.ISSP_ANG_ANG_PCI_Process_Notification_Mail_Body}" />
+
+{!$Label.ISSP_Email_YoursSincerely}
+
+<p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
+<b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">{!if(relatedTo.CNSCase__c, 'CNS', 'IATA')} Operations and Services Center - {!relatedTo.contact.Account.IATA_ISO_Country__r.Region__c}</span></b>
+</p>
+
+<p>
+<!--The URL of the following image is the one of PROD-->
+<a href="http://portal.iata.org">
+<apex:image value="{!IF(relatedTo.CNSCase__c, '', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000')}"/>
+</a>
+</p>
+
+<apex:image value="{!IF(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000')}"/>
+
+</div>
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS PCI Renewal Compliant IT</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} – PCI Compliant</subject>
+    <textOnly>Gentile,
+
+
+
+Codice IATA: {!Case.IATA_Code__c}
+
+
+con riferimento alla consulenza fornita a IATA in merito ai rischi associati alle transazioni con carte di pagamento e alle potenziali violazioni di dati, si pone l&apos;esigenza di confermare la conformità agli standard PCI (Payment Card Industry) DSS (Data Security Standard) delle agenzie accreditate che operano nel sistema BSP.
+
+
+In base al Regolamento per le agenzie di vendita ai passeggeri (Passenger Sales Agency Rules) tutte le agenzie accreditate IATA devono garantire la piena conformità agli standard PCI DSS.
+
+
+Il PCI DSS è uno standard globale che favorisce la comprensione e l’attuazione da parte dei commercianti (agenzie) degli standard relativi alle politiche per la sicurezza, alle tecnologie e alle procedure adottate per proteggere i loro sistemi di pagamento da violazioni e furti dei dati dei titolari delle carte.
+
+
+Alla luce di quanto sopra indicato la invitiamo a fornirci l’attestato di conformità a conferma della conformità della sua azienda.
+
+
+La informiamo che secondo le linee guida del PCI DSS, i certificati di conformità non sono riconosciuti per la validazione della conformità stessa. I soli documenti riconosciuti sono i documenti ufficiali del sito web del PCI SSC. Qualsiasi altro documento emesso per dimostrare la conformità al PCI DSS o qualsiasi altro standard PCI non è autorizzato ne considerato valido.
+
+
+L’attestato di conformità è il documento che viene utilizzato per indicare l’avvenuta compilazione dell’apposito rapporto di conformità o questionario di autovalutazione e che attesta la conformità della sua organizzazione al PCI DSS.
+
+
+Per maggiori informazioni su come ottenere la conformità agli standard PCI DSS può visitare la nostra pagina web dedicata a PCI DSS: http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+
+Qualora al momento lei non effettui transazioni tramite BSP utilizzando il pagamento con carta di credito e non abbia intenzione di farlo, può presentare l’autocertificazione nessuna carta di credito allegata alla presente comunicazione.
+
+
+Si noti che, dopo la compilazione di tale autocertificazione, all’agenzia non verranno richiesti ulteriori attestati di conformità, ma il pagamento con carta di credito verrà disabilitato per tale agenzia al momento della migrazione del rispettivo paese di attività nell’ambiente NewGen nonché ai sensi della risoluzione 812
+
+
+La documentazione di cui sopra (attestato di conformità o autocertificazione nessuna carta di credito) dovrà essere inviata a IATA dalla pagina web del Portale Assistenza Clienti http://www.iata.org/cs in modo che ci pervenga entro e non oltre il {!Today()+30}. La preghiamo di allegare una copia scansionata al caso {!Case.CaseNumber} (https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}) visualizzabile dalla home page del portale alla sezione «I miei casi recenti».
+
+
+Le istruzioni per la presentazione della documentazione sono allegate a questa comunicazione.
+
+
+Il dipartimento Agency Management esaminerà la documentazione e deciderà sulla base delle prove disponibili.
+
+-----------------------------------------------------------------------------------------------------------------
+La preghiamo di tenere presente che il mancato rispetto di questo requisito come da richiesta IATA si tradurrà nell’apertura di una Non Conformità / Non Conformità Amministrativa nei confronti dell’agenzia.
+-----------------------------------------------------------------------------------------------------------------
+
+La invitiamo quindi a provvedere immediatamente. Qualora le occorressero ulteriori informazioni da IATA non esiti a trasmettere una nuova richiesta attraverso il nostro Portale clienti www.iata.org/cs.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

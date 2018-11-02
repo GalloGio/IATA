@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>ANG Financial Assesment Opt-out App EN</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Financial Assessment Opt-out accepted</subject>
+    <textOnly>{!Account.Name}
+
+{!Account.TradeName__c}
+
+{!Account.BillingStreet}
+
+{!Account.BillingCity} {!Account.BillingPostalCode}
+
+{!Account.BillingCountry}
+
+IATA Numeric Code: {!Account.IATACode__c}
+
+
+Dear Sir/Madam,
+
+
+FINANCIAL ASSESSMENT OPT OUT - ACCEPTED
+
+
+This is to confirm that your request for opt out from financial statements evaluation exercise by IATA has been accepted and your agency is no longer required to submit year-end financial statements for this year’s Financial Assessment Exercise to IATA. Consequently the following provisions of Resolution 812, Section 5.4.6 will apply, namely:
+
+
+- No Risk Status will be assigned to your Agency
+
+- Your Remittance Holding Capacity amount will be limited to the level of financial security that your agency provides to IATA
+
+
+BSP Airlines will be notified of the above.
+
+
+Please note that the opt out status will only be valid for this year and we will request your agency’s financial statements for next year’s exercise as per the timelines specified in Local Financial Criteria for {!Account.BillingCountry}.
+
+
+If you would like to opt back in the financial assessment, you can do so by providing your Agency’s financial statements as per requirements of Local Financial Criteria for {!Account.BillingCountry}.
+
+
+
+Sincerely,
+
+IATA Global Delivery Center</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

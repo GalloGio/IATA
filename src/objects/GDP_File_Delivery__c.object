@@ -366,7 +366,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <operation>equals</operation>
             <value>Failed</value>
         </filters>
-        <label>01-Failed</label>
+        <label>02-Failed</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -388,7 +388,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <operation>equals</operation>
             <value>In Progress</value>
         </filters>
-        <label>02-In Progress</label>
+        <label>01-In Progress</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -435,6 +435,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
     </listViews>
     <listViews>
         <fullName>ZZZ_Deliveries_With_No_Link_to_Z_Sub</fullName>
+        <booleanFilter>1 OR 2</booleanFilter>
         <columns>NAME</columns>
         <columns>GSS_Subscription_Detail__c</columns>
         <columns>Subscription__c</columns>
@@ -449,6 +450,10 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Subscription__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>GSS_Subscription_Detail__c</field>
             <operation>equals</operation>
         </filters>
         <label>ZZZ: Deliveries With No Link to Z-Sub</label>
@@ -471,7 +476,11 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <filters>
             <field>GSS_Subscription_Detail__c</field>
             <operation>equals</operation>
-            <value>A-S00000441</value>
+            <value>A-S00018003</value>
+        </filters>
+        <filters>
+            <field>Subscription__c</field>
+            <operation>equals</operation>
         </filters>
         <label>ZZ: Search by GSS Subscription Detail</label>
         <language>en_US</language>

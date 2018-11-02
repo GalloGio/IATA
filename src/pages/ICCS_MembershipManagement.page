@@ -1,0 +1,106 @@
+<apex:page standardController="Case"  extensions="ICCS_MembershipManagementController">
+
+    <apex:remoteObjects >
+        <apex:remoteObjectModel name="Portal_Application_Right__c" jsShorthand="ApplicationRight">
+            <apex:remoteObjectField name="Right__c" jsShorthand="right"/>
+            <apex:remoteObjectField name="ANG_Portal_Service_Role__c" jsShorthand="role"/>
+            <apex:remoteObjectField name="Account__c" jsShorthand="acctId"/>
+            <apex:remoteObjectField name="Top_Account__c" jsShorthand="topAcctId"/>
+            <apex:remoteObjectField name="Portal_Application__c" jsShorthand="applicationId"/>
+        </apex:remoteObjectModel>
+    </apex:remoteObjects>
+
+    <script>
+        function setMembershipToActiveJS(){
+            setMembershipToActiveAF();
+        }
+    
+		function setMembershipToMemberJS(){
+
+/* commenting the attachment verification part
+
+            var cl = new SObjectModel.Checklist();
+            cl.retrieve({where: {caseId: {eq: '{!cse.Id}'}}},
+                function(err, records, event){
+                    if(err){
+                        alert("Error : " + err.message);
+                    }
+                    else{
+                        var attachmentsOK = true;
+                        records.forEach(function(record){
+                            if(record.get("status") != "Approved" || !record.get("received")){ 
+                                attachmentsOK = false;
+                            }
+                        });                        
+*/
+                        var signatoryAccess = false;
+                        var users = new SObjectModel.ApplicationRight();
+                        users.retrieve({where: { or: {acctId: {eq: '{!acct.Id}'}, topAcctId: {eq: '{!acct.Id}'}}, applicationId: {eq: '{!iccsApplicationId}'}}},
+                            function(err, records, event){
+                                if(err){
+                                    alert("Error : " + err.message);
+                                }
+                                else{
+                                    records.forEach(function(record){
+                                        if(record.get("right") == "Access Granted" && record.get("role") == "Signatory"){ 
+                                            signatoryAccess = true;
+                                        }
+                                    });
+                                    
+                                    if(/*attachmentsOK == false || */signatoryAccess == false){
+                                        var message = "In order to activate ICCS Membership for this account, at least one signatory user must have access to the ICCS service.";
+                                        alert(message);
+                                    }
+                                    else{
+							            setMembershipToMemberAF();
+							        }
+                                }
+                            }
+                        );
+/* commenting the attachment verification part
+                    }
+                }
+            );
+*/
+        }
+        
+        function setMembershipToInactiveJS(){
+            setMembershipToInactiveAF();
+        }
+    </script>
+
+    <div style="text-align:center;">
+    <apex:form >
+        <apex:PageBlock >
+            <apex:PageBlockSection >
+                <apex:PageBlockSectionItem >
+                    <apex:outputLabel >ICCS Membership Status</apex:outputLabel>
+                    <apex:outputField value="{!acct.ICCS_Membership_Status__c}"/>
+                
+                </apex:PageBlockSectionItem>
+                <apex:PageBlockSectionItem >
+                    <apex:outputPanel >
+                        <apex:commandButton value="Set ICCS Membership to Active" onclick="setMembershipToActiveJS();return false;"  rendered="{! canBeSetToActive}"/>
+                        <apex:commandButton value="Set ICCS Membership to Member" onclick="setMembershipToMemberJS();return false;"  rendered="{! canBeSetToMember}"/>
+                        <apex:commandButton value="Set ICCS Membership to Inactive" onclick="setMembershipToInactiveJS();return false;" rendered="{! canBeSetToInactive}"/>
+                    </apex:outputPanel>
+                </apex:PageBlockSectionItem>
+            </apex:PageBlockSection>
+        </apex:PageBlock>
+        
+        <apex:actionFunction name="setMembershipToActiveAF" action="{! setMembershipToActive}" reRender="redirectPanel"/>
+        <apex:actionFunction name="setMembershipToMemberAF" action="{! setMembershipToMember}" reRender="redirectPanel"/>
+        <apex:actionFunction name="setMembershipToInactiveAF" action="{! setMembershipToInactive}" reRender="redirectPanel"/>
+        
+        <apex:outputPanel id="redirectPanel" >
+            <apex:outputText rendered="{!shouldRedirect}">
+                <script type="text/javascript">
+                    window.top.location.href = '{!redirectUrl}';
+                </script>
+            </apex:outputText>
+        </apex:outputPanel>
+        
+    </apex:form>
+    </div>
+    
+</apex:page>

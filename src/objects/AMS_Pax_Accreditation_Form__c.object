@@ -54,6 +54,376 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fieldSets>
+        <fullName>AMS_CorrectionAllHierarchy</fullName>
+        <description>This is used on the CORRECTION Process</description>
+        <displayedFields>
+            <field>Account_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Local_Legally_Registered_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_Legal_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_Number_Input__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>AMS_CorrectionAllHierarchy</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_CorrectionPerLocation</fullName>
+        <description>this is used on the CORRECTION process</description>
+        <displayedFields>
+            <field>Local_Legally_Registered_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_Premises_located_at_airport__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Short_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_License_No__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Email__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Phone__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Location_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Mobile__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_FAX__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Solicitation_Flag__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_Address__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Street_name_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Postal_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>State_Province__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Local_Physical_Address_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Local_Postal_Address_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATA_ISO_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Street__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Postal_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_ISO_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_ISO_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_frequency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>AMS_CorrectionPerLocation</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_CorrectionSingleAccount</fullName>
+        <description>This is used on the CORRECTION Process</description>
+        <displayedFields>
+            <field>Account_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_Legal_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_Number_Input__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Local_Legally_Registered_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_Premises_located_at_airport__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Short_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_License_No__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Email__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Phone__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Location_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Mobile__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_FAX__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Solicitation_Flag__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_Address__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Street_name_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Postal_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>State_Province__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Local_Physical_Address_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Local_Postal_Address_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATA_ISO_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Street__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Postal_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_ISO_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_ISO_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_frequency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>AMS_CorrectionSingleAccount</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>AMS_cnsremovaloftradename</fullName>
         <description>fields to be migrated when we have a removal of trade name process (CNS)</description>
         <displayedFields>
@@ -198,6 +568,11 @@
         </displayedFields>
         <displayedFields>
             <field>Abbreviated_Address__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_State__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -834,6 +1209,61 @@
         <label>NG Ownership</label>
     </fieldSets>
     <fieldSets>
+        <fullName>ANG_tradename</fullName>
+        <description>fields to be migrated when we have a change of trade name</description>
+        <displayedFields>
+            <field>Short_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Phone__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Email__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_FAX__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>NG Trade Name</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>ANG_vmfr</fullName>
         <description>fields to be migrated when we have a vmfr process</description>
         <displayedFields>
@@ -1343,7 +1773,7 @@
         <fullName>ANG_Accreditation_type__c</fullName>
         <description>Global picklist with all the types of accreditation.</description>
         <externalId>false</externalId>
-        <label>Accreditation type</label>
+        <label>Accreditation Type</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1358,7 +1788,7 @@
         <externalId>false</externalId>
         <formula>TEXT(HO_Account__r.ANG_Accreditation_Model__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Current Accreditation type</label>
+        <label>Current Accreditation Type</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1934,7 +2364,7 @@
         <fullName>Confirm_accreditation_type_are_correct__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Confirm accreditation type is correct</label>
+        <label>Confirm Accreditation Type is correct</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -1953,7 +2383,7 @@
     <fields>
         <fullName>Current_VAT_Number__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
 HO_Account__r.VAT_Number__c,
 SAAM_Case__r.Account_Concerned__r.VAT_Number__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -2295,10 +2725,10 @@ SAAM_Case__r.Account_Concerned__r.VAT_Number__c)</formula>
     <fields>
         <fullName>HO_Billing_Address__c</fullName>
         <externalId>false</externalId>
-        <formula>if(LEN(SAAM_Case__r.Account.BillingStreet)&gt;0, SAAM_Case__r.Account.BillingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp; 
-if(LEN(SAAM_Case__r.Account.BillingCity)&gt;0, SAAM_Case__r.Account.BillingCity&amp; &quot;, &quot; , &quot;&quot; )&amp; 
-if(LEN(SAAM_Case__r.Account.BillingState)&gt;0, SAAM_Case__r.Account.BillingState&amp; &quot; &quot; , &quot;&quot; )&amp; 
-if(LEN(SAAM_Case__r.Account.BillingPostalCode)&gt;0, SAAM_Case__r.Account.BillingPostalCode,&quot;&quot;) &amp; BR() &amp; 
+        <formula>if(LEN(SAAM_Case__r.Account.BillingStreet)&gt;0, SAAM_Case__r.Account.BillingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp;
+if(LEN(SAAM_Case__r.Account.BillingCity)&gt;0, SAAM_Case__r.Account.BillingCity&amp; &quot;, &quot; , &quot;&quot; )&amp;
+if(LEN(SAAM_Case__r.Account.BillingState)&gt;0, SAAM_Case__r.Account.BillingState&amp; &quot; &quot; , &quot;&quot; )&amp;
+if(LEN(SAAM_Case__r.Account.BillingPostalCode)&gt;0, SAAM_Case__r.Account.BillingPostalCode,&quot;&quot;) &amp; BR() &amp;
 If(LEN( SAAM_Case__r.Account.BillingCountry) &gt;0, SAAM_Case__r.Account.BillingCountry,&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>HO Billing Address</label>
@@ -2311,10 +2741,10 @@ If(LEN( SAAM_Case__r.Account.BillingCountry) &gt;0, SAAM_Case__r.Account.Billing
     <fields>
         <fullName>HO_Shipping_Address__c</fullName>
         <externalId>false</externalId>
-        <formula>if(LEN(SAAM_Case__r.Account.ShippingStreet)&gt;0, SAAM_Case__r.Account.ShippingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp; 
-if(LEN(SAAM_Case__r.Account.ShippingCity)&gt;0, SAAM_Case__r.Account.ShippingCity&amp; &quot;, &quot; , &quot;&quot; )&amp; 
-if(LEN(SAAM_Case__r.Account.ShippingState)&gt;0, SAAM_Case__r.Account.ShippingState&amp; &quot; &quot; , &quot;&quot; )&amp; 
-if(LEN(SAAM_Case__r.Account.ShippingPostalCode)&gt;0, SAAM_Case__r.Account.ShippingPostalCode,&quot;&quot;) &amp; BR() &amp; 
+        <formula>if(LEN(SAAM_Case__r.Account.ShippingStreet)&gt;0, SAAM_Case__r.Account.ShippingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp;
+if(LEN(SAAM_Case__r.Account.ShippingCity)&gt;0, SAAM_Case__r.Account.ShippingCity&amp; &quot;, &quot; , &quot;&quot; )&amp;
+if(LEN(SAAM_Case__r.Account.ShippingState)&gt;0, SAAM_Case__r.Account.ShippingState&amp; &quot; &quot; , &quot;&quot; )&amp;
+if(LEN(SAAM_Case__r.Account.ShippingPostalCode)&gt;0, SAAM_Case__r.Account.ShippingPostalCode,&quot;&quot;) &amp; BR() &amp;
 If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.ShippingCountry,&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>HO Shipping Address</label>
@@ -3266,6 +3696,38 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>ISSP_AMS_Total_Current_Ownership_Company__c</fullName>
+        <externalId>false</externalId>
+        <label>% Total Current Ownership Companies</label>
+        <summarizedField>AMS_Accreditation_Contact__c.Financial_interest__c</summarizedField>
+        <summaryFilterItems>
+            <field>AMS_Accreditation_Contact__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Current Company Owner</value>
+        </summaryFilterItems>
+        <summaryForeignKey>AMS_Accreditation_Contact__c.AMS_Pax_Accreditation_Form__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>ISSP_AMS_Total_Current_Ownership_Individ__c</fullName>
+        <externalId>false</externalId>
+        <label>% Total Current Ownership Individuals</label>
+        <summarizedField>AMS_Accreditation_Contact__c.Financial_interest__c</summarizedField>
+        <summaryFilterItems>
+            <field>AMS_Accreditation_Contact__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Current Owner</value>
+        </summaryFilterItems>
+        <summaryForeignKey>AMS_Accreditation_Contact__c.AMS_Pax_Accreditation_Form__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>ISSP_AMS_Total_Current_Ownership__c</fullName>
         <externalId>false</externalId>
         <label>% Total Current Ownership</label>
@@ -4042,7 +4504,7 @@ O-SATO
 P-Passenger
 S-SSI
 T-TIDS
-V-Travel Service Intermediaries-TSI (USA Only) 
+V-Travel Service Intermediaries-TSI (USA Only)
 X-Handling Agents and Shipping Lines</inlineHelpText>
         <label>Location Class</label>
         <required>false</required>
@@ -4307,7 +4769,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <fullName>Notify_Change_Accreditation_Type__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Request Change of accreditation type</label>
+        <label>Request Change of Accreditation Type</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -4466,7 +4928,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
     <fields>
         <fullName>Previous_Email__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
 HO_Account__r.Email__c,
 SAAM_Case__r.Account_Concerned__r.Email__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -4516,7 +4978,7 @@ SAAM_Case__r.Account_Concerned__r.Email__c)</formula>
     <fields>
         <fullName>Previous_Mobile__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
 HO_Account__r.Mobile__c,
 SAAM_Case__r.Account_Concerned__r.Mobile__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -4542,7 +5004,7 @@ SAAM_Case__r.Account_Concerned__r.Mobile__c)</formula>
     <fields>
         <fullName>Previous_Phone__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
 HO_Account__r.Phone,
 SAAM_Case__r.Account_Concerned__r.Phone)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -4556,7 +5018,7 @@ SAAM_Case__r.Account_Concerned__r.Phone)</formula>
     <fields>
         <fullName>Previous_Postal_code__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
 HO_Account__r.BillingPostalCode,
 SAAM_Case__r.Account_Concerned__r.BillingPostalCode)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -4570,7 +5032,7 @@ SAAM_Case__r.Account_Concerned__r.BillingPostalCode)</formula>
     <fields>
         <fullName>Previous_State_Province__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
 HO_Account__r.BillingState,
 SAAM_Case__r.Account_Concerned__r.BillingState)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -4598,7 +5060,7 @@ SAAM_Case__r.Account_Concerned__r.BillingStreet)</formula>
     <fields>
         <fullName>Previous_Trade_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
 HO_Account__r.TradeName__c,
 SAAM_Case__r.Account_Concerned__r.TradeName__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -4654,7 +5116,7 @@ SAAM_Case__r.Account_Concerned__r.TradeName__c)</formula>
     <fields>
         <fullName>Ready_for_Accreditation__c</fullName>
         <externalId>false</externalId>
-        <formula>OR (Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  TEXT(ISSP_AMS_Legal_Status__c) != null  &amp;&amp; Branch_Office_Email__c != null &amp;&amp;  Branch_Office_Phone__c != null &amp;&amp; !ISPICKVAL(Location_Class__c, &quot;M&quot;),ISPICKVAL(Location_Class__c,&quot;M&quot;) &amp;&amp; 
+        <formula>OR (Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  TEXT(ISSP_AMS_Legal_Status__c) != null  &amp;&amp; Branch_Office_Email__c != null &amp;&amp;  Branch_Office_Phone__c != null &amp;&amp; !ISPICKVAL(Location_Class__c, &quot;M&quot;),ISPICKVAL(Location_Class__c,&quot;M&quot;) &amp;&amp;
 Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  ISPICKVAL( Location_Class__c, &quot;M&quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Ready for Accreditation</label>
@@ -4703,7 +5165,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <externalId>false</externalId>
         <label>Remittance frequency</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <valueSet>
@@ -4711,54 +5173,44 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Monthly</fullName>
+                    <fullName>M</fullName>
                     <default>false</default>
                     <label>Monthly</label>
                 </value>
                 <value>
-                    <fullName>Fortnightly</fullName>
+                    <fullName>F</fullName>
                     <default>false</default>
                     <label>Fortnightly</label>
                 </value>
                 <value>
-                    <fullName>Every 10 days</fullName>
+                    <fullName>R</fullName>
                     <default>false</default>
                     <label>Every 10 days</label>
                 </value>
                 <value>
-                    <fullName>4 times per month</fullName>
+                    <fullName>W</fullName>
                     <default>false</default>
                     <label>4 times per month</label>
                 </value>
                 <value>
-                    <fullName>Weekly</fullName>
+                    <fullName>V</fullName>
                     <default>false</default>
                     <label>Weekly</label>
                 </value>
                 <value>
-                    <fullName>Every 5 days</fullName>
+                    <fullName>S</fullName>
                     <default>false</default>
                     <label>Every 5 days</label>
                 </value>
                 <value>
-                    <fullName>Every 3 days</fullName>
+                    <fullName>B</fullName>
                     <default>false</default>
                     <label>Every 3 days</label>
                 </value>
                 <value>
-                    <fullName>Daily</fullName>
+                    <fullName>D</fullName>
                     <default>false</default>
                     <label>Daily</label>
-                </value>
-                <value>
-                    <fullName>Daily (China)</fullName>
-                    <default>false</default>
-                    <label>Daily (China)</label>
-                </value>
-                <value>
-                    <fullName>Every 5 day</fullName>
-                    <default>false</default>
-                    <label>Every 5 day</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -5084,6 +5536,33 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Staging area&apos;s status</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Staging area&apos;s status</inlineHelpText>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>InProgress</fullName>
+                    <default>false</default>
+                    <label>InProgress</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Steamship__c</fullName>
@@ -5566,6 +6045,942 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
     </nameField>
     <pluralLabel>AMS Online Accreditations</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Annual_Revalidation</fullName>
+        <active>true</active>
+        <description>Record type for Annual Revalidation staging areas.</description>
+        <label>Annual Revalidation</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_type__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_a_sole_proprietor__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_director_or_had_a_financial__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_found_guilty_of_infringements__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_involved_in_a_bankruptcy__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_the_air_transportation_which_your__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_intend_to_request__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_now_share_or_intend__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_operate_a_cargo_cartage__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_sell_air_cargo__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_use_its_own_vehicles__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Enable_Credit_Card_FOP__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Has_your_firm_ever_held_a_Cargo_Agency__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Has_your_form_ever_held_CASS_Assoc_etc__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Have_any_having_authorization_to_act__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Head_Office_have_access__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_Registered_IATAN_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Curr_Entity_with_listed_shares__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Entity_with_listed_shares__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_GDS_with_signed_contract__c</picklist>
+            <values>
+                <fullName>Abacus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Amadeus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Axess</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deutsche Reiseburo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Farelogix</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infini</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kiu System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kotis Travel Info SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resiber</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sabre</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sirena</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Topas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Apollo%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Galileo%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Worldspan%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelsky</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_IATA_Registered_Cargo_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Is_Applicant_Parent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Is_Make_Declarations__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Legal_Status__c</picklist>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Co-operative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Joint Venture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>State Owned Enterprise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Nominee_Trustee__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Online_Agency_Application__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Premises_located_at_airport__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Previous_default__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>If_yes_are_you_fully_and_legally__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>International_Sales_in_last_Year__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IsGSA__c</picklist>
+            <values>
+                <fullName>NO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YES</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_there_any_relationship__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_this_Branch_becoming_a_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_this_Head_Office_becoming_a_Branch__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_a_General_Sales_Agent_GSA__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_a_member_of_a_national__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_acting_as_agent_for_surface__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_affiliated_directly__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_insured_to_cover__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Local_Agent_Type__c</picklist>
+            <values>
+                <fullName>Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Operation_Type__c</picklist>
+            <values>
+                <fullName>Cargo_Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel_Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Registered_to_hot_files__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Scope_of_Change__c</picklist>
+            <values>
+                <fullName>HO - All Branches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO - Selected Branches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Selected Branches Only</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Separate_user_access__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Specialize_in_particular_traffic_type__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Specify_Legal_Status_After_Change__c</picklist>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Co-operative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Joint Venture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>State Owned Enterprise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Cargo_Agent__c</picklist>
+            <values>
+                <fullName>CASS Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Import</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Were_all_IATA_Members_fully_repaid__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wholly_managed_by_this_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wholly_owned_by_this_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_locations__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_the_managers__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_the_premises__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_the_change_of_ownership_cause__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <recordTypes>
         <fullName>CASS_Associate_Branch</fullName>
         <active>true</active>
@@ -6227,39 +7642,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6282,6 +7693,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6991,39 +8413,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7046,6 +8464,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7755,39 +9184,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7810,6 +9235,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8519,39 +9955,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8574,6 +10006,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9295,39 +10738,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9350,6 +10789,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10071,39 +11521,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10126,6 +11572,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10847,39 +12304,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10902,6 +12355,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11623,39 +13087,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11678,6 +13138,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11743,6 +13214,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_type__c</picklist>
             <values>
                 <fullName>Cash</fullName>
                 <default>false</default>
@@ -12426,39 +13908,31 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12524,6 +13998,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13288,39 +14773,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13343,6 +14824,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14063,39 +15555,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14118,6 +15606,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14894,39 +16393,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15015,6 +16510,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15818,39 +17324,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15935,6 +17437,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16694,39 +18207,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16811,6 +18320,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17622,35 +19142,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17735,6 +19255,972 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Cargo_Agent__c</picklist>
+            <values>
+                <fullName>CASS Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Import</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Were_all_IATA_Members_fully_repaid__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wholly_managed_by_this_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wholly_owned_by_this_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_locations__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_the_managers__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_the_premises__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_the_change_of_ownership_cause__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>PCI_Compliance</fullName>
+        <active>true</active>
+        <label>PCI Compliance</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_type__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_a_sole_proprietor__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_director_or_had_a_financial__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_found_guilty_of_infringements__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_involved_in_a_bankruptcy__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_the_air_transportation_which_your__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_intend_to_request__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_now_share_or_intend__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_operate_a_cargo_cartage__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_sell_air_cargo__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_use_its_own_vehicles__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Enable_Credit_Card_FOP__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Has_your_firm_ever_held_a_Cargo_Agency__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Has_your_form_ever_held_CASS_Assoc_etc__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Have_any_having_authorization_to_act__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Head_Office_have_access__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_Registered_IATAN_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Curr_Entity_with_listed_shares__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Entity_with_listed_shares__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_GDS_with_signed_contract__c</picklist>
+            <values>
+                <fullName>Abacus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Amadeus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Axess</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deutsche Reiseburo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Farelogix</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infini</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kiu System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kotis Travel Info SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resiber</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sabre</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sirena</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Topas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Apollo%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Galileo%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Worldspan%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelsky</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_IATA_Registered_Cargo_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Is_Applicant_Parent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Is_Make_Declarations__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Legal_Status__c</picklist>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Co-operative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Joint Venture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>State Owned Enterprise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Nominee_Trustee__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Online_Agency_Application__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Premises_located_at_airport__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Previous_default__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>If_yes_are_you_fully_and_legally__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>International_Sales_in_last_Year__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IsGSA__c</picklist>
+            <values>
+                <fullName>NO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YES</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_there_any_relationship__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_this_Branch_becoming_a_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_this_Head_Office_becoming_a_Branch__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_a_General_Sales_Agent_GSA__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_a_member_of_a_national__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_acting_as_agent_for_surface__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_affiliated_directly__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_insured_to_cover__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Local_Agent_Type__c</picklist>
+            <values>
+                <fullName>Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Operation_Type__c</picklist>
+            <values>
+                <fullName>Cargo_Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel_Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Registered_to_hot_files__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Scope_of_Change__c</picklist>
+            <values>
+                <fullName>Branch Abroad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO - All Branches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO - Selected Branches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Selected Branches Only</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Separate_user_access__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Specialize_in_particular_traffic_type__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Specify_Legal_Status_After_Change__c</picklist>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Co-operative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Joint Venture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>State Owned Enterprise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18191,39 +20677,46 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Weekly</fullName>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18985,39 +21478,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19106,6 +21595,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19859,39 +22359,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19914,6 +22410,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20651,39 +23158,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20749,6 +23252,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21502,39 +24016,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21557,6 +24067,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22329,39 +24850,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22450,6 +24967,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23266,39 +25794,35 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
+                <fullName>B</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily %28China%29</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 3 days</fullName>
+                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 5 days</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23387,6 +25911,972 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Cargo_Agent__c</picklist>
+            <values>
+                <fullName>CASS Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Import</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Were_all_IATA_Members_fully_repaid__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wholly_managed_by_this_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wholly_owned_by_this_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_locations__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_the_managers__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_the_premises__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_the_change_of_ownership_cause__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>VR</fullName>
+        <active>true</active>
+        <label>VR</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_type__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_a_sole_proprietor__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_director_or_had_a_financial__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_found_guilty_of_infringements__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_involved_in_a_bankruptcy__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_the_air_transportation_which_your__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_intend_to_request__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_now_share_or_intend__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_operate_a_cargo_cartage__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_sell_air_cargo__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_use_its_own_vehicles__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Enable_Credit_Card_FOP__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Has_your_firm_ever_held_a_Cargo_Agency__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Has_your_form_ever_held_CASS_Assoc_etc__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Have_any_having_authorization_to_act__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Head_Office_have_access__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_Registered_IATAN_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Curr_Entity_with_listed_shares__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Entity_with_listed_shares__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_GDS_with_signed_contract__c</picklist>
+            <values>
+                <fullName>Abacus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Amadeus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Axess</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deutsche Reiseburo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Farelogix</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infini</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kiu System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kotis Travel Info SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resiber</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sabre</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sirena</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Topas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Apollo%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Galileo%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Worldspan%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelsky</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_IATA_Registered_Cargo_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Is_Applicant_Parent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Is_Make_Declarations__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Legal_Status__c</picklist>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Co-operative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Joint Venture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>State Owned Enterprise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Nominee_Trustee__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Online_Agency_Application__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Premises_located_at_airport__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Previous_default__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>If_yes_are_you_fully_and_legally__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>International_Sales_in_last_Year__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IsGSA__c</picklist>
+            <values>
+                <fullName>NO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YES</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_there_any_relationship__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_this_Branch_becoming_a_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_this_Head_Office_becoming_a_Branch__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_a_General_Sales_Agent_GSA__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_a_member_of_a_national__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_acting_as_agent_for_surface__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_affiliated_directly__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_insured_to_cover__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Local_Agent_Type__c</picklist>
+            <values>
+                <fullName>Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Operation_Type__c</picklist>
+            <values>
+                <fullName>Cargo_Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel_Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Registered_to_hot_files__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Scope_of_Change__c</picklist>
+            <values>
+                <fullName>Branch Abroad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO - All Branches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO - Selected Branches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Selected Branches Only</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Separate_user_access__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Specialize_in_particular_traffic_type__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Specify_Legal_Status_After_Change__c</picklist>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Co-operative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Joint Venture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>State Owned Enterprise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23497,6 +26987,30 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <errorMessage>CASS Number cannot be changed if IATA Code is already filled.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Cass_Number_edit_permission</fullName>
+        <active>true</active>
+        <description>To prevent CASS Number to be inserted by agents with a sector different of Cargo Agent.</description>
+        <errorConditionFormula>IF(
+    AND( 
+        SAAM_Case__r.Account.RecordTypeId = &quot;012w0000000QBMW&quot; , 
+        NOT( ISPICKVAL( SAAM_Case__r.Account.Sector__c, &quot;Cargo Agent&quot; ) ), 
+        NOT( ISBLANK( CASS_Number__c ) ) 
+    ),
+    true,
+    AND( 
+        SAAM_Case__r.Account.RecordTypeId = &quot;012w0000000QBMb&quot; , 
+        NOT( ISPICKVAL( Location_Class__c , &quot;C&quot; ) ),
+        NOT( ISPICKVAL( Location_Class__c , &quot;R&quot; ) ),
+        NOT( ISPICKVAL( Location_Class__c , &quot;I&quot; ) ), 
+        NOT( ISPICKVAL( Location_Class__c , &quot;Q&quot; ) ), 
+        NOT( AND( ISPICKVAL( Location_Class__c , &quot;G&quot; ), ISPICKVAL( SAAM_Case__r.OSCAR__r.Process__c, &quot;NEW.GSSA.1.0&quot; ) ) ),   
+        NOT( ISBLANK( CASS_Number__c ) ) 
+    )
+)</errorConditionFormula>
+        <errorDisplayField>CASS_Number__c</errorDisplayField>
+        <errorMessage>CASS Number should be inserted for Accounts with Location Class equals to C, R, I Q or G (for GSSA application processes) or for Cargo Agents.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>ISSP_AMS_T_C_Accepted_on_Submit</fullName>
         <active>false</active>
         <errorConditionFormula>Submitted_to_IATA__c ==TRUE &amp;&amp; Accept_terms_and_conditions__c == FALSE</errorConditionFormula>
@@ -23505,39 +27019,37 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
     <validationRules>
         <fullName>Limit_Remittance_Frequency_Options</fullName>
         <active>true</active>
-        <errorConditionFormula>OR( 
+        <errorConditionFormula>OR(
 
-AND( 
+AND(
 
-ANG_IsNewGenAgency__c, 
+ANG_IsNewGenAgency__c,
 
-NOT( Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;), 
+NOT( Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;),
 
-IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily (China)&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 1 ), 
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
 
-AND( 
+AND(
 
-ANG_IsNewGenAgency__c, 
+ANG_IsNewGenAgency__c,
 
-Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;, 
+Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;,
 
-IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily (China)&quot;),1,0) + 
-IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 ) 
+IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
 
 )</errorConditionFormula>
         <errorDisplayField>Remittance_frequency__c</errorDisplayField>

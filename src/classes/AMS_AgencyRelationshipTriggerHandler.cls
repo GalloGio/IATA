@@ -258,32 +258,36 @@ public class AMS_AgencyRelationshipTriggerHandler {
                 hierarchyIds.add(r.Hierarchy__c);
 
         //Get all the relations in the hierarchies
-        List<AMS_Agencies_relationhip__c> relationsInHierarchy = [select Id, Child_Account__c, Hierarchy__c from AMS_Agencies_relationhip__c where Hierarchy__c in :hierarchyIds];
+        List<AMS_Agencies_relationhip__c> relationsInHierarchy = [select Id, Child_Account__c, Parent_Account__c, Hierarchy__c from AMS_Agencies_relationhip__c where Hierarchy__c in :hierarchyIds];
 
         //list to save all child accounts from all the hierarchies in the context
-        List<Id> allChildAccountsInHierarchies = new List<Id>();
+        Set<Id> allAccountsInHierarchies = new Set<Id>();
 
-        for (AMS_Agencies_relationhip__c r : relationsInHierarchy)
-            allChildAccountsInHierarchies.add(r.Child_Account__c);
+        for (AMS_Agencies_relationhip__c r : relationsInHierarchy){
+            allAccountsInHierarchies.add(r.Child_Account__c);
+            allAccountsInHierarchies.add(r.Parent_Account__c);
+        }
 
-        Map<Id, Account> accounts = new Map<Id, Account>([select Id, CASS_Number__c, Sector__c, CNS_Agency__c from Account where Id in :allChildAccountsInHierarchies]);
+        Map<Id, Account> accounts = new Map<Id, Account>([select Id, CASS_Number__c, Sector__c, CNS_Agency__c from Account where Id in :allAccountsInHierarchies]);
 
         //Build mapping between hierarchy and the available CASS Numbers for it
         for (Id hId : hierarchyIds) {
 
-            List<Account> childAccountsInHierarchy = new List<Account>();
+            Set<Account> accountsInHierarchy = new Set<Account>();
 
             if (hierarchyAvailableCass.get(hId) == null) {
-                //get all the child accounts for this hierarchy
+                //get all the accounts for this hierarchy
                 boolean isCNS = false;
                 for (AMS_Agencies_relationhip__c r : relationsInHierarchy)
                     if (r.Hierarchy__c == hId) {
                         Account acc = accounts.get(r.Child_Account__c);
-                        childAccountsInHierarchy.add(acc);
+                        accountsInHierarchy.add(acc);
+                        Account accParent = accounts.get(r.Parent_Account__c);
+                        accountsInHierarchy.add(accParent);
                         isCNS = acc.CNS_Agency__c;
                     }
 
-                Set<Integer> availableCassNumbers = getAvailableCassNumbers(childAccountsInHierarchy,isCNS);
+                Set<Integer> availableCassNumbers = getAvailableCassNumbers(accountsInHierarchy,isCNS);
                 List<Integer> availableCassOrdered = new List<Integer>(availableCassNumbers);
                 availableCassOrdered.sort();
 
@@ -328,10 +332,10 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
     }
 
-    public static Set<Integer> getAvailableCassNumbers(List<Account> accounts, boolean isCNS) {
+    public static Set<Integer> getAvailableCassNumbers(Set<Account> accounts, boolean isCNS) {
         Set<Integer> availableCASS = new Set<Integer>();
 
-        for (Integer i = (isCNS == true ? 2 : 1); i < 1000; i++)
+        for (Integer i = (isCNS == true ? 1 : 0); i < 1000; i++)
             availableCASS.add(i);
 
         for (Account acc : accounts)

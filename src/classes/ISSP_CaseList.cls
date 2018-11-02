@@ -1,4 +1,9 @@
-public with sharing class ISSP_CaseList {
+/*
+    Class that lists all the cases of Portal Users
+    Used in Portal and NewGen APP (mobile)
+*/
+@RestResource(urlMapping='/newgenapp/v1/getCaseList/*')
+global with sharing class ISSP_CaseList {
 
     public string selectedList {get;set;}
     public string currNavState {get;set;}
@@ -15,7 +20,8 @@ public with sharing class ISSP_CaseList {
         
     public boolean apList {get;set;}
     public boolean apUser {get;set;}
-    
+    private Id myAccountId {get;set;}
+
     public string soqlOrder {get;set;}
     //basto1p
     public Map<String,String> mapFieldsValue {get;set;}
@@ -34,6 +40,48 @@ public with sharing class ISSP_CaseList {
        sortExp = value;
      }
     }
+
+    //Start NewGenApp
+    public boolean isNewGenApp = false;
+    public string ngaListViewName = '';
+    public integer newgenappPage = 0;
+    
+    @HttpGet
+    global static List<Case> doGet(){
+        RestRequest req = RestContext.request;
+        String filterKey = req.params.get('filterKey');
+        String page = req.params.get('page');
+        System.Debug('REQ' + req);
+        System.Debug('filterKey' + filterKey);
+        System.Debug('page' + page);
+
+        ISSP_CaseList caseListInstance = new ISSP_CaseList(); 
+        
+        List<Case> caseList = new List<Case>();
+
+        System.Debug('PRINTING1 ' + caseListInstance.ngaListViewName);
+        caseListInstance.ngaListViewName = filterKey;
+        caseListInstance.newgenappPage = integer.valueof(page);
+
+        caseListInstance.isExtinstion = true;
+        caseListInstance.isAdmin = false;
+        caseListInstance.apUser = false;
+        caseListInstance.apList = false;
+        caseListInstance.isNewGenApp = true; 
+
+        System.Debug('PRINTING2 ' + caseListInstance.ngaListViewName);
+
+        caseListInstance.initialization();
+        caseListInstance.initFilters(); 
+        caseListInstance.initCaseListViewMap();
+
+        System.Debug('ReadyToGetCases');
+        
+        caseList = caseListInstance.getCases();
+
+        return caseList; 
+    }
+    //End NewGenApp
 
     public String getSortDirection() {
         //if not column is selected 
@@ -61,8 +109,14 @@ public with sharing class ISSP_CaseList {
                 sortDirection = 'DESC';
             }
             else{
-				ApexPages.currentPage().getParameters().put('ListViewName', '3_MyRecentCases');
+                if(isNewGenApp){
+                    ApexPages.currentPage().getParameters().put('ListViewName', ngaListViewName);
                 sortDirection = 'DESC';
+                }
+                else {
+                    ApexPages.currentPage().getParameters().put('ListViewName', '3_MyRecentCases');
+                    sortDirection = 'DESC';
+                }	
             }
             
             //AS
@@ -71,7 +125,7 @@ public with sharing class ISSP_CaseList {
             //TF
             apList = false;
             apUser = false;
-            User myUser = [select Id,ContactId from User where Id =:Userinfo.getUserId()];
+            User myUser = [select Id,ContactId, Contact.AccountId from User where Id =:Userinfo.getUserId()];
             if (myUser.ContactId != null){
 				List <Portal_Application_Right__c> appRightList = [Select Id From Portal_Application_Right__c
 																where Contact__c =: myUser.ContactId and
@@ -80,12 +134,13 @@ public with sharing class ISSP_CaseList {
 		        if (!appRightList.isEmpty()){
 		                apUser = true;
 		        }
+                myAccountId = myUser.Contact.AccountId;
             }
                 
             Id profileId=userinfo.getProfileId();
             String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
             if(profileName.startsWith('ISS Portal PwC')){  isPWCProfile = true; }
-            if(profileName.startsWith('ISS Portal DPC') ){  isDPCUser= true; }
+            if(profileName.startsWith('ISS Portal DPC Admin') ){  isDPCUser= true; }
             
             isAdmin = ApexPages.currentPage().getParameters().get('admin') == 'true'  ? true : false ;
             
@@ -157,8 +212,15 @@ public with sharing class ISSP_CaseList {
         if(ListViewNameList.size()>0){
             selectedList = ListViewNameList.get(0);
         }
-        
-        string ListViewName = ApexPages.currentPage().getParameters().get('ListViewName');
+
+        string ListViewName = '';
+        if(isNewGenApp){
+            ListViewName = ngaListViewName;
+        } 
+        else {
+            ListViewName = ApexPages.currentPage().getParameters().get('ListViewName');
+        }
+
         if( ListViewName!=null && caseListViewMap.containsKey(ListViewName)){
             selectedList = ListViewName;
         }
@@ -184,6 +246,18 @@ public with sharing class ISSP_CaseList {
         if(String.isNotBlank(selectedList))
 			queryConditions = caseListViewMap.get(selectedList).SOQL_Filter__c;             
                 
+        if(caseListViewMap.get(selectedList).isOwnedByMe__c)
+           queryConditions += ' AND OwnerId = \'' + UserInfo.getUserId() + '\' ';
+        if(caseListViewMap.get(selectedList).isMyAccount__c) {
+            List<User> lsUsers = [SELECT Id FROM User WHERE AccountId = :myAccountId AND Contact.User_Portal_Status__c IN ('Approved User','Approved Admin')];
+            String userIds = '';
+            for(User u : lsUsers) {
+                userIds += '\'' + u.Id  + '\',';
+            }
+            if(userIds.endsWith(',')) userIds = userIds.substring(0,userIds.length()-1);
+            if(userIds != '') queryConditions += ' AND OwnerId IN (' + userIds + ') ';
+        }
+
         return String.isNotBlank(queryConditions) ? queryConditions : ''; 
     }
     
@@ -202,7 +276,7 @@ public with sharing class ISSP_CaseList {
                     fieldPathSet.add(f.getFieldPath());
                 }
                 //basto1p
-                String query = '  Account.Name , Contact.Name   ';
+                String query = '  Account.Name , Contact.Name, Owner.Name, E2CP__AdditionalCC__c   ';
                 Boolean hasStatus = false;
                 
                 for(String fieldPath  : fieldPathSet) {
@@ -234,11 +308,16 @@ public with sharing class ISSP_CaseList {
                 		sortFullExp = soqlOrder;
 					queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by '+ sortFullExp;
                 }
+                else if(isNewGenApp){
+                    queryString = 'select '+query.substring(1) +', Description, (SELECT Id, CreatedDate, CommentBody, CreatedById, CreatedBy.Name FROM CaseComments order by CreatedDate ASC limit 200) from Case  '+getQueryConditions()+' order by CreatedDate DESC limit 200';
+                }
                 else{
                      queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by CreatedDate '+ sortDirection +' limit 5';
                 }
                 ISSP_Utilities.log('SQL String: ' + queryString);
                 setCon = new ApexPages.StandardSetController(Database.getQueryLocator(queryString));
+                //newgenapp
+
                 setCon.setPageSize(size);
                 noOfRecords = setCon.getResultSize();
             }

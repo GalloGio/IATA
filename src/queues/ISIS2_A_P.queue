@@ -3,6 +3,19 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>yoobk@iata.org</email>
     <name>IBSPS - A&amp;P</name>
+    <queueMembers>
+        <users>
+            <user>leungc@iata.org</user>
+            <user>byrnej@iata.org</user>
+            <user>murthye@iata.org</user>
+            <user>ohv@iata.org</user>
+            <user>alsharifr@iata.org</user>
+            <user>rodrigos@iata.org</user>
+            <user>zhangy2@iata.org</user>
+            <user>yoobk1@iata.org</user>
+            <user>parkyr@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

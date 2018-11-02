@@ -86,7 +86,7 @@ private class ContactProxyTest {
                     FirstName__c = 'first'
                     , LastName__c = 'LastName' 
                     , Name_on_ID_Card__c = 'name on card'                                    
-                    , Card_Status__c = 'Approved'
+                    , Card_Status__c = 'Sent ID Card'
                     , Blacklisted__c = false
                     , Valid_To_Date__c = Date.today().addMonths(5)
                     , Title__c = 'Mr.'

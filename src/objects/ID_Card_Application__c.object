@@ -599,24 +599,39 @@ Completed: Process is complete</inlineHelpText>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
+                    <fullName>Travel Agency Fees - EN</fullName>
+                    <default>false</default>
+                    <label>Travel Agency Fees - EN</label>
+                </value>
+                <value>
+                    <fullName>Assist Travelers Special Needs - EN</fullName>
+                    <default>false</default>
+                    <label>Assist Travelers Special Needs - EN</label>
+                </value>
+                <value>
+                    <fullName>Fundamentals Journey Pricing - EN</fullName>
+                    <default>false</default>
+                    <label>Fundamentals Journey Pricing - EN</label>
+                </value>
+                <value>
+                    <fullName>Notions essent&apos;l en tarif et billet - FR</fullName>
+                    <default>false</default>
+                    <label>Notions essent&apos;l en tarif et billet - FR</label>
+                </value>
+                <value>
+                    <fullName>Adv. Skills Journey Price&amp;Ticket - EN</fullName>
+                    <default>false</default>
+                    <label>Adv. Skills Journey Price&amp;Ticket - EN</label>
+                </value>
+                <value>
                     <fullName>Geography in Travel Planning - EN</fullName>
                     <default>false</default>
                     <label>Geography in Travel Planning - EN</label>
                 </value>
                 <value>
-                    <fullName>Destination Geography - EN</fullName>
+                    <fullName>Serving the Travel  Customer - EN</fullName>
                     <default>false</default>
-                    <label>Destination Geography - EN</label>
-                </value>
-                <value>
-                    <fullName>Serving the T and T Customer - EN</fullName>
-                    <default>false</default>
-                    <label>Serving the T and T Customer - EN</label>
-                </value>
-                <value>
-                    <fullName>Intro to BSPLink - EN</fullName>
-                    <default>false</default>
-                    <label>Intro to BSPLink - EN</label>
+                    <label>Serving the Travel  Customer - EN</label>
                 </value>
                 <value>
                     <fullName>Le service au client voyageur - FR</fullName>
@@ -629,29 +644,14 @@ Completed: Process is complete</inlineHelpText>
                     <label>Selling Intl Rail Transportation - EN</label>
                 </value>
                 <value>
-                    <fullName>Intro al BSPlink - ES</fullName>
+                    <fullName>Social Media for Travel Industry - EN</fullName>
                     <default>false</default>
-                    <label>Intro al BSPlink - ES</label>
+                    <label>Social Media for Travel Industry - EN</label>
                 </value>
                 <value>
-                    <fullName>Intro al Sistema y Lenguaje BSP - ES</fullName>
+                    <fullName>Destination Geography - EN</fullName>
                     <default>false</default>
-                    <label>Intro al Sistema y Lenguaje BSP - ES</label>
-                </value>
-                <value>
-                    <fullName>Informes y procedimientos de facturacion BSP - ES</fullName>
-                    <default>false</default>
-                    <label>Informes y procedimientos de facturacion BSP - ES</label>
-                </value>
-                <value>
-                    <fullName>Social Media for T and T Industry - EN</fullName>
-                    <default>false</default>
-                    <label>Social Media for T and T Industry - EN</label>
-                </value>
-                <value>
-                    <fullName>Fundamentals Journey Pricing - EN</fullName>
-                    <default>false</default>
-                    <label>Fundamentals Journey Pricing - EN</label>
+                    <label>Destination Geography - EN</label>
                 </value>
                 <value>
                     <fullName>Repricing, Exchange and Reissue - EN</fullName>
@@ -659,9 +659,9 @@ Completed: Process is complete</inlineHelpText>
                     <label>Repricing, Exchange and Reissue - EN</label>
                 </value>
                 <value>
-                    <fullName>Travel Agency Fees - EN</fullName>
+                    <fullName>Acc. &amp; Fin. Mgmt for agencies -EN</fullName>
                     <default>false</default>
-                    <label>Travel Agency Fees - EN</label>
+                    <label>Acc. &amp; Fin. Mgmt for agencies -EN</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -680,24 +680,39 @@ Completed: Process is complete</inlineHelpText>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
+                    <fullName>Travel Agency Fees - EN</fullName>
+                    <default>false</default>
+                    <label>Travel Agency Fees - EN</label>
+                </value>
+                <value>
+                    <fullName>Assist Travelers Special Needs - EN</fullName>
+                    <default>false</default>
+                    <label>Assist Travelers Special Needs - EN</label>
+                </value>
+                <value>
+                    <fullName>Fundamentals Journey Pricing - EN</fullName>
+                    <default>false</default>
+                    <label>Fundamentals Journey Pricing - EN</label>
+                </value>
+                <value>
+                    <fullName>Notions essent&apos;l en tarif et billet - FR</fullName>
+                    <default>false</default>
+                    <label>Notions essent&apos;l en tarif et billet - FR</label>
+                </value>
+                <value>
+                    <fullName>Adv. Skills Journey Price&amp;Ticket - EN</fullName>
+                    <default>false</default>
+                    <label>Adv. Skills Journey Price&amp;Ticket - EN</label>
+                </value>
+                <value>
                     <fullName>Geography in Travel Planning - EN</fullName>
                     <default>false</default>
                     <label>Geography in Travel Planning - EN</label>
                 </value>
                 <value>
-                    <fullName>Destination Geography - EN</fullName>
+                    <fullName>Serving the Travel  Customer - EN</fullName>
                     <default>false</default>
-                    <label>Destination Geography - EN</label>
-                </value>
-                <value>
-                    <fullName>Serving the T and T Customer - EN</fullName>
-                    <default>false</default>
-                    <label>Serving the T and T Customer - EN</label>
-                </value>
-                <value>
-                    <fullName>Intro to BSPLink - EN</fullName>
-                    <default>false</default>
-                    <label>Intro to BSPLink - EN</label>
+                    <label>Serving the Travel  Customer - EN</label>
                 </value>
                 <value>
                     <fullName>Le service au client voyageur - FR</fullName>
@@ -710,29 +725,14 @@ Completed: Process is complete</inlineHelpText>
                     <label>Selling Intl Rail Transportation - EN</label>
                 </value>
                 <value>
-                    <fullName>Intro al BSPlink - ES</fullName>
+                    <fullName>Social Media for Travel Industry - EN</fullName>
                     <default>false</default>
-                    <label>Intro al BSPlink - ES</label>
+                    <label>Social Media for Travel Industry - EN</label>
                 </value>
                 <value>
-                    <fullName>Intro al Sistema y Lenguaje BSP - ES</fullName>
+                    <fullName>Destination Geography - EN</fullName>
                     <default>false</default>
-                    <label>Intro al Sistema y Lenguaje BSP - ES</label>
-                </value>
-                <value>
-                    <fullName>Informes y procedimientos de facturacion BSP - ES</fullName>
-                    <default>false</default>
-                    <label>Informes y procedimientos de facturacion BSP - ES</label>
-                </value>
-                <value>
-                    <fullName>Social Media for T and T Industry - EN</fullName>
-                    <default>false</default>
-                    <label>Social Media for T and T Industry - EN</label>
-                </value>
-                <value>
-                    <fullName>Fundamentals Journey Pricing - EN</fullName>
-                    <default>false</default>
-                    <label>Fundamentals Journey Pricing - EN</label>
+                    <label>Destination Geography - EN</label>
                 </value>
                 <value>
                     <fullName>Repricing, Exchange and Reissue - EN</fullName>
@@ -740,9 +740,9 @@ Completed: Process is complete</inlineHelpText>
                     <label>Repricing, Exchange and Reissue - EN</label>
                 </value>
                 <value>
-                    <fullName>Travel Agency Fees - EN</fullName>
+                    <fullName>Acc. &amp; Fin. Mgmt for agencies -EN</fullName>
                     <default>false</default>
-                    <label>Travel Agency Fees - EN</label>
+                    <label>Acc. &amp; Fin. Mgmt for agencies -EN</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1325,7 +1325,6 @@ Completed: Process is complete</inlineHelpText>
     <label>ID Card Application</label>
     <listViews>
         <fullName>Completed_Paid_ID_Card_Applications</fullName>
-        <booleanFilter>1 OR 2 OR 3</booleanFilter>
         <columns>NAME</columns>
         <columns>Payment_Amount__c</columns>
         <columns>First_Name__c</columns>
@@ -1336,19 +1335,6 @@ Completed: Process is complete</inlineHelpText>
         <columns>Photo__c</columns>
         <columns>UIR__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>VER_Number__c</field>
-            <operation>equals</operation>
-            <value>5990042088</value>
-        </filters>
-        <filters>
-            <field>Payment_Type__c</field>
-            <operation>equals</operation>
-        </filters>
-        <filters>
-            <field>Payment_Type__c</field>
-            <operation>equals</operation>
-        </filters>
         <label>Completed/Paid ID Card Applications</label>
         <language>en_US</language>
         <sharedTo>
@@ -1379,6 +1365,7 @@ Completed: Process is complete</inlineHelpText>
         <fullName>For_specific_VER</fullName>
         <columns>CREATED_DATE</columns>
         <columns>NAME</columns>
+        <columns>VER_Number__c</columns>
         <columns>RECORDTYPE</columns>
         <columns>Application_Status__c</columns>
         <columns>IATA_Code__c</columns>
@@ -1389,7 +1376,7 @@ Completed: Process is complete</inlineHelpText>
         <filters>
             <field>VER_Number__c</field>
             <operation>equals</operation>
-            <value>5484010057</value>
+            <value>Z5990063819</value>
         </filters>
         <label>For specific VER</label>
         <language>en_US</language>
@@ -1431,9 +1418,9 @@ Completed: Process is complete</inlineHelpText>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>VER_Number__c</field>
+            <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>5990038761</value>
+            <value>TODAY</value>
         </filters>
         <label>Incomplete/Unpaid ID Card Applications</label>
         <language>en_US</language>

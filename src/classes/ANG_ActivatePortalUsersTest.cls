@@ -3,13 +3,14 @@ private class ANG_ActivatePortalUsersTest {
 	
     @testSetup static void setup()
     {
-        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Westeros', ISO_Code__c = 'TS');       
+        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Westeros', ISO_Code__c = 'TS', ANG_Enable_NewGen__c = true);       
         insert isoc;
 
         IATA_ISO_State__c isos = new IATA_ISO_State__c(Name= 'Winterfell', ISO_Code__c = 'TS', IATA_Iso_Country__c = isoc.Id);
    		insert isos;
 
-   		Account acc1 = new Account(Name = 'Stardust Travels', Sector__c = 'Travel Agent',  Category__c = 'IATA Passenger Sales Agent', IATA_ISO_Country__c = isoc.id, Iso_State__c = isos.id, Location_Type__c = 'HE', Location_Class__c = 'P', Reason_for_creation__c = 'Account is missing');
+        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+   		Account acc1 = new Account(RecordTypeId = agencyRT, Name = 'Stardust Travels', Sector__c = 'Travel Agent',  Category__c = 'IATA Passenger Sales Agent', IATA_ISO_Country__c = isoc.id, Iso_State__c = isos.id, Location_Type__c = 'HE', Location_Class__c = 'P', Reason_for_creation__c = 'Account is missing');
         insert acc1;
 
         Contact c1 = new Contact(AccountId = acc1.id, FirstName='Name', Lastname='LastName', Email = 'unique@email.com', Community__c = 'ISS Customer Portal', Phone = '3424322343');
@@ -83,5 +84,35 @@ private class ANG_ActivatePortalUsersTest {
 		system.assertEquals(u.ContactId, c.Id);
 
 	}
+
+    @isTest static void updatePortalUser() {
+        Account acc = ISSP_ObjectFactory.createNewAccount();  
+        insert acc; 
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = acc.Id;
+        insert contact;
+        
+        User u = new User(
+            Alias = 'dsfsdfds', 
+            Email = contact.email, 
+            Emailencodingkey = 'UTF-8', 
+            Firstname = contact.firstName, 
+            Lastname = contact.lastname, 
+            Languagelocalekey = 'en_US', 
+            Localesidkey = 'en_US', 
+            ContactId = contact.Id,
+            Timezonesidkey = 'Asia/Dubai',
+            Username = contact.email+'dfgdf',
+            PortalRole = 'Manager',
+            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+            ProfileId = ISSP_Constant.TEST_User_ProfileID,
+            IsActive = true
+        );
+        insert u;
+
+        Test.startTest();
+        System.enqueueJob(new ANG_ActivatePortalUsersBatch.UpdateUserStatus(contact.Id, contact.Email, null));        
+        Test.stopTest();
+    }
 
 }

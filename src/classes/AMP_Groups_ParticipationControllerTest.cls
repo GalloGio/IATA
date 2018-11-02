@@ -13,6 +13,11 @@ private class AMP_Groups_ParticipationControllerTest {
 			TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
 			License_Cost_Center__c = 'ISF005CH01'
 		);
+		insert testUser;
+
+		PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Reg_Div_Group_Owners'];
+		PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = testUser.Id);
+		insert psa;
 
 		System.runAs(testUser) {
 

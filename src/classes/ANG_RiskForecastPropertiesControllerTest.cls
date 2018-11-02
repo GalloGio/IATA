@@ -3,10 +3,10 @@ private class ANG_RiskForecastPropertiesControllerTest {
     
     @testSetup static void testSetup(){
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
-        Account a1 = new Account(Remittance_frequency__c = 'Every 5 days' , ANG_Accreditation_Model__c = 'Cash', Financial_Review_Result__c = 'Satisfactory - No Action' ,ANG_HE_CashCondition__c = false , ANG_HE_RiskStatus__c = 'B' , IATA_ISO_Country__c = ctry.id, RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY, IATACode__c='1234561',Location_Type__c='HE',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = 'Approved');
+        Account a1 = new Account(Remittance_frequency__c = 'S' , ANG_Accreditation_Model__c = 'Cash', Financial_Review_Result__c = 'Satisfactory - No Action' ,ANG_HE_CashCondition__c = false , ANG_HE_RiskStatus__c = 'B' , IATA_ISO_Country__c = ctry.id, RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY, IATACode__c='1234561',Location_Type__c='HE',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = 'Approved');
         insert a1;
         
         Case sidraLiteCase = new Case();
@@ -95,11 +95,9 @@ private class ANG_RiskForecastPropertiesControllerTest {
 
             pgController.closePopup();
 
-            pgController.redirectPopup();
-
             pgController.getcanExecuteForecast();
 
-            pgController.showPopup();
+            pgController.forecast();
 
             System.assertEquals('C',pgController.newRiskStatus);
             System.assertEquals(true,pgController.newCashCondition);

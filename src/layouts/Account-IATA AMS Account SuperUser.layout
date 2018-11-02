@@ -121,6 +121,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Is_DGR_Compliant__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ANG_Accreditation_Model__c</field>
             </layoutItems>
             <layoutItems>
@@ -142,6 +146,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Airline_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -355,6 +363,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Covered_Ownership__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Original_Approval_DAte__c</field>
             </layoutItems>
             <layoutItems>
@@ -457,7 +469,7 @@
                 <field>Guaranteed_amount__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Remittance_frequency__c</field>
             </layoutItems>
             <layoutItems>
@@ -489,6 +501,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Fin_statements_submission_deadline__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_FA_Opt_out__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -600,6 +616,22 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Risk Event History</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>220</height>
+                <page>ANG_RiskEventHistory</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Web Links</label>
@@ -624,6 +656,22 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Owners</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>300</height>
+                <page>AMS_AccountOwners</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <miniLayout>
         <fields>Name</fields>
         <fields>ParentId</fields>
@@ -633,6 +681,10 @@
         <fields>Phone</fields>
         <fields>Location_Type__c</fields>
         <fields>Status__c</fields>
+        <fields>Reason__c</fields>
+        <fields>Sector__c</fields>
+        <fields>Category__c</fields>
+        <fields>Location_Class__c</fields>
     </miniLayout>
     <relatedLists>
         <relatedList>RelatedAccountSalesTeam</relatedList>
@@ -645,6 +697,7 @@
         <fields>Type__c</fields>
         <fields>LAST_UPDATE</fields>
         <fields>CREATED_DATE</fields>
+        <fields>Active__c</fields>
         <relatedList>Location__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
@@ -661,21 +714,6 @@
         <fields>User_Portal_Status__c</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
         <relatedList>RelatedContactList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Active__c</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Unified_Owner_Name__c</fields>
-        <fields>Owner_Name__c</fields>
-        <fields>Owner_Account__c</fields>
-        <fields>Contact__c</fields>
-        <fields>Percentage__c</fields>
-        <fields>Termination_Date__c</fields>
-        <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -739,7 +777,8 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>ANG_RHC_Amount_Simulation__c</fields>
+        <fields>ANG_RHC_Amount__c</fields>
+        <fields>ANG_ConsumedRHC__c</fields>
         <fields>ANG_ConsumedRHC_Percent__c</fields>
         <fields>ANG_ConsumedRHC_Last_Update__c</fields>
         <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
@@ -854,10 +893,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>

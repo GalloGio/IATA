@@ -1,0 +1,16 @@
+.THIS li.form-element__help {
+	padding-top: 0px; 
+}
+
+.THIS .intl-tel-input{
+	display: block;
+}
+
+.THIS .text-warning{
+	color: orange;
+}
+
+.THIS .button-bordered{
+	border: 1px solid rgb(217, 219, 221);
+	padding: 3px;
+}

@@ -8,9 +8,7 @@
     <customButtons>New_Manage_Fees_Checklist</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <emailDefault>false</emailDefault>
-    <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
-    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -57,6 +55,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>New_Interaction_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Region__c</field>
             </layoutItems>
             <layoutItems>
@@ -74,6 +76,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reason1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Type</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Classification_SIS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Defect_Issue__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -214,6 +228,9 @@
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
+            <layoutItems>
+                <customLink>Conga_Merge_Letters</customLink>
+            </layoutItems>
         </layoutColumns>
         <style>CustomLinks</style>
     </layoutSections>
@@ -235,14 +252,6 @@
                 <behavior>Edit</behavior>
                 <field>Acknowledgment_sent__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>New_docs_Received__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Process_Start_Date__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -252,14 +261,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Additional_requirements_form_received__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Missing_Documents_A_B_requested__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Missing_Documents_A_B_received__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -272,7 +273,27 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Missing_Documents_A_B_received__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Missing_Documents_A_B_requested__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Eligibility_Documents_Checklist_approved__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Proof_of_payment_requested__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Proof_of_payment_received__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Process_Start_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -319,11 +340,19 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>DPC_Date_Time_Completed__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Airline_User_Created__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>WPI_Updated__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>R_S_Confirmation__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -354,10 +383,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>R_S_Confirmation__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>CS_informed__c</field>
             </layoutItems>
         </layoutColumns>
@@ -380,6 +405,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Process_Age__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BusinessHoursId</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

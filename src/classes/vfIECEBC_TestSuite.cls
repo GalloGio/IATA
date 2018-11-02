@@ -158,10 +158,10 @@ public class vfIECEBC_TestSuite {
     public static List<ID_CARD__c> createIDCARD(id ProductAccountViewId) {
        
         List<ID_CARD__c> gpavs = new List<ID_CARD__c>{
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA1', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092'),
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA2', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092'),
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA3', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092'),
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA4', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092')
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA1', Agency_Name__c='IATA',Card_Status__c='Sent ID Card',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA2', Agency_Name__c='IATA',Card_Status__c='Sent ID Card',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA3', Agency_Name__c='IATA',Card_Status__c='Sent ID Card',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA4', Agency_Name__c='IATA',Card_Status__c='Sent ID Card',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='11111092')
          };
         insert gpavs;
         return gpavs;
@@ -830,6 +830,18 @@ public class vfIECEBC_TestSuite {
             Test.stopTest();
             
         }
+    }
+    /*
+     * Test the Fix ID CARD batch. relation between ID CARD and GDP Product Account View
+     */
+    public static void testFixIDCard() {
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
+        List<ID_CARD__c> gidcard = createIDCARD(null);
+        
+        Test.startTest();
+        SchdlEBCFixIdCardAgencyLink.prepare();
+        SchdlEBCFixIdCardAgencyLink.Schedule(null);
+        Test.stopTest();
     }
     
     public static void testCampaignPayWithCreditTrusted() {

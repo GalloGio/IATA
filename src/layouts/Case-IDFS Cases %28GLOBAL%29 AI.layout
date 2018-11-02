@@ -24,7 +24,7 @@
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
                     <label>AI Chat</label>
-                    <page>dglc__LiveChat</page>
+                    <page>dglc__DG_LiveChat</page>
                 </sidebarComponents>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
@@ -214,7 +214,7 @@
                 <field>Case_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Type</field>
             </layoutItems>
             <layoutItems>

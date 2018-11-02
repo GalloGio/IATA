@@ -81,6 +81,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>PermissionSet_Provisioning__c</fullName>
         <externalId>false</externalId>
         <label>PermissionSet Provisioning</label>
@@ -123,5 +134,21 @@
         <type>Checkbox</type>
     </fields>
     <label>Connected App Roles</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Connected_App_Provisioning_Name__c</columns>
+        <columns>PermissionSet_Provisioning__c</columns>
+        <columns>Connected_App__c</columns>
+        <columns>Permission_set_SSO__c</columns>
+        <columns>Role__c</columns>
+        <columns>Min_Users_With_Role__c</columns>
+        <columns>Default_User_Role__c</columns>
+        <columns>Manage_User_Access__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

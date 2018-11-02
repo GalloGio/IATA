@@ -1,0 +1,199 @@
+<apex:page controller="ANG_AnualRevalCaseCreationController" showHeader="true">
+	
+	<style>
+		.hidden {
+			display: none;
+		}
+	</style>
+<apex:sectionHeader title="Annual Revalidation Cases Page" />
+
+	<apex:form>
+
+		<apex:pageBlock mode="edit" id="pageBlock">
+
+			<apex:pageBlockSection columns="1" title="Please select Region and Mode" >
+
+				<apex:pageblockSectionItem>
+
+				    <apex:outputLabel value="Region Name"/>
+
+				    <apex:outputPanel styleClass="requiredInput" layout="block">
+
+				        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+				        
+				        <apex:selectList size="1" value="{!region}">
+
+				            <apex:selectoptions value="{!regionobj}"/>
+							<apex:actionSupport event="onchange" reRender="parameter1,parameter2,parameter3,parameter4,parameter5,Overview,buttons"/>
+
+				        </apex:selectList>
+
+				    </apex:outputPanel>
+
+				</apex:pageblockSectionItem>
+				<apex:pageblockSectionItem > </apex:pageblockSectionItem> 
+				<apex:pageblockSectionItem>
+
+				    <apex:outputLabel value="Mode"/>
+
+				    <apex:outputPanel styleClass="requiredInput" layout="block">
+
+				        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+				        
+				        <apex:selectList size="1" value="{!mode}">
+
+				            <apex:selectoptions value="{!modeObj}"/>
+							<apex:actionSupport event="onchange" reRender="parameter1,parameter2,parameter3,parameter4,parameter5,Overview,buttons"/>
+
+				        </apex:selectList>
+
+				    </apex:outputPanel>
+
+				</apex:pageblockSectionItem>
+
+			
+		</apex:pageBlockSection>
+
+
+
+			<apex:pageBlockSection id="parameter1" >
+
+                    <apex:pageblockSectionItem rendered="{!mode == 'Financial year end' &&  !(region == 'Select Region')}">
+
+                        <apex:outputLabel value="Financial year end" />
+                        
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+
+                            <apex:selectList size="1" value="{!year}" id="year">
+
+                                <apex:selectoptions value="{!yearobj}"/>
+								<apex:actionSupport event="onchange" reRender="parameter4,parameter5,Overview,buttons"/>
+
+                            </apex:selectList>
+
+                        </apex:outputPanel>
+
+                    </apex:pageblockSectionItem>
+
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection id="parameter2" >
+
+                    <apex:pageblockSectionItem rendered="{!mode == 'Country' &&  !(region == 'Select Region')}">
+
+                        <apex:outputLabel value="Country" />
+                        
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+
+                            <apex:selectList size="1" value="{!country}" id="country">
+
+                                <apex:selectoptions value="{!countryObj}"/>
+								<apex:actionSupport event="onchange" reRender="parameter4,parameter5,Overview,buttons"/>
+
+                            </apex:selectList>
+
+                        </apex:outputPanel>
+
+                    </apex:pageblockSectionItem>
+
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection id="parameter3" >
+
+               <apex:pageBlockSectionItem rendered="{!mode == 'IATA Code' &&  !(region == 'Select Region')}">
+
+	                <apex:outputLabel>IATA Code</apex:outputLabel>
+                    <apex:inputText label="IATA Code" value="{!account.IATACode__c}"/>
+
+ 					<!-- <apex:actionSupport event="onchange" reRender="parameter4"/> -->
+
+                </apex:pageBlockSectionItem> 
+
+			</apex:pageBlockSection>
+
+
+
+			<apex:pageBlockSection id="parameter4">
+
+				<div align="center">
+
+					<apex:pageBlockSectionItem >
+	    				<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableButton}" reRender="Overview, parameter5,buttons,actionButton2"/>
+					</apex:pageBlockSectionItem>
+
+
+
+	           	</div>
+			
+			</apex:pageBlockSection>
+
+</apex:pageBlock>
+
+<apex:pageBlock id="buttons">
+
+
+	<apex:pageblocktable value="{!accountsToCreate}" var="a" id="pbTable">
+		<apex:column headerValue="Oscar Revalidation Case" rendered="{!NOT(accountsToCreate.size == 0) && (a.OSCARs__r == null || a.OSCARs__r.size == 0)}"/>
+		<apex:column headerValue="Oscar Revalidation Case" rendered="{!a.OSCARs__r != null && a.OSCARs__r.size > 0}"><apex:outputLink value="/{!caseOscars[a.OSCARs__r[0].Id]}">{!a.OSCARs__r[0].Name}</apex:outputLink></apex:column>
+		<apex:column value="{!a.IATACode__c}"/>
+		<apex:column value="{!a.Name}"/>
+		<apex:column value="{!a.Location_Class__c}"/>
+		<apex:column value="{!a.Location_Type__c}"/>
+		<apex:column value="{!a.Status__c}"/>
+		<apex:column value="{!a.IATA_ISO_Country__r.Name}"/>
+		<apex:column value="{!a.IATA_ISO_Country__r.Region__c}"/>
+		<apex:column value="{!a.Financial_Year_End__c}"/>
+	</apex:pageblocktable >
+
+	<apex:outputLabel value="Total Records Found: {!IF(Con == null , 0 ,Con.resultSize)}" rendered="{!Con != null}"/>
+	
+	<div align="Center"> 
+                  
+		<apex:commandButton value="First Page" action="{!First}" disabled="{!Con == null}" reRender="buttons" rendered="{!Con != null}"/>
+		<apex:commandButton value="Previous Page" action="{!Previous}" disabled="{!Con == null || NOT(Con.HasPrevious)}" reRender="buttons" rendered="{!Con != null}"/>
+		<apex:commandButton value="Next Page" action="{!Next}" disabled="{!Con == null || NOT(Con.HasNext)}" reRender="buttons" rendered="{!Con != null}"/>
+		<apex:commandButton value="Last Page" action="{!Last}" disabled="{!Con == null}" reRender="buttons" rendered="{!Con != null}"/>
+     
+	</div>
+ 	Display records per page 
+
+	<apex:selectList value="{!size}" multiselect="false" size="1">
+		<apex:selectOptions value="{!paginationSizeOptions}"/>
+	</apex:selectList>
+
+
+        </apex:pageBlock>
+
+        <apex:pageBlock>
+
+			<div align="center">
+
+    			
+    				<apex:commandButton value="Launch Campaign" action="{!launchCampaign}" id="actionButton2" disabled="{!Con == null || shouldDisableButton || batchStatusBool}"/>
+            	
+				<apex:outputText style="color: red" value="Accounts with Revalidation Oscars will not be proccessed." rendered="{!Con != null}" />
+           	</div>
+
+        </apex:pageBlock>
+
+		<apex:pageBlock mode="edit" id="StatusPageBlock">
+
+            <apex:pageBlockSection columns="1" title="Process Status" rendered="{!batchStatusBool}">
+
+                <apex:actionStatus id="act" startText="Checking..." />
+
+                <apex:outputText styleClass="processText" value="Anual Revalidation Process Status: {!batchJob.Status}"/>
+
+                <apex:outputText styleClass="processText" value="Anual Revalidation Cases Proccessed: {!batchJob.JobItemsProcessed}"/>
+
+                <apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
+
+                <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="StatusPageBlock" status="act"/>
+            
+            </apex:pageBlockSection>
+
+		</apex:pageBlock>
+
+	</apex:form>
+
+</apex:page>

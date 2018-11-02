@@ -31,5 +31,17 @@
         <type>Checkbox</type>
     </fields>
     <label>ISSP LoginSurvey</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>isActive__c</columns>
+        <columns>PopupDelayTime__c</columns>
+        <columns>SETUP_TYPE</columns>
+        <columns>Survey_Link__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

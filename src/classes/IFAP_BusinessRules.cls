@@ -24,6 +24,8 @@ public with sharing class IFAP_BusinessRules {
     private static final string REOPENED = 'Re-open/ed';
     private static final string SCF = 'Sanity Check Failure';
     private static final string SUBMITTED = 'Submitted';
+    private static final string CLOSEDOPTOUT = 'Closed Opt-out';
+
 
     /**
      * Validates the country of a Case's Account
@@ -190,7 +192,7 @@ public with sharing class IFAP_BusinessRules {
                 if ( status == AGENT_NOTIFIED_EMAIL){
                     aCase.Mass_Case_Creation_Email_Send__c = true;
                     aCase.FA_Letter_Sent__c = true;
-	                aCase.Status = status;
+                    aCase.Status = status;
                 }
                 else if ( status == AGENT_NOTIFIED_TRACKED_EMAIL){
                     aCase.Status = AGENT_TO_BE_NOTIFIED;
@@ -327,6 +329,9 @@ public with sharing class IFAP_BusinessRules {
                     return true;
 
             }
+
+            if (caseStatus == CLOSEDOPTOUT)
+                    return true;
 
             if (caseStatus == AGENT_NOTIFIED_EMAIL)
                 if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_MAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED)

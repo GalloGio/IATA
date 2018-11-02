@@ -1769,6 +1769,7 @@
         <columns>Geographic_Region__c</columns>
         <columns>SAP_Contract__c</columns>
         <columns>Service_Active__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

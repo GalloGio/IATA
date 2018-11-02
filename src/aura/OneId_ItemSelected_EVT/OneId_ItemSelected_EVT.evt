@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event sent when one account is selected on the AccountSearch" >
+	<aura:attribute name="state" type="String"/>
+	<aura:attribute name="account" type="Account"/>
+</aura:event>

@@ -3,6 +3,17 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>suwal@iata.org</email>
     <name>Cases - Complaints AME</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAfricaMEallusers</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <users>
+            <user>shalbakf@iata.org</user>
+            <user>arafatl@iata.org</user>
+            <user>nofalmtodeactivate@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

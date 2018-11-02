@@ -119,10 +119,20 @@
         <label>Send To Zuora Listener</label>
     </fieldSets>
     <fields>
+        <fullName>ANG_AE_Annual_Fees__c</fullName>
+        <externalId>false</externalId>
+        <label>AE Annual Fees</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_AE_Application_Registration_Fees__c</fullName>
         <description>Stores fees for application &amp; registration for AEs</description>
         <externalId>false</externalId>
-        <label>Application &amp; Registration Fees</label>
+        <label>Application &amp; Reg. Fees</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -133,7 +143,7 @@
         <fullName>ANG_AE_Fees_Additional_Locations__c</fullName>
         <description>N/A. Placeholder</description>
         <externalId>false</externalId>
-        <label>Any Additional Locations</label>
+        <label>Additional locations/codes beyond 25</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -144,7 +154,7 @@
         <fullName>ANG_AE_Fees_First_10_locations__c</fullName>
         <description>AE: Annual fees for first 20 locations</description>
         <externalId>false</externalId>
-        <label>First 10 locations</label>
+        <label>First 10 locations/codes</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -155,7 +165,7 @@
         <fullName>ANG_AE_Fees_Next_15_Locations__c</fullName>
         <description>AE: Annual fees for Next 15 locations</description>
         <externalId>false</externalId>
-        <label>Next 15 locations</label>
+        <label>11-25 locations/codes</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -199,7 +209,7 @@
         <fullName>ANG_HE_AnnualFees_Large_Agents__c</fullName>
         <description>HE: Annual fees for large agents</description>
         <externalId>false</externalId>
-        <label>Large agents</label>
+        <label>Large Agents</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -210,7 +220,7 @@
         <fullName>ANG_HE_AnnualFees_Medium_Agents__c</fullName>
         <description>HE: Annual fees for medium agents</description>
         <externalId>false</externalId>
-        <label>Medium agents</label>
+        <label>Medium Agents</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -229,10 +239,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_HE_Annual_Fees__c</fullName>
+        <externalId>false</externalId>
+        <label>HE Annual Fees</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_HE_Application_Registration_Fees__c</fullName>
         <description>Stores fees for application &amp; registration for new HE</description>
         <externalId>false</externalId>
-        <label>Application &amp; Registration Fees</label>
+        <label>Application &amp; Reg. Fees</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -2129,9 +2149,9 @@ SIS Charge Code Type.</description>
                     <label>20 Year Passenger Forecast</label>
                 </value>
                 <value>
-                    <fullName>Aircraft Reliability</fullName>
+                    <fullName>Aircraft Reliability Guidelines</fullName>
                     <default>false</default>
-                    <label>Aircraft Reliability</label>
+                    <label>Aircraft Reliability Guidelines</label>
                 </value>
                 <value>
                     <fullName>Airline Coding Directory</fullName>
@@ -2147,6 +2167,11 @@ SIS Charge Code Type.</description>
                     <fullName>Airline Operational Cost Management Guidelines</fullName>
                     <default>false</default>
                     <label>Airline Operational Cost Management Guidelines</label>
+                </value>
+                <value>
+                    <fullName>Airlines Magazine Subscription</fullName>
+                    <default>false</default>
+                    <label>Airlines. Magazine Subscription</label>
                 </value>
                 <value>
                     <fullName>Airport Development Reference Manual</fullName>
@@ -2182,6 +2207,11 @@ SIS Charge Code Type.</description>
                     <fullName>Baggage Reference Manual</fullName>
                     <default>false</default>
                     <label>Baggage Reference Manual</label>
+                </value>
+                <value>
+                    <fullName>Cabin Safety Guide</fullName>
+                    <default>false</default>
+                    <label>Cabin Safety Guide</label>
                 </value>
                 <value>
                     <fullName>Cargo Agency Conference Resolution Manual</fullName>
@@ -2304,6 +2334,11 @@ SIS Charge Code Type.</description>
                     <label>Guide to Facilitation</label>
                 </value>
                 <value>
+                    <fullName>IATA and Aviation History</fullName>
+                    <default>false</default>
+                    <label>IATA and Aviation History</label>
+                </value>
+                <value>
                     <fullName>IATA Cargo Handling Manual</fullName>
                     <default>false</default>
                     <label>IATA Cargo Handling Manual</label>
@@ -2332,6 +2367,11 @@ SIS Charge Code Type.</description>
                     <fullName>IATA Rates of Exchange</fullName>
                     <default>false</default>
                     <label>IATA Rates of Exchange</label>
+                </value>
+                <value>
+                    <fullName>Infectious Substances Shipping Guidelines</fullName>
+                    <default>false</default>
+                    <label>Infectious Substances Shipping Guidelines</label>
                 </value>
                 <value>
                     <fullName>Integrated Risk Management Guidance</fullName>
@@ -2382,6 +2422,11 @@ SIS Charge Code Type.</description>
                     <fullName>Marshalling Signals</fullName>
                     <default>false</default>
                     <label>Marshalling Signals</label>
+                </value>
+                <value>
+                    <fullName>Merchandise</fullName>
+                    <default>false</default>
+                    <label>Merchandise</label>
                 </value>
                 <value>
                     <fullName>Mileage</fullName>
@@ -2459,9 +2504,9 @@ SIS Charge Code Type.</description>
                     <label>Publications Online</label>
                 </value>
                 <value>
-                    <fullName>Reservations Services Manual</fullName>
+                    <fullName>Reservations Handbook</fullName>
                     <default>false</default>
-                    <label>Reservations Services Manual</label>
+                    <label>Reservations Handbook</label>
                 </value>
                 <value>
                     <fullName>Revenue Accounting Manual</fullName>
@@ -3113,6 +3158,16 @@ SIS Charge Code Type.</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ImageFile__c</fullName>
+        <description>Stores the image file inside</description>
+        <externalId>false</externalId>
+        <label>ImageFile</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
         <fullName>Image__c</fullName>
         <externalId>false</externalId>
         <label>Image</label>
@@ -3176,6 +3231,11 @@ SIS Charge Code Type.</description>
                     <fullName>Excel Spreadsheet</fullName>
                     <default>false</default>
                     <label>Excel Spreadsheet</label>
+                </value>
+                <value>
+                    <fullName>Event</fullName>
+                    <default>false</default>
+                    <label>Event</label>
                 </value>
                 <value>
                     <fullName>Floating License</fullName>
@@ -3289,9 +3349,19 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <label>In stock</label>
                 </value>
                 <value>
+                    <fullName>Available Now</fullName>
+                    <default>false</default>
+                    <label>Available Now</label>
+                </value>
+                <value>
                     <fullName>Out of stock</fullName>
                     <default>false</default>
                     <label>Out of stock</label>
+                </value>
+                <value>
+                    <fullName>Coming Soon</fullName>
+                    <default>false</default>
+                    <label>Coming Soon</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -3688,6 +3758,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <label>Excel Spreadsheet</label>
                 </value>
                 <value>
+                    <fullName>Event</fullName>
+                    <default>false</default>
+                    <label>Event</label>
+                </value>
+                <value>
                     <fullName>Forms</fullName>
                     <default>false</default>
                     <label>Forms</label>
@@ -3857,6 +3932,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <default>false</default>
                     <label>Book &amp; Mobile</label>
                 </value>
+                <value>
+                    <fullName>Merchandise</fullName>
+                    <default>false</default>
+                    <label>Merchandise</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -3880,6 +3960,11 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <fullName>data-and-statistics</fullName>
                     <default>false</default>
                     <label>data-and-statistics</label>
+                </value>
+                <value>
+                    <fullName>IATA Branded Merchandise</fullName>
+                    <default>false</default>
+                    <label>IATA Branded Merchandise</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -3913,6 +3998,14 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>NumberOfQuantityInstallments</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>NumberOfRevenueInstallments</fullName>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>Number_Of_Editions_per_Year__c</fullName>
@@ -4160,6 +4253,11 @@ The product will only appear on the Online Store when the date entered in this f
                     <fullName>Jill Sladen-Pilon</fullName>
                     <default>false</default>
                     <label>Jill Sladen-Pilon</label>
+                </value>
+                <value>
+                    <fullName>Jonathan Paul Jasper</fullName>
+                    <default>false</default>
+                    <label>Jonathan Paul Jasper</label>
                 </value>
                 <value>
                     <fullName>Karen Stephenson</fullName>
@@ -4587,6 +4685,14 @@ The product will only appear on the Online Store when the date entered in this f
         </valueSet>
     </fields>
     <fields>
+        <fullName>QuantityInstallmentPeriod</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>QuantityScheduleType</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>QuantityUnitOfMeasure</fullName>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -4806,6 +4912,14 @@ The product will only appear on the Online Store when the date entered in this f
             </valueSetDefinition>
         </valueSet>
         <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RevenueInstallmentPeriod</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>RevenueScheduleType</fullName>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>SAP_Contract_OrderReason__c</fullName>
@@ -5321,35 +5435,10 @@ The product will only appear on the Online Store when the date entered in this f
         </filters>
         <filters>
             <field>PRODUCT2.NAME</field>
-            <operation>equals</operation>
-            <value>CheckACode Professional for Members</value>
+            <operation>startsWith</operation>
+            <value>CheckACode Professional</value>
         </filters>
-        <label>GDP/CAC PRO for Members</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>GDP_CAC_PRO_for_Non_Members</fullName>
-        <columns>PRODUCT2.NAME</columns>
-        <columns>IEC_Product_Information__c</columns>
-        <columns>IEC_Parent_Product__c</columns>
-        <columns>IEC_Product_Rate_Plan_Information__c</columns>
-        <columns>SAP_Material_Number__c</columns>
-        <columns>Product_Manager_lookup__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>PRODUCT2.FAMILY</field>
-            <operation>equals</operation>
-            <value>GDP</value>
-        </filters>
-        <filters>
-            <field>PRODUCT2.NAME</field>
-            <operation>equals</operation>
-            <value>CheckACode Professional for Non-Members</value>
-        </filters>
-        <label>GDP/CAC PRO for Non-Members</label>
+        <label>GDP/CAC PRO</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -6110,6 +6199,32 @@ The product will only appear on the Online Store when the date entered in this f
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>MITA_Daily_Master_Files</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>contains</operation>
+            <value>MITA</value>
+        </filters>
+        <label>MITA Daily Master Files</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>RCRM_Products</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>PRODUCT2.DESCRIPTION</columns>
@@ -6126,6 +6241,32 @@ The product will only appear on the Online Store when the date entered in this f
         </filters>
         <label>RCRM Products</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_GDP_Search</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>Formula_Zuora_Id__c</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Sell_through_eCommerce__c</columns>
+        <columns>IEC_Cart_Option__c</columns>
+        <columns>Display_to_ECommerce__c</columns>
+        <columns>Effective_To__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <columns>IEC_Override_Profit_Center__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>contains</operation>
+            <value>AgentExperience</value>
+        </filters>
+        <label>ZZ - GDP Search</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>samson</fullName>
@@ -7158,6 +7299,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Family</picklist>
             <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ATC%2FATS Licence Fee</fullName>
                 <default>false</default>
             </values>
@@ -7250,6 +7395,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fees</fullName>
                 <default>false</default>
             </values>
@@ -7274,6 +7423,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IFG %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Interest</fullName>
                 <default>false</default>
             </values>
@@ -7283,6 +7436,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Lighting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER %28MER Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7350,6 +7507,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>SFO %28SFO Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Security</fullName>
                 <default>false</default>
             </values>
@@ -7393,10 +7554,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <fullName>Training%3A Self Study</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Weblink</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>IATA_ORG_Group__c</picklist>
@@ -7409,11 +7566,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aircraft Reliability Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Industry Freight Forecast</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7438,6 +7603,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin Safety Guide</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7653,7 +7822,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8057,6 +8226,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -8123,6 +8296,14 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
+            <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>In stock</fullName>
                 <default>false</default>
@@ -8405,6 +8586,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -8434,6 +8619,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8611,6 +8800,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10363,10 +10556,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <fullName>Training%3A Self Study</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Weblink</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>IATA_ORG_Group__c</picklist>
@@ -10379,11 +10568,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aircraft Reliability Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Industry Freight Forecast</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10408,6 +10605,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin Safety Guide</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10555,6 +10756,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Merchandise</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Mileage</fullName>
                 <default>false</default>
             </values>
@@ -10611,7 +10816,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11015,6 +11220,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -11081,6 +11290,14 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
+            <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>In stock</fullName>
                 <default>false</default>
@@ -11359,6 +11576,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -11388,6 +11609,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11565,6 +11790,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13129,6 +13358,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Family</picklist>
             <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ATC%2FATS Licence Fee</fullName>
                 <default>false</default>
             </values>
@@ -13221,6 +13454,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fees</fullName>
                 <default>false</default>
             </values>
@@ -13245,6 +13482,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IFG %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Interest</fullName>
                 <default>false</default>
             </values>
@@ -13254,6 +13495,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Lighting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER %28MER Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13289,6 +13534,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PBI %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Parking</fullName>
                 <default>false</default>
             </values>
@@ -13318,6 +13567,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Runway Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO %28SFO Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13364,10 +13617,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <fullName>Training%3A Self Study</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Weblink</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>IATA_ORG_Group__c</picklist>
@@ -13380,7 +13629,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Aircraft Reliability</fullName>
+                <fullName>Aircraft Reliability Guidelines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13393,6 +13642,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13417,6 +13670,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin Safety Guide</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13536,6 +13793,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA and Aviation History</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infectious Substances Shipping Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Integrated Risk Management Guidance</fullName>
                 <default>false</default>
             </values>
@@ -13573,6 +13838,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13636,7 +13905,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14048,6 +14317,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -14114,6 +14387,14 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
+            <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>In stock</fullName>
                 <default>false</default>
@@ -14404,6 +14685,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -14437,6 +14722,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14614,6 +14903,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16135,6 +16428,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Family</picklist>
             <values>
+                <fullName>APCS Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ATC%2FATS Licence Fee</fullName>
                 <default>false</default>
             </values>
@@ -16227,11 +16524,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fees</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Financial Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAP</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16251,6 +16556,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IFG %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Interest</fullName>
                 <default>false</default>
             </values>
@@ -16260,6 +16569,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Lighting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER %28MER Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16295,6 +16608,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PBI %28FDS Division%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Parking</fullName>
                 <default>false</default>
             </values>
@@ -16324,6 +16641,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Runway Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO %28SFO Division%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16370,10 +16691,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <fullName>Training%3A Self Study</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Weblink</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>IATA_ORG_Group__c</picklist>
@@ -16386,11 +16703,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aircraft Reliability Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Industry Freight Forecast</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16415,6 +16740,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin Safety Guide</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16618,7 +16947,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reservations Services Manual</fullName>
+                <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17022,6 +17351,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -17088,6 +17421,14 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Inventory_Status__c</picklist>
+            <values>
+                <fullName>Available Now</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Coming Soon</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>In stock</fullName>
                 <default>false</default>
@@ -17366,6 +17707,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Excel Spreadsheet</fullName>
                 <default>false</default>
             </values>
@@ -17395,6 +17740,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Memory Stick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Merchandise</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17572,6 +17921,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Jill Sladen-Pilon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jonathan Paul Jasper</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -18104,6 +18457,7 @@ The product will only appear on the Online Store when the date entered in this f
         <searchResultsAdditionalFields>Line_of_Business__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>SAP_Material_Number__c</searchResultsAdditionalFields>
     </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Charge_Code_Fee_needs_Charge_Code_Type</fullName>
         <active>true</active>

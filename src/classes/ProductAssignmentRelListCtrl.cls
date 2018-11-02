@@ -45,7 +45,7 @@ public with sharing class ProductAssignmentRelListCtrl {
 
         // Create a map with a List of Product Assignments per key Product - Country - Currency
         Map<String, List<Product_Assignment__c>> mapProductAssignmentsPerProductCurrencyKey = new Map<String, List<Product_Assignment__c>>();
-        List<Product_Assignment__c> lstPAs = [SELECT Id, Account__c, Name, ICCS_Product_Currency__c, Status__c, ICCS_Bank_Account__c, Bank_Account_Code__c, Bank_Account_Currency__c, GSA_Agreement__c, Third_Party_Payment__c, De_Activation_Date__c, Accelerated_Function__c, Split_Type__c, Percentage__c, ICCS_Product_Currency__r.Product__c, ICCS_Product_Currency__r.Country__c, ICCS_Product_Currency__r.Currency__c, Notice_of_Assignment__c, Amount__c  FROM Product_Assignment__c WHERE Account__c = :acc.Id ORDER BY De_Activation_Date__c DESC];
+        List<Product_Assignment__c> lstPAs = [SELECT Id, Account__c, Name, ICCS_Product_Currency__c, Status__c, ICCS_Bank_Account__c, Bank_Account_Code__c, Bank_Account_Currency__c, GSA_Agreement__c, Third_Party_Payment__c, De_Activation_Date__c, Split_Type__c, Percentage__c, ICCS_Product_Currency__r.Product__c, ICCS_Product_Currency__r.Country__c, ICCS_Product_Currency__r.Currency__c, Notice_of_Assignment__c, Amount__c  FROM Product_Assignment__c WHERE Account__c = :acc.Id ORDER BY De_Activation_Date__c DESC];
         for (Product_Assignment__c pa : lstPAs) {
           //mapProductAssignmentsPerKey.put(String.valueOf(pa.ICCS_Product_Currency__c), pa);
           List<Product_Assignment__c> lst = mapProductAssignmentsPerProductCurrencyKey.get(String.valueOf(pa.ICCS_Product_Currency__c));

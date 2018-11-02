@@ -32,6 +32,7 @@ public with sharing class ISSP_PersonalInformation {
     public boolean isTerminatedAgent {get; set;}
     public boolean isTerminatedAgentBR {get; set;}
     public boolean isCNSAccount {get; set;}
+    public boolean isLegalNamePopulated {get; set;}
     private Id vHQAccountId;
 
      //CNS
@@ -46,7 +47,19 @@ public with sharing class ISSP_PersonalInformation {
 	public String ValidatedAirlineUser_Str {get;set;}
 	
 	public Boolean hasIdCard {get;set;}
-    public boolean showIEPStatus {get;set;}    
+    public boolean showIEPStatus {get;set;}
+    public Boolean flagCashOptedOutFinReview {get;set;}
+
+    public Boolean canChangeTradeName {get; private set;}
+    public Boolean isNAMEnabled {get; private set;}
+    public boolean isIATAAgencyCargo {get; private set;}
+    public boolean isIATAAgencyTravel {get; private set;}
+
+    public Boolean canChangeTradeNameBR {get; private set;}
+    public Boolean isNAMEnabledBR {get; private set;}
+    public boolean isIATAAgencyCargoBR {get; private set;}
+    public boolean isIATAAgencyTravelBR {get; private set;}
+
     
     public List<AccountTeamMember> portalAdmins { 
         get {
@@ -84,6 +97,16 @@ public with sharing class ISSP_PersonalInformation {
         isHOAccredited = false;
         bUserHO = false;
 
+        canChangeTradeName = false;
+        isNAMEnabled = false;
+        isIATAAgencyCargo = false;
+        isIATAAgencyTravel = false;
+
+        canChangeTradeNameBR = false;
+        isNAMEnabledBR = false;
+        isIATAAgencyCargoBR = false;
+        isIATAAgencyTravelBR = false;
+
         bIsOSCARenabledBR = false;
         bIsMinorChangeEnabledBR = false;
         bBlockTradeNameChangeBR = false;
@@ -92,6 +115,7 @@ public with sharing class ISSP_PersonalInformation {
         isTerminatedAgentBR = false;
         showIEPStatus = false;
         isCNSAccount = false;
+        isLegalNamePopulated = false;
         
     	String confirmParameter = ApexPages.currentPage().getParameters().get('confirm');
     	system.debug('confirmParameter: ' + confirmParameter);
@@ -133,7 +157,7 @@ public with sharing class ISSP_PersonalInformation {
         noirr = string.valueof(con.Account.Accumulated_Irregularities__c);
         FinSubmission  = string.valueof(con.Account.Fin_statements_submission_deadline__c);
         
-        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false && (!con.Account.CNS_Account__c)) {
+        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false && (!con.Account.CNS_Account__c) && !con.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
                 showIrregularities = True;
         }
         else {
@@ -142,10 +166,17 @@ public with sharing class ISSP_PersonalInformation {
         
         if (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent')
             isIATAAgencyAcct = true;
+
+        if (con.Account.Sector__c == 'Cargo Agent') isIATAAgencyCargo = true;
+        if (con.Account.Sector__c == 'Travel Agent') isIATAAgencyTravel = true;
         
         if (con.Account.Sector__c=='Airline')
             isIATAAirlineAcct = true;
         system.debug('Sfi con2 ==>  '+con);
+
+        if (con.Account.Top_Parent__r.Legal_name__c != null) {
+            isLegalNamePopulated = true;
+        }
         
         //AS - SP11
         accountCountryISOCode = con.Account.IATA_ISO_Country__r.ISO_Code__c;
@@ -163,7 +194,11 @@ public with sharing class ISSP_PersonalInformation {
             showIEPStatus = true;
         }
        
-        //AEF: portalAdmins is filled in extensions controller ISSP_PersonalInformationWithoutSharing 
+        flagCashOptedOutFinReview = (con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_FA_Opt_out__c);
+
+        //AEF: portalAdmins is filled in extensions controller ISSP_PersonalInformationWithoutSharing
+
+        canChangeTradeName = (bIsAdmin && bIsMinorChangeEnabled && !isTerminatedAgent && ((!isNAMEnabled && isIATAAgencyTravel && !bBlockTradeNameChange) || (!bBlockTradeNameChange && isIATAAgencyCargo) || (!isHOAccredited)));
     }
     
     private void popContact(){
@@ -192,6 +227,7 @@ public with sharing class ISSP_PersonalInformation {
         bIsOSCARenabled = con.Account.IATA_ISO_Country__r.OSCAR_enabled__c;
         bIsMinorChangeEnabled = con.Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c;
         bBlockTradeNameChange = con.Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c;
+        isNAMEnabled = con.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c;
     }
     
     /*public void save(){
@@ -246,6 +282,17 @@ public with sharing class ISSP_PersonalInformation {
             ApexPages.addMessages(ex);
             return null;   
         }
+    }
+
+    public void cancelAccount() {
+        con.Account = [SELECT Id, Name, TradeName__c, IATACode__c, Phone, PhoneNational__c, Fax, FAXNational__c, Email__c,
+                            IATA_ISO_Country__r.Name, BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry,Sector__c,
+                            Category__c,Location_Type__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.OSCAR_enabled__c, 
+                            IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c, IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
+                            Website, Status__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, RecordTypeId, RecordType.DeveloperName, DDS_Status__c,
+                            Top_Parent__r.Name_on_AOC__c, Top_Parent__r.Legal_name__c
+                        FROM Account 
+                        WHERE Id=:con.Account.Id LIMIT 1];
     }
 
     public Pagereference saveAccount(){
@@ -400,7 +447,7 @@ public with sharing class ISSP_PersonalInformation {
         					IATA_ISO_Country__r.Name, BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry,Sector__c,
                             Category__c,Location_Type__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.OSCAR_enabled__c, 
                             IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c, IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
-                            Website, Status__c
+                            Website, Status__c, Top_Parent__r.Name_on_AOC__c, Top_Parent__r.Legal_name__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c
         					FROM Account
                             WHERE Id = :selectedBranchAccount];
         
@@ -411,21 +458,24 @@ public with sharing class ISSP_PersonalInformation {
             bIsOSCARenabledBR = branchOffice.IATA_ISO_Country__r.OSCAR_enabled__c;
             bIsMinorChangeEnabledBR = branchOffice.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c;
             bBlockTradeNameChangeBR = branchOffice.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c;
+            isNAMEnabledBR = branchOffice.IATA_ISO_Country__r.ANG_Enable_NewGen__c;
     
-            
             if(branchOffice.Status__c == 'Terminated' || branchOffice.Status__c == 'Not accreditated' 
                     || branchOffice.Status__c == 'No longer a customer' || branchOffice.Status__c == 'New application pending')
                 isTerminatedAgentBR = true;
         
             if (branchOffice.Sector__c=='Cargo Agent' || branchOffice.Sector__c=='Travel Agent')
                 isIATAAgencyAcctBR = true;
-            
+
+            if (branchOffice.Sector__c == 'Cargo Agent') isIATAAgencyCargoBR = true;
+            if (branchOffice.Sector__c == 'Travel Agent') isIATAAgencyTravelBR = true;
             
         } else {
             branchOffice = null;
             accountCountryISOCodeBR = null;
         }
-        
+
+        canChangeTradeNameBR = (bIsAdmin && bUserHO && bIsMinorChangeEnabledBR && !isTerminatedAgentBR && ((!isNAMEnabledBR && isIATAAgencyTravelBR && !bBlockTradeNameChangeBR) || (!bBlockTradeNameChangeBR && isIATAAgencyCargo) || (!isHOAccredited)));
     }
     
     /**

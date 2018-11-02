@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>maria.veselinova@recall.com</email>
     <name>Recall Sweden Img. Esc. (IATA IW)</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAIWProjectTeam</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>IATAInvoiceWorksA</role>
+            <role>IATAIWCallCentreA</role>
+            <role>RecallUSA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -62,11 +62,15 @@ global with sharing class IDCardUtil {
     @RemoteAction
     public static final String CARDSTATUS_PREAPPROVED = 'Preapproved';
     @RemoteAction
-    public static final String CARDSTATUS_APPROVED = 'Approved';
+    public static final String CARDSTATUS_APPROVED = 'Sent ID Card';
+    @RemoteAction
+    public static final String CARDSTATUS_VALID = 'Valid ID Card';
     @RemoteAction
     public static final String CARDSTATUS_PRINTED_DELIVERED = 'Printed/Delivered';
     @RemoteAction
-    public static final String CARDSTATUS_CANCELED = 'Cancelled';
+    public static final String CARDSTATUS_CANCELED = 'Cancelled ID Card';
+    @RemoteAction
+    public static final String CARDSTATUS_Expired = 'Expired ID Card';
 
     @RemoteAction
     public static final String AGENTTYPE_PASSENGER = 'Passenger';
@@ -152,6 +156,27 @@ global with sharing class IDCardUtil {
     public static String Key_Account_Feature_Only_KC_Purchase = 'Prohibit Applicant to Apply';
     public static String Key_Account_Feature_2_Years_validity = 'ID Cards validity is extended to 2 years';
     public static final string single_application_status_waiting = 'Waiting for processing';
+
+    public static final String IDCARD_SERVICE_NAME = 'Id Card Holder';
+    /**
+        Get the Card holder Image Id running the query only once if required
+    **/
+    private static String CARD_HOLDER_IMAGE_ID = null;
+    public static String getCardHolderImageId() {
+        if (CARD_HOLDER_IMAGE_ID==null) {
+            try {
+                CARD_HOLDER_IMAGE_ID = [SELECT Id FROM Document WHERE DeveloperName = 'ID_card_PNG'].Id;
+            } catch (Exception e) {
+                CARD_HOLDER_IMAGE_ID = '';
+            }
+        }
+        return CARD_HOLDER_IMAGE_ID;
+    }
+    
+    public static String getCardHolderImageHtml() {
+        String imageUrl = '/servlet/servlet.FileDownload?file=' + getCardHolderImageId();
+        return '<img src="' + imageUrl + '" alt="' + IDCARD_SERVICE_NAME + '" title="' + IDCARD_SERVICE_NAME + '" border="0" height="40" width="40"/>';
+    }
 
     // Variables for storing information and limit the queries in case of mass use.
     public static Account massAccount {get; set;}
@@ -1096,7 +1121,7 @@ public static String generateVER(Account theAccount) {
             //If not active card is found, than search for card NOT canceled and NOT blacklisted
             if (lsIdCard.isEmpty()) {
                 lsIdCard = [select Id, Valid_To_Date__c, Valid_From_Date__c
-                            from ID_Card__c where Related_Contact__c = :con.id and Blacklisted__c = :false and Card_Status__c<>:'Cancelled'
+                            from ID_Card__c where Related_Contact__c = :con.id and Blacklisted__c = :false and Card_Status__c<>:'Cancelled ID Card'
                                     order by Valid_From_Date__c nulls last limit 1];
             }
 
@@ -1549,7 +1574,7 @@ public static String generateVER(Account theAccount) {
 
         //integer renewableCardDays = integer.valueOf(Label.IDCard_IsRenewableCard_Days);
         Date renewableEndDate  = date.today().addDays(days);
-        ID_Card__c[] idCard = [Select Id, Valid_To_Date__c From ID_Card__c c where c.Related_Contact__r.Id = :contactID AND c.Card_Status__c = : IDCardUtil.CARDSTATUS_PRINTED_DELIVERED
+        ID_Card__c[] idCard = [Select Id, Valid_To_Date__c From ID_Card__c c where c.Related_Contact__r.Id = :contactID AND c.Card_Status__c = : IDCardUtil.CARDSTATUS_VALID
                                AND c.Is_Active_Card__c = : true
                                        order by c.Valid_To_Date__c desc ];
 
@@ -1744,7 +1769,7 @@ public static String generateVER(Account theAccount) {
                     // Change the status of the old card to "Cancelled" (only on reissue => Lost/stolen) and change of agency
                     if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE || application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REPLACEMENT) {
                         //find old card to cancel it
-                        ID_Card__c[] idCards = [Select Card_Status__c, MustSyncWithAIMS__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c = : CARDSTATUS_PRINTED_DELIVERED order by CreatedDate desc];
+                        ID_Card__c[] idCards = [Select Card_Status__c, MustSyncWithAIMS__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c = : CARDSTATUS_VALID order by CreatedDate desc];
                         if (idCards != null && idCards.size() > 0) {
                             idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
                             idCards[0].Cancellation_Date__c = Date.Today();

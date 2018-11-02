@@ -3,6 +3,13 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>machadoj@iata.org</email>
     <name>Agency Mgmt - Americas Data Validation</name>
+    <queueMembers>
+        <roles>
+            <role>AmericasAgencyManagementManagerA</role>
+            <role>AmericasAgencyManagementStaffA</role>
+            <role>Americas_Agency_Risk_Management_Staff</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

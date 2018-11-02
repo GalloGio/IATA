@@ -362,6 +362,7 @@
     <label>EBC Campaign Email Tracking</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
         <columns>EBC_Campaign__c</columns>
         <columns>NumberofClicks__c</columns>
         <columns>NumberofOpens__c</columns>
@@ -375,7 +376,6 @@
         <columns>NotSentDueToError__c</columns>
         <columns>NotSentDueToOptOut__c</columns>
         <columns>NotSentDueToUndeliverable__c</columns>
-        <columns>Rank__c</columns>
         <columns>LAST_ACTIVITY</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>

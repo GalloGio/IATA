@@ -15,6 +15,18 @@
         }
     </script>
 
+	<style>
+	.errorM4 .msgIcon, .errorSmall {
+	    background-image: url(/img/samples/flag_red.gif) !important;
+	}
+
+	.myCustomMessage .message {
+	    background: none  !important;
+	    border: none !important;
+	}
+
+	</style>
+
 	<apex:sectionHeader title="Agencies migration tool: exception management" />   
 	<apex:form >
 	<apex:PageBlock id="pb"  >
@@ -59,7 +71,14 @@
 					</tr>
 					<tr>
 						<td style="border:0px #dddddd;text-align:center">
-							<apex:commandButton action="{!migrateSelectedHierarchies}" value="Migrate selected hierarchies" rendered="true"  />
+							
+							<apex:outputPanel styleClass="myCustomMessage" rendered="{!errorDetailCode == -8}">
+					        	<apex:pageMessage severity="error"
+				                          strength="1"
+				                          summary="Orpah Branches are not automatically migrated. Please contact the global administrator." />
+					    	</apex:outputPanel>
+
+							<apex:commandButton action="{!migrateSelectedHierarchies}" value="Migrate selected hierarchies" rendered="{!errorDetailCode != -8}" />
                             <apex:commandButton action="{!backToMainPage}" value="Back to the main page" rendered="true"  />
 						</td>
 					</tr>

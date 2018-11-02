@@ -343,14 +343,14 @@ public with sharing class IEC_MyPaymentMethodsController extends IEC_PageControl
 	{
 		try
 		{
-			loggedCustomer.zAccount.setValue('DefaultPaymentMethodId', defaultPaymentMethodId);
+		  loggedCustomer.zAccount.setValue('DefaultPaymentMethodId', defaultPaymentMethodId);
 			IECZuoraHelper.updateApiCall(loggedCustomer.zAccount);
 
 			loggedCustomer.loadCreditCards();
-            refreshCreditCards();
+      refreshCreditCards();
 
-            IEC_CreditCard_DTO selectedCreditCard = creditCardById.get(defaultPaymentMethodId);
-            addConfirmMessage('The credit card ' + selectedCreditCard.creditCardMaskNumber + ' has been successfully set as default card.');
+      IEC_CreditCard_DTO selectedCreditCard = creditCardById.get(defaultPaymentMethodId);
+      addConfirmMessage('The credit card ' + selectedCreditCard.creditCardMaskNumber + ' has been successfully set as default card.');
 
 			return null;
 		}

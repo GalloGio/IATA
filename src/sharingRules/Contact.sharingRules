@@ -77,4 +77,30 @@
             <value>IDFS ACCA Contact,GDP Contact,MACS Sales,Senior,IATA Service Provider Contact,IATA SIS Contact,IATA Standard Contact,IATA TTBS Contact,New contact for iss portal</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SIS_visibility</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>SIS visibility</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SISCustomerSupport</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Email</field>
+            <operation>contains</operation>
+            <value>@</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Standard_Contacts</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Standard Contacts</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
 </SharingRules>

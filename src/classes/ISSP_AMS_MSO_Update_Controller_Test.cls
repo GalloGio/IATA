@@ -295,6 +295,18 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 	            ctrl = new ISSP_AMS_MSO_Update_Controller(); // the case, oscar etc exist now          	
             	ctrl.cancelRequest(); 
 
+            	Test.setCurrentPage(Page.ISSP_AMS_MSO_Update);
+	      		System.currentPageReference().getParameters().put('msoId', mso.Id);
+	      		System.currentPageReference().getParameters().put('action', ISSP_AMS_MSO_Update_Controller.ACTION_CORRECTION);
+	      		System.currentPageReference().getParameters().put('step', 'view');
+	      		System.currentPageReference().getParameters().put('caseId', caseId);
+            
+            	ctrl = new ISSP_AMS_MSO_Update_Controller(); // the case, oscar etc exist now          	
+            
+            	ctrl.goToEdit(); 
+                ctrl.goToView(); 
+                ctrl.goToTermination(); 
+
 			Test.stopTest();
         }
 

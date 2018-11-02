@@ -81,7 +81,6 @@
         <fullName>ANG_Minimum_Financial_Security__c</fullName>
         <externalId>false</externalId>
         <formula>Reception_Case__r.Financial_Security_Amount__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Financial Security Amount (Minimum)</label>
         <precision>18</precision>
         <required>false</required>
@@ -237,6 +236,18 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>First_Call_Letter_required1__c</fullName>
+        <description>Takes the value from the Financial Institution through a WF</description>
+        <externalId>false</externalId>
+        <label>First Call Letter required</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>First_Call_Letter_required__c</fullName>
@@ -563,6 +574,16 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
                     <default>false</default>
                     <label>Inactive_Addendum</label>
                 </value>
+                <value>
+                    <fullName>Pending to be Released</fullName>
+                    <default>false</default>
+                    <label>Pending to be Released</label>
+                </value>
+                <value>
+                    <fullName>Pending Validation</fullName>
+                    <default>false</default>
+                    <label>Pending Validation</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -642,6 +663,11 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
                     <fullName>Letter Of Undertaking</fullName>
                     <default>false</default>
                     <label>Letter Of Undertaking</label>
+                </value>
+                <value>
+                    <fullName>Manifestacion de Bienes</fullName>
+                    <default>false</default>
+                    <label>Manifestacion de Bienes</label>
                 </value>
                 <value>
                     <fullName>MCBG</fullName>
@@ -739,9 +765,15 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpg&quot;,&quot;Expir
 IF( ISPICKVAL( Security_Status__c , &quot;Encashment in progress&quot;),  
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004RhqP&quot;,&quot;Encashment in progress&quot;,30,30),
 
+IF( ISPICKVAL( Security_Status__c , &quot;Pending to be Released&quot;),  
+IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DJop&quot;,&quot;Pending to be Released&quot;,30,30),
+
+IF( ISPICKVAL( Security_Status__c , &quot;Pending Validation&quot;),  
+IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DJop&quot;,&quot;Pending to be Released&quot;,30,30),
+
 IF(ISPICKVAL( Security_Status__c , &quot;Close to Expiry Date&quot;), 
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Requested&quot;,30,30), &quot;error&quot;
-)))))</formula>
+)))))))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status image</label>
         <required>false</required>
@@ -749,6 +781,16 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Two_months_passed_expiry__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used for flagging FS with first call letter required when two months of expiry date have passed. This info goes to the account and then to the case.</description>
+        <externalId>false</externalId>
+        <label>Two months passed expiry</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Unlimited_Security__c</fullName>
@@ -2214,9 +2256,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         </filters>
         <label>Financial Securities Actives - BSP FR</label>
         <language>en_US</language>
-        <sharedTo>
-            <roleAndSubordinatesInternal>StaffFrance</roleAndSubordinatesInternal>
-        </sharedTo>
+        <sharedTo/>
     </listViews>
     <listViews>
         <fullName>N_ASIA_Active_Securities</fullName>
@@ -2559,7 +2599,8 @@ NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit Pledge&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Transit Account&quot;) ),
 NOT( ISPICKVAL( Security_Type__c , &quot;Financial Guarantee&quot;) ),
-NOT( ISPICKVAL( Security_Type__c , &quot;GDI&quot;) )
+NOT( ISPICKVAL( Security_Type__c , &quot;GDI&quot;) ),
+NOT( ISPICKVAL( Security_Type__c , &quot;Manifestacion de Bienes&quot;) )
 )</errorConditionFormula>
         <errorDisplayField>Security_Type__c</errorDisplayField>
         <errorMessage>Invalid Security Type</errorMessage>

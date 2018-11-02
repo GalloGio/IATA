@@ -89,12 +89,7 @@
         <label>Source Product Rate Plan Information</label>
         <lookupFilter>
             <active>true</active>
-            <booleanFilter>(1 AND 2) OR (3 AND 4)</booleanFilter>
-            <filterItems>
-                <field>Product_Rate_Plan_Information__c.Related_Product_Information__r.Product_Audience__c</field>
-                <operation>equals</operation>
-                <value>Default</value>
-            </filterItems>
+            <booleanFilter>1 OR (2 AND 3)</booleanFilter>
             <filterItems>
                 <field>$Source.Relationship_Type__c</field>
                 <operation>equals</operation>

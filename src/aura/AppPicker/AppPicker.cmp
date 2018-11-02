@@ -9,6 +9,7 @@
 <aura:attribute name="activeAppPic" type="String" />
 <aura:attribute name="activeAppDescription" type="String" />
 <aura:attribute name="activeAppTerms" type="String" />
+<aura:attribute name="activeAppRoleSelectibility" type="Boolean" />
 <aura:attribute name="activePage" type="Integer" default="0"/>
 <aura:attribute name="selectedRole" type="String" />
 <aura:attribute name="submitDisabled" type="Boolean" default="true"/>
@@ -17,16 +18,16 @@
 <aura:attribute name="termsLocked" type="Boolean" default="false"/>
 <aura:attribute name="Terms" type="Boolean" default="false"/>
 <aura:attribute name="toolTipBtn" type="String" default="You accept the Terms and Conditions"/>
-
+<aura:attribute name="requestSent" type="Boolean" default="false" />
  
 
 <div class="slds slds-grid">
     
     
         <!-- <div class="launcherTitle"><h1>{!$Label.c.OneId_My_available_applications}</h1></div> -->
-        <div id="launcher" class="launcher">
-            <button class="sfdc_button uiButton floatleft" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.handleClick}">
-                <span class="label bBody truncate" dir="ltr" alternativeText="Launch picker">{!$Label.c.Oneid_request_acess_to_a_new_service}</span>
+        <div class="slds-size_1-of-1 slds-m-bottom_medium">
+            <button class="sfdc_button uiButton slds-truncate" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.handleClick}" style="float: none;">
+                <span class="" dir="ltr" alternativeText="Launch picker">{!$Label.c.Oneid_request_acess_to_a_new_service}</span>
             </button>
             <!--lightning:buttonIcon iconName="utility:apps" variant="bare" onclick="{! c.handleClick }" alternativeText="Launch picker" size="large"/-->
         </div>
@@ -43,6 +44,7 @@
             
             <lightning:buttonIcon iconName="utility:close" variant="bare" onclick="{! c.handleClose }" alternativeText="Close picker" size="large" class="closebutton"/>
             
+			<aura:if isTrue="{! !v.requestSent}">
             <aura:if isTrue="{!!v.showRoles}">
 
                 <!--lightning:buttonIcon iconName="utility:left" variant="bare" onclick="{! c.pagePrevious }" alternativeText="Close picker" size="large" class="leftarrow"/>
@@ -86,9 +88,16 @@
                     </aura:iteration>
                 </div>
 
+                    <aura:if isTrue="{! v.activeAppRoleSelectibility}">
                 <button data-tooltip="{!v.toolTipBtn}" class="sfdc_button uiButton requestApp" aura:id="btnReqApp" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.showRoles}" disabled="{!v.requestAppDisabled}">
                     <span class="label bBody truncate" dir="ltr">{!$Label.c.OneId_Request_this_App}</span>
                 </button>
+                        <aura:set attribute="else">
+                            <button class="sfdc_button uiButton" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.checkSelectedRoleAvailability}" disabled="{!v.requestAppDisabled}">
+                                <span class="label bBody truncate" dir="ltr" alternativeText="{!$Label.c.ISSP_Submit}">{!$Label.c.ISSP_Submit}</span>
+                            </button>
+                        </aura:set>
+                    </aura:if>
 
 
 
@@ -127,20 +136,34 @@
                             <div>
                                 <!-- <ui:button label="{!$Label.c.ISSP_Back}" press="{!c.hideRoles}"/> -->
                                 <button class="sfdc_button uiButton" disabled="{!v.submitDisabled}" aria-live="off" type="button" data-aura-class="uiButton--default uiButton"
-                                        onclick="{!c.submitRequest}"><span class="label bBody truncate" dir="ltr"
+                                            onclick="{!c.checkSelectedRoleAvailability}"><span class="label bBody truncate" dir="ltr"
                                                                            alternativeText="{!$Label.c.ISSP_Submit}">{!$Label.c.ISSP_Submit}</span></button>
 
                                 <!--i:button label="{!$Label.c.ISSP_Submit}" press="{!c.submitRequest}" disabled="{!v.submitDisabled}"/-->
                             </div>
                         </div>
-                        <div aura:id="requestSent" class="requestSent hide">
+                        </div>
+                    </aura:set>
+                </aura:if>
+                
+                <aura:set attribute="else">
+                	<div class="slds-grid">
+                        <div class="slds-text-heading--large">{!$Label.c.issp_apppicker_request_new_application}</div>
+                    </div>
+                    <div aura:id="requestSent" class="requestSent">
                             <h2>{!$Label.c.OneId_Your_request_has_been_successfully_sent}</h2>
-                            <p>{!$Label.c.OneId_Thank_you_for_requesting_access_to_our_service}</p>
+							<aura:if isTrue="{! v.activeApp == 'FRED'}">
+	                            <p>{!$Label.c.OneId_Thank_you_Fred_Access_Request}</p>
+							
+								<aura:set attribute="else">
+		                            <p>{!$Label.c.OneId_Thank_you_for_requesting_access_to_our_service}</p>
+								</aura:set>
+							</aura:if>
+
                             <div class="barButton">
                                 <button class="sfdc_button uiButton" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.closeRequest}"><span class="label bBody truncate" dir="ltr" alternativeText="{!$Label.c.ISSP_Submit}">Close</span></button>
                             </div>
                         </div>
-                    </div>
                 </aura:set>
             </aura:if>
        </div>

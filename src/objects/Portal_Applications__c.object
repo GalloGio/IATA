@@ -228,6 +228,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_Lock_access_to_accreditation_type__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Only allow internal users to grant access to this portal service if the agency&apos;s accreditation type matches the &apos;Restrict by Accreditation Type&apos; of the portal service</inlineHelpText>
+        <label>Lock access to Accreditation Type</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_Restrict_by_Accreditation_Type__c</fullName>
         <description>Value used to restrict the visibility of the RHC Portal Service</description>
         <externalId>false</externalId>
@@ -516,6 +526,20 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>NewGenAPP_ShortName__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>When this filed is filled, it will show the service in NewGenAPP mobile.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When this filed is filled, it will show the service in NewGenAPP mobile.</inlineHelpText>
+        <label>NewGenAPP-ShortName</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>New_Window__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -652,7 +676,8 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
-&quot;RHC Information&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;ICCS&quot;,&quot;ICCS&quot;,
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -700,6 +725,7 @@ Name
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description,
 &quot;&quot;
       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -880,7 +906,8 @@ OR(
     ), 
     AND(Name = &quot;Payment Link&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
     AND(Name = &quot;Paypal&quot;,$User.CNS_Account_or_Agency__c),
-    AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;))
+    AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)),
+    AND(Name = &quot;Transparency in Payments (TIP)&quot;,($User.Is_TIP_User__c))
 )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -906,6 +933,31 @@ OR(
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_NewGenAPP</fullName>
+        <booleanFilter>1 or 2</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>Description__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Application_URL__c</columns>
+        <columns>Critical_Service__c</columns>
+        <columns>NewGenAPP_ShortName__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NewGenAPP_ShortName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>NewGenAPP_Mobile</value>
+        </filters>
+        <label>All - NewGenAPP</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>EasyPay</fullName>

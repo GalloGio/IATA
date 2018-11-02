@@ -22,7 +22,7 @@ global  class NewLocalGroupCtrl {
       Set<Id> setRegDivRecordTypes = new Set<Id>();
         Set<Id> setLocalGroupRecordTypes = new Set<Id>();
         for (RecordType rt : lsRecordTypes) {
-            if(rt.DeveloperName == 'Reg_Div_Groups' || rt.DeveloperName == 'Draft_Reg_Div_Group') {
+            if(rt.DeveloperName == 'Reg_Div_Groups') {
                 setRegDivRecordTypes.add(rt.Id);
             } else if(rt.DeveloperName == 'Local_Groups') {
                 setLocalGroupRecordTypes.add(rt.Id);
@@ -40,7 +40,7 @@ global  class NewLocalGroupCtrl {
         if(!redirect && lg.RecordTypeId == null) {
             for(RecordTypeInfo info: LocalGovernance__c.SObjectType.getDescribe().getRecordTypeInfos()) {
                 if(info.isAvailable()) {
-                    if( info.getName() == 'Reg/Div Groups' || info.getName() == 'Draft Reg/Div Group') {
+                    if( info.getName() == 'Reg/Div Groups') {
                         redirect = true;
                     }
                 }

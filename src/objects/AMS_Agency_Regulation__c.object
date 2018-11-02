@@ -47,7 +47,7 @@
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
@@ -120,7 +120,8 @@
         <relationshipLabel>AMS Agency Regulations</relationshipLabel>
         <relationshipName>AMS_Agency_Regulations</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -130,6 +131,7 @@
         <externalId>false</externalId>
         <label>Air cargo transport business exp</label>
         <length>32768</length>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -140,6 +142,7 @@
         <label>Certificate Name</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -150,6 +153,7 @@
         <formula>Expiry_Date__c &lt;= TODAY()</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Expired</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -158,6 +162,7 @@
         <externalId>false</externalId>
         <label>Expiry Date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -167,6 +172,7 @@
         <label>First Name</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -177,6 +183,7 @@
         <formula>IF(TEXT(Account__r.Is_your_firm_handling_Dangerous_Goods__c) = &apos;No&apos;, FALSE, TRUE)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Handling Account</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -185,6 +192,7 @@
         <externalId>false</externalId>
         <label>IATA/FIATA training history</label>
         <length>32768</length>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -197,6 +205,7 @@
         <label>Is your firm handling Dangerous Goods</label>
         <length>20</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -206,6 +215,7 @@
         <externalId>false</externalId>
         <label>Certificate Issued On</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -215,6 +225,7 @@
         <label>Issued By</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -225,6 +236,7 @@
         <label>Last Name</label>
         <length>80</length>
         <required>true</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -234,6 +246,7 @@
         <externalId>false</externalId>
         <label>Notification Date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -242,6 +255,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Notification Sent</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -254,6 +268,7 @@
         <relationshipLabel>AMS Agency Regulations</relationshipLabel>
         <relationshipName>AMS_Agency_Regulations</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -263,6 +278,7 @@
         <label>Position in the Agency</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -274,6 +290,7 @@
         <label>Registration Number</label>
         <length>30</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -283,6 +300,7 @@
         <externalId>false</externalId>
         <label>Training dangerous goods completed</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -307,6 +325,7 @@
         <externalId>false</externalId>
         <label>Type Of Certificate</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -356,6 +375,7 @@
         <externalId>false</externalId>
         <label>Validity</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -380,10 +400,26 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <fields>
+        <fullName>Validity_count__c</fullName>
+        <description>Returns 1 if the expired field is unchecked. To be used in reports.</description>
+        <externalId>false</externalId>
+        <formula>IF(Expired__c=False,1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Validity count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
     <label>AMS Agency Regulation</label>
     <nameField>
         <displayFormat>AReg-{000000}</displayFormat>
         <label>AMS Agency Regulation Name</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS Agency Regulations</pluralLabel>
@@ -394,6 +430,14 @@
         <active>true</active>
         <errorConditionFormula>AND(ISPICKVAL(Type_Of_Certificate__c, &quot;DGR&quot;),  ISBLANK( Expiry_Date__c ))</errorConditionFormula>
         <errorMessage>DGR certificates must have an expiry date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Uncheck_notification_sent</fullName>
+        <active>true</active>
+        <description>If expiry date is modified, &quot;Notification sent&quot; field needs to be unchecked.</description>
+        <errorConditionFormula>AND(ISCHANGED(Expiry_Date__c),Notification_Sent__c=True)</errorConditionFormula>
+        <errorDisplayField>Notification_Sent__c</errorDisplayField>
+        <errorMessage>Please un-check this field before updating the Expiry date.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

@@ -278,28 +278,6 @@
         <label>Country that Can Pay by Cheque</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>asdasdasd</fullName>
-        <columns>NAME</columns>
-        <columns>ID_Card_Fee__c</columns>
-        <columns>CURRENCY_ISO_CODE</columns>
-        <columns>ISO_Country__c</columns>
-        <columns>ISO_Country_Code__c</columns>
-        <columns>Region__c</columns>
-        <columns>Type_Class_of_Agent__c</columns>
-        <columns>IATA_Package__c</columns>
-        <columns>Expedite__c</columns>
-        <columns>Can_Pay_by_Cheque__c</columns>
-        <columns>Expedite_Delivery_added_to_IDCard_Price__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ISO_Country__c</field>
-            <operation>equals</operation>
-            <value>United Kingdom</value>
-        </filters>
-        <label>All asd</label>
-        <language>en_US</language>
-    </listViews>
     <nameField>
         <displayFormat>PT-{0000}</displayFormat>
         <label>Price Table Name</label>

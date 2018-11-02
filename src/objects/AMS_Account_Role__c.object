@@ -53,6 +53,146 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>AMS_Oscar_Savepoint_fields</fullName>
+        <description>Determine which fields should be saved on serialized object</description>
+        <displayedFields>
+            <field>Id</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Account__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Contact__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Duty__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Earning__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Employee_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Employee_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Hours__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Inconsistent_Contact_Info__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>isManager__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>isTicketingAgent__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_synchronization__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Legacy_External_ID__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Legacy_System__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Owner_Account__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Owner_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Owner_Sequence__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Percentage__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Position__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Registration_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>SIMPLEX__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Stage__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Start_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Termination_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Title__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Unique_Identifier__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Valid__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>AMS Oscar Savepoint fields</label>
+    </fieldSets>
     <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -220,7 +360,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <label>Employee Name</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -377,6 +517,26 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>No_Airline_Subsidiaries__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used  to indicate that the related account doesn&apos;t own any airline</description>
+        <externalId>false</externalId>
+        <label>No Airline Subsidiaries</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Other_Stakeholder_Types__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates that the related account is partially or completely owned by other stakeholders (not an account, a person, a contact)</description>
+        <externalId>false</externalId>
+        <label>Other Stakeholder Types</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Owner_Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>The Account that owns the Account Object - this is a Ownership Relation</description>
@@ -387,7 +547,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <relationshipLabel>AMS Account Roles</relationshipLabel>
         <relationshipName>AMS_Account_Roles</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -413,6 +573,24 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Owner_Type__c</fullName>
+        <description>field created for AMP reporting</description>
+        <externalId>false</externalId>
+        <formula>IF
+(
+TEXT(Owner_Account__r.Membership_status__c)= &apos;&apos;,
+TEXT(Owner_Account__r.Sector__c), 
+TEXT(Owner_Account__r.Membership_status__c)
+)</formula>
+        <inlineHelpText>field created for AMP reporting</inlineHelpText>
+        <label>Owner Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -558,6 +736,26 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Sort_Order__c</fullName>
+        <description>Field to determine the sort order on the related list of owners</description>
+        <externalId>false</externalId>
+        <formula>IF( Active__c , 1000000 + 100 * Percentage__c , 
+VALUE(
+RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
+&amp;RIGHT(LEFT(TEXT( Termination_Date__c ), 7),2)
+&amp;RIGHT(LEFT(TEXT( Termination_Date__c ), 10),2))
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sort Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Stage__c</fullName>
         <externalId>false</externalId>
         <label>Stage</label>
@@ -626,6 +824,24 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Subsidiary_Type__c</fullName>
+        <description>field created for AMP reporting</description>
+        <externalId>false</externalId>
+        <formula>IF
+(
+TEXT(Account__r.Membership_status__c)= &apos;&apos;,
+TEXT(Account__r.Sector__c), 
+TEXT(Account__r.Membership_status__c)
+)</formula>
+        <inlineHelpText>field created for AMP reporting</inlineHelpText>
+        <label>Subsidiary Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Termination_Date__c</fullName>
         <externalId>false</externalId>
         <label>Termination Date</label>
@@ -674,7 +890,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>
         <label>Valid</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -742,20 +958,17 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <columns>NAME</columns>
         <columns>Account__c</columns>
         <columns>Contact__c</columns>
-        <columns>Owner_Account__c</columns>
+        <columns>Unified_Owner_Name__c</columns>
         <columns>Owner_Name__c</columns>
-        <columns>Person__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
+        <columns>Employee_Name__c</columns>
+        <columns>Owner_Account__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Owner_Name__c</field>
+            <field>Unified_Owner_Name__c</field>
             <operation>equals</operation>
             <value>Agency Company</value>
         </filters>
-        <label>ZZ-Search By Owner Name</label>
+        <label>ZZ-Search By Unified Owner Name - GDP</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -765,7 +978,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS Account Roles</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Employee</fullName>
         <active>true</active>
@@ -1207,14 +1420,25 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
     <validationRules>
         <fullName>Ownership_Validation</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(RecordType.DeveloperName == &apos;Ownership&apos;,
+        <errorConditionFormula>AND(
+	RecordType.DeveloperName == &apos;Ownership&apos;,
 Account__r.CNS_Agency__c == false,
-OR(ISBLANK(Account__c), (
+	OR(
 
 AND (
-ISBLANK(Owner_Account__c), ISBLANK(Person__c), ISBLANK(Legacy_External_ID__c),ISBLANK(Contact__c)
+			ISBLANK(Account__c),
+			NOT(No_Airline_Subsidiaries__c)
+		),
+		(AND (
+			ISBLANK(Owner_Account__c), 
+			NOT(Other_Stakeholder_Types__c),
+			ISBLANK(Person__c), 
+			ISBLANK(Legacy_External_ID__c),
+			ISBLANK(Contact__c)
+			)
+		)
 )
-)))</errorConditionFormula>
+)</errorConditionFormula>
         <errorMessage>For Ownership Account Role please fill the Account, Person or Owner Account.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>

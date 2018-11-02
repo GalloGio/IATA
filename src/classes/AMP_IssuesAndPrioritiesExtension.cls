@@ -51,6 +51,13 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         else this.sortOrder = ' Name DESC';
         lsIssuesAndPriorities = getIssuesAndPriorities();
     }
+
+    public void sortByDivision() {
+        if(this.sortOrder == ' Division__c DESC') this.sortOrder = ' Division__c ASC';
+        else this.sortOrder = ' Division__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
+    }
+
     public void sortBySource() {
         if(this.sortOrder == ' AM_Source_Text__c DESC') this.sortOrder = ' AM_Source_Text__c ASC';
         else this.sortOrder = ' AM_Source_Text__c DESC';
@@ -109,6 +116,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         List<String> issueAccessFields = new String [] {
             // 'Id',
             'Name',
+            'Division__c',
             'Description__c',
             'AM_Can_IATA_support_the_airline__c',
             'AM_Global__c',

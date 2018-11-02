@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>zhangxl@iata.org</email>
     <name>Customer Service - China &amp; N.Asia</name>
+    <queueMembers>
+        <roles>
+            <role>ChinaNAsiaCustomerServiceManagerA</role>
+            <role>ChinaNAsiaCustomerServiceStaffA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -3,6 +3,25 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>acr@iata.org</email>
     <name>Change Requests - DPC Systems</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IDFSAfricaMEHUB</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAmericasHUB</publicGroup>
+            <publicGroup>IDFSAsiaPacificHUB</publicGroup>
+            <publicGroup>IDFSChinaNAsiaHUB</publicGroup>
+            <publicGroup>IDFSPassengerSystemOwners</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>DistributionOperationalMgmtHOA</role>
+        </roles>
+        <users>
+            <user>wana@iata.org</user>
+            <user>mcbrideg@iata.org</user>
+            <user>coler@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

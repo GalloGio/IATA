@@ -1,0 +1,23 @@
+<apex:component >
+    <apex:attribute name="helper" type="ISSP_ANG_ANNUAL_REV_SUBMIT_REPORT_HELPER" description="helper" />
+
+    <div class="alert alert-danger" style="{!IF(helper.allowSubmit, 'display: none;','')}">
+        {! $Label.ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW}
+    </div>
+
+    <strong style="{!IF(helper.showNotStarted, '','display: none;')};"><p><span class="glyphicon glyphicon-refresh text-primary"></span> - {! $Label.ISSP_ANG_ANNUAL_STATUS_OPEN}</p></strong>
+    <p style="text-align: justify; text-justify: inter-word; margin-left: 25px;{!IF(helper.showNotStarted, '','display: none;')};">{!helper.strListNotStarted}.</p>
+
+    <br style="{!IF(helper.showDetailsConfirmed, '','display: none;')}"></br>
+    <strong style="{!IF(helper.showDetailsConfirmed, '','display: none;')}"><p><span class="glyphicon glyphicon-ok text-success"></span> - {! $Label.ISSP_ANG_ANNUAL_STATUS_CONFIRMED}</p></strong>
+    <p style="text-align: justify; text-justify: inter-word; margin-left: 25px;{!IF(helper.showDetailsConfirmed, '','display: none;')}">{!helper.strListDetailsConfirmed}.</p>
+
+    <br style="{!IF(helper.showUpdateInProgress, '','display: none;')}"></br>
+    <strong style="{!IF(helper.showUpdateInProgress, '','display: none;')}"><p><span class="glyphicon glyphicon-edit text-danger"></span> - {! $Label.ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS}</p></strong>
+    <p style="text-align: justify; text-justify: inter-word; margin-left: 25px;{!IF(helper.showUpdateInProgress, '','display: none;')}">{!helper.strListUpdateInProgress}.</p>
+
+    <br style="{!IF(helper.showUpdateCompleted, '','display: none;')}"></br>
+    <strong style="{!IF(helper.showUpdateCompleted, '','display: none;')}"><p><span class="glyphicon glyphicon-flag text-danger"></span> - {! $Label.ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED}</p></strong>
+    <p style="text-align: justify; text-justify: inter-word; margin-left: 25px;{!IF(helper.showUpdateCompleted, '','display: none;')}">{!helper.strListUpdateCompleted}.</p>
+
+</apex:component>

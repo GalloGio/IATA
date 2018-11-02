@@ -10,6 +10,8 @@
     <customButtons>Reactivate_BSPLink</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
+    <customButtons>OscarFOP</customButtons>
+    <customButtons>Conga_Merge_JS</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -1200,6 +1202,22 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Repayment instalments</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>320</height>
+                <page>SIDRARepaymentInstalments</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <quickActionList/>
     <relatedContent>
         <relatedContentItems>
@@ -1298,6 +1316,10 @@
         <relatedList>Agency_Applied_Change_code__c.SIDRA_Case__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Process_Detail__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>

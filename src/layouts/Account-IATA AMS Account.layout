@@ -117,6 +117,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDP_Opt_In__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>PCI_DSS_Compliant__c</field>
             </layoutItems>
             <layoutItems>
@@ -129,11 +137,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Is_DGR_Compliant__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ANG_Accreditation_Model__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_PCI_compliant__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -212,6 +228,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Record_Sharing_Criteria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Account_Role__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -304,6 +324,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Agent_Type_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Covered_Ownership__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -445,6 +469,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Last_SIDRA_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_FA_Opt_out__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -645,6 +673,22 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Risk Event History</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>220</height>
+                <page>ANG_RiskEventHistory</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Web Links</label>
@@ -669,6 +713,22 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Owners</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>300</height>
+                <page>AMS_AccountOwners</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <miniLayout>
         <fields>Name</fields>
         <fields>ParentId</fields>
@@ -678,6 +738,7 @@
         <fields>Phone</fields>
         <fields>Location_Type__c</fields>
         <fields>Status__c</fields>
+        <fields>Reason__c</fields>
     </miniLayout>
     <relatedLists>
         <relatedList>RelatedAccountSalesTeam</relatedList>
@@ -690,6 +751,7 @@
         <fields>Type__c</fields>
         <fields>LAST_UPDATE</fields>
         <fields>CREATED_DATE</fields>
+        <fields>Active__c</fields>
         <relatedList>Location__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
@@ -705,22 +767,8 @@
         <fields>CONTACT.PHONE1</fields>
         <fields>User_Portal_Status__c</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
+        <fields>Primary_Contact__c</fields>
         <relatedList>RelatedContactList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Active__c</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Unified_Owner_Name__c</fields>
-        <fields>Owner_Name__c</fields>
-        <fields>Owner_Account__c</fields>
-        <fields>Contact__c</fields>
-        <fields>Percentage__c</fields>
-        <fields>Termination_Date__c</fields>
-        <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -787,7 +835,8 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>ANG_RHC_Amount_Simulation__c</fields>
+        <fields>ANG_RHC_Amount__c</fields>
+        <fields>ANG_ConsumedRHC__c</fields>
         <fields>ANG_ConsumedRHC_Percent__c</fields>
         <fields>ANG_ConsumedRHC_Last_Update__c</fields>
         <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
@@ -955,6 +1004,19 @@
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ISSP_Web_Service_Log__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Provider_Code__c</fields>
+        <fields>Status__c</fields>
+        <fields>Effective_From_Date__c</fields>
+        <fields>Effective_To_Date__c</fields>
+        <relatedList>Account_Role__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

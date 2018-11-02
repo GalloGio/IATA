@@ -198,7 +198,8 @@ public static void sendProducts2Zuora(Map<Id, Product2> productById)
     else if(System.isFuture())
         Product_Svc.saveZProducts(productById.keySet());
     else
-        Product_Svc.saveZProductsFuture(productById.keySet());
+        //Product_Svc.saveZProductsFuture(productById.keySet());
+        System.enqueueJob(new Product_Svc.saveZProductsQueueable(productById.keySet()));
 }
 
 //private void onAfterDelete() {

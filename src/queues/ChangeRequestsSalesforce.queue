@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>garciam@iata.org</email>
     <name>Change Requests - Salesforce</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>CS_Systems</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

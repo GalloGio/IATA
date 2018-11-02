@@ -402,6 +402,31 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>X04_Completed_Yesterday</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Production_Date__c</field>
+            <operation>equals</operation>
+            <value>YESTERDAY</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Completed</value>
+        </filters>
+        <label>04: Completed Yesterday</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>X07_TXT_DAILY_File_Productions</fullName>
         <columns>NAME</columns>
         <columns>Full_SFDC_ID__c</columns>
@@ -537,6 +562,27 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>ZZZ_MITA_File</fullName>
+        <columns>NAME</columns>
+        <columns>Full_SFDC_ID__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Size__c</columns>
+        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
+        <columns>Production_Date__c</columns>
+        <columns>Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>contains</operation>
+            <value>MITA</value>
+        </filters>
+        <label>ZZZ : MITA File</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>ZZ_Ad_Hoc_Production_Search</fullName>
         <columns>NAME</columns>
         <columns>OBJECT_ID</columns>
@@ -550,19 +596,24 @@
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Status__c</field>
+            <field>Production_Date__c</field>
             <operation>equals</operation>
-            <value>Completed</value>
+            <value>TODAY</value>
         </filters>
         <filters>
             <field>File_Specification__c</field>
             <operation>notContain</operation>
-            <value>Daily,Weekly</value>
+            <value>Daily</value>
         </filters>
         <filters>
-            <field>Production_Date__c</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>MITA</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>notContain</operation>
+            <value>CAC</value>
         </filters>
         <label>ZZ: Ad Hoc Production Search</label>
         <language>en_US</language>

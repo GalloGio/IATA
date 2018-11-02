@@ -985,71 +985,62 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <columns>Scheduled_Date__c</columns>
         <columns>Exact_Target_Campaign_Id__c</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <label>00 - All</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Drafts</fullName>
         <columns>NAME</columns>
         <columns>Maximum_Allowed_Step__c</columns>
+        <columns>Billing_Account__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
             <value>DRAFT</value>
         </filters>
-        <label>Drafts</label>
+        <label>01 - Draft</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>EBC_Approvers_EBC_Campaign</fullName>
-        <filterScope>Queue</filterScope>
-        <label>eBroadcast Approvers</label>
-        <queue>EBC_Approvers</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
+        <fullName>In_Progress</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>Send_Datetime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>STARTED</value>
+        </filters>
+        <label>04 - In Progress</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Pending_Review</fullName>
         <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
         <columns>Campaign_ID__c</columns>
         <columns>Status__c</columns>
         <columns>Audience__c</columns>
-        <columns>Billing_Account__c</columns>
         <columns>EBC_Master_Filter__c</columns>
+        <columns>Number_of_Recipients__c</columns>
         <columns>Scheduled_Date__c</columns>
-        <columns>Exact_Target_Campaign_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
             <value>PENDING_APPROVAL</value>
         </filters>
-        <label>Pending Review</label>
+        <label>02 - Pending Review</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Scheduled_Campaigns</fullName>
-        <columns>NAME</columns>
-        <columns>Campaign_ID__c</columns>
-        <columns>Status__c</columns>
-        <columns>Audience__c</columns>
-        <columns>Billing_Account__c</columns>
-        <columns>EBC_Master_Filter__c</columns>
-        <columns>Scheduled_Date__c</columns>
-        <columns>Number_of_Recipients__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>APPROVED</value>
-        </filters>
-        <label>Scheduled Campaigns</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Sent</fullName>
+        <fullName>Scheduled_Campaigns1</fullName>
         <columns>NAME</columns>
         <columns>Campaign_ID__c</columns>
         <columns>Status__c</columns>
@@ -1062,9 +1053,110 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
+            <value>APPROVED</value>
+        </filters>
+        <label>03 - Scheduled</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Sent</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>Delivered7Days__c</columns>
+        <columns>Number_of_Unique_Opens__c</columns>
+        <columns>OpenRate7Days__c</columns>
+        <columns>Number_of_Unique_Clicks__c</columns>
+        <columns>ClickRate7Days__c</columns>
+        <columns>Send_Datetime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
             <value>SENT</value>
         </filters>
-        <label>Sent</label>
+        <label>05 - Sent</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X06_Rejected</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>Send_Datetime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>REJECTED</value>
+        </filters>
+        <label>06 - Rejected</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X07_Deleted</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>Send_Datetime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>DELETED</value>
+        </filters>
+        <label>07 - Deleted</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X10_Email_Recover</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>Send_Datetime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>EMAIL RECOVER</value>
+        </filters>
+        <label>10 - Email Recover</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_MISC_Search</fullName>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Status__c</columns>
+        <columns>Audience__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>Scheduled_Date__c</columns>
+        <columns>Google_Analytics_Tracking_Code__c</columns>
+        <columns>Is_Google_Analytics_Tracker_Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Billing_Account__c</field>
+            <operation>equals</operation>
+            <value>HotelsPro DMCC</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>PENDING_APPROVAL</value>
+        </filters>
+        <label>ZZ - MISC Search</label>
         <language>en_US</language>
     </listViews>
     <nameField>
