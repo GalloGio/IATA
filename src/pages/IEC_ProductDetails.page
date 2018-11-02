@@ -300,11 +300,10 @@
                                                 <tr>
                                                     <th scope="row">{!$Label.Effective_Date}</th>
                                                     <td>
-                                                        <apex:outputText value="{0, date, medium}" >
+                                                        <apex:outputText value="{0, date, medium}" style="{! IF(isBlank(product.EffectiveFrom), 'display:none', '')}">
                                                             <apex:param value="{!product.EffectiveFrom}" /> 
                                                         </apex:outputText>
                                                         <apex:variable value="1" var="displayEffectiveTo" rendered="{!product.DisplayEffectiveTo}">
-                                                            , 
                                                             {!$Label.Until}&nbsp;
                                                             <apex:outputText value="{0, date, medium}" >
                                                                 <apex:param value="{!product.EffectiveTo}" /> 
