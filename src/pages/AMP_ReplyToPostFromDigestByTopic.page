@@ -93,7 +93,7 @@
 		
 			<apex:pageMessages escape="false" />
 
-			<apex:pageBlockSection title="Step 1 - Select accounts on which you wish your comment to be posted" columns="1" collapsible="false" rendered="{! step == 1}">
+			<apex:pageBlockSection title="Step 1 - Select accounts on which you want your comment to be posted" columns="1" collapsible="false" rendered="{! step == 1}">
 		
 				<apex:pageBlockSectionItem >
 					<apex:outputPanel >
