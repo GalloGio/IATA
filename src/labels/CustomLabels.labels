@@ -21002,6 +21002,22 @@ Please add below all your company valid email domains, including different ones 
         <value>dev@balink.net</value>
     </labels>
     <labels>
+        <fullName>ISSP_Emergency_Support</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Emergency Support</shortDescription>
+        <value>Emergency Support</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Emergency_Support_Subtitle</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Emergency Support Subtitle</shortDescription>
+        <value>Our GDC locations now offer 24x7 Emergency Support in English for critical situation. If your request is not related to an emergency, please use the &quot;Ask a Question&quot; tab</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Enable_Service</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -27135,6 +27151,22 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <protected>false</protected>
         <shortDescription>LVA_CallUsAvailableHours</shortDescription>
         <value>Available Period:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsEmergencyAvailableHours</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsEmergencyAvailableHours</shortDescription>
+        <value>Phone is not available at this time.</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsEmergencyPhoneNumber</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsEmergencyPhoneNumber</shortDescription>
+        <value>Phone is not available at this time.</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>

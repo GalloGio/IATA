@@ -1,0 +1,161 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" >
+<tr valign="top" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div align="justify" style="margin: 0px;"><div align="justify" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0px;"><p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR">Sayın,</span><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:red;mso-bidi-language:TR"> </span><span lang="TR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:red;mso-bidi-font-weight:
+bold"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR">IATA Kodu:&nbsp;<b style="mso-bidi-font-weight:
+normal">{!Case.IATA_Code__c} - No BSP<o:p></o:p></b></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><b><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p>&nbsp;</o:p></span></b></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR">Ödeme kartı işlemleri ve potansiyel veri
+ihlalleri ile ilgili riskler hakkında IATA’ya verilen tavsiyeye göre, BSP
+içerisinde çalışan Kayıtlı Acentelerin, Ödeme Kartı Endüstrisi (PCI) Veri
+Güvenliği Standardı (DSS) uygunluğunun onaylanması gerekmektedir</span><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:Arial;mso-bidi-language:TR">.</span><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="TR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+TR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="TR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+TR">Yolcu Satış Acentesi Kuralları kapsamında, tüm IATA Kayıtlı Acenteler PCI
+DSS ile tam uygunlukta olduklarından emin olmalıdırlar.</span><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="TR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+TR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="TR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+TR">PCI DSS, ticari firmalara (Acente) güvenlik politikası standartlarını,
+teknolojilerini ve ödeme sistemlerini ihlallerden ve kart sahibi verisi
+hırsızlığından koruyan işlemleri anlamak ve uygulamak konusunda yardım etmeyi
+amaçlayan küresel bir standarttır. </span><span lang="TR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR">Yukarıdakilerin ışığı altında, şirketinizin
+uygunluğunu gösterebilmek için bize Uygunluk Onay Belgenizi göndermenizi önemle
+rica ederiz.<o:p></o:p></span></p><p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR"><br></span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt;"><span style="background-color: rgb(255, 255, 255);"><span lang="TR" style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-size: 9pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);">PCI
+DSS kuralları gereği uygunluk sertifikalarının PCI DSS geçerliliği açısından
+tanınmadığını belirtmek isteriz. PCI DSS geçerliliği açısından tanınan tek
+dokumanlar PCI SSC websitesindeki resmi dokumanlardır.</span><span lang="TR" style="font-size: 9pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"> <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">Bunların dışında PCI DSS uygunluğunu veya standardını göstermek
+amacıyla düzenlenmiş herhangi başka bir belge ve ya sertifika tanınır veya
+geçerli değildir.</span></span></span><span lang="TR" style="background-color: rgb(255, 255, 255); font-size: 9pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR">Uygunluk Onay Belgesi, gerekli Uygunluk
+Raporunun veya Öz Değerlendirme Anketinin uygulandığını göstermek ve
+kuruluşunuzun PCI DSS ile uygunluk durumunu ispat etmek için kullanılan bir
+belgedir.</span><span lang="TR" style="font-size:9.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR">PCI DSS’e uygun hale gelmek hakkında daha
+fazla bilgi için, lütfen PCI DSS’ye özel web sayfamızı ziyaret edin: </span><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx"><span style="mso-bidi-language:TR">http://www.iata.org/services/finance/Pages/pci-dss.aspx</span></a><span class="MsoHyperlink"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="TR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+TR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="TR" style="font-size: 9pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span style="background-color: rgb(255, 255, 255);">Eğer şu anda BSP üzerinden Kredi Kartıyla ödeme şeklini kullanan işlem
+yürütmüyorsanız ve yürütmeyi düşünmüyorsanız, <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">Yeterlik Beyanını</span> bu mesaja ek olarak
+gönderebilirsiniz.</span></span><span lang="TR" style="background-color: rgb(255, 255, 255); font-size: 9pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><o:p></o:p></span></p>
+
+<p class="Default" style="background-color: rgb(255, 255, 255); text-align: justify;"><span lang="TR" style="font-size:
+9.0pt;color:#1F4E79;mso-bidi-language:TR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="Default" style="background-color: rgb(255, 255, 255); text-align: justify;"><span lang="TR" style="font-size:
+9.0pt;color:#1F4E79;mso-bidi-language:TR">Söz konusu beyanın doldurulması
+halinde Acentenizden başka bir uygunluk belgesi istenmeyecektir, ancak faaliyet
+gösterdiğiniz ülkenin NewGen ortamı ve karar 812 altına taşınmasından sonra
+Acenteniz için Kredi Kartı ödeme yöntemi devre dışı bırakılacaktır</span><span lang="TR" style="font-size:9.0pt;color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="Default" style="background-color: rgb(255, 255, 255); text-align: justify;"><span lang="TR" style="font-size:
+9.0pt;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:TR">Yukarıda talep edilen
+belgeler (Uygunluk Onay Belgesi veya Kredi Kartı Geçmeme Beyanı) IATA’ya
+Müşteri Hizmetleri Portalı web sayfası </span><span lang="TR" style="font-size:
+9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/cs" target="_blank"><span style="color:#1F4E79;
+mso-bidi-language:TR;text-decoration:none;text-underline:none">http://www.iata.org/cs</span></a></span><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR"> üzerinden gönderilmelidir ve en geç <b style="mso-bidi-font-weight:normal">{!Today()+30}</b> tarihine kadar
+ulaşmalıdır. Lütfen taranmış bir kopyayı
+portal ana sayfanızda ‘Son konularım’ bölümünün altındaki <a href="https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}">{!Case.CaseNumber}</a> kodlu
+konuya ekleyin.</span><span lang="TR" style="font-size:9.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:TR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:TR">Belgenizi nasıl
+göndereceğinize dair talimatları bu mesaja eklenmiş olarak bulabilirsiniz.</span><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:TR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:TR">Acente Yönetim
+Departmanı, bir inceleme yapacak ve mevcut kanıta dayalı olarak karar
+verecektir. <o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<div style="background-color: rgb(255, 255, 255); border: 1pt solid windowtext; padding: 1pt 4pt;">
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;border:none;mso-border-alt:solid windowtext .5pt;padding:0cm;
+mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt"><b style="mso-bidi-font-weight:normal"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:TR">Lütfen, bu gereksinime uygun davranılmaması
+durumunda, her bir IATA talebinin Acenteye karşı Uygunsuzluk Bildirimi / İdari
+Uygunsuzluk ihbarı ile sonuçlanacağını göz önünde bulundurun.</span></b><b style="mso-bidi-font-weight:normal"><span lang="TR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p></o:p></span></b></p>
+
+</div>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:TR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:TR">Bu konuyla en kısa
+zamanda ilgilenirseniz memnun oluruz. IATA’dan daha fazla bilgi almanız
+gerekirse, lütfen Müşteri Portalımız </span><span lang="TR" style="font-size:
+9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span style="color:#1F4E79;mso-bidi-language:TR;text-decoration:none;text-underline:
+none">www.iata.org/cs</span></a></span><span lang="TR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+TR"> aracılığıyla yeni bir sorgu oluşturmaktan çekinmeyin.&nbsp;</span><span lang="TR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p></o:p></span></p><br></div></div>]]></td>
+</tr>
+</table>
