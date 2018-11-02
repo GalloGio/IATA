@@ -1974,7 +1974,15 @@ public without sharing class AMS_Utils {
                     insp.Account__c = insp.OSCAR__r.Account__c;
                 }
                 
-                insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+                /* AMSU-161 - begin - force change of date for these process */
+                //insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+                if(String.isNotBlank(insp.OSCAR__c) && insp.OSCAR__r.Process__c != null && (insp.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP || insp.OSCAR__r.Process__c == AMS_Utils.new_AHA_BSP || insp.OSCAR__r.Process__c == AMS_Utils.new_GSSA)){ 
+                    insp.Date_Organisation_Status_attained__c = system.today();
+                }else{
+                	insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+                }
+                /* AMSU-161 - end */
+                
                 insp.Accreditation_Endorsement_Status_code__c = statusToApply;
                 insp.Last_synchronization__c = system.today();
 
@@ -3107,4 +3115,6 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     /*** AMSU-179 ***/
         public static final List<Schema.FieldSetMember> ACCOUNT_FIELDS_TO_VALIDATE = SObjectType.Account.FieldSets.AMS_ACCOUNT_FIELDS_TO_VALIDATE.getFields();
 
+    /*** AMSU-173 ***/
+    public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
 }
