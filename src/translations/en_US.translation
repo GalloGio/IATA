@@ -11117,6 +11117,14 @@
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Emergency Support --></label>
+        <name>ISSP_Emergency_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Emergency Support Subtitle --></label>
+        <name>ISSP_Emergency_Support_Subtitle</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Enable_Service --></label>
         <name>ISSP_Enable_Service</name>
     </customLabels>
@@ -14275,6 +14283,14 @@
     <customLabels>
         <label><!-- LVA_CallUsAvailableHours --></label>
         <name>LVA_CallUsAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
+        <name>LVA_CallUsEmergencyAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_CallUsEmergencyPhoneNumber --></label>
+        <name>LVA_CallUsEmergencyPhoneNumber</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_CallUsNoConfigAvailable --></label>
