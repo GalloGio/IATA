@@ -21015,7 +21015,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Emergency Support Subtitle</shortDescription>
-        <value>Our GDC locations now offer 24x7 Emergency Support in English for critical situation. Of your request is not related to an emergency, please use the &quot;Ask a Question&quot; tab</value>
+        <value>Our GDC locations now offer 24x7 Emergency Support in English for critical situation. If your request is not related to an emergency, please use the &quot;Ask a Question&quot; tab</value>
     </labels>
     <labels>
         <fullName>ISSP_Enable_Service</fullName>
