@@ -297,7 +297,7 @@
                                                 </tr>
 
                                                 <!-- Effective Dates -->
-                                                <tr style="{! IF(isBlank(product.EffectiveFrom), 'display:none', '')}">
+                                                <tr>
                                                     <th scope="row">{!$Label.Effective_Date}</th>
                                                     <td>
                                                         <apex:outputText value="{0, date, medium}" >
