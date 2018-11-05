@@ -1,9 +1,9 @@
 public class PriceTableAddErrorForDuplicates extends TriggerAction {
 	
 	/**
-	 * Method that checks if the record has a duplicate or not
+	 * Method that checks if the relevant fields for this action were changed
 	 * @param s the affected record
-	 * @return true if there is a duplicate and false if not
+	 * @return true if the relevant fields for this action were changed and false if not
 	 */
 	protected override Boolean isRelevant(SObject s) {
 
@@ -17,16 +17,7 @@ public class PriceTableAddErrorForDuplicates extends TriggerAction {
 				&& ptRecord.Type_Class_of_Agent__c == oldMap.get(ptRecord.Id).Type_Class_of_Agent__c) return false;
 		}
 
-
-		List<Price_Table__c> priceTableList = PriceTableSelector.getInstance().getPriceTablesByISOCountry(ptRecord.ISO_Country__c);
-
-		if(priceTableList.isEmpty()) return false;
-
-		for(Price_Table__c pt : priceTableList) {
-			if(pt.Type_Class_of_Agent__c == ptRecord.Type_Class_of_Agent__c) return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	/**
@@ -37,8 +28,18 @@ public class PriceTableAddErrorForDuplicates extends TriggerAction {
 	 */
 	protected override void execute(List<SObject> records, UnitOfWork uw) {
 
-		for(Price_Table__c pt : (List<Price_Table__c>)records)
-			pt.ISO_Country__c.addError(' A record with the same ISO Country and Agent type is already created. No Duplicates are allowerd.');
+		PriceTableSelector priceTableSelector = PriceTableSelector.getInstance();
+
+		for(Price_Table__c ptRecord : (List<Price_Table__c>)records) {
+
+			for(Price_Table__c pt : priceTableSelector.getPriceTablesByISOCountry(ptRecord.ISO_Country__c)) {
+
+				if(pt.Type_Class_of_Agent__c == ptRecord.Type_Class_of_Agent__c) {
+					ptRecord.ISO_Country__c.addError(' A record with the same ISO Country and Agent type is already created. No Duplicates are allowed.');
+					break;
+				}
+			}
+		}
 	}
 
 }

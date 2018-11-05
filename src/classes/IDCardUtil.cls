@@ -143,6 +143,8 @@ global with sharing class IDCardUtil {
     public static final String CREDENTIAL_NAME = 'IdCard';
     public static final String FOLDER_NAME = 'a0W';
 
+    public static final Id IDCARDMASSAPPLICATION_RTID = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
+
     @RemoteAction
     public static Id IDCardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
     @RemoteAction
