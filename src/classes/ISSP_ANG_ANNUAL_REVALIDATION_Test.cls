@@ -202,22 +202,18 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		insert testcase;
 
-		Test.stopTest();
-
 		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
 
 		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
 
+		Test.stopTest();
+
 		String mode = ctrl.mode;
 
 		List<SelectOption> countryNameList = ctrl.countryNameList;
 		AMS_Accreditation_Country_CheckList__c CountryCheckList = ctrl.CountryCheckList;
-		System.debug('rui2: ' + CountryCheckList);
-		//ctrl.currentAccount.isocountry.Iso_code__c
-		//currentAccount.Account.Sector__c
 
-		//ctrl.securityCheck();
 
 		ctrl.currentIataCode = '87654321';
 		ctrl.loadIataCode();
