@@ -5606,6 +5606,10 @@ and
         <name>ISSP_AMS_Apply_New_Branch_Office</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Head_Entity --></label>
         <name>ISSP_AMS_Apply_New_Head_Entity</name>
     </customLabels>
@@ -9338,6 +9342,10 @@ and
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE --></label>
+        <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL --></label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
@@ -9364,6 +9372,10 @@ and
     <customLabels>
         <label><!-- Annual Revalidation work area title --></label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_SAME_OWNER_ERROR --></label>
+        <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
         <label><!-- Annual Revalidation confirmed status --></label>
@@ -11743,6 +11755,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label>잘못된 비밀번호입니다.</label>
         <name>ISSP_InvalidPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_InvalidPostalCode --></label>
+        <name>ISSP_InvalidPostalCode</name>
     </customLabels>
     <customLabels>
         <label>불만사항</label>
@@ -15011,6 +15027,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Fred_App_Description --></label>
+        <name>OneId_Fred_App_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Fred_Select_Type_of_Company --></label>
