@@ -5604,6 +5604,10 @@ and
         <name>ISSP_AMS_Apply_New_Branch_Office</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Head_Entity --></label>
         <name>ISSP_AMS_Apply_New_Head_Entity</name>
     </customLabels>
@@ -9336,6 +9340,10 @@ and
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE --></label>
+        <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL --></label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
@@ -9362,6 +9370,10 @@ and
     <customLabels>
         <label><!-- Annual Revalidation work area title --></label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_SAME_OWNER_ERROR --></label>
+        <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
         <label><!-- Annual Revalidation confirmed status --></label>
@@ -11740,6 +11752,10 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
     <customLabels>
         <label>Senha inválida.</label>
         <name>ISSP_InvalidPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_InvalidPostalCode --></label>
+        <name>ISSP_InvalidPostalCode</name>
     </customLabels>
     <customLabels>
         <label>Apresentar uma Reclamação</label>
@@ -15011,6 +15027,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
     <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Fred_App_Description --></label>
+        <name>OneId_Fred_App_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Fred_Select_Type_of_Company --></label>
