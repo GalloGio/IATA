@@ -2473,6 +2473,18 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Postal_Code_Format_regEx__c</fullName>
+        <description>regEx to validate correct Postal Code format on online forms</description>
+        <externalId>false</externalId>
+        <inlineHelpText>regEx to validate correct Postal Code format on online forms</inlineHelpText>
+        <label>Postal Code Format regEx</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
         <fullName>Prevent_Portal_Trade_Name_Change__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2676,6 +2688,17 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Tax ID Mandatory?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Number_VAT_field_mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</description>
+        <externalId>false</externalId>
+        <inlineHelpText>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</inlineHelpText>
+        <label>Tax Number / VAT field mandatory</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
