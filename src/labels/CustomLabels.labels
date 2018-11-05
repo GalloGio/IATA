@@ -17524,14 +17524,6 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>* Please confirm which GDSs are used in your company?</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</fullName>
-        <categories>ISSP,ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</shortDescription>
-        <value>The same IATA Code as the one being updated cannot be added as a Company Owner.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
@@ -17562,6 +17554,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>Annual Revalidation work area title</shortDescription>
         <value>Please either confirm or update the details for each IATA Code in your hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</shortDescription>
+        <value>The same IATA Code as the one being updated cannot be added as a Company Owner.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ANNUAL_STATUS_CONFIRMED</fullName>
@@ -28652,6 +28652,13 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_ForgotPassword</shortDescription>
         <value>Forgot your password?</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Fred_App_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Fred_App_Description</shortDescription>
+        <value>CORSIA CO2 emissions reporting for Aircraft Operators and States</value>
     </labels>
     <labels>
         <fullName>OneId_Fred_Select_Type_of_Company</fullName>
