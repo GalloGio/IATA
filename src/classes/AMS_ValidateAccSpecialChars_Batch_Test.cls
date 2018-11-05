@@ -24,7 +24,7 @@ private class AMS_ValidateAccSpecialChars_Batch_Test
 			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
 			IATACode__c = '12345678', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 		
-		Account a2 = new Account(Name='Test2 – Agency', RecordtypeId=agencyRT,
+		Account a2 = new Account(Name='Test2 Agency', RecordtypeId=agencyRT,
 			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
 			IATACode__c = '12345679', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 		Account a3 = new Account(Name='Test3 Agency', RecordtypeId=agencyRT,
