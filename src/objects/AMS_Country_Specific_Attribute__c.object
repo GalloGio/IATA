@@ -53,7 +53,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-    <fields>
         <fullName>ANG_Block_Cut_Cash_Form_of_Payment__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
