@@ -239,7 +239,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	private Boolean checkPreviousOwnership() {
 		Decimal percentage = 0;
 
-		for (AMS_Account_Role__c ar: [SELECT Percentage__c FROM AMS_Account_Role__c WHERE Account__c = :currentAccount.account.Id AND Active__c = true AND (RecordTypeId = :rtAccreditContPreviousOwner OR RecordTypeId = :rtAccreditContPreviousCompanyOwner)])
+		for (AMS_Account_Role__c ar: [SELECT Percentage__c FROM AMS_Account_Role__c WHERE Account__c = :currentAccount.account.Id AND Active__c = true AND RecordTypeId = :ownershipId])
 			percentage += ar.Percentage__c;
 
 		return percentage == 100;
@@ -927,7 +927,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		mapAccountToAccrFormFields = new Map<String, String> {'Name' => 'Account_Name__c', 'IATACode__c' => 'IATACode__c', 'Short_Name__c' => 'Short_Name__c',
             'Location_Class__c' => 'Location_Class__c', 'Location_Type__c' => 'Location_Type__c', 'TradeName__c' => 'Trade_Name__c',
-            'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'Billing_State__c', 'BillingCity' => 'Branch_Office_City__c',
+            'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'State_Province__c', 'BillingCity' => 'Branch_Office_City__c',
             'IATA_ISO_Country__c' => 'ISO_Country__c', 'IATA_ISO_Country__c' => 'Branch_Office_Country__c', 'Iso_State__c' => 'IATA_ISO_State__c', 'ShippingCountry' => 'Shipping_Country__c', 'ShippingStreet' => 'Shipping_Street__c',
             'ShippingPostalCode' => 'Shipping_Postal_Code__c', 'ShippingState' => 'Shipping_State__c', 'ShippingCity' => 'Shipping_City__c', 'Email__c' => 'Branch_Office_Email__c',
             'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone_National__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c', 'Abbreviated_name__c' => 'Abbreviated_name__c',
@@ -937,7 +937,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c', 'Company_Type__c' => 'ISSP_AMS_Legal_Status__c'
 			};
 
-        for (String accountApiName : mapAccountToAccrFormFields.keyset())
+        for (String accountApiName : mapAccountToAccrFormFields.keyset()) 
             newForm.put(mapAccountToAccrFormFields.get(accountApiName), sourceAccount.get(accountApiName));
     }
 
