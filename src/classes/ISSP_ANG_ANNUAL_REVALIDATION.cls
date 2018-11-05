@@ -575,6 +575,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			if(!errorFound) {
 				currentAccount.fw.newform.status__c = FORM_STATUS_COMPLETED;
+				migrateExtraFields();
 			}
 
 			//
@@ -593,6 +594,18 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return null;
+	}
+
+	private void migrateExtraFields() {
+
+		String isoCountryForm = currentAccount.fw.newform.Shipping_Country__c;
+
+		for(IATA_ISO_Country__c ctr : [Select Id, Name from IATA_ISO_Country__c]){
+			if(ctr.Name.toupperCase() == isoCountryForm.toupperCase()){
+				currentAccount.fw.newform.Shipping_ISO_Country__c = ctr.Id;
+				break;
+			}
+		}
 	}
 
 	public PageReference cancelUpdate() {
