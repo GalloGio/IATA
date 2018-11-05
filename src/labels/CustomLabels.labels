@@ -10393,6 +10393,14 @@ IFG Customer Services</value>
         <value>Apply for a New Branch Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Apply_New_Cargo_Head_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Cargo_Head_Office</shortDescription>
+        <value>Apply for New Cargo Head Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Apply_New_Head_Entity</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -17485,6 +17493,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Total Ownership (Individuals + Companies) must equal 100% in order to submit to IATA.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</shortDescription>
+        <value>According to our records the Ownership for this IATA Code is not 100%. Please update the Agency details (Agency Ownership / Shareholding section), to ensure that the total ownership equals 100% in order that we can update our records.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -17506,6 +17522,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ANNUAL_REV_Q3</shortDescription>
         <value>* Please confirm which GDSs are used in your company?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</shortDescription>
+        <value>The same IATA Code as the one being updated cannot be added as a Company Owner.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</fullName>
@@ -22205,6 +22229,14 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP_ChangePassword</shortDescription>
         <value>Invalid password.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_InvalidPostalCode</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_InvalidPostalCode</shortDescription>
+        <value>Invalid Postal Code format</value>
     </labels>
     <labels>
         <fullName>ISSP_IwishToComplain</fullName>
