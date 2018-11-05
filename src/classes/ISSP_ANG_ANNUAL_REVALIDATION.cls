@@ -41,6 +41,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	private static Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
 	private static Id rtAnnualRevalidation = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Annual Revalidation').getRecordTypeId();
 
+	private static Id ownershipId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Account_Role__c').get('Ownership');
+
 	public static String DEFAULT_ICON { get{ return 'glyphicon glyphicon-refresh text-primary';} set;}
 	public static String OK_ICON { get{ return 'glyphicon glyphicon-ok text-success';} set;}
 	public static String CONFIRMED_ICON { get{ return 'glyphicon glyphicon-flag text-danger';} set;}
@@ -82,6 +84,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public String heIataCode {get; set;}
 	public Boolean errorFound {get; set;}
 	public ISSP_ANG_ANNUAL_REV_SUBMIT_REPORT_HELPER submitHelper {get; set;}
+	public Boolean ownershipCompleted {get; set;}
 
 	//modals
 	public string editContactId {get; set;}
@@ -99,6 +102,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     Integer cntAgencyLookups;
     public Boolean isAddCompanyModal {get; set;}
     public string txtHelpCurrency {get; set;}
+    public Boolean ownerWithSameIATACode {get; set;}
 	//modals
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
@@ -203,6 +207,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
         applyLanguage = UserInfo.getLanguage();
 
+        ownershipCompleted = checkPreviousOwnership();
+        ownerWithSameIATACode = false;
+
         if(currentAccount != null && currentAccount.fw != null && this.currentAccount.fw.newForm != null && currentAccount.fw.newForm.ISSP_AMS_Legal_Status__c != null) {
             legalstatus = currentAccount.fw.newForm.ISSP_AMS_Legal_Status__c.toLowerCase();
         }
@@ -227,6 +234,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			update newCase;
 		}
+	}
+
+	private Boolean checkPreviousOwnership() {
+		Decimal percentage = 0;
+
+		for (AMS_Account_Role__c ar: [SELECT Percentage__c FROM AMS_Account_Role__c WHERE Account__c = :currentAccount.account.Id AND Active__c = true AND RecordTypeId = :ownershipId])
+			percentage += ar.Percentage__c;
+
+		return percentage == 100;
 	}
 
 	private void setParentsAndChilds() {
@@ -366,7 +382,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		isoCountryMap = new Map<String, IATA_ISO_Country__c>();
 
         List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, 
-        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c
+        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c, Tax_Number_VAT_field_mandatory__c,
+        								Postal_Code_Format_regEx__c
                                         From IATA_ISO_Country__c
                                         Where ISO_Code__c In :isocodes];
 
@@ -384,7 +401,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity,
                        Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c,
                        Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Sector__c, Category__c,
-                       License_Number__c, GDS__c,
+                       License_Number__c, GDS__c, Site,
                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
 				  From Account
 				 Where Id in :accountIds
@@ -409,6 +426,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 															  getForm(currentIataCode),
 															  getIsoCountry(accountsMap.get(currentIataCode).Country_ISO_Code__c),
 															  (currentIataCode == heIataCode));
+		ownershipCompleted = checkPreviousOwnership();
 		return null;
 	}
 
@@ -909,17 +927,17 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		mapAccountToAccrFormFields = new Map<String, String> {'Name' => 'Account_Name__c', 'IATACode__c' => 'IATACode__c', 'Short_Name__c' => 'Short_Name__c',
             'Location_Class__c' => 'Location_Class__c', 'Location_Type__c' => 'Location_Type__c', 'TradeName__c' => 'Trade_Name__c',
-            'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'Billing_State__c', 'BillingCity' => 'Branch_Office_City__c',
+            'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'State_Province__c', 'BillingCity' => 'Branch_Office_City__c',
             'IATA_ISO_Country__c' => 'ISO_Country__c', 'IATA_ISO_Country__c' => 'Branch_Office_Country__c', 'Iso_State__c' => 'IATA_ISO_State__c', 'ShippingCountry' => 'Shipping_Country__c', 'ShippingStreet' => 'Shipping_Street__c',
             'ShippingPostalCode' => 'Shipping_Postal_Code__c', 'ShippingState' => 'Shipping_State__c', 'ShippingCity' => 'Shipping_City__c', 'Email__c' => 'Branch_Office_Email__c',
-            'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c', 'Abbreviated_name__c' => 'Abbreviated_name__c',
+            'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone_National__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c', 'Abbreviated_name__c' => 'Abbreviated_name__c',
             'Abbreviated_Address__c' => 'Abbreviated_Address__c', 'Remittance_frequency__c' => 'Remittance_frequency__c', 'Solicitation_Flag__c' => 'Solicitation_Flag__c',
             'VAT_Number_2__c' => 'VAT_Number_2__c', 'CASS_Number__c' => 'CASS_Number__c', 'VAT_Number__c' => 'ISSP_AMS_VAT_number__c', 'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c', 
             'License_Number__c' => 'ISSP_AMS_License_No__c', 'GDS__c' => 'ISSP_AMS_GDS_with_signed_contract__c', 'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c',
             'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c', 'Company_Type__c' => 'ISSP_AMS_Legal_Status__c'
 			};
 
-        for (String accountApiName : mapAccountToAccrFormFields.keyset())
+        for (String accountApiName : mapAccountToAccrFormFields.keyset()) 
             newForm.put(mapAccountToAccrFormFields.get(accountApiName), sourceAccount.get(accountApiName));
     }
 
@@ -1195,6 +1213,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		errorFound = false;
 		Pattern iso8859 = Pattern.compile(ISO_8859_1_regEx);
+		Pattern postalCodeRegex;
+
+		if (currentAccount.isocountry.Postal_Code_Format_regEx__c != null && currentAccount.isocountry.Postal_Code_Format_regEx__c != '')
+			postalCodeRegex = Pattern.compile(currentAccount.isocountry.Postal_Code_Format_regEx__c);
 
 		if(!currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Legal_Details__c &&
 			!currentAccount.fw.newForm.Confirm_Location_Details_are_correct__c && !currentAccount.fw.newForm.Notify_Change_Location__c &&
@@ -1231,10 +1253,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
+				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
-				} else if (currentAccount.fw.newForm.INVALID_Tax_Number__c && currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
+				} else if (currentAccount.fw.newForm.INVALID_Tax_Number__c && currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);
 					errorFound = true;
 				}
@@ -1299,6 +1321,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				if (currentAccount.fw.newform.Shipping_Postal_Code__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
 					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
+				} else if (postalCodeRegex != null && currentAccount.fw.newform.Shipping_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
+					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
+            		errorFound = true;
 				}
 
 				if (currentAccount.fw.newform.Shipping_ISO_State__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_ISO_State__c).matches()) {
@@ -1306,7 +1331,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.fw.newform.Branch_Office_Phone_National__c == null) {
+				if (currentAccount.fw.newform.Branch_Office_Phone_National__c == null || currentAccount.fw.newform.Branch_Office_Phone_National__c == '') {
 					currentAccount.fw.newform.Branch_Office_Phone_National__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				}
@@ -1323,10 +1348,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 				Pattern validUrl = Pattern.compile(ISSP_CS__c.getValues('ISSP AMS ALLOWED AGENCY URL').Value__c);
 
-				if (currentAccount.fw.newform.Website__c == null) {
-					currentAccount.fw.newform.Website__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				} else if (currentAccount.fw.newform.Website__c != null && !validUrl.matcher(currentAccount.fw.newForm.Website__c.toLowerCase()).matches()) {
+				if (currentAccount.fw.newform.Website__c != null && !validUrl.matcher(currentAccount.fw.newForm.Website__c.toLowerCase()).matches()) {
 					currentAccount.fw.newForm.Website__c.addError(Label.ISSP_AMS_Valid_URL);
 		            errorFound = true;
 				} else if (currentAccount.fw.newform.Website__c != null && !iso8859.matcher(currentAccount.fw.newform.Website__c).matches()) {
@@ -1336,6 +1358,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 				if (currentAccount.fw.newform.Branch_Office_Postal_code__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_Postal_code__c).matches()) {
 					currentAccount.fw.newform.Branch_Office_Postal_code__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
+				} else if (postalCodeRegex != null && currentAccount.fw.newform.Branch_Office_Postal_code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Branch_Office_Postal_code__c).matches()) {
+					currentAccount.fw.newform.Branch_Office_Postal_code__c.addError(Label.ISSP_InvalidPostalCode);
             		errorFound = true;
 				}
 
@@ -1350,6 +1375,16 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				}
 
 				if (currentAccount.isocountry.Local_language_Agency_details_required__c) {
+					if (postalCodeRegex != null && currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c).matches()) {
+						currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
+            			errorFound = true;
+					}
+
+					if (postalCodeRegex != null && currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c).matches()) {
+						currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
+            			errorFound = true;
+					}
+
 					if (currentAccount.fw.newform.Local_Physical_Address_Street__c == null) {
 						currentAccount.fw.newform.Local_Physical_Address_Street__c.addError(Label.ISSP_YouMustEnter);
 						errorFound = true;
@@ -1642,11 +1677,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                 contactSaved = false;
                 return;
             }
-            if (currentAccount.newContact.Registration_number__c == null || currentAccount.newContact.Name == null || currentAccount.newContact.Financial_interest__c == null ) {
-                contactSaved = false;
-                return;
-            }
-            if (!validateCharactersInCompanyWindow()) {
+
+            if (currentAccount.newContact.Registration_number__c == null || currentAccount.newContact.Name == null || currentAccount.newContact.Financial_interest__c == null || !validateCharactersInCompanyWindow() || ownerWithSameIATACode) {
                 contactSaved = false;
                 return;
             }
@@ -1992,9 +2024,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         Account generalAccount = null;
         companyModalAddress = '';
         companyModalNameOfEmployer = '';
+        ownerWithSameIATACode = false;
 
         if (iatacode == null || iatacode.length() < 7)
             return null;
+
+        if (iatacode == currentAccount.account.IATACode__c || iatacode == currentAccount.account.Site) {
+        	ownerWithSameIATACode = true;
+        	return null;
+        }
 
         //Limit how many calls can be made to this service, to prevent a user from attempting to retrieve full list of agents
         cntAgencyLookups += 1;
@@ -2012,7 +2050,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		System.debug('alex agentaccounts : ' + agentaccounts);
 
         if (agentaccounts!= null && !agentaccounts.isEmpty()) {
-			generalAccount = agentaccounts[0];
+        	generalAccount = agentaccounts[0];
             String agentAddress;
 
             TravelAgentPrevAccount = agentaccounts[0];
@@ -2022,6 +2060,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                             ' \r\n' + AMS_Utils.notNull(TravelAgentPrevAccount.BillingCountry);
 
 			companyModalNameOfEmployer = AMS_Utils.notNull(generalAccount.Name);
+			companyModalAddress = agentAddress;
 
             currentAccount.newContact.Prev_Job2_Address__c = agentAddress;
             currentAccount.newContact.Prev_Job2_Employer__c = TravelAgentPrevAccount.Name;
