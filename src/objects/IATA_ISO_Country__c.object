@@ -2611,6 +2611,15 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>State_Province_Mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>State/Province Mandatory</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sub_Region__c</fullName>
         <externalId>false</externalId>
         <label>Sub Region</label>
