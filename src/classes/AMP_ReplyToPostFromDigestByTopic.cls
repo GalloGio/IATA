@@ -121,7 +121,7 @@ public class AMP_ReplyToPostFromDigestByTopic {
 	public PageReference postReplyMessages(){
 		
 		if(String.isBlank(message)){
-			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please type in the reply message.'));
+			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please insert the comment.'));
 			return null;
 		}
 		
@@ -146,14 +146,14 @@ public class AMP_ReplyToPostFromDigestByTopic {
 				insert feedCommentLst;
 			}
 			
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The reply messages were successfully posted.'));
-			
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The comments were successfully posted.'));
+
 			step = 3;
 			
 		}
 		catch(Exception e){
 			System.debug(LoggingLevel.ERROR, '____ [cls AMP_ReplyToPostFromDigestByTopic - postReplyMessages] Exception: ' + e.getMessage());
-			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'The reply messages failed to be posted.'));
+			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'The comments failed to be posted.'));
 		}
 		
 		return null;
@@ -178,7 +178,7 @@ public class AMP_ReplyToPostFromDigestByTopic {
 		}
 		
 		if(this.selectedFeedItemAccountLst.isEmpty()){
-			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please select at least one Account from the list.'));
+			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please select at least one account from the list.'));
 			return null;
 		}
 		
