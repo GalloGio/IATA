@@ -25,6 +25,9 @@ global class ANG_RME_Alert_Service {
 		public String thresholdLevel;
 		public String direction;
 
+		//Used only on RTS ALert
+		public String rtsSeverity;
+		public Decimal agentSales;
 		//Used on INT 033: Request Provisional RHC (button)
 		public String title;
 		public String transactionId;
@@ -115,6 +118,10 @@ global class ANG_RME_Alert_Service {
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
 
 			if(accs.isEmpty()) 								setResponse('No agent found with IATA Code '+req.iataCode, 404);
+
+			//handle Real Time Sales alert request 
+			else if(req.eventType == 'RTSAlert') 			saveRTSAlert(req, accs[0].Id);
+
 			else if(accs[0].RHC_Informations__r.isEmpty())	setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
 			else if(accs[0].RHC_informations__r.size()>1)	setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
 			else{
@@ -175,6 +182,66 @@ global class ANG_RME_Alert_Service {
 
 		update rhcInfo;
 		setResponse(null, 202);
+	}
+
+	private static void saveRTSAlert(RHCMessage req, Id accountId){
+
+		if(!validateRTSAlert(req)) return;
+
+		ANG_Risk_Alert__c rtsAlert = new ANG_Risk_Alert__c(
+			RecordTypeId = Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+			ANG_Severity__c= req.rtsSeverity,
+			ANG_Agent_Sales__c = req.agentSales,
+			CurrencyIsoCode = req.storedBaseCurrency,
+			ANG_Account__c = accountId,
+			ANG_EventId__c = req.eventId
+		);
+    	insert rtsAlert;
+    	setResponse(null, 202);
+	}
+
+	private static Boolean validateRTSAlert(RHCMessage req) {
+
+		// validate fields required
+		if (String.isBlank(req.rtsSeverity) || req.agentSales == null || String.isBlank(req.eventId)) {
+			setResponse('Required values missing: '
+				+ (String.isBlank(req.rtsSeverity) ? 'rtsSeverity ' : '') 
+				+ (req.agentSales == null ? 'agentSales ' : '' )
+				+ (String.isBlank(req.eventId) ? 'eventId ' : '')
+				, 400);
+			return false;
+		}
+
+		//validate severity value - check if exists on picklist
+		String severPLvals = '';
+		for (Schema.PicklistEntry entry :ANG_Risk_Alert__c.ANG_Severity__c.getDescribe().getPicklistValues()){
+				
+			if(String.isBlank(severPLvals))
+				severPLvals = entry.getValue();
+			else 
+				severPLvals += ',' + entry.getValue();
+		}
+
+		if (!(new Set<String>(severPLvals.split(','))).contains(req.rtsSeverity)) {
+
+			setResponse('Invalid rtsSeverity: "'+req.rtsSeverity+'". Field is case Sensitive. Allowed values are: '+severPLvals, 400);
+			return false;
+		}
+
+		//validate currency
+		Set<String> currencyPLvals = new Set<String>();
+
+		for (Schema.Picklistentry entry: ANG_Risk_Alert__c.getSObjectType().getDescribe().fields.getMap().get('CurrencyIsoCode').getDescribe().getPickListValues()){
+			currencyPLvals.add(entry.getValue());
+		}
+
+		if (!currencyPLvals.contains(req.storedBaseCurrency)){
+			setResponse('Invalid storedBaseCurrency: "'+req.storedBaseCurrency+'". Currency code must have 3 upper case characters.', 400);
+			return false; 
+		}
+
+		return true;
+
 	}
 
 	global class WebserviceResult {
