@@ -177,7 +177,7 @@ global class AMS_OSCAR_Webservice {
 
             ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
 
-            List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c, OSCAR__r.Account__r.Name from Case where OSCAR__c = : oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+            List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c, OSCAR__r.Account__r.Name from Case where OSCAR__c = : oscar.Id AND ( (ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) OR (Parent.RecordType.Name = 'OSCAR Communication' AND Parent.Reason1__c ='Annual revalidation')) limit 1];
 
             if (cases == null || cases.isEmpty()) {
                 result = 'Could not find a the Oscar Communication case related to this OSCAR.';
@@ -339,7 +339,7 @@ global class AMS_OSCAR_Webservice {
             oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.Step35__c,
             oscar__r.RPM_Approval__c, oscar__r.Step44__c
             FROM Case
-            WHERE OSCAR__c = :oscarId AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )
+            WHERE OSCAR__c = :oscarId AND ( (ParentId = null or Parent.RecordType.Name != 'OSCAR Communication') OR (Parent.RecordType.Name = 'OSCAR Communication' AND Parent.Reason1__c ='Annual revalidation' ))
             LIMIT 1];
         if (cases.isEmpty()) {
             throw new OSCARException('Could not find a the Oscar Communication case related to this OSCAR');
