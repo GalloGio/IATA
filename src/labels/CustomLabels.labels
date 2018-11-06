@@ -853,13 +853,6 @@
 Please issue a Credit Note in order to refund the change fee.</value>
     </labels>
     <labels>
-        <fullName>AMS_XML_GEN_ERROR_RECEIVER</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_XML_GEN_ERROR_RECEIVER</shortDescription>
-        <value>howj@iata.org</value>
-    </labels>
-    <labels>
         <fullName>ANG_AE_separate_Legal_Entity</fullName>
         <categories>ANG</categories>
         <language>en_US</language>
