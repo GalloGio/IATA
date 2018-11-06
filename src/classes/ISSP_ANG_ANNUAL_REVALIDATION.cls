@@ -1331,6 +1331,13 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
+				if (currentAccount.fw.newform.Shipping_Country__c == null) {
+					currentAccount.fw.newform.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else if (currentAccount.fw.newform.Shipping_Country__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Country__c).matches()) {
+					currentAccount.fw.newform.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
+				}
 				if (currentAccount.isocountry.IEC_Zip_Postal_Code_required__c && currentAccount.fw.newform.Shipping_Postal_Code__c == null) {
 					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
