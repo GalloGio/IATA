@@ -208,7 +208,6 @@
                 <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!text5}</b> {!cc.Name}"></apex:outputText> 
                 <br/>
                 <br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!text6}</b> {!cc.Date_of_Birth__c}"></apex:outputText> 
                 <br/>
                 <br/>
                 <!-- <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>VER#:</b> {!cc.VER_Number__c}"></apex:outputText> --> 
