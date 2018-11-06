@@ -253,8 +253,26 @@
                         $(".shipping_postal_code__c").attr('disabled','disabled');
                         $(".shipping_state__c").attr('disabled','disabled');
                     }
-                    
-                    
+
+                    if ('{!ca.isocountry.IEC_Zip_Postal_Code_required__c}' == 'true') {
+                        $('[id$="branch_office_postal_code__c"]').parent().prev().children().text(function () {
+                            return "* " + $(this).text();
+                        });
+                        
+                        $('[id$="shipping_postal_code__c"]').parent().prev().children().text(function () {
+                            return "* " + $(this).text();
+                        });
+                    }
+
+                    if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'true') {
+                        $('[id$="state_province__c"]').parent().prev().children().text(function () {
+                            return "* " + $(this).text();
+                        });
+                        
+                        $('[id$="shipping_state__c"]').parent().prev().children().text(function () {
+                            return "* " + $(this).text();
+                        });
+                    }
                 </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
@@ -359,6 +377,17 @@
             </apex:pageBlockSection>
 
             <apex:pageBlockSection columns="1" collapsible="false">
+                <script type="text/javascript">
+                    if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'true') {
+                        $('[id$="PhysicalProvince"]').text(function () {
+                            return $(this).text().replace('*', ''); 
+                        });​​​​​
+
+                        $('[id$="PostalProvince"]').text(function () {
+                            return $(this).text().replace('*', ''); 
+                        });​​​​​
+                    }
+                </script>
 
                 <apex:outputPanel id="checkBoxAndInfo">
                     <apex:pageBlockSection columns="2">
@@ -425,12 +454,12 @@
                     <apex:pageBlockSection columns="2" collapsible="false">
 
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
+                            <apex:outputLabel value="{!IF(ca.isocountry.IEC_Zip_Postal_Code_required__c, '* ','')}{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
                             <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode" id="PhysicalPostalCode"/>
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
+                            <apex:outputLabel value="{!IF(ca.isocountry.IEC_Zip_Postal_Code_required__c, '* ','')}{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
                             <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode" id="PostalPostalCode"/>
                         </apex:pageBlockSectionItem>
 
