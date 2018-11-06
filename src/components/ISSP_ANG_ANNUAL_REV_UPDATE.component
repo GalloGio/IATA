@@ -1048,7 +1048,6 @@
             $(".country__c").attr('disabled','disabled');
 
             $(".shipping_country__c").val("{!ca.isocountry.Name}");
-            //put it mandatory
             
              $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
