@@ -42,7 +42,6 @@ src/staticresources/eBroadcastAssets.resource
 src/applications/standard__Platform.app
 src/applications/standard__LightningSalesConsole.app
 src/layouts/Macro-Macro Layout.layout
-src/objects/CampaignMember.object
 
 src/profilesApex/Marketing\ User.profile
 src/profilesApex/Standard\ User.profile
@@ -281,7 +280,6 @@ src/workflows/SocialPost.workflow
 src/layouts/EmailMessage-Email Message Layout.layout
 src/applications/standard__DataAssessment.app
 src/applications/standard__LightningSales.app
-src/applications/standard__LightningInstrumentation.app
 src/workflows/Contact.workflow
 src/workflows/ACCA_Notification_on_new_Application_Change_Request.workflow
 src/workflows/ACCA_Notification_on_new_Application_Change_Request_ISIS2_ISIS2D.workflow
@@ -305,9 +303,6 @@ src/workflows/SIS_Escalated_case_notification_to_CS_Manager.workflow
 src/workflows/SIS_HD_New_case_comment_notification.workflow
 src/workflows/ZMG_Send_Survey_Email_to_Case_Contact_after_Case_Closed.workflow
 src/workflows/Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application.workflow
-src/workflows/RequestsForAccessSIQ.workflow
-src/workflows/StreamActivityAccess.workflow
-src/queues/CasesAmericasemails.queue
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace
@@ -338,4 +333,3 @@ config/*
 out
 config/*
 README.md
-uncrustify.cfg

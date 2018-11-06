@@ -84,7 +84,10 @@ private class ANG_MasterData_Interface_test {
                 insert new list<Agency_Authorization__c>{agAurthRec,agAurthRec2};
 
                 ANG_RHC_Information__c rhcRec = new ANG_RHC_Information__c(
-                        ANG_AccountId__c = acc.id
+                        ANG_AccountId__c = acc.id,
+                        ANG_Financial_Security__c = 20000,
+                        ANG_RHC_Amount__c = 20000,
+                        CurrencyIsoCode = 'USD'
                 );
                 insert rhcRec;
 	}
