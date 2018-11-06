@@ -149,30 +149,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Invitation_Primary_Max__c</fullName>
-        <externalId>false</externalId>
-        <label>Invitation Primary Max</label>
-        <precision>2</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Invitation_Secondary_Max__c</fullName>
-        <externalId>false</externalId>
-        <label>Invitation Secondary Max</label>
-        <precision>2</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Is_Active__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
