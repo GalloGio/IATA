@@ -1048,8 +1048,12 @@
             $(".country__c").attr('disabled','disabled');
 
             $(".shipping_country__c").val("{!ca.isocountry.Name}");
-            $(".shipping_country__c").attr('readonly', true);
-            $(".shipping_country__c").attr('disabled','disabled');
+            //put it mandatory
+            
+             $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
+                return "* " + $(this).text();
+            });
+     
             
             $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
