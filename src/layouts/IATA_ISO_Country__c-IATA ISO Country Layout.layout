@@ -234,6 +234,10 @@
                 <behavior>Edit</behavior>
                 <field>Due_diligence_mandatory__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Postal_Code_Hint_Format__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

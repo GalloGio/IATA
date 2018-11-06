@@ -383,7 +383,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
         List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, 
         								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c, Tax_Number_VAT_field_mandatory__c,
-        								Postal_Code_Format_regEx__c, IEC_Zip_Postal_Code_required__c, State_Province_Mandatory__c
+        								Postal_Code_Format_regEx__c, IEC_Zip_Postal_Code_required__c, State_Province_Mandatory__c, Postal_Code_Hint_Format__c
                                         From IATA_ISO_Country__c
                                         Where ISO_Code__c In :isocodes];
 
