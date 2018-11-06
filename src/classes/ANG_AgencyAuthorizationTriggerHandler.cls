@@ -24,7 +24,7 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
              }
          }
 
- 		new ANG_AgencyEventsGenerator(listAuthP,mapOldAuthP,'AgencyAuthorization','Account__c', 'Account__c').run(); 
+ 		new ANG_AgencyEventsGenerator(listAuthP,mapOldAuthP,'AgencyAuthorization','Account__c').run(); 
 	}
 
 	public static void handleAfterUpdate(List<Agency_Authorization__c> triggerNew, Map<Id,Agency_Authorization__c> oldMap){
@@ -36,7 +36,7 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
  				listAuthp.add(a);
  		}
 
- 		new ANG_AgencyEventsGenerator(listAuthP,oldMap,'AgencyAuthorization','Account__c', 'Account__c').run(); 
+ 		new ANG_AgencyEventsGenerator(listAuthP,oldMap,'AgencyAuthorization','Account__c').run(); 
 	}
 
 
