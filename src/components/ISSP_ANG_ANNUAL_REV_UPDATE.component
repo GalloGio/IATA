@@ -274,7 +274,7 @@
                         });
                     }
 
-                    if ('{!ca.isocountry.Postal_Code_Hint_Format__c}' != '' && '{!ca.isocountry.Postal_Code_Format_regEx__c}' != 'true') {
+                    if ('{!ca.isocountry.Postal_Code_Hint_Format__c}' != '' && '{!ca.isocountry.Postal_Code_Format_regEx__c}' != '') {
                         $(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
                         $(".shipping_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
                     }
