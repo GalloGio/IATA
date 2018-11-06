@@ -102,7 +102,7 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 		
 		ctrl.nextStep();
 		
-		findApexMessage('Please select at least one Account from the list.', ApexPages.Severity.ERROR);
+		findApexMessage('Please select at least one account from the list.', ApexPages.Severity.ERROR);
 		
 		for(AMP_ReplyToPostFromDigestByTopic.FeedItemWrapper wrap : ctrl.feedItemAccountLst){
 			wrap.isSelected = true;
@@ -113,12 +113,12 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 		ctrl.nextStep();
 		ctrl.postReplyMessages();
 		
-		findApexMessage('Please type in the reply message.', ApexPages.Severity.ERROR);
+		findApexMessage('Please insert the comment.', ApexPages.Severity.ERROR);
 		
 		ctrl.message = replyMessage;
 		ctrl.postReplyMessages();
 		
-		findApexMessage('The reply messages were successfully posted.', ApexPages.Severity.INFO);
+		findApexMessage('The comments were successfully posted.', ApexPages.Severity.INFO);
 		
 		ctrl.restartFromStep1();
 		
@@ -135,7 +135,7 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 		system.assertEquals(ctrl.feedItemAccountLst.size(), feedCommentLst.size(), 'Must be created two feed comments');
 		
 		for(FeedComment comment : feedCommentLst){
-			system.assertEquals(replyMessage, comment.CommentBody, 'The replied message must be the following: ' + replyMessage);
+			system.assertEquals(replyMessage, comment.CommentBody, 'The comment must be the following: ' + replyMessage);
 		}
 				
 	}
@@ -163,7 +163,7 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 		ctrl.message = replyMessage;
 		ctrl.postReplyMessages();
 		
-		findApexMessage('The reply messages failed to be posted.', ApexPages.Severity.ERROR);
+		findApexMessage('The comments failed to be posted.', ApexPages.Severity.ERROR);
 		
 	}
 	
