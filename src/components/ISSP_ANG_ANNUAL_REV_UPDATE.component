@@ -378,14 +378,14 @@
 
             <apex:pageBlockSection columns="1" collapsible="false">
                 <script type="text/javascript">
-                    if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'true') {
-                        $('[id$="PhysicalProvince"]').text(function () {
-                            return $(this).text().replace('*', ''); 
-                        });​​​​​
-
-                        $('[id$="PostalProvince"]').text(function () {
-                            return $(this).text().replace('*', ''); 
-                        });​​​​​
+                    if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'false') {
+                        $('[id$="PhysicalProvince"]').parent().prev().child().text(function () {
+                            return $(this).text().replace("*", ""); 
+                        });
+                        
+                        $('[id$="PostalProvince"]').parent().prev().child().text(function () {
+                            return $(this).text().replace("*", ""); 
+                        });
                     }
                 </script>
 
@@ -1048,8 +1048,11 @@
             $(".country__c").attr('disabled','disabled');
 
             $(".shipping_country__c").val("{!ca.isocountry.Name}");
-            $(".shipping_country__c").attr('readonly', true);
-            $(".shipping_country__c").attr('disabled','disabled');
+            
+             $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
+                return "* " + $(this).text();
+            });
+     
             
             $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
