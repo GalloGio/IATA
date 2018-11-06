@@ -342,6 +342,7 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 	
 	global void finish(Database.BatchableContext BC){
 		if (!isCloseChildCases) {
+			list<Case> listInsertCases = new list<Case>();
 			// create one single case for AP for the suspension
 			Id RT_AirlineParticipationProcess_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IDFS_Airline_Participation_Process');
 			
