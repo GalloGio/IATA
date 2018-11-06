@@ -270,7 +270,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
     if (!Test.isRunningTest() && sender != null)  email.setOrgWideEmailAddressId(sender.value__c);
-    email.setBccAddresses(new list<string> {'aertsr@iata.org','rovedaa@iata.org'});
+    email.setBccAddresses(new list<string> {'aertsr@iata.org','rovedaa@iata.org','irturko@iata.org'});
     email.setPlainTextBody(log);
     email.setSubject('Instant survey email batch');
     Messaging.sendEmail(new list<Messaging.SingleEmailMessage> {email});
@@ -285,7 +285,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     // Send an email to the Apex job's submitter notifying of job completion.
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-    String[] toAddresses = new String[] {'aertsr@iata.org','rovedaa@iata.org'};
+    String[] toAddresses = new String[] {'aertsr@iata.org','rovedaa@iata.org','irturko@iata.org'};
     mail.setToAddresses(toAddresses);
     mail.setSubject('Instant Survey Customer Recovery batch status: ' + a.Status);
     mail.setPlainTextBody ('The batch process that processes the Instant Surveys with a score between 0 and 4 processed ' + a.TotalJobItems + ' survey batches (containing up to 10 surveys each) with ' + a.NumberOfErrors + ' failures.');
@@ -316,6 +316,14 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
       String RoleName = c.WhoClosedCase__r.UserRole.Name != null ? c.WhoClosedCase__r.UserRole.Name : 'none';
       String ProfileName = c.WhoClosedCase__r.Profile.Name != null ? c.WhoClosedCase__r.Profile.Name : 'none';
+      System.debug('::: RoleName : ' + RoleName + 'ProfileName : ' + ProfileName);
+
+      // Conditions requested on INC428523
+      if((c.Reason1__c == 'Debt Recovery' && RoleName.contains('E&F')) || (c.Origin == 'E&F Client – Email to Case') || (RoleName.contains('E&F Client Services'))){
+        System.debug('Bypass case due to match conditions : c.Reason1__c = Debt Recovery AND RoleName.contains(E&F) OR c.Origin = E&F Client – Email to Case OR RoleName.contains(E&F Client Services)');
+        continue;
+      }
+      // End of requested conditions on INC428523 
 
       // Using the country data from the contact's account and not from the  AccountCountry anymore, to minimize the risk of select the wrong language
       String AccountCountry = '';
