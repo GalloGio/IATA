@@ -273,6 +273,11 @@
                             return "* " + $(this).text();
                         });
                     }
+
+                    if ('{!ca.isocountry.Postal_Code_Hint_Format__c}' != '' && '{!ca.isocountry.Postal_Code_Format_regEx__c}' != 'true') {
+                        $(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
+                        $(".shipping_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
+                    }
                 </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
@@ -455,12 +460,12 @@
 
                         <apex:pageBlockSectionItem >
                             <apex:outputLabel value="{!IF(ca.isocountry.IEC_Zip_Postal_Code_required__c, '* ','')}{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode" id="PhysicalPostalCode"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode" id="PhysicalPostalCode" html-placeholder="{!IF(AND(ca.isocountry.Postal_Code_Hint_Format__c != null, ca.isocountry.Postal_Code_Hint_Format__c != ''), ca.isocountry.Postal_Code_Hint_Format__c, '')}"/>
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem >
                             <apex:outputLabel value="{!IF(ca.isocountry.IEC_Zip_Postal_Code_required__c, '* ','')}{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode" id="PostalPostalCode"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode" id="PostalPostalCode" html-placeholder="{!IF(AND(ca.isocountry.Postal_Code_Hint_Format__c != null, ca.isocountry.Postal_Code_Hint_Format__c != ''), ca.isocountry.Postal_Code_Hint_Format__c, '')}"/>
                         </apex:pageBlockSectionItem>
 
                     </apex:pageBlockSection>
