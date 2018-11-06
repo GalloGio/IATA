@@ -33,7 +33,7 @@
                 <height>200</height>
                 <page>GenericAttachmentListExternalReport</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
