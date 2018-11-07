@@ -1071,6 +1071,16 @@
             $(".country__c").attr('readonly', true);
             $(".country__c").attr('disabled','disabled');
 
+
+            $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
+            var oldElemt=$('#shipping_country__c > input');
+            
+            oldElemt.attr('Style','display:none;');
+            $('#shipping_country__c').css("padding-right",0);
+            if($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length>0){
+                $('[id$="ShippingCountryList"]').css({'border-width':'2px','border-color':'#d74c3b'})
+            }
+
            // $(".shipping_country__c").val("{!ca.isocountry.Name}");
             
              $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
