@@ -64,8 +64,11 @@
     <label>GDP Area Definition</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Country_Selection__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>GDP Area Definition Name</label>

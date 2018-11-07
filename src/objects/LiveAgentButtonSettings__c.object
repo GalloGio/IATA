@@ -54,5 +54,17 @@
         <type>TextArea</type>
     </fields>
     <label>LiveAgentButtonSettings</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Sectors__c</columns>
+        <columns>Language__c</columns>
+        <columns>ButtonId__c</columns>
+        <columns>DeploymentId__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

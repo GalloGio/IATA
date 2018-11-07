@@ -78,6 +78,8 @@ private class ang_AmendFS_test {
 	 	//new minimum fs on rhc == inserted financial security
 	 	system.assertEquals([select ANG_Minimum_Financial_Security__c from ANG_RHC_Information__c limit 1].get(0).ANG_Minimum_Financial_Security__c,[select id,ANG_Minimum_Financial_Security__c from Financial_Security__c limit 1].get(0).ANG_Minimum_Financial_Security__c);
 	 	ANG_AmendFS plugin = new ANG_AmendFS();
+		
+		Test.startTest();
 
 	 	Case c = new Case(
         		Subject = 'second case', 
@@ -101,7 +103,9 @@ private class ang_AmendFS_test {
     	Process.PluginRequest request = new Process.PluginRequest(inputParams);
     	Process.PluginResult result = plugin.invoke(request);
     	Process.PluginDescribeResult describeresult= plugin.describe();
-
+		
+		Test.stopTest();
+		
     	string newFSId= String.valueOF(result.outputParameters.get('CreatedFSId'));
     	
     	//new minimum fs on rhc from selected case

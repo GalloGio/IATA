@@ -201,8 +201,9 @@
         .ui-dialog-title {font-size:14px; color:white;}
         .domainnamelabel {font-size:14px;}
     </style>
+    <c:ISSP_CustomNavigation />
     <div class="container">
-        <c:ISSP_CustomNavigation />
+        <div id="contentWrapper">
         <apex:form >
             <div class="panel panel-primary">
                 <div class="panel-heading head_panel_green">
@@ -302,8 +303,11 @@
 
                 </div>
             </div><!-- end panel body -->
+
         </apex:form>
     </div>
+    </div>
+    <c:ISSP_CustomFooter/>
 </body>
 </html>
 </apex:page>

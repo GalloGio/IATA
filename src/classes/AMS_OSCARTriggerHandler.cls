@@ -2302,6 +2302,10 @@ public class AMS_OSCARTriggerHandler {
     }
 
     private static void updateOSCARAppointments(){
+        //AMSU-161
+        AMS_InspectionHelper.runnigFromOSCAR = true;
+        System.debug('updateOSCARAppointments Begin!');
+
 
         List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
         Set<Id> oscarsToProcessIds = new Set<Id>();
@@ -2318,10 +2322,15 @@ public class AMS_OSCARTriggerHandler {
 
         if(!oscarsToProcess.isEmpty()){
 
-            List<AMS_Inspection__c> allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c IN :oscarsToProcessIds]);
+            //AMSU-161 - adding OSCAR__r.Process__c field
+            List<AMS_Inspection__c> allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, OSCAR__r.Process__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c IN :oscarsToProcessIds]);
+            //AMSU-161 - need to get all inspections by account for VR process
+            List<AMS_Inspection__c> allInspectionsByAccount = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, OSCAR__r.Process__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE Account__c IN :accountIds]);
 
             if(allInspections.isEmpty()){
-                allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE Account__c IN :accountIds]);
+                //AMSU-161
+                //allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE Account__c IN :accountIds]);
+                allInspections = allInspectionsByAccount;
             }
 
             Map<Id, List<AMS_Inspection__c>> inspectionsPerOSCAR = new Map<Id, List<AMS_Inspection__c>>();
@@ -2353,7 +2362,22 @@ public class AMS_OSCARTriggerHandler {
                 if ((oldOSCAR.STEP1__c <> AMS_Utils.PASSED && oscar.STEP1__c == AMS_Utils.PASSED)||
                     (oldOSCAR.STEP10__c <> AMS_Utils.PASSED && oscar.STEP10__c == AMS_Utils.PASSED))
                 {
+                    /* AMSU-161 - begin */
+                    //allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '9'));
+
+                    if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA){
+
+                        //check if it's IATACODE generation step
+                        if (oldOSCAR.STEP10__c <> AMS_Utils.PASSED && oscar.STEP10__c == AMS_Utils.PASSED){
+                            allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '2'));
+                        }else{
+                            allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '9'));
+                        }
+
+                    }else{
                     allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '9'));
+                }
+                    /* AMSU-161 - end */
                 }
                 if ((oldOSCAR.STEP3__c <> AMS_Utils.PASSED && oscar.STEP3__c == AMS_Utils.PASSED) ||
                     (oldOSCAR.STEP18__c <> AMS_Utils.PASSED && oscar.STEP18__c == AMS_Utils.PASSED) ||
@@ -2366,6 +2390,21 @@ public class AMS_OSCARTriggerHandler {
                 //At this point the existing oscar is the new and empty one
                 if (oldOSCAR.STEP31__c <> AMS_Utils.PASSED && oscar.STEP31__c == AMS_Utils.PASSED && oscar.Location_Class__c == 'M'){
                     allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerAccount.get(oscar.Account__c), '0'));   
+                }
+
+                //AMSU-161 - adding new logic for VR CLO for GSA/AHA/GSSA
+                if (oldOSCAR.STEP31__c <> AMS_Utils.PASSED && oscar.STEP31__c == AMS_Utils.PASSED && oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+                    System.debug('updateOSCARAppointments oscar.Process__c: ' + oscar.Process__c);
+                    inspectionsPerAccount = new Map<Id, List<AMS_Inspection__c>>();
+                    for(AMS_Inspection__c insp: allInspectionsByAccount){
+                        //inspections per account
+                        if(!inspectionsPerAccount.containsKey(insp.Account__c)){
+                            inspectionsPerAccount.put(insp.Account__c, new List<AMS_Inspection__c>());
+                        }
+                        inspectionsPerAccount.get(insp.Account__c).add(insp);
+                    }
+                    allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerAccount.get(oscar.Account__c), '0'));   
+                    System.debug('updateOSCARAppointments allInspectionsToUpdate: ' + allInspectionsToUpdate);
                 }
             }
 
@@ -2600,6 +2639,12 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId                  = 'ANG_Changes_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId      = 'ANG_Changes_APP';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId     = 'ANG_Changes_DIS';
+        else if(agencyType == AMS_Utils.IEPMODELAACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Model_A_Creation';
+        else if(agencyType == AMS_Utils.IEPMODELAACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Model_A_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (EDENRED)') templateId    = 'ANG_IEP_Model_B_Creation_EDENRED';
+        else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (MSTS)') templateId    = 'ANG_IEP_Model_B_Creation_MSTS'; //TODO: fix link on template
+        //else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'ANG_IEP_Model_B_SanityCheck_Passed'; //TODO: create template?
+		else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Setup_Creation';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Setup_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'closed' && wasApproved) templateId  = 'IEP_Setup_Finalization_Passed';
         else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'closed' && !wasApproved) templateId  = 'IEP_Setup_Finalization_Failed';
@@ -2849,6 +2894,16 @@ public class AMS_OSCARTriggerHandler {
                 }
                 /*** AMSU-121 End ***/ 
 
+                /*** AMSU-161 Start ***/
+                if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP 
+                    || oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_GSA 
+                    || oscar.Process__c == AMS_Utils.new_AHA){
+                    String sError = AMS_InspectionHelper.validateGSAforAppointments(oscar, allOnlineAccr);
+                    if(!sError.equalsIgnoreCase('')){
+                        oscar.addError(sError);
+                    }
+                }
+                /*** AMSU-161 End ***/ 
             }
         }
     }
@@ -3085,17 +3140,48 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
-        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+        if(updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed' && !updatedOscar.ANG_Share_documentation_with_vendor__c){
+            updatedOscar.addError('Share documentation with vendor must be check in order to pass Sanity check.');
+            return;
+        }
 
-            System.debug('Sending the email for the user to anounce Sanity Check Passing of the IEP bank account setup oscar');
+        if(updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce Sanity Check Passing of the IEP Model A oscar');
 
             //using an already existing method to send email alert to user.
             AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SANITYCHECK, true);
 
         }
 
+        //NEWGEN-3841 NEWGEN-4000 - Send Notification to update results to IEP
+        if((updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP || updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP) && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && (updatedOscar.STEP17__c == 'Passed' || updatedOscar.STEP17__c == 'Failed')){
+            System.debug('Finish Setup Processing step for IEP bank account setup OSCAR. Sending notification to Mulesoft');
+            String cc;
+            Id configID; 
+            for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getall().values()){
+                cc = cm.Change_Code__c;
+                if(updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP && cm.Change_Code__c == 'MAPDF'){
+                    configID = cm.id;
+                    break;
+                }
+                if(updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP && cm.Change_Code__c == 'MBDIL'){
+                    configID = cm.id;
+                    break;
+                }
+            }
+            if(configID != null)
+                insert new AMS_Agency_Updates__c(Account__c = updatedOscar.account__c, Update_Type__c = 'Update', Change_Code__c = cc, configurationID__C = configID, Integration_System__c='Mulesoft');
+        }
+        /* commented as per NEWGEN-4238
         //NEWGEN-2473 - if due diligence step is failed automatically close the OSCAR/case
-        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Failed') updatedOscar.Status__c = 'Closed';
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && updatedOscar.STEP17__c == 'Failed'){
+            //updatedOscar.Status__c = 'Closed';
+            
+            System.debug('Sending the email for the user to anounce Finalization Falling of the IEP bank account setup oscar');
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, 'closed', false);
+        } 
+        */
         
         //NEWGEN-2473 - Send an email notification on case closure (passed or failed)
         if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && updatedOscar.Status__c == 'Closed'){
@@ -3105,6 +3191,18 @@ public class AMS_OSCARTriggerHandler {
             //using an already existing method to send email alert to user.
             AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, 'closed', (updatedOscar.STEP17__c == 'Passed' && updatedOscar.STEP41__c == 'Passed'));
 
+        }
+
+        //NEWGEN-3857 - Send Notification to update results to IEP
+        if(updatedOscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP && oldOSCAR.STEP41__c <> updatedOscar.STEP41__c && (updatedOscar.STEP41__c == 'Passed' || updatedOscar.STEP41__c == 'Failed')){
+            System.debug('Finish Setup Processing step for IEP bank account setup OSCAR. Sending notification to Mulesoft');
+            
+            ID configID; 
+            for(ANG_CalloutMapping__c cm: ANG_CalloutMapping__c.getall().values()){
+                if(cm.Change_Code__c == 'MaddY') configID = cm.id;
+            }
+
+            insert new AMS_Agency_Updates__c(Account__c = updatedOscar.account__c, Update_Type__c = 'Update', Change_Code__c = 'MaddY', configurationID__C = configID, Integration_System__c='Mulesoft');
         }
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
