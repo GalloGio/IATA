@@ -1,9 +1,9 @@
 public class CloseCasesForCancelledIDCardApplications extends TriggerAction {
 	
 	/**
-	 * Method that checks if the relevant fields for this action were changed
+	 * Method that checks if the mass application was cancelled
 	 * @param s the affected record
-	 * @return true if the relevant fields for this action were changed and false if not
+	 * @return true if the mass application was cancelled and false if not
 	 */
 	protected override Boolean isRelevant(SObject s) {
 
@@ -17,8 +17,8 @@ public class CloseCasesForCancelledIDCardApplications extends TriggerAction {
 	}
 
 	/**
-	 * Method that adds a error for duplicate records
-	 * @param records duplicated records
+	 * Method that closes the respective cases
+	 * @param records relevant records
 	 * @param uw 	  unit of work to include all DML operations
 	 * @return
 	 */
@@ -37,8 +37,11 @@ public class CloseCasesForCancelledIDCardApplications extends TriggerAction {
 			c.ID_Card_Status__c = 'Cancelled';
 		}
 
-		Map<String, SObjectField> sObjectFieldMap = Schema.getGlobalDescribe().get('Case').getDescribe().fields.getMap();
+		if(!casesToClose.isEmpty()){
+			
+			Map<String, SObjectField> sObjectFieldMap = Schema.getGlobalDescribe().get('Case').getDescribe().fields.getMap();
 
-		uw.registerDirty(casesToClose, new List<SObjectField>{sObjectFieldMap.get('Status'),sObjectFieldMap.get('ID_Card_Status__c')});
+			uw.registerDirty(casesToClose, new List<SObjectField>{sObjectFieldMap.get('Status'),sObjectFieldMap.get('ID_Card_Status__c')});
+		}
 	}
 }

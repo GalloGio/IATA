@@ -19,8 +19,8 @@ public class ProcessIDCardMassApplications extends TriggerAction {
 	}
 
 	/**
-	 * Method that adds a error for duplicate records
-	 * @param records duplicated records
+	 * Method to process mass applications 
+	 * @param records relevant records
 	 * @param uw 	  unit of work to include all DML operations
 	 * @return
 	 */
