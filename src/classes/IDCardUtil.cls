@@ -1217,6 +1217,12 @@ global with sharing class IDCardUtil {
             insert theContact;
             update application;
 
+            //Needs to get theContact.VerNumber - calculates after the insert on GlobalContactTrigger
+            theContact = [SELECT c.AgencyShare_Confirmation__c,c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName, c.UIR__c, 
+                            c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c 
+                          FROM Contact c 
+                          WHERE id=:theContact.id];
+
             return theContact;
         } catch (Exception ex) {
             system.debug('Error: ' + ex);

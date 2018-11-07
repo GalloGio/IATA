@@ -1855,7 +1855,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if(aCase.RecordTypeId == caseRecordType){
                     idCardCases.add(aCase);
                     if (aCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_APPROVED && oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL) {
-                        contactIDList.add(aCase.ContactId);
+                        
+                        if(aCase.ContactId != null)
+                            contactIDList.add(aCase.ContactId);
+
                         relatedIDCardAppList.add(aCase.Related_ID_Card_Application__c);
 
                         if(aCase.AccountId == null) casesWithoutAccount.add(aCase.Related_ID_Card_Application__c);
@@ -1907,7 +1910,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
             if(!iataCodes.isEmpty()){
                 for(Account a : [SELECT 
-                                 Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c, Status__c
+                                 Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c, Status__c, BillingCountry
                                  FROM Account 
                                  WHERE Id IN :accounttIDList OR
                                   (RecordType.Name = : 'Agency' 
@@ -1974,15 +1977,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         if (application.ID_Cards__r.size() == 0) {
                             //**Create Contact only for new application
                             if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW){
-
                                 theContact = IDCardUtil.CreateContactWhenNewCardIsApproved(application, theAccount);
                                 theContact.Email = application.Email_admin__c; 
                                 aCase.ContactId = theContact.ID;
-                            }else{
-                                theContact = contactMap.get(aCase.ContactId);
                             }
-                            //Check if theContact exists with VER_Number na lista anterior preenchida - Ver codigo antigo
-
+                            else theContact = contactMap.get(aCase.ContactId);
+                            
                             if (theContact == null || theContact.VER_Number__c != Decimal.valueOf(application.VER_Number__c)) 
                                 throw new IDCardApplicationException(string.format(Label.ID_Card_Contact_Not_found_for_VER, new string[] {application.VER_Number__c}));
                             
