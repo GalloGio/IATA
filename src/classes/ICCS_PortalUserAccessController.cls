@@ -33,11 +33,9 @@ public class ICCS_PortalUserAccessController{
     }
     
     public void resetController(){
-        String accId = ((String)cse.AccountId).substring(0,15);
-
         wrappedPortalUsers = new List<PortalUserWrapper>();
         
-        for(Portal_Application_Right__c usr : [select Id, Contact__r.Name, Contact__r.Email, Right__c, Access_Status_Reason__c, ANG_Portal_Service_Role__c from Portal_Application_Right__c where Top_Account__c =: accId and Portal_Application__c =: ISSP_ICCS_Utils.getIccsPortalApplication().Id]){
+        for(Portal_Application_Right__c usr : [select Id, Contact__r.Name, Contact__r.Email, Right__c, Access_Status_Reason__c, ANG_Portal_Service_Role__c from Portal_Application_Right__c where Top_Account__c =: cse.AccountId and Portal_Application__c =: ISSP_ICCS_Utils.getIccsPortalApplication().Id]){
             wrappedPortalUsers.add(new PortalUserWrapper(this, usr));
         }
 

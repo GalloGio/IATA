@@ -339,12 +339,14 @@ private class IEC_ShoppingCartControllerTest
 				ctrl.onLoadAction();
 
 				system.assert(ctrl.vfOrder.orderItems.size() == 1 && ctrl.vfOrder.orderItems[0].quantity == 5, 'Wrong quantity: ' + ctrl.vfOrder.orderItems);
-
+				
+				Test.stopTest();
+				
 				//*** continue shopping and checkout
 				system.assert(ctrl.continueShopping() != null, 'Continue shopping should be allowed');
 				system.assert(ctrl.startCheckout() != null, 'Checkout should be allowed');
 			}
-		Test.stopTest();
+		
 	}
 
 	// ------------------------ old version ---------------------------------
