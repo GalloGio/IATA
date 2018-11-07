@@ -218,6 +218,19 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', IATA_ISO_State__c = null, Branch_Office_Country__c = ctries[6].id);
          insert accre;
 
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
+
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
@@ -267,6 +280,19 @@ public class  AmsIataCodeGeneratorTest
 
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', IATA_ISO_State__c = stateCA.Id, Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
@@ -332,6 +358,19 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFRdefault.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
+
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
@@ -351,6 +390,19 @@ public class  AmsIataCodeGeneratorTest
          insert cse2;
          AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, CASS_Number__c = '124', IATA_ISO_State__c = stateFRdefault.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre2;
+        
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner2 = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre2.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner2;
         
          AMS_OSCAR__c theOscar2 = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag2.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre2.Id );
          insert theOscar2;
@@ -418,6 +470,19 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
+
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
@@ -477,6 +542,19 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
+
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
@@ -512,6 +590,19 @@ public class  AmsIataCodeGeneratorTest
          
          AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre2;
+        
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner2 = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre2.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner2;
         
          AMS_OSCAR__c theOscar2 = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag2.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre2.Id );
          insert theOscar2;
@@ -571,6 +662,19 @@ public class  AmsIataCodeGeneratorTest
          
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
@@ -636,6 +740,19 @@ public class  AmsIataCodeGeneratorTest
          System.debug('****************** fr: '+stateFR);
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
@@ -705,6 +822,19 @@ public class  AmsIataCodeGeneratorTest
         AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id, IATA_ISO_State__c = stateFR.Id);
         insert accre;
 
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
+
         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
@@ -772,6 +902,19 @@ public class  AmsIataCodeGeneratorTest
         
         AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id, IATA_ISO_State__c = stateFR.Id);
         insert accre;
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
@@ -841,6 +984,19 @@ public class  AmsIataCodeGeneratorTest
         AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id, IATA_ISO_State__c = stateFR.Id);
         insert accre;
 
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
+
         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
@@ -893,6 +1049,19 @@ public class  AmsIataCodeGeneratorTest
          //AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id);
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
+
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
@@ -1037,11 +1206,19 @@ public class  AmsIataCodeGeneratorTest
          }
          insert agsgts;
          
+         /*** AMSU-180 ***/
+        Contact c = new Contact(FirstName= 'test', LastName= 'contact', Email= 'test.owner@contact.com');
+        insert c;
+                 
          Account ag = createAgency(null, ctries[1],'Travel Agent');
          ag.Sector__c = 'Cargo Agent';
          ag.Cass_Number__c = '121';
          ag.Category__c = '';
          insert ag;
+
+         AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c= ag.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId());
+         insert owner1;
+
          AMS_Agency_Segment__c aas = new AMS_Agency_Segment__c(account__c=ag.Id, Segment__c = p1.Id);
          insert aas;
          Test.startTest();
@@ -1084,6 +1261,9 @@ public class  AmsIataCodeGeneratorTest
          ag2.Sector__c = 'Cargo Agent';
          insert ag2;
          
+         AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= ag2.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId());
+         insert owner2;
+
          AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = ag2.Id);
          insert oscar;
          oscar.STEP6__c = 'Passed';
@@ -1153,6 +1333,19 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id , CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
+
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
          insert theOscar;
@@ -1208,6 +1401,20 @@ public class  AmsIataCodeGeneratorTest
          insert cse2;
          AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, IATA_ISO_State__c=stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre2;
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner2 = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre2.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner2;
+
          Account agf2  = [select id, IATACode__c, Top_Parent__c, Check_Digit__c, Site from Account where Id = :ag2.Id ];
 
          AMS_OSCAR__c theOscar2 = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = agf2.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre2.Id);
@@ -1253,6 +1460,19 @@ public class  AmsIataCodeGeneratorTest
          insert cse;
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[0].id);
          insert accre;
+
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
@@ -1309,6 +1529,19 @@ public class  AmsIataCodeGeneratorTest
          insert cse;
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id);
          insert accre;
+
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+        );
+        insert owner;
 
          ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
