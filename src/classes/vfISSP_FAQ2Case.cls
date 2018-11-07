@@ -2748,7 +2748,8 @@ for (string topicver:listofAllowedTopics){
         if (isCompliment1 == false)
         {
             clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(topic)];
-            newCase.Topic__c = ((cdc.CategoryName).replace('__c',' ')).replace('_',' ') ;
+            //newCase.Topic__c = ((cdc.CategoryName).replace('__c',' ')).replace('_',' ') ;
+            newCase.Topic__c = cdc.CategoryLabel;
             //set the Topic__c "English Value"
 
             for(Integer cIndex = 0; cIndex < cdc.lst_childs.size(); cIndex++)
@@ -2756,7 +2757,8 @@ for (string topicver:listofAllowedTopics){
                 clsDataCategory.CategoryChildWrapper childCat = cdc.lst_childs[cIndex];
                 if(subtopic == childCat.CategoryName)
                 {
-                     newCase.SubTopic__c =  ((childCat.CategoryName).replace('__c',' ')).replace('_',' ') ;
+                     //newCase.SubTopic__c =  ((childCat.CategoryName).replace('__c',' ')).replace('_',' ') ;
+                     newCase.SubTopic__c = childCat.CategoryLabel;
                 }
             }
         }else
@@ -3248,6 +3250,7 @@ for (string topicver:listofAllowedTopics){
 
     // Method display topic and subtopic according to Custom Setting "ISSP_FAQ2Case_Permissions__c" Permissions
     private void setTopicByPermissions(){
+        List<String> sectors = new List<String>();
         //Help Selectoptuion List
         list<SelectOption> tmpselectTopicsList = new list<SelectOption>();
         boolean isIFGUser = ISSP_Utilities.isIFGUser();
@@ -3280,11 +3283,13 @@ for (string topicver:listofAllowedTopics){
                 boolean FoundExcludePermission = false ;
                 for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
                 {
+                    sectors = new List<String>();
+                    sectors = per.Sector_Permission__c.split(',');
                     //Check if the topic has matched Custom setting record
                     if (per.topic__c != null && per.topic__c.contains(TopicinEnglish))
                     {
                     if ( per.Sector_Permission__c != null
-                        && ( (per.Sector_Permission__c.contains(Sector) && !isCNS && !per.Sector_Permission__c.startsWith('CNS')) ||
+                        && ( (sectors.contains(Sector) && !isCNS && !per.Sector_Permission__c.startsWith('CNS')) ||
                             per.Sector_Permission__c.contains('All') ||
                             (isCNS && per.Sector_Permission__c.startsWith('CNS')) )
                         && per.ISO_Country__c != null
@@ -3319,6 +3324,7 @@ for (string topicver:listofAllowedTopics){
 
     // Method display topic and subtopic according to Custom Setting "ISSP_FAQ2Case_Permissions__c" Permissions
     private void setSubTopicByPermissions(){
+        List<String> sectors2 = new List<String>();
         Integer index = Integer.valueOf(topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
@@ -3338,8 +3344,10 @@ for (string topicver:listofAllowedTopics){
                 string subtopicVal = subtop.getValue() == 'Fees__c' || subtop.getValue() == 'Changes__c' ? ','+(subtop.getValue()).replace('__c','') : (subtop.getValue()).replace('__c','') ;
                 for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
                 {
+                    sectors2 = new List<String>();
+                    sectors2 = per.Sector_Permission__c.split(',');
                     //Check if the topic has matched Custom setting record
-                    if ( per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector)
+                    if ( per.Sector_Permission__c != null && sectors2.contains(Sector)
                         && per.Subtopic__c != null && per.Subtopic__c.contains(subtopicVal)
                         && (selectDataCategory.CategoryName == per.topic__c || per.topic__c == null || per.topic__c == '')
                         && per.ISO_Country__c != null
@@ -3383,7 +3391,8 @@ for (string topicver:listofAllowedTopics){
                                                                                       WHERE
                                                                                           Topic__c =: selectDataCategory.CategoryName
                                                                                       And SubTopic__c =:subtopic
-                                                                                      And SubTopic__c != null]);
+                                                                                      And SubTopic__c != null
+                                                                                      AND Active__c = true]);
 
         System.debug('Kerensen2 ISSP_CreateButtonURL_Lst ==>' + ISSP_CreateButtonURL_Lst);
         if(ISSP_CreateButtonURL_Lst != null && ISSP_CreateButtonURL_Lst.size() > 0){
