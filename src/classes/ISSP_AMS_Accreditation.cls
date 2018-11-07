@@ -908,21 +908,11 @@ public without sharing class ISSP_AMS_Accreditation {
 
             list<IATA_ISO_Country__c> isoList;
             if (applyLanguage == 'es') {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                FROM IATA_ISO_Country__c
-                WHERE Case_BSP_Country__c != null
-                AND Case_BSP_Country__c != ''
-                ORDER BY IATA_Country_SP__c];
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_SP__c');
+                
             } else if (applyLanguage == 'fr') {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                FROM IATA_ISO_Country__c
-                WHERE Case_BSP_Country__c != null
-                AND Case_BSP_Country__c != ''
-                ORDER BY IATA_Country_FR__c];
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_FR__c');
+
             } else {
                 isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
             }
