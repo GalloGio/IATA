@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Sent when IEP Model B Account Setup OSCAR is created</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>ANG IEP Model B Creation MSTS EN</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Registration of IEP Account</subject>
+    <textOnly>Dear Sir/Madam,
+
+
+Thank you for submitting your request to activate the IATA EasyPay form of payment for your agency.
+
+
+
+Here you can find all the information related to the IATA EasyPay payment method, including instructions on how to create an IATA EasyPay Account.
+
+
+Should you require additional information, please reply to this e-mail. We will soon contact you with an update on your request.
+
+
+
+Thanks in advance for your cooperation.
+
+
+Kind Regards,
+
+
+IATA Customer Service Portal
+
+
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

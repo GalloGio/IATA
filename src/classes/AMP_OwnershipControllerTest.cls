@@ -31,8 +31,8 @@ private class AMP_OwnershipControllerTest {
           // add new Owner account
           controller.AddNewOwner();
 
-          controller.lstOwners[0].Owner_Account__c = acct_hq2.Id;
-          controller.lstOwners[0].Percentage__c = 50;
+          controller.owners.amsAccountRoleList[0].Owner_Account__c = acct_hq2.Id;
+          controller.owners.amsAccountRoleList[0].Percentage__c = 50;
           controller.SaveLine();
 
           // check it was correctly added
@@ -53,25 +53,29 @@ private class AMP_OwnershipControllerTest {
           controller.IdConcerned = tmplstOwners[0].Id;
           controller.DeleteLine();
 
-          system.assertEquals(true, controller.lstOwners.isEmpty());
+          system.assertEquals(true, controller.owners.amsAccountRoleList.isEmpty());
 
           // simulate the addition of a new Subsidiary
           controller.AddNewSubsidiary();
 
-          system.assertEquals(false, controller.lstSubsidiaries.isEmpty());
+          system.assertEquals(false, controller.subsidiaries.amsAccountRoleList.isEmpty());
+          
+          AMP_OwnershipController.getSubsidiaries(acct_hq.Id);
 
 					// add new Owner account
 					controller.AddNewOwner();
 
 					// for @AuraEnabled
-					controller.lstOwners[0].Owner_Account__c = acct_hq2.Id;
-					controller.lstOwners[0].Percentage__c = 50;
+					controller.owners.amsAccountRoleList[0].Owner_Account__c = acct_hq2.Id;
+					controller.owners.amsAccountRoleList[0].Percentage__c = 50;
 					controller.SaveLine();
-					AMS_Account_Role__c ar = controller.lstOwners[0];
+					AMS_Account_Role__c ar = controller.owners.amsAccountRoleList[0];
 					ar.RecordTypeId = null;
 					System.debug(ar);
 					AMP_OwnershipController.upsertAccount(ar);
 					AMP_OwnershipController.deleteAccount(ar);
+
+		controller.addOtherStakeholderTypes();
 
         test.stopTest();
   }

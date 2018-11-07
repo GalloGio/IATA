@@ -22,7 +22,7 @@ private class trgICCS_ASP_Case_Validation_Test {
         
         // create an Airline Coding Application case on the account
         ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
-        Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1');
+        Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1', Reason1__c='Designator Form');
         insert cs_coding1;
         
         test.startTest();
@@ -30,7 +30,7 @@ private class trgICCS_ASP_Case_Validation_Test {
         // Create a Case for the Account
         Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management');
         Case cs = new Case(RecordTypeId = RT_ICCS_ASP_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'FDS - Create Authorized Signatories Package', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, Confirmation_Remarks__c = 'remarks', Eligibility_Documents_Checklist_approved__c = true);  
+                        ContactId = c.Id, AccountId = a.Id, Confirmation_Remarks__c = 'remarks', Eligibility_Documents_Checklist_approved__c = true,Reason1__c='Designator Form');
         insert cs;
         
         List<Case> lstCases = [SELECT Id, Account.Ongoing_Request_for_Documents__c FROM Case WHERE RecordTypeId = :RT_ICCS_ASP_Id];
@@ -40,7 +40,7 @@ private class trgICCS_ASP_Case_Validation_Test {
         // try to open a new ASP case on the same account, check that it is not inserted
         try {
             Case cs2 = new Case(RecordTypeId = RT_ICCS_ASP_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'FDS - Create Authorized Signatories Package', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, Confirmation_Remarks__c = 'remarks', Eligibility_Documents_Checklist_approved__c = true);
+                        ContactId = c.Id, AccountId = a.Id, Confirmation_Remarks__c = 'remarks', Eligibility_Documents_Checklist_approved__c = true,Reason1__c='Designator Form');
             insert cs2;
         } catch(Exception e) {}
         
@@ -59,7 +59,7 @@ private class trgICCS_ASP_Case_Validation_Test {
         // try to open a new Airline Coding case on the same account, check that it is not inserted 
         Boolean isExceptionRaised = false;
         try {
-	        Case cs_coding2 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs2');
+	        Case cs_coding2 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs2',Reason1__c='Designator Form');
 	        insert cs_coding2;
         } catch(Exception e) {
         	isExceptionRaised = true;
