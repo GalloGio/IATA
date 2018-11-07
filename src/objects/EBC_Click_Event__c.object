@@ -177,7 +177,7 @@
         <filters>
             <field>EBC_Campaign__c</field>
             <operation>equals</operation>
-            <value>Right Travel FAM Trips</value>
+            <value>Wave 2 NewGen Webinar - EG - October 2018</value>
         </filters>
         <label>ZZ - EBC Click Events Per Campaign</label>
         <language>en_US</language>

@@ -3,7 +3,6 @@ public class ICCS_MembershipManagementController{
     public Case cse {get;set;}
 
     public Account acct {get;set;}
-    public String acctId {get;set;}
     
     public String iccsApplicationId {
     	get{
@@ -27,7 +26,6 @@ public class ICCS_MembershipManagementController{
         cse = [select Id, CaseNumber, CaseArea__c, RecordTypeId, AccountId, Account.Name from Case where Id =: ((Case)controller.getRecord()).id];
         
         acct = [select Id, ICCS_Membership_Status__c from Account where Id =: cse.AccountId];
-        acctId = ((String)acct.Id).substring(0,15);
         
         shouldRedirect = false;
         redirectUrl = controller.view().getUrl();
@@ -55,7 +53,7 @@ public class ICCS_MembershipManagementController{
         
         List<Portal_Application_Right__c> ICCSPortalUsers;
 
-        ICCSPortalUsers = [select Id, Right__c, Access_Status_Reason__c from Portal_Application_Right__c where Top_Account__c =: acctId and Portal_Application__c =: ISSP_ICCS_Utils.getIccsPortalApplication().Id];
+        ICCSPortalUsers = [select Id, Right__c, Access_Status_Reason__c from Portal_Application_Right__c where Top_Account__c =: acct.Id and Portal_Application__c =: ISSP_ICCS_Utils.getIccsPortalApplication().Id];
         
         for(Portal_Application_Right__c ICCSPortalUser : ICCSPortalUsers){
             ICCSPortalUser.Right__c = 'Access Denied';

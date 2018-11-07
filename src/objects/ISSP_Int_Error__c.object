@@ -3,9 +3,194 @@
     <customSettingsType>List</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Assignment_Group__c</fullName>
+        <description>Group to assign the SNOW incident</description>
+        <externalId>false</externalId>
+        <label>Assignment Group</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Service__c</fullName>
+        <description>Service Triggering the Error</description>
+        <externalId>false</externalId>
+        <label>Business Service</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Caller_ID__c</fullName>
+        <description>SNOW ID of the caller</description>
+        <externalId>false</externalId>
+        <label>Caller ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <description>Category for SNOW</description>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Caused_By__c</fullName>
+        <description>System triggering the error</description>
+        <externalId>false</externalId>
+        <label>Caused By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Type__c</fullName>
+        <description>Contact type for SNOW</description>
+        <externalId>false</externalId>
+        <label>Contact Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <description>Description of the error. If enclosed in &quot;[[&quot; &quot;]]&quot; it will be used to dynamically get the value of a field (i.e. [[log.Error_Message__c]] ).Otherwise it will display a literal.</description>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Error_Message__c</fullName>
         <externalId>false</externalId>
         <label>Error Message</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Impact__c</fullName>
+        <description>Impact value on SNOW</description>
+        <externalId>false</externalId>
+        <label>Impact</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opened_by__c</fullName>
+        <description>Platform opening the ticket in SNOW</description>
+        <externalId>false</externalId>
+        <label>Opened by</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Severity__c</fullName>
+        <description>Severity value on SNOW</description>
+        <externalId>false</externalId>
+        <label>Severity</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Short_Description__c</fullName>
+        <description>Short description of the error. If enclosed in &quot;[[&quot; &quot;]]&quot;  it will be used to dynamically get a value from field (i.e. [[iataCode + &apos; &apos; + log.Error_Code__c]]). Otherwise it will display a literal.</description>
+        <externalId>false</externalId>
+        <label>Short Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subcategory__c</fullName>
+        <description>Subcategory of the error</description>
+        <externalId>false</externalId>
+        <label>Subcategory</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>U_Application__c</fullName>
+        <description>Application triggering the error</description>
+        <externalId>false</externalId>
+        <label>u Application</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>U_Business_Service__c</fullName>
+        <description>Business Service for SNOW</description>
+        <externalId>false</externalId>
+        <label>u Business Service</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>U_Issue_Identified_By__c</fullName>
+        <description>Interface / Class triggering the error</description>
+        <externalId>false</externalId>
+        <label>u Issue Identified By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>U_Operation_Name__c</fullName>
+        <description>Operation/Process running while error was triggered</description>
+        <externalId>false</externalId>
+        <label>u Operation Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Urgency__c</fullName>
+        <description>Urgency value on SNOW</description>
+        <externalId>false</externalId>
+        <label>Urgency</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>

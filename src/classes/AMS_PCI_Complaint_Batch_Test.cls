@@ -38,12 +38,24 @@ private class AMS_PCI_Complaint_Batch_Test {
 		//agencylist.add(a3);
 		insert agencylist;
 
-		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
-		Contact co2 = new Contact(AccountId = a1.id, Firstname = 'teste2', Lastname='test2', Phone = '911111112', MobilePhone = '911111112', Email = 'test2@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved Admin');
-		Contact co3 = new Contact(AccountId = a1.id, Firstname = 'teste3', Lastname='test3', Phone = '911111113', MobilePhone = '911111113', Email = 'test3@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved');
+        Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1_2', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'testmauz@testmauz.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
+        Contact co2 = new Contact(AccountId = a1.id, Firstname = 'teste2_3', Lastname='test2', Phone = '911111112', MobilePhone = '911111112', Email = 'test2mauz@testmauz.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved Admin');
+        Contact co3 = new Contact(AccountId = a1.id, Firstname = 'teste3_4', Lastname='test3', Phone = '911111113', MobilePhone = '911111113', Email = 'test3@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved');
 		
 		List<Contact> cos = new List<Contact>{co1,co2}; 
 		insert cos;
+
+        User testUser1 = createPortalUser(co1);
+        co1.OwnerId = testUser1.Id;
+        update co1;
+
+        User testUser2 = createPortalUser(co2);
+        co2.OwnerId = testUser2.Id;
+        update co2;
+
+        
+
+        
 
 		//AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc1.Id, recordTypeID == certRT);
 		//AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_CERT, Account__c = acc1.Id,
@@ -148,5 +160,35 @@ private class AMS_PCI_Complaint_Batch_Test {
 	    };
 	    insert AWS_KEYs;
 	}
+
+        public static User createPortalUser(Contact con) {
+            String orgId = UserInfo.getOrganizationId();
+            String dateString = String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','');
+            Integer randomInt = Integer.valueOf(math.rint(math.random()*1000000));
+            String uniqueName = orgId + dateString + con.Firstname;
+            String conId15 = con.Id;
+            //conId15 = conId15.substring(0,15);
+            String UserNameStr=uniqueName+ string.valueof(randomInt) + '@test' + orgId + '.org';
+            String ComNickNameStr=con.email.substring(0, con.email.indexOf('@'))+randomInt;//Datetime.now().formatLong().substring(10,15);
+            system.debug('basto1p TEST UserName='+UserNameStr);
+            system.debug('basto1p TEST ComNickNameStr='+ComNickNameStr);
+           User newUser = new User(alias = 'dsfsdfds', 
+                                    email = con.email, 
+                                    emailencodingkey = 'UTF-8', 
+                                    firstname = con.firstName, 
+                                    lastname = con.lastname, 
+                                    languagelocalekey = 'en_US', 
+                                    localesidkey = 'en_US', 
+                                    contactId = con.Id,
+                                    FederationIdentifier = conId15,
+                                    timezonesidkey = 'Asia/Dubai',
+                                    Username = con.Email,
+                                    PortalRole = 'Manager',
+                                    CommunityNickname = ComNickNameStr,
+                                    ProfileId = ISSP_Constant.TEST_User_ProfileID,
+                                    IsActive = true);
+            insert newUser;
+            return newUser;
+        }
 
 }
