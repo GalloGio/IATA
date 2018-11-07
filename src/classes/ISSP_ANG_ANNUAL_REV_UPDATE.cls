@@ -12,6 +12,17 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     public string txtHelpCurrency {get; set;}
     public string txtHelpTaxNumber {get; set;}
     public String vatNumber {get; set;}
+    public list<selectOption> countryList{get{
+                if(countryList==null){
+                    countryList= new list<selectOption>();
+                    countryList.add(new selectOption('',''));
+                    for(IATA_ISO_Country__c cnt:[select id,name from IATA_ISO_Country__c where region__c!='']){
+                        countryList.add(new selectOption(cnt.name.toUpperCase(),cnt.name));
+                    }
+                }
+                return countryList;
+        }   
+        set;}
 
 	public ISSP_ANG_ANNUAL_REV_UPDATE() {
         applyLanguage = UserInfo.getLanguage();
