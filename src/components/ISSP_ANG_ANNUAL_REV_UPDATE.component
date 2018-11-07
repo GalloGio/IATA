@@ -317,6 +317,9 @@
                         FormControlStyle="apcontainer">
                     </DSE:DS_DataQuality>
 
+                    <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();">
+                        <apex:selectOptions value="{!countryList}"/>
+                    </apex:selectList>
                 </apex:outputPanel>
 
 
@@ -1018,6 +1021,7 @@
                     }
                 });
 
+                if($(this).attr("data-group")=='agencyLocation') populateShippingCountry();
                 showForms();
             });
 
@@ -1047,12 +1051,37 @@
             }
         }
 
+        function populateShippingCountry() {
+            if($('[id$="notifyChangeLocationCheckbox"]').prop("checked")) {
+                if('{!ca.fw.newform.shipping_country__c}' !='')$('[id$="ShippingCountryList"]').val('{!ca.fw.newform.shipping_country__c}');
+                else   $('[id$="ShippingCountryList"]').val("{!ca.isocountry.Name}".toUpperCase());
+            } else {
+                $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
+            }
+            copyToADShippingCntr();
+        } 
+
+
+        function copyToADShippingCntr(){
+            
+            $('#shipping_country__c > input').val($('[id$="ShippingCountryList"]').val());
+        }
         function initFieldsSettings() {
             $(".country__c").val("{!ca.isocountry.Name}");
             $(".country__c").attr('readonly', true);
             $(".country__c").attr('disabled','disabled');
 
-            $(".shipping_country__c").val("{!ca.isocountry.Name}");
+
+            $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
+            var oldElemt=$('#shipping_country__c > input');
+            
+            oldElemt.attr('Style','display:none;');
+            $('#shipping_country__c').css("padding-right",0);
+            if($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length>0){
+                $('[id$="ShippingCountryList"]').css({'border-width':'2px','border-color':'#d74c3b'})
+            }
+
+           // $(".shipping_country__c").val("{!ca.isocountry.Name}");
             
              $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
