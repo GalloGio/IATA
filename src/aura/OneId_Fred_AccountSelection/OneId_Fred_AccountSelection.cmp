@@ -30,6 +30,7 @@
   <aura:attribute name="paramLoaded" type="Boolean" default="false" />
   <aura:attribute name="userTypeToCreate" type="Integer" default="-1"/> <!-- 1=PRIMARY or 2=SECONDARY -->
   <aura:attribute type="Boolean" name="searching" default="false" access="private" />
+  <aura:attribute name="isInvitation" type="Boolean" default="false" />
 
   <aura:attribute name="invitationId" type="String" /> <!-- invitation id in the url -->
   

@@ -455,10 +455,46 @@
         <fullName>Class_G_Appointments</fullName>
         <active>true</active>
         <description>Prevent GSA/GSSA Appointment with status = 9 with no Territory Associated</description>
-        <errorConditionFormula>AND(Nr_of_AMS_Territories__c = 0, ISPICKVAL(Account__r.Location_Class__c, &apos;G&apos;), 
+        <errorConditionFormula>AND(Nr_of_AMS_Territories__c = 0, 
+AND(NOT(ISPICKVAL(Account__r.Status__c, &apos;Approved&apos;)),
+ISPICKVAL(Account__r.Location_Class__c, &apos;G&apos;)), 
 
 Value(Text(Accreditation_Endorsement_Status_code__c)) &gt; 4)</errorConditionFormula>
         <errorMessage>You cannot create an Appointment for a GSA/GSSA with Status greater or equal than 5 without creating an AMS Territory first. Please create the Appointment with status 2 and change it &gt;= 5 once the Account is Approved and the AMS Territory is created.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Terminate</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Terminate</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)}
+   
+var recordId = &quot;{!AMS_Inspection__c.Id}&quot;;
+var currentStatus = &quot;{!AMS_Inspection__c.Accreditation_Endorsement_Status_code__c}&quot;;
+
+if(currentStatus != &quot;9&quot;) {
+	alert(&quot;You can only terminate appointments with status 9&quot;);
+} else {
+	var r = confirm(&quot;Are you sure you want to terminate this appointment?&quot;); 
+	if(r) {
+		try {
+			var record = new sforce.SObject(&quot;AMS_Inspection__c&quot;);
+			record.Id = recordId;
+			record.Accreditation_Endorsement_Status_code__c = &quot;0&quot;;
+			var updateResult = sforce.connection.update([record]); 
+			if(updateResult[0].success === &quot;true&quot;) {
+				window.location=window.location;
+			} else {
+				alert(updateResult[0].errors.message);
+			}
+		} catch(e) {
+			alert(e);
+		}
+	}
+}</url>
+    </webLinks>
 </CustomObject>

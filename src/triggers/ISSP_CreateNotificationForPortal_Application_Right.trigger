@@ -27,10 +27,6 @@ trigger ISSP_CreateNotificationForPortal_Application_Right on Portal_Application
        PortalServiceAccessTriggerHandler.onAfterUpdate(trigger.newMap, trigger.oldMap);
     }
     
-    if(trigger.isUpdate && trigger.isAfter) {
-       PortalServiceAccessTriggerHandler.onAfterUpdate(trigger.newMap, trigger.oldMap);
-    }
-    
     if(trigger.isDelete && trigger.isAfter) {
        PortalServiceAccessTriggerHandler.onAfterDelete(trigger.old);
     }

@@ -1,45 +1,94 @@
 <apex:page showHeader="true" sidebar="true" standardController="Account" extensions="AMP_OwnershipController">
 	<apex:pageMessages />
 
-	<apex:form >
+	<style>
+		.LockOn {
+			background-image: url('/img/loading.gif');
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-position: center;
+			display: float; 
+			visibility: visible; 
+			position: absolute; 
+			z-index: 999; 
+			top: 0px; 
+			left: 0px; 
+			width: 100%; 
+			height: 100%; 
+			background-color: #ccc; 
+			text-align: center; 
+			filter: alpha(opacity=75); 
+			opacity: 0.75; 
+		}
+
+		.LockOff { 
+			display: none; 
+			visibility: hidden; 
+		}
+	</style>
+
+	<script>
+		function startProcessSpinner(){
+			var lock = document.getElementById('processSpinner');
+			if (lock){
+				lock.className = 'LockOn';
+			}
+		}
+
+		function stopProcessSpinner(){
+			var lock = document.getElementById('processSpinner');
+			if (lock){
+				lock.className = 'LockOff'; 
+			}
+		}
+	</script>
+
+	<apex:actionStatus id="processActStatusId" onstart="startProcessSpinner();"  onstop="stopProcessSpinner();" />
+
+	<div id="processSpinner" class="LockOff"/>
+
+	<apex:form  id="main">
 		<apex:pageBlock >
 			<apex:outputPanel id="OwnersTable">
 				<h2>Owners</h2>
 
-				<apex:pageBlockTable value="{!lstOwners}" var="item">
+				<apex:pageBlockTable value="{!owners.amsAccountRoleList}" var="item">
 
 					<apex:column style="width: 80px;">
 	                    <apex:facet name="header">Actions</apex:facet>
 
-	                    <apex:commandLink value="Del" action="{!DeleteLine}" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{!IF(OR(AND(isEditMode, IdConcerned==item.Id), NOT(canEdit)), false, true)}" >
+	                    <apex:commandLink value="Del" action="{!DeleteLine}" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{! !(isEditMode && IdConcerned == item.Id) && canEdit && (!item.Other_Stakeholder_Types__c || owners.canUserHandleSpecialLine)}" status="processActStatusId" rerender="main">
                     		<apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
                     	</apex:commandLink>
                     	&nbsp;
-                    	<apex:commandLink value="Edit" action="{!EditLine}" rerender="OwnersTable" rendered="{!IF(OR(AND(isEditMode, IdConcerned==item.Id), NOT(canEdit)), false, true)}" >
+                    	<apex:commandLink value="Edit" action="{!EditLine}" rendered="{! !(isEditMode && IdConcerned == item.Id) && canEdit && (!item.Other_Stakeholder_Types__c || owners.canUserHandleSpecialLine)}" status="processActStatusId" rerender="main">
                     		<apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
                     	</apex:commandLink>
 
-                    	<apex:commandLink value="Save" action="{!SaveLine}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" >
+                    	<apex:commandLink value="Save" action="{!SaveLine}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" status="processActStatusId" rerender="main">
                     		<apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
                     	</apex:commandLink>
                     	&nbsp;
-                    	<apex:commandLink value="Cancel" action="{!CancelEdit}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" >
+                    	<apex:commandLink value="Cancel" action="{!CancelEdit}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" status="processActStatusId" rerender="main">
                     		<apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
                     	</apex:commandLink>
 	            	</apex:column>
 
 	            	<apex:column >
 	            		<apex:facet name="header">Account Name</apex:facet>
-
-	            		<apex:inputField value="{!item.Owner_Account__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 80%;" />
-            			<apex:outputLink value="/{!item.Owner_Account__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" target="_blank">{!item.Owner_Account__r.Name}</apex:outputLink>
-
+						<apex:outputPanel rendered="{! item.Other_Stakeholder_Types__c == false}">
+		            		<apex:inputField value="{!item.Owner_Account__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 80%;" />
+	            			<apex:outputLink value="/{!item.Owner_Account__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" target="_blank">{!item.Owner_Account__r.Name}</apex:outputLink>
+						</apex:outputPanel>
+						<apex:outputPanel rendered="{! item.Other_Stakeholder_Types__c == true}">
+		            		<apex:outputText value="{! $Label.Remaining_Owners}" style="width: 80%;" />
+						</apex:outputPanel>
 	            	</apex:column>
 
 	            	<apex:column >
 	            		<apex:facet name="header">Owner Type</apex:facet>
 
-            			<apex:outputField value="{!item.Owner_Account__r.Membership_status__c}" />
+            			<apex:outputField value="{!item.Owner_Account__r.Membership_status__c}" rendered="{! item.Other_Stakeholder_Types__c == false}"/>
 	            	</apex:column>
 
 	            	<apex:column >
@@ -54,7 +103,8 @@
 
 				</apex:pageBlockTable>
 
-				<apex:commandButton action="{!AddNewOwner}" value="Add New Owner" rendered="{!IF(OR(isEditMode, NOT(canEdit)), false, true)}" />
+				<apex:commandButton action="{!AddNewOwner}" value="Add Owner" rendered="{!IF(OR(isEditMode, NOT(canEdit)), false, true)}" status="processActStatusId" rerender="main"/>
+				<apex:commandButton action="{!AddOtherStakeholderTypes}" value="{! $Label.Remaining_Owners}" rendered="{! !isEditMode && canEdit && owners.canSpecialLineBeAdded && owners.canUserHandleSpecialLine}" status="processActStatusId" rerender="main"/>
 			</apex:outputPanel>
 
 

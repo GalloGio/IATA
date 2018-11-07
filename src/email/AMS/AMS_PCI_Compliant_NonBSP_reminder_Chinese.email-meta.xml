@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_PCI Compliant NonBSP reminder CN</name>
+    <style>freeForm</style>
+    <subject>尊敬的国际航协认可代理人，您好：</subject>
+    <textOnly>航协代码： {!Case.IATA_Code__c} - No BSP
+
+
+特此提醒，贵司须在截止日前（详见之前邮件内容）提交《PCI DSS认证证明》或《不启用信用卡支付声明》。如果您已提交上述文件，烦请忽略此信息。
+
+
+烦请注意提交文件截止日为： {!Case.CreatedDate+30}
+
+
+
+
+如需获取更多关于如何通过PCI DSS认证信息，烦请登录PCI DSS专用网站查询：http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+
+如有任何疑问，烦请提交问询至国际航协客户入口www.iata.org/cs。
+
+
+
+
+
+代理人管理办公室
+
+国际航空运输协会
+
+
+
+如需获取国际航协更多信息及帮助，烦请及时登录国际航协客户入口Customer Portal。</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
