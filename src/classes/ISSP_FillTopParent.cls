@@ -93,25 +93,9 @@ public without sharing class ISSP_FillTopParent {
 				childsToUpdate.add(child);
 			}
 		}
-
-			for(Account acct : childAcctsToChange){
-				acct.Top_Parent__c = topParentOldToNew.get(acct.Top_Parent__c);
-			}
-			if(!childAcctsToChange.isEmpty())
-				update childAcctsToChange;
-		}
-		else{
-			list<Account> childAccList  = [select Parent.Top_Parent__c,Top_Parent__c,ParentId from Account where ParentId in:trigger.newMap.keySet()];
-			for(Account acc : childAccList){
-				if(acc.Parent.Top_Parent__c!=null)
-					acc.Top_Parent__c = acc.Parent.Top_Parent__c;
-				else
-					acc.Top_Parent__c = acc.ParentId;
-			}
-			if(!childAccList.isEmpty())
-				update childAccList;
-		}
-		return;
+        
+        if(!childsToUpdate.isEmpty()) 
+            update childsToUpdate;
 	}
 	/*************End After Update:************************/
 	/*************Before Update:************************/
