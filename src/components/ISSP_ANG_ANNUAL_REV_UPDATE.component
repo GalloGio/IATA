@@ -317,6 +317,9 @@
                         FormControlStyle="apcontainer">
                     </DSE:DS_DataQuality>
 
+                    <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();">
+                        <apex:selectOptions value="{!countryList}"/>
+                    </apex:selectList>
                 </apex:outputPanel>
 
 
@@ -344,7 +347,7 @@
 
                     <apex:outputLabel style="margin-right:4%" value="* {!$Label.ISSP_Registration_BusinessPhone}"/>
                     <apex:inputField value="{!ca.fw.newform.Branch_Office_Phone_National__c}"
-                                        onblur="setInternationalAccountPhoneInfo('phone'); updatePhoneInfo();" id="locationphoneinput"
+                                        onblur="setInternationalAccountPhoneInfo('phone'); $('.branch_office_phone__c').change(); updatePhoneInfo();" id="locationphoneinput"
                                         style="width:80%"/>
                 </apex:pageBlockSectionItem>
 
@@ -364,7 +367,7 @@
                                         id="locationfaxinput" styleClass="col-lg-9"/>
                 </apex:pageBlockSectionItem>
 
-                <apex:inputHidden value="{!ca.fw.newform.Branch_Office_Phone_National__c}" id="locationphone"/>
+                <apex:inputHidden value="{!ca.fw.newform.Branch_Office_Phone__c}" id="locationphone"/>
                 <apex:inputHidden value="{!ca.fw.newform.Mobile__c}" id="locationmobile"/>
                 <apex:inputHidden value="{!ca.fw.newform.Branch_Office_FAX__c}" id="locationfax"/>
 
@@ -1018,6 +1021,7 @@
                     }
                 });
 
+                if($(this).attr("data-group")=='agencyLocation') populateShippingCountry();
                 showForms();
             });
 
@@ -1047,12 +1051,37 @@
             }
         }
 
+        function populateShippingCountry() {
+            if($('[id$="notifyChangeLocationCheckbox"]').prop("checked")) {
+                if('{!ca.fw.newform.shipping_country__c}' !='')$('[id$="ShippingCountryList"]').val('{!ca.fw.newform.shipping_country__c}');
+                else   $('[id$="ShippingCountryList"]').val("{!ca.isocountry.Name}".toUpperCase());
+            } else {
+                $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
+            }
+            copyToADShippingCntr();
+        } 
+
+
+        function copyToADShippingCntr(){
+            
+            $('#shipping_country__c > input').val($('[id$="ShippingCountryList"]').val());
+        }
         function initFieldsSettings() {
             $(".country__c").val("{!ca.isocountry.Name}");
             $(".country__c").attr('readonly', true);
             $(".country__c").attr('disabled','disabled');
 
-            $(".shipping_country__c").val("{!ca.isocountry.Name}");
+
+            $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
+            var oldElemt=$('#shipping_country__c > input');
+            
+            oldElemt.attr('Style','display:none;');
+            $('#shipping_country__c').css("padding-right",0);
+            if($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length>0){
+                $('[id$="ShippingCountryList"]').css({'border-width':'2px','border-color':'#d74c3b'})
+            }
+
+           // $(".shipping_country__c").val("{!ca.isocountry.Name}");
             
              $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
@@ -1160,7 +1189,8 @@
         });
 
         var natphoneacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemPhone.locationphoneinput}']");
-        var phoneacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationphone}']");
+        var phoneacct1 = $j('.branch_office_phone__c');
+        var phoneacct2 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationphone}']");
 
         natphoneacct1.intlTelInput({
             nationalMode: true,
@@ -1169,9 +1199,12 @@
             utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
 
+        natphoneacct1.intlTelInput("setNumber", phoneacct1.val());
+
         function setInternationalAccountPhoneInfo(p) {
             if(p=='phone') {
                 phoneacct1.val(natphoneacct1.intlTelInput("getNumber"));
+                phoneacct2.val(natphoneacct1.intlTelInput("getNumber"));
             } else if(p=='mobile') {
                 mobileacct1.val(natmobileacct1.intlTelInput("getNumber"));
             } else {
