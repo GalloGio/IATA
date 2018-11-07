@@ -36,8 +36,6 @@ public class ISSP_FillTopParentTest {
         insert grandson;
             
         child.ParentId = parent2.Id;
-        accountsToChange = ISSP_FillTopParent.getAcctsToUpdate(new map<Id,Account>(new list<Account>{(Account)child}),new map<Id,Account>(new list<Account>{(Account)acct}));
-        ISSP_FillTopParent.accountsBeforeUpdateTopParent(accountsToChange);
         update child;
        
         ISSP_FillTopParent.accountsAfterDeleteTopParent(new map<Id,Account>(new list<Account>{(Account)child}));
