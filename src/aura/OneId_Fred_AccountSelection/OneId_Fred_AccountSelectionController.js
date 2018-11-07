@@ -26,7 +26,6 @@
                         component.set("v.invitationId", invitationId);
                     }
                     console.log('wwww');
-                    component.set("v.isInvitation", isInvitation)
                     helper.initParams(component, isInvitation, invitationId);
                 }
             }
@@ -172,8 +171,7 @@
             "con":component.get("v.contact"),
             "isGuest" : component.get("v.isGuest"),
             "createPrimary":component.get("v.createPrimary"),
-            "userTypeToCreate":component.get("v.userTypeToCreate"),
-            "isInvitation":component.get("v.isInvitation")
+            "userTypeToCreate":component.get("v.userTypeToCreate")
 
         });
 
