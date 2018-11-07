@@ -878,8 +878,10 @@ public without sharing class ISSP_AMS_Accreditation {
             list<IATA_ISO_Country__c> isoList;
             if (applyLanguage == 'es') {
                 isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_SP__c');
+                
             } else if (applyLanguage == 'fr') {
                 isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_FR__c');
+
             } else {
                 isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
             }

@@ -94,41 +94,56 @@ public without sharing class ISSP_FillTopParent {
 			}
 		}
 
-		if(!childsToUpdate.isEmpty()) 
-			update childsToUpdate;
+			for(Account acct : childAcctsToChange){
+				acct.Top_Parent__c = topParentOldToNew.get(acct.Top_Parent__c);
+			}
+			if(!childAcctsToChange.isEmpty())
+				update childAcctsToChange;
+		}
+		else{
+			list<Account> childAccList  = [select Parent.Top_Parent__c,Top_Parent__c,ParentId from Account where ParentId in:trigger.newMap.keySet()];
+			for(Account acc : childAccList){
+				if(acc.Parent.Top_Parent__c!=null)
+					acc.Top_Parent__c = acc.Parent.Top_Parent__c;
+				else
+					acc.Top_Parent__c = acc.ParentId;
+			}
+			if(!childAccList.isEmpty())
+				update childAccList;
+		}
+		return;
 	}
-
-    /*************End After Update:************************/
-    /*************Before Update:************************/
-    /*
-     * Trigger - before update on Account obj.
-     * All it does is updating the node's Top_Parent.
-     * The AfterUpdate trigger will update it's hierarchy.
-     */
-    public static void accountsBeforeUpdateTopParent(List<Account> acctsToUpdate, Map<Id, Account> oldTrigger, Map<Id, Account> newTrigger){
-        Set<Id> parentIds = new Set<Id>();
-        for(Account acct : acctsToUpdate){
-            parentIds.add(acct.ParentId);
-        }
-        // Get a map of parent nodes
-        Map<String, Account> parentNodes = new Map<String, Account>([
-                                                                     Select a.Top_Parent__c, a.ParentId, a.Name 
-                                                                     From Account a
-                                                                     Where a.Id IN :parentIds
-                                                                     ]);
-        // Iterate through new accounts, and change their Top_Parent
-        for(Account acct : acctsToUpdate){
-            Account parent = parentNodes.get(acct.ParentId);
-            if(acct.ParentId == null){
-                acct.Top_Parent__c = null;
-            } else if(parent.Top_Parent__c == null){
-                acct.Top_Parent__c = acct.ParentId;
-            } else{ // parent.Top_Parent__c is not null
-                acct.Top_Parent__c = parent.Top_Parent__c;
-            }
-        }
-    }
-    /*************End Before Update:************************/
+	/*************End After Update:************************/
+	/*************Before Update:************************/
+	/*
+	 * Trigger - before update on Account obj.
+	 * All it does is updating the node's Top_Parent.
+	 * The AfterUpdate trigger will update it's hierarchy.
+	 */
+	public static void accountsBeforeUpdateTopParent(List<Account> acctsToUpdate){
+		Set<Id> parentIds = new Set<Id>();
+		for(Account acct : acctsToUpdate){
+			parentIds.add(acct.ParentId);
+		}
+		// Get a map of parent nodes
+		Map<String, Account> parentNodes = new Map<String, Account>([
+		                                                             Select a.Top_Parent__c, a.ParentId, a.Name 
+		                                                             From Account a
+		                                                             Where a.Id IN :parentIds
+		                                                             ]);
+		// Iterate through new accounts, and change their Top_Parent
+		for(Account acct : acctsToUpdate){
+			Account parent = parentNodes.get(acct.ParentId);
+			if(acct.ParentId == null){
+				acct.Top_Parent__c = null;
+			} else if(parent.Top_Parent__c == null){
+				acct.Top_Parent__c = acct.ParentId;
+			} else{ // parent.Top_Parent__c is not null
+				acct.Top_Parent__c = parent.Top_Parent__c;
+			}
+		}
+	}
+	/*************End Before Update:************************/
 
     /*************Before Delete:************************/
     /*

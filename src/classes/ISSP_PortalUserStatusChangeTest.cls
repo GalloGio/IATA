@@ -54,7 +54,7 @@ private class ISSP_PortalUserStatusChangeTest {
 
     public static testMethod void testISSP_PortalUserStatusChangeTest3() {
 
-        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
         Contact contact = ISSP_ObjectFactory.createNewContact();

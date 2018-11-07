@@ -112,7 +112,7 @@
         <label>Reason</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -373,7 +373,7 @@
         <externalId>false</externalId>
         <label>ICCS Currency Center Current Visit</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -383,7 +383,7 @@
         <externalId>false</externalId>
         <label>ICCS Currency Center Previous Visit</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -465,7 +465,7 @@
         <label>New Role Requested</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -696,7 +696,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <fullName>Top_Account__c</fullName>
         <description>Id of the Top Account in the account hierarchy.</description>
         <externalId>false</externalId>
-        <formula>IF(Contact__r.Account.Top_Parent__r.Id  &lt;&gt;  null, Contact__r.Account.Top_Parent__r.Id, Account__c)</formula>
+        <formula>IF(Contact__r.Account.Top_Parent__r.Id  &lt;&gt;  null, CASESAFEID(Contact__r.Account.Top_Parent__r.Id), CASESAFEID(Account__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Top Account</label>
         <required>false</required>

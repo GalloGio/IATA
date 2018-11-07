@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_PCI Compliant NonBSP reminder EN</name>
+    <style>freeForm</style>
+    <subject>PCI DSS REMINDER</subject>
+    <textOnly>Dear Sir/Madam,
+
+IATA Code: {!Case.IATA_Code__c} - No BSP
+
+
+
+With reference to communication sent earlier reminding you to renew your compliance certification for Payment Card Industry (PCI) Data Security Standard (DSS), please note we have still not received your new Attestation of Compliance (AoC).
+
+
+
+We would like to remind you again that your compliance certification for Payment Card Industry (PCI) Data Security Standard (DSS) will expire on {!Account.ANG_PCI_compliance_expiry_date__c}
+
+
+
+In light of the above and as a second reminder, you are kindly requested to provide us with your new Attestation of Compliance to indicate your company’s compliance within next 30 days but no later than {!Account.ANG_PCI_compliance_expiry_date__c}
+
+
+
+In case you fail to submit your new compliance certification, IATA will proceed with issuing of notification of non-compliance and inform the member airlines.
+
+
+
+We must remind you that credit card form of payment will be restricted upon migration of {!Case.BSPCountry__c} under Resolution 812, unless the evidence is provided prior to the specified date.
+
+
+
+In case you are currently not processing any transactions through BSP utilizing credit card form of payment or not intending to continue using credit card form of payment, you can submit the Nil Credit Card Self-Declaration, attached to this communication.
+
+
+
+It should be noted that upon completion of such declaration no further proof of compliance will be requested from your agency, however credit card form of payment will be disabled for your Agency upon migration of your country of operation under NewGen environment and resolution 812
+
+You can visit our PCI DSS compliance dedicated page for more information on the process. http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+
+We would appreciate you will give this matter your immediate attention. Please do not hesitate to contact us if you have any queries on this matter via our Customer Service Portal at http://www.iata.org/cs</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

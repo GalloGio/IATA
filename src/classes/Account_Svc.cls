@@ -32,11 +32,15 @@ public with sharing class Account_Svc {
 	                    if(!String.isBlank(field) && runAccs.get(field) != mapOldAccount.get(runAccs.Id).get(field)){
 				    		setAccIdsToSync.add(runAccs.Id);
 				    		break;
-						}
-					}
-				}
-		    }
-		}
+	                    }
+	                }
+	    		}
+	    	/*}*/
+	    }
+
+	    if(setAccIdsToSync.isEmpty())
+   			return; // nothing to do here .
+	    
 	    // The map of Location that will be synced with SAP
 	    Map<Id, Location__c> mapLocation = new Map<Id, Location__c>(
 	    	[SELECT Id

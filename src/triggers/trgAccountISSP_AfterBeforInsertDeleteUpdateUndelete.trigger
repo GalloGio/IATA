@@ -1,3 +1,4 @@
+
 trigger trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete on Account (after delete, after insert, after undelete, 
 after update, before delete, before insert, before update) {
 
@@ -22,7 +23,9 @@ after update, before delete, before insert, before update) {
         if(!AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess){
             system.debug('CHECK IN TopParentBeforeUpdate');
             acctToUpdate = ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
-            ISSP_FillTopParent.accountsBeforeUpdateTopParent(acctToUpdate, trigger.oldMap, trigger.newMap);
+            // Update the accounts:
+            if(!acctToUpdate.isEmpty())
+                ISSP_FillTopParent.accountsBeforeUpdateTopParent(acctToUpdate);
         }
     }
     else if(trigger.isUpdate && trigger.isAfter){

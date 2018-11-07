@@ -24,12 +24,15 @@ global without sharing class ANG_SAP_PPA {
             Blob fileContent;
 
             if (string.isBlank(fileBody)) {
-                SAP_Digital_Invoice.DT_SFDC_DigitalSignedInvoice_Response response = IECInvoice_Ctrl.CallSAPToGetInvoice_Static(ppaNumber);
+                /* removed PPA stories from Release
+                //SAP_Digital_Invoice.DT_SFDC_DigitalSignedInvoice_Response response = IECInvoice_Ctrl.CallSAPToGetInvoice_Static(ppaNumber);
                 if (response!=null) {
                     if (response.Error == null) EncodingUtil.base64Decode(response.EncodedSignedInvoice);
                 } else {
-                	if (!Test.isRunningTest()) ServiceNow_Helper.sendRequestToSNOW('SAP', 'SAP PPA', 'SAP PPA', 'SAP-PI', 'SAP', 'Error while getting PPA from SAP', String.valueOf(response.Error.Message), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+                	if (!Test.isRunningTest()) //ServiceNow_Helper.sendRequestToSNOW('SAP', 'SAP PPA', 'SAP PPA', 'SAP-PI', 'SAP', 'Error while getting PPA from SAP', String.valueOf(response.Error.Message), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+                        ServiceNow_Helper.sendRequestToSNOWSAP('SNOW15', response, null);
                 }
+                */
             }
             else fileContent = EncodingUtil.base64Decode(fileBody);
 
@@ -48,14 +51,18 @@ global without sharing class ANG_SAP_PPA {
                 
                 theOscar.Billing_Document_Number__c = ppaNumber;
                 update theOscar;
+                theCase.New_interaction__c = 'New Attachment';
+                update theCase;
             }else {
-                if (!Test.isRunningTest()) ServiceNow_Helper.sendRequestToSNOW('SAP', 'SAP PPA', 'SAP PPA', 'SAP-PI', 'SAP', 'Error while getting PPA from SAP', 'Error: Amazon file not Uploaded - ISSP_AMS_Accreditation.cls', 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+                if (!Test.isRunningTest()) //ServiceNow_Helper.sendRequestToSNOW('SAP', 'SAP PPA', 'SAP PPA', 'SAP-PI', 'SAP', 'Error while getting PPA from SAP', 'Error: Amazon file not Uploaded - ISSP_AMS_Accreditation.cls', 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+                ServiceNow_Helper.sendRequestToSNOWSAP('SNOW16', null, null);
             }
             
             return new WSResponse('200', 'OK');
         }
         catch(exception e){
-        	if (!Test.isRunningTest()) ServiceNow_Helper.sendRequestToSNOW('SAP', 'SAP PPA', 'SAP PPA', 'SAP-PI', 'SAP', 'Error while getting PPA from SAP', e.getMessage(), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+        	if (!Test.isRunningTest()) //ServiceNow_Helper.sendRequestToSNOW('SAP', 'SAP PPA', 'SAP PPA', 'SAP-PI', 'SAP', 'Error while getting PPA from SAP', e.getMessage(), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+                ServiceNow_Helper.sendRequestToSNOWSAP('SNOW17', null, e);
             return new WSResponse('500', 'Generic Error: ' + e.getMessage());
         }
     }

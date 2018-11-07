@@ -584,6 +584,15 @@ private class AMS_UtilsTest {
                                      Name='Test HE',Short_Name__c='Test HE',ANG_IEP_Status__c='Open',ANG_IEP_HE_AccntNum__c='126473547', Reason__c = '12-aaa', Status__c='approved',Location_Class__c = 'P');
         insert acct;
 
+        Contact iepContact = new Contact(FirstName = 'test', LastName = 'test', email = 'IEP_test@test.test', AccountId = acct.Id);
+        insert iepContact;
+
+        Portal_Applications__c portalApp = new Portal_Applications__c(Name='IATA EasyPay (EDENRED)' );
+        insert portalApp;
+
+        Portal_Application_Right__c portalRight = new Portal_Application_Right__c(Portal_Application__c = portalApp.Id, ANG_Portal_Service_Role__c= 'IEP Admin', Right__c = 'Access Granted', Contact__c = iepContact.Id);
+        insert portalRight;
+
         //integration will run on trigger because settings conditions are met: ANG_IEP_Status__c changed and value is 'In Progress'
         acct.ANG_IEP_Status__c = 'In Progress';
         update acct;

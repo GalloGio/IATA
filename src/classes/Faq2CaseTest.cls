@@ -1199,4 +1199,69 @@ private class Faq2CaseTest {
             }
       }
     }
+    
+    static testMethod void testFaq2CaseEmergency() 
+    {
+        //ISSP_ObjectFactory.fiilIncludedFields();
+
+        Id rtIdHq = [ SELECT Id FROM RecordType 
+        WHERE SobjectType = 'Account'
+        AND DeveloperName = 'IATA_Airline'][0].Id;
+
+        Id rtIdBr = [ SELECT Id FROM RecordType 
+        WHERE SobjectType = 'Account'
+        AND DeveloperName = 'IATA_Airline_BR'][0].Id;                       
+
+        //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        insert parent;
+       
+        //Account headQuarter =  (Account)ISSP_ObjectFactory.createSObject('Account',false,2);
+        Account headQuarter = ISSP_ObjectFactory.createNewAccount();
+        headQuarter.ParentId = parent.Id;
+        headQuarter.BillingCity = 'test2';
+        headQuarter.Name = 'test2';
+        headQuarter.RecordTypeId = rtIdHq;
+        headQuarter.Site = 'headSite';
+        insert headQuarter;
+        //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.Email = 'testxxaasddasdasda@test.com';
+        con.AccountId= headQuarter.Id;
+        insert con;
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1');
+        insert country;
+
+        list<Account> consumers = new list<Account>();
+        for (integer i = 0;i<1;i++)
+            consumers.add(new Account(name = 'consumer '+i,
+                                    recordTypeId =rtIdBr,
+                                    parentId = headQuarter.id,
+                                    Site = 'Site'+i,
+                                    IATA_ISO_Country__c = country.Id));
+        insert consumers;
+
+        list<Services_Rendered__c> services = new list<Services_Rendered__c>();
+        for(Account cons: consumers )
+        { 
+            services.add( new  Services_Rendered__c(Services_Rendered_Status__c = 'Active',Services_Rendered_Type__c = 'CASS Participation',Services_Rendered_to_Airline__c = cons.id, Services_Rendered_By__c = headQuarter.Id));
+            services.add( new  Services_Rendered__c(Services_Rendered_Status__c = 'Active',Services_Rendered_Type__c = 'BSP Representation',Services_Rendered_to_Airline__c = cons.id, Services_Rendered_By__c = headQuarter.Id));
+            services.add( new  Services_Rendered__c(Services_Rendered_Status__c = 'Active',Services_Rendered_Type__c = 'THIS ONE WILL NOT FIRE !!!!',Services_Rendered_to_Airline__c = cons.id, Services_Rendered_By__c = headQuarter.Id));
+        }
+        insert services;
+
+        System.runAs(newUser)
+        {
+            vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
+            controller.pageLoad();
+            controller.createAnEmergency();
+            controller.refreshTopicPickList();
+            controller.getCallUsEmergencyFinalString();
+        }
+
+    }
  }
