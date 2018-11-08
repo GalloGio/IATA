@@ -316,21 +316,25 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	}
 
 	if (!contactKaviAdd.isEmpty()){
+
+		String action = 'create';
+
 		string kaviUser = [SELECT Kavi_User__c from Contact where Id in:contactKaviAdd limit 1].Kavi_User__c;
 		
 		if (kaviUser != null ){
-			ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create2',contactKaviAdd);
-			}
-		else  
-		{
-			ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create',contactKaviAdd);
-		}		
+			action = 'create2';
+		}
+
+		HigherLogicIntegrationHelper.pushPersonCompanyMembers(action, contactKaviAdd);
+
 		//RN-ENHC0012059 grant and remove the permission set to the user	
-		ISSP_WS_KAVI.addUserPSA(contactKaviAdd, 'grant'); 
+		HigherLogicIntegrationHelper.assignHLPermissionSet(contactKaviAdd, 'grant'); 
+		
 	}
+	
 	//RN-ENHC0012059 grant and remove the permission set to the user
 	if(!removeKaviPermissionSet.isEmpty()){
-		ISSP_WS_KAVI.addUserPSA(removeKaviPermissionSet, 'remove');
+		HigherLogicIntegrationHelper.assignHLPermissionSet(removeKaviPermissionSet, 'remove');
 	}
 
 

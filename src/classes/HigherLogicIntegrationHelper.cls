@@ -1,0 +1,286 @@
+public class HigherLogicIntegrationHelper {
+
+	public static Boolean preventTrigger = false;
+	
+	private static Map<String,Schema.RecordTypeInfo> recordTypesMap = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName();
+
+	private static String AGENCY_RECORD_TYPE_ID = recordTypesMap.get('IATA_Agency').getRecordTypeId();
+	private static String BRANCH_RECORD_TYPE_ID = recordTypesMap.get('IATA_Airline_BR').getRecordTypeId();
+	private static String HEADQUARTER_RECORD_TYPE_ID = recordTypesMap.get('IATA_Airline').getRecordTypeId();
+	
+    private static List<Account> fetchAccountRecords(Set<Id> accountIdSet){
+    	
+    	List<Account> accountLst = new List<Account>(
+			[SELECT
+				Id,
+				Name,
+				Website,
+				Email__c,
+				BillingCity,
+				BillingState,
+				BillingStreet,
+				BillingCountry,
+				BillingPostalCode,
+				Inactive_Account__c
+			 FROM 
+			 	Account 
+			 WHERE
+			 	Id IN :accountIdSet
+			]
+		);
+		
+		return accountLst;
+
+	}
+	
+	/**
+	* Fetch the correct account Id considering 
+	* the record type, parent accounts and airline type
+	*
+	* @param accountId: Id
+	* @param recordTypeId: Id
+	* @param airlineType: String
+	* @param parentId: Id
+	* @param parent2Id: Id
+	*
+	* @return Id: accountId
+	*
+	*/
+	private static Id fetchAssociatedAccountId(Id accountId, Id recordTypeId, String airlineType, Id parentId, Id parent2Id){
+					
+		if(recordTypeId == BRANCH_RECORD_TYPE_ID && airlineType == 'Branch' && parentId != null){
+			return parentId;
+		}
+		
+		if(recordTypeId == AGENCY_RECORD_TYPE_ID && parentId != null && parent2Id == null){
+			return parentId;
+		}
+		
+		if(recordTypeId == AGENCY_RECORD_TYPE_ID && parentId != null && parent2Id != null){
+			return parent2Id;
+		}
+		
+		return accountId;
+		
+	}
+	
+	/*
+	* Push all given accounts details into HigherLogic
+	*
+	* @param accountIdSet: Set<Id>
+	*
+	*/
+	@future(callout=true)	
+	public static void pushCompanyMembers(Set<Id> accountIdSet){
+		
+		List<Account> accountLst = fetchAccountRecords(accountIdSet);
+		
+		if(!accountLst.isEmpty()){
+			HigherLogicIntegrationWS.pushMembers(accountLst);
+			HigherLogicIntegrationWS.flushWebServiceLogs();
+		}
+		
+	}
+	
+	/**
+	* Push all users detail into HigherLogic
+	*
+	* @param usersToPushLst: List<User>
+	*
+	*/
+	public static void pushPersonMembers(List<User> usersToPushLst){
+		HigherLogicIntegrationWS.pushMembers(usersToPushLst);
+		HigherLogicIntegrationWS.flushWebServiceLogs();
+	}
+	
+	/**
+	*
+	*
+	*
+	*/
+	public static void updateMembersRelationships(){
+		//TODO
+	}
+	
+	/**
+	* Processes each User/Account pair 
+	* and pushes their detail into HigherLogic
+	*
+	* @param operation: String
+	* @param contactIdSet: Set<Id>
+	*
+	*/
+	@future(callout=true)
+	public static void pushPersonCompanyMembers(String operation, Set<Id> contactIdSet){
+
+		String usersQuery =
+			' SELECT                                  ' +
+			' 	Id,                                   ' +
+			' 	ContactKaviId__c,                     ' +
+			' 	Username,                             ' +
+			' 	Title,                                ' +
+			' 	FirstName,                            ' +
+			' 	LastName,                             ' +
+			' 	Phone,                                ' +
+			' 	Fax,                                  ' +
+			' 	IsActive,                             ' +
+			' 	City,                                 ' +
+			' 	MobilePhone,                          ' +
+			' 	State,                                ' +
+			' 	Country,                              ' +
+			' 	Street,                               ' +
+			' 	Email,                                ' +
+			' 	PostalCode,                           ' +
+			' 	Contact.Account.RecordTypeId,         ' +
+			' 	Contact.Account.Field_Head_Office__c, ' +
+			' 	Contact.AccountId,                    ' +
+			' 	Contact.Account.ParentId,             ' +
+			' 	Contact.Account.Parent.ParentId       ' +
+			' FROM                                    ' +
+			' 	User                                  ' +
+			' WHERE									  ';
+			
+		if (operation == 'create2'){ 
+			usersQuery += ' ContactKaviId__c IN :contactIdSet ';
+		}
+		else {
+			usersQuery += ' ContactId IN :contactIdSet ';
+		}
+		
+		List<User> userLst = (List<User>) Database.query(usersQuery);
+		
+		if(operation == 'update'){
+			HigherLogicIntegrationWS.pushMembers(userLst);
+			HigherLogicIntegrationWS.flushWebServiceLogs();
+			return;
+		}
+
+		List<sObject> membersToPushLst = new List<sObject>();
+		
+		Map<Id, User> newUsersMap = new Map<Id, User>(userLst);
+
+		List<Portal_Application_Right__c> portalAppRightsLst = new List<Portal_Application_Right__c>(
+			[SELECT
+				Id,
+				ContactId__c,
+				Kavi_user__c
+			 FROM
+			 	Portal_Application_Right__c
+			 WHERE
+			 	 Contact__c IN :contactIdSet
+			 AND Right__c = 'Access Granted'
+			 AND Portal_Application__r.Name = 'Standards Setting Workspace'
+			]
+		);
+		
+		Map<Id, Portal_Application_Right__c> contactRightsMap = new Map<Id, Portal_Application_Right__c>();
+
+		for (Portal_Application_Right__c par : portalAppRightsLst){
+			contactRightsMap.put(par.ContactId__c, par);
+		}
+		
+		Set<Id> newAccountsIds = new Set<Id>();
+
+		Map<Id,Id> newRelationship = new Map<Id,Id>();
+		
+		Id provAcctId = ProvisionKaviAccess.getFakeAccount().Id;
+		
+		for(User newUser : newUsersMap.values()){
+			
+			Id accId = provAcctId;
+			
+			if (operation == 'create'){
+				accId = fetchAssociatedAccountId(newUser.Contact.AccountId,newUser.Contact.Account.RecordTypeId, newUser.Contact.Account.Field_Head_Office__c, newUser.Contact.Account.ParentId, newUser.Contact.Account.Parent.ParentId);
+			}
+
+			newAccountsIds.add(accId);
+			newRelationship.put(newUser.Id,accId);
+
+		}
+		
+		List<Account> accountLst = fetchAccountRecords(newAccountsIds);
+		
+		membersToPushLst.addAll(accountLst);
+		membersToPushLst.addAll(userLst);
+		
+		HigherLogicIntegrationWS.pushMembers(membersToPushLst);
+		
+		for(User newUser : newUsersMap.values()){
+			
+			if(newUser.ContactId != null && contactRightsMap.containsKey(newUser.ContactId)) {
+				contactRightsMap.get(newUser.ContactId).Kavi_user__c = true;
+			}
+			//Extension Code for Internal users
+			else if(newUser.ContactKaviId__c != null && contactRightsMap.containsKey(newUser.ContactKaviId__c)){
+				contactRightsMap.get(newUser.ContactKaviId__c).Kavi_user__c = true;
+			}
+			
+		}
+
+		HigherLogicIntegrationWS.pushMembersRelationships(newRelationship);
+
+		update contactRightsMap.values();	
+		
+		HigherLogicIntegrationWS.flushWebServiceLogs();
+		
+	}
+	
+	/**
+	* Processes each User/Account pair 
+	* and pushes their detail into HigherLogic
+	*
+	* @param contactIdSet: Set<Id>
+	* @param action: String
+	*
+	*/
+	@future(callout=true) 
+	public static void assignHLPermissionSet(Set<Id> contactIdSet, String action){
+
+		PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'HL_UsersAccess'][0];
+		
+		List<User> userLst = new List<User>(
+			[SELECT 
+				Id
+			 FROM 
+			 	User 
+			 WHERE 
+			 	ContactId IN :contactIdSet
+			]
+		);
+
+		if(action == 'grant'){
+			
+			List<PermissionSetAssignment> grantPSALst  = new List<PermissionSetAssignment>();
+			
+			for(User usr : userLst){
+				grantPSALst.add(new PermissionSetAssignment(PermissionSetId = permSet.Id, AssigneeId = usr.Id));
+			}
+			
+			if(!grantPSALst.isEmpty()){
+				insert grantPSALst;
+			}
+			
+		}
+		else if(action == 'remove'){
+		
+			List<PermissionSetAssignment> removePSALst  = new List<PermissionSetAssignment>(
+				[SELECT
+					Id
+				 FROM 
+					PermissionSetAssignment
+				 WHERE
+				 	AssigneeId IN :userLst
+				 AND
+				 	PermissionSetId = :permSet.Id
+				]
+			);
+
+			if(!removePSALst.isEmpty()){ 
+				delete removePSALst;
+			}
+			
+		}
+		
+	}
+
+}

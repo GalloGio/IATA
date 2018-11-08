@@ -13,13 +13,14 @@ public without sharing class ISSP_UserTriggerHandler {
         Set <Id> contactKaviAdd = new Set <Id>();
 
         for(User oneUser: newUserList) {
+        	
             if (oldUserMap.containsKey(oneUser.Id)){
                 if (oneUser.Email != oldUserMap.get(oneUser.Id).Email){
                     oneUser.ISSP_Old_Email__c = oldUserMap.get(oneUser.Id).Email;
                 }
             }
 
-            if(oldUserMap.get(oneUser.Id).Username != oneUser.Username ||
+			if(oldUserMap.get(oneUser.Id).Username != oneUser.Username ||
                oldUserMap.get(oneUser.Id).Phone != oneUser.Phone ||
                oldUserMap.get(oneUser.Id).Fax != oneUser.Fax ||
                oldUserMap.get(oneUser.Id).City != oneUser.City ||
@@ -29,27 +30,31 @@ public without sharing class ISSP_UserTriggerHandler {
                oldUserMap.get(oneUser.Id).Mobilephone != oneUser.Mobilephone ||
                oldUserMap.get(oneUser.Id).Street != oneUser.Street){
               
-               if(oneUser.contactId != null)
+               if(oneUser.contactId != null){
                  contactIdSet.add(oneUser.contactId);
-
+               }
+               
                //Code added to consider Kavi internal users
                if(oneUser.ContactKaviId__c != null){
                    contactIdSet.add(oneUser.ContactKaviId__c);
-                  }
                }
+               
             }
+        }
 
         List <Portal_Application_Right__c> appRightList = [SELECT Id, Contact__c FROM Portal_Application_Right__c
                             WHERE Application_Name__c = 'Standards Setting Workspace'
                             AND Right__c = 'Access Granted'
                             AND Contact__c IN :contactIdSet];
          
-        for (Portal_Application_Right__c thisRecord : appRightList)
-             contactKaviAdd.add(thisRecord.Contact__c);
+		for(Portal_Application_Right__c thisRecord : appRightList){
+			contactKaviAdd.add(thisRecord.Contact__c);
+        }
         
-        if(contactKaviAdd.size()>0)
-            ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('update',contactKaviAdd);
-
+        if(contactKaviAdd.size() > 0){
+            HigherLogicIntegrationHelper.pushPersonCompanyMembers('update', contactKaviAdd);
+        }
+        
         setPortalUserName(newUserList);
     }
 
