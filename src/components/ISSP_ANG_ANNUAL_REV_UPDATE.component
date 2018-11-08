@@ -1053,8 +1053,8 @@
 
         function populateShippingCountry() {
             if($('[id$="notifyChangeLocationCheckbox"]').prop("checked")) {
-                if('{!ca.fw.newform.shipping_country__c}' !='')$('[id$="ShippingCountryList"]').val('{!ca.fw.newform.shipping_country__c}');
-                else   $('[id$="ShippingCountryList"]').val("{!ca.isocountry.Name}".toUpperCase());
+                if ('{!ca.fw.newform.shipping_country__c}' !='') $('[id$="ShippingCountryList"]').val('{!ca.fw.newform.shipping_country__c}');
+                else $('[id$="ShippingCountryList"]').val("{!ca.isocountry.Name}".toUpperCase());
             } else {
                 $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
             }
@@ -1063,9 +1063,11 @@
 
 
         function copyToADShippingCntr(){
+            var dropdownValue = $('[id$="ShippingCountryList"]').val();
             
-            $('#shipping_country__c > input').val($('[id$="ShippingCountryList"]').val());
+            $('[id$="shipping_country__c"]').val(dropdownValue == null ? "{!ca.account.ShippingCountry}" : dropdownValue);
         }
+
         function initFieldsSettings() {
             $(".country__c").val("{!ca.isocountry.Name}");
             $(".country__c").attr('readonly', true);
