@@ -14,7 +14,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	public string preview {get;set;}
 	
 	//time range in minutes to include Feed Item createDate to compensate broadcast time skips
-	private static Integer rangeInMinutes = 5;
+	private static Integer rangeInMinutes = Integer.ValueOf(Account_Management_Settings__c.getInstance().Topic_Digest_Time_Range_Aggregator__c);
 	
 	public AMP_ChatterTopicSubscribeController() {
 		showPreview = false;
