@@ -179,8 +179,10 @@ public with sharing class ISSP_PortalUserStatusChange {
                 u.IsActive = false;
             }
         }
-        update usersToUpdate;
-        
+        try{
+            update usersToUpdate;
+        }catch(Exception e){}
+
     }
     
     @RemoteAction
@@ -250,14 +252,18 @@ public with sharing class ISSP_PortalUserStatusChange {
     
     
     public Pagereference sendEmailToUser(){
+
+        try{
         
-        User user = [select Id from User where ContactId =:contactId];
-        ISSP_Registration.password =  ISSP_Registration.generatePassword();
-        system.setPassword(user.Id, ISSP_Registration.password);
-        if(CommunityName=='CNS'){
-            ISSP_Registration.sendCNSEmail(user.Id,contactId);
-        }else{ ISSP_Registration.sendEmail(user.Id,contactId); }
-        
+            User user = [select Id from User where ContactId =:contactId];
+            ISSP_Registration.password =  ISSP_Registration.generatePassword();
+            system.setPassword(user.Id, ISSP_Registration.password);
+            if(CommunityName=='CNS'){
+                ISSP_Registration.sendCNSEmail(user.Id,contactId);
+            }else{ ISSP_Registration.sendEmail(user.Id,contactId);            }
+
+        }catch(Exception e){  } 
+
         return null;
     }
 
@@ -266,7 +272,8 @@ public with sharing class ISSP_PortalUserStatusChange {
     public string contactId {get;set;}
     public string portalStatus{get;set;}
     public string oldPortalStatus {get;set;}
-    public  Pagereference preformAction(){
+
+    public Pagereference preformAction(){
         
         string actionName = getActionName(portalStatus,oldPortalStatus);
         if(actionName == '' || actionName == null) 
@@ -275,7 +282,11 @@ public with sharing class ISSP_PortalUserStatusChange {
         Type t = Type.forName('ISSP_PortalUserStatusChange.'+actionName);
         
         IActions action = (IActions) t.newInstance();
-        action.processAction(contactId);
+        try{
+            action.processAction(contactId);
+        }catch(Exception e){ 
+            //return new map<String, String> { 'error' => e.getMessage() };
+        } 
         return null;
     }
 
@@ -381,7 +392,10 @@ public with sharing class ISSP_PortalUserStatusChange {
                 u.IsActive = false;
             }
         }
-        update usersToUpdate;
+        try{
+            update usersToUpdate;
+        }catch(Exception e){    }
+        
         update new Contact(Id=contactId,User_Portal_Status__c='');
     } 
 
