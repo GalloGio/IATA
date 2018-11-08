@@ -1,13 +1,18 @@
 ({
-	//Fetch the accounts from the Apex controller
-  getContactList: function(component) {
-    var action = component.get("c.getKeyContacs");
+	getReportId : function(component, event) {
+		var action = component.get("c.getReportId");
+		action.setCallback(this, function(a) {
+			var reportId = a.getReturnValue();
 
-    //Set up the callback
-    var self = this;
-    action.setCallback(this, function(actionResult) {
-        component.set("v.contacts", actionResult.getReturnValue());
-    });
-    $A.enqueueAction(action);
-  }
+			var state = a.getState();
+			//  var ParticipantWrappers = new Array();
+			if (component.isValid() && state === "SUCCESS") {
+				component.set("v.reportId", reportId);
+
+			}
+			else if (state === "ERROR") {}
+		});
+		$A.enqueueAction(action);
+
+	}
 })
