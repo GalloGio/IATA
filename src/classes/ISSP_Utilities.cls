@@ -35,13 +35,17 @@ public without sharing class ISSP_Utilities {
 	}
     
     public static string getContactTypeById(string conId){
-    	Contact con = [select Id, Account.RecordType.DeveloperName, Account.Sector__c from Contact where Id =:conId];
+    	Contact con = [select Id, Account.RecordType.DeveloperName, Account.Sector__c, Account.Category__c from Contact where Id =:conId];
     	string userType = ISSP_Constant.userTypeByAccountRtDeveloperNameMap.get(con.Account.RecordType.DeveloperName);
     	if(userType!=null){
     		return userType;
     	}
     	else{
     		userType = ISSP_Constant.accountSectorType.get(con.Account.Sector__c);
+    		if(userType!=null){
+				return userType;
+			}
+    		userType = ISSP_Constant.accountCategoryType.get(con.Account.Category__c);
     		if(userType!=null){
 				return userType;
 			}

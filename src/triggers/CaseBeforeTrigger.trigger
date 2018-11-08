@@ -191,9 +191,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         Account aAccount = accounts.get(aCase.AccountId);
                         if(aAccount != null){
                             accountMap.put(aCase.id, aAccount);
-                            if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){
-                                aCase.CNSCase__c = true;
-                            }
+                            if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){ aCase.CNSCase__c = true; }
                         }
                   
                     }
@@ -534,8 +532,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // New from Oct 2015: if there's already another Airline Coding case open, raise an error
                     // Mod from 2016/04/05: this restriction is only when the case has the same Reason1__c 
                     if (c.RecordTypeId == AirlineCodingRTId && mapACCasesPerAccountId.get(c.AccountId) != null) {
-                        for (Case cse : mapACCasesPerAccountId.get(c.AccountId) ) {
-                            if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id) {
+                        system.debug('##ROW##');
+                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form'};
+                        for (Case cse: mapACCasesPerAccountId.get(c.AccountId) ) {
+                            if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id && setInvalidReasons.contains(c.Reason1__c)) {
                                 c.addError('There is already an open Airline Coding Application case with Reason "' + c.Reason1__c + '" on the selected Account. There can be only one open case of this type on an Account.');
                             }
                         }
@@ -544,7 +544,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
             // Prevent the closing of the ASP cases if there are related tasks still open
             // only continue if there are ASP cases getting closed
-            System.debug(loggingLevel.ERROR, '____ [CaseBeforeTrigger - trgICCS_ASP_Case_Validation] setClosingCasesIds] - ' + setClosingCasesIds);
             if (!setClosingCasesIds.isEmpty()) {
                 //create a map of open tasks related to the cases
                 Map<Id, Task> mapTasksPerCaseId = new Map<Id, Task>();
@@ -1858,7 +1857,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if(aCase.RecordTypeId == caseRecordType){
                     idCardCases.add(aCase);
                     if (aCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_APPROVED && oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL) {
-                        contactIDList.add(aCase.ContactId);
+                        
+                        if(aCase.ContactId != null)
+                            contactIDList.add(aCase.ContactId);
+
                         relatedIDCardAppList.add(aCase.Related_ID_Card_Application__c);
 
                         if(aCase.AccountId == null) casesWithoutAccount.add(aCase.Related_ID_Card_Application__c);
@@ -1910,7 +1912,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
             if(!iataCodes.isEmpty()){
                 for(Account a : [SELECT 
-                                 Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c, Status__c
+                                 Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c, Status__c, BillingCountry
                                  FROM Account 
                                  WHERE Id IN :accounttIDList OR
                                   (RecordType.Name = : 'Agency' 
@@ -1977,15 +1979,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         if (application.ID_Cards__r.size() == 0) {
                             //**Create Contact only for new application
                             if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW){
-
                                 theContact = IDCardUtil.CreateContactWhenNewCardIsApproved(application, theAccount);
                                 theContact.Email = application.Email_admin__c; 
                                 aCase.ContactId = theContact.ID;
-                            }else{
-                                theContact = contactMap.get(aCase.ContactId);
                             }
-                            //Check if theContact exists with VER_Number na lista anterior preenchida - Ver codigo antigo
-
+                            else theContact = contactMap.get(aCase.ContactId);
+                            
                             if (theContact == null || theContact.VER_Number__c != Decimal.valueOf(application.VER_Number__c)) 
                                 throw new IDCardApplicationException(string.format(Label.ID_Card_Contact_Not_found_for_VER, new string[] {application.VER_Number__c}));
                             

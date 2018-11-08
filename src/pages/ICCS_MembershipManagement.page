@@ -35,7 +35,7 @@
 */
                         var signatoryAccess = false;
                         var users = new SObjectModel.ApplicationRight();
-                        users.retrieve({where: { or: {acctId: {eq: '{!acctId}'}, topAcctId: {eq: '{!acctId}'}}, applicationId: {eq: '{!iccsApplicationId}'}}},
+                        users.retrieve({where: { or: {acctId: {eq: '{!acct.Id}'}, topAcctId: {eq: '{!acct.Id}'}}, applicationId: {eq: '{!iccsApplicationId}'}}},
                             function(err, records, event){
                                 if(err){
                                     alert("Error : " + err.message);

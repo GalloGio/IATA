@@ -5,7 +5,18 @@ global class ANG_OscarProcessHelper {
 
 	public static final String ANG_PCI_RENEWAL = 'ANG_PCI_RENEWAL'; //email template id name for pci automatic renewal
 
+	/* EasyPay Service Providers */
+	public static final Set<String> MODEL_A_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)'};
+	public static final Set<String> MODEL_B_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)','IATA EasyPay (MSTS)'};
+
 	public static boolean isIATACodeGenerationRunning = false;
+
+	public static final Set<Id> NEW_ACCRCONTACTS_RC = new Set<Id>{
+		RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'),
+		RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner'),
+		RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company'),
+		RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner')
+	};
 
 	webservice static String[] processIATACodeGeneration(String accountId, String onlineAccreditationId, String oscarId){
 
@@ -45,7 +56,7 @@ global class ANG_OscarProcessHelper {
 					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
-					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c,
 					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
 					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 					FROM Account
@@ -121,6 +132,16 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1','A New MSO cannot have more than one Appointment. Please review the appointments section and try again.','-1'};
 			}
 
+			/*** AMSU-161 Start ***/
+			if(oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_GSA 
+			    || oscar.Process__c == AMS_Utils.new_AHA){
+			    String sError = AMS_InspectionHelper.validateGSAforAppointments(oscar, updater.onlineAMap);
+			    if(!sError.equalsIgnoreCase('')){
+			    	return new String[]{'-1',sError+'\n\r','-1'};
+			    }
+			}
+			/*** AMSU-161 End ***/ 
+			
 			System.debug('[ANG_OscarProcessHelper] Execution time so far:' + (datetime.now().getTime() - processStartTime.getTime()) /1000);
 
 			/*** AMSU-37 ***/
@@ -478,6 +499,103 @@ global class ANG_OscarProcessHelper {
             }
 
             updaterObj.acctMap.put(acc.Id,acc);
+
+            //Get the Accreditation Contacts to update the accounts fields Has_an_Administrator_User_Portal__c and Has_a_Financial_Assessment_Contact__c
+            List<AMS_Accreditation_Contact__c> accreditationContacts = [SELECT id, Financial_Assessment_Contact__c, Portal_administrator__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, Contact__c, Contact__r.AccountId, Contact__r.Financial_Assessment_Contact__c, Contact__r.Designated_Portal_Admin__c
+            															FROM AMS_Accreditation_Contact__c
+            															WHERE AMS_Pax_Accreditation_Form__c =: onlineAcc.Id 
+	    																	AND RecordTypeId IN: NEW_ACCRCONTACTS_RC];
+
+            if(!accreditationContacts.isEmpty()){
+
+            	Map<Id,List<AMS_Accreditation_Contact__c>> accrConPerAccount = new Map<Id,List<AMS_Accreditation_Contact__c>>();
+            	Set<Id> conIds = new Set<Id>();
+            	
+            	Id accrConAccountIdTemp;
+
+            	//get all the account Ids and contactIds from accreditation contacts
+            	for(AMS_Accreditation_Contact__c accrCon : accreditationContacts){
+
+            		if(accrCon.Contact__c == null){
+            			accrConAccountIdTemp = accrCon.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+        			} else {
+        				accrConAccountIdTemp = accrCon.Contact__r.AccountId;
+        				conIds.add(accrCon.Contact__c);
+        			}
+
+        			if(!accrConPerAccount.containsKey(accrConAccountIdTemp))
+        				accrConPerAccount.put(accrConAccountIdTemp, new List<AMS_Accreditation_Contact__c>());
+
+        			accrConPerAccount.get(accrConAccountIdTemp).add(accrCon);
+            	}
+
+            	//get all the accounts
+            	Map<Id,Account> listAccount;
+            	if(!accrConPerAccount.keySet().isEmpty() && !(accrConPerAccount.keySet().size() == 1 && accrConPerAccount.keySet().contains(acc.Id))){
+
+            		listAccount = new Map<Id,Account>([SELECT Id, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c,
+																	(SELECT Financial_Assessment_Contact__c, User_Portal_Status__c FROM Contacts WHERE Id NOT IN: conIds)
+																	FROM Account
+																	WHERE id IN: accrConPerAccount.keySet()]);
+
+            	} else if(accrConPerAccount.keySet().size() == 1 && accrConPerAccount.keySet().contains(acc.Id)){
+            		listAccount = new Map<Id,Account>{acc.Id => acc};
+            	}
+            	
+            	Boolean someFStrue = false;
+            	Boolean somePAtrue = false;
+            	//update account fields
+            	for(Id acctId : accrConPerAccount.keySet()){
+
+            		someFStrue = false;
+            		somePAtrue = false;
+
+        			for(AMS_Accreditation_Contact__c accreditationCon : accrConPerAccount.get(acctId)){
+
+        				if(accreditationCon.Financial_Assessment_Contact__c)
+        					someFStrue = true;
+
+        				if(accreditationCon.Portal_administrator__c)
+        					somePAtrue = true;
+        			}
+
+        			//There is a new financial assessment contact
+            		if(someFStrue && listAccount.get(acctId).Has_a_Financial_Assessment_Contact__c == false){
+
+            			if(!updaterObj.acctMap.containsKey(acctId))
+    						updaterObj.acctMap.put(acctId, listAccount.get(acctId));
+
+    					updaterObj.acctMap.get(acctId).Has_a_Financial_Assessment_Contact__c = true;
+            		}
+
+            		//The account had a financial assessment contact but not anymore
+            		if(!someFStrue && listAccount.get(acctId).Has_a_Financial_Assessment_Contact__c == true && !ContactHandler.calculeHasAFinancialAssessmentValue(listAccount.get(acctId).Contacts)){
+
+            			if(!updaterObj.acctMap.containsKey(acctId))
+    						updaterObj.acctMap.put(acctId, listAccount.get(acctId));
+
+    					updaterObj.acctMap.get(acctId).Has_a_Financial_Assessment_Contact__c = false;
+            		}
+
+            		//There is a new portal admin contact
+            		if(somePAtrue && listAccount.get(acctId).Has_an_Administrator_User_Portal__c == false){
+
+            			if(!updaterObj.acctMap.containsKey(acctId))
+    						updaterObj.acctMap.put(acctId, listAccount.get(acctId));
+
+    					updaterObj.acctMap.get(acctId).Has_an_Administrator_User_Portal__c = true;
+            		}
+
+            		//The account had a portal admin contact but not anymore
+            		if(!somePAtrue && listAccount.get(acctId).Has_an_Administrator_User_Portal__c == true && !ContactHandler.calculeHasAnAdminPortalUserValue(listAccount.get(acctId).Contacts)){
+
+            			if(!updaterObj.acctMap.containsKey(acctId))
+    						updaterObj.acctMap.put(acctId, listAccount.get(acctId));
+
+    					updaterObj.acctMap.get(acctId).Has_an_Administrator_User_Portal__c = false;
+            		}
+            	}
+            }
 
             stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 
@@ -1691,6 +1809,135 @@ global class ANG_OscarProcessHelper {
         	return -1;
     	}
 
+    }
+
+    public static List<AMS_OSCAR__c> createIEPAccountOscar(Map<Id,Account> accsMap, String model){
+
+    	List<Account> accs = accsMap.values();
+
+		Map<id,OscarObjectsWrapper> accOscarObjsMap = new Map<id,OscarObjectsWrapper>();
+		OscarObjectsWrapper oscarObjs;
+		
+		Map<String,Object> fieldsOfObject;
+
+		List<Case> casesToInsert = new List<Case>();
+
+		Map<Id,Contact> contactAcc = new Map<Id,Contact>();
+
+		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId,
+			(SELECT Id, Portal_Application__r.Name FROM Portal_Application_Rights__r WHERE ANG_Portal_Service_Role__c = 'IEP Admin')
+			FROM Contact WHERE AccountId IN :accsMap.keySet() 
+            AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
+                AND ANG_Portal_Service_Role__c = 'IEP Admin' 
+                AND Portal_Application__r.Name IN : (model == 'A' || model == 'setup' ? MODEL_A_PROVIDERS : MODEL_B_PROVIDERS))]){
+                
+			contactAcc.put(con.AccountId,con);
+		} 
+
+		//Case:
+		for(Account acc : accs){
+
+			System.debug('[ANG_OscarProcessHelper.createIEPAccountOscar] - BEGINNING INSERTING for ACCOUNT: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
+			
+            if(contactAcc.get(acc.Id) == null){
+            	acc.addError('An IEP Admin Contact is needed on this Account for the IEP Account OSCAR');
+            	return null;
+            } 
+            	
+            
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
+	      	fieldsOfObject.put('ContactId',contactAcc.get(acc.Id).Id);
+	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
+	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('Origin','IEP portal');
+	        fieldsOfObject.put('Reason1__c', (model == 'A' ? 'Onboarding IEP Model A' : (model == 'B' ? 'Screening IEP Model B' : 'IEP Bank Account Setup')));
+	        fieldsOfObject.put('Subject',(model == 'A' ? 'Onboarding IEP Model A - ' : (model == 'B' ? 'Screening IEP Model B -' : 'IEP Bank Account Setup -')) + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
+	        
+	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+            //assign to queue
+            if(!Test.isRunningTest()){           
+                Database.DMLOptions dmo = new Database.DMLOptions();
+                dmo.assignmentRuleHeader.useDefaultRule = true;
+                cse.setOptions(dmo);
+            }
+
+	        oscarObjs = new OscarObjectsWrapper();
+	        oscarObjs.cse = cse;
+	        oscarObjs.con = contactAcc.get(acc.Id);
+
+	        accOscarObjsMap.put(acc.id,oscarObjs);
+	        casesToInsert.add(cse);
+		}
+
+		if (!casesToInsert.isEmpty())
+       		insert casesToInsert;
+
+       	Set<Id> casesIds = new Set<Id>();
+	    for (Case cse : casesToInsert){
+	    	casesIds.add(cse.Id);
+	    }
+
+       	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+       	}
+
+		//AMS_OSCAR__c:
+		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>(); 
+
+        for (Account acc : accs){
+        
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Process__c',(model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP :AMS_Utils.IEPBANKACCOUNTSETUP)));
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
+			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
+			fieldsOfObject.put('Dossier_Reception_Date__c',Date.today());
+
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_IEPMODELA, acc.Id, fieldsOfObject);		
+	        oscarsToInsert.add(oscar);
+	        accOscarObjsMap.get(acc.Id).oscar = oscar;
+		}
+
+	    
+
+	    if(!oscarsToInsert.isEmpty())
+	    	insert oscarsToInsert;
+
+
+	    OrgWideEmailAddress[] owea;
+
+
+		owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+			
+
+		List<Case> casesToUpdate = new List<Case>();
+
+			
+		for (Account acc: accs){
+
+			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
+			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
+		    
+
+			System.debug('[ANG_OscarProcessHelper.createIEPAccountOscar] - FINISHING... INSERTING OSCARS: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
+		}
+			
+
+		if(!casesToUpdate.isEmpty())
+			update casesToUpdate;
+
+		//sending email with url for portal    
+        for (Account acc: accs){
+        
+            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP)), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
+
+        }
+        return oscarsToInsert;
     }
 
 	//EM - To be removed

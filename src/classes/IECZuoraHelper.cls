@@ -92,13 +92,6 @@ public with sharing class IECZuoraHelper {
         acc.setValue('CRMContactID__c', theContact.Id);
         acc.setValue('Currency', theContact.Account.CurrencyIsoCode);   //*** (Thai 2016-11-17) replace "theAccount"
         
-        // TODO: check these required fields after the registration process is completed
-        //acc.setValue('IATA_Area__c', 'Area 1' /*theAccount.IATA_Area__c*/);
-        //acc.setValue('ClientType__c', theAccount.ClientType__c);
-        //acc.setValue('SubRegion__c', 'Asia');
-        //acc.setValue('CompanyType__c', 'Casino');
-        //acc.setValue('ProfitCenter__c', 'DBP003' /*theAccount.Profit_Center__c*/);
-        
         // TO CHECK...
         acc.setValue('BillCycleDay', 1);
         acc.setValue('PaymentTerm', 'Net 30');
@@ -135,18 +128,6 @@ public with sharing class IECZuoraHelper {
             
         if (String.isNotBlank(theContact.Tax_2_ID__c))
             acc.setValue('Tax2ID__c', theContact.Tax_2_ID__c);
-            
-		/* Commented by Samy (2016-03-11) Using the SAP ID from the new Location__c model instead of the old SAP_Account__c
-		// Get the SAP Bill-To Id
-		List<SAP_Account__c> lstSAPAcc =
-			[SELECT SAP_ID__c
-			FROM SAP_Account__c
-			WHERE Account__c = :theAccount.Id AND  GDP__c  = true ];
-				//AND SAP_Account_type__c = :IECConstants.SAPAccount_InvoiceType_Invoices];
-		
-		if (!lstSAPAcc.isEmpty())
-			acc.setValue('SAPBillTo__c', lstSAPAcc.get(0).SAP_ID__c);
-		*/
 		
 		if (String.isNotBlank(theContact.BillTo_Location__r.SAP_Id__c))
 			acc.setValue('SAPBillTo__c', theContact.BillTo_Location__r.SAP_Id__c);
@@ -684,13 +665,10 @@ public with sharing class IECZuoraHelper {
             transactionNumber = (String.isNotBlank(oSubscribeResult.PaymentTransactionNumber) ? oSubscribeResult.PaymentTransactionNumber : '');
             subscriptionNumber = (String.isNotBlank(oSubscribeResult.SubscriptionNumber) ? oSubscribeResult.SubscriptionNumber : '');
             appUrl = sAppURL;
-            //cyberSourceReasonCode = oSubscribeResult.GatewayResponse;
-            //cyberSourceReasonCodeMessage = oSubscribeResult.GatewayResponseCode;
             
             listErrorCodeAndMessage = new List<String>();
             if (oSubscribeResult.Success == false) {
             	for (Zuora.zObject error: oSubscribeResult.errors) {
-                    //listErrorCodeAndMessage.add((String)error.getValue('Code') + ' : ' + (String)error.getValue('Message'));
                     parseError(error);
                 }
             }
@@ -740,8 +718,6 @@ public with sharing class IECZuoraHelper {
 			get {
 				if (LastTransactionStatus == '' || LastTransactionStatus == 'undefined')
 					return 'black';
-				//else if (Status == 'Draft' || Status == 'Pending Activation' || Status == 'Pending Acceptance')
-				//	return '#FF9632';	// yellow
 				else if (LastTransactionStatus == 'Approved')
 					return '#5e9741';	// green
 				else
@@ -854,130 +830,6 @@ public with sharing class IECZuoraHelper {
     	}
         
     }	
-    
-    /* NOT USED
-    public static void updateZuoraBillingAccountWithContact(Contact oContact, IECAddress__c oBilling, IECAddress__c oShipping) {
-
-		List<Zuora.zObject> lAccountsToUpdate = new List<Zuora.zObject>();
-		List<Zuora.zObject> lContactsToUpdate = new List<Zuora.zObject>();
-		String accountsId = oContact.AccountId;
-			
-		
-		//Query the Zuora_CustomerAccounts related to updated Contacts			
-		List<Zuora__CustomerAccount__c> lBillingAccounts = new List<Zuora__CustomerAccount__c>([select Zuora__Account__c, Id, Name, Zuora__BillToId__c, Zuora__SoldToId__c, Zuora__Zuora_Id__c 
-				from Zuora__CustomerAccount__c 
-				where Zuora__Account__c = : accountsId limit 1]);
-
-		//IF a Billing Account exists for given contact, then its information is updated
-		if (lBillingAccounts != null && lBillingAccounts.size() > 0) {
-			
-			Zuora__CustomerAccount__c ba = lBillingAccounts.get(0);
-			
-			//Get zuoraBillingAccount gor given SF BA
-			String zuoraBillingAccountId = ba.Zuora__Zuora_Id__c;
-			Zuora.zObject zuoraBA = IECZuoraHelper.getZuoraAccountById(zuoraBillingAccountId);
-			
-			//Get zuoraBillingContact for given SF BA
-			String zuoraBillingContactID = ba.Zuora__BillToId__c;
-			Zuora.zObject zuoraBC =  IECZuoraHelper.getZuoraContactById(zuoraBillingContactID);
-		
-			//Get zuoraShippingContact for given SF BA
-			String zuoraShippingContactID = ba.Zuora__SoldToId__c;
-			Zuora.zObject zuoraSC = (zuoraBillingContactID !=zuoraShippingContactID) ? IECZuoraHelper.getZuoraContactById(zuoraShippingContactID) : null;
-		
-			//Update zuoraBillingAccount (if neccesary)
-			if (zuoraBA != null) {
-				String zuoraAccountName = (String) zuoraBA.getValue('Name');
-				if (zuoraAccountName != ba.Name) {
-					zuoraBA.setValue('Name', ba.Name);
-					lAccountsToUpdate.add(zuoraBA);
-				}
-			}			
-			
-			//Update zuoraBillingContact (if neccesary)
-			boolean bUpdateBillingContact = false;
-			if (zuoraBC != null) {
-				
-				//Check and Update contact's Name / Last Name
-				if ((String) zuoraBC.getValue('FirstName') != oContact.FirstName ||
-					(String) zuoraBC.getValue('LastName') != oContact.FirstName ) 
-				{
-					zuoraBC.setValue('FirstName', oContact.FirstName);
-					zuoraBC.setValue('LastName', oContact.FirstName);
-					bUpdateBillingContact = true;
-				}
-				
-				//Check and Update contact's Shipping Address
-				if ((String) zuoraBC.getValue('Address1') != oBilling.Street__c || 
-					(String) zuoraBC.getValue('City') != oBilling.City__c || 
-					(String) zuoraBC.getValue('Country') != oBilling.Country__c || 
-					(String) zuoraBC.getValue('PostalCode') != oBilling.ZipCode__c || 
-					(String) zuoraBC.getValue('State') != oBilling.State__c ) 
-				{
-					zuoraBC.setValue('Address1',oBilling.Street__c);
-					zuoraBC.setValue('City',oBilling.City__c);
-					zuoraBC.setValue('Country',oBilling.Country__c);
-					zuoraBC.setValue('PostalCode',oBilling.ZipCode__c);
-					zuoraBC.setValue('State',oBilling.State__c);
-			
-					bUpdateBillingContact = true;
-				}				
-			
-			
-			
-				if (bUpdateBillingContact) 
-					lContactsToUpdate.add(zuoraBC);
-			}		
-			
-		
-			//Update zuoraShippingContact (if neccesary)
-			boolean bUpdateShippingContact = false;
-			if (zuoraSC != null) {
-				
-				//Check and Update contact's Name / Last Name
-				if ((String) zuoraSC.getValue('FirstName') != oContact.FirstName ||
-					(String) zuoraSC.getValue('LastName') != oContact.FirstName ) 
-				{
-					zuoraSC.setValue('FirstName', oContact.FirstName);
-					zuoraSC.setValue('LastName', oContact.FirstName);
-					bUpdateShippingContact = true;
-				}
-				
-				//Check and Update contact's Shipping Address
-				if ((String) zuoraSC.getValue('Address1') != oShipping.Street__c || 
-					(String) zuoraSC.getValue('City') != oShipping.City__c || 
-					(String) zuoraSC.getValue('Country') != oShipping.Country__c || 
-					(String) zuoraSC.getValue('PostalCode') != oShipping.ZipCode__c || 
-					(String) zuoraSC.getValue('State') != oShipping.State__c ) 
-				{
-					zuoraSC.setValue('Address1',oShipping.Street__c);
-					zuoraSC.setValue('City',oShipping.City__c);
-					zuoraSC.setValue('Country',oShipping.Country__c);
-					zuoraSC.setValue('PostalCode',oShipping.ZipCode__c);
-					zuoraSC.setValue('State',oShipping.State__c);
-			
-					bUpdateShippingContact = true;
-				}				
-			
-				if (bUpdateShippingContact) 
-					lContactsToUpdate.add(zuoraBC);
-			}				
-		}
-
-
-		//Push all zuora objects to Zuora
-		if (lAccountsToUpdate.size() > 0) {
-			List<Zuora.zApi.SaveResult> lAccountsResult = IECZuoraHelper.updateApiCall(lAccountsToUpdate);
-		}
-		
-		if (lContactsToUpdate.size() > 0) {
-			List<Zuora.zApi.SaveResult> lContactsResult = IECZuoraHelper.updateApiCall(lContactsToUpdate);
-		}
-			
-			
-    		
-    }
-    */
 
     /**
     * Retrieve PaymentMethod from a list using the ID

@@ -67,14 +67,11 @@ public with sharing class IECSAPManager {
 				}
 			}
 			
-			
-			
 			//////////////////////////////////
 			// if there are invoices to send
 			
 			if (!lstSAPInvoicesToSend.isEmpty()) {
-			
-			
+
 				///////////////////////////////////////////
 				// Build list of contract element to send
 				
@@ -89,8 +86,7 @@ public with sharing class IECSAPManager {
 					
 					lstContractElement.add(oContractElement);
 				}
-				
-				
+
 				/////////////////////////////
 				// Send SAP Invoices to SAP
 				
@@ -133,11 +129,6 @@ public with sharing class IECSAPManager {
 						// if calloutexception or timeout, flag all invoices with Error Message and status SAP Error
 						for (IEC_SAP_Invoice__c oSAPInvoiceToSend : lstSAPInvoicesToSend) {
 							oSAPInvoiceToSend.Error_Message__c = 'SAP Web Service callout error: ' + ex.getMessage();
-							
-							// for callout exception, we no longer change the status. This means that the invoice will be picked up the next time
-							// the interface runs to let time to fix network/credentials issue, instead of manually changing the invoices from 'SAP Error' to 'New'
-							//oSAPInvoiceToSend.Status__c = IECConstants.IECSAPInvoice_Status_SAPError;
-							//oSAPInvoiceToSend.Status_Date__c = Datetime.now();
 						}
 						
 						update lstSAPInvoicesToSend;
@@ -284,15 +275,6 @@ public with sharing class IECSAPManager {
 						oCurrentSAPInvoice.Status_Date__c = Datetime.now();
 						lstSAPInvoiceToUpdate.add(oCurrentSAPInvoice);
 						
-						// NOT SURE IF WE UPDATE THE ITEMS AS WELL
-						/*
-						// update status of the SAP Invoice Items
-						for (IEC_SAP_Invoice_Item__c oSAPInvoiceItem : oCurrentSAPInvoice.IEC_SAP_Invoice_Items__r) {
-							oSAPInvoiceItem.Status__c = IECConstants.IECSAPInvoiceItem_Status_SAPError;
-							oSAPInvoiceItem.Status_Date__c = Datetime.now();
-							lstSAPInvoiceItemsToUpdate.add(oSAPInvoiceItem);
-						}
-						*/
 					}
 				
 					i++;
