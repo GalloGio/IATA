@@ -7,9 +7,38 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 	}
 
     public static void handleBeforeUpdate(List<Agency_Authorization__c> newMap, Map<Id,Agency_Authorization__c> oldMap){
+		
 		verifyAAUniqueness(newMap);
 		removeUniqueId(newMap);
 	}
+
+	 public static void handleAfterInsert(List<Agency_Authorization__c> triggerNew){
+
+	 	List<Agency_Authorization__c> listAuthP = new List<Agency_Authorization__c>();
+	 	map<Id,Agency_Authorization__c> mapOldAuthP = new map<Id,Agency_Authorization__c>();
+         
+         for(Agency_Authorization__c a : triggerNew){
+             if(a.recordtypeid == Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId()){
+                 listAuthp.add(a);
+                 mapOldAuthP.put(a.id, new Agency_Authorization__c(id = a.id));
+             }
+         }
+
+ 		new ANG_AgencyEventsGenerator(listAuthP,mapOldAuthP,'AgencyAuthorization','Account__c').run(); 
+	}
+
+	public static void handleAfterUpdate(List<Agency_Authorization__c> triggerNew, Map<Id,Agency_Authorization__c> oldMap){
+
+ 		List<Agency_Authorization__c> listAuthP = new List<Agency_Authorization__c>();
+ 		
+ 		for(Agency_Authorization__c a : triggerNew){
+ 			if(a.recordtypeid == Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId())
+ 				listAuthp.add(a);
+ 		}
+
+ 		new ANG_AgencyEventsGenerator(listAuthP,oldMap,'AgencyAuthorization','Account__c').run(); 
+	}
+
 
 	public static void removeUniqueId(List<Agency_Authorization__c> newMap){
 

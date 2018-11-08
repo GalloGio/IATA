@@ -29,7 +29,7 @@
     <apex:sectionHeader title="Newgen Multi-Country Hierarchy Account Creator" subtitle="{!AMS_OSCAR__c.Account__r.Name}" />
 
     <apex:form styleClass="pos-relative">
-        <apex:pageMessages></apex:pageMessages>
+		<apex:pageMessages id="pageMessages"/>
         <apex:pageBlock rendered="{!canbeedited}"> 
             <apex:pageBlockTable value="{!listAccount}" var="acc">
 
@@ -42,7 +42,12 @@
                 </apex:column>
 
                 <apex:column headerValue="Location Class">
-                    <apex:inputField value="{!acc.Location_Class__c}" />
+                    
+                    <!--<apex:inputField value="{!acc.Location_Class__c}" />-->
+                    <apex:selectList value="{!acc.Location_Class__c}" size="1">
+                        <apex:selectOptions value="{!items}"/>
+                    </apex:selectList>
+                    
                 </apex:column>
 
                 <apex:column headerValue="ISO Country">

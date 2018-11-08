@@ -1197,7 +1197,7 @@ IATA Customer Service</value>
         <shortDescription>ANG_ISSP_CountryRequirementsTitle</shortDescription>
         <value>IATA Online Agency Accreditation</value>
     </labels>
-    <labels>
+	<labels>
         <fullName>ANG_ISSP_EasyPayLegalConfirmation</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -4118,6 +4118,15 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>FW</shortDescription>
         <value>FW</value>
+    </labels>
+    <labels>
+        <fullName>Feed_Item_Invalid_Topics</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Feed Item Invalid Topics</shortDescription>
+        <value>Your message was not posted because you are not using one of the mandatory topics.
+Please use hashtags (#) to define the topic(s) of your post.
+You can choose one or more of the following topics:</value>
     </labels>
     <labels>
         <fullName>File_Description</fullName>
@@ -21067,6 +21076,13 @@ Please add below all your company valid email domains, including different ones 
         <value>dev@balink.net</value>
     </labels>
     <labels>
+        <fullName>ISSP_Enable_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Enable_Service</shortDescription>
+        <value>Enable this service</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Encolment_page_Office_address</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25084,6 +25100,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_ServiceAccessConfirm</fullName>
+        <categories>ISSP, services</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ServiceAccessConfirm</shortDescription>
+        <value>Are you sure you want to enable this service?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ServiceRequestConfirm</fullName>
         <categories>ISSP, services</categories>
         <language>en_US</language>
@@ -26593,6 +26617,15 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Invalid source case</value>
     </labels>
     <labels>
+        <fullName>Invalid_Topic_Assignment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Topic Assignment</shortDescription>
+        <value>Your message was not posted because you are not using one of the mandatory topics.
+Please use hashtags (#) to define the topic(s) of your post.
+You can choose one or more of the following topics:</value>
+    </labels>
+    <labels>
         <fullName>Invoice_number</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -28035,6 +28068,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>No-Reply</shortDescription>
         <value>No-Reply</value>
+    </labels>
+    <labels>
+        <fullName>No_Subsidiaries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No_Subsidiaries</shortDescription>
+        <value>No Subsidiaries</value>
     </labels>
     <labels>
         <fullName>No_account_yet_Sign_up</fullName>
@@ -30906,6 +30946,37 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>RE</value>
     </labels>
     <labels>
+        <fullName>RTS_TAR_Notification_Message</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification Message</shortDescription>
+        <value>Dear {{name}}, &lt;br&gt;&lt;br&gt;
+
+We have been informed that there is reason to believe that BSP’s ability to collect funds in respect of airline sales may be prejudiced. Therefore in accordance with the provisions of Resolution 818g, Attachment ‘A’, Section 1.8, BSP Management shall withdraw all Standard Traffic Documents and Carrier Identification Plates from your Agency, and shall arrange for an immediate accounting and settlement of all amounts due.&lt;br&gt;
+If you disagree with this decision, you may invoke the procedures set out in Resolution 820e for review of the Agency Administrator’s action by the Travel Agency Commissioner. The Travel Agency Commissioner is an independent arbiter who conducts reviews and acts with
+respect to decisions and/or actions affecting Agents and applicants under the IATA Agency Programme within his or her jurisdiction under the Agency Programme. The Travel Agency Commissioner can be reached at &lt;a href=&quot;http://tacommissioner.com/&quot;&gt;http://tacommissioner.com/&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_MessageB</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification MessageB</shortDescription>
+        <value>&lt;br&gt;Please do not hesitate to contact us if you have any queries on this matter via our Customer Service Portal at &lt;a href=&quot;http://www.iata.org/cs&quot;&gt;http://www.iata.org/cs&lt;/a&gt;.
+&lt;br&gt;Yours faithfully,&lt;br&gt;&lt;br&gt;
+
+&lt;span style=&quot;color: #385d8b&quot;&gt;IATA – Global Delivery Center&lt;/span&gt;</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_Title</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification Title</shortDescription>
+        <value>Prejudiced Collection of Funds</value>
+    </labels>
+    <labels>
         <fullName>Reader_Main_Content</fullName>
         <categories>Content</categories>
         <language>en_US</language>
@@ -30980,6 +31051,13 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>ReleaseDateMessage</shortDescription>
         <value>This title will be effective on</value>
+    </labels>
+    <labels>
+        <fullName>Remaining_Owners</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Remaining_Owners</shortDescription>
+        <value>Remaining Owners</value>
     </labels>
     <labels>
         <fullName>Renewal_Number</fullName>

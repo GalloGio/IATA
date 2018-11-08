@@ -253,8 +253,31 @@
                         $(".shipping_postal_code__c").attr('disabled','disabled');
                         $(".shipping_state__c").attr('disabled','disabled');
                     }
-                    
-                    
+
+                    if ('{!ca.isocountry.IEC_Zip_Postal_Code_required__c}' == 'true') {
+                        $('[id$="branch_office_postal_code__c"]').parent().prev().children().text(function () {
+                            return "* " + $(this).text();
+                        });
+                        
+                        $('[id$="shipping_postal_code__c"]').parent().prev().children().text(function () {
+                            return "* " + $(this).text();
+                        });
+                    }
+
+                    if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'true') {
+                        $('[id$="state_province__c"]').parent().prev().children().text(function () {
+                            return "* " + $(this).text();
+                        });
+                        
+                        $('[id$="shipping_state__c"]').parent().prev().children().text(function () {
+                            return "* " + $(this).text();
+                        });
+                    }
+
+                    if ('{!ca.isocountry.Postal_Code_Hint_Format__c}' != '' && '{!ca.isocountry.Postal_Code_Format_regEx__c}' != '') {
+                        $(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
+                        $(".shipping_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
+                    }
                 </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
@@ -294,6 +317,9 @@
                         FormControlStyle="apcontainer">
                     </DSE:DS_DataQuality>
 
+                    <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();">
+                        <apex:selectOptions value="{!countryList}"/>
+                    </apex:selectList>
                 </apex:outputPanel>
 
 
@@ -321,7 +347,7 @@
 
                     <apex:outputLabel style="margin-right:4%" value="* {!$Label.ISSP_Registration_BusinessPhone}"/>
                     <apex:inputField value="{!ca.fw.newform.Branch_Office_Phone_National__c}"
-                                        onblur="setInternationalAccountPhoneInfo('phone'); updatePhoneInfo();" id="locationphoneinput"
+                                        onblur="setInternationalAccountPhoneInfo('phone'); $('.branch_office_phone__c').change(); updatePhoneInfo();" id="locationphoneinput"
                                         style="width:80%"/>
                 </apex:pageBlockSectionItem>
 
@@ -341,7 +367,7 @@
                                         id="locationfaxinput" styleClass="col-lg-9"/>
                 </apex:pageBlockSectionItem>
 
-                <apex:inputHidden value="{!ca.fw.newform.Branch_Office_Phone_National__c}" id="locationphone"/>
+                <apex:inputHidden value="{!ca.fw.newform.Branch_Office_Phone__c}" id="locationphone"/>
                 <apex:inputHidden value="{!ca.fw.newform.Mobile__c}" id="locationmobile"/>
                 <apex:inputHidden value="{!ca.fw.newform.Branch_Office_FAX__c}" id="locationfax"/>
 
@@ -359,6 +385,17 @@
             </apex:pageBlockSection>
 
             <apex:pageBlockSection columns="1" collapsible="false">
+                <script type="text/javascript">
+                    if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'false') {
+                        $('[id$="PhysicalProvince"]').parent().prev().child().text(function () {
+                            return $(this).text().replace("*", ""); 
+                        });
+                        
+                        $('[id$="PostalProvince"]').parent().prev().child().text(function () {
+                            return $(this).text().replace("*", ""); 
+                        });
+                    }
+                </script>
 
                 <apex:outputPanel id="checkBoxAndInfo">
                     <apex:pageBlockSection columns="2">
@@ -425,13 +462,13 @@
                     <apex:pageBlockSection columns="2" collapsible="false">
 
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode" id="PhysicalPostalCode"/>
+                            <apex:outputLabel value="{!IF(ca.isocountry.IEC_Zip_Postal_Code_required__c, '* ','')}{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode" id="PhysicalPostalCode" html-placeholder="{!IF(AND(ca.isocountry.Postal_Code_Hint_Format__c != null, ca.isocountry.Postal_Code_Hint_Format__c != ''), ca.isocountry.Postal_Code_Hint_Format__c, '')}"/>
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode" id="PostalPostalCode"/>
+                            <apex:outputLabel value="{!IF(ca.isocountry.IEC_Zip_Postal_Code_required__c, '* ','')}{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode" id="PostalPostalCode" html-placeholder="{!IF(AND(ca.isocountry.Postal_Code_Hint_Format__c != null, ca.isocountry.Postal_Code_Hint_Format__c != ''), ca.isocountry.Postal_Code_Hint_Format__c, '')}"/>
                         </apex:pageBlockSectionItem>
 
                     </apex:pageBlockSection>
@@ -974,11 +1011,6 @@
         //console.log('***************** COMPONENT ******************');
         
         $(document).ready(function() {
-            if(!window.location.hash) {
-                window.location = window.location + '#loaded';
-                window.location.reload();
-            }
-            
             showCurrCorporateDetails();
             // binds on change to make checkbox function as radio buttons
             $('[data-group]').on('change', function() {
@@ -989,6 +1021,7 @@
                     }
                 });
 
+                if($(this).attr("data-group")=='agencyLocation') populateShippingCountry();
                 showForms();
             });
 
@@ -1018,14 +1051,46 @@
             }
         }
 
+        function populateShippingCountry() {
+            if($('[id$="notifyChangeLocationCheckbox"]').prop("checked")) {
+                if ('{!ca.fw.newform.shipping_country__c}' !='') $('[id$="ShippingCountryList"]').val('{!ca.fw.newform.shipping_country__c}');
+                else $('[id$="ShippingCountryList"]').val("{!ca.isocountry.Name}".toUpperCase());
+            } else {
+                $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
+            }
+            copyToADShippingCntr();
+        } 
+
+
+        function copyToADShippingCntr(){
+            var dropdownValue = $('[id$="ShippingCountryList"]').val();
+            
+            $('[id$="shipping_country__c"]').val(dropdownValue == null ? "{!ca.account.ShippingCountry}" : dropdownValue);
+        }
+
         function initFieldsSettings() {
             $(".country__c").val("{!ca.isocountry.Name}");
             $(".country__c").attr('readonly', true);
             $(".country__c").attr('disabled','disabled');
 
-            $(".shipping_country__c").val("{!ca.isocountry.Name}");
-            $(".shipping_country__c").attr('readonly', true);
-            $(".shipping_country__c").attr('disabled','disabled');
+
+            if('{!ca.isReadonly}'=='false'){
+               $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
+               var oldElemt=$('#shipping_country__c > input');
+               oldElemt.attr('Style','display:none;');
+               $('#shipping_country__c').css("padding-right",0);
+               if($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length>0){
+                   $('[id$="ShippingCountryList"]').css({'border-width':'2px','border-color':'#d74c3b'})
+               }
+            }else{
+                 $('[id$="ShippingCountryList"]').css('display','none');
+             }
+             
+            
+             $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
+                return "* " + $(this).text();
+            });
+     
             
             $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
@@ -1128,7 +1193,8 @@
         });
 
         var natphoneacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemPhone.locationphoneinput}']");
-        var phoneacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationphone}']");
+        var phoneacct1 = $j('.branch_office_phone__c');
+        var phoneacct2 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationphone}']");
 
         natphoneacct1.intlTelInput({
             nationalMode: true,
@@ -1137,9 +1203,12 @@
             utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
 
+        natphoneacct1.intlTelInput("setNumber", phoneacct1.val());
+
         function setInternationalAccountPhoneInfo(p) {
             if(p=='phone') {
                 phoneacct1.val(natphoneacct1.intlTelInput("getNumber"));
+                phoneacct2.val(natphoneacct1.intlTelInput("getNumber"));
             } else if(p=='mobile') {
                 mobileacct1.val(natmobileacct1.intlTelInput("getNumber"));
             } else {

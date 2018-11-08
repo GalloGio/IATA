@@ -1558,6 +1558,11 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
                     <default>false</default>
                     <label>NUNAVUT (NT): GST</label>
                 </value>
+                <value>
+                    <fullName>YUKON (YK): GST</fullName>
+                    <default>false</default>
+                    <label>YUKON (YK): GST</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -3625,6 +3630,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 <fullName>SASKATCHEWAN %28SK%29%3A GST</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>YUKON %28YK%29%3A GST</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Card_brand_accepted_for_BSP_ticket__c</picklist>
@@ -4511,6 +4520,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>SASKATCHEWAN %28SK%29%3A GST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YUKON %28YK%29%3A GST</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

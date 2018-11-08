@@ -1,5 +1,13 @@
 public with sharing class ANG_MulticountryAccountCreatorController {
     
+    public List<SelectOption> getItems() {
+
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('P','P'));
+        options.add(new SelectOption('D','D'));
+        return options;
+    }
+
     public Boolean closeTab{
 		get{
 			if(closeTab == null) closeTab = false;
@@ -33,7 +41,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 		set;
 	}
 
-    private Set<String> oscarFields{
+    public Set<String> oscarFields{
 		get{
 			if(oscarFields == null){
 				oscarFields = new Set<String>{
@@ -63,10 +71,14 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 
     public ANG_MulticountryAccountCreatorController(ApexPages.StandardController stdController){
         
-        stdController.addFields(new List<String>(oscarFields));
+        if(!Test.isRunningTest())
+            stdController.addFields(new List<String>(oscarFields));
 
 		oscarId = stdController.getId();
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
+
+        if(Test.isRunningTest())
+           oscar =  [Select Id, Account__c, Process__c, Step6__c, STEP45__c, ANG_Hierarchy_Created__c from AMS_OSCAR__c where Id =:oscarId];
 
         listAccount = new list<Account>();
 

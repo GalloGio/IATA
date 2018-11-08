@@ -19,7 +19,7 @@
 	<apex:form >
 		<apex:outputPanel style="margin-left: 30%;" rendered="{!isAirlineSuspensionChildCSCase}">
 
-            	<apex:commandButton onclick="openCongaEnglish();return false;" value="Merge English Template" rendered="{!TemplateIdEn!=null}" />
+            	<apex:commandButton onclick="openCongaEnglish();return false;" value="Merge English Template" rendered="{!TemplateIdEn!=null}"/>
             	<apex:commandButton onclick="openConga2ndLanguage();return false;" value="Merge {!SecondLanguageName} Template" rendered="{!isSecondLanguageConfigured}" />
 
             </apex:outputPanel>

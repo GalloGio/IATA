@@ -57,7 +57,10 @@ private class AirlineSuspensionCaseTest {
         ApexPages.StandardController std = new ApexPages.StandardController(cs);
         AirlineSuspensionCaseController controller = new AirlineSuspensionCaseController(std);
         controller.asrecord.SVP_FDS_Approval__c = Datetime.now();
-
+		system.debug(controller.GDSTemplateId);
+        system.debug(controller.InternalTemplateId);
+        system.debug(controller.AirlineSuspensionDocFolderId);
+		
         // save the presuspension part and check the locked values are correctly in place afterwards
         PageReference pref = controller.SaveSuspension();
 
@@ -78,7 +81,8 @@ private class AirlineSuspensionCaseTest {
 
         pref = controller.CancelSuspensionEdit();
 
-
+		controller.CreateCountrySuspensionCases();
+        controller.CloseAllChildSuspensionCases();
 
         test.stopTest();
     }

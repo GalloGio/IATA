@@ -78,6 +78,20 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Link to the case that is related with the log.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Link to the case that is related with the log.</inlineHelpText>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>ISSP Web Service Logs</relationshipLabel>
+        <relationshipName>ISSP_Web_Service_Logs</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Contact__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -464,7 +478,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>10/8/2018 12:00 AM</value>
+            <value>10/15/2018 12:00 AM</value>
         </filters>
         <filters>
             <field>Method__c</field>
