@@ -22,9 +22,18 @@ public class IDCardGenerateAndAssignCIN extends TriggerAction {
 	 */
 	protected override void execute(List<SObject> records, UnitOfWork uw) {
 
-		Map<Id, String> mapCinTemplatePerIdCardId = new Map<Id, String>();
+		Map<String, String> mapCinTemplatePerIdCardName = new Map<String, String>();
         Map<String, Integer> mapIncDigitsPerCinTemplate = new Map<String, Integer>();
         Set<String> setCinTemplates = new Set<String>();
+        Set<Id> setIdCardApplication = new Set<Id>();
+        Map<Id, ID_Card_Application__c> mapIdCardApplicationsById = new Map<Id, ID_Card_Application__c>();
+
+        for (ID_Card__c idCardRecord : (List<ID_Card__c>) records)
+            setIdCardApplication.add(idCardRecord.ID_Card_Application__c);
+        
+        //Since the info from ID Card Application is not available in the idcard before trigger, we need to query the value of the UIR field 
+        if(!setIdCardApplication.isEmpty())
+            mapIdCardApplicationsById = new Map<Id, ID_Card_Application__c>([SELECT Id, UIR__c FROM ID_Card_Application__c WHERE Id IN: setIdCardApplication]);
 
         for (ID_Card__c idCard : (List<ID_Card__c>) records) {
             String CIN = '';
@@ -38,8 +47,8 @@ public class IDCardGenerateAndAssignCIN extends TriggerAction {
                 CIN += idCard.Duty_Code__c != '' ? idCard.Duty_Code__c : ' ';
                 CIN += idCard.HourWorkedCode__c != '' ? idCard.HourWorkedCode__c : ' ';
 
-                if (idCard.ID_Card_Application__c != null && idCard.ID_Card_Application__r.UIR__c != null) {
-                    CIN += idCard.ID_Card_Application__r.UIR__c.left(2);
+                if (mapIdCardApplicationsById.containsKey(idCard.ID_Card_Application__c) && mapIdCardApplicationsById.get(idCard.ID_Card_Application__c).UIR__c != null) {
+                    CIN += mapIdCardApplicationsById.get(idCard.ID_Card_Application__c).UIR__c.left(2);
                 }
             } catch (Exception e) {
                 // empty fields could lead to this
@@ -51,7 +60,7 @@ public class IDCardGenerateAndAssignCIN extends TriggerAction {
             // add a temporary prefix for sex M/F, REMOVE IT BEFORE ASSIGNING to the ID Card
             CIN = (idCard.Gender__c == 'Male' ? 'M' : 'F') + CIN;
 
-            mapCinTemplatePerIdCardId.put(idCard.Id, CIN);
+            mapCinTemplatePerIdCardName.put(idCard.Name, CIN);
             mapIncDigitsPerCinTemplate.put(CIN, idCard.Gender__c == 'Male' ? 0 : 50);
             setCinTemplates.add(CIN.substring(1)); // add to the set without the prefix, to correctly match in the DB
 
@@ -81,16 +90,16 @@ public class IDCardGenerateAndAssignCIN extends TriggerAction {
 
         for (ID_Card__c idCard : (List<ID_Card__c>) records) {
             // Get the increment digits
-            Integer incDigits = mapIncDigitsPerCinTemplate.get(mapCinTemplatePerIdCardId.get(idCard.Id));
+            Integer incDigits = mapIncDigitsPerCinTemplate.get(mapCinTemplatePerIdCardName.get(idCard.Name));
 
             //increase the digits for the new card
             incDigits++;
 
             // update the increased digits in the map
-            mapIncDigitsPerCinTemplate.put(mapCinTemplatePerIdCardId.get(idCard.Id), incDigits);
+            mapIncDigitsPerCinTemplate.put(mapCinTemplatePerIdCardName.get(idCard.Name), incDigits);
 
             // insert the digits in the CIN template for the idcard
-            String strCIN = mapCinTemplatePerIdCardId.get(idCard.Id).replace('__', String.valueOf(incDigits).leftPad(2).replace(' ', '0'));
+            String strCIN = mapCinTemplatePerIdCardName.get(idCard.Name).replace('__', String.valueOf(incDigits).leftPad(2).replace(' ', '0'));
 
             // remove the temporary prefix (M/F)
             strCIN = strCIN.substring(1);

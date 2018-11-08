@@ -12,7 +12,7 @@ public abstract class TriggerHandler {
 		runTrigger(Trigger.operationType);
 		
 		uw.commitWork();
-		if(Trigger.isAfter) delegator.enqueue(this);
+		if(Trigger.isAfter) TriggerDelegation.register(this).enqueue(this);
 	}
 
 	private void runTrigger(System.TriggerOperation op) {
