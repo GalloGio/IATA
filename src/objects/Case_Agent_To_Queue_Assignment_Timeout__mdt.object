@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Timeout settings for Agent to Queue Case assignment when the agent is logged off.
+Timeout denotes how long the batch job waits until it ignores the agent as logged off.</description>
+    <fields>
+        <fullName>Region__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Region</label>
+        <length>90</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Timeout_In_Minutes__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Timeout In Minutes</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Agent2Queue Region Assignment Timeout</label>
+    <pluralLabel>Agent2Queue Region Assignment Timeouts</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

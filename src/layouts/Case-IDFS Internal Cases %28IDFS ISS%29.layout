@@ -80,6 +80,10 @@
                 <behavior>Readonly</behavior>
                 <field>Case_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Subtopic__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
