@@ -2725,8 +2725,10 @@ public class AMS_OSCARTriggerHandler {
         for(AMS_OSCAR__c oscar: oscars){
 
             Boolean isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c);
+            Boolean isAMSProcess = AMS_Utils.oscarAMSProcesses_ValidateOwnership.contains(oscar.Process__c);//AMSU-180
+            Boolean run_validation = (isAMSProcess && oscar.Process__c <> AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.new_TIDS && oscar.Location_Type__c == 'HO');
 
-            if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && isNewGenProcess && oscar.ANG_Type_Of_Change__c <> AMS_Utils.ANG_VMFR){
+            if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && (isNewGenProcess || run_validation) && oscar.ANG_Type_Of_Change__c <> AMS_Utils.ANG_VMFR && oscar.Type_of_change__c <> AMS_Utils.VFMR){
 
                 if(contacts == null){
                     contacts = getAccreditationContacts(oscars);
@@ -2736,10 +2738,9 @@ public class AMS_OSCARTriggerHandler {
                 if(contacts.get(oscar.AMS_Online_Accreditation__c) > 0)
                     continue;
                 else    
-                    if(!validate100Ownership(oscar,allPercentages,isNewGenProcess)){
-                        Double requiredOwnership = isNewGenProcess ? 99.99 : 100;
-                        String errorMessage = !isNewGenProcess ? 'Agency does not have 100% ownership. Please add the owners to the agency before passing the Sanity Check.'
-                                                             : 'Agency must have at least 99.99% ownership. Please add the owners to the agency before passing the Sanity Check.';
+                    if(!validate100Ownership(oscar,allPercentages)){//AMSU-180
+                        Double requiredOwnership = 99.99;
+                        String errorMessage = 'Agency must have at least 99.99% ownership. Please add the owners to the agency before passing the Sanity Check.';
                         oscar.addError(errorMessage);
                     }
 
@@ -2786,9 +2787,9 @@ public class AMS_OSCARTriggerHandler {
 
     }
 
-    public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages, Boolean isNewGenProcess){
+    public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages){
 
-        return (!isNewGenProcess && percentages.get(oscar.Account__c) == 100) || (isNewGenProcess && percentages.get(oscar.Account__c) < 99.99);
+        return percentages.get(oscar.Account__c) < 99.99;//AMSU-180
 
     }
 
