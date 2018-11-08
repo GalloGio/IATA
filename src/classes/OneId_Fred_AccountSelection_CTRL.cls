@@ -15,7 +15,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
     }
 
     @AuraEnabled
-    public static RegistrationResponse registration(Account acc, Contact con, String selectedCustomerType, Boolean isGuest, Boolean createPrimary, Integer userTypeToCreate, boolean isInvitation) {
+    public static RegistrationResponse registration(Account acc, Contact con, String selectedCustomerType, Boolean isGuest, Boolean createPrimary, Integer userTypeToCreate) {
         System.debug('SMH register');
         System.debug('SMH acc '+acc);
         System.debug('SMH con '+con);
@@ -88,10 +88,10 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             One_Id_Service_Provider_Config__c config;
 
 			if(! recordTypes.isEmpty()){
-				config = [select Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c, Invitation_Primary_Max__c, Invitation_Secondary_Max__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName AND RecordTypeId =: recordTypes[0].Id LIMIT 1];
+				config = [select Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName AND RecordTypeId =: recordTypes[0].Id LIMIT 1];
 			}
 			else{
-				config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c, Invitation_Primary_Max__c, Invitation_Secondary_Max__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName LIMIT 1];
+				config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName LIMIT 1];
 			}
             
            
@@ -99,12 +99,8 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 			System.debug('SMH LIMIT SECONDARY: '+nbOfSecondaryInAccount+' over '+config.Max_Number_Of_Secondary_User__c);
 			System.debug('SMH isGuest '+isGuest);
 
-            if(!isInvitation) {
-                if((createPrimary && nbOfPrimaryInAccount >= config.Max_Number_Of_Primary_User__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Max_Number_Of_Secondary_User__c)) {
-                    // Limit reached
-                    return new RegistrationResponse(false, Label.OneId_Max_Account_Reached);
-                }
-            } else if ((createPrimary && nbOfPrimaryInAccount >= config.Invitation_Primary_Max__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Invitation_Secondary_Max__c)) {
+            if((createPrimary && nbOfPrimaryInAccount >= config.Max_Number_Of_Primary_User__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Max_Number_Of_Secondary_User__c)) {
+                // Limit reached
                 return new RegistrationResponse(false, Label.OneId_Max_Account_Reached);
             }
 			}
