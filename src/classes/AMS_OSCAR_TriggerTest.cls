@@ -1143,10 +1143,10 @@
         Database.DMLOptions dmo = new Database.DMLOptions();
         dmo.assignmentRuleHeader.useDefaultRule= false;
         newCase.setOptions(dmo);
-
-        insert newCase;        
         
         Test.startTest();
+
+        insert newCase;               
         
         Attachment attc = new Attachment(
           OwnerId = UserInfo.getUserId(),
