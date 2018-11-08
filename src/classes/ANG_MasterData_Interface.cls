@@ -173,8 +173,6 @@ global class ANG_MasterData_Interface{
         public string TradeName;
         public string vatNumber;        
         public string topParentIATACode;
-        //public string guaranteedAmount; //RTS - Silenced for now
-        //public string guaranteedAmountCurrency; //RTS - Silenced for now
         public list<FOP> FormOfPayment;
         public RHCInfoClass RHCInfo;    //Risk Information
         public list<string> lsChildren; //List of Children IATA Code
@@ -243,7 +241,7 @@ global class ANG_MasterData_Interface{
                     this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, rhc.ANG_Financial_Security__c);
                 
 
-                if(this.RHCInfo ==null)this.RHCInfo = new RHCInfoClass(null, null, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,null);
+                if(this.RHCInfo ==null)this.RHCInfo = new RHCInfoClass(null, null, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c,acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode));
                 //List  of children IATACode
                 //Returned only if specifically requested
                 if(getChildren){
