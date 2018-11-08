@@ -527,6 +527,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 			currentAccount.fw.newform.status__c = FORM_STATUS_INPROGRESS;
+			copyShippingCountry();
 
 			upsert currentAccount.fw.newform;
 
@@ -555,12 +556,18 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Savepoint sp = Database.setSavepoint();
 
 		try {
-
+			copyShippingCountry();
 			upsert currentAccount.fw.newform;
 
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return null;
+	}
+
+	private void copyShippingCountry() {
+		// Workaround to assign the previous value if not changed
+		if (!currentAccount.fw.newform.Notify_Change_Location__c)
+			currentAccount.fw.newform.Shipping_Country__c = currentAccount.account.ShippingCountry;
 	}
 
 	public PageReference confirmUpdate() {
