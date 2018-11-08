@@ -129,8 +129,8 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWGENFOP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
     public static final String RECTYPE_NEWGENOPTINOUT  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
     public static final String RECTYPE_NEWGENANNUALREVAL = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
+    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
 
-    public static final String RECTYPE_IEPMODELA   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK ACCOUNT SETUP');
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
