@@ -417,7 +417,8 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
 		Integer amountOfFeedItems = 0;
-
+		Integer rangeInMinutes = 5;//time range in minutes to include Feed Item createDate to compensate batches time skips
+		
 		// get a count of how many chatter posts mention this topic
 		for(FeedItem fi : lsAllFeedItems) {
 			if(dayOrWeek == 'day' && fi.CreatedDate < System.now().addDays(-1) ) {
@@ -450,6 +451,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 
 
 			Integer feedItemCounter = 0;
+			Datetime timeRange;
 			for(FeedItem fi : lsAllFeedItems) {
 				// for daily digest ignore older posts
 				if(dayOrWeek == 'day' && fi.CreatedDate < System.now().addDays(-1) ) {
@@ -458,10 +460,13 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 				if(fi.Body.toLowerCase().contains('#'+topicName.toLowerCase())) {
 					topicFeedItemCounter++;
 					lsAccountIds.add(fi.ParentId);
-
+					if(timeRange == null){timeRange = fi.CreatedDate;}
+					timeRange.addMinutes(rangeInMinutes);
 					// see if the next post is the same for different parent
 					if(	feedItemCounter < lsAllFeedItems.size()-1 &&
-						fi.CreatedDate == lsAllFeedItems[feedItemCounter+1].CreatedDate &&
+						fi.CreatedDate >= lsAllFeedItems[feedItemCounter+1].CreatedDate &&
+						fi.CreatedDate <= timeRange &&
+						fi.CreatedById == lsAllFeedItems[feedItemCounter+1].CreatedById &&
 						fi.Body ==  lsAllFeedItems[feedItemCounter+1].Body) {
 					}
 					// only add post if the next one is not the same
