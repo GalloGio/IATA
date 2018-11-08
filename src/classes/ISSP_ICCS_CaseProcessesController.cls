@@ -452,7 +452,7 @@ global class ISSP_ICCS_CaseProcessesController extends ISSP_ICCS_ComponentContro
                 File_Identifier__c = doc.Description,
                 File_Identifier_picklist__c = doc.Description,
                 Review_Status__c = 'Pending',
-                RecordTypeId = Schema.SObjectType.AmazonFile__c.RecordTypeInfosByName.get('ICCS File').RecordTypeId,
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'ICCS_File');
                 Size_MB__c = doc.BodyLength* 0.000001, //convert to MB
                 isPublic__c = true,
                 Case__c = cse.Id
