@@ -1237,6 +1237,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Pattern iso8859 = Pattern.compile(ISO_8859_1_regEx);
 		Pattern postalCodeRegex;
 
+		Map<String, String> shippingPostalCodeRegexByCountryMap = ISSP_ANG_ANNUAL_REV_UPDATE.postalCodeRegexByCountryMap;
+
+		Pattern shippingCountryPostalCodeRegex;
+
+		if (shippingPostalCodeRegexByCountryMap != null && 
+			shippingPostalCodeRegexByCountryMap.get(currentAccount.fw.newForm.Shipping_Country__c) != null) {
+			shippingCountryPostalCodeRegex = Pattern.compile(ISSP_ANG_ANNUAL_REV_UPDATE.postalCodeRegexByCountryMap.get(currentAccount.fw.newForm.Shipping_Country__c));
+		}
+
 		if (currentAccount.isocountry.Postal_Code_Format_regEx__c != null && currentAccount.isocountry.Postal_Code_Format_regEx__c != '')
 			postalCodeRegex = Pattern.compile(currentAccount.isocountry.Postal_Code_Format_regEx__c);
 
@@ -1353,7 +1362,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				} else if (currentAccount.fw.newform.Shipping_Postal_Code__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
 					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
-				} else if (postalCodeRegex != null && currentAccount.fw.newform.Shipping_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
+				} else if (shippingCountryPostalCodeRegex != null && currentAccount.fw.newform.Shipping_Postal_Code__c != null && !shippingCountryPostalCodeRegex.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
 					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
             		errorFound = true;
 				}
