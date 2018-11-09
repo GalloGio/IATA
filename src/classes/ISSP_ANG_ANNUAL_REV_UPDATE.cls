@@ -16,12 +16,24 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
                 if(countryList==null){
                     countryList= new list<selectOption>();
                     countryList.add(new selectOption('',''));
-                    for(IATA_ISO_Country__c cnt:[select id,name from IATA_ISO_Country__c where region__c!='' and Iso_code__c not in ('IO','TF','GS','UM','UP','VI') order by name desc]){
+                    map<string,string> tempMap= new map<string,string>();//stores temporarely the values to be assing to a string
+                    for(IATA_ISO_Country__c cnt:[select id,name,Postal_Code_Hint_Format__c
+                        from IATA_ISO_Country__c 
+                        where region__c!='' and Iso_code__c not in ('IO','TF','GS','UM','UP','VI') order by name asc]){
                         countryList.add(new selectOption(cnt.name.toUpperCase(),cnt.name));
+                        tempMap.put(cnt.Name.toUpperCase(), cnt.Postal_Code_Hint_Format__c);
                     }
+                    stringMap=JSON.serialize(tempMap);
                 }
                 return countryList;
         }   
+        set;}
+    
+    public string stringMap{
+        get{
+            if(stringMap==null) stringMap='\'\'';//characters to avoid crashing stringfy method on vf page
+            return stringMap;
+        }
         set;}
 
 	public ISSP_ANG_ANNUAL_REV_UPDATE() {

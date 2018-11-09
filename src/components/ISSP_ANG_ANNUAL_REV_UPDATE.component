@@ -973,6 +973,7 @@
 
     <script>
 
+        var mapa2=JSON.parse(JSON.stringify({!stringMap}));
         $(".branch_office_street_name_number__c").change(function () {
             copyBranchAddress();
         });
@@ -1097,6 +1098,11 @@
             $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
             });
+            $(".shipping_postal_code__c").attr('placeholder', mapa2[$('[id$="ShippingCountryList"]').val()]);
+        }
+
+        function resetPCHint() {
+            $(".shipping_postal_code__c").attr('placeholder', mapa2[$('[id$="ShippingCountryList"]').val()]);
         }
 
         function showForms() {
