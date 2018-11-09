@@ -167,7 +167,6 @@ public class HigherLogicIntegrationWS {
 			memberDetails.CompanyName		 = acct.Name; 
 			memberDetails.WebsiteURL		 = acct.Website;
 			memberDetails.EmailAddress		 = acct.Email__c;
-			memberDetails.IsActive			 = !acct.Inactive_Account__c;
 			memberDetails.LegacyContactKey	 = null; //TODO
 			memberDetails.Address1			 = acct.BillingStreet;
 			memberDetails.City				 = acct.BillingCity;

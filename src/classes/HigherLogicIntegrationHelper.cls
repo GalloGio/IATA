@@ -20,8 +20,7 @@ public class HigherLogicIntegrationHelper {
 				BillingState,
 				BillingStreet,
 				BillingCountry,
-				BillingPostalCode,
-				Inactive_Account__c
+				BillingPostalCode
 			 FROM 
 			 	Account 
 			 WHERE
@@ -94,12 +93,46 @@ public class HigherLogicIntegrationHelper {
 	}
 	
 	/**
+	* Updates an existing relationship in Higher Logic
 	*
-	*
+	* @param contactIdSet 
 	*
 	*/
-	public static void updateMembersRelationships(){
-		//TODO
+	public static void updateMembersRelationships(Set<Id> contactIdSet){
+		
+		List<User> newUsersLst = new List<User>(
+			[SELECT 
+				Id,
+				ContactKaviId__c,
+				Contact.AccountId,
+				Contact.Account.ParentId,
+				Contact.Account.RecordTypeId,
+				Contact.Account.Parent.ParentId,
+				Contact.Account.Field_Head_Office__c
+			 FROM
+			 	User 
+			 WHERE
+			 	ContactId IN :contactIdSet
+			 OR ContactKaviId__c IN :contactIdSet
+			]
+		);
+
+		Map<Id, Id> newRelationshipMap = new Map<Id, Id>();
+
+		for(User newUser : newUsersLst){
+			Id accId = fetchAssociatedAccountId(newUser.Contact.AccountId, newUser.Contact.Account.RecordTypeId, newUser.Contact.Account.Field_Head_Office__c, newUser.Contact.Account.ParentId, newUser.Contact.Account.Parent.ParentId);
+			newRelationshipMap.put(newUser.Id, accId);
+		}
+		
+		Set<Id> accountIdSet = new Set<Id>(newRelationshipMap.values());
+		
+		List<Account> accountLst = fetchAccountRecords(accountIdSet);
+		
+		HigherLogicIntegrationWS.pushMembers(accountLst);
+		HigherLogicIntegrationWS.pushMembersRelationships(newRelationshipMap);
+		
+		HigherLogicIntegrationWS.flushWebServiceLogs();
+		
 	}
 	
 	/**
