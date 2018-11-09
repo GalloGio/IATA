@@ -317,7 +317,7 @@
                         FormControlStyle="apcontainer">
                     </DSE:DS_DataQuality>
 
-                    <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();">
+                    <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();resetPCHint();">
                         <apex:selectOptions value="{!countryList}"/>
                     </apex:selectList>
                 </apex:outputPanel>
