@@ -28,6 +28,23 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
                 return countryList;
         }   
         set;}
+
+    public static map<string,string> postalCodeRegexByCountryMap{
+        get{
+            if(postalCodeRegexByCountryMap==null){
+                postalCodeRegexByCountryMap= new map<string,string>();
+                
+                for(IATA_ISO_Country__c cnt:[select id,name,Postal_Code_Format_regEx__c
+                    from IATA_ISO_Country__c 
+                    where region__c!='' and Iso_code__c not in ('IO','TF','GS','UM','UP','VI') order by name asc]){
+                    postalCodeRegexByCountryMap.put(cnt.Name.toUpperCase(), cnt.Postal_Code_Format_regEx__c);
+                }
+
+            } 
+            return postalCodeRegexByCountryMap;
+        }
+        set;
+    }
     
     public string stringMap{
         get{
