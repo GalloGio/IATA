@@ -702,6 +702,7 @@
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
+                <controllingFieldValue>IATA Branded Merchandise</controllingFieldValue>
                 <valueName>New</valueName>
             </valueSettings>
             <valueSettings>

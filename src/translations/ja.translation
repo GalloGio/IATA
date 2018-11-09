@@ -593,6 +593,10 @@
         <name>AMS_RollbackCase_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_XML_GEN_ERROR_RECEIVER --></label>
+        <name>AMS_XML_GEN_ERROR_RECEIVER</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_AE_separate_Legal_Entity --></label>
         <name>ANG_AE_separate_Legal_Entity</name>
     </customLabels>
@@ -5605,6 +5609,10 @@ and
         <name>ISSP_AMS_Apply_New_Branch_Office</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Head_Entity --></label>
         <name>ISSP_AMS_Apply_New_Head_Entity</name>
     </customLabels>
@@ -9337,6 +9345,10 @@ and
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE --></label>
+        <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL --></label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
@@ -9363,6 +9375,10 @@ and
     <customLabels>
         <label><!-- Annual Revalidation work area title --></label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_SAME_OWNER_ERROR --></label>
+        <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
         <label><!-- Annual Revalidation confirmed status --></label>
@@ -11741,6 +11757,10 @@ and
     <customLabels>
         <label>無効なパスワードです。</label>
         <name>ISSP_InvalidPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_InvalidPostalCode --></label>
+        <name>ISSP_InvalidPostalCode</name>
     </customLabels>
     <customLabels>
         <label>苦情を言う</label>
@@ -15010,6 +15030,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Fred_App_Description --></label>
+        <name>OneId_Fred_App_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Fred_Select_Type_of_Company --></label>

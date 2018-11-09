@@ -133,7 +133,7 @@
 
             <!--Line 5 VAT Number -->
 
-            <apex:outputPanel rendered="{!NOT(ca.isocountry.Hide_Tax_Number_VAT__c)}">
+            <apex:outputPanel>
 
                 <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
                     <apex:param name="vatno" value="" assignto="{!vatNumber}" />
@@ -147,7 +147,7 @@
                     </apex:pageBlockSectionItem>
 
                     <apex:pageBlockSectionItem labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
-                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
+                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_VAT_field_mandatory__c, '* ','')}{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
 
                         <apex:outputPanel id="VATNumberInput">
 
@@ -321,7 +321,7 @@
 
                     <apex:outputLabel style="margin-right:4%" value="* {!$Label.ISSP_Registration_BusinessPhone}"/>
                     <apex:inputField value="{!ca.fw.newform.Branch_Office_Phone_National__c}"
-                                        onblur="setInternationalAccountPhoneInfo('phone');$('.branch_office_phone__c').change();updatePhoneInfo();" id="locationphoneinput"
+                                        onblur="setInternationalAccountPhoneInfo('phone'); updatePhoneInfo();" id="locationphoneinput"
                                         style="width:80%"/>
                 </apex:pageBlockSectionItem>
 
@@ -341,7 +341,7 @@
                                         id="locationfaxinput" styleClass="col-lg-9"/>
                 </apex:pageBlockSectionItem>
 
-                <apex:inputHidden value="{!ca.fw.newform.Branch_Office_Phone__c}" id="locationphone"/>
+                <apex:inputHidden value="{!ca.fw.newform.Branch_Office_Phone_National__c}" id="locationphone"/>
                 <apex:inputHidden value="{!ca.fw.newform.Mobile__c}" id="locationmobile"/>
                 <apex:inputHidden value="{!ca.fw.newform.Branch_Office_FAX__c}" id="locationfax"/>
 
@@ -498,6 +498,12 @@
             </div>
         </apex:pageBlockSection>
 
+        <apex:outputPanel id="noUpdateMessage" >
+            <apex:outputPanel >
+                <apex:pageMessage  summary="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE}" severity="error" strength="3" rendered="{!AND(ca.fw.newForm.ISSP_AMS_Total_Previous_Ownership__c != 100, ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c != 100)}"/>
+            </apex:outputPanel >
+        </apex:outputPanel>
+
         <apex:pageBlockSection columns="2" collapsible="false" id="Section3CheckBoxes">
 
             <!--apex:facet name="header">
@@ -505,13 +511,13 @@
                     <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding}</apex:outputpanel>
                 </apex:outputpanel>
             </apex:facet-->
-
+            
             <!-- CHECKBOXES -->
             <apex:outputPanel >
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(ca.errorFoundCheckBoxes, ca.fw.newForm.Confirm_Ownership_details_are_correct__c==false, ca.fw.newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px;', 'margin-right:5px')}">
                         <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" style="color:black;font-size:110%"/>
-                        <apex:inputCheckbox disabled="{!ca.isReadonly}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="$('[id$=currcorporatedetails]').hide();"/>
+                        <apex:inputCheckbox disabled="{!ca.isReadonly || ca.fw.newForm.ISSP_AMS_Total_Previous_Ownership__c != 100}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="$('[id$=currcorporatedetails]').hide();"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -676,7 +682,7 @@
                 </div>
                 <br/><br/>
 
-                <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonAdd" action="{!newAgencyContact}" style="margin-left:20px" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact, ownershipMessage">
+                <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonAdd" action="{!newAgencyContact}" style="margin-left:20px" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact, ownershipMessage, noUpdateMessage">
                     <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_Add_Person}
                 </apex:commandLink>
 
@@ -714,7 +720,7 @@
                             </apex:facet>
                         </apex:actionStatus>
 
-                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonEdit" action="{!editAgencyContact}" status="actEditCurrOwner" styleClass="glyphicon glyphicon-pencil" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact, ownershipMessage">
+                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonEdit" action="{!editAgencyContact}" status="actEditCurrOwner" styleClass="glyphicon glyphicon-pencil" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact, ownershipMessage, noUpdateMessage">
                             <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                         </apex:commandLink>
 
@@ -750,7 +756,7 @@
 
                 <apex:commandLink rendered="{!NOT(ca.isReadonly)}" action="{!newAgencyContact}" id="c" style="margin-left:20px;display:{!IF(ca.fw.newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship','none','')}"
                         oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();"
-                        rerender="currCompanyList, newCompany, newOwnerQuestions, ownershipMessage">
+                        rerender="currCompanyList, newCompany, newOwnerQuestions, ownershipMessage, noUpdateMessage">
                     <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}
                 </apex:commandLink>
 
@@ -772,7 +778,7 @@
                     </apex:column>
                     <apex:column >
 
-                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentCompaniesEdit" action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" rerender="currCompanyList, newCompany, newOwnerQuestions, ownershipMessage">
+                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentCompaniesEdit" action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" rerender="currCompanyList, newCompany, newOwnerQuestions, ownershipMessage, noUpdateMessage">
                             <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                         </apex:commandLink>
 
@@ -968,11 +974,6 @@
         //console.log('***************** COMPONENT ******************');
         
         $(document).ready(function() {
-            if(!window.location.hash) {
-                window.location = window.location + '#loaded';
-                window.location.reload();
-            }
-            
             showCurrCorporateDetails();
             // binds on change to make checkbox function as radio buttons
             $('[data-group]').on('change', function() {
@@ -993,6 +994,10 @@
                 setReadonly();
             }
         });
+
+        function toggleCurrencyCode(c) {
+            $('[id$=y2CurrencyCode]').html(' ' + c);
+        }
 
 
         function showCurrCorporateDetails() {
@@ -1099,8 +1104,6 @@
         var natmobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemMobile.locationmobileinput}']");
         var mobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationmobile}']");
 
-        //console.log(natmobileacct1);
-
         natmobileacct1.intlTelInput({
             nationalMode: true,
             defaultCountry: defaultHQCountry,
@@ -1120,8 +1123,7 @@
         });
 
         var natphoneacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemPhone.locationphoneinput}']");
-        var phoneacct1 = $j('.branch_office_phone__c');
-        var phoneacct2 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationphone}']");
+        var phoneacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationphone}']");
 
         natphoneacct1.intlTelInput({
             nationalMode: true,
@@ -1130,14 +1132,9 @@
             utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
 
-        var phoneacct1NotUndefined = phoneacct1.val() == undefined ? '' : phoneacct1.val();
-
-        natphoneacct1.intlTelInput("setNumber", phoneacct1NotUndefined);
-
         function setInternationalAccountPhoneInfo(p) {
             if(p=='phone') {
                 phoneacct1.val(natphoneacct1.intlTelInput("getNumber"));
-                phoneacct2.val(natphoneacct1.intlTelInput("getNumber"));
             } else if(p=='mobile') {
                 mobileacct1.val(natmobileacct1.intlTelInput("getNumber"));
             } else {
