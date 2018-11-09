@@ -247,7 +247,9 @@ global class AMS_2_MDM_Webservice {
 
         /*** AMSU-158 ***/
         try {
-            sendCSVReport(listOfErrors);
+            if(listOfErrors != null && !listOfErrors.isEmpty()) {
+            	sendCSVReport(listOfErrors);
+            }
         } catch(Exception ex) {
             System.debug('Error sending report: ' + ex.getMessage());
         }
