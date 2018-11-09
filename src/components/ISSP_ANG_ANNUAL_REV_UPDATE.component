@@ -387,11 +387,11 @@
             <apex:pageBlockSection columns="1" collapsible="false">
                 <script type="text/javascript">
                     if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'false') {
-                        $('[id$="PhysicalProvince"]').parent().prev().child().text(function () {
+                        $('[id$="PhysicalProvince"]').parent().prev().children().text(function () {
                             return $(this).text().replace("*", ""); 
                         });
                         
-                        $('[id$="PostalProvince"]').parent().prev().child().text(function () {
+                        $('[id$="PostalProvince"]').parent().prev().children().text(function () {
                             return $(this).text().replace("*", ""); 
                         });
                     }
