@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS FS Notification Unlimited TR</name>
+    <style>freeForm</style>
+    <subject>Financial Security Unlimited notification</subject>
+    <textOnly>Sayın,
+
+
+
+IATA Kodu: {!Case.IATA_Code__c}
+
+
+Ödeme kartı işlemleri ve potansiyel veri ihlalleri ile ilgili riskler hakkında IATA’ya verilen tavsiyeye göre, BSP içerisinde çalışan Kayıtlı Acentelerin, Ödeme Kartı Endüstrisi (PCI) Veri Güvenliği Standardı (DSS) uygunluğunun onaylanması gerekmektedir.
+
+
+Yolcu Satış Acentesi Kuralları kapsamında, tüm IATA Kayıtlı Acenteler PCI DSS ile tam uygunlukta olduklarından emin olmalıdırlar.
+
+
+PCI DSS, ticari firmalara (Acente) güvenlik politikası standartlarını, teknolojilerini ve ödeme sistemlerini ihlallerden ve kart sahibi verisi hırsızlığından koruyan işlemleri anlamak ve uygulamak konusunda yardım etmeyi amaçlayan küresel bir standarttır.
+
+
+Yukarıdakilerin ışığı altında, şirketinizin uygunluğunu gösterebilmek için bize Uygunluk Onay Belgenizi göndermenizi önemle rica ederiz.
+
+
+
+PCI DSS kuralları gereği uygunluk sertifikalarının PCI DSS geçerliliği açısından tanınmadığını belirtmek isteriz. PCI DSS geçerliliği açısından tanınan tek dokumanlar PCI SSC websitesindeki resmi dokumanlardır. Bunların dışında PCI DSS uygunluğunu veya standardını göstermek amacıyla düzenlenmiş herhangi başka bir belge ve ya sertifika tanınır veya geçerli değildir.
+
+
+Uygunluk Onay Belgesi, gerekli Uygunluk Raporunun veya Öz Değerlendirme Anketinin uygulandığını göstermek ve kuruluşunuzun PCI DSS ile uygunluk durumunu ispat etmek için kullanılan bir belgedir.
+
+
+PCI DSS’e uygun hale gelmek hakkında daha fazla bilgi için, lütfen PCI DSS’ye özel web sayfamızı ziyaret edin: http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+
+Eğer şu anda BSP üzerinden Kredi Kartıyla ödeme şeklini kullanan işlem yürütmüyorsanız ve yürütmeyi düşünmüyorsanız, Yeterlik Beyanını bu mesaja ek olarak gönderebilirsiniz.
+
+
+Söz konusu beyanın doldurulması halinde Acentenizden başka bir uygunluk belgesi istenmeyecektir, ancak faaliyet gösterdiğiniz ülkenin NewGen ortamı ve karar 812 altına taşınmasından sonra Acenteniz için Kredi Kartı ödeme yöntemi devre dışı bırakılacaktır
+
+
+Yukarıda talep edilen belgeler (Uygunluk Onay Belgesi veya Kredi Kartı Geçmeme Beyanı) IATA’ya Müşteri Hizmetleri Portalı web sayfası http://www.iata.org/cs üzerinden gönderilmelidir ve en geç {!Today()+30} tarihine kadar ulaşmalıdır. Lütfen taranmış bir kopyayı portal ana sayfanızda ‘Son konularım’ bölümünün altındaki {!Case.CaseNumber} (https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}) kodlu konuya ekleyin.
+
+
+Belgenizi nasıl göndereceğinize dair talimatları bu mesaja eklenmiş olarak bulabilirsiniz.
+
+
+Acente Yönetim Departmanı, bir inceleme yapacak ve mevcut kanıta dayalı olarak karar verecektir.
+
+-----------------------------------------------------------------------------------------------------------------
+Lütfen, bu gereksinime uygun davranılmaması durumunda, her bir IATA talebinin Acenteye karşı Uygunsuzluk Bildirimi / İdari Uygunsuzluk ihbarı ile sonuçlanacağını göz önünde bulundurun.
+-----------------------------------------------------------------------------------------------------------------
+
+Bu konuyla en kısa zamanda ilgilenirseniz memnun oluruz. IATA’dan daha fazla bilgi almanız gerekirse, lütfen Müşteri Portalımız www.iata.org/cs aracılığıyla yeni bir sorgu oluşturmaktan çekinmeyin.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

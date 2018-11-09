@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS FS Notification Unlimited SP</name>
+    <style>freeForm</style>
+    <subject>Financial Security Unlimited notification</subject>
+    <textOnly>Estimado/a:
+
+
+
+
+Código de la IATA: {!Case.IATA_Code__c}
+
+
+Con motivo de las recomendaciones hechas a la IATA relativas a los riesgos asociados a las transacciones con tarjetas de pago y a las posibles vulneraciones de la seguridad de los datos, las Agencias Acreditadas que operen en el BSP tienen la obligación de confirmar el cumplimiento de las Normas de Seguridad de Datos (DSS) de la Industria de Tarjetas de Pago (PCI).
+
+
+Según lo dispuesto en las Normas para Agencias de Venta de Pasaje, todas las Agencias Acreditadas de la IATA deben garantizar el pleno cumplimiento de las DSS de la PCI.
+
+
+Las DSS de la PCI son unas pautas globales destinadas a ayudar a los comerciantes (en este caso, las Agencias) a comprender y a aplicar las normas en las políticas, tecnologías y procesos existentes de seguridad que protegen sus sistemas de pago de las violaciones y el robo de datos de los titulares de tarjetas.
+
+
+Habida cuenta de lo anterior, le rogamos que nos envíe la Atestación de Cumplimiento para hacer constar la conformidad de su empresa con dichas normas.
+
+
+Le informamos que de acuerdo con las directrices establecidas por PCI, la única documentación aceptada para la validación de las DSS de la PCI son los documentos oficiales obtenidos en el sitio web del Consejo sobre Normas de Seguridad de la PCI.  Cualquier otro tipo de documento o certificado expedido con objeto de demostrar el cumplimiento de las DSS de la PCI, o de otras normas de la PCI, no está autorizado ni se validará.
+
+
+La Atestación de Cumplimiento es el documento que se emplea para indicar que se ha completado el Informe sobre Cumplimiento o el Cuestionario de Autoevaluación correspondiente, así como para acreditar el grado de conformidad de su organización con las DSS de la PCI.
+
+
+Si desea obtener más información acerca de los requisitos de cumplimiento de las DSS de la PCI, visite nuestra página web específica: http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+
+En el caso de que actualmente no procese transacciones a través del BSP con la modalidad de pago con tarjetas de crédito y no tenga intención de hacerlo, puede enviar la Autodeclaración de No Utilización de Tarjetas de Crédito que se adjunta al presente comunicado.
+
+
+Cabe señalar que, una vez efectuada dicha autodeclaración, no se solicitará ninguna otra prueba de cumplimiento a su Agencia, y que la modalidad de pago con tarjetas de crédito quedará deshabilitada para su Agencia en cuanto se lleve a cabo la migración de su país de actividad conforme a las condiciones de la NewGen de ISS y la Resolución 812.
+
+
+La documentación solicitada anteriormente (Atestación de Cumplimiento o Autodeclaración de No Utilización de Tarjetas de Crédito) deberá enviarse a la IATA a través de la página web de nuestro Portal del Cliente: http://www.iata.org/cs, de modo que se reciba, a más tardar, el {!Today()+30}. Le rogamos que adjunte una copia escaneada al caso {!Case.CaseNumber} (https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}), que podrá ver en su página de inicio del portal en el apartado «Mi casos recientes».
+
+
+Con este comunicado adjuntamos instrucciones sobre la manera de enviar la documentación.
+
+
+El departamento de Gestión de Agencias llevará a cabo un examen y tomará una decisión basada en las pruebas disponibles.
+
+-----------------------------------------------------------------------------------------------------------------
+Tenga en cuenta que la inobservancia de este requisito cuando la IATA lo solicite dará lugar al envío de una notificación de Incumplimiento / Incumplimiento Administrativo a su Agencia. En aras de evitar cualquier malentendido, quisiéramos reiterar que en ningún caso esta notificación de Incumplimiento / Incumplimiento Administrativo será calificada como un Aviso de Irregularidad
+-----------------------------------------------------------------------------------------------------------------
+
+Le agradeceríamos que diera a este asunto la máxima prioridad. Si necesita que la IATA le proporcione más información, no dude en realizar una nueva consulta a través de nuestro Portal del Cliente: www.iata.org/cs.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

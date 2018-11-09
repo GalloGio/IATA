@@ -1,0 +1,209 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" >
+<tr valign="top" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div align="justify" style="margin: 0px;"><p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-fareast-language:AR">الأعزاء
+،</span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:
+minor-bidi;color:red;mso-fareast-language:AR"> </span><span dir="LTR" style="color:red;mso-bidi-font-weight:bold"><o:p></o:p></span></p>
+
+<p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><span dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79"><o:p>&nbsp;</o:p></span></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Account -&nbsp;{!Financial_Security__c.Account__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">iatacode -&nbsp;{!Financial_Security__c.IATA_code__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Amount -&nbsp;{!Financial_Security__c.Amount__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Financial Institution -&nbsp;{!Financial_Security__c.Financial_Institution__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Validity Start Date -&nbsp;{!Financial_Security__c.Validity_Start_Date__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Security Type -&nbsp;{!Financial_Security__c.Security_Type__c}</span></font></p><p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><span dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79"><o:p></o:p></span></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Expiry Date -&nbsp;{!Financial_Security__c.Expiry_Date__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;"><br></span></font></p>
+
+<p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-fareast-language:AR">كود
+"الاياتا" (</span><span lang="EN-GB" dir="LTR" style="font-size:10.0pt;
+line-height:107%;color:#1F4E79;mso-ansi-language:EN-GB;mso-fareast-language:
+AR;mso-bidi-language:EN-GB">IATA</span><span dir="RTL"></span><span dir="RTL"></span><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:
+minor-bidi;color:#1F4E79;mso-fareast-language:AR"><span dir="RTL"></span><span dir="RTL"></span>):&nbsp;</span><span dir="LTR"></span><span dir="LTR"></span><b style="mso-bidi-font-weight:normal"><span dir="LTR" style="font-size:10.0pt;
+line-height:107%;color:#1F4E79;mso-fareast-language:AR"><span dir="LTR"></span><span dir="LTR"></span>{!Case.IATA_Code__c}</span></b><b><span dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79"><o:p></o:p></span></b></p><p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><b style="mso-bidi-font-weight:normal"><span dir="LTR" style="font-size:10.0pt;
+line-height:107%;color:#1F4E79;mso-fareast-language:AR"><br></span></b></p>
+
+<p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><span lang="AR-JO" style="font-size:10.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-fareast-language:AR;
+mso-bidi-language:AR-JO">بالاشاره الى </span><span lang="AR-SA" style="font-size:
+10.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:
+minor-bidi;color:#1F4E79;mso-fareast-language:AR">متطلبات اتحاد النقل الجوي
+الدولي "الاياتا" (</span><span lang="EN-GB" dir="LTR" style="font-size:
+10.0pt;line-height:107%;color:#1F4E79;mso-ansi-language:EN-GB;mso-fareast-language:
+AR;mso-bidi-language:EN-GB">IATA</span><span dir="RTL"></span><span dir="RTL"></span><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:
+minor-bidi;color:#1F4E79;mso-fareast-language:AR"><span dir="RTL"></span><span dir="RTL"></span>)، بخصوص المخاطر المرتبطة بمعاملات بطاقات الدفع واحتمالات
+الإخلال بأمن البيانات، فقد استدعت الحاجةُ تأكيدَ التزام الوكلاء المعتمَدين
+العاملين ضمن نظام التسوية لدفع الفواتير (</span><span lang="EN-GB" dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79;mso-ansi-language:EN-GB;
+mso-fareast-language:AR;mso-bidi-language:EN-GB">BSP</span><span dir="RTL"></span><span dir="RTL"></span><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;
+mso-bidi-font-family:Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;
+mso-fareast-language:AR"><span dir="RTL"></span><span dir="RTL"></span>) بالامتثال
+لمعايير أمن البيانات (</span><span lang="EN-GB" dir="LTR" style="font-size:10.0pt;
+line-height:107%;color:#1F4E79;mso-ansi-language:EN-GB;mso-fareast-language:
+AR;mso-bidi-language:EN-GB">DSS</span><span dir="RTL"></span><span dir="RTL"></span><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:
+minor-bidi;color:#1F4E79;mso-fareast-language:AR"><span dir="RTL"></span><span dir="RTL"></span>) في قطاع بطاقات الدفع (</span><span lang="EN-GB" dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79;mso-ansi-language:EN-GB;
+mso-fareast-language:AR;mso-bidi-language:EN-GB">PCI</span><span dir="RTL"></span><span dir="RTL"></span><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;
+mso-bidi-font-family:Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;
+mso-fareast-language:AR"><span dir="RTL"></span><span dir="RTL"></span>)</span><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:Arial;mso-fareast-language:AR">.</span><span dir="LTR"><o:p></o:p></span></p><p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><span lang="AR-SA" style="text-align: justify; font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);">وبموجب قواعد وكلاء مبيعات
+الركّاب، يتعيّن على جميع الوكلاء المعتمَدين لدى "الاياتا" (</span><span lang="EN-GB" dir="LTR" style="text-align: justify; font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);">IATA</span><span dir="RTL" style="text-align: justify; font-size: 12pt;"></span><span dir="RTL" style="text-align: justify; font-size: 12pt;"></span><span lang="AR-SA" style="text-align: justify; font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span>)
+التأكد من امتثالهم التام لمعايير أمن البيانات في قطاع بطاقات الدفع (</span><span lang="EN-GB" dir="LTR" style="text-align: justify; font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);">PCI
+DSS</span><span dir="RTL" style="text-align: justify; font-size: 12pt;"></span><span dir="RTL" style="text-align: justify; font-size: 12pt;"></span><span lang="AR-SA" style="text-align: justify; font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span>).</span></p><p class="MsoNormal" dir="RTL" style="mso-margin-top-alt:auto;text-align:justify;
+vertical-align:baseline;direction:rtl;unicode-bidi:embed"><span lang="AR-SA" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);">تُعدّ معايير أمن البيانات في
+قطاع بطاقات الدفع (</span><span lang="EN-GB" dir="LTR" style="font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);">PCI DSS</span><span dir="RTL" style="font-size: 12pt;"></span><span dir="RTL" style="font-size: 12pt;"></span><span lang="AR-SA" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span>) مقياساً عالمياً يهدف إلى مساعدة (وكلات السياحة) في فهم
+المعايير المتخذة في السياسات الأمنيّة والتقنيات والعمليات المتواصلة وتنفيذها،
+التي تحمي أنظمتهم من الاختراق ومن سرقة بيانات حاملي البطاقات.</span></p><p class="MsoNormal" dir="RTL" style="mso-margin-top-alt:auto;text-align:justify;
+vertical-align:baseline;direction:rtl;unicode-bidi:embed"><span style="color: rgb(31, 78, 121); font-family: Arial, sans-serif; font-size: 10pt; text-align: right;">وفي
+ضوء ما تقدَّم، يُطلب منكم لُطفاً تزويدنا بإقرار الامتثال لماعيير امن البيانات
+الخاص بوكالتكم.</span></p>
+
+<p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-fareast-language:AR">إنّ
+إقرارات الامتثال هي الوثيقة التي تُستخدم للدلالة على أداء تقرير الامتثال
+المطلوب أو استبيان التقييم الذاتي، وتُصادق على حالة امتثال مؤسستكم لمعايير أمن
+البيانات في قطاع بطاقات الدفع (</span><span lang="EN-GB" dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79;mso-ansi-language:EN-GB;
+mso-fareast-language:AR;mso-bidi-language:EN-GB">PCI DSS</span><span dir="RTL"></span><span dir="RTL"></span><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;
+mso-bidi-font-family:Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;
+mso-fareast-language:AR"><span dir="RTL"></span><span dir="RTL"></span>). اي وثائق
+اخرى تم اصدارها </span><span lang="AR-SA" style="font-size:10.0pt;line-height:
+107%;font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;
+color:#1F4E79;mso-fareast-language:AR">من الشهادات أو الوثائق الصادرة لغرض التزام
+بـ </span><span dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79;
+mso-fareast-language:AR">PCI DSS</span><span dir="RTL"></span><span dir="RTL"></span><span style="font-size:10.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:#1F4E79;mso-fareast-language:
+AR"><span dir="RTL"></span><span dir="RTL"></span> <span lang="AR-SA">أو أي معيار آخر
+لـ </span></span><span dir="LTR" style="font-size:10.0pt;line-height:107%;
+color:#1F4E79;mso-fareast-language:AR">PCI</span><span dir="RTL"></span><span dir="RTL"></span><span style="font-size:10.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:#1F4E79;mso-fareast-language:
+AR"><span dir="RTL"></span><span dir="RTL"></span> <span lang="AR-SA">غير مصرح بها أو
+لم يتم التحقق منها.</span></span><span dir="LTR" style="font-size:10.0pt;
+line-height:107%;color:#1F4E79"><o:p></o:p></span></p><p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><span lang="AR-SA" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);">للاطّلاع
+على معلومات أكثر حول كيفية الامتثال لمعايير أمن البيانات في قطاع بطاقات الدفع (</span><span lang="EN-GB" dir="LTR" style="font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);">PCI
+DSS</span><span dir="RTL" style="font-size: 12pt;"></span><span dir="RTL" style="font-size: 12pt;"></span><span lang="AR-SA" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span>) يُرجى زيارة صفحتنا المخصصة لمعايير أمن البيانات في قطاع بطاقات
+الدفع (</span><span lang="EN-GB" dir="LTR" style="font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);">PCI DSS</span><span dir="RTL" style="font-size: 12pt;"></span><span dir="RTL" style="font-size: 12pt;"></span><span lang="AR-SA" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span>): </span><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx" style="font-size: 12pt;"><span lang="EN-GB" dir="LTR" style="font-size:10.0pt;line-height:107%;mso-ansi-language:
+EN-GB;mso-fareast-language:AR;mso-bidi-language:EN-GB">http://www.iata.org/services/finance/Pages/pci-dss.aspx</span></a></p>
+
+<p class="MsoNormal" dir="RTL" style="mso-margin-top-alt:auto;text-align:justify;
+vertical-align:baseline;direction:rtl;unicode-bidi:embed"><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;
+mso-bidi-font-family:Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;
+mso-fareast-language:AR">إذا كنتم لا تُجرون حالياً أي معاملات من خلال نظام
+التسوية لدفع الفواتير (</span><span lang="EN-GB" dir="LTR" style="color:#1F4E79;
+mso-ansi-language:EN-GB;mso-fareast-language:AR;mso-bidi-language:EN-GB">BSP</span><span dir="RTL"></span><span dir="RTL"></span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:
+minor-bidi;color:#1F4E79;mso-fareast-language:AR"><span dir="RTL"></span><span dir="RTL"></span>) باستخدام طريقة الدفع بواسطة البطاقات الائتمانيه ولا تنوون
+اتخاذ تلك الطريقة، فيمكنكم إرسال </span><span lang="AR-SA" style="font-size:10.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:minor-bidi;
+color:#1F4E79;mso-fareast-language:AR">التصريح الذاتي بعدم استخدام بطاقة
+الائتمان، المُرفق بهذا البيان.</span><span dir="LTR" style="font-size:10.0pt;
+line-height:107%;color:#1F4E79"><o:p></o:p></span></p><p class="MsoNormal" dir="RTL" style="mso-margin-top-alt:auto;text-align:justify;
+vertical-align:baseline;direction:rtl;unicode-bidi:embed"><span lang="AR-SA" style="font-size: 10pt; color: rgb(31, 78, 121);">وجدير بالملاحظة أنّه بمجرّد استكمال هذا
+التصريح لن يطلب من وكالتكم أيّ مستند او وثيقة اخرى لامتثال، غير أنه سوف يتم
+إلغاء تفعيل ّ طريقة الدفع بواسطة بطاقة الائتمان&nbsp;
+الخاص بوكالتكم عند نقل بلد التشغيل الخاص بكم ضمن إطار برنامج (</span><span lang="EN-GB" dir="LTR" style="font-size: 10pt; font-family: Calibri, sans-serif; color: rgb(31, 78, 121);">NewGen</span><span dir="RTL" style="font-size: 12pt;"></span><span dir="RTL" style="font-size: 12pt;"></span><span lang="AR-SA" style="font-size: 10pt; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span>) وبموجب القرار </span><span dir="LTR" style="font-size: 12pt;"></span><span dir="LTR" style="font-size: 12pt;"></span><span lang="EN-GB" dir="LTR" style="font-size: 10pt; font-family: Calibri, sans-serif; color: rgb(31, 78, 121);"><span dir="LTR"></span><span dir="LTR"></span>812</span><span dir="RTL" style="font-size: 12pt;"></span><span dir="RTL" style="font-size: 12pt;"></span><span lang="AR-SA" style="font-size: 10pt; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span>.</span></p>
+
+<p class="Default" dir="RTL" style="text-align:justify;direction:rtl;unicode-bidi:
+embed"><span dir="LTR" style="font-size:10.0pt;font-family:&quot;Calibri&quot;,sans-serif;
+mso-ascii-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79"><o:p>&nbsp;</o:p></span><span lang="AR-SA" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);">تُرسل
+المُستندات المطلوبة أعلاه (إقرار الامتثال أو التصريح الذاتي بعدم استخدام بطاقة
+الائتمان) إلى «الاياتا» (</span><span lang="EN-GB" dir="LTR" style="font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);">IATA</span><span dir="RTL" style="font-size: 12pt;"></span><span dir="RTL" style="font-size: 12pt;"></span><span lang="AR-SA" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span>) عبر صفحة الويب الخاصة ببوابة خدمة العملاء:&nbsp;</span><a href="http://www.iata.org/cs" target="_blank" style="font-size: 12pt;"><span lang="EN-GB" dir="LTR" style="font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121); text-decoration-line: none;">http://www.iata.org/cs</span></a><span dir="RTL" style="font-size: 12pt;"></span><span dir="RTL" style="font-size: 12pt;"></span><span lang="AR-SA" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span> في موعدٍ
+أقصاه </span><span dir="LTR" style="font-size: 12pt;"></span><span dir="LTR" style="font-size: 12pt;"></span><b style="font-size: 12pt;"><span dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79;
+mso-fareast-language:AR"><span dir="LTR"></span><span dir="LTR"></span>{!Today()+30}</span></b><span dir="RTL" style="font-size: 12pt;"></span><span dir="RTL" style="font-size: 12pt;"></span><span style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span> <span lang="AR-SA">. يُرجى إرفاق نسخة الكترونيه إلى الحالة رقم </span></span><span dir="LTR" style="font-size: 12pt;"></span><span dir="LTR" style="font-size: 12pt;"></span><span dir="LTR" style="font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);"><a href="https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}"><span dir="LTR"></span><span dir="LTR"></span>{!Case.CaseNumber}</a></span><span dir="RTL" style="font-size: 12pt;"></span><span dir="RTL" style="font-size: 12pt;"></span><span lang="AR-SA" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span> الظاهرة في الصفحة لرئيسية في البوابة الخاصة بكم تحت قسم ’الحالات
+الحديثة‘ (</span><span lang="EN-GB" dir="LTR" style="font-size: 10pt; line-height: 107%; color: rgb(31, 78, 121);">My recent cases</span><span dir="RTL" style="font-size: 12pt;"></span><span dir="RTL" style="font-size: 12pt;"></span><span lang="AR-SA" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><span dir="RTL"></span><span dir="RTL"></span>).</span></p>
+
+<p class="MsoNormal" dir="RTL" style="text-align:justify;direction:rtl;unicode-bidi:
+embed"><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-fareast-language:AR">التعليمات
+الخاصة بكيفية إرسال مستنداتكم مُرفقه بهذا البيان.</span><span dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79"><o:p></o:p></span></p><p class="MsoNormal" dir="RTL" style="text-align:justify;direction:rtl;unicode-bidi:
+embed"><span style="color: rgb(31, 78, 121); font-family: Arial, sans-serif; font-size: 10pt;">تتولّى
+إدارة شؤون الوكالات مراجعة المستندات وتتخذ قرارها بموجب الوثائق المُتوفرة لديها
+بما يتماشى مع الاقرارات المقدمه من وكالاتكم.</span></p><p class="MsoNormal" dir="RTL" style="text-align:justify;direction:rtl;unicode-bidi:
+embed"><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-fareast-language:AR"><br></span></p>
+
+<div style="mso-element:para-border-div;border:solid windowtext 1.0pt;
+mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt">
+
+<p class="MsoNormal" dir="RTL" style="text-align:justify;direction:rtl;unicode-bidi:
+embed;border:none;mso-border-alt:solid windowtext .5pt;padding:0cm;mso-padding-alt:
+1.0pt 4.0pt 1.0pt 4.0pt"><b><span lang="AR-SA" style="font-size:10.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:minor-bidi;
+color:#1F4E79;mso-fareast-language:AR">يُرجى الملاحظة أنّ عدم الامتثال لهذا
+الشرط وفقاً لطلب «إياتا» (</span></b><b><span lang="EN-GB" dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79;mso-ansi-language:EN-GB;
+mso-fareast-language:AR;mso-bidi-language:EN-GB">IATA</span></b><span dir="RTL"></span><span dir="RTL"></span><b><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;
+mso-bidi-font-family:Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;
+mso-fareast-language:AR"><span dir="RTL"></span><span dir="RTL"></span>) يترتّب
+عليه إصدار إشعار بعدم الامتثال / عدم امتثال إداري في حقّ الوكالة.</span></b><b style="mso-bidi-font-weight:normal"><span dir="LTR" style="font-size:10.0pt;
+line-height:107%;color:#1F4E79"><o:p></o:p></span></b></p>
+
+</div>
+
+<p class="MsoNormal" dir="RTL" style="text-align:justify;direction:rtl;unicode-bidi:
+embed"><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-fareast-language:AR"><br></span></p><p class="MsoNormal" dir="RTL" style="text-align:justify;direction:rtl;unicode-bidi:
+embed"><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+Arial;mso-bidi-theme-font:minor-bidi;color:#1F4E79;mso-fareast-language:AR">نأمل
+بكل تقدير إيلاء هذه المسألة اهتمامكم العاجل. إذا احتجتم إلى أي معلومات أخرى من
+«إياتا» (</span><span lang="EN-GB" dir="LTR" style="font-size:10.0pt;line-height:
+107%;color:#1F4E79;mso-ansi-language:EN-GB;mso-fareast-language:AR;mso-bidi-language:
+EN-GB">IATA</span><span dir="RTL"></span><span dir="RTL"></span><span lang="AR-SA" style="font-size:10.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:
+minor-bidi;color:#1F4E79;mso-fareast-language:AR"><span dir="RTL"></span><span dir="RTL"></span>) فنرجو ألاّ تتردّدوا في تسجيل استفسار جديد عبر بوابة العملاء: </span><a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span lang="EN-GB" dir="LTR" style="color:#1F4E79;mso-ansi-language:EN-GB;mso-fareast-language:
+AR;mso-bidi-language:EN-GB;text-decoration:none;text-underline:none">www.iata.org/cs</span></a><span dir="RTL"></span><span dir="RTL"></span><span lang="AR-SA" style="font-size:10.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:minor-bidi;
+color:#1F4E79;mso-fareast-language:AR"><span dir="RTL"></span><span dir="RTL"></span>.&nbsp;</span><span dir="LTR" style="font-size:10.0pt;line-height:107%;color:#1F4E79"><o:p></o:p></span></p><p class="MsoNormal" dir="RTL" style="text-align:justify;direction:rtl;unicode-bidi:
+embed"><span lang="AR-SA" style="font-size:10.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+minor-latin;mso-bidi-font-family:Arial;mso-bidi-theme-font:minor-bidi;
+color:#1F4E79;mso-fareast-language:AR"><br></span></p><br></div>]]></td>
+</tr>
+</table>

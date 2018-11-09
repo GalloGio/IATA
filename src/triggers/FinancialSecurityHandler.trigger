@@ -9,6 +9,7 @@ trigger FinancialSecurityHandler on Financial_Security__c (after delete, after i
             new ANG_FinancialSecurityTriggerHandler().onBeforeInsert();
         } else if (Trigger.isAfter) {
             new ANG_FinancialSecurityTriggerHandler().onAfterInsert();
+            new FinancialSecurityUtil().onAfterInsert(Trigger.newMap, Trigger.oldMap);
         }
         
         

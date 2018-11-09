@@ -1,0 +1,95 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" >
+<tr valign="top" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div align="justify" style="margin: 0px;"><div align="justify" style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); margin: 0px;"><p class="MsoNormal" style=""><font face="Arial, sans-serif" style="" size="2"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">Caro(a),</span><span lang="PT" style="color: red;"> </span><span lang="PT" style="color: red;"><o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></p><h2 class="pageDescription" style="font-family: Arial, Helvetica, sans-serif; font-size: 1.8em; margin: 0px; font-weight: normal; line-height: 1.1em; text-align: start;"><br></h2><h2 class="pageDescription" style="font-family: Arial, Helvetica, sans-serif; font-size: 1.8em; margin: 0px; font-weight: normal; line-height: 1.1em; text-align: start;">Unlimited&nbsp;</h2><div><br></div><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Account -&nbsp;{!Financial_Security__c.Account__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">iatacode -&nbsp;{!Financial_Security__c.IATA_code__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Amount -&nbsp;{!Financial_Security__c.Amount__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Financial Institution -&nbsp;{!Financial_Security__c.Financial_Institution__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Validity Start Date -&nbsp;{!Financial_Security__c.Validity_Start_Date__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Security Type -&nbsp;{!Financial_Security__c.Security_Type__c}</span></font></p><p class="MsoNormal"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Expiry Date -&nbsp;{!Financial_Security__c.Expiry_Date__c}</span></font></p><p class="MsoNormal" style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><o:p><font face="Arial, sans-serif" size="2">&nbsp;</font></o:p></span></p>
+
+<p class="MsoNormal" style=""><font face="Arial, sans-serif" size="2"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">Código IATA:&nbsp;<b style="mso-bidi-font-weight:
+normal">{!Case.IATA_Code__c}</b></span><b><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></b></font></p><p class="MsoNormal" style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><b style="mso-bidi-font-weight:
+normal"><font face="Arial, sans-serif" size="2"><br></font></b></span></p>
+
+<p class="MsoNormal" style=""><font face="Arial, sans-serif" size="2"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">Em referência ao aconselhamento dado à IATA
+relativo aos riscos associados às transações com cartões de pagamento e
+potenciais violações de dados, é necessário confirmar a conformidade das
+Agências Acreditadas que operam no BSP para serem compatíveis com a Norma de
+Segurança de Dados (DSS) da Indústria de Cartões de Pagamento (PCI).</span><span lang="PT" style="line-height: 107%;">.</span><span lang="PT"><o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style="text-align: justify; vertical-align: baseline;"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style="text-align: justify; vertical-align: baseline;"><font face="Arial, sans-serif" size="2"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">Ao abrigo das Regras para Agências de
+Vendas a Passageiros, todas as Agências Acreditadas pela IATA têm de assegurar
+a sua total conformidade com a PCI DSS.</span><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style="text-align: justify; vertical-align: baseline;"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style="text-align: justify; vertical-align: baseline;"><font face="Arial, sans-serif" size="2"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">A PCI DSS é uma norma global destinada
+a ajudar os comerciantes (Agência) a entenderem e a implementarem normas para
+políticas de segurança, tecnologias e processos contínuos que protegem os seus
+sistemas de pagamento contra violações e roubos de dados do titular do cartão. </span><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2">Tendo em conta o acima exposto, solicita-se
+que nos forneça o Atestado de Conformidade, a comprovar a conformidade da sua
+empresa.<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2">Gostaríamos de informá-lo que, de acordo
+com as diretrizes da PCI DSS, os certificados de conformidade não serão aceitos
+para a validação do PCI DSS.<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2">O único documento reconhecido para a
+validação da PCI DSS são os documentos oficiais do site da PCI SSC. Qualquer
+outro formulário, certificado ou documentação emitidos com o objetivo de
+comprovar a conformidade com PCI DSS ou qualquer outro PCI standard não está
+autorizado e não será considerado válido.<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style=""><font face="Arial, sans-serif" size="2"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">O Atestado de Conformidade é o documento
+utilizado para indicar que o Relatório sobre a Conformidade ou Questionário de
+Autoavaliação adequado foi realizado e para certificar o estatuto de
+conformidade da sua organização com a PCI DSS.</span><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style=""><font face="Arial, sans-serif" size="2"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">Para mais informações sobre como obter a
+conformidade PCI DSS, visite a nossa página Web dedicada à PCI DSS: </span><span lang="PT"><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx"><span style="line-height: 107%;">http://www.iata.org/services/finance/Pages/pci-dss.aspx</span></a></span><span class="MsoHyperlink"><span lang="PT" style="line-height: 107%;"><o:p></o:p></span></span></font></p>
+
+<p class="MsoNormal" style="text-align: justify; vertical-align: baseline;"><span lang="PT" style="color:#1F4E79;mso-bidi-language:
+PT"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style="text-align: justify; vertical-align: baseline;"><font face="Arial, sans-serif" size="2"><span lang="PT" style="color:#1F4E79;mso-bidi-language:
+PT">Caso não esteja, atualmente, a processar quaisquer transações através do
+BSP utilizando a forma de pagamento através de Cartão de Crédito, ou não
+pretenda fazê-lo, pode entregar a</span><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"> Declaração de Não
+Utilização do Cartão de Crédito, anexada a este comunicado.</span><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></font></p>
+
+<p class="Default" style="text-align: justify;"><span lang="PT" style="color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="Default" style="text-align: justify;"><font face="Arial, sans-serif" size="2"><span lang="PT" style="color: rgb(31, 78, 121);">É de
+salientar que após preencher essa declaração, não será exigido à Agência
+qualquer outro elemento comprovativo de conformidade. Todavia, a forma de
+pagamento através de Cartão de Crédito será desativada da Agência, à data de
+migração do país onde opera, ao abrigo do ambiente NewGen e da resolução 812</span><span lang="PT" style="color: rgb(31, 78, 121);"><o:p></o:p></span></font></p>
+
+<p class="Default" style="text-align: justify;"><span lang="PT" style="color: rgb(31, 78, 121);"><o:p><font face="Arial, sans-serif" size="2">&nbsp;</font></o:p></span></p>
+
+<p class="MsoNormal" style="text-align: justify;"><font face="Arial, sans-serif" size="2"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">A documentação
+solicitada supracitada (Atestado de Conformidade ou Declaração de Não
+Utilização do Cartão de Crédito) deverá ser enviada à IATA&nbsp;através da
+nossa página Web do Portal de Atendimento ao Cliente:&nbsp;</span><span lang="PT"><a href="http://www.iata.org/cs" target="_blank"><span style="line-height: 107%; color: rgb(31, 78, 121); text-decoration: none;">http://www.iata.org/cs</span></a></span><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">&nbsp;o mais tardar até <b style="mso-bidi-font-weight:normal">{!Today()+30}</b>. Anexe uma cópia digitalizada ao
+processo&nbsp;<a href="https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}">{!Case.CaseNumber}</a>&nbsp;visível na sua página inicial do portal,
+na secção ‘Os meus processos recentes’.</span><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style="text-align: justify;"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style="text-align: justify;"><font face="Arial, sans-serif" size="2"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">As instruções sobre
+como entregar a sua documentação encontram-se em anexo a este comunicado.</span><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style="text-align: justify;"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style="text-align: justify;"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" style="" size="2">O Departamento de
+Gestão da Agência realizará uma análise e tomará uma decisão com base nos
+elementos disponíveis. </font></span><span lang="PT" style="font-size: 10pt; font-family: arial; line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></p><p class="MsoNormal" style="font-size: 12pt; font-family: arial; text-align: justify;"><span lang="PT" style="font-size:
+10.0pt;line-height:107%;color:#1F4E79;mso-bidi-language:PT"><br></span></p>
+
+<div style="border: 1pt solid windowtext; padding: 1pt 4pt;">
+
+<p class="MsoNormal" style="text-align: justify; border: none; padding: 0cm;"><b style=""><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);"><font face="Arial, sans-serif" style="" size="2">Tenha em atenção que o incumprimento deste requisito, a
+pedido da IATA, resultará numa Notificação de Não Conformidade / Não
+Conformidade Administrativa emitida contra a Agência.</font></span></b><b style="font-size: 12pt; font-family: arial;"><span lang="PT" style="font-size:10.0pt;
+line-height:107%;color:#1F4E79"><o:p></o:p></span></b></p>
+
+</div>
+
+<p class="MsoNormal" style="font-size: 12pt; font-family: arial; text-align: justify;"><span lang="PT" style="font-size:
+10.0pt;line-height:107%;color:#1F4E79;mso-bidi-language:PT"><br></span></p><p class="MsoNormal" style="text-align: justify;"><font face="Arial, sans-serif" style="" size="2"><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">Agradecíamos que
+dispensasse atenção imediata a este assunto. Caso necessite de mais informações
+da IATA, não hesite em inserir uma nova questão, iniciando sessão no Portal do
+Cliente:&nbsp;</span><span lang="PT" style=""><a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span style="color:#1F4E79;mso-bidi-language:
+PT;text-decoration:none;text-underline:none">www.iata.org/cs</span></a></span><span lang="PT" style="line-height: 107%; color: rgb(31, 78, 121);">.&nbsp;</span></font><span lang="PT" style="font-size: 10pt; font-family: arial; line-height: 107%; color: rgb(31, 78, 121);"><o:p></o:p></span></p><br></div></div>]]></td>
+</tr>
+</table>
