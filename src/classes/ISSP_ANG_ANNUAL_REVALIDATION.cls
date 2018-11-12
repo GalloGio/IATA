@@ -1228,13 +1228,12 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Pattern iso8859 = Pattern.compile(ISO_8859_1_regEx);
 		Pattern postalCodeRegex;
 
-		Map<String, String> shippingPostalCodeRegexByCountryMap = ISSP_ANG_ANNUAL_REV_UPDATE.postalCodeRegexByCountryMap;
+		IATA_ISO_Country__c shippingCountryInfo = ISSP_ANG_ANNUAL_REV_UPDATE.postalCodeRegexByCountryMap.get(currentAccount.fw.newForm.Shipping_Country__c);
 
 		Pattern shippingCountryPostalCodeRegex;
 
-		if (shippingPostalCodeRegexByCountryMap != null && 
-			shippingPostalCodeRegexByCountryMap.get(currentAccount.fw.newForm.Shipping_Country__c) != null) {
-			shippingCountryPostalCodeRegex = Pattern.compile(ISSP_ANG_ANNUAL_REV_UPDATE.postalCodeRegexByCountryMap.get(currentAccount.fw.newForm.Shipping_Country__c));
+		if (shippingCountryInfo != null && shippingCountryInfo.Postal_Code_Format_regEx__c != null) {
+			shippingCountryPostalCodeRegex = Pattern.compile(shippingCountryInfo.Postal_Code_Format_regEx__c);
 		}
 
 		if (currentAccount.isocountry.Postal_Code_Format_regEx__c != null && currentAccount.isocountry.Postal_Code_Format_regEx__c != '')
@@ -1347,7 +1346,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					currentAccount.fw.newform.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
 				}
-				if (currentAccount.isocountry.IEC_Zip_Postal_Code_required__c && currentAccount.fw.newform.Shipping_Postal_Code__c == null) {
+
+
+				if (shippingCountryInfo != null && shippingCountryInfo.IEC_Zip_Postal_Code_required__c && currentAccount.fw.newform.Shipping_Postal_Code__c == null) {
 					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				} else if (currentAccount.fw.newform.Shipping_Postal_Code__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
@@ -1358,7 +1359,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.isocountry.State_Province_Mandatory__c && currentAccount.fw.newform.Shipping_State__c == null) {
+
+				if (shippingCountryInfo != null && shippingCountryInfo.State_Province_Mandatory__c && currentAccount.fw.newform.Shipping_State__c == null) {
 					currentAccount.fw.newform.Shipping_State__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				} else if (currentAccount.fw.newform.Shipping_State__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_State__c).matches()) {
