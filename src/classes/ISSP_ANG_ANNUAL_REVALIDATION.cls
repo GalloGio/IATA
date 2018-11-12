@@ -527,6 +527,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 			currentAccount.fw.newform.status__c = FORM_STATUS_INPROGRESS;
+			copyShippingCountry();
 
 			upsert currentAccount.fw.newform;
 
@@ -555,12 +556,18 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Savepoint sp = Database.setSavepoint();
 
 		try {
-
+			copyShippingCountry();
 			upsert currentAccount.fw.newform;
 
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return null;
+	}
+
+	private void copyShippingCountry() {
+		// Workaround to assign the previous value if not changed
+		if (!currentAccount.fw.newform.Notify_Change_Location__c)
+			currentAccount.fw.newform.Shipping_Country__c = currentAccount.account.ShippingCountry;
 	}
 
 	public PageReference confirmUpdate() {
@@ -599,6 +606,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	private void migrateExtraFields() {
 
 		String isoCountryForm = currentAccount.fw.newform.Shipping_Country__c;
+
+		if (String.isEmpty(isoCountryForm)) return;
 
 		for(IATA_ISO_Country__c ctr : [Select Id, Name from IATA_ISO_Country__c]){
 			if(ctr.Name.toupperCase() == isoCountryForm.toupperCase()){
@@ -943,7 +952,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'State_Province__c', 'BillingCity' => 'Branch_Office_City__c',
             'IATA_ISO_Country__c' => 'ISO_Country__c', 'IATA_ISO_Country__c' => 'Branch_Office_Country__c', 'Iso_State__c' => 'IATA_ISO_State__c', 'ShippingCountry' => 'Shipping_Country__c', 'ShippingStreet' => 'Shipping_Street__c',
             'ShippingPostalCode' => 'Shipping_Postal_Code__c', 'ShippingState' => 'Shipping_State__c', 'ShippingCity' => 'Shipping_City__c', 'Email__c' => 'Branch_Office_Email__c',
-            'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone_National__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c', 'Abbreviated_name__c' => 'Abbreviated_name__c',
+            'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c', 'Abbreviated_name__c' => 'Abbreviated_name__c',
             'Abbreviated_Address__c' => 'Abbreviated_Address__c', 'Remittance_frequency__c' => 'Remittance_frequency__c', 'Solicitation_Flag__c' => 'Solicitation_Flag__c',
             'VAT_Number_2__c' => 'VAT_Number_2__c', 'CASS_Number__c' => 'CASS_Number__c', 'VAT_Number__c' => 'ISSP_AMS_VAT_number__c', 'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c', 
             'License_Number__c' => 'ISSP_AMS_License_No__c', 'GDS__c' => 'ISSP_AMS_GDS_with_signed_contract__c', 'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c',
