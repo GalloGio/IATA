@@ -97,7 +97,7 @@
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
@@ -342,7 +342,7 @@
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;  
         
@@ -799,7 +799,7 @@
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
@@ -1081,7 +1081,7 @@
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
@@ -1124,7 +1124,7 @@
         Contact c = new Contact(FirstName= 'test', LastName= 'contact', Email= 'test.owner@contact.com');
         insert c;
 
-        ID changeRT = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        ID changeRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = aHo.id, OwnerId = UserInfo.getUserId(), Process__c = AMS_Utils.AGENCYCHANGES, RecordTypeId = changeRT);
         
@@ -1154,8 +1154,8 @@
         insert stagingArea;
 
         
-        AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c= aHo.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId());
-        AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= aBr.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId());
+        AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c= aHo.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
+        AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= aBr.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
 
         insert new List<AMS_Account_Role__c> {owner1, owner2};
 
@@ -1229,7 +1229,7 @@
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
@@ -1307,7 +1307,7 @@
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
