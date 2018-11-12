@@ -141,11 +141,12 @@ public class HigherLogicIntegrationHelper {
 	*
 	* @param operation: String
 	* @param contactIdSet: Set<Id>
+	* @param provAcctId: Id
 	*
 	*/
 	@future(callout=true)
-	public static void pushPersonCompanyMembers(String operation, Set<Id> contactIdSet){
-
+	public static void pushPersonCompanyMembers(String operation, Set<Id> contactIdSet, Id provAcctId){
+	
 		String usersQuery =
 			' SELECT                                  ' +
 			' 	Id,                                   ' +
@@ -216,8 +217,6 @@ public class HigherLogicIntegrationHelper {
 
 		Map<Id,Id> newRelationship = new Map<Id,Id>();
 		
-		Id provAcctId = ProvisionKaviAccess.getFakeAccount().Id;
-		
 		for(User newUser : newUsersMap.values()){
 			
 			Id accId = provAcctId;
@@ -238,6 +237,8 @@ public class HigherLogicIntegrationHelper {
 		
 		HigherLogicIntegrationWS.pushMembers(membersToPushLst);
 		
+		HigherLogicIntegrationWS.pushMembersRelationships(newRelationship);
+
 		for(User newUser : newUsersMap.values()){
 			
 			if(newUser.ContactId != null && contactRightsMap.containsKey(newUser.ContactId)) {
@@ -250,8 +251,6 @@ public class HigherLogicIntegrationHelper {
 			
 		}
 
-		HigherLogicIntegrationWS.pushMembersRelationships(newRelationship);
-
 		update contactRightsMap.values();	
 		
 		HigherLogicIntegrationWS.flushWebServiceLogs();
@@ -259,8 +258,8 @@ public class HigherLogicIntegrationHelper {
 	}
 	
 	/**
-	* Processes each User/Account pair 
-	* and pushes their detail into HigherLogic
+	* Assigns or removes the Higher Logic Permission Set
+	* to the users related to the given contacts
 	*
 	* @param contactIdSet: Set<Id>
 	* @param action: String

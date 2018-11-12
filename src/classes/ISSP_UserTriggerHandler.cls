@@ -52,7 +52,7 @@ public without sharing class ISSP_UserTriggerHandler {
         }
         
         if(contactKaviAdd.size() > 0){
-            HigherLogicIntegrationHelper.pushPersonCompanyMembers('update', contactKaviAdd);
+            HigherLogicIntegrationHelper.pushPersonCompanyMembers('update', contactKaviAdd, null);
         }
         
         setPortalUserName(newUserList);

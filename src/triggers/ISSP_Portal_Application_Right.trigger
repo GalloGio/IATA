@@ -316,16 +316,20 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	}
 
 	if (!contactKaviAdd.isEmpty()){
-
+		
+		Id provAcctId = null;
+		
 		String action = 'create';
-
+		
 		string kaviUser = [SELECT Kavi_User__c from Contact where Id in:contactKaviAdd limit 1].Kavi_User__c;
 		
 		if (kaviUser != null ){
 			action = 'create2';
+			//Fetch the required provisional account id
+			provAcctId = ProvisionKaviAccess.getFakeAccount().Id;
 		}
 
-		HigherLogicIntegrationHelper.pushPersonCompanyMembers(action, contactKaviAdd);
+		HigherLogicIntegrationHelper.pushPersonCompanyMembers(action, contactKaviAdd, provAcctId);
 
 		//RN-ENHC0012059 grant and remove the permission set to the user	
 		HigherLogicIntegrationHelper.assignHLPermissionSet(contactKaviAdd, 'grant'); 

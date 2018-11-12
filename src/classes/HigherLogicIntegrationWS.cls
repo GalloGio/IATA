@@ -69,7 +69,7 @@ public class HigherLogicIntegrationWS {
 		public String responseBody {get; set;}
 	}
 	
-	public static List<ISSP_Web_Service_Log__c> wsServiceLogLst = new List<ISSP_Web_Service_Log__c>();
+	private static List<ISSP_Web_Service_Log__c> wsServiceLogLst = new List<ISSP_Web_Service_Log__c>();
 	
 	/**
 	* Invokes Higher Logic Push API
@@ -79,7 +79,7 @@ public class HigherLogicIntegrationWS {
 	* @return hlResp: HigherLogicResponse
 	*
 	*/
-	public static HigherLogicResponse invoke(HigherLogicRequest requestBody){
+	private static HigherLogicResponse invoke(HigherLogicRequest requestBody){
 		
 		HigherLogicResponse hlResp = new HigherLogicResponse();
 
@@ -139,7 +139,7 @@ public class HigherLogicIntegrationWS {
 	* @return memberDetails: MemberDetails
 	*
 	*/
-	public static MemberDetails createMemberDetail(sObject sObj){
+	private static MemberDetails createMemberDetail(sObject sObj){
 		
 		MemberDetails memberDetails = new MemberDetails();
 		
@@ -184,7 +184,6 @@ public class HigherLogicIntegrationWS {
 			memberDetails.Country			 = acct.BillingCountry;
 			memberDetails.PostalCode		 = acct.BillingPostalCode;
 			memberDetails.IsOrganization	 = true;
-			
 		}
 		
 		return memberDetails;
@@ -201,7 +200,7 @@ public class HigherLogicIntegrationWS {
 	* @return memberDetails: MemberDetails
 	*
  	*/
-	public static MemberDetails createMemberDetail(Id userId, Id acctId){
+	private static MemberDetails createMemberDetail(Id userId, Id acctId){
 		
 		MemberDetails memberDetails = new MemberDetails();
 		
@@ -221,7 +220,7 @@ public class HigherLogicIntegrationWS {
 	* @return hlRequest: HigherLogicRequest
 	*
 	*/
-	public static HigherLogicRequest createRequestBody(List<sObject> sObjectLst){
+	private static HigherLogicRequest createRequestBody(List<sObject> sObjectLst){
 		
 		HigherLogicRequest hlRequest = new HigherLogicRequest();
 		
@@ -254,7 +253,7 @@ public class HigherLogicIntegrationWS {
 	* @return hlRequest: HigherLogicRequest
 	*
 	*/
-	public static HigherLogicRequest createRequestBody(Map<Id, Id> relationshipMap){
+	private static HigherLogicRequest createRequestBody(Map<Id, Id> relationshipMap){
 		
 		HigherLogicRequest hlRequest = new HigherLogicRequest();
 		
@@ -321,7 +320,7 @@ public class HigherLogicIntegrationWS {
 	* @return Map<Id, String> 
 	*
 	*/
-	public static Map<Id, String> processHigherLogicResponse(String action, HigherLogicResponse wsResponse){
+	private static Map<Id, String> processHigherLogicResponse(String action, HigherLogicResponse wsResponse){
 		//parseResponseBody(wsResponse.responseBody);
 		wsServiceLogLst.add(createNewWSLog(action, wsResponse));
 		return new Map<Id, String>();
