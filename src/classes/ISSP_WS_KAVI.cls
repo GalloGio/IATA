@@ -142,7 +142,9 @@ public class ISSP_WS_KAVI {
 
 				@future(callout=true)
 				public static void createOrUpdateKaviUsersAccounts(String operation, Set<Id> newContactsIds){
-
+					//PS to grant access to all licenses
+					permissionset psID= [select id from permissionset where name = 'HL_UsersAccess'][0];
+					List<PermissionSetAssignment> listPsa = new List<PermissionSetAssignment>();
 					//New Code to Admit Internal Users
 					Map<Id,User> newUsersMap = new Map<Id,User>();
 					if (operation == 'create2'){

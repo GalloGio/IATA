@@ -953,7 +953,7 @@ public class VfIECShoppingCart extends IECPageController {
             else {
 
                 vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
-                System.debug('JR UpdateContactINfo - VATCONFIG.VATValidationRequired: ' + vatConfig);
+                System.debug('____ [cls VfIECShoppingCart - updateContactInfo] UpdateContactINfo - VATCONFIG.VATValidationRequired: ' + vatConfig);
 
                 if (vatConfig != null && vatConfig.TaxIDMandatory) {
                     if (vatConfig.ShowTax1) {
