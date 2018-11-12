@@ -1950,6 +1950,8 @@ for (string topicver:listofAllowedTopics){
         subtopic = Env.SelectOptionDefaultValue ;
         System.debug('createAnEmergency END: ' + this.Clicked_EmergencyRequest);
         labelSubTopic = 'I wish to create an emergency about';
+        isComplain1 = false ;
+        isCompliment1 = false ;
         errorMessage = new list<string>();
         return null;
     }
