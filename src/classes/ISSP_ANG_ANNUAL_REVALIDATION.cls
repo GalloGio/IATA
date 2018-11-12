@@ -41,7 +41,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	private static Id rtAccreditContCurrentCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
 	private static Id rtAnnualRevalidation = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Annual_Revalidation'); 
 	
-	private Map<String, String> amsAccrContactRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AMS_Accreditation_Contact__c');
 	private static Id ownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 	
 	public static String DEFAULT_ICON { get{ return 'glyphicon glyphicon-refresh text-primary';} set;}
@@ -1686,7 +1685,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         }
 
         if (!Test.IsRunningTest()) {
-            contactToUpsert.RecordTypeId = amsAccrContactRecordTypesMap.get(contactType);
+            contactToUpsert.RecordTypeId = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AMS_Accreditation_Contact__c').get(contactType);
         }
 
 		if (currentAccount.newContact.Agencies_prev_worked_for__c == ''  || currentAccount.newContact.Agencies_prev_worked_for__c == 'none') {
