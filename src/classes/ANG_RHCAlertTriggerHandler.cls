@@ -431,31 +431,6 @@ public class ANG_RHCAlertTriggerHandler{
         return true;
     }
 
-    public static String mapRemittanceFrequency(Account acc){
-    
-        /*
-        -------ignore china for now-------
-
-        if(acc.Remittance_frequency__c == 'Daily' && acc.Region_formula__c == 'Europe' && acc.IATA_ISO_Country__r.iso_code__c  != 'UA') return 'D';
-        if(acc.Remittance_frequency__c == 'Daily' && acc.IATA_ISO_Country__r.iso_code__c  == 'CN') return 'T';
-        if(acc.Remittance_frequency__c == 'Every 3 days' && acc.IATA_ISO_Country__r.iso_code__c  == 'CN') return 'E';
-        if(acc.Remittance_frequency__c == 'Every 3 days' && acc.IATA_ISO_Country__r.iso_code__c  == 'UA') return 'B';*/
-
-        if(acc.Remittance_frequency__c.length() == 1) return acc.Remittance_frequency__c; // After newgen release 4 Remittance Frequency will not need further mapping
-        
-        if(acc.IATA_ISO_Country__r.iso_code__c  == 'BR') return 'V';
-        
-        if(acc.Remittance_frequency__c == 'Monthly') return 'M';
-        if(acc.Remittance_frequency__c == 'Fortnightly') return 'F';
-        if(acc.Remittance_frequency__c == '4 times per month') return 'W';
-        if(acc.Remittance_frequency__c == 'Weekly') return 'V';
-        if(acc.Remittance_frequency__c == 'Daily' ) return 'D';
-        if(acc.Remittance_frequency__c == 'Every 3 days') return 'B';        
-        if(acc.Remittance_frequency__c == 'Every 10 days') return 'R';
-        
-        return '';
-    }
-
     public void handleRedAlerts(){
         List<ANG_Risk_Alert__c> redAlerts = new List<ANG_Risk_Alert__c>();
         List<RiskAlertParentCaseWrapper> wrapperList = new List<RiskAlertParentCaseWrapper>();
@@ -665,7 +640,7 @@ public class ANG_RHCAlertTriggerHandler{
                         sidraToUpdate.DEF_Approval_Rejection__c = 'Approved';
                         sidraToUpdate.SIDRA_Lite_Default_Date__c = Date.today();
                         sidraToUpdate.Reason_for_Default__c = 'Under Review';
-                        sidraToUpdate.Update_AIMS_DEF__c = Date.today();
+                        sidraToUpdate.Update_AIMS_DEF__c = Datetime.now();
                         sidraToUpdate.CS_Rep_Acc_DEF__c = userInfo.getUserId();
                         sidrasToGenerateChangeCode.add(sidraToUpdate);
                     }
@@ -700,7 +675,7 @@ public class ANG_RHCAlertTriggerHandler{
                             raAccMap.get(ra.id).IATA_ISO_Country__r.BSP_Country_free_text__c : 
                             raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c));
 
-            rfs.add(mapRemittanceFrequency(raAccMap.get(ra.id)));
+            rfs.add(raAccMap.get(ra.id).Remittance_frequency__c);
         }
 
         List<Operational_Calendar__c> ops = [SELECT id,ISS_Operation__r.Name,Frequency_Code__c,First_Day__c, Last_Day__c, Remittance_Day__c   
@@ -718,7 +693,7 @@ public class ANG_RHCAlertTriggerHandler{
                             raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c);
                 
                 if(op.ISS_Operation__r.Name == isoCode &&
-                    op.Frequency_Code__c == mapRemittanceFrequency(raAccMap.get(ra.id))
+                    op.Frequency_Code__c == raAccMap.get(ra.id).Remittance_frequency__c
                 ){
 
                     ocMap.put(ra.ANG_Account__c,op);
