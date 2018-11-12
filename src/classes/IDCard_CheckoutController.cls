@@ -113,7 +113,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
                                      i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c, 
                                      i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, 
                                      i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, 
-                                     i.ConnectionSentId, i.ConnectionReceivedId, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
+                                     i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
                                      i.Tax_2_Name__c,  i.Tax_1_Name__c,  i.Tax_1_Value__c,  i.Tax_2_Value__c    
                                      From ID_Card_Application__c i 
                                      where i.Id = :applicationId 
@@ -124,30 +124,30 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
                 
                Map<String,String> taxes =  IDCardTaxUtil.GetTaxes(a.BillingState,a.BillingCountry);
                if(taxes.keySet().Size()==1){   
-		             List<String> taxPercentage =  taxes.values();
-		             List<String> taxName = new List<String>();
-		             taxName.addAll(taxes.keySet());
-		             idCardApplication.Tax_1_Name__c = String.ValueOf(taxName[0]) + '(' + String.ValueOf(taxPercentage[0]) + '%)' ;
-		             idCardApplication.Tax_1_Value__c = IDCardTaxUtil.CalculateTaxes(String.ValueOf(taxPercentage[0]), String.ValueOf(idCardApplication.Applicable_Fee__c)) + ' '+ idCardApplication.CurrencyIsoCode;
-	              
-	           }else if(taxes.keySet().Size()==2){
-					 List<String> taxPercentage =  taxes.values();
-		             List<String> taxName = new List<String>();
-		             taxName.addAll(taxes.keySet());
-		             idCardApplication.Tax_1_Name__c = String.ValueOf(taxName[0]) + '(' + String.ValueOf(taxPercentage[0]) + '%)' ;
-	                 idCardApplication.Tax_2_Name__c = taxName[1] + '(' + String.ValueOf(taxPercentage[1]) + '%)' ;
-	                 
-	                 // If I have 2 taxes, I must consider both in the calculation
-	                 // As first I retrieve the total amount of the taxes
-					 decimal totaltaxpercentage = decimal.valueOf(taxPercentage[0])+decimal.valueOf(taxPercentage[1]);
-	                 decimal totaltaxamount = decimal.valueOf(IDCardTaxUtil.CalculateTaxes(String.valueOf(totaltaxpercentage), String.ValueOf(idCardApplication.Applicable_Fee__c)));
+                     List<String> taxPercentage =  taxes.values();
+                     List<String> taxName = new List<String>();
+                     taxName.addAll(taxes.keySet());
+                     idCardApplication.Tax_1_Name__c = String.ValueOf(taxName[0]) + '(' + String.ValueOf(taxPercentage[0]) + '%)' ;
+                     idCardApplication.Tax_1_Value__c = IDCardTaxUtil.CalculateTaxes(String.ValueOf(taxPercentage[0]), String.ValueOf(idCardApplication.Applicable_Fee__c)) + ' '+ idCardApplication.CurrencyIsoCode;
+                  
+               }else if(taxes.keySet().Size()==2){
+                     List<String> taxPercentage =  taxes.values();
+                     List<String> taxName = new List<String>();
+                     taxName.addAll(taxes.keySet());
+                     idCardApplication.Tax_1_Name__c = String.ValueOf(taxName[0]) + '(' + String.ValueOf(taxPercentage[0]) + '%)' ;
+                     idCardApplication.Tax_2_Name__c = taxName[1] + '(' + String.ValueOf(taxPercentage[1]) + '%)' ;
+                     
+                     // If I have 2 taxes, I must consider both in the calculation
+                     // As first I retrieve the total amount of the taxes
+                     decimal totaltaxpercentage = decimal.valueOf(taxPercentage[0])+decimal.valueOf(taxPercentage[1]);
+                     decimal totaltaxamount = decimal.valueOf(IDCardTaxUtil.CalculateTaxes(String.valueOf(totaltaxpercentage), String.ValueOf(idCardApplication.Applicable_Fee__c)));
 
-					 // Now I split the total tax amount in the two separate ones
-					 decimal taxamount1 = totaltaxamount / totaltaxpercentage * decimal.valueOf(taxPercentage[0]);
-					 decimal taxamount2 = totaltaxamount / totaltaxpercentage * decimal.valueOf(taxPercentage[1]);			  
-		             idCardApplication.Tax_1_Value__c = taxamount1.setScale(2) + ' '+ idCardApplication.CurrencyIsoCode;
-	                 idCardApplication.Tax_2_Value__c = taxamount2.setScale(2)+ ' '+ idCardApplication.CurrencyIsoCode;
-		         }
+                     // Now I split the total tax amount in the two separate ones
+                     decimal taxamount1 = totaltaxamount / totaltaxpercentage * decimal.valueOf(taxPercentage[0]);
+                     decimal taxamount2 = totaltaxamount / totaltaxpercentage * decimal.valueOf(taxPercentage[1]);            
+                     idCardApplication.Tax_1_Value__c = taxamount1.setScale(2) + ' '+ idCardApplication.CurrencyIsoCode;
+                     idCardApplication.Tax_2_Value__c = taxamount2.setScale(2)+ ' '+ idCardApplication.CurrencyIsoCode;
+                 }
             }
             catch (Exception ex) {
                 throw new IDCardApplicationException(Label.IDCard_IDCardAppNotFound);
@@ -264,7 +264,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
     
     public Pagereference buyNow() {
         try {
-        	showPopup();
+            showPopup();
             orderPage_timestamp = String.valueOf(System.currentTimeMillis());
             //String theData = merchantID + amount + curr + orderPage_timestamp + orderPage_transactionType;
             calculatedSignature = machash(buildDataToSign(), sharedSecret);
