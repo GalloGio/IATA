@@ -190,7 +190,7 @@ private class OneId_RegistrationProcessControllerTest {
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
             OneId_RegistrationProcessController.registration(a,c,serviceName);
-            OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@registest.com');
+            OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@lls.com', OneId_RegistrationProcessController.returnExistingContact('xpto@lls.com'));
             OneId_RegistrationProcessController.getAccountLabels();
             OneId_RegistrationProcessController.getSectors();
 
@@ -424,6 +424,31 @@ private class OneId_RegistrationProcessControllerTest {
 			 OneId_RegistrationProcessController.increaseCodeCoverage();
            
          Test.stopTest();
+     }
+    
+     @isTest
+     public static void testInvitationFeature() {
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', Region__c = 'Europe');
+        insert ctry ;
+		
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+        Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Travel Agent', Category__c='Non-IATA Travel Agent',IATA_ISO_Country__c = ctry.Id, recordTypeId = accountRT, Reason_for_creation__c = 'Account is missing');
+        insert a;
+
+        Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com', accountId = a.Id);
+        insert c;
+
+        // Insert an invitation
+        Invitation__c invitation = new Invitation__c(AccountId__c=a.Id);
+        insert invitation;
+        Test.startTest();
+
+        OneId_RegistrationProcessController.loadInvitationInfo(invitation.Id);
+
+        Test.stopTest();
+
      }
 
 }

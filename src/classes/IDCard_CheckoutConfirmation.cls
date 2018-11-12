@@ -84,7 +84,7 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
                                                 i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c,
                                                 i.Hours_Worked_Validation_Failed__c, i.Email_admin__c, i.Duties_in_Current_Agency__c,
                                                 i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode,
-                                                i.CreatedDate, i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId,
+                                                i.CreatedDate, i.CreatedById,
                                                 i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
                                                 i.Payment_Credit_Card_Number__c, i.Payment_Date__c, i.Revenue_Confirmation_Validation_Failed__c,
                                                 i.Payment_Transaction_Number__c, i.Payment_Amount__c , i.RecordTypeId
