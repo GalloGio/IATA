@@ -226,11 +226,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -290,11 +290,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -368,11 +368,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -401,7 +401,7 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre2.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner2;
         
@@ -481,11 +481,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -554,11 +554,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -603,7 +603,7 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre2.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner2;
         
@@ -675,11 +675,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -754,11 +754,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -836,11 +836,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -918,11 +918,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -1000,11 +1000,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -1067,11 +1067,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -1126,7 +1126,7 @@ public class  AmsIataCodeGeneratorTest
          ag.Category__c = '';
          insert ag;
 
-         AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c= ag.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId());
+         AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c= ag.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
          insert owner1;
 
          AMS_Agency_Segment__c aas = new AMS_Agency_Segment__c(account__c=ag.Id, Segment__c = p1.Id);
@@ -1171,7 +1171,7 @@ public class  AmsIataCodeGeneratorTest
          ag2.Sector__c = 'Cargo Agent';
          insert ag2;
          
-         AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= ag2.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId());
+         AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= ag2.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
          insert owner2;
 
          AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = ag2.Id);
@@ -1253,11 +1253,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
          insert theOscar;
          theOscar.STEP6__c = 'Passed';
@@ -1322,7 +1322,7 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre2.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner2;
 
@@ -1383,11 +1383,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
          insert theOscar;
 
@@ -1452,11 +1452,11 @@ public class  AmsIataCodeGeneratorTest
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
          insert theOscar;
 
