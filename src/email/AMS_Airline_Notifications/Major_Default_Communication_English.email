@@ -90,18 +90,7 @@
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:15.0pt">
-  <p class="MsoNormal"><span style="font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span><span style="font-size: 12pt;">?NEED TO ASK?</span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:6;height:15.0pt">
-  <td width="281" nowrap="" valign="bottom" style="width:211.0pt;border-top:none;
-  border-left:solid windowtext 1.0pt;border-bottom:none;border-right:solid windowtext 1.0pt;
-  mso-border-left-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
-  padding:0in 5.4pt 0in 5.4pt;height:15.0pt"></td>
-  <td width="228" nowrap="" valign="bottom" style="width:171.25pt;border:none;
-  border-right:solid windowtext 1.0pt;mso-border-right-alt:solid windowtext .5pt;
-  padding:0in 5.4pt 0in 5.4pt;height:15.0pt">
-  <p class="MsoNormal"><br></p>
+  <p class="MsoNormal"><font face="Arial, sans-serif">{!Case.Remittance_Period__c}</font></p>
   </td>
  </tr>
  <tr style="mso-yfti-irow:7;mso-yfti-lastrow:yes;height:15.0pt">
@@ -115,7 +104,7 @@
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:15.0pt">
-  <p class="MsoNormal">?NEED TO ASK?</p>
+  <p class="MsoNormal">{!Account.Guaranteed_amount__c}</p>
   </td>
  </tr>
 </tbody></table><br></div><div align="center" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: left;"><font face="arial"><br></font></div><div align="center" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: left;"><font face="arial">We would like to take this opportunity to remind you that the outstanding amount due by the aforementioned agency to your Airline for impacted billing period can be acquired through IATA BSPlink. Please find attached guidelines detailing steps on how to find the outstanding amounts on BSPlink.</font></div><div align="center" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: left;"><font face="arial"><br></font></div><div align="center" style="color: rgb(0, 0, 0); text-align: left;"><font face="arial" style=""><div align="center" style="text-align: left;">Please do not hesitate to contact us if you have any queries on this matter via our Customer Service Portal at http://www.iata.org/cs.</div><div align="center" style="text-align: left;"><br></div><div align="center" style="text-align: left;">Yours Sincerely,</div><div align="center" style="text-align: left;"><br></div><div align="center" style="text-align: left;">Global Delivery Center</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div></font></div><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"></font></span></div>]]></td>
