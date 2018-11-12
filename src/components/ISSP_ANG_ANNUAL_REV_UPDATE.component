@@ -1092,7 +1092,8 @@
 
         function copyToADShippingCntr(){
             var dropdownValue = $('[id$="ShippingCountryList"]').val();
-            $('[id$="shipping_country__c"]').val(dropdownValue == null ? "{!ca.account.ShippingCountry}" : dropdownValue);
+            $('#shipping_country__c > input').val(dropdownValue == null ? "{!ca.account.ShippingCountry}" : dropdownValue);
+            $('#shipping_country__c > input').change();
             populateShippingAsterisks();
             resetPCHint();
         }
