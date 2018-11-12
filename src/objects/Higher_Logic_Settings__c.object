@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Stores key information regarding the integration with Higher Logic</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>API_Key__c</fullName>
+        <description>Stores the API key required to push data into Higher Logic</description>
+        <externalId>false</externalId>
+        <label>API Key</label>
+        <length>64</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Endpoint__c</fullName>
+        <description>Higher Logic Push API endpoint</description>
+        <externalId>false</externalId>
+        <label>Endpoint</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Tenant_Code__c</fullName>
+        <description>Stores the IATA community tenant code in Higher Logic</description>
+        <externalId>false</externalId>
+        <label>Tenant Code</label>
+        <length>12</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Higher Logic Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

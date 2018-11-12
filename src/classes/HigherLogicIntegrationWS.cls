@@ -1,5 +1,7 @@
 public class HigherLogicIntegrationWS {
 	
+	public class HigherLogicException extends Exception {}
+	
 	public class MemberDetails {
 		public String LegacyContactKey 	{get;set;}
 		public Integer Age 				{get;set;}
@@ -83,12 +85,20 @@ public class HigherLogicIntegrationWS {
 
 		try {
 			
+			Higher_Logic_Settings__c hlSettings = Higher_Logic_Settings__c.getInstance();
+			
+			if(String.isBlank(hlSettings.Endpoint__c) || String.isBlank(hlSettings.API_Key__c) || String.isBlank(hlSettings.Tenant_Code__c)){
+				throw new HigherLogicException('Undefined endpoint, API key or Tenant Code on Higher Logic Settings');
+			}
+			
+			requestBody.TenantCode = hlSettings.Tenant_Code__c;
+			
 			String requestBodyJSON = JSON.serialize(requestBody);
 			
 			HttpRequest request = new HttpRequest();
 			
-			request.setEndpoint('https://data.higherlogic.com/push/v1/members');
-			request.setHeader('x-api-key', 'eeEviXRzqZ8KLBVSlJf5C3qVMfqdkW7q9WkLMFrn');
+			request.setEndpoint(hlSettings.Endpoint__c);
+			request.setHeader('x-api-key', hlSettings.API_Key__c);
 			request.setMethod('POST');
 			request.setHeader('content-type', 'application/json');
 			request.setBody(requestBodyJSON);
@@ -215,8 +225,6 @@ public class HigherLogicIntegrationWS {
 		
 		HigherLogicRequest hlRequest = new HigherLogicRequest();
 		
-		hlRequest.TenantCode = 'IATASB3';
-
 		List<Items> itemsLst = new List<Items>();
 		
 		for(sObject sObj : sObjectLst){
@@ -250,8 +258,6 @@ public class HigherLogicIntegrationWS {
 		
 		HigherLogicRequest hlRequest = new HigherLogicRequest();
 		
-		hlRequest.TenantCode = 'IATASB3';
-
 		List<Items> itemsLst = new List<Items>();
 		
 		for(Id userId : relationshipMap.keySet()){
