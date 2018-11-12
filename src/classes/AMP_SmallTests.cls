@@ -80,6 +80,10 @@ private class AMP_SmallTests {
 		f2.Body = 'testBody2 #test';
 		insert f2;
 
+		Account_Management_Settings__c ams = new Account_Management_Settings__c();
+		ams.Topic_Digest_Time_Range_Aggregator__c = 5;
+		insert ams;
+		
 		Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
 		User u = new User(Alias = 'standt', Email='testusertempname@foo.bar',
 	               EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
