@@ -253,16 +253,18 @@
                         });
 
                         if ($('[id$="ShippingCountryList"]').val() != undefined) {
-                            if (countryMap[$('[id$="ShippingCountryList"]').val()]['IEC_Zip_Postal_Code_required__c']) {
-                                $('[id$="shipping_postal_code__c"]').parent().prev().children().text(function () {
-                                    return "* " + $(this).text();
-                                });
-                            }
-                            
-                            if (countryMap[$('[id$="ShippingCountryList"]').val()]['State_Province_Mandatory__c']) {
-                                $('[id$="shipping_state__c"]').parent().prev().children().text(function () {
-                                    return "* " + $(this).text();
-                                });
+                            if (countryMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
+                                if (countryMap[$('[id$="ShippingCountryList"]').val()]['IEC_Zip_Postal_Code_required__c']) {
+                                    $('[id$="shipping_postal_code__c"]').parent().prev().children().text(function () {
+                                        return "* " + $(this).text();
+                                    });
+                                }
+                                
+                                if (countryMap[$('[id$="ShippingCountryList"]').val()]['State_Province_Mandatory__c']) {
+                                    $('[id$="shipping_state__c"]').parent().prev().children().text(function () {
+                                        return "* " + $(this).text();
+                                    });
+                                }
                             }
                         }
                     }
