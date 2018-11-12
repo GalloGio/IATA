@@ -3,6 +3,7 @@
     <fields>
         <fullName>Active__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Determines if the record is active or not</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Active</label>
@@ -10,6 +11,8 @@
     </fields>
     <fields>
         <fullName>Country_Codes__c</fullName>
+        <description>Country iso codes where the default value will be applied.
+Each code must be delimited by a semicolon.</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Country Codes</label>
@@ -19,6 +22,7 @@
     </fields>
     <fields>
         <fullName>Default_Amount__c</fullName>
+        <description>Default value for short payment or technical default</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Default Amount</label>
