@@ -1133,9 +1133,11 @@
         }
 
         function resetPCHint() {
-            if ($('[id$="ShippingCountryList"]').val() != undefined && countryMap[$('[id$="ShippingCountryList"]').val()] != undefined) 
-                $(".shipping_postal_code__c").attr('placeholder', countryMap[$('[id$="ShippingCountryList"]').val()]['Postal_Code_Hint_Format__c']);
-            else 
+            if ($('[id$="ShippingCountryList"]').val() != undefined && countryMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
+                if (countryMap[$('[id$="ShippingCountryList"]').val()]['Postal_Code_Hint_Format__c'] != undefined) 
+                    $(".shipping_postal_code__c").attr('placeholder', countryMap[$('[id$="ShippingCountryList"]').val()]['Postal_Code_Hint_Format__c']);
+                else $(".shipping_postal_code__c").attr('placeholder', '');
+            } else 
                 $(".shipping_postal_code__c").attr('placeholder', '');
         }
 
