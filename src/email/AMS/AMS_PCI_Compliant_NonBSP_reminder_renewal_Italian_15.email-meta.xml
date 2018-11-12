@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_PCI Compliant NonBSP reminder renewal IT 15</name>
+    <style>freeForm</style>
+    <subject>SOLLECITO PCI DSS</subject>
+    <textOnly>Gentile {!Case.Contact},
+
+Codice IATA: {!Case.IATA_Code__c} - No BSP,
+
+
+
+ci permettiamo di ricordarle che siamo ancora in attesa di ricevere l’attestato di conformità PCI DSS o l’autocertificazione nessuna carta di credito. Le rammentiamo che la scadenza per la presentazione è il {!Case.CreatedDate+30}.
+
+Nel caso in cui ha già fornito uno dei documenti richiesti, la invitiamo a non considerare il presente messaggio.
+
+
+Per saperne di più su come ottenere la conformità agli standard PCI DSS la invitiamo a visitare la nostra pagina web:
+
+http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+Qualora le occorressero ulteriori informazioni da IATA non esiti a trasmettere una nuova richiesta attraverso il nostro Portale clienti www.iata.org/cs.
+
+
+Cordiali saluti,
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+
+
+
+
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,142 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;
+mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-fareast">航协代码：</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;background:
+white">&nbsp;<b><span style="background:yellow;mso-highlight:yellow">{!Case.IATA_Code__c} - No BSP</span></b></span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast"><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-indent:24.0pt;mso-char-indent-count:2.0"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast">特此提醒，贵司须在截止日前（详见之前邮件内容）提交</span><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+0pt">《</span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+0pt">PCI DSS<span lang="ZH-CN">认证证明》或《不启用信用卡支付声明》。如果您已提交上述文件，烦请忽略此信息。</span><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+0pt"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-indent:24.0pt;mso-char-indent-count:2.0"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+0pt">烦请注意提交文件截止日为：</span><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;background:white">&nbsp;<span style="background:yellow;
+mso-highlight:yellow">{!Case.CreatedDate+30}</span></span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:0pt"><o:p></o:p></span></p>
+
+<p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+background:white;vertical-align:baseline"><span style="font-size:12.0pt;
+font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+mso-bidi-font-family:Arial;mso-font-kerning:0pt"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+background:white;vertical-align:baseline"><span style="font-size:12.0pt;
+font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+mso-bidi-font-family:Arial;mso-font-kerning:0pt"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+background:white;vertical-align:baseline"><span style="font-size:12.0pt;
+font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+mso-bidi-font-family:Arial;mso-font-kerning:0pt"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+background:white;vertical-align:baseline"><span lang="ZH-CN" style="font-size:
+12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+mso-bidi-font-family:Arial;mso-font-kerning:0pt">如需获取更多关于如何通过</span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:0pt">PCI DSS<span lang="ZH-CN">认证信息，烦请登录</span>PCI DSS<span lang="ZH-CN">专用网站查询：</span></span><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:0pt">http://www.iata.org/services/finance/Pages/pci-dss.aspx</span></a><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast;mso-bidi-font-family:SimSun;color:black;mso-font-kerning:0pt"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="text-indent:24.0pt;mso-char-indent-count:2.0"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="text-indent:24.0pt;mso-char-indent-count:2.0"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast">如有任何疑问，烦请提交问询至国际航协客户入口</span><a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast;mso-bidi-font-family:Arial;color:#1F4E79;mso-font-kerning:0pt">www.iata.org/cs</span></a><u><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;color:#1F4E79;
+mso-font-kerning:0pt">。</span></u><u><span style="font-size:12.0pt;font-family:
+SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+mso-bidi-font-family:Arial;color:#1F4E79;mso-font-kerning:0pt"><o:p></o:p></span></u></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" align="right" style="text-align:right"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast">代理人管理办公室</span><span style="font-size:12.0pt;font-family:SimSun;
+mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-fareast"><o:p></o:p></span></p>
+
+<p class="MsoNormal" align="right" style="text-align:right"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast">国际航空运输协会</span><span style="font-size:12.0pt;font-family:SimSun;
+mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-fareast"><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+0pt"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;
+mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;
+mso-font-kerning:0pt">如需获取国际航协更多信息及帮助，烦请及时登录国际航协客户入口</span><a href="http://www.iata.org/cs" target="_blank"><span style="font-size:12.0pt;
+font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+mso-bidi-font-family:Arial">Customer Portal</span></a><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast;mso-bidi-font-family:Arial;color:black">。</span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast"><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></p>]]></td>
+</tr>
+</table>

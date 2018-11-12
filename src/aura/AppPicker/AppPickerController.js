@@ -127,7 +127,7 @@
 					var results = a.getReturnValue();
                     
                     if(results == ''){
-						alert($A.get("$Label.c.OneId_Max_Account_Reached2") + '\n' + $A.get("$Label.c.OneId_FRED_Troubleshooting_Link"));
+						alert($A.get("$Label.c.OneId_Max_Account_Reached2"));
                     }
                     else{
                         component.set("v.selectedRole", results);

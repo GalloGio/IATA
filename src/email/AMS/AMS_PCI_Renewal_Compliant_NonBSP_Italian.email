@@ -1,0 +1,194 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" >
+<tr valign="top" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div align="justify" style="margin: 0px;"><div align="justify" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT">Gentile,</span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:red;mso-bidi-language:IT"> </span><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:red;mso-bidi-font-weight:
+bold"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT">Codice IATA:&nbsp;<b style="mso-bidi-font-weight:
+normal">{!Case.IATA_Code__c}<o:p></o:p></b></span><b style="color: rgb(31, 78, 121); font-family: Arial, sans-serif; font-size: 12px;">&nbsp;- NonBSP</b></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><b><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p>&nbsp;</o:p></span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT">con riferimento alla consulenza fornita a
+IATA in merito ai rischi associati alle transazioni con carte di pagamento e
+alle potenziali violazioni di dati, si pone l'esigenza di confermare la
+conformità agli standard PCI (Payment Card Industry) DSS (Data Security
+Standard) delle agenzie accreditate che operano nel sistema BSP</span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:Arial;mso-bidi-language:IT">.</span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;vertical-align:baseline"><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;vertical-align:baseline"><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+IT">In base al Regolamento per le agenzie di vendita ai passeggeri (Passenger
+Sales Agency Rules) tutte le agenzie accreditate IATA devono garantire la piena
+conformità agli standard PCI DSS.</span><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;vertical-align:baseline"><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;vertical-align:baseline"><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+IT">Il PCI DSS è uno standard globale che favorisce la comprensione e
+l’attuazione da parte dei commercianti (agenzie) degli standard relativi alle
+politiche per la sicurezza, alle tecnologie e alle procedure adottate per
+proteggere i loro sistemi di pagamento da violazioni e furti dei dati dei
+titolari delle carte. </span><span lang="IT" style="font-size:9.0pt;line-height:
+107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT">Alla luce di quanto sopra indicato</span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:red;mso-bidi-language:IT"> </span><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+IT">la invitiamo a fornirci l’attestato di conformità a conferma della
+conformità della sua azienda.</span><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT">La informiamo che secondo le linee guida
+del PCI DSS, i certificati di conformità non sono riconosciuti per la
+validazione della conformità stessa. I soli documenti riconosciuti sono i
+documenti ufficiali del sito web del <b style="mso-bidi-font-weight:normal"><u>PCI
+SSC</u></b>. <b style="mso-bidi-font-weight:normal"><u>Qualsiasi altro
+documento emesso per dimostrare la conformità al PCI DSS o qualsiasi altro
+standard PCI non è autorizzato ne considerato valido.<o:p></o:p></u></b></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT">L’attestato di conformità è il documento
+che viene utilizzato per indicare l’avvenuta compilazione dell’apposito
+rapporto di conformità o questionario di autovalutazione e che attesta la
+conformità della sua organizzazione al PCI DSS.</span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT">Per maggiori informazioni su come ottenere
+la conformità agli standard PCI DSS può visitare la nostra pagina web dedicata
+a PCI DSS: </span><span lang="IT" style="font-size:9.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx"><span style="mso-bidi-language:IT">http://www.iata.org/services/finance/Pages/pci-dss.aspx</span></a><span class="MsoHyperlink"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;vertical-align:baseline"><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;vertical-align:baseline"><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+IT">Qualora al momento lei non effettui transazioni tramite BSP utilizzando il
+pagamento con carta di credito e non abbia intenzione di farlo, può presentare
+l’autocertificazione nessuna carta di credito allegata alla presente
+comunicazione.</span><span lang="IT" style="font-size:9.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+9.0pt;color:#1F4E79;mso-bidi-language:IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+9.0pt;color:#1F4E79;mso-bidi-language:IT">Si noti che, dopo la compilazione di
+tale autocertificazione, all’agenzia non verranno richiesti ulteriori attestati
+di conformità, ma il pagamento con carta di credito verrà disabilitato per tale
+agenzia al momento della migrazione del rispettivo paese di attività
+nell’ambiente NewGen nonché ai sensi della risoluzione 812</span><span lang="IT" style="font-size:9.0pt;color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="Default" style="text-align:justify"><span lang="IT" style="font-size:
+9.0pt;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:IT">La documentazione di cui
+sopra (attestato di conformità o autocertificazione nessuna carta di credito)
+dovrà essere inviata a IATA dalla pagina web del Portale Assistenza Clienti </span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/cs" target="_blank"><span style="color:#1F4E79;
+mso-bidi-language:IT;text-decoration:none;text-underline:none">http://www.iata.org/cs</span></a></span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT"> in modo che ci pervenga entro e non oltre
+il <b style="mso-bidi-font-weight:normal">{!Today()+30}</b>. La preghiamo di allegare una copia scansionata al caso <a href="https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}">{!Case.CaseNumber}</a>
+visualizzabile dalla home page del portale alla sezione «I miei casi recenti».</span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:IT">Le istruzioni per la presentazione
+della documentazione sono allegate a questa comunicazione.</span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:IT">Il dipartimento</span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:red;mso-bidi-language:IT"> </span><span lang="IT" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+IT">Agency Management esaminerà la documentazione e deciderà sulla base delle
+prove disponibili. <o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<div style="mso-element:para-border-div;border:solid windowtext 1.0pt;
+mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt">
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;border:none;mso-border-alt:solid windowtext .5pt;padding:0cm;
+mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt"><b style="mso-bidi-font-weight:normal"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT">La preghiamo di tenere presente che il
+mancato rispetto di questo requisito come da richiesta IATA si tradurrà
+nell’apertura di una Non Conformità / Non Conformità Amministrativa nei
+confronti dell’agenzia.</span></b><b style="mso-bidi-font-weight:normal"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p></o:p></span></b></p>
+
+</div>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:IT"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify"><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:IT">La invitiamo quindi a
+provvedere immediatamente. Qualora le occorressero ulteriori informazioni da
+IATA non esiti a trasmettere una nuova richiesta attraverso il nostro Portale
+clienti </span><span lang="IT" style="font-size:9.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span style="color:#1F4E79;mso-bidi-language:
+IT;text-decoration:none;text-underline:none">www.iata.org/cs</span></a></span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:IT">.&nbsp;</span><span lang="IT" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p></o:p></span></p><br></div></div>]]></td>
+</tr>
+</table>
