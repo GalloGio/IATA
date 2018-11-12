@@ -526,7 +526,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>CLO</value>
+            <value>NEW,NWD</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
