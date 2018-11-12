@@ -1110,8 +1110,6 @@ global class ANG_OscarProcessHelper {
 				contactsToReturn.add(con);
 			else if (con.Financial_Assessment_Contact__c)
 				contactsToReturn.add(con);
-			else if(con.BSP_CASS_Payment_contact__c)
-				contactsToReturn.add(con);
 		}
 
 		return contactsToReturn;
