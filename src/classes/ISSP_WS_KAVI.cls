@@ -1,9 +1,7 @@
 public class ISSP_WS_KAVI {
 
 	public static Boolean preventTrigger;
-	//private static String AGENCY_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId;
-	//private static String BRANCH_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId;
-	//private static String HEADQUARTER_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId;
+
 	private static String AGENCY_RECORD_TYPE_ID;
 	private static String BRANCH_RECORD_TYPE_ID;
 	private static String HEADQUARTER_RECORD_TYPE_ID;
