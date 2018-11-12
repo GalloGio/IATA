@@ -848,7 +848,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_RollbackCase_Description</shortDescription>
-        <value>Dear colleagues, 
+        <value>Dear colleagues,
 
 Please issue a Credit Note in order to refund the change fee.</value>
     </labels>
@@ -857,7 +857,7 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_XML_GEN_ERROR_RECEIVER</shortDescription>
-        <value>howj@iata.org</value>
+        <value>howj@iata.org.prod</value>
     </labels>
     <labels>
         <fullName>ANG_AE_separate_Legal_Entity</fullName>
@@ -2638,6 +2638,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>Button View all</shortDescription>
         <value>View all</value>
+    </labels>
+    <labels>
+        <fullName>BuyNow</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Buy Now</shortDescription>
+        <value>Buy now</value>
     </labels>
     <labels>
         <fullName>CASSLink_Description</fullName>
@@ -23921,7 +23928,7 @@ Indicate if this product has chargeback right: Yes or No</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Portal Product VAN Type Label</shortDescription>
-        <value>Enter  if the product is an Agent&apos;s Single-use VAN (Virtual Account Number) or Agent’s Multi-use VAN.  
+        <value>Enter  if the product is an Agent&apos;s Single-use VAN (Virtual Account Number) or Agent’s Multi-use VAN.
 If the product is an Agent&apos;s single-use VAN, then a unique Agent’s VAN number is created for every transaction.
 If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s unique card/account number that can be used multiple times.</value>
     </labels>
@@ -29255,7 +29262,7 @@ If you believe that it is a mistake, please follow the link below to contact us.
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_UneligibleLoggedUserRegisteringError</shortDescription>
-        <value>You already have an active 1ID session opened. 
+        <value>You already have an active 1ID session opened.
 &lt;br/&gt;
 Note that your user is not eligible for FRED+ access.
 &lt;br/&gt;
