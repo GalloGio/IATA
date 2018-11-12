@@ -17,6 +17,7 @@ public class SCIMUserTest {
         Profile p = [SELECT Id FROM profile WHERE name='Standard User'];
         User user = new User(
                 userName = 'john.doe@example.org',
+				email = 'john.doe@example.org',
                 firstName = 'John',
                 lastName = 'Doe',
                 profileId = p.id,
