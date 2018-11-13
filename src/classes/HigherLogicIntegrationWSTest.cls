@@ -86,7 +86,8 @@ private class HigherLogicIntegrationWSTest {
 		Test.stopTest();
 		
 		//Increasing code coverage by creating a new MemberDetails fake element
-		
+		//since several elements aren't being used for now
+
 		HigherLogicIntegrationWS.MemberDetails md = new HigherLogicIntegrationWS.MemberDetails();
 		
 		md.age = 50;
@@ -146,5 +147,7 @@ private class HigherLogicIntegrationWSTest {
 		Test.stopTest();
 		
 	}
+	
+	
 	
 }

@@ -2,6 +2,12 @@ public class HigherLogicIntegrationHelper {
 
 	public static Boolean preventTrigger = false;
 	
+	public static String PUSH_MEMBERS = 'PUSH_MEMBERS';
+	public static String PUSH_INTERNAL_MEMBERS = 'PUSH_INTERNAL_MEMBERS';
+	public static String PUSH_EXISTING_MEMBERS = 'PUSH_EXISTING_MEMBERS';
+	public static String GRANT_ACCESS = 'GRANT_ACCESS';
+	public static String REMOVE_ACCESS = 'REMOVE_ACCESS';
+	
 	private static Map<String,Schema.RecordTypeInfo> recordTypesMap = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName();
 
 	private static String AGENCY_RECORD_TYPE_ID = recordTypesMap.get('IATA_Agency').getRecordTypeId();
@@ -174,7 +180,7 @@ public class HigherLogicIntegrationHelper {
 			' 	User                                  ' +
 			' WHERE									  ';
 			
-		if (operation == 'create2'){ 
+		if (operation == PUSH_INTERNAL_MEMBERS){
 			usersQuery += ' ContactKaviId__c IN :contactIdSet ';
 		}
 		else {
@@ -183,7 +189,7 @@ public class HigherLogicIntegrationHelper {
 		
 		List<User> userLst = (List<User>) Database.query(usersQuery);
 		
-		if(operation == 'update'){
+		if(operation == PUSH_EXISTING_MEMBERS){
 			HigherLogicIntegrationWS.pushMembers(userLst);
 			HigherLogicIntegrationWS.flushWebServiceLogs();
 			return;
@@ -221,7 +227,7 @@ public class HigherLogicIntegrationHelper {
 			
 			Id accId = provAcctId;
 			
-			if (operation == 'create'){
+			if (operation == PUSH_MEMBERS){
 				accId = fetchAssociatedAccountId(newUser.Contact.AccountId,newUser.Contact.Account.RecordTypeId, newUser.Contact.Account.Field_Head_Office__c, newUser.Contact.Account.ParentId, newUser.Contact.Account.Parent.ParentId);
 			}
 
@@ -280,7 +286,7 @@ public class HigherLogicIntegrationHelper {
 			]
 		);
 
-		if(action == 'grant'){
+		if(action == GRANT_ACCESS){
 			
 			List<PermissionSetAssignment> grantPSALst  = new List<PermissionSetAssignment>();
 			
@@ -293,7 +299,7 @@ public class HigherLogicIntegrationHelper {
 			}
 			
 		}
-		else if(action == 'remove'){
+		else if(action == REMOVE_ACCESS){
 		
 			List<PermissionSetAssignment> removePSALst  = new List<PermissionSetAssignment>(
 				[SELECT
