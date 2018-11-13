@@ -25,10 +25,12 @@ public class TestClass_SetupVariables {
             return RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'GDP_Contact');
         }
     }
-    public static ID IATAServiceProviderAccountRecordTypeID {
-        get
+    public static ID IATAAccountRecordTypeID
+    {
+     	get
         {
-            return RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Service_Provider_Account');
+            List<RecordType> recTypId= [Select id, name from recordtype where name = 'Standard Account' limit 1];             
+            return recTypId.size() > 0 ? recTypId[0].Id : null;  
         }
     }
     public static ID ExternalCasesInvoicesWorksID {
