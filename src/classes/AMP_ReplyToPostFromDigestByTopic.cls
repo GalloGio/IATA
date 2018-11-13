@@ -48,17 +48,23 @@ public class AMP_ReplyToPostFromDigestByTopic {
 	
 	private void init(){
 		
+		
 		//Fetch the "main" feed item record
 		FeedItem fi = 
 			[SELECT 
 				Id, 
-				Body, 
-				CreatedDate 
+				Body,
+				CreatedById,
+				CreatedDate
 			 FROM 
 			 	FeedItem 
 			 WHERE 
 			 	Id = :mainFeedId
 			];
+			
+		Integer rangeInMinutes = Integer.ValueOf(Account_Management_Settings__c.getInstance().Topic_Digest_Time_Range_Aggregator__c);
+
+		DateTime timeRange = fi.CreatedDate.addMinutes(rangeInMinutes);
 		
 		//Fetch all the feed items that were created 
 		//at the same time as the "main" one (fi)
@@ -74,7 +80,11 @@ public class AMP_ReplyToPostFromDigestByTopic {
 			 FROM
 			 	FeedItem
 			 WHERE
-			 	CreatedDate = :fi.CreatedDate
+			 	CreatedDate >= :fi.CreatedDate
+			 AND
+			 	CreatedDate <= :timeRange
+			 AND
+			 	CreatedById = :fi.CreatedById
 			]
 		);
 		
