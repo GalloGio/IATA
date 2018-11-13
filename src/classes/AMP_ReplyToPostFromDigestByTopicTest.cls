@@ -8,6 +8,10 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 	
 	@testSetup static void setup() {
 	
+		Account_Management_Settings__c ams = new Account_Management_Settings__c();
+		ams.Topic_Digest_Time_Range_Aggregator__c = 5;
+		insert ams;
+		
 		AMP_Account_Topics__c airportsAmpTopic = new AMP_Account_Topics__c(Name = 'Airports');
 		AMP_Account_Topics__c ndcAmpTopic = new AMP_Account_Topics__c(Name = 'NDC');
 		AMP_Account_Topics__c securityAmpTopic = new AMP_Account_Topics__c(Name = 'Security');
