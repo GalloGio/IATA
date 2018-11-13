@@ -208,7 +208,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
 
-		Test.stopTest();
 
 		String mode = ctrl.mode;
 
@@ -246,6 +245,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.updateDetails();
 
 		ctrl.confirmUpdate();
+		
+		Test.stopTest();
 
 		ctrl.currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c = true;
 		ctrl.currentAccount.fw.newForm.Confirm_Location_Details_are_correct__c = true;
