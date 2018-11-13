@@ -26,8 +26,9 @@ global class ANG_RME_Alert_Service {
 		public String direction;
 
 		//Used only on RTS ALert
-		public String rtsSeverity;
-		public Decimal agentSales;
+		public String RTSSeverity;
+		public Decimal AgentSales;
+		
 		//Used on INT 033: Request Provisional RHC (button)
 		public String title;
 		public String transactionId;

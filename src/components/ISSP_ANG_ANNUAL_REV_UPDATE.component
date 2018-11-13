@@ -1115,6 +1115,7 @@
                }
             }else{
                  $('[id$="ShippingCountryList"]').css('display','none');
+                 $('#shipping_country__c > input').attr('disabled','disabled');
              }
             
             $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
@@ -1246,6 +1247,8 @@
             utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
 
+        natfaxacct1.intlTelInput("setNumber", faxacct1.val());
+
         natphoneacct1.intlTelInput("setNumber", phoneacct1.val());
 
         function setInternationalAccountPhoneInfo(p) {
@@ -1255,6 +1258,7 @@
             } else if(p=='mobile') {
                 mobileacct1.val(natmobileacct1.intlTelInput("getNumber"));
             } else {
+                $('[id$="locationfax"]').val(natfaxacct1.intlTelInput("getNumber"));
                 faxacct1.val(natfaxacct1.intlTelInput("getNumber"));
             }
         }
