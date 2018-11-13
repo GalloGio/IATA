@@ -2307,6 +2307,10 @@ public class AMS_OSCARTriggerHandler {
     }
 
     private static void updateOSCARAppointments(){
+        //AMSU-161
+        AMS_InspectionHelper.runnigFromOSCAR = true;
+        System.debug('updateOSCARAppointments Begin!');
+
 
         List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
         Set<Id> oscarsToProcessIds = new Set<Id>();
@@ -2323,10 +2327,15 @@ public class AMS_OSCARTriggerHandler {
 
         if(!oscarsToProcess.isEmpty()){
 
-            List<AMS_Inspection__c> allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c IN :oscarsToProcessIds]);
+            //AMSU-161 - adding OSCAR__r.Process__c field
+            List<AMS_Inspection__c> allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, OSCAR__r.Process__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c IN :oscarsToProcessIds]);
+            //AMSU-161 - need to get all inspections by account for VR process
+            List<AMS_Inspection__c> allInspectionsByAccount = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, OSCAR__r.Process__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE Account__c IN :accountIds]);
 
             if(allInspections.isEmpty()){
-                allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE Account__c IN :accountIds]);
+                //AMSU-161
+                //allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c, Account__r.Location_Class__c, OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE Account__c IN :accountIds]);
+                allInspections = allInspectionsByAccount;
             }
 
             Map<Id, List<AMS_Inspection__c>> inspectionsPerOSCAR = new Map<Id, List<AMS_Inspection__c>>();
@@ -2358,7 +2367,22 @@ public class AMS_OSCARTriggerHandler {
                 if ((oldOSCAR.STEP1__c <> AMS_Utils.PASSED && oscar.STEP1__c == AMS_Utils.PASSED)||
                     (oldOSCAR.STEP10__c <> AMS_Utils.PASSED && oscar.STEP10__c == AMS_Utils.PASSED))
                 {
+                    /* AMSU-161 - begin */
+                    //allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '9'));
+
+                    if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA){
+
+                        //check if it's IATACODE generation step
+                        if (oldOSCAR.STEP10__c <> AMS_Utils.PASSED && oscar.STEP10__c == AMS_Utils.PASSED){
+                            allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '2'));
+                        }else{
+                            allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '9'));
+                        }
+
+                    }else{
                     allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '9'));
+                }
+                    /* AMSU-161 - end */
                 }
                 if ((oldOSCAR.STEP3__c <> AMS_Utils.PASSED && oscar.STEP3__c == AMS_Utils.PASSED) ||
                     (oldOSCAR.STEP18__c <> AMS_Utils.PASSED && oscar.STEP18__c == AMS_Utils.PASSED) ||
@@ -2371,6 +2395,21 @@ public class AMS_OSCARTriggerHandler {
                 //At this point the existing oscar is the new and empty one
                 if (oldOSCAR.STEP31__c <> AMS_Utils.PASSED && oscar.STEP31__c == AMS_Utils.PASSED && oscar.Location_Class__c == 'M'){
                     allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerAccount.get(oscar.Account__c), '0'));   
+                }
+
+                //AMSU-161 - adding new logic for VR CLO for GSA/AHA/GSSA
+                if (oldOSCAR.STEP31__c <> AMS_Utils.PASSED && oscar.STEP31__c == AMS_Utils.PASSED && oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+                    System.debug('updateOSCARAppointments oscar.Process__c: ' + oscar.Process__c);
+                    inspectionsPerAccount = new Map<Id, List<AMS_Inspection__c>>();
+                    for(AMS_Inspection__c insp: allInspectionsByAccount){
+                        //inspections per account
+                        if(!inspectionsPerAccount.containsKey(insp.Account__c)){
+                            inspectionsPerAccount.put(insp.Account__c, new List<AMS_Inspection__c>());
+                        }
+                        inspectionsPerAccount.get(insp.Account__c).add(insp);
+                    }
+                    allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerAccount.get(oscar.Account__c), '0'));   
+                    System.debug('updateOSCARAppointments allInspectionsToUpdate: ' + allInspectionsToUpdate);
                 }
             }
 
@@ -2689,8 +2728,10 @@ public class AMS_OSCARTriggerHandler {
         for(AMS_OSCAR__c oscar: oscars){
 
             Boolean isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c);
+            Boolean isAMSProcess = AMS_Utils.oscarAMSProcesses_ValidateOwnership.contains(oscar.Process__c);//AMSU-180
+            Boolean run_validation = (isAMSProcess && oscar.Process__c <> AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.new_TIDS && oscar.Location_Type__c == 'HO');
 
-            if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && isNewGenProcess && oscar.ANG_Type_Of_Change__c <> AMS_Utils.ANG_VMFR){
+            if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && (isNewGenProcess || run_validation) && oscar.ANG_Type_Of_Change__c <> AMS_Utils.ANG_VMFR && oscar.Type_of_change__c <> AMS_Utils.VFMR){
 
                 if(contacts == null){
                     contacts = getAccreditationContacts(oscars);
@@ -2700,10 +2741,9 @@ public class AMS_OSCARTriggerHandler {
                 if(contacts.get(oscar.AMS_Online_Accreditation__c) > 0)
                     continue;
                 else    
-                    if(!validate100Ownership(oscar,allPercentages,isNewGenProcess)){
-                        Double requiredOwnership = isNewGenProcess ? 99.99 : 100;
-                        String errorMessage = !isNewGenProcess ? 'Agency does not have 100% ownership. Please add the owners to the agency before passing the Sanity Check.'
-                                                             : 'Agency must have at least 99.99% ownership. Please add the owners to the agency before passing the Sanity Check.';
+                    if(!validate100Ownership(oscar,allPercentages)){//AMSU-180
+                        Double requiredOwnership = 99.99;
+                        String errorMessage = 'Agency must have at least 99.99% ownership. Please add the owners to the agency before passing the Sanity Check.';
                         oscar.addError(errorMessage);
                     }
 
@@ -2750,9 +2790,9 @@ public class AMS_OSCARTriggerHandler {
 
     }
 
-    public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages, Boolean isNewGenProcess){
+    public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages){
 
-        return (!isNewGenProcess && percentages.get(oscar.Account__c) == 100) || (isNewGenProcess && percentages.get(oscar.Account__c) < 99.99);
+        return percentages.get(oscar.Account__c) < 99.99;//AMSU-180
 
     }
 
@@ -2860,6 +2900,16 @@ public class AMS_OSCARTriggerHandler {
                 }
                 /*** AMSU-121 End ***/ 
 
+                /*** AMSU-161 Start ***/
+                if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP 
+                    || oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_GSA 
+                    || oscar.Process__c == AMS_Utils.new_AHA){
+                    String sError = AMS_InspectionHelper.validateGSAforAppointments(oscar, allOnlineAccr);
+                    if(!sError.equalsIgnoreCase('')){
+                        oscar.addError(sError);
+                    }
+                }
+                /*** AMSU-161 End ***/ 
             }
         }
     }

@@ -52,6 +52,7 @@
     </style>
 
     <script>
+        var countryMap = JSON.parse(JSON.stringify({!countryInfoByCountryNameMapString}));
     </script>
 
     <div styleClass="workArea" id="work">
@@ -242,6 +243,32 @@
 
             <apex:pageBlockSection columns="1" id="addressSection">
                 <script type="text/javascript">
+                    function populateShippingAsterisks() {
+                        $('[id$="shipping_postal_code__c"]').parent().prev().children().text(function () {
+                            return $(this).text().replace("*", "");
+                        });
+
+                        $('[id$="shipping_state__c"]').parent().prev().children().text(function () {
+                            return $(this).text().replace("*", "");
+                        });
+
+                        if ($('[id$="ShippingCountryList"]').val() != undefined) {
+                            if (countryMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
+                                if (countryMap[$('[id$="ShippingCountryList"]').val()]['IEC_Zip_Postal_Code_required__c']) {
+                                    $('[id$="shipping_postal_code__c"]').parent().prev().children().text(function () {
+                                        return "* " + $(this).text();
+                                    });
+                                }
+                                
+                                if (countryMap[$('[id$="ShippingCountryList"]').val()]['State_Province_Mandatory__c']) {
+                                    $('[id$="shipping_state__c"]').parent().prev().children().text(function () {
+                                        return "* " + $(this).text();
+                                    });
+                                }
+                            }
+                        }
+                    }
+
                     if('{!ca.isReadonly}' == 'true') {
                         $(".branch_office_street_name_number__c").attr('disabled','disabled');
                         $(".branch_office_city__c").attr('disabled','disabled');
@@ -254,26 +281,28 @@
                         $(".shipping_state__c").attr('disabled','disabled');
                     }
 
+                    $('[id$="branch_office_postal_code__c"]').parent().prev().children().text(function () {
+                        return $(this).text().replace("*", "");
+                    });
+
                     if ('{!ca.isocountry.IEC_Zip_Postal_Code_required__c}' == 'true') {
                         $('[id$="branch_office_postal_code__c"]').parent().prev().children().text(function () {
                             return "* " + $(this).text();
                         });
-                        
-                        $('[id$="shipping_postal_code__c"]').parent().prev().children().text(function () {
-                            return "* " + $(this).text();
-                        });
                     }
 
+                    $('[id$="state_province__c"]').parent().prev().children().text(function () {
+                        return $(this).text().replace("*", "");
+                    });
+                    
                     if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'true') {
                         $('[id$="state_province__c"]').parent().prev().children().text(function () {
                             return "* " + $(this).text();
                         });
-                        
-                        $('[id$="shipping_state__c"]').parent().prev().children().text(function () {
-                            return "* " + $(this).text();
-                        });
                     }
 
+                    populateShippingAsterisks();
+                    
                     if ('{!ca.isocountry.Postal_Code_Hint_Format__c}' != '' && '{!ca.isocountry.Postal_Code_Format_regEx__c}' != '') {
                         $(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
                         $(".shipping_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
@@ -317,7 +346,7 @@
                         FormControlStyle="apcontainer">
                     </DSE:DS_DataQuality>
 
-                    <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();resetPCHint();">
+                    <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();">
                         <apex:selectOptions value="{!countryList}"/>
                     </apex:selectList>
                 </apex:outputPanel>
@@ -387,11 +416,11 @@
             <apex:pageBlockSection columns="1" collapsible="false">
                 <script type="text/javascript">
                     if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'false') {
-                        $('[id$="PhysicalProvince"]').parent().prev().child().text(function () {
+                        $('[id$="PhysicalProvince"]').parent().prev().children().text(function () {
                             return $(this).text().replace("*", ""); 
                         });
                         
-                        $('[id$="PostalProvince"]').parent().prev().child().text(function () {
+                        $('[id$="PostalProvince"]').parent().prev().children().text(function () {
                             return $(this).text().replace("*", ""); 
                         });
                     }
@@ -973,7 +1002,7 @@
 
     <script>
 
-        var mapa2=JSON.parse(JSON.stringify({!stringMap}));
+        
         $(".branch_office_street_name_number__c").change(function () {
             copyBranchAddress();
         });
@@ -1055,7 +1084,7 @@
         function populateShippingCountry() {
             if($('[id$="notifyChangeLocationCheckbox"]').prop("checked")) {
                 if ('{!ca.fw.newform.shipping_country__c}' !='') $('[id$="ShippingCountryList"]').val('{!ca.fw.newform.shipping_country__c}');
-                else $('[id$="ShippingCountryList"]').val("{!ca.isocountry.Name}".toUpperCase());
+                else $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
             } else {
                 $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
             }
@@ -1065,8 +1094,10 @@
 
         function copyToADShippingCntr(){
             var dropdownValue = $('[id$="ShippingCountryList"]').val();
-            
-            $('[id$="shipping_country__c"]').val(dropdownValue == null ? "{!ca.account.ShippingCountry}" : dropdownValue);
+            $('#shipping_country__c > input').val(dropdownValue == null ? "{!ca.account.ShippingCountry}" : dropdownValue);
+            $('#shipping_country__c > input').change();
+            populateShippingAsterisks();
+            resetPCHint();
         }
 
         function initFieldsSettings() {
@@ -1086,11 +1117,10 @@
                  $('[id$="ShippingCountryList"]').css('display','none');
              }
             
-             $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
+            $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
             });
      
-            
             $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
             });
@@ -1098,11 +1128,20 @@
             $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
             });
-            $(".shipping_postal_code__c").attr('placeholder', mapa2[$('[id$="ShippingCountryList"]').val()]);
+
+            if ($('[id$="ShippingCountryList"]').val() != undefined && countryMap[$('[id$="ShippingCountryList"]').val()] != undefined) 
+                $(".shipping_postal_code__c").attr('placeholder', countryMap[$('[id$="ShippingCountryList"]').val()]['Postal_Code_Hint_Format__c']);
+            else 
+                $(".shipping_postal_code__c").attr('placeholder', '');
         }
 
         function resetPCHint() {
-            $(".shipping_postal_code__c").attr('placeholder', mapa2[$('[id$="ShippingCountryList"]').val()]);
+            if ($('[id$="ShippingCountryList"]').val() != undefined && countryMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
+                if (countryMap[$('[id$="ShippingCountryList"]').val()]['Postal_Code_Hint_Format__c'] != undefined) 
+                    $(".shipping_postal_code__c").attr('placeholder', countryMap[$('[id$="ShippingCountryList"]').val()]['Postal_Code_Hint_Format__c']);
+                else $(".shipping_postal_code__c").attr('placeholder', '');
+            } else 
+                $(".shipping_postal_code__c").attr('placeholder', '');
         }
 
         function showForms() {

@@ -1060,8 +1060,12 @@
     </listViews>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Case__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>CasesACCEuropeOffOnshore_AmazonFile</fullName>
@@ -1079,7 +1083,7 @@
         <filters>
             <field>Case__c</field>
             <operation>equals</operation>
-            <value>09524062</value>
+            <value>09536782</value>
         </filters>
         <label>files by case</label>
         <language>en_US</language>
