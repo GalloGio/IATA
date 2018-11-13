@@ -39,7 +39,7 @@ var dyn_functions = {
 
         }
 
-        var ifapPSR;
+        var ifapPSR = '';
 
         var checkIFAPContact;
         if(records[0].Account__r.Reason__c == '12-APPLICATION DISAPPROVED' || records[0].Account__r.Reason__c == '11-APPLICATION WITHDRAWN') {
@@ -59,8 +59,6 @@ var dyn_functions = {
                 }else{
                     ifapPSR = 'Grant IFAP service access - Success!\n\r';
                 }
-            }else{
-            ifapPSR = '';
             }
         }
 

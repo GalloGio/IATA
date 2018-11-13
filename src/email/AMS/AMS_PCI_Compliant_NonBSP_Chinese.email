@@ -1,0 +1,224 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" align="left" style="text-align:left;text-indent:6.0pt;
+mso-char-indent-count:.5;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+background:white"><span lang="ZH-CN" style="font-size: 12pt; font-family: SimSun;">航协代码：</span><span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-size: 9pt; font-family: Arial, sans-serif; color: rgb(31, 78, 121);">&nbsp;<b><span style="background:yellow;
+mso-highlight:yellow">{!Case.IATA_Code__c} - No BSP</span></b></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></p>
+
+<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="0" style="width:375.0pt;mso-cellspacing:0in;background:white;mso-yfti-tbllook:
+ 1184;mso-padding-alt:0in 0in 0in 0in">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:2.5in">
+  <td valign="top" style="padding:0in 0in 0in 0in;height:2.5in">
+  <table class="MsoNormalTable" border="0" cellspacing="4" cellpadding="0" width="0" style="width:412.5pt;mso-cellspacing:3.0pt;mso-yfti-tbllook:1184;mso-padding-alt:
+   3.0pt 3.0pt 3.0pt 3.0pt">
+   <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes">
+    <td valign="top" style="background:white;padding:3.0pt 3.0pt 3.0pt 3.0pt">
+    <p class="MsoNormal" align="left" style="text-align:left;mso-line-height-alt:
+    11.75pt;mso-pagination:widow-orphan;background:white"><span lang="ES" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;color:black;
+    mso-font-kerning:0pt;mso-ansi-language:ES">&nbsp;<span style="mso-spacerun:yes">&nbsp; </span></span><span lang="ZH-CN" style="font-size:
+    12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+    SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;color:black;mso-font-kerning:0pt">为了防范代理人付款交易中存在的潜在的支付卡数据及信息安全隐患，参与</span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;color:black;
+    mso-font-kerning:0pt">BSP<span lang="ZH-CN">运作的国际航协认可代理人均须确认已符合支付卡行业数据安全标准（以下简称</span>“PCI
+    DSS”<span lang="ZH-CN">）。</span></span><span style="font-size:12.0pt;
+    font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+    SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:SimSun;color:black;mso-font-kerning:0pt"><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;mso-line-height-alt:
+    11.75pt;mso-pagination:widow-orphan;background:white;vertical-align:baseline"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;color:#1F4E79;
+    mso-font-kerning:0pt">&nbsp;<span style="mso-spacerun:yes">&nbsp; </span></span><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+    minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">根据代理人销售协议规定，所有国际航协认可代理人均须通过</span><span style="font-size:12.0pt;
+    font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+    SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;mso-font-kerning:0pt">PCI DSS<span lang="ZH-CN">认证或确认不启用信用卡支付方式（进行</span>BSP<span lang="ZH-CN">结算）。</span></span><span style="font-size:12.0pt;font-family:
+    SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:SimSun;mso-font-kerning:0pt"><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+    background:white"><span style="font-size:12.0pt;font-family:SimSun;
+    mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;mso-font-kerning:0pt">PCI DSS<span lang="ZH-CN">作为一项全球性标准，为了保护支付系统中持卡者的数据安全，免于数据被盗和违法操作，帮助服务商（认可代理人）了解并满足安全条例、技术及流程的各项标准。</span><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+    background:white"><span lang="ZH-CN" style="font-size:12.0pt;font-family:
+    SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;mso-font-kerning:0pt">综上所述，特此提醒贵司须提供您的</span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">PCI DSS<span lang="ZH-CN">认证证明，以此表明贵司的认可资质。</span></span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:SimSun;mso-font-kerning:
+    0pt"><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+    background:white"><span lang="ZH-CN" style="font-size:12.0pt;font-family:
+    SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;mso-font-kerning:0pt">特此通知，根据</span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">PCI DSS<span lang="ZH-CN">的规定，唯一有效的</span>PCI DSS<span lang="ZH-CN">认证证明是可以通过</span>PCI
+    SSC<span lang="ZH-CN">网站查询的官方认可证书，其他以任何目的表明通过</span>PCI DSS<span lang="ZH-CN">认证所出具的任何形式的证书或文件均未经过官方授权且无效。</span></span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:SimSun;mso-font-kerning:
+    0pt"><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+    background:white"><span style="font-size:12.0pt;font-family:SimSun;
+    mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;mso-font-kerning:0pt">PCI DSS<span lang="ZH-CN">认证证明用于证明相关报告已通过认证或自我评估调查，同时也表明已通过贵公司的</span>PCI
+    DSS<span lang="ZH-CN">认可标准。</span></span><span style="font-size:12.0pt;
+    font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+    SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:SimSun;color:black;mso-font-kerning:0pt"><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+    background:white;vertical-align:baseline"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">如需获取更多关于如何通过</span><span style="font-size:12.0pt;font-family:SimSun;
+    mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;mso-font-kerning:0pt">PCI DSS<span lang="ZH-CN">认证信息，烦请登录</span>PCI
+    DSS<span lang="ZH-CN">专用网站查询：</span></span><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">http://www.iata.org/services/finance/Pages/pci-dss.aspx</span></a><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:SimSun;color:black;
+    mso-font-kerning:0pt"><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-pagination:widow-orphan;background:white"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+    minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">如果贵司目前尚未且将来也不会使用</span><span style="font-size:12.0pt;font-family:SimSun;
+    mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;mso-font-kerning:0pt">BSP<span lang="ZH-CN">信用卡方式进行交易付款，贵司可以通过回复此通知提交一份《不启用信用卡支付声明》。</span><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-pagination:widow-orphan;background:white"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+    minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">烦请注意，上述声明一经提交，贵司之后将不必提供任何</span><span style="font-size:12.0pt;
+    font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+    SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;mso-font-kerning:0pt">PCI DSS<span lang="ZH-CN">认证证明。但当您所属地区启用</span>NewGen
+    <span lang="ZH-CN">环境及</span>812<span lang="ZH-CN">决议生效后，贵司将无法使用信用卡支付方式。</span><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+    background:white"><span lang="ZH-CN" style="font-size:12.0pt;font-family:
+    SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;mso-font-kerning:0pt">以上所需贵司提交的《</span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">PCI DSS<span lang="ZH-CN">认证证明》或《不启用信用卡支付声明》均须在收到此通知后的</span>30<span lang="ZH-CN">天内通过国际航协客户入口</span></span><a href="http://www.iata.org/cs" target="_blank"><span style="font-size:12.0pt;font-family:SimSun;
+    mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;color:windowtext;mso-font-kerning:0pt">http://www.iata.org/cs</span></a><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+    minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">正式提交。烦请将文件作为附件在案例中</span><span style="background:yellow;mso-highlight:
+    yellow"><a href="https://portal.iata.org/apex/ISSP_Case?caseId=%7b!Case.Id%7d"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-shading:white">{!Case.CaseNumber}</span></a></span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black;
+    background:white">&nbsp;</span><span lang="ZH-CN" style="font-size:12.0pt;
+    font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+    SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;mso-font-kerning:0pt">提交，案例编号可在客户入口主页</span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">“<span lang="ZH-CN">我最近的案例</span>”<span lang="ZH-CN">中查询</span><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+    background:white"><span style="font-size:12.0pt;font-family:SimSun;
+    mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:SimSun;mso-font-kerning:0pt"><o:p>&nbsp;</o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+    background:white"><span lang="ZH-CN" style="font-size:12.0pt;font-family:
+    SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:SimSun;background:yellow;mso-highlight:yellow;
+    mso-font-kerning:0pt">提交文件截止日：</span><b><span style="font-size:9.0pt;
+    font-family:&quot;Arial&quot;,sans-serif;color:black;background:yellow;mso-highlight:
+    yellow;mso-shading:white">{!Today()+30}</span></b><b><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black;
+    background:white"><o:p></o:p></span></b></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+    background:white"><span style="font-size:12.0pt;font-family:SimSun;
+    mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:SimSun;mso-font-kerning:0pt"><o:p>&nbsp;</o:p></span></p>
+    <p class="MsoNormal" style="text-autospace:none"><span style="font-size:12.0pt;
+    font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+    SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;color:black;mso-font-kerning:0pt"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span><span lang="ZH-CN">请参阅</span>ASD<span lang="ZH-CN">网站上</span></span><a href="http://www.iata-asd.com/"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">http://www.iata-asd.com</span></a><span style="font-size:12.0pt;
+    font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+    SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;color:black;mso-font-kerning:0pt"> <span lang="ZH-CN">的《关于国际航协认可客运代理人自主上传</span>PCI DSS <span lang="ZH-CN">文件通知》，获取提交</span>PCI
+    DSS<span lang="ZH-CN">证明文件的具体操作步骤信息。</span></span><span style="font-size:
+    12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+    SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:SimSun;mso-font-kerning:0pt"><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-line-height-alt:11.75pt;mso-pagination:widow-orphan;
+    background:white"><span lang="ZH-CN" style="font-size:12.0pt;font-family:
+    SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+    mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:Arial;color:black;mso-font-kerning:0pt">国际航协代理人管理办公室将审核贵司提交的文件是否合格有效。</span><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+    mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:SimSun;color:black;
+    mso-font-kerning:0pt"><o:p></o:p></span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:24.0pt;
+    mso-char-indent-count:2.0;mso-pagination:widow-orphan;background:white"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+    minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+    mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;mso-font-kerning:
+    0pt">烦请知悉，未按时提交合格文件的代理人将会受到不规则行为的处理。</span><span style="font-size:12.0pt;
+    font-family:SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
+    SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast;
+    mso-bidi-font-family:SimSun;mso-font-kerning:0pt"><o:p></o:p></span></p>
+    </td>
+   </tr>
+  </tbody></table>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;height:1.5pt">
+  <td valign="top" style="padding:0in 0in 0in 0in;height:1.5pt"></td>
+ </tr>
+ <tr style="mso-yfti-irow:2;mso-yfti-lastrow:yes">
+  <td style="padding:0in 0in 0in 0in"></td>
+ </tr>
+</tbody></table>
+
+<p class="MsoNormal" style="text-indent:30.0pt;mso-char-indent-count:2.5"><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast">希望贵司收到此通知后可以尽快提交相关文件。如有任何疑问，烦请提交问询至国际航协客户入口</span><a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:minor-fareast;
+mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-fareast;mso-bidi-font-family:Arial;color:#1F4E79;mso-font-kerning:0pt">www.iata.org/cs</span></a><u><span lang="ZH-CN" style="font-size:12.0pt;font-family:SimSun;mso-ascii-theme-font:
+minor-fareast;mso-fareast-font-family:SimSun;mso-fareast-theme-font:minor-fareast;
+mso-hansi-theme-font:minor-fareast;mso-bidi-font-family:Arial;color:#1F4E79;
+mso-font-kerning:0pt">。</span></u><span style="font-size:12.0pt;font-family:
+SimSun;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:SimSun;
+mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast"><o:p></o:p></span></p>]]></td>
+</tr>
+</table>
