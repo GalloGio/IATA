@@ -1,9 +1,9 @@
 @isTest
 private class AMS_Case_Popup_ctrlTest {
-	private static id SIDRALiteRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
-    private static id SIDRARTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
-	private static Id RTOSCAR = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
-	private static id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+	private static id SIDRALiteRTId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'SIDRA_Lite');
+    private static id SIDRARTId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'SIDRA');
+	private static Id RTOSCAR = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'OSCAR_Communication');
+	private static id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Agency') ;
 	
     static testMethod void testEmptyCase() {
     	test.StartTest();

@@ -1,7 +1,5 @@
 public with sharing class NewObjectiveController {
 
-    public static final map<String,Recordtype> MAP_RT = ObjectiveHandler.MAP_RT;
-    
     public Id parentId;
     public String recordtype;
 
@@ -18,7 +16,7 @@ public with sharing class NewObjectiveController {
         ];
         Objective__c newObjective = parent.clone();
         newObjective.Parent_Objective__c = this.parentId;
-        newObjective.RecordtypeId = MAP_RT.get(recordtype).Id;
+        newObjective.RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', recordtype);
         newObjective.Name = parent.Description__c;
         insert newObjective;
 

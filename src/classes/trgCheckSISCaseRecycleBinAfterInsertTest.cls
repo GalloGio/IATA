@@ -22,10 +22,10 @@
 @isTest
 private class trgCheckSISCaseRecycleBinAfterInsertTest {
 
-    static testMethod void myUnitTest() {
-        // TO DO: implement unit test
+    @isTest
+	static void myUnitTest() {
         
-        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard' and r.SobjectType = 'Contact' limit 1];
+        Id StandardContactRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         
         ExcludedEmailFromAddress__c excludeEmail = new ExcludedEmailFromAddress__c();
         excludeEmail.ApplicationName__c = 'ANY';
@@ -63,44 +63,21 @@ private class trgCheckSISCaseRecycleBinAfterInsertTest {
         contact1.AccountId = account1.Id;
         contact1.Email = 'some@email.org';
         contact1.Financial_Assessment_Contact__c = false;
-        contact1.RecordTypeId = StandardContactRecordType.Id;
+        contact1.RecordTypeId = StandardContactRecordTypeId;
         insert contact1;
-        
-        /*Case c1 = new Case();        
-        c1.CaseArea__c = 'SIS';
-        c1.Status = 'Escalated';
-        c1.Subject = 'FAILURE NOTICE';
-        c1.Origin = 'E-mail to Case - IS Help Desk';
-        c1.RecordTypeId = SIScaseRecordTypeID;
-        c1.SuppliedEmail = 'sishelp@iata.org';
-        c1.Assigned_To__c = account1.Name;
-        insert c1;*/
         
         Case c2 = new Case();        
         c2.CaseArea__c = 'SIS';
         c2.Status = 'Escalated';
         c2.Subject = 'FAILURE NOTICE';
         c2.Origin = 'E-mail to Case - IS Help Desk';        
-      //  c2.SuppliedEmail = 'No-Reply@email.com';
         c2.Assigned_To__c = account1.Name;
         c2.Description = 'Case Area: SIS';
         c2.Type = 'Feature Request';
         
-        /*Case c3 = new Case();        
-        c3.CaseArea__c = 'SIS';
-        c3.Status = 'Escalated';
-        c3.Subject = 'UNDELIVERABLE';
-        c3.Origin = 'E-mail to Case - IS Help Desk';        
-        c3.SuppliedEmail = 'sis.servicedesk@accelyakale.com';
-        c3.Assigned_To__c = account1.Name;
-        c3.Description = 'Case Area: SIS';
-        c3.Type = 'Feature Request';*/
-        
-        //c2.RecordTypeId = null;
         User thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
         System.runAs ( thisUser ) {
             insert c2;
-            //insert c3;
         }
         
     }

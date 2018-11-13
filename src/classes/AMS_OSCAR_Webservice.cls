@@ -93,7 +93,7 @@ global class AMS_OSCAR_Webservice {
 
         try {
 
-            ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+            ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name from AMS_OSCAR__c where Id = : oscarId];
             if (oscar != null && oscar.size() > 0) {
@@ -175,7 +175,7 @@ global class AMS_OSCAR_Webservice {
 
         try {
 
-            ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
+            ID InternalCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 
             List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c, OSCAR__r.Account__r.Name from Case where OSCAR__c = : oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
@@ -256,81 +256,8 @@ global class AMS_OSCAR_Webservice {
         }
     }
 
-    /*OBSOLETE SIDRA LITE
-    WebService static String createSIDRALite(String oscarId) {
-
-        String result = '';
-
-        try {
-
-            ID sidraLiteRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
-
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, BusinessHours__c from AMS_OSCAR__c where Id = : oscarId];
-            if (oscar != null && oscar.size() > 0) {
-
-                List<Case> cases = [SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
-
-                if (cases == null || cases.isEmpty()) {
-                    result = 'Could not find a the Oscar Communication case related to this OSCAR.';
-                    return 'ERROR: ' + result;
-                }
-
-                Case oscarCommCase = cases[0];
-
-                Case sidraCase = new Case();
-                sidraCase.RecordTypeId = sidraLiteRecType;
-                //sidraCase.OSCAR__c = oscar[0].Id;
-                sidraCase.Subject = 'SIDRA Lite – Non-Compliance due to "' + oscarCommCase.Reason1__c + '"';
-                sidraCase.ParentId = oscarCommCase.Id;
-                sidraCase.AccountId = oscar[0].Account__c;
-                sidraCase.ContactId = oscarCommCase.ContactId;
-                sidraCase.Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c;
-                sidraCase.BSPCountry__c = oscarCommCase.BSPCountry__c;
-                sidraCase.Reason1__c = 'Late/Absence of Notification of Change';
-                //sidraCase.SIDRA_Lite_Reason__c = 'Late/Absence of Notification of Change';
-                //sidraCase.SIDRA_Lite_Default_Date__c = Date.Today();
-                sidraCase.Reason_for_Default__c = 'Disapproval of Change';
-                sidraCase.Total_Irregularities__c = String.ValueOf(oscarCommCase.account.Accumulated_Irregularities__c);
-
-                DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
-                sidraCase.Termination_date_manual_entry__c = BusinessHours.nextStartDate(oscar[0].BusinessHours__c, nextMonthEnd).date();
-
-                if ( oscarCommCase.account.Type == 'IATA Passenger Sales Agent' || oscarCommCase.account.Type == 'Domestic Agent' ) {
-                    sidraCase.BSP_CASS__c = 'BSP';
-                } else {
-                    sidraCase.BSP_CASS__c = 'CASS';
-                }
-
-                insert sidraCase;
-
-                //AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-
-                //changeCode.name = 'SRM';
-                //changeCode.reasonCode = '91';
-                //changeCode.memoText = 'to be defined';
-                //changeCode.reasonDesc  = 'SIDRA LITE CREATED';
-                //changeCode.status  = '7';
-
-                //Account acct = new Account(Id = oscar[0].Account__c);
-                //AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar[0]}, new List<Account> {acct}, true);
-
-                oscar[0].STEP26__c = 'In Progress';
-                update oscar;
-
-                return sidraCase.Id;
-
-            }
-
-            return 'ERROR: OSCAR not found.';
-
-        } catch (Exception ex) {
-            return AMS_Utils.errorMessageBeautifyer(ex);
-        }
-
-    }*/
-    
-        /**
-        Find the parent case related to an Oscar Id
+    /**
+    	Find the parent case related to an Oscar Id
     **/
     private static Case findOscarParentCase(Id oscarId) {
         List<Case> cases = [
@@ -441,7 +368,7 @@ global class AMS_OSCAR_Webservice {
 
         try {
 
-            ID commisionerCaseRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+            ID commisionerCaseRecType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
 
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id = : oscarId];
             if (oscar != null && oscar.size() > 0) {
@@ -489,7 +416,7 @@ global class AMS_OSCAR_Webservice {
 
         try {
 
-            ID fsReleaseRT = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+            ID fsReleaseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
 
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
             if (oscar != null && oscar.size() > 0) {

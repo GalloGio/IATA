@@ -2,8 +2,8 @@
 private class AMS_UtilsTest {
 
 
-
-    static testmethod void testEncriptDecript() {
+    @isTest
+    static void testEncriptDecript() {
 
         AMS_Utils util = new AMS_Utils();
 
@@ -21,7 +21,8 @@ private class AMS_UtilsTest {
 
     }
 
-    static testmethod void testEncriptDecriptEncoded() {
+    @isTest
+    static void testEncriptDecriptEncoded() {
         try{
             String sPWDenc = AMS_Utils.EncryptParameter('1');
             String sPWDdec = AMS_Utils.DecryptParameter('sPWDenc');
@@ -34,7 +35,9 @@ private class AMS_UtilsTest {
         System.assertEquals(sPWDdec , 'test_password');
         Test.stopTest();
     }
-    static testmethod void testAMSPROFILES() {
+
+    @isTest
+    static void testAMSPROFILES() {
 
         Profile p = new Profile(Name = 'IDFS Americas - Hub Staff');
         Profile p2 = new Profile(Name = 'FDS Hub Analyst ARM');
@@ -44,7 +47,9 @@ private class AMS_UtilsTest {
         Set<Id> amsProfiles = AMS_Utils.AMSPROFILES;
         Test.stopTest();
     }
-    static testmethod void testIataIsoStatesAndCountries() {
+
+    @isTest
+    static void testIataIsoStatesAndCountries() {
 
         AMS_OSCAR_TestDataFactory.createOSCARtestData();
 
@@ -64,7 +69,9 @@ private class AMS_UtilsTest {
 
         Test.stopTest();
     }
-    static testmethod void testsendEmailAmsSupport() {
+
+    @isTest
+    static void testsendEmailAmsSupport() {
 
         Test.startTest();
         //no code coverage for sending emails
@@ -72,14 +79,16 @@ private class AMS_UtilsTest {
         Test.stopTest();
     }
 
-    static testmethod void testCreateEmployeePersonFromAccountContact() {
+    @isTest
+    static void testCreateEmployeePersonFromAccountContact() {
 
         Test.startTest();
         AMS_Utils.createEmployeePersonFromAccountContact( '001234567891235');
         Test.stopTest();
     }
 
-    static testmethod void testgetRecIdFromChangeCode() {
+    @isTest
+    static void testgetRecIdFromChangeCode() {
 
         List <String> sChangeCodeList = new List<String>();
         sChangeCodeList.add('AAA');
@@ -106,7 +115,8 @@ private class AMS_UtilsTest {
         Test.stopTest();
     }
 
-     static testmethod void testisAddressEmpty() {
+    @isTest
+    static void testisAddressEmpty() {
 
         Account account = new Account();
         account.Name = 'TestAccount';
@@ -129,7 +139,8 @@ private class AMS_UtilsTest {
         Test.stopTest();
     }
 
-    static testmethod void testsplitAccAndAccTradeName() {
+    @isTest
+    static void testsplitAccAndAccTradeName() {
 
         List <String> accountNamesList = new List<String>();
         accountNamesList.add('Nome usado para o teste com mais de 32 caracteres.. banana banana banana');
@@ -147,7 +158,9 @@ private class AMS_UtilsTest {
 
         Test.stopTest();
     }
-    static testmethod void testgetIATAReadableStatus() {
+
+    @isTest
+    static void testgetIATAReadableStatus() {
 
         List <String> iATAReadableStatusList = new List<String>();
         iATAReadableStatusList.add('');
@@ -175,121 +188,11 @@ private class AMS_UtilsTest {
     }
 
 
-
-    //REVIEW already tested on: AMS_AgencyChangesTest
-    static testmethod void testcreateAAChangeCode() {
-        /*
-        String SECTORPAX = 'Travel Agent';
-        String CATEGORYPAX = 'IATA Passenger Sales Agent';
-        String LOCCLASSPAX = 'P';
-
-        String SECTORCASS = 'Cargo Agent';
-        String CATEGORYCASS = 'IATA Cargo Sales Agent';
-        String LOCCLASSCASS = 'C';
-
-        String CHANGELOCATIONTYPE = 'Location type';
-        String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
-        String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
-
-        Boolean isPax = true;
-
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
-        insert italy;
-
-
-        Account HO1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = italy.id,
-                         Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS),
-                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = 'Approved',
-                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com'
-                         );
-
-
-        insert HO1;
-
-
-
-        Contact C1 = new Contact(FirstName = 'First', LastName = 'Contact',  AccountId = HO1.Id, Email = 'thecontact1@gmail.com', Phone = '123123123');
-
-        insert C1;
-
-        createCaseAndOSCAR(HO1,C1);
-        Test.startTest();
-
-        List<AMS_Pax_Accreditation_Form__c> accreditationLst = [SELECT ID, Name, Short_Name__c, Trade_Name__c, Branch_Office_City__c, Branch_Office_Email__c from AMS_Pax_Accreditation_Form__c];
-
-        List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c from AMS_OSCAR__c];
-
-        List<Account> accountLst = [SELECT ID, Status__c from Account ];
-
-        if(accreditationLst.isEmpty())
-            System.assert(true,false);
-
-        if(oscarLst.isEmpty())
-            System.assert(true,false);
-
-        if(accountLst.isEmpty())
-            System.assert(true,false);
-
-        AMS_Pax_Accreditation_Form__c accreditation = accreditationLst.get(0);
-
-        AMS_OSCAR__c oscar= oscarLst.get(0);
-
-        Account account = accountLst.get(0);
-
-        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-
-        changeCode.name = 'NEW';
-        changeCode.reasonCode = '21';
-
-        changeCode.memoText = 'New application in progress';
-        changeCode.reasonDesc  = 'NEW APPLICATION';
-        changeCode.status  = '2';
-
-        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account> {account}, true);
-
-        changeCode = new AMS_OSCAR_JSON.ChangeCode();
-
-        changeCode.name = 'FIN';
-        changeCode.reasonCode = '91';
-
-        changeCode.memoText = 'New application - Head Office finalized';
-        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
-        changeCode.status  = '2';
-
-
-
-        accreditation.Account_Name__c = 'Changed Name';
-        accreditation.Short_Name__c= 'Changed short name';
-        accreditation.Trade_Name__c='Changed trade name';
-        accreditation.Branch_Office_City__c = 'Porto';
-        accreditation.Branch_Office_Email__c = 'changedrmailteste@fe443.com';
-
-        update accreditation;
-
-        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account> {account}, true);
-
-        accountLst = [SELECT ID, Name, Short_Name__c , TradeName__c, BillingCity , Email__c  from Account ];
-
-        if(accountLst.isEmpty())
-            System.assert(true,false);
-
-        account = accountLst.get(0);
-
-        System.assertEquals(account.Name,accreditation.Account_Name__c);
-        System.assertEquals(account.Short_Name__c,accreditation.Short_Name__c);
-        System.assertEquals(account.TradeName__c,accreditation.Trade_Name__c);
-        System.assertEquals(account.BillingCity,accreditation.Branch_Office_City__c);
-        System.assertEquals(account.Email__c,accreditation.Branch_Office_Email__c);
-
-        Test.stopTest();
-        */
-    }
     static void createCaseAndOSCAR(Account theAccount, Contact theContact){
 
         // Create the Staging area for the Account
-        ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Case theCommunicationCase = new Case(RecordTypeId = rtCommCase, Subject =  theAccount.Name,
                                             AccountId = (theAccount.ParentId == null ? theAccount.Id : theAccount.ParentId), ContactId = theContact.Id  );
@@ -315,7 +218,7 @@ private class AMS_UtilsTest {
             insert theStagingConts;
 
         // Create OSCAR and Communication Case
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = theAccount.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = theStagingAcc.Id );
         insert theOscar;
@@ -327,13 +230,14 @@ private class AMS_UtilsTest {
 
     }
 
-    static testmethod void testsyncOSCARwithIFAP() {
+    @isTest
+    static void testsyncOSCARwithIFAP() {
 
 
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
         insert a1;
@@ -344,14 +248,8 @@ private class AMS_UtilsTest {
         AMS_OSCAR__c OSCAR2 = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id);
         insert OSCAR2;
 
-        //Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
-        //insert co1;
+        Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
 
-        Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
-
-
-        //oscarCase.AccountId = a1.Id;
-        //oscarCase.ContactId = co1.Id;
         oscarCase.Financial_Assessment_requested__c = date.today();
         oscarCase.Deadline_Date__c= date.today();
         oscarCase.Assessment_Performed_Date__c= date.today();
@@ -361,7 +259,7 @@ private class AMS_UtilsTest {
         oscarCase.FS_Deadline_Date__c = date.today();
         insert oscarCase;
 
-        Case oscarCaseToCompare = new Case(Oscar__c = oscar2.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+        Case oscarCaseToCompare = new Case(Oscar__c = oscar2.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
 
         oscarCaseToCompare.Financial_Assessment_requested__c = date.today().addDays(-1);
         oscarCaseToCompare.Deadline_Date__c= date.today().addDays(-1);
@@ -384,7 +282,8 @@ private class AMS_UtilsTest {
 
     }
     //Review Part of the code not covered
-    static testmethod void testcopyDataToAccount() {
+    @isTest
+    static void testcopyDataToAccount() {
 
         String SECTORPAX = 'Travel Agent';
         String CATEGORYPAX = 'IATA Passenger Sales Agent';
@@ -400,7 +299,7 @@ private class AMS_UtilsTest {
 
         Boolean isPax = true;
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
 
@@ -430,7 +329,8 @@ private class AMS_UtilsTest {
     }
 
     //Review Part of the code not covered
-    static testmethod void testownershipIsToBeMigrated() {
+    @isTest
+    static void testownershipIsToBeMigrated() {
 
         Test.startTest();
 
@@ -439,7 +339,9 @@ private class AMS_UtilsTest {
         Test.stopTest();
 
     }
-    static testmethod void testtransformCompanyType() {
+
+    @isTest
+    static void testtransformCompanyType() {
 
         Test.startTest();
 
@@ -460,7 +362,9 @@ private class AMS_UtilsTest {
         Test.stopTest();
 
     }
-     static testmethod void testtransformGDS() {
+
+    @isTest
+    static void testtransformGDS() {
 
         Test.startTest();
 
@@ -487,7 +391,9 @@ private class AMS_UtilsTest {
         Test.stopTest();
 
     }
-     static testmethod void testerrorMessageBeautifyer() {
+
+    @isTest
+    static void testerrorMessageBeautifyer() {
 
         Test.startTest();
 
@@ -496,7 +402,7 @@ private class AMS_UtilsTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',
                                  Name='Test1 Agency Ltd',Short_Name__c='Test1 Agency' , CASS_Number__c  = '1234567');
@@ -511,7 +417,9 @@ private class AMS_UtilsTest {
         Test.stopTest();
 
     }
-    static testmethod void testgetRecordType() {
+
+    @isTest
+    static void testgetRecordType() {
 
 
         Test.startTest();
@@ -520,10 +428,9 @@ private class AMS_UtilsTest {
 
         try{
 
-            RecordType RT = AMS_Utils.getRecordType('Account', 'Standard_Account');
-            AMS_Utils.getRecordType(RT.Id);
+            Id RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-            AMS_Utils.getRecordType('Account', 'Non_Existent_Record_Type');
+            RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Non_Existent_Record_Type');
 
         }
         catch(Exception e)
@@ -534,7 +441,9 @@ private class AMS_UtilsTest {
         Test.stopTest();
 
     }
-    static testmethod void testfindObjectNameFromRecordIdPrefix() {
+
+    @isTest
+    static void testfindObjectNameFromRecordIdPrefix() {
 
 
         Test.startTest();
@@ -546,7 +455,9 @@ private class AMS_UtilsTest {
 
     }
 
-    static testmethod void testTransformLegalStatus() {
+
+    @isTest
+    static void testTransformLegalStatus() {
 
 
         Test.startTest();
@@ -568,7 +479,8 @@ private class AMS_UtilsTest {
 
     }
 
-    static testmethod void testgetLocationClassDescr() {
+    @isTest
+    static void testgetLocationClassDescr() {
 
         /*
             C-Cargo
@@ -616,32 +528,9 @@ private class AMS_UtilsTest {
 
     }
 
-    //Test method for createEmployeePersonFromAccountContact
-    /*AMSFTS
-    @isTest static void createEmployeePersonFromAccountContact() {
 
-            Test.startTest();
-            AMS_OSCAR_TestDataFactory.createOSCARtestData();
-
-            Account a = [SELECT Id from Account where Name = 'Test1 Agency' limit 1];
-            List<Contact> contacts = [select id, AccountId, Person__c, Name, FirstName, LastName, Phone, MobilePhone, Birthdate, Email from Contact];
-            AMS_Utils.createEmployeePersonFromAccountContact(a.Id);
-
-            // it should have created AMS_Employee__c and AMS_Person__c
-
-            Contact co1 = [select id, Person__c, Name, AccountId from Contact];
-            System.assert(co1.Person__c <> null);
-
-            AMS_Employee__c e = [SELECT Id, Account__c, Contact__c from AMS_Employee__c LIMIT 1];
-
-            System.assertEquals(a.Id, e.Account__c);
-            System.assertEquals(co1.Id, e.Contact__c);
-
-            Test.stopTest();
-
-    }*/
-
-    @isTest static void encryptDecryptExceptionTester(){
+    @isTest 
+    static void encryptDecryptExceptionTester(){
 
          try {
             AMS_Utils.EncryptEncodeParameter(null);
@@ -672,7 +561,8 @@ private class AMS_UtilsTest {
         }
     }
 
-        @isTest static void testStartIntegration(){
+    @isTest
+    static void testStartIntegration(){
 
         //creat setting for change code IEP
         AMS_ChangeCodes__c changeCodeConfig = new AMS_ChangeCodes__c();
@@ -698,7 +588,7 @@ private class AMS_UtilsTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
         insert ctry;
 
-        Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         //create account to match triggering fields on settings
         Account acct = new Account(IATA_ISO_Country__c = ctry.id, Location_Type__c = 'HE', RecordTypeId = accountRT, IATACode__c='1234567',
@@ -730,7 +620,8 @@ private class AMS_UtilsTest {
 
     }
 
-     @isTest static void CustomChangeIntegrations(){
+     @isTest
+     static void CustomChangeIntegrations(){
         AMS_ChangeCodes_Integration__c aci = new AMS_ChangeCodes_Integration__c(name = 'test', RecId_A__c= 'A', RecId_B__c='B', RecId_Res__c='C');
         insert aci;
         String sRes = AMS_Utils.getRecIdFromIntegrationMatriz('A', 'B');
@@ -741,7 +632,8 @@ private class AMS_UtilsTest {
         System.assertEquals(statusDesc, 'REVIEW/STDS REMOVAL/NOTICE OF TERMINATION');        
      }
 
-     @isTest static void  copyDataFromAccount(){        
+     @isTest
+     static void  copyDataFromAccount(){      
         Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         List<AMS_Pax_Accreditation_Form__c> onlineAccredsToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
         String SECTORPAX = 'Travel Agent';
@@ -758,7 +650,7 @@ private class AMS_UtilsTest {
 
         Boolean isPax = true;
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
 

@@ -746,6 +746,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     // flip the site settings to not create contact/account in future
     kbSettings.Create_Contact_and_Account__c = false;
     update kbSettings;
+	
   }
 
   public void notifyAdmin(System.DmlException de, Exception e, String introMessage) {
@@ -845,7 +846,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     set;
     get {
       if (currentSiteUrl == null) {
-        currentSiteUrl = Site.getCurrentSiteUrl();
+        currentSiteUrl = Site.getBaseUrl();
         if (!isSite) {
             if (Site.getTemplate().getUrl().endsWith('pkb_Template_fb'))
                currentSiteUrl = Page.pkb_Home_fb.getUrl();

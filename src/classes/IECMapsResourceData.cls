@@ -19,10 +19,10 @@ global Integer InitialStep = USPartOne;
 
 public IECMapsResourceData(Integer c) {
       
-            Count = c;            
-            List <IATA_ISO_Country__c> countries = [Select ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c <> null ];
-            MaxCount = (Integer) countries.size();                   
-           System.debug('*** setting job counts    count = ' + Count + ' maxcount = ' + MaxCount);         
+      Count = c;            
+      List <IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountries();
+      MaxCount = (Integer) countries.size();                   
+      System.debug('*** setting job counts    count = ' + Count + ' maxcount = ' + MaxCount);         
                      
     }
 
