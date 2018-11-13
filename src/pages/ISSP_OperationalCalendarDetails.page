@@ -536,6 +536,7 @@
                             <option value="10">{!$Label.ISSP_AMS_Month_October} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
                             <option value="11">{!$Label.ISSP_AMS_Month_November} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
                             <option value="12">{!$Label.ISSP_AMS_Month_December} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
+                            <option value="{!YEAR(TODAY())-1}">{!YEAR(TODAY())-1} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
                             <option value="{!YEAR(TODAY())+1}">{!YEAR(TODAY())+1} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
                         </select>
                     </div>

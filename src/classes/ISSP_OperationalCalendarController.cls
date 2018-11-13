@@ -378,6 +378,8 @@ global without sharing class ISSP_OperationalCalendarController {
                 query += ' AND First_Day__c = THIS_YEAR';
             } else if (billingPeriod==Date.today().year()+1) {
                 query += ' AND First_Day__c = NEXT_YEAR';
+            } else if (billingPeriod==Date.today().year()-1) {
+                query += ' AND First_Day__c = LAST_YEAR';
             } else if ( billingPeriod >= 1 && billingPeriod <= 12 ) {
                 query += ' AND First_Day__c = THIS_YEAR';
                 query += ' AND CALENDAR_MONTH(First_Day__c) = ' + billingPeriod;
