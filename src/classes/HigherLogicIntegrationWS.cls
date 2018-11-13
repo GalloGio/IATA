@@ -85,20 +85,14 @@ public class HigherLogicIntegrationWS {
 
 		try {
 			
-			Higher_Logic_Settings__c hlSettings = Higher_Logic_Settings__c.getInstance();
-			
-			if(String.isBlank(hlSettings.Endpoint__c) || String.isBlank(hlSettings.API_Key__c) || String.isBlank(hlSettings.Tenant_Code__c)){
-				throw new HigherLogicException('Undefined endpoint, API key or Tenant Code on Higher Logic Settings');
-			}
-			
-			requestBody.TenantCode = hlSettings.Tenant_Code__c;
+			requestBody.TenantCode = '{!$Credential.Username}';
 			
 			String requestBodyJSON = JSON.serialize(requestBody);
 			
 			HttpRequest request = new HttpRequest();
 			
-			request.setEndpoint(hlSettings.Endpoint__c);
-			request.setHeader('x-api-key', hlSettings.API_Key__c);
+			request.setEndpoint('callout:Higher_Logic_Push_API');
+			request.setHeader('x-api-key', '{!$Credential.Password}');
 			request.setMethod('POST');
 			request.setHeader('content-type', 'application/json');
 			request.setBody(requestBodyJSON);
@@ -135,11 +129,12 @@ public class HigherLogicIntegrationWS {
 	* considering the sObj information
 	* 
 	* @param sObject: sObject (User or Account)
+	* @param legacyContactsMap: Map<Id, Id> (only used if the sObj is an instance of Account)
 	*
 	* @return memberDetails: MemberDetails
 	*
 	*/
-	private static MemberDetails createMemberDetail(sObject sObj){
+	private static MemberDetails createMemberDetail(sObject sObj, Map<Id, Id> legacyContactsMap){
 		
 		MemberDetails memberDetails = new MemberDetails();
 		
@@ -173,11 +168,13 @@ public class HigherLogicIntegrationWS {
 			
 			Account acct = (Account) sObj;
 			
+			Id legacyContactId = legacyContactsMap.get(acct.Id);
+			
 			memberDetails.ParentMemberKey	 = acct.Id;
 			memberDetails.CompanyName		 = acct.Name; 
 			memberDetails.WebsiteURL		 = acct.Website;
 			memberDetails.EmailAddress		 = acct.Email__c;
-			memberDetails.LegacyContactKey	 = null; //TODO
+			memberDetails.LegacyContactKey	 = legacyContactId;
 			memberDetails.Address1			 = acct.BillingStreet;
 			memberDetails.City				 = acct.BillingCity;
 			memberDetails.State 			 = acct.BillingState;
@@ -216,11 +213,12 @@ public class HigherLogicIntegrationWS {
 	* considering the members given (Users and/or Accounts)
 	*
 	* @param sObjectLst: List<sObject> (Users or Accounts)
+	* @param legacyContactMap: Map<Id, Id>
 	*
 	* @return hlRequest: HigherLogicRequest
 	*
 	*/
-	private static HigherLogicRequest createRequestBody(List<sObject> sObjectLst){
+	private static HigherLogicRequest createRequestBody(List<sObject> sObjectLst, Map<Id, Id> legacyContactMap){
 		
 		HigherLogicRequest hlRequest = new HigherLogicRequest();
 		
@@ -228,7 +226,7 @@ public class HigherLogicIntegrationWS {
 		
 		for(sObject sObj : sObjectLst){
 
-			MemberDetails memberDetails = createMemberDetail(sObj);
+			MemberDetails memberDetails = createMemberDetail(sObj, legacyContactMap);
 
 			Items items = new Items();
 			
@@ -283,15 +281,32 @@ public class HigherLogicIntegrationWS {
 	* Pushes members (users & accounts) to HigherLogic
 	*
 	* @param sObjectLst: List<sObject>  
+	* @param contactIdMap: Map<Id, Id>
+	*
+	*/
+	public static void pushMembers(List<sObject> sObjectLst, Map<Id, Id> contactIdMap){
+		
+		HigherLogicRequest request = createRequestBody(sObjectLst, contactIdMap);
+		
+		HigherLogicResponse response = invoke(request);
+		
+		processHigherLogicResponse('pushMembers', response);
+		
+	}
+	
+	/**
+	* Pushes members (users & accounts) to HigherLogic
+	*
+	* @param sObjectLst: List<sObject>  
 	*
 	*/
 	public static void pushMembers(List<sObject> sObjectLst){
 		
-		HigherLogicRequest request = createRequestBody(sObjectLst);
+		HigherLogicRequest request = createRequestBody(sObjectLst, null);
 		
 		HigherLogicResponse response = invoke(request);
 		
-		Map<Id, String> accountResponsesMap = processHigherLogicResponse('pushMembers', response);
+		processHigherLogicResponse('pushMembers', response);
 		
 	}
 	
@@ -307,7 +322,7 @@ public class HigherLogicIntegrationWS {
 		
 		HigherLogicResponse response = invoke(request);
 		
-		Map<Id, String> accountResponsesMap = processHigherLogicResponse('pushMembersRelationships', response);
+		processHigherLogicResponse('pushMembersRelationships', response);
 		
 	}
 	
@@ -317,13 +332,9 @@ public class HigherLogicIntegrationWS {
 	* @param action: String
 	* @param wsResponse: HigherLogicResponse
 	*
-	* @return Map<Id, String> 
-	*
 	*/
-	private static Map<Id, String> processHigherLogicResponse(String action, HigherLogicResponse wsResponse){
-		//parseResponseBody(wsResponse.responseBody);
+	private static void processHigherLogicResponse(String action, HigherLogicResponse wsResponse){
 		wsServiceLogLst.add(createNewWSLog(action, wsResponse));
-		return new Map<Id, String>();
 	}
 	
 	/**

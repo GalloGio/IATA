@@ -3,14 +3,6 @@ private class HigherLogicIntegrationWSTest {
 
 	@testSetup static void setup() {
 		
-		Higher_Logic_Settings__c hls = new Higher_Logic_Settings__c();
-		
-		hls.Endpoint__c = 'https://test.higherlogic.com';
-		hls.Api_Key__c = 'asdfghjklçqwertyuiop';
-		hls.Tenant_Code__c = 'HLTENANT';
-		
-		insert hls;
-		
 		List<Account> acctLst = new List<Account>();
 		
 		for(Integer i=0; i<2; i++){
@@ -121,33 +113,5 @@ private class HigherLogicIntegrationWSTest {
 		md.OtherBlogURL = 'https://otherblog.com';
 				
 	}
-	
-	static testMethod void pushMembersFailTest(){
-		
-		delete [select id from Higher_Logic_Settings__c];
-		
-		List<Contact> contactLst = new List<Contact>(
-			[SELECT Id FROM Contact]
-		);
-		
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Standards Setting Workspace'); 
-		insert app;
-		
-		Test.setMock(HttpCalloutMock.class, new HigherLogicServiceMock());
-		Test.startTest();
-		
-		Portal_Application_Right__c par = new Portal_Application_Right__c();
-			
-		par.Contact__c = contactLst.get(0).Id;
-		par.Portal_Application__c = app.Id;
-		par.Right__c = 'Access Granted';
-		
-		insert par;
-			
-		Test.stopTest();
-		
-	}
-	
-	
 	
 }

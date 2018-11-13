@@ -73,15 +73,16 @@ public class HigherLogicIntegrationHelper {
 	* Push all given accounts details into HigherLogic
 	*
 	* @param accountIdSet: Set<Id>
+	* @param legacyContactMap: Map<Id, Id>
 	*
 	*/
 	@future(callout=true)	
-	public static void pushCompanyMembers(Set<Id> accountIdSet){
+	public static void pushCompanyMembers(Set<Id> accountIdSet, Map<Id, Id> legacyContactMap){
 		
 		List<Account> accountLst = fetchAccountRecords(accountIdSet);
 		
 		if(!accountLst.isEmpty()){
-			HigherLogicIntegrationWS.pushMembers(accountLst);
+			HigherLogicIntegrationWS.pushMembers(accountLst, legacyContactMap);
 			HigherLogicIntegrationWS.flushWebServiceLogs();
 		}
 		
@@ -109,6 +110,7 @@ public class HigherLogicIntegrationHelper {
 		List<User> newUsersLst = new List<User>(
 			[SELECT 
 				Id,
+				ContactId,
 				ContactKaviId__c,
 				Contact.AccountId,
 				Contact.Account.ParentId,
@@ -123,18 +125,20 @@ public class HigherLogicIntegrationHelper {
 			]
 		);
 
+		Map<Id, Id> contactIdMap = new Map<Id, Id>();
 		Map<Id, Id> newRelationshipMap = new Map<Id, Id>();
 
 		for(User newUser : newUsersLst){
 			Id accId = fetchAssociatedAccountId(newUser.Contact.AccountId, newUser.Contact.Account.RecordTypeId, newUser.Contact.Account.Field_Head_Office__c, newUser.Contact.Account.ParentId, newUser.Contact.Account.Parent.ParentId);
 			newRelationshipMap.put(newUser.Id, accId);
+			contactIdMap.put(accId, newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c);
 		}
 		
 		Set<Id> accountIdSet = new Set<Id>(newRelationshipMap.values());
 		
 		List<Account> accountLst = fetchAccountRecords(accountIdSet);
 		
-		HigherLogicIntegrationWS.pushMembers(accountLst);
+		HigherLogicIntegrationWS.pushMembers(accountLst, contactIdMap);
 		HigherLogicIntegrationWS.pushMembersRelationships(newRelationshipMap);
 		
 		HigherLogicIntegrationWS.flushWebServiceLogs();
@@ -171,6 +175,7 @@ public class HigherLogicIntegrationHelper {
 			' 	Street,                               ' +
 			' 	Email,                                ' +
 			' 	PostalCode,                           ' +
+			'   ContactId,							  ' +
 			' 	Contact.Account.RecordTypeId,         ' +
 			' 	Contact.Account.Field_Head_Office__c, ' +
 			' 	Contact.AccountId,                    ' +
@@ -220,8 +225,8 @@ public class HigherLogicIntegrationHelper {
 		}
 		
 		Set<Id> newAccountsIds = new Set<Id>();
-
-		Map<Id,Id> newRelationship = new Map<Id,Id>();
+		Map<Id, Id> contactIdMap = new Map<Id, Id>();
+		Map<Id, Id> newRelationship = new Map<Id, Id>();
 		
 		for(User newUser : newUsersMap.values()){
 			
@@ -232,7 +237,8 @@ public class HigherLogicIntegrationHelper {
 			}
 
 			newAccountsIds.add(accId);
-			newRelationship.put(newUser.Id,accId);
+			newRelationship.put(newUser.Id, accId);
+			contactIdMap.put(accId, newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c);
 
 		}
 		
@@ -241,7 +247,7 @@ public class HigherLogicIntegrationHelper {
 		membersToPushLst.addAll(accountLst);
 		membersToPushLst.addAll(userLst);
 		
-		HigherLogicIntegrationWS.pushMembers(membersToPushLst);
+		HigherLogicIntegrationWS.pushMembers(membersToPushLst, contactIdMap);
 		
 		HigherLogicIntegrationWS.pushMembersRelationships(newRelationship);
 
