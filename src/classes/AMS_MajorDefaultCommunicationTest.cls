@@ -48,6 +48,7 @@ private class AMS_MajorDefaultCommunicationTest {
 		cse.IATAcode__c = '24125';
 		cse.Subject = 'Major Default';
 		cse.Short_Payment_Amount__c = 200000000.00;
+		cse.Outstanding_Amount__c = 100;
 		insert cse;
 
 		Services_Rendered__c service = new Services_Rendered__c();
