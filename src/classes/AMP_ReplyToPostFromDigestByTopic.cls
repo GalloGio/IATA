@@ -48,7 +48,6 @@ public class AMP_ReplyToPostFromDigestByTopic {
 	
 	private void init(){
 		
-		
 		//Fetch the "main" feed item record
 		FeedItem fi = 
 			[SELECT 
