@@ -245,7 +245,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.updateDetails();
 
 		ctrl.confirmUpdate();
-		
+
 		Test.stopTest();
 
 		ctrl.currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c = true;
@@ -693,7 +693,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true );
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', 
+                                    Region__c = 'Europe', ANG_Enable_NewGen__c = true );
 		insert country;
 
         Account account = ISSP_ObjectFactory.createNewAccount();
@@ -752,6 +753,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		);
 
 		insert testcase;
+
+		Test.startTest();
 
 		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
@@ -820,6 +823,15 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact.Prev_Job2_employer__c = '111';
 
 		ctrl.createAgencyContact();
+
+		ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
+
+		System.assert(upd.countryInfoByCountryNameMapString == '\'\'');
+		System.assert(upd.countryList.size() > 0);
+		System.assert(upd.countryInfoByCountryNameMapString.startsWith('{'));
+
+
+		Test.stopTest();
 
 	}
 
