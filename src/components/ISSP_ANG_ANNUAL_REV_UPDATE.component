@@ -544,7 +544,7 @@
                 <apex:pageBlockSection columns="1">
                     <apex:pageblockSectionItem labelStyle="width:80%" dataStyle="width:10%;">
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Map_Company_Type_to_Legal_Status__c.Label}"/>
-                        <apex:outputField value="{!ca.fw.newForm.ISSP_AMS_Legal_Status__c}" />
+                        <apex:outputField value="{!ca.fw.newForm.Map_Company_Type_to_Legal_Status__c}" />
                     </apex:pageblockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
