@@ -29,11 +29,11 @@ public class TestClass_SetupVariables{
             return clsContactTypeIDSingleton.getInstance().RecordTypes.get('GDP Contact');
         }
     }
-    public static ID IATAServiceProviderAccountRecordTypeID
+    public static ID IATAAccountRecordTypeID
     {
      	get
         {
-            List<RecordType> recTypId= [Select id, name from recordtype where name = 'IATA Service Provider Account' limit 1];             
+            List<RecordType> recTypId= [Select id, name from recordtype where name = 'Standard Account' limit 1];             
             return recTypId.size() > 0 ? recTypId[0].Id : null;  
         }
     } 

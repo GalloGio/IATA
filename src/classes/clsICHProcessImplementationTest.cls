@@ -39,7 +39,7 @@ private class clsICHProcessImplementationTest {
         badEmail.ApplicationName__c = 'ANY';
         insert badEmail;
 //
-        ID IATAServiceProviderAccountRecordTypeID = TestClass_SetupVariables.IATAServiceProviderAccountRecordTypeID;
+        ID IATAAccountRecordTypeID = TestClass_SetupVariables.IATAAccountRecordTypeID;
 
 
 
@@ -51,7 +51,7 @@ private class clsICHProcessImplementationTest {
         account1.BillingCountry = 'Canada';
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
-        account1.RecordTypeId = IATAServiceProviderAccountRecordTypeID;
+        account1.RecordTypeId = IATAAccountRecordTypeID;
         insert account1;
 
         Contact contact1 = new Contact();

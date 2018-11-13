@@ -39,7 +39,7 @@ private class trgCheckSISCaseRecycleBinAfterInsertTest {
         
         Case c = new Case();
         ID SIScaseRecordTypeID = TestClass_SetupVariables.SIScaseRecordTypeID;
-        ID IATAServiceProviderAccountRecordTypeID = TestClass_SetupVariables.IATAServiceProviderAccountRecordTypeID;        
+        ID IATAAccountRecordTypeID = TestClass_SetupVariables.IATAAccountRecordTypeID;        
         c.Subject = 'FAILURE NOTICE';
         c.Origin = 'E-mail to Case - IS Help Desk';
         c.RecordTypeId = SIScaseRecordTypeID;
@@ -53,7 +53,7 @@ private class trgCheckSISCaseRecycleBinAfterInsertTest {
         account1.BillingCountry = 'Canada';
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
-        account1.RecordTypeId = IATAServiceProviderAccountRecordTypeID;
+        account1.RecordTypeId = IATAAccountRecordTypeID;
         insert account1;
         
         Contact contact1 = new Contact();
