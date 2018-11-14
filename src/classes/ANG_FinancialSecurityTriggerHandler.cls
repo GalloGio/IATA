@@ -1,5 +1,42 @@
 public class ANG_FinancialSecurityTriggerHandler{
 
+	private static final Set<String> statuschangeMatrix = new Set<String> {
+				'Close to Expiry DateActive',
+				'Close to Expiry DateEncashed',
+				'Close to Expiry DateEncashment in progress',
+				'Close to Expiry DateExpired',
+				'Close to Expiry DateInactive_Addendum',
+				'Close to Expiry DateNot Active yet',
+				'Close to Expiry DatePending to be Released',
+				'Close to Expiry DatePending Validation',
+				'Close to Expiry DateReleased',
+				'ActiveClose to Expiry Date',
+				'ActiveEncashed',
+				'ActiveEncashment in progress',
+				'ActiveExpired',
+				'ActiveInactive_Addendum',
+				'ActiveNot Active yet',
+				'ActivePending to be Released',
+				'ActivePending Validation',
+				'ActiveReleased',
+				'ExpiredClose to Expiry Date',
+				'ExpiredActive',
+				'ReleasedClose to Expiry Date',
+				'ReleasedActive',
+				'EncashedClose to Expiry Date',
+				'EncashedActive',
+				'Not Active yetClose to Expiry Date',
+				'Not Active yetActive',
+				'Encashment in progressClose to Expiry Date',
+				'Encashment in progressActive',
+				'Inactive_AddendumClose to Expiry Date',
+				'Inactive_AddendumActive',
+				'Pending to be ReleasedClose to Expiry Date',
+				'Pending to be ReleasedActive',
+				'Pending ValidationClose to Expiry Date',
+				'Pending ValidationActive'
+            };
+
 	public List<Financial_Security__c> triggerNew = (List<Financial_Security__c>) Trigger.new;
 	public List<Financial_Security__c> triggerOld = (List<Financial_Security__c>) Trigger.old;
 
@@ -45,6 +82,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 	public void onAfterInsert(){
 		calculateFSTotal();
 		updateMinimumFS();
+		calculateTotalAmmount_Int008();
 	}
 
 	public void onBeforeUpdate(){
@@ -53,7 +91,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 	public void onAfterUpdate(){
 		calculateFSTotal();
 		updateMinimumFS();
-
+		calculateTotalAmmount_Int008();
 	}
 
 	public void onBeforeDelete(){		
@@ -116,4 +154,50 @@ public class ANG_FinancialSecurityTriggerHandler{
 		if(!map2Insert.values().isEmpty())upsert map2Insert.values() ANG_UniqueKey__c;
 	}
 
+	private void calculateTotalAmmount_Int008(){
+
+		List<Financial_Security__c> fsList = new List<Financial_Security__c>();
+
+		for(Financial_Security__c fs:triggerNew){
+			if(Trigger.isUpdate){
+				if(fs.Security_Status__c <> oldMap.get(fs.id).Security_Status__c){
+					if(checkStatusChange(fs.Security_Status__c,oldMap.get(fs.id).Security_Status__c))
+						fsList.add(fs);
+				}else  if(fs.Amount__c <> oldMap.get(fs.id).Amount__c){
+					if(fs.Security_Status__c == 'Active' || fs.Security_Status__c == 'Close to Expiry Date')
+						fsList.add(fs);
+				}
+			} 
+			else{
+				if(Trigger.isInsert){
+					if(fs.Security_Status__c == 'Active' || fs.Security_Status__c == 'Close to Expiry Date')
+						fsList.add(fs);
+				}
+			}
+		}
+		
+		if(fsList.isEmpty()) 
+			return;
+
+		if(Trigger.isUpdate)
+			new ANG_AgencyEventsGenerator(fsList,oldMap,'Financial_Security__c','Account__c').run();
+
+		if(Trigger.isInsert){
+
+			oldMap =  new Map<Id,Financial_Security__c>();
+		
+			for(Financial_Security__c fs: fsList){
+				oldMap.put(fs.Id, new Financial_Security__c(Id=fs.Id));
+			}
+			
+			new ANG_AgencyEventsGenerator(fsList,oldMap,'Financial_Security__c','Account__c').run();
+
+		}
+	}
+
+	public boolean checkStatusChange(String oldValue, String newValue){
+
+		return statuschangeMatrix.contains(oldValue+newValue);
+
+	}
 }
