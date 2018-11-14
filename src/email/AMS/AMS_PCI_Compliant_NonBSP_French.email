@@ -1,0 +1,171 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" >
+<tr valign="top" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div align="justify" style="margin: 0px;"><div align="justify" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0px;"><p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:FR">Cher/Chère,</span><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:red;mso-bidi-language:FR"> </span><span lang="FR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:red;mso-bidi-font-weight:
+bold"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:FR">Code IATA&nbsp;:&nbsp;<b style="mso-bidi-font-weight:
+normal">{!Case.IATA_Code__c} - No BSP<o:p></o:p></b></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><b><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p>&nbsp;</o:p></span></b></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:FR">En référence aux conseils donnés à l’IATA
+concernant les risques associés aux transactions de paiement par carte et aux
+fuites de données potentielles, il est nécessaire de confirmer la conformité
+des Agents accrédités qui opèrent dans le cadre du BSP aux normes de protection
+de données <span style="mso-spacerun:yes">&nbsp;</span>de l’industrie des cartes de
+paiement (PCI DSS)</span><span lang="FR" style="font-size:9.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:Arial;mso-bidi-language:
+FR">.</span><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="FR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+FR">En vertu de la Réglementation des agences de ventes passagers, toutes les
+agences accréditées IATA doivent garantir leur entière conformité aux normes PCI
+DSS.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="FR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="FR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+FR">Le conseil des&nbsp;normes&nbsp;de sécurité&nbsp;PCI DSS constitue une
+norme mondiale visant à aider les marchands (Agence) à comprendre et à mettre
+en œuvre des normes en matière de politiques, de sécurité, de technologies et
+de processus réguliers, afin de protéger leurs systèmes de paiement contre les
+failles et les vols de données des titulaires de cartes. <o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="FR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:FR">Au vu de ce qui précède, vous êtes
+invité(e) à nous fournir votre attestation de conformité qui témoigne de la
+conformité de votre entreprise.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:FR">L’attestation de conformité est le document
+utilisé pour indiquer que le rapport approprié de conformité a été rédigé ou le
+questionnaire d’auto-évaluation rempli pour attester de l’état de conformité de
+votre organisation aux PCI&nbsp;DSS.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:FR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; margin-bottom: 0.0001pt; line-height: normal;"><span lang="FR" style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-size: 9pt; font-family: Arial, sans-serif; color: rgb(31, 78, 121); background-color: rgb(255, 255, 255);">Nous
+tenons à vous informer que conformément aux directives des normes de sécurité PCI
+DSS, les attestations de conformité PCI ne sont pas considérées&nbsp; comme justificatifs officiels de conformité
+PCI. Le seul document &nbsp;reconnu&nbsp; pour attester de&nbsp; la conformité PCI DSS est le certificat délivré
+par une société agréée du PCI SSC répertoriée &nbsp;sur le site Web PCI DSS. <o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; margin-bottom: 0.0001pt; line-height: normal;"><span lang="FR" style="font-size: 9pt; font-family: Arial, sans-serif; color: rgb(31, 78, 121); background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: rgb(255, 255, 255);"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt;"><span lang="FR" style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-size: 9pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121); background-color: rgb(255, 255, 255);">Toute
+documentation qui ne relève ni de l’autorité, ni de la validation des normes
+PCI DSS ne pourra &nbsp;pas être acceptée pour
+justifier de la conformité de votre agence.</span><span lang="FR" style="background-color: rgb(255, 255, 255); font-size: 9pt; line-height: 107%; font-family: Arial, sans-serif; color: rgb(31, 78, 121);"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:FR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:FR">Pour plus d’informations sur la manière de
+se mettre en conformité avec les&nbsp;normes de sécurité des données de
+l’industrie des cartes de paiement, veuillez-vous rendre sur notre
+page&nbsp;Web dédiée aux&nbsp;PCI&nbsp;DSS&nbsp;: </span><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx"><span style="mso-bidi-language:FR">http://www.iata.org/services/finance/Pages/pci-dss.aspx</span></a></span><span class="MsoHyperlink"><span lang="FR" style="font-size:9.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif;mso-bidi-language:FR"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt;"><span class="MsoHyperlink"><span lang="FR" style="font-size:9.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif"><o:p><span style="text-decoration:none">&nbsp;</span></o:p></span></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="FR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+FR">Si vous ne traitez actuellement aucune transaction par cartes de crédit et
+que vous n’avez nullement l’intention de le faire, vous pouvez envoyer
+l’auto-déclaration d’absence d’utilisation de cartes de crédit jointe à la
+présente communication.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify; vertical-align: baseline;"><span lang="FR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="Default" style="background-color: rgb(255, 255, 255); text-align: justify;"><span lang="FR" style="font-size:
+9.0pt;color:#1F4E79;mso-bidi-language:FR">Il est à noter qu’une fois cette
+déclaration remplie, aucun autre justificatif de conformité ne sera exigé de la
+part de votre agence&nbsp;; cependant, le mode de paiement par carte de crédit
+sera désactivé pour votre agence lors de la migration de votre pays
+d’exploitation sous l’environnement NewGen en vertu de la résolution&nbsp;812.</span><span lang="FR" style="font-size:9.0pt;color:#1F4E79"><o:p></o:p></span></p>
+
+<p class="Default" style="background-color: rgb(255, 255, 255); text-align: justify;"><span lang="FR" style="font-size:
+9.0pt;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:FR">La documentation requise
+mentionnée ci-dessus (l’attestation de conformité ou l’auto-déclaration
+d’absence d’utilisation de cartes de crédit) devra être envoyée à l’IATA par le
+biais de notre portail de service à la clientèle&nbsp;:&nbsp;</span><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/cs" target="_blank"><span style="color:#1F4E79;
+mso-bidi-language:FR;text-decoration:none;text-underline:none">http://www.iata.org/cs</span></a></span><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:FR">&nbsp;pour nous parvenir au plus tard le <b style="mso-bidi-font-weight:normal">{!Today()+30}</b>. Veuillez joindre une copie numérisée au dossier&nbsp;<a href="ttps://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}">{!Case.CaseNumber}</a>,
+accessible sur la page d’accueil de votre portail sous la rubrique «&nbsp;Mes
+dossiers récents&nbsp;».<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:FR">Vous trouverez les
+instructions sur la manière de soumettre votre documentation en annexe de la
+présente communication.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:FR">Le service de gestion
+des agences procédera à un examen et rendra une décision en fonction du
+justificatif présenté. <o:p></o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p>&nbsp;</o:p></span></p>
+
+<div style="background-color: rgb(255, 255, 255); border: 1pt solid windowtext; padding: 1pt 4pt;">
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;border:none;mso-border-alt:solid windowtext .5pt;padding:0cm;
+mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt"><b style="mso-bidi-font-weight:normal"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-bidi-language:FR">Veuillez noter que le manquement à se
+conformer à cette exigence à la demande de l’IATA donnera lieu à l’émission
+d’un avis de non-conformité/non-conformité administrative à l’encontre de
+l’Agence.</span></b><b style="mso-bidi-font-weight:normal"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79"><o:p></o:p></span></b></p>
+
+</div>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:FR"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="background-color: rgb(255, 255, 255); margin-bottom: 0.0001pt; text-align: justify;"><span lang="FR" style="font-size:9.0pt;line-height:107%;font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:FR">Nous vous serions
+reconnaissants de bien vouloir régler cette question dans les plus brefs
+délais. Si vous avez besoin d’informations supplémentaires de la part de
+l’IATA, n’hésitez pas à adresser une nouvelle demande par le biais de notre
+portail de service à la clientèle&nbsp;: </span><span lang="FR" style="font-size:
+9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span style="color:#1F4E79;mso-bidi-language:FR;text-decoration:none;text-underline:
+none">www.iata.org/cs</span></a></span><span lang="FR" style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-bidi-language:
+FR">.&nbsp;</span><span lang="FR" style="font-size:9.0pt;line-height:107%;
+font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79"><o:p></o:p></span></p><br></div></div>]]></td>
+</tr>
+</table>

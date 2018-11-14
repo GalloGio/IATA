@@ -15,13 +15,14 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
     }
 
     @AuraEnabled
-    public static RegistrationResponse registration(Account acc, Contact con, String selectedCustomerType, Boolean isGuest, Boolean createPrimary, Integer userTypeToCreate) {
+    public static RegistrationResponse registration(Account acc, Contact con, String selectedCustomerType, Boolean isGuest, Boolean createPrimary, Integer userTypeToCreate, boolean isInvitation) {
         System.debug('SMH register');
         System.debug('SMH acc '+acc);
         System.debug('SMH con '+con);
         System.debug('SMH createPrimary '+createPrimary);
         System.debug('SMH userTypeToCreate '+userTypeToCreate);
         System.debug('SMH isGuest '+isGuest);
+        System.debug('invitation: '+isInvitation);
 
         String serviceName = 'FRED';
 
@@ -49,7 +50,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             // Determine if is primary or a guest
             system.debug('@@@ isGuest '+isGuest);
             
-			// Retrieve the number of primary and secondary fred users for the selected account
+            // Retrieve the number of primary and secondary fred users for the selected account
             list<PermissionSetAssignment> fredUsers = [SELECT AssigneeId, PermissionSet.Name FROM PermissionSetAssignment WHERE PermissionSet.Name in ('FRED_Primary_User', 'FRED_SSO') AND Assignee.AccountId =: acc.Id];
 
             set<Id> primariesIds = new set<Id>();
@@ -57,15 +58,15 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             
             for(PermissionSetAssignment psa : fredUsers) {
                 if(psa.PermissionSet.Name == 'FRED_Primary_User'){
-	                primariesIds.add(psa.AssigneeId);
+                    primariesIds.add(psa.AssigneeId);
                 }
                 else{
-	                secondariesIds.add(psa.AssigneeId);
+                    secondariesIds.add(psa.AssigneeId);
                 }
             }
 
-			// Remove from the secondaries set, the users identified as primary user (they should have both permission sets assigned)
-			secondariesIds.removeAll(primariesIds);
+            // Remove from the secondaries set, the users identified as primary user (they should have both permission sets assigned)
+            secondariesIds.removeAll(primariesIds);
 
             Integer nbOfPrimaryInAccount = primariesIds.size();
             Integer nbOfSecondaryInAccount = secondariesIds.size();
@@ -78,26 +79,37 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
             }
             
 
+            // INC431553 : For verifiers, limits don't apply
+            List<RecordType> recordTypeVerifier = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'Verifiers'];
+            if(recordTypeVerifier[0].Id != acc.RecordTypeId){
+
             // Load  FRED limit and compare to account number
-			List<RecordType> recordTypes = [SELECT Id FROM RecordType WHERE SObjectType = 'One_Id_Service_Provider_Config__c' AND DeveloperName = 'Service_Provider'];
+            List<RecordType> recordTypes = [SELECT Id FROM RecordType WHERE SObjectType = 'One_Id_Service_Provider_Config__c' AND DeveloperName = 'Service_Provider'];
 
             One_Id_Service_Provider_Config__c config;
 
-			if(! recordTypes.isEmpty()){
-				config = [select Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName AND RecordTypeId =: recordTypes[0].Id LIMIT 1];
-			}
-			else{
-				config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName LIMIT 1];
-			}
+            if(! recordTypes.isEmpty()){
+                config = [select Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c, Invitation_Primary_Max__c, Invitation_Secondary_Max__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName AND RecordTypeId =: recordTypes[0].Id LIMIT 1];
+            }
+            else{
+                config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c, Invitation_Primary_Max__c, Invitation_Secondary_Max__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName LIMIT 1];
+            }
             
            
-			System.debug('SMH LIMIT PRIMARY: '+nbOfPrimaryInAccount+' over '+config.Max_Number_Of_Primary_User__c);
-			System.debug('SMH LIMIT SECONDARY: '+nbOfSecondaryInAccount+' over '+config.Max_Number_Of_Secondary_User__c);
-			System.debug('SMH isGuest '+isGuest);
+            System.debug('SMH LIMIT PRIMARY: '+nbOfPrimaryInAccount+' over '+config.Max_Number_Of_Primary_User__c);
+            System.debug('SMH LIMIT SECONDARY: '+nbOfSecondaryInAccount+' over '+config.Max_Number_Of_Secondary_User__c);
+            System.debug('SMH isGuest '+isGuest);
+            System.debug('LIMIT invitation primary: '+ nbOfPrimaryInAccount + config.Invitation_Primary_Max__c);
+            System.debug('LIMIT invitation secondary: '+ nbOfSecondaryInAccount + config.Invitation_Secondary_Max__c);
 
-            if((createPrimary && nbOfPrimaryInAccount >= config.Max_Number_Of_Primary_User__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Max_Number_Of_Secondary_User__c)) {
-                // Limit reached
+            if(!isInvitation) {
+                if((createPrimary && nbOfPrimaryInAccount >= config.Max_Number_Of_Primary_User__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Max_Number_Of_Secondary_User__c)) {
+                    // Limit reached
+                    return new RegistrationResponse(false, Label.OneId_Max_Account_Reached);
+                }
+            } else if ((createPrimary && nbOfPrimaryInAccount >= config.Invitation_Primary_Max__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Invitation_Secondary_Max__c)) {
                 return new RegistrationResponse(false, Label.OneId_Max_Account_Reached);
+            }
             }
                 
 
@@ -328,7 +340,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
                     list<Account> acct = [SELECT Id, Name, RecordType.Name FROM Account WHERE Id =: invitation[0].AccountId__c]; 
                     if(! acct.isEmpty()) {
                         param.partnerAccount = acct[0];
-						param.createPrimary = invitation[0].Role__c == 'Primary';
+                        param.createPrimary = invitation[0].Role__c == 'Primary';
                     }
                 }
             }
@@ -362,12 +374,12 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
         set<string> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(recordTypeSearch);
 
-        String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry FROM Account WHERE ';
+        String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry, RecordTypeId FROM Account WHERE ';
         queryStr += ' RecordType.DeveloperName in :recordTypesSet';
         queryStr += ' AND Name like \'%' + userInput + '%\'';
 
         if(customerType=='Aircraft Operator') {
-            queryStr = 'SELECT Id, Name, IATACode__c, X8585_Code__c, Airline_designator__c, IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c ';
+            queryStr = 'SELECT Id, Name, IATACode__c, X8585_Code__c, Airline_designator__c, IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c, RecordTypeId ';
             String queryStr2 = ' FROM Account WHERE';
             //queryStr2 += ' RecordType.DeveloperName = \'IATA_Airline\'';
             queryStr2 += ' (RecordType.DeveloperName = \'IATA_Airline\' OR RecordType.DeveloperName = \'Operator\' )';
@@ -387,7 +399,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         }
 
         if(customerType=='ICAO Member State') {
-            queryStr = 'SELECT Id, Name, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c, IATA_ISO_Country__r.ISO_Code__c ';
+            queryStr = 'SELECT Id, Name, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c, IATA_ISO_Country__r.ISO_Code__c, RecordTypeId ';
             String queryStr2 = ' FROM Account WHERE';
             queryStr2 += ' RecordType.DeveloperName = \'ICAO_Member_State\'';
             queryStr2 += ' AND (Name like \'%' + userInput + '%\'';

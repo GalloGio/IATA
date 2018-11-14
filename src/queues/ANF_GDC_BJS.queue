@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>noreply@iata.org</email>
-    <name>E&amp;F Client Services</name>
+    <email>pangxx@iata.org</email>
+    <name>ANF - GDC BJS</name>
     <queueMembers>
-        <roles>
-            <role>E_F</role>
-            <role>IDFSEFServicesA</role>
-        </roles>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

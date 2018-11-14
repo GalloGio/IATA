@@ -71,6 +71,7 @@ global class vfISSP_FAQ2Case
     public String recordToCreate {get; set;}
     public list<SelectOption> lst_selectTopics {get;set;}
     public list<SelectOption> lst_selectsubTopics {get;set;}
+    public list<SelectOption> lst_selectTopics_Emergencies {get;set;}
     public list<SelectOption> lst_selectAreasOfConcern {get;set;}
 
     public String topic { get; set; }
@@ -93,7 +94,7 @@ global class vfISSP_FAQ2Case
     public boolean isPWCProfile {get;set;}
     public boolean isDPCUser {get;set;}
     public boolean isIFG {get;set;}
-    public static boolean isComplain {get;set;}//Indecates if the user clicked the "I wish to complain button"
+    public static boolean isComplain {get;set;}//Indicates if the user clicked the "I wish to complain button"
     // compliments
     public static boolean isCompliment {get;set;}//Indicates if the user clicked the "Share a compliment button"
     // end compliments
@@ -118,6 +119,7 @@ global class vfISSP_FAQ2Case
     public boolean Clicked_IATAServiceRequest {get;set;}
     public boolean Clicked_PWCServiceRequest {get;set;}
     public boolean Clicked_DPCServiceRequest {get;set;}
+    public boolean Clicked_EmergencyRequest {get;set;}
 
     //Added new Help Text to the Page
     public ISSP_HelpText__c ISSP_TopicHelptext {get;set;}
@@ -445,6 +447,7 @@ global class vfISSP_FAQ2Case
         vfISSP_FAQ2Case faq2Case = new vfISSP_FAQ2Case();
         // bypass any apex page parametes calls, otherwise will get NullPointerException
         faq2Case.callApexPagesParameters = false;
+        faq2Case.Clicked_EmergencyRequest = false;
         faq2Case.pageLoad();
         // set choosen topic, subtopic and country
         faq2Case.topic = topicCode;
@@ -903,6 +906,11 @@ global class vfISSP_FAQ2Case
     * 2017-09-07   paulo.bastos@rightitservices.com  Creation
     ********************************************************************************************************/
     public void getButtonNameFromConfigAndAddToList(String butMapConfigKey,String buttonCategory){
+        // if we are in Emergenecy section show ONLY emergecncy button category
+        if (Clicked_EmergencyRequest  && buttonCategory!=BUT_CAT_EMERGENCY) return;
+        // if we are in a NON Emergency section show only non emergency buttons
+        if (!Clicked_EmergencyRequest  && buttonCategory==BUT_CAT_EMERGENCY) return;
+        
         String csButtonNameAux;
         LiveAgentButtonSettings__c csButtonSettObj;
 
@@ -1027,6 +1035,12 @@ global class vfISSP_FAQ2Case
         this.callUsFinalString=retVal;
 
         return retVal;
+    }
+
+    public String getCallUsEmergencyFinalString(){
+        return
+            Label.LVA_CallUsThruPhoneNum+' <b>'+Label.LVA_CallUsEmergencyPhoneNumber +'</b>'+
+            '<br/>'+Label.LVA_CallUsAvailableHours+' <b>'+Label.LVA_CallUsEmergencyAvailableHours+'</b>';
     }
 
     /*******************************************************************************************************
@@ -1714,6 +1728,11 @@ for (string topicver:listofAllowedTopics){
             newCase.Groups__c = 'CNS Team'; // important field to be used on E2C premium
         }
         newCase.Case_Language__c = null;
+        
+        //Specific case field values for Emergencies
+        if (this.Clicked_EmergencyRequest) {
+            newCase.Priority = 'Emergency';
+        }
 
         system.debug('wwe newCase: ' + newCase );
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && isCompliment1!= true){
@@ -1795,6 +1814,11 @@ for (string topicver:listofAllowedTopics){
         if(isCNS || cnsTopicMap.containsKey(newCase.Topic__c.replace(' ', ''))) {
             newCase.CNSCase__c = true;
             newCase.Groups__c = 'CNS Team'; // important field to be used on E2C premium
+        }
+
+        //Specific case field values for Emergencies
+        if (this.Clicked_EmergencyRequest) {
+            newCase.Priority = 'Emergency';
         }
 
         //ASsign new CAse Record Type
@@ -1902,6 +1926,7 @@ for (string topicver:listofAllowedTopics){
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;
         Clicked_DPCServiceRequest = false;
+        Clicked_EmergencyRequest = false;
         GenerateFieldsBySettings();
         isComplain = true ;
         this.currentButtonsToShow = OnlyCancel;
@@ -1917,12 +1942,33 @@ for (string topicver:listofAllowedTopics){
         return null;
     }
 
+    public PageReference createAnEmergency(){
+        System.debug('createAnEmergency START: ' + this.Clicked_EmergencyRequest);
+        resetCase();
+        Clicked_SISHelpDesk = false;
+        Clicked_IATAServiceRequest = false;
+        Clicked_PWCServiceRequest = false;
+        Clicked_DPCServiceRequest = false;
+        Clicked_EmergencyRequest = true;
+        GenerateFieldsBySettings();
+        this.currentButtonsToShow = OnlyCancel;
+        topic = Env.SelectOptionDefaultValue ;
+        subtopic = Env.SelectOptionDefaultValue ;
+        System.debug('createAnEmergency END: ' + this.Clicked_EmergencyRequest);
+        labelSubTopic = 'I wish to create an emergency about';
+        isComplain1 = false ;
+        isCompliment1 = false ;
+        errorMessage = new list<string>();
+        return null;
+    }
+
     public PageReference GeneralQueueMethod(){
         resetCase();
         Clicked_SISHelpDesk = false;
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;
         Clicked_DPCServiceRequest = false;
+        Clicked_EmergencyRequest = false;
         GenerateFieldsBySettings();
         isComplain = false ;
         isCompliment = false;
@@ -1942,6 +1988,7 @@ for (string topicver:listofAllowedTopics){
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;
         Clicked_DPCServiceRequest = false;
+        Clicked_EmergencyRequest = false;
         GenerateFieldsBySettings();
         isCompliment = true;
         isComplain = false ;
@@ -1995,10 +2042,27 @@ for (string topicver:listofAllowedTopics){
             if (selectDataCategory.lst_childs.size() > 0)
             {
                 this.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
+                
+                // ONLY FOR EMERGENCIES list of available categories
+                set<String> setEmergencyCategories = new set<String>();
+                if(this.Clicked_EmergencyRequest==null) this.Clicked_EmergencyRequest=false;
+                if (this.Clicked_EmergencyRequest) {
+                    ISSP_FAQ2Case_Emergencies__c emergencyCategories = ISSP_FAQ2Case_Emergencies__c.getInstance(selectDataCategory.CategoryName);
+                    if (emergencyCategories!=null && emergencyCategories.Subtopic__c!=null) {
+                        setEmergencyCategories.addAll(emergencyCategories.Subtopic__c.split(','));
+                    }
+                }
+                
                 for(Integer cIndex = 0; cIndex < selectDataCategory.lst_childs.size(); cIndex++)
                 {
                     clsDataCategory.CategoryChildWrapper childCat = selectDataCategory.lst_childs[cIndex];
-                    this.lst_selectsubTopics.add(new SelectOption(childCat.CategoryName, childCat.CategoryLabel));
+                    if (this.Clicked_EmergencyRequest) {
+                        if (setEmergencyCategories.contains(childCat.CategoryName)) {
+                            this.lst_selectsubTopics.add(new SelectOption(childCat.CategoryName, childCat.CategoryLabel));
+                        }
+                    } else {
+                        this.lst_selectsubTopics.add(new SelectOption(childCat.CategoryName, childCat.CategoryLabel));
+                    }
                 }
 
                 subtopic = selectDataCategory.CategoryName;
@@ -2384,6 +2448,28 @@ for (string topicver:listofAllowedTopics){
             }
         }
         setTopicByPermissions();
+        
+        //fill list for emergencies
+        this.lst_selectTopics_Emergencies = new list<SelectOption>();
+        for (SelectOption option: this.lst_selectTopics) {
+            Integer index = getIndexValue(option.getValue());
+            if (index==-1) {
+                this.lst_selectTopics_Emergencies.add(option);
+            } else {
+                clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[index];
+                if (ISSP_FAQ2Case_Emergencies__c.getInstance(cdc.CategoryName)!=null) {
+                    this.lst_selectTopics_Emergencies.add(option);
+                }
+            }
+        }
+    }
+    
+    private static Integer getIndexValue(String value) {
+        try {
+            return Integer.ValueOf(value);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     /*
@@ -3088,6 +3174,7 @@ for (string topicver:listofAllowedTopics){
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;
         Clicked_DPCServiceRequest = false;
+        Clicked_EmergencyRequest = false;
 
         if(inRecordTypeName == 'Cases_SIS_Help_Desk'){
             Clicked_SISHelpDesk = true ;

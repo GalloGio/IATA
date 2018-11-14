@@ -4138,16 +4138,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Assign_to_Agency_Management_Europe_queue</fullName>
-        <field>OwnerId</field>
-        <lookupValue>CasesACCEuropeOffOnshore</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Assign to Agency Management Europe queue</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Assign_to_DE_BSP_queue</fullName>
         <field>OwnerId</field>
         <lookupValue>CasesGermany</lookupValue>
@@ -12010,7 +12000,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,SAAM,Internal Cases (IDFS ISS),Process</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Internal Cases (IDFS ISS),Process</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -13784,7 +13774,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and  6 and 7 and 8</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and  6 and 7 and 8 and 9</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -13821,6 +13811,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Total_Irregularities__c</field>
             <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.ANG_IsNewGenAgency__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
         </criteriaItems>
         <description>key account management in Europe</description>
         <triggerType>onAllChanges</triggerType>
@@ -15038,10 +15033,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <rules>
         <fullName>ISS Key controls Dashboard AM</fullName>
         <actions>
-            <name>Assign_to_Agency_Management_Europe_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>Case_Area_Agency_Management</name>
             <type>FieldUpdate</type>
         </actions>
@@ -15068,7 +15059,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org</value>
+            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Subject</field>
@@ -15306,7 +15297,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19 OR 20 OR (23 AND 24)))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR (19 AND 20) OR (23 AND 24)))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15385,7 +15376,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>FoP Management,Accreditation Type</value>
+            <value>FoP Management,Accreditation Type,Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy,Annual revalidation</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
@@ -15400,12 +15391,12 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy</value>
+            <value>Financial Security Request,Financial Security Reduction,Financial Security Update,Financial Security Renewal</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Reason1__c</field>
+            <field>Case.Status</field>
             <operation>equals</operation>
-            <value>Annual revalidation</value>
+            <value>Accepted_Pending BG</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
