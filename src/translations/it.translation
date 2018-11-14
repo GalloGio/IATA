@@ -1513,6 +1513,10 @@ la seguente procedura per completarlo :
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>Questo servizio facilita l&apos;interazione e lo scambio di informazioni tra gli intermediari/agenti merci e le compagnie aeree che fanno parte di IATA Cargo Accounts Settlement System (CASS).</label>
         <name>CASSLink_Description</name>
     </customLabels>

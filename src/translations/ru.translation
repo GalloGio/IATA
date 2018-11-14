@@ -1509,6 +1509,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>Эта служба упрощает взаимодействие и обмен информацией между грузовыми агентами и авиалиниями, которые участвуют в IATA программе расчета счетов и платежей за грузоперевозки (CASS).</label>
         <name>CASSLink_Description</name>
     </customLabels>

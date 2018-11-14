@@ -8101,6 +8101,66 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Key_Contacts_Order__c</fullName>
+        <description>PLEASE CONTACT ACCOUNT MANAGEMENT TEAM FOR MORE DETAILS</description>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(CEO_CFO__c,&apos;CEO&apos;), 1, 
+IF( ISPICKVAL(CEO_CFO__c,&apos;CFO&apos;), 2, 
+IF( ISPICKVAL(CEO_CFO__c,&apos;COO&apos;), 3, 
+IF( ISPICKVAL(CEO_CFO__c,&apos;CCO&apos;), 4, 
+IF( ISPICKVAL(CEO_CFO__c,&apos;CIO&apos;), 5, 
+IF(Membership_Main_Contact__c == true,6, 
+IF( INCLUDES(Function__c, &apos;Aeropolitical&apos;),7, 
+IF( INCLUDES(Function__c, &apos;Cargo&apos;),8, 
+IF( INCLUDES(Function__c, &apos;Commercial&apos;),9, 
+IF( INCLUDES(Function__c, &apos;Environment&apos;),10, 
+IF( INCLUDES(Function__c, &apos;Finance&apos;),11, 
+IF( INCLUDES(Function__c, &apos;Gen.Management&apos;),12, 
+IF( INCLUDES(Function__c, &apos;Human Resources&apos;),13, 
+IF( INCLUDES(Function__c, &apos;IT&apos;),14, 
+IF( INCLUDES(Function__c, &apos;Legal&apos;),15, 
+IF( INCLUDES(Function__c, &apos;Marketing&amp;Sales&apos;),16, 
+IF( INCLUDES(Function__c, &apos;Media&apos;),17, 
+IF( INCLUDES(Function__c, &apos;Operations&apos;),18, 
+IF( INCLUDES(Function__c, &apos;Other&apos;),19, 
+IF( INCLUDES(Function__c, &apos;Safety&apos;),20, 
+IF( INCLUDES(Function__c, &apos;Security&amp; Facilitation&apos;),21, 
+IF( INCLUDES(Function__c, &apos;Technical&apos;),22, 
+IF( INCLUDES(Function__c, &apos;Training&apos;),23, 
+24 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+) 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Key Contacts Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>LCAG_Member__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -8580,6 +8640,18 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <label>Main Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Membership_Main_Contact_for_Report__c</fullName>
+        <description>Main Contact value fore AMP record display</description>
+        <externalId>false</externalId>
+        <formula>IF(Membership_Main_Contact__c, &apos;Main&apos;, &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Main Contact</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Middle_Initial__c</fullName>
