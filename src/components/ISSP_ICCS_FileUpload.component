@@ -16,7 +16,7 @@
                         
                         <br/><br/>
                         
-                        <apex:inputFile value="{! fileBody}" filename="{! fileName}"/>
+                        <apex:inputFile value="{! fileBody}" filename="{! fileName}" contentType="{! contentType}"/>
                         
                         <apex:outputPanel rendered="{! filenameExists}">
 	                        <br/>
