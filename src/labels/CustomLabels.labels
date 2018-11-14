@@ -5485,7 +5485,7 @@ Has read only access over different features of the service.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS More About Link</shortDescription>
-        <value>More about the New ICCS</value>
+        <value>ICCS Communications</value>
     </labels>
     <labels>
         <fullName>ICCS_Multiple_Signatories_Change_Message</fullName>
