@@ -25,10 +25,11 @@ public class TestClass_SetupVariables {
             return RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'GDP_Contact');
         }
     }
-    public static ID IATAServiceProviderAccountRecordTypeID {
-        get
+    public static ID IATAAccountRecordTypeID
+    {
+     	get
         {
-            return RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Service_Provider_Account');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         }
     }
     public static ID ExternalCasesInvoicesWorksID {

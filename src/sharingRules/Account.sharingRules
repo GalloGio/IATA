@@ -263,10 +263,10 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>GDP Account,Agency</value>
+            <value>Agency</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Merged_Account__c</field>
+           <field>Merged_Account__c</field>
             <operation>notEqual</operation>
             <value>Merged</value>
         </criteriaItems>
