@@ -4,6 +4,88 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>BSPlink_FOP_notifications</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordType__c</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - FoP notification</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emergency_BJS_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;01:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emergency_SIN_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>OR(
+  AND(
+    RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
+    ISPICKVAL(Priority , &quot;Emergency&quot;),
+    OR(
+      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;23:00:00.000&quot;),
+      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;13:00:00.000&quot;)
+    )
+  ),
+  AND(
+    OR(
+      RecordType.DeveloperName = &quot;CasesEurope&quot;,
+      RecordType.DeveloperName = &quot;CasesAmericas&quot;,
+      RecordType.DeveloperName = &quot;CasesMENA&quot;
+    ),
+    ISPICKVAL(Priority , &quot;Emergency&quot;),
+    OR(
+      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;22:00:00.000&quot;),
+      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;05:00:00.000&quot;)
+    )
+  ),
+  AND(  
+    RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
+    ISPICKVAL(Priority , &quot;Emergency&quot;),
+    OR(
+      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;09:00:00.000&quot;),
+      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;01:00:00.000&quot;)
+    )
+  )
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emergency_MAD_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>OR(
+  AND(
+    OR(
+      RecordType.DeveloperName = &quot;CasesEurope&quot;,
+      RecordType.DeveloperName = &quot;CasesAmericas&quot;,
+      RecordType.DeveloperName = &quot;CasesMENA&quot;
+    ),
+    ISPICKVAL(Priority , &quot;Emergency&quot;),
+    TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;05:00:00.000&quot;),
+    TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;22:00:00.000&quot;)
+  ),
+  AND(
+    OR(
+      RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
+      RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;
+    ),
+    ISPICKVAL(Priority , &quot;Emergency&quot;),
+    TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;13:00:00.000&quot;),
+    TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
+  )
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 OR 2</booleanFilter>
@@ -1057,6 +1139,76 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <field>Account.Region_formula__c</field>
                 <operation>equals</operation>
                 <value>Africa &amp; Middle East</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Model_A_Onboarding_Africa_Mid_East</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Region__c</field>
+                <operation>equals</operation>
+                <value>Africa &amp; Middle East</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Model_A_Onboarding_China_North_Asia</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Region__c</field>
+                <operation>equals</operation>
+                <value>China &amp; North Asia</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Model_A_Onboarding_Americas</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Region__c</field>
+                <operation>equals</operation>
+                <value>Americas</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Model_A_Onboarding_Asia_Pacific</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Asia &amp; Pacific</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Model_A_Onboarding_Europe</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Region__c</field>
+                <operation>equals</operation>
+                <value>Europe</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>

@@ -22,7 +22,7 @@ private class IECInvoice_Ctrl_Test {
 		Test.setMock(WebServiceMock.class, new MockSAPDigitalInvoice());
 		IECInvoice_Ctrl invoice = new IECInvoice_Ctrl();
 		invoice.getInvoice();
-		IECInvoice_Ctrl.CallSAPToGetInvoice_Static(orderItems[0].Invoice_Number__c);
+		//IECInvoice_Ctrl.CallSAPToGetInvoice_Static(orderItems[0].Invoice_Number__c); removed PPA stories from NEWGEN release6.1
 		Test.stopTest();
 
 		List<Attachment> lstAttachment = [select id, Name from Attachment where Name =:orders[0].Id];

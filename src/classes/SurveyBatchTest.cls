@@ -8,13 +8,13 @@ public class SurveyBatchTest {
   public static final ID FDS_ICCS_Email_to_CaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Email_to_Case');
   public static final ID Cases_SIS_Help_DeskRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
   public static final ID processRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
-  public static final ID aCAId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application'); 
+  public static final ID aCAId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
 
 
   @testSetup
     static void setupTestData() {
 
-           Map<String,String> mpCountries = new Map<String,String>();           
+           Map<String,String> mpCountries = new Map<String,String>();
            mpCountries.put('Finland','FI');
            mpCountries.put('United States','US');
            mpCountries.put('Russian Federation','RU');
@@ -60,7 +60,7 @@ public class SurveyBatchTest {
                                  );
         insert con;
 
-        User u1 = new User(FirstName='Ángel', 
+        User u1 = new User(FirstName='Ángel',
                 Division='UnitTest',
                 License_Cost_Center__c='AAA000AA00',
                 Username='test1@iata.org.amsdev1',
@@ -749,12 +749,12 @@ public class SurveyBatchTest {
                                      CNS_Account__c = false);
 
 
-            
+
 
             acc.add(a);
             acc.add(a2);
             acc.add(a3);
-            
+
             insert acc;
 
             //List Contact
@@ -762,10 +762,10 @@ public class SurveyBatchTest {
 
             Contact con =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et1', HasOptedOutOfEmail = false);
             Contact con2 =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = a2.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et2', HasOptedOutOfEmail = false);
-            
+
             cont.add(con);
             cont.add(con2);
-            
+
             insert cont;
 
             date dead = date.today().addDays(40);
@@ -933,22 +933,22 @@ public class SurveyBatchTest {
                               Financial_Review_Result__c = 'Satisfactory',
                               Reason1__c = 'CHC – Change of Shareholding'
                               ));*/
-                        
-                        
+
+
 
         for(Case c : cases){
           c.Status = 'Closed';
         }
-		
-		test.startTest();
+
+    test.startTest();
         insert cases;
-		test.stopTest();
+    test.stopTest();
 
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
         TransformationHelper.CalculateBusinessHoursAges = false;
         CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 
-        
+
             //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
             SurveyBatch batch = new SurveyBatch();
             batch.ClosedDate = date.today();
@@ -959,7 +959,7 @@ public class SurveyBatchTest {
                         '0 0 0 15 3 ? 2022',
                         new SurveyBatchScheduler());
 
-        
+
     }
    }
 
@@ -1129,20 +1129,20 @@ public class SurveyBatchTest {
                               OwnerId = u1.Id
                               ));
 
-                   
+
 
         for(Case c : cases){
           c.Status = 'Closed';
         }
-		test.startTest();
+    test.startTest();
         insert cases;
-		test.stopTest();
+    test.stopTest();
 
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
         TransformationHelper.CalculateBusinessHoursAges = false;
         CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 
-        
+
             //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
             SurveyBatch batch = new SurveyBatch();
             batch.ClosedDate = date.today();
@@ -1153,7 +1153,7 @@ public class SurveyBatchTest {
                         '0 0 0 15 3 ? 2022',
                         new SurveyBatchScheduler());
 
-        
+
     }
    }
 
@@ -1162,12 +1162,12 @@ public class SurveyBatchTest {
       if(offsetLimit!=null){
         listCountries = [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_Country__c LIMIT :countriesLimit Offset :offsetLimit];
         }else{
-        listCountries = [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_Country__c LIMIT :countriesLimit];  
+        listCountries = [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_Country__c LIMIT :countriesLimit];
       }
        Integer i = 0;
        i=0;
        list<Account> listAccount = new list<Account>();
-       for(IATA_ISO_Country__c iso : listCountries) {        
+       for(IATA_ISO_Country__c iso : listCountries) {
            Account a = new Account( name ='IFAP ACCT'+i,
            industry = 'pluto',
            IATA_ISO_Country__c=iso.id,
@@ -1309,7 +1309,7 @@ static testMethod void testForCountries3() {
     System.runAS(u) {
        prepareTestForCountries(6,10);
     }
-   
+
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);
@@ -2205,6 +2205,66 @@ System.runAS(u) {
        test.stopTest();
     }
 
+    static testMethod void testForRoles13() {
+
+     TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+     TransformationHelper.CalculateBusinessHoursAges = true;
+     CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+
+
+     User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+
+     UserRole uRole = new UserRole(Name = 'E&F Client Service');
+
+     insert uRole;
+     u.UserRoleId = uRole.Id;
+     update u;
+
+     System.runAS(u) {
+
+      Account a = [SELECT Id, Name FROM Account WHERE  name ='IFAP ACCT' LIMIT 1];
+
+      Contact con = [SELECT Id, Name FROM Contact WHERE email = 'asd.arg@wewt.et' LIMIT 1];
+
+
+      Case c = new Case();
+      c.RecordTypeId = chinaRTID;
+      c.OwnerId = u.Id;
+      c.Reason1__c = 'CHC – Change of Shareholding';
+      c.BSPCountry__c='Canada';
+      c.Status = 'Financial Security Requested';
+      c.FS_Submitted_Date__c = date.today();
+      c.FS_Deadline_Date__c = date.today().addDays(-14);
+      c.Origin = 'asd';
+      c.IFAP_Area__c = 'asda';
+      c.Financial_Review_Type__c ='bla';
+      c.IFAP_Financial_Year__c =  String.valueOF(date.today().month());
+      c.Deadline_Date__c = date.today().addDays(-14);
+      c.contactid = con.id;
+      c.AccountId = a.id;
+      c.Assessment_Performed_Date__c = date.today();
+      c.Financial_Review_Result__c = 'Satisfactory' ;
+      c.Subject = 'wrthsrthjr';
+        // OwnerId = us.Id
+        insert c;
+
+        c.Status = 'Closed';
+        update c;
+
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        TransformationHelper.CalculateBusinessHoursAges = false;
+        CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
+      }
+      test.startTest();
+       //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
+       SurveyBatch batch = new SurveyBatch();
+       batch.ClosedDate = date.today();
+       Database.executeBatch(batch, 50);
+
+
+       test.stopTest();
+     }
+
     static testMethod void testProcessCustomerRecovery() {
        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
        TransformationHelper.CalculateBusinessHoursAges = true;
@@ -2265,5 +2325,10 @@ System.runAS(u) {
        batch.ClosedDate = date.today();
        Database.executeBatch(batch, 50);
        test.stopTest();
+    }
+
+    static testMethod void testFakeMethod(){
+      SurveyBatch batch = new SurveyBatch();
+      batch.fakeMethod();
     }
 }
