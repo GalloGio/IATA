@@ -4,6 +4,7 @@
 Timeout denotes how long the batch job waits until it ignores the agent as logged off.</description>
     <fields>
         <fullName>Region__c</fullName>
+        <description>Region agent belongs to</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Region</label>
@@ -14,6 +15,7 @@ Timeout denotes how long the batch job waits until it ignores the agent as logge
     </fields>
     <fields>
         <fullName>Timeout_In_Minutes__c</fullName>
+        <description>Timeout after which agent is treated as logged off by auto assignment</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Timeout In Minutes</label>

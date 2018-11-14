@@ -5,6 +5,7 @@
     <fields>
         <fullName>Active__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Flag to specify that redirection is active or not.</description>
         <externalId>false</externalId>
         <label>Active</label>
         <trackTrending>false</trackTrending>

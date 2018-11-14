@@ -4,6 +4,7 @@
     <fields>
         <fullName>GCS_Product_Topic__c</fullName>
         <caseSensitive>true</caseSensitive>
+        <description>Type of product the queue is related to</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Case Area</label>
@@ -14,6 +15,7 @@
     </fields>
     <fields>
         <fullName>Queue_Id__c</fullName>
+        <description>Id of queue</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Queue Id</label>
