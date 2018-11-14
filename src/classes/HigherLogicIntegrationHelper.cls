@@ -95,8 +95,12 @@ public class HigherLogicIntegrationHelper {
 	*
 	*/
 	public static void pushPersonMembers(List<User> usersToPushLst){
-		HigherLogicIntegrationWS.pushMembers(usersToPushLst);
-		HigherLogicIntegrationWS.flushWebServiceLogs();
+		
+		if(!usersToPushLst.isEmpty()){
+			HigherLogicIntegrationWS.pushMembers(usersToPushLst);
+			HigherLogicIntegrationWS.flushWebServiceLogs();
+		}
+		
 	}
 	
 	/**
@@ -105,6 +109,7 @@ public class HigherLogicIntegrationHelper {
 	* @param contactIdSet 
 	*
 	*/
+	@future(callout=true)
 	public static void updateMembersRelationships(Set<Id> contactIdSet){
 		
 		List<User> newUsersLst = new List<User>(

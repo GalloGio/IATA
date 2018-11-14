@@ -181,6 +181,7 @@ public class HigherLogicIntegrationWS {
 			memberDetails.Country			 = acct.BillingCountry;
 			memberDetails.PostalCode		 = acct.BillingPostalCode;
 			memberDetails.IsOrganization	 = true;
+			
 		}
 		
 		return memberDetails;
