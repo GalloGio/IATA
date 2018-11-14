@@ -1,12 +1,14 @@
 <aura:component controller="AMP_KeyContactsController">
     <aura:attribute name="accountId" type="String" />
-    <aura:attribute name="contacts" type="Contact[]" />
+    <aura:attribute name="reportId" type="String" />
+    <aura:attribute name="contacts" type="Object[]" />
+    <aura:attribute name="showPopup" type="Boolean" default="false" />
 
    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
    <div class="slds-card">
 
-    <div class="slds-card__header slds-grid">
-      <div class="slds-media slds-media--center">
+    <header class="slds-card__header slds-grid">
+      <div class="slds-media slds-media--center slds-has-flexi-truncate">
         <div class="slds-media__figure">
             <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#contact'}" class="slds-icon slds-icon-standard-contact slds-icon--medium" />
         </div>
@@ -14,39 +16,75 @@
           <h3 class="slds-text-heading--small">Key Contacts</h3>
         </div>
       </div>
-    </div>
-<div class="slds-card__body">
-   <table class="slds-table slds-table--bordered slds-table--striped">
-      <thead>
-        <tr>
-			<!-- <th scope="col"><span class="slds-truncate">Actions</span></th> -->
-            <th scope="col"><span class="slds-truncate">Name</span></th>
-            <th scope="col"><span class="slds-truncate">Type</span></th>
-            <th scope="col"><span class="slds-truncate">Primary for</span></th>
-            <th scope="col"><span class="slds-truncate">Title</span></th>
-            <th scope="col"><span class="slds-truncate">Phone</span></th>
-            <th scope="col"><span class="slds-truncate">Mobile</span></th>
-            <th scope="col"><span class="slds-truncate">Email</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        <aura:iteration items="{!v.contacts}" var="contact">
-         <tr>
-             <!-- <td><c:AMP_EditSaveMenu /></td> -->
-           <td><a href="{!'/'+contact.Id}" target="_blank">{!contact.Name}</a></td>
-           <td> <aura:unescapedHtml value="{!contact.Airline_Contact_Type__c}"/></td>
-           <td>{!contact.Function__c}</td>
-           <td>{!contact.Title}</td>
-           <td>{!contact.Phone}</td>
-           <td>{!contact.MobilePhone}</td>
-           <td>{!contact.Email}</td>
-
-         </tr>
-        </aura:iteration>
-      </tbody>
-   </table>
-
+            &nbsp;&nbsp;
+        <lightning:button class="slds-button slds-button--neutral" title="Print">
+            <a href="{!'/apex/AMP_KeyContacts_Printable?accountId='+  v.accountId}" target="_blank"> Print </a>
+        </lightning:button>
+        &nbsp;&nbsp;
+        <lightning:button class="slds-button slds-button--neutral" title="Print" onclick="{!c.showPopup}">
+            Export Details
+        </lightning:button>
+    </header>
+    <div class="slds-card__body">
+       <table class="slds-table slds-table--bordered slds-table--striped">
+          <thead>
+            <tr>
+                <!-- <th scope="col"><span class="slds-truncate">Actions</span></th> -->
+                <th scope="col"><span class="slds-truncate">Name</span></th>
+                <th scope="col"><span class="slds-truncate">Type</span></th>
+                <th scope="col"><span class="slds-truncate">Primary for</span></th>
+                <th scope="col"><span class="slds-truncate">Title</span></th>
+                <th scope="col"><span class="slds-truncate">Phone</span></th>
+                <th scope="col"><span class="slds-truncate">Mobile</span></th>
+                <th scope="col"><span class="slds-truncate">Email</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <aura:iteration items="{!v.contacts}" var="contact">
+             <tr>
+                 <!-- <td><c:AMP_EditSaveMenu /></td> -->
+               <td><a href="{!'/'+contact.con.Id}" target="_blank">{!contact.con.Name}</a></td>
+               <td> <aura:unescapedHtml value="{!contact.con.Airline_Contact_Type__c}"/></td>
+               <td> <aura:unescapedHtml value="{!contact.primaryFor}"/></td>
+               <td>{!contact.con.Title}</td>
+               <td>{!contact.con.Phone}</td>
+               <td>{!contact.con.MobilePhone}</td>
+               <td>{!contact.con.Email}</td>
+    
+             </tr>
+            </aura:iteration>
+          </tbody>
+       </table>
      </div>
      </div>
+
+	<aura:if isTrue="{!v.showPopup}">
+        <div class="slds-modal slds-fade-in-open " style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+
+                        <lightning:button class="slds-button slds-modal__close slds-button--icon-inverse close-button"  onclick="{!c.hidePopup}">
+                            <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#close" class="slds-icon "/>
+                            <span class="slds-assistive-text">Close</span>
+                        </lightning:button>
+                    </div>
+
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>Please remove column A once you have exported details.</p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="slds-button slds-button--neutral" title="OK" onclick="{!c.hidePopup}">
+                            <a href="{!'/'+ v.reportId +'?pv0=' + v.accountId + '&amp;pv1=' + v.accountId + '&amp;export=1&amp;enc=UTF-8&amp;xf=xls'}" target="_blank"> OK </a>
+                        </lightning:button>
+                        &nbsp;&nbsp;
+                        <lightning:button class="slds-button slds-button--neutral" title="Cancel"  onclick="{!c.hidePopup}"> Cancel </lightning:button>
+
+                    </footer>
+                </div>
+            </section>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
 
 </aura:component>
