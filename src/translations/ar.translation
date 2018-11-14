@@ -1509,6 +1509,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>كما تساعد هذه الخدمة على تيسير التواصل وتبادل المعلومات بين وسطاء/ وكالات الشحن وشركات الطيران المشاركة في نظام تسوية حسابات الشحن (CASS).</label>
         <name>CASSLink_Description</name>
     </customLabels>

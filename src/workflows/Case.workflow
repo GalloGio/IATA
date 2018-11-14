@@ -12000,7 +12000,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,SAAM,Internal Cases (IDFS ISS),Process</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Internal Cases (IDFS ISS),Process</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
