@@ -1237,6 +1237,11 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                     <label>11</label>
                 </value>
                 <value>
+                    <fullName>12</fullName>
+                    <default>false</default>
+                    <label>12</label>
+                </value>
+                <value>
                     <fullName>21</fullName>
                     <default>false</default>
                     <label>21</label>
@@ -1380,6 +1385,11 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                     <fullName>ADMINISTRATIVE OFFICES</fullName>
                     <default>false</default>
                     <label>ADMINISTRATIVE OFFICES</label>
+                </value>
+                <value>
+                    <fullName>APPLICATION DISAPPROVED</fullName>
+                    <default>false</default>
+                    <label>APPLICATION DISAPPROVED</label>
                 </value>
                 <value>
                     <fullName>APPLICATION WITHDRAWN</fullName>
@@ -1597,6 +1607,10 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <controllingFieldValue>No longer a customer</controllingFieldValue>
                 <controllingFieldValue>Not in operation</controllingFieldValue>
                 <valueName>CODE ASSIGNMENT ONLY</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Not accreditated</controllingFieldValue>
+                <valueName>APPLICATION DISAPPROVED</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Not accreditated</controllingFieldValue>
@@ -2638,6 +2652,10 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <default>false</default>
             </values>
             <values>
+                <fullName>12</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>21</fullName>
                 <default>false</default>
             </values>
@@ -2742,6 +2760,10 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
             </values>
             <values>
                 <fullName>ADMINISTRATIVE OFFICES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APPLICATION DISAPPROVED</fullName>
                 <default>false</default>
             </values>
             <values>
