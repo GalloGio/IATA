@@ -16,8 +16,8 @@ public class SCIMUserTest {
         // Create a test user - changes will be reverted automatically by Salesforce
         Profile p = [SELECT Id FROM profile WHERE name='Standard User'];
         User user = new User(
-                userName = 'john.doe1@example.org',
-                email = 'john.doe@example.org',
+                userName = 'john.doe@example.org',
+				email = 'john.doe@example.org',
                 firstName = 'John',
                 lastName = 'Doe',
                 profileId = p.id,

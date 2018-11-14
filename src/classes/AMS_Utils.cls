@@ -1896,6 +1896,12 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
 
+        /*** AMSU-169 ***/
+        //Remittance frequency must be migrate but won't be available to edit
+        if(typesOfChange == AMS_UTILS.OWNERSHIP_IATA) {
+            fieldsToMigrate.add('Remittance_frequency__c');
+        }
+
         if (fieldsToMigrate != null && onlineAccreditation != null) {
                 Map<String, Object> onlineAccreditationFieldNewValue = new Map<String,Object>();
 
@@ -1912,7 +1918,7 @@ public without sharing class AMS_Utils {
                 if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
                     onlineAccreditationFieldNewValue.put('ISSP_AMS_Premises_located_at_airport__c', (account.In_a_Airport__c == true) ? 'Yes' : 'No');
                 if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
-                    onlineAccreditationFieldNewValue.put('ISSP_AMS_Legal_Status__c', account.Company_Type__c);
+                    onlineAccreditationFieldNewValue.put('ISSP_AMS_Legal_Status__c', transformLegalStatus(account.Company_Type__c));
                 if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
                     onlineAccreditationFieldNewValue.put('ISSP_AMS_GDS_with_signed_contract__c', account.GDS__c);
 
@@ -3087,14 +3093,14 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     /**
     *   Method that validates if the record fields contain only latin characters
     **/
-    public static List<String> validateCharacters(sObject record, List<Schema.SObjectField> fieldsToCheck) {
+    public static List<String> validateCharacters(sObject record, List<Schema.FieldSetMember> fieldsToCheck) {
         List<String> res = new List<String>();
         String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
-        for(Schema.SObjectField field : fieldsToCheck) {
-            String fieldAPIName = field.getDescribe().getName();
-            String fieldLabel = field.getDescribe().getLabel();
+        for(Schema.FieldSetMember field : fieldsToCheck) {
+            String fieldAPIName = field.getFieldPath();
+            String fieldLabel = field.getLabel();
             Object value = record.get(fieldAPIName);
             if( value == null || !(value instanceof String)) {
                 continue; //Skip non String fields
@@ -3112,28 +3118,11 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return res;
     }
 
-    public static final List<Schema.SObjectField> STAGING_AREA_FIELDS_TO_VALIDATE = new List<Schema.SObjectField> {
-        AMS_Pax_Accreditation_Form__c.Account_Name__c, 
-        AMS_Pax_Accreditation_Form__c.IATACode__c, 
-        AMS_Pax_Accreditation_Form__c.CASS_Number__c, 
-        AMS_Pax_Accreditation_Form__c.Short_Name__c, 
-        AMS_Pax_Accreditation_Form__c.Trade_Name__c, 
-        AMS_Pax_Accreditation_Form__c.ISSP_AMS_License_No__c, 
-        AMS_Pax_Accreditation_Form__c.ISSP_AMS_VAT_number__c,
-        AMS_Pax_Accreditation_Form__c.Branch_Office_Street_name_number__c, 
-        AMS_Pax_Accreditation_Form__c.Branch_Office_Postal_code__c, 
-        AMS_Pax_Accreditation_Form__c.Branch_Office_City__c, 
-        AMS_Pax_Accreditation_Form__c.Shipping_Street__c, 
-        AMS_Pax_Accreditation_Form__c.Shipping_Postal_Code__c,
-        AMS_Pax_Accreditation_Form__c.Shipping_City__c, 
-        AMS_Pax_Accreditation_Form__c.Branch_Office_Email__c, 
-        AMS_Pax_Accreditation_Form__c.Website__c, 
-        AMS_Pax_Accreditation_Form__c.Abbreviated_name__c, 
-        AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c, 
-        AMS_Pax_Accreditation_Form__c.VAT_Number_2__c
-    };
+    public static final List<Schema.FieldSetMember> STAGING_AREA_FIELDS_TO_VALIDATE = SObjectType.AMS_Pax_Accreditation_Form__c.FieldSets.STAGING_AREA_FIELDS_TO_VALIDATE.getFields();
     /*** AMSU-166 End ***/
 
+    /*** AMSU-179 ***/
+        public static final List<Schema.FieldSetMember> ACCOUNT_FIELDS_TO_VALIDATE = SObjectType.Account.FieldSets.AMS_ACCOUNT_FIELDS_TO_VALIDATE.getFields();
 
     /*** AMSU-173 ***/
     public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};

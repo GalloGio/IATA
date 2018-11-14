@@ -1512,6 +1512,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>Ce service facilite l&apos;interaction et l&apos;échange d&apos;informations entre les intermédiaires / agences de fret et les compagnies aériennes qui participent au Système de règlement des comptes marchandises (CASS) de l&apos;IATA.</label>
         <name>CASSLink_Description</name>
     </customLabels>
