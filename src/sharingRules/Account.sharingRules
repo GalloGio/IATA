@@ -248,6 +248,30 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>GDP_extra_RW_Access</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <description>RW access to record types, in addition to those granted through the IDFS sharing rules (GDP is part of IDFS)</description>
+        <label>GDP extra RW Access</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>GDP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Agency</value>
+        </criteriaItems>
+        <criteriaItems>
+           <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>IATA_Country_Office</fullName>
         <accessLevel>Read</accessLevel>
         <accountSettings>

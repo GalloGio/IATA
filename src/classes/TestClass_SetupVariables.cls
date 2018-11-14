@@ -29,8 +29,7 @@ public class TestClass_SetupVariables {
     {
      	get
         {
-            List<RecordType> recTypId= [Select id, name from recordtype where name = 'Standard Account' limit 1];             
-            return recTypId.size() > 0 ? recTypId[0].Id : null;  
+            return RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         }
     }
     public static ID ExternalCasesInvoicesWorksID {
