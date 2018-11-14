@@ -1512,6 +1512,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>이 서비스를 통해 화물 중개/대행사 및 IATA 화물 계정 결산시스템(CASS) 간 상호작용과 정보교환이 가능합니다.</label>
         <name>CASSLink_Description</name>
     </customLabels>
