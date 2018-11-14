@@ -1,6 +1,6 @@
 ({
 
-	
+    
 /**
     Load customer type depending on service provider in URL
 */
@@ -14,9 +14,11 @@
             var servName = paramsMap.serviceName;
             var userTypeToCreate = paramsMap.t; //t=1  (for primary) or t=2 (for secondary) 
             var invitationId = paramsMap.token; //Invitation ID
+            console.log(invitationId);
 
             if(/\S/.test(servName)){
                 component.set("v.serviceName", servName);
+                console.log("servname "+servName);
                 if(! component.get("v.paramLoaded")) {
                     // Avoid multiple calls
                     component.set("v.paramLoaded", true);
@@ -26,6 +28,8 @@
                         component.set("v.invitationId", invitationId);
                     }
                     console.log('wwww');
+                    console.log(isInvitation);
+                    component.set("v.isInvitation", isInvitation)
                     helper.initParams(component, isInvitation, invitationId);
                 }
             }
@@ -38,7 +42,7 @@
 /**
     When a user type inside the search box
 */
-	onKeyUp : function(component, event, helper) {
+    onKeyUp : function(component, event, helper) {
         // Unvalidate component when user tries to change input        
         component.set("v.isValid", false);
         component.set("v.accountSelected", false);
@@ -50,7 +54,7 @@
             
             var action = component.get("c.getAccountsByType");
             action.setParams({
-            	"customerType":component.get("v.customerType"),
+                "customerType":component.get("v.customerType"),
                 "userInput":userInputCmp.value
             });
 
@@ -101,7 +105,7 @@
                 $A.util.removeClass(resultDiv, 'slds-is-open');
             }
         }
-	},
+    },
 
     onRender: function(component, event, helper) {
         // Expand div according to suggestion size
@@ -171,7 +175,8 @@
             "con":component.get("v.contact"),
             "isGuest" : component.get("v.isGuest"),
             "createPrimary":component.get("v.createPrimary"),
-            "userTypeToCreate":component.get("v.userTypeToCreate")
+            "userTypeToCreate":component.get("v.userTypeToCreate"),
+            "isInvitation":component.get("v.isInvitation")
 
         });
 

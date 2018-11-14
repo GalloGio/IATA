@@ -2,29 +2,34 @@ public with sharing class AMP_KeyContactsController {
 
     private final Account myAccount;
 	private final Id parentAccountId;
-	public List<Contact> lsKeyContacts {get;set;}
 
+    public String accountName {get;set;}
+
+	public List<ContactWrapper> lsKeyContactsWrapped {get;set;}
 
     // The extension constructor initializes the private member
     // variable myAccount by using the getRecord method from the standard
     // controller.
     public AMP_KeyContactsController(ApexPages.StandardController stdController) {
         this.myAccount = (Account)stdController.getRecord();
+        if(this.myAccount != null && this.myAccount.Id != null) {
 		this.parentAccountId = [SELECT Id, ParentId FROM Account WHERE Id = :myAccount.Id].ParentId;
-        lsKeyContacts = getKeyContacs();
+			lsKeyContactsWrapped = getKeyContactsWrapped(myAccount.Id);
+        }
+    }
+
+    public AMP_KeyContactsController() {
+        String accountId =  ApexPages.currentPage().getParameters().get('accountId');
+        accountName = [SELECT Id, Name FROM Account WHERE Id =:accountId LIMIT 1].Name;
+		lsKeyContactsWrapped = getKeyContactsWrapped(accountId);
     }
 
     public String getRecordId() {
         return (Id)myAccount.get('Id');
     }
 
-    public List<Contact> getKeyContacs() {
-        List<Contact> lsKeyContacts = getKeyContacs(myAccount.Id);//, parentAccountId);
-        return lsKeyContacts;
-    }
-
     @AuraEnabled
-    public static List<Contact> getKeyContacs(Id AccountId) {
+    public static List<ContactWrapper> getKeyContactsWrapped(Id AccountId) {
         List<Contact> lsKeyContacts =
             [SELECT Id, Name, Airline_Contact_Type__c, Title, Phone,
                     MobilePhone, Email, Membership_Function__c, Function__c,
@@ -76,7 +81,56 @@ public with sharing class AMP_KeyContactsController {
                     lsKeyContactsSorted.add(c);
                 }
             }
+		}
+		
+		List<ContactWrapper> wrappedContacts = new List<ContactWrapper>();
+		
+		for(Contact con : lsKeyContactsSorted){
+			wrappedContacts.add(new ContactWrapper(con));
         }
-        return lsKeyContactsSorted;
+		
+        return wrappedContacts;
     }
+    @AuraEnabled
+    public static String  getReportId() {
+    	List<Report> reports = [SELECT Id FROM Report WHERE DeveloperName = 'AMP_KeyContacts' LIMIT 1];
+    	
+    	if(!reports.isEmpty()){
+    		return reports[0].Id;
+    	}
+    	else{
+    		return '';
+    	}
+    }
+        
+    public class ContactWrapper{
+    	@AuraEnabled
+    	public Contact con {get;set;}
+    	
+    	@AuraEnabled
+    	public String primaryFor {get;set;}
+    	
+    	public ContactWrapper(Contact con){
+    		this.con = con;
+    		
+    		String s = con.Function__c;
+   			primaryFor = '';
+    		if(s != null){
+    			List<String> primaryForList = s.split(';');
+    			for(Integer i = 0; i < primaryForList.size(); i++){
+					primaryFor += primaryForList[i];
+
+					if(i != primaryForList.size()-1){
+	    				if(Math.mod(i,3) != 2){
+	    					primaryFor += '; ';
+	    				}
+	    				else{
+	    					primaryFor += ';<br/>';
+	    				}					
+					}
+    			}
+    		}
+    	}
+    }
+
 }
