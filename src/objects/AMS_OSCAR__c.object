@@ -7845,6 +7845,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     </listViews>
     <listViews>
         <fullName>AgencyManagementAfricaME_AMS_OSCAR</fullName>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
         <columns>NAME</columns>
         <columns>Account__c</columns>
         <columns>Country__c</columns>
@@ -7857,8 +7858,18 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
         <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Closed,Closed_ Not Accepted,Closed_Rejected,Closed_Withdrawn,Closed_Disapproved</value>
+        </filters>
+        <filters>
             <field>AMS_Online_Accreditation__c</field>
             <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operation>equals</operation>
+            <value>VR.1.0,VR.1.0.CA,ANG.FS.OPTINOUT,CER.1.0</value>
         </filters>
         <label>Agency Management - Africa &amp; ME</label>
         <language>en_US</language>

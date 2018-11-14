@@ -316,4 +316,12 @@ public class AMS_2_MDM_WebserviceTest {
 
         system.assert(sRespStatusCode=='200');
     }
+
+    public static testmethod void test_csv_errors_report() {
+        Test.startTest();
+        AMS_2_MDM_Webservice.sendCSVReport(new List<String> {'accountid, reason'});
+        Test.stopTest();
+    }
+
+
 }
