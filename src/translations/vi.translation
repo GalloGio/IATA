@@ -1511,6 +1511,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>Dịch vụ này tạo điều kiện tương tác và trao đổi thông tin giữa các trung gian/ đại lý vận chuyển hàng hóa và các hãng hàng không tham gia Chương trình Lập hóa đơn và Thanh toán của IATA (Billing and Settlement Plan - BSP).</label>
         <name>CASSLink_Description</name>
     </customLabels>

@@ -1509,6 +1509,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>บริการนี้อำนวยความสะดวกในการทำงานร่วมกัน และการแลกเปลี่ยนข้อมูลระหว่างคนกลาง/ตัวแทนคลังสินค้าและสายการบินที่เข้าร่วมในระบบการชำระเงินบัญชีคลังสินค้า IATA (Cargo Accounts Settlement System - CASS)</label>
         <name>CASSLink_Description</name>
     </customLabels>
