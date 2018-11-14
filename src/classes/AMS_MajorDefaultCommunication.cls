@@ -90,6 +90,9 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 		for(String country : airlinesByCountry.keySet()) {
 			for(Id airlineId : airlinesByCountry.get(country)) {
 				Set<Contact> contacts = executiveContacts.get(airlineId);
+				if(contacts == null) {
+					continue;
+				}
 				Id parentId = airlinesMap.get(airlineId);
 				if(parentId != null) {
 					Set<Contact> parentContacts = executiveContacts.get(parentId);
