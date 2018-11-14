@@ -2,17 +2,25 @@ public abstract class TriggerHandler {
 
 	private TriggerDelegation delegator;
 	private UnitOfWork uw;
+	private String handlerName;
+
+	private static void runHandler(String handlerName){
+
+		TriggerHandler handler = (TriggerHandler)Type.forName(handlerName).newInstance();
+		handler.handlerName = handlerName;
+		handler.run();
+	}
 
 	public void run() {
 
 		//check for trigger bypass
 		uw = getUnitOfWork();
-		if(Trigger.isBefore || Trigger.isUndelete) delegator = TriggerDelegation.register(this);
+		delegator = TriggerDelegation.register(handlerName);
 
 		runTrigger(Trigger.operationType);
 		
 		uw.commitWork();
-		if(Trigger.isAfter) TriggerDelegation.register(this).enqueue(this);
+		if(Trigger.isAfter) delegator.enqueue(handlerName);
 	}
 
 	private void runTrigger(System.TriggerOperation op) {

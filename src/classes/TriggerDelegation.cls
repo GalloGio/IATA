@@ -3,17 +3,20 @@ public class TriggerDelegation implements Queueable{
 	public class TriggerDelegationException extends Exception{}
 
 	private static TriggerDelegation instance;
-	private TriggerHandler originalCaller;
+	private String originalCaller;
+	private Integer executeCheck;
 	private List<TriggerAction> actions;
 	private Id jobId;
-	
-	public static TriggerDelegation register(TriggerHandler handler){
+
+	public static TriggerDelegation register(String handlerName){
 		if(instance == null){
 			instance = new TriggerDelegation();
 			instance.actions = new List<TriggerAction>();
-			instance.originalCaller = handler;
+			instance.originalCaller = handlerName;
+			instance.executeCheck = 0;
 		}
 
+		if(handlerName == instance.originalCaller) instance.executeCheck++;
 		return getInstance();
 	}
 
@@ -29,16 +32,18 @@ public class TriggerDelegation implements Queueable{
 		instance.actions.add(a);
 	}
 
-	public void enqueue(TriggerHandler handler){
+	public void enqueue(String handlerName){
+		if(originalCaller != handlerName) executeCheck--;
 
-		if(originalCaller != handler || actions.isEmpty()) return;
+		if(executeCheck > 0 || actions.isEmpty()) return;
 
 		if(jobId != null) System.abortJob(jobId);
 		jobId = System.enqueueJob(this);
 	}
 
 	public void execute(QueueableContext qc){
-		UnitOfWork uw = originalCaller.getUnitOfWork();
+		TriggerHandler handler = (TriggerHandler)Type.forName(originalCaller).newInstance();
+		UnitOfWork uw = handler.getUnitOfWork();
 		for(TriggerAction a : actions) a.executeFuture(uw);
 		uw.commitWork();
 	}
