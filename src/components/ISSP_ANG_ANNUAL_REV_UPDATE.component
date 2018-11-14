@@ -1035,6 +1035,8 @@
                 $(".shipping_city__c").val($(".branch_office_city__c").val());
                 $(".shipping_postal_code__c").val($(".branch_office_postal_code__c").val());
                 $(".shipping_state__c").val($(".state_province__c").val());
+                $('[id$="ShippingCountryList"]').val($(".country__c").val().toUpperCase());
+                $('#shipping_country__c > input').val($(".country__c").val().toUpperCase());
             }
         }
 
@@ -1212,6 +1214,7 @@
             $('[id$="newEmail"]' + " :input").attr("disabled", true);
 
             $('[id$="multiSelectId"]' + " :input").attr("disabled", true);
+            $('#shipping_country__c > input').css('display','block');
 
         }
 
