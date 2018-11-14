@@ -38,7 +38,7 @@ private class clsICHProcessImplementationTest {
         badEmail.Name = 'bad@email.com' ;
         badEmail.ApplicationName__c = 'ANY';
         insert badEmail;
-//
+
         ID IATAAccountRecordTypeID = TestClass_SetupVariables.IATAAccountRecordTypeID;
         Account account1 = new Account();
         account1.Name = 'ICH Application Support';
