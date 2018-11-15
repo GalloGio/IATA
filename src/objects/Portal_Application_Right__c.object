@@ -1159,9 +1159,10 @@ NOT(CONTAINS($Profile.Name,&quot;System administrator&quot;))
         <fullName>TD_cannot_be_approved_by_admin</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
- OR (ISCHANGED(Right__c) , ISNEW() ),
+ OR (ISCHANGED(Right__c) , ISNEW()
+ ),
  Application_Name__c = &apos;Treasury Dashboard&apos;,
- OR(AND(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)),NOT(ISPICKVAL(PRIORVALUE(Right__c),&apos;Access Requested&apos;))), 
+ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)), 
   $User.TD_Team__c = false
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by IATA ‘Treasury Dashboard’ team.</errorMessage>
