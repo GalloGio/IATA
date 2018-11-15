@@ -3887,13 +3887,15 @@ public class AMS_OSCARTriggerHandler {
 
             if(fop.ANG_FormOfPayment_ID__c == 'CC' && oscar.Process__c == AMS_Utils.NEWAE && oscar.Is_PCI_compliant__c == 'No')
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = 'Non-Active', RecordTypeId = fop.RecordTypeId));
-            else
-                authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = fop.Status__c, RecordTypeId = fop.RecordTypeId));
+            else {
+                String statusForFOP = oscar.Is_NewGen_Pilot__c ? 'Non-Active' : fop.Status__c;
+                authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = statusForFOP, RecordTypeId = fop.RecordTypeId));
+            }
         }
 
         if(!isCCCreated && oscar.Process__c == AMS_Utils.NEWAE){
 
-            if(oscar.Process__c == AMS_Utils.NEWAE && oscar.Is_PCI_compliant__c == 'No')
+            if(oscar.Process__c == AMS_Utils.NEWAE && (oscar.Is_PCI_compliant__c == 'No' || oscar.Is_NewGen_Pilot__c))
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
             else
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
