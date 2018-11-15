@@ -42,17 +42,8 @@ public without sharing class ISSP_UserTriggerHandler {
             }
         }
 
-        List <Portal_Application_Right__c> appRightList = [SELECT Id, Contact__c FROM Portal_Application_Right__c
-                            WHERE Application_Name__c = 'Standards Setting Workspace'
-                            AND Right__c = 'Access Granted'
-                            AND Contact__c IN :contactIdSet];
-         
-		for(Portal_Application_Right__c thisRecord : appRightList){
-			contactKaviAdd.add(thisRecord.Contact__c);
-        }
-        
-        if(contactKaviAdd.size() > 0){
-            HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, contactKaviAdd, null);
+        if(contactIdSet.size() > 0){
+            HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, contactIdSet, null);
         }
         
         setPortalUserName(newUserList);

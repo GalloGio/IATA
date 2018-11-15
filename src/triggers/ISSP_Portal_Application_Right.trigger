@@ -55,9 +55,27 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
     if(Trigger.isBefore && Trigger.isDelete) handler.onBeforeDelete();
     if(Trigger.isAfter && Trigger.isDelete) handler.onAfterDelete();    
 	//end of ANG
-    
-    if(Trigger.isDelete) return;
-    //methods below this line should not run for delete cases
+
+	if(Trigger.isDelete) {
+	
+		Set<Id> disableContactIdSet = new Set<Id>();
+
+		for(Portal_Application_Right__c access : trigger.old){
+		
+			if(Trigger.isAfter && access.Application_Name__c == 'Standards Setting Workspace'){
+				disableContactIdSet.add(access.Contact__c);
+			}
+
+		}
+		
+		if(!disableContactIdSet.isEmpty()){
+			HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.DISABLE_EXISTING_MEMBERS, disableContactIdSet, null);
+		}
+		
+		return;
+		
+	}
+	//methods below this line should not run for delete cases
 
 	for(Portal_Application_Right__c access : trigger.new){
 		system.debug('ONE RECORD');
@@ -180,6 +198,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 					if (access.Right__c == 'Access Granted'){
 						contactKaviAdd.add(access.Contact__c);
 					}else if (access.Right__c == 'Access Denied'){
+						//Should update user status in Higherlogic status to inactive (below9)
 						removeKaviPermissionSet.add(access.Contact__c);
 					}
 				}
@@ -314,10 +333,10 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	if (!contactRemove2FAIdSet.isEmpty()){
 		ISSP_UserTriggerHandler.removeNonTdReportSharing(contactRemove2FAIdSet);
 	}
+	
+	Id provAcctId = ProvisionKaviAccess.getFakeAccount().Id;
 
 	if (!contactKaviAdd.isEmpty()){
-		
-		Id provAcctId = null;
 		
 		String action = HigherLogicIntegrationHelper.PUSH_MEMBERS;
 		
@@ -325,8 +344,6 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 		
 		if (kaviUser != null ){
 			action = HigherLogicIntegrationHelper.PUSH_INTERNAL_MEMBERS;
-			//Fetch the required provisional account id
-			provAcctId = ProvisionKaviAccess.getFakeAccount().Id;
 		}
 
 		HigherLogicIntegrationHelper.pushPersonCompanyMembers(action, contactKaviAdd, provAcctId);
@@ -338,10 +355,9 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	
 	//RN-ENHC0012059 grant and remove the permission set to the user
 	if(!removeKaviPermissionSet.isEmpty()){
+		HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, removeKaviPermissionSet, provAcctId);
 		HigherLogicIntegrationHelper.assignHLPermissionSet(removeKaviPermissionSet, HigherLogicIntegrationHelper.REMOVE_ACCESS);
 	}
-
-
 
 	/*
 	if (!contactBaggageAdd.isEmpty()){

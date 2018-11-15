@@ -706,7 +706,8 @@ public with sharing class ISSP_PortalUserStatusChange {
         		Preferred_Language__c,
         		Status__c, 
         		(SELECT
-        			Id
+        			Id,
+        			Right__c
         		 FROM
         		 	Portal_Application_Rights__r 
         		 WHERE 
@@ -724,6 +725,7 @@ public with sharing class ISSP_PortalUserStatusChange {
         if(!contactMap.values().isEmpty()){
 
 	        List<User> usersToPushHL = new List<User>();
+	        Map<Id, Boolean> activeUserMap = new Map<Id, Boolean>();
 
             list<User> userList = [select Id,ContactId, ContactKaviId__c,languagelocalekey,email,firstname,lastname,Title,IsActive,IsPortalEnabled,username from User where ContactId in:contactMap.keySet() OR ContactKaviId__c in:contactMap.keySet()];
 
@@ -754,12 +756,14 @@ public with sharing class ISSP_PortalUserStatusChange {
                 System.debug(LoggingLevel.FINE, '____ [cls ISSP_PortalUserStatusChange - futureUpdateUsers] Portal Application Rights associated: ' + parLst);
                 
                 if(parLst != null && !parLst.isEmpty()){
+                	String access = parLst.get(0).Right__c;
                 	usersToPushHL.add(user);
+                	activeUserMap.put(user.Id, access == 'Access Granted');
                 }
 				                
              }
 
-            HigherLogicIntegrationHelper.pushPersonMembers(usersToPushHL);
+            HigherLogicIntegrationHelper.pushPersonMembers(usersToPushHL, activeUserMap);
             
             update userList;
             

@@ -130,11 +130,12 @@ public class HigherLogicIntegrationWS {
 	* 
 	* @param sObject: sObject (User or Account)
 	* @param legacyContactsMap: Map<Id, Id> (only used if the sObj is an instance of Account)
+	* @param activeUserMap: Map<Id, Boolean> (only used if the sObj is an instance of User)
 	*
 	* @return memberDetails: MemberDetails
 	*
 	*/
-	private static MemberDetails createMemberDetail(sObject sObj, Map<Id, Id> legacyContactsMap){
+	private static MemberDetails createMemberDetail(sObject sObj, Map<Id, Id> legacyContactsMap, Map<Id, Boolean> activeUserMap){
 		
 		MemberDetails memberDetails = new MemberDetails();
 		
@@ -142,6 +143,11 @@ public class HigherLogicIntegrationWS {
 		if(sObj instanceof User){
 			
 			User user = (User) sObj;
+			
+			// Active status is defined based on the Portal Application Right
+			// PAR with Access Granted => ACTIVE
+			// PAR with Access Denied => INACTIVE
+			Boolean activeUser = activeUserMap.get(user.Id);
 			
 			memberDetails.LegacyContactKey 	= user.Id;
 			memberDetails.FirstName 		= user.FirstName;
@@ -159,7 +165,7 @@ public class HigherLogicIntegrationWS {
 			memberDetails.Phone2Type		= 'Mobile';
 			memberDetails.Phone3			= user.Fax;
 			memberDetails.Phone3Type		= 'Fax';
-			memberDetails.IsActive			= user.IsActive;
+			memberDetails.IsActive			= activeUser;
 			memberDetails.IsOrganization	= false;
 			
 		}
@@ -180,6 +186,7 @@ public class HigherLogicIntegrationWS {
 			memberDetails.State 			 = acct.BillingState;
 			memberDetails.Country			 = acct.BillingCountry;
 			memberDetails.PostalCode		 = acct.BillingPostalCode;
+			memberDetails.IsActive			 = true;
 			memberDetails.IsOrganization	 = true;
 			
 		}
@@ -215,11 +222,12 @@ public class HigherLogicIntegrationWS {
 	*
 	* @param sObjectLst: List<sObject> (Users or Accounts)
 	* @param legacyContactMap: Map<Id, Id>
+	* @param activeUserMap: Map<Id, Boolean>
 	*
 	* @return hlRequest: HigherLogicRequest
 	*
 	*/
-	private static HigherLogicRequest createRequestBody(List<sObject> sObjectLst, Map<Id, Id> legacyContactMap){
+	private static HigherLogicRequest createRequestBody(List<sObject> sObjectLst, Map<Id, Id> legacyContactMap, Map<Id, Boolean> activeUserMap){
 		
 		HigherLogicRequest hlRequest = new HigherLogicRequest();
 		
@@ -227,7 +235,7 @@ public class HigherLogicIntegrationWS {
 		
 		for(sObject sObj : sObjectLst){
 
-			MemberDetails memberDetails = createMemberDetail(sObj, legacyContactMap);
+			MemberDetails memberDetails = createMemberDetail(sObj, legacyContactMap, activeUserMap);
 
 			Items items = new Items();
 			
@@ -283,27 +291,12 @@ public class HigherLogicIntegrationWS {
 	*
 	* @param sObjectLst: List<sObject>  
 	* @param contactIdMap: Map<Id, Id>
+	* @param activeUserMap: Map<Id, Boolean>
 	*
 	*/
-	public static void pushMembers(List<sObject> sObjectLst, Map<Id, Id> contactIdMap){
+	public static void pushMembers(List<sObject> sObjectLst, Map<Id, Id> contactIdMap, Map<Id, Boolean> activeUserMap){
 		
-		HigherLogicRequest request = createRequestBody(sObjectLst, contactIdMap);
-		
-		HigherLogicResponse response = invoke(request);
-		
-		processHigherLogicResponse('pushMembers', response);
-		
-	}
-	
-	/**
-	* Pushes members (users & accounts) to HigherLogic
-	*
-	* @param sObjectLst: List<sObject>  
-	*
-	*/
-	public static void pushMembers(List<sObject> sObjectLst){
-		
-		HigherLogicRequest request = createRequestBody(sObjectLst, null);
+		HigherLogicRequest request = createRequestBody(sObjectLst, contactIdMap, activeUserMap);
 		
 		HigherLogicResponse response = invoke(request);
 		

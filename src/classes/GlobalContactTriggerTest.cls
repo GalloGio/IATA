@@ -353,7 +353,7 @@ private class GlobalContactTriggerTest {
         con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
         con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
         insert con;
-
+		
         testUser.ContactId = con.id;
         testUser.ContactKaviId__c = con.id;
         insert testUser;
@@ -387,13 +387,26 @@ private class GlobalContactTriggerTest {
         );
         insert PAR2;*/
 
-        try{
-            update con;
-        }
-        catch(Exception e){
-            Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
-            //System.AssertEquals(expectedExceptionThrown, true);
-        }
+		User usr = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+		
+		system.runAs(usr){
+			
+			Test.setMock(HttpCalloutMock.class, new HigherLogicServiceMock());
+			
+			Test.startTest();
+
+	        try{
+	        	update con;
+	        }
+	        catch(Exception e){
+	            Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
+	            //System.AssertEquals(expectedExceptionThrown, true);
+	        }
+	        
+    		Test.stopTest();
+    		
+		}
+        
     }
 
     static testMethod void triggerTestAdd3() {
@@ -454,43 +467,54 @@ private class GlobalContactTriggerTest {
         con.status__c = 'Inactive';
         con.Kavi_User__c = testUser.id;
 
-        Test.startTest();
-        list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
-        Portal_Applications__c PA = new Portal_Applications__c(
-            Name = 'Test'
-        );
-        listApps.add(PA);
+		User usr = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+		
+		system.runAs(usr){
 
-        Portal_Applications__c PA2 = new Portal_Applications__c(
-            Name = 'Standards Setting Workspace'
-        );
-        listApps.add(PA2);
-        insert listApps;
-
-        list<Portal_Application_Right__c> listAppRights = new list<Portal_Application_Right__c>();
-        Portal_Application_Right__c PAR = new Portal_Application_Right__c(
-            Contact__c = con.Id,
-            Portal_Application__c = PA.id,
-            Right__c = 'Access Granted'
-        );
-        listAppRights .add(PAR);
-
-        Portal_Application_Right__c PAR2 = new Portal_Application_Right__c(
-            Contact__c = con.Id,
-            Portal_Application__c = PA2.id,
-            Right__c = 'Access Granted'
-        );
-        listAppRights .add(PAR2);
-        insert listAppRights ;
-
-        try{
-            update con;
-        }
-        catch(Exception e){
-            Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
-            //System.AssertEquals(expectedExceptionThrown, true);
-        }
-        Test.stopTest();
+			Test.setMock(HttpCalloutMock.class, new HigherLogicServiceMock());
+			
+	        Test.startTest();
+	        
+	        list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
+	        Portal_Applications__c PA = new Portal_Applications__c(
+	            Name = 'Test'
+	        );
+	        listApps.add(PA);
+	
+	        Portal_Applications__c PA2 = new Portal_Applications__c(
+	            Name = 'Standards Setting Workspace'
+	        );
+	        listApps.add(PA2);
+	        insert listApps;
+	
+	        list<Portal_Application_Right__c> listAppRights = new list<Portal_Application_Right__c>();
+	        Portal_Application_Right__c PAR = new Portal_Application_Right__c(
+	            Contact__c = con.Id,
+	            Portal_Application__c = PA.id,
+	            Right__c = 'Access Granted'
+	        );
+	        listAppRights .add(PAR);
+	
+	        Portal_Application_Right__c PAR2 = new Portal_Application_Right__c(
+	            Contact__c = con.Id,
+	            Portal_Application__c = PA2.id,
+	            Right__c = 'Access Granted'
+	        );
+	        listAppRights .add(PAR2);
+	        insert listAppRights ;
+	
+	        try{
+	            update con;
+	        }
+	        catch(Exception e){
+	            Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
+	            //System.AssertEquals(expectedExceptionThrown, true);
+	        }
+        
+	        Test.stopTest();
+	        
+		}
+		
     }
 
     static testMethod void triggerTestAdd5() {

@@ -5,6 +5,7 @@ public class HigherLogicIntegrationHelper {
 	public static String PUSH_MEMBERS = 'PUSH_MEMBERS';
 	public static String PUSH_INTERNAL_MEMBERS = 'PUSH_INTERNAL_MEMBERS';
 	public static String PUSH_EXISTING_MEMBERS = 'PUSH_EXISTING_MEMBERS';
+	public static String DISABLE_EXISTING_MEMBERS = 'DISABLE_EXISTING_MEMBERS';
 	public static String GRANT_ACCESS = 'GRANT_ACCESS';
 	public static String REMOVE_ACCESS = 'REMOVE_ACCESS';
 	
@@ -82,7 +83,7 @@ public class HigherLogicIntegrationHelper {
 		List<Account> accountLst = fetchAccountRecords(accountIdSet);
 		
 		if(!accountLst.isEmpty()){
-			HigherLogicIntegrationWS.pushMembers(accountLst, legacyContactMap);
+			HigherLogicIntegrationWS.pushMembers(accountLst, legacyContactMap, null);
 			HigherLogicIntegrationWS.flushWebServiceLogs();
 		}
 		
@@ -92,12 +93,13 @@ public class HigherLogicIntegrationHelper {
 	* Push all users detail into HigherLogic
 	*
 	* @param usersToPushLst: List<User>
+	* @param activeUserMap: Map<Id, Boolean>
 	*
 	*/
-	public static void pushPersonMembers(List<User> usersToPushLst){
+	public static void pushPersonMembers(List<User> usersToPushLst, Map<Id, Boolean> activeUserMap){
 		
 		if(!usersToPushLst.isEmpty()){
-			HigherLogicIntegrationWS.pushMembers(usersToPushLst);
+			HigherLogicIntegrationWS.pushMembers(usersToPushLst, null, activeUserMap);
 			HigherLogicIntegrationWS.flushWebServiceLogs();
 		}
 		
@@ -143,7 +145,7 @@ public class HigherLogicIntegrationHelper {
 		
 		List<Account> accountLst = fetchAccountRecords(accountIdSet);
 		
-		HigherLogicIntegrationWS.pushMembers(accountLst, contactIdMap);
+		HigherLogicIntegrationWS.pushMembers(accountLst, contactIdMap, null);
 		HigherLogicIntegrationWS.pushMembersRelationships(newRelationshipMap);
 		
 		HigherLogicIntegrationWS.flushWebServiceLogs();
@@ -199,12 +201,6 @@ public class HigherLogicIntegrationHelper {
 		
 		List<User> userLst = (List<User>) Database.query(usersQuery);
 		
-		if(operation == PUSH_EXISTING_MEMBERS){
-			HigherLogicIntegrationWS.pushMembers(userLst);
-			HigherLogicIntegrationWS.flushWebServiceLogs();
-			return;
-		}
-
 		List<sObject> membersToPushLst = new List<sObject>();
 		
 		Map<Id, User> newUsersMap = new Map<Id, User>(userLst);
@@ -212,13 +208,13 @@ public class HigherLogicIntegrationHelper {
 		List<Portal_Application_Right__c> portalAppRightsLst = new List<Portal_Application_Right__c>(
 			[SELECT
 				Id,
+				Right__c,
 				ContactId__c,
 				Kavi_user__c
 			 FROM
 			 	Portal_Application_Right__c
 			 WHERE
 			 	 Contact__c IN :contactIdSet
-			 AND Right__c = 'Access Granted'
 			 AND Portal_Application__r.Name = 'Standards Setting Workspace'
 			]
 		);
@@ -232,8 +228,24 @@ public class HigherLogicIntegrationHelper {
 		Set<Id> newAccountsIds = new Set<Id>();
 		Map<Id, Id> contactIdMap = new Map<Id, Id>();
 		Map<Id, Id> newRelationship = new Map<Id, Id>();
+		Map<Id, Boolean> activeUserMap = new Map<Id, Boolean>();
 		
 		for(User newUser : newUsersMap.values()){
+			
+			Id contactId = newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c;
+
+			if(!contactRightsMap.containsKey(contactId) && operation == DISABLE_EXISTING_MEMBERS){
+				activeUserMap.put(newUser.Id, false);
+				continue;
+			}
+
+			String access = contactRightsMap.get(contactId).Right__c;
+			
+			activeUserMap.put(newUser.Id, access == 'Access Granted');
+
+			if(operation == PUSH_EXISTING_MEMBERS){
+				continue;	
+			}
 			
 			Id accId = provAcctId;
 			
@@ -243,8 +255,14 @@ public class HigherLogicIntegrationHelper {
 
 			newAccountsIds.add(accId);
 			newRelationship.put(newUser.Id, accId);
-			contactIdMap.put(accId, newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c);
+			contactIdMap.put(accId, contactId);
 
+		}
+		
+		if(operation == PUSH_EXISTING_MEMBERS || operation == DISABLE_EXISTING_MEMBERS){
+			HigherLogicIntegrationWS.pushMembers(userLst, null, activeUserMap);
+			HigherLogicIntegrationWS.flushWebServiceLogs();
+			return;
 		}
 		
 		List<Account> accountLst = fetchAccountRecords(newAccountsIds);
@@ -252,18 +270,16 @@ public class HigherLogicIntegrationHelper {
 		membersToPushLst.addAll(accountLst);
 		membersToPushLst.addAll(userLst);
 		
-		HigherLogicIntegrationWS.pushMembers(membersToPushLst, contactIdMap);
+		HigherLogicIntegrationWS.pushMembers(membersToPushLst, contactIdMap, activeUserMap);
 		
 		HigherLogicIntegrationWS.pushMembersRelationships(newRelationship);
 
 		for(User newUser : newUsersMap.values()){
 			
-			if(newUser.ContactId != null && contactRightsMap.containsKey(newUser.ContactId)) {
-				contactRightsMap.get(newUser.ContactId).Kavi_user__c = true;
-			}
-			//Extension Code for Internal users
-			else if(newUser.ContactKaviId__c != null && contactRightsMap.containsKey(newUser.ContactKaviId__c)){
-				contactRightsMap.get(newUser.ContactKaviId__c).Kavi_user__c = true;
+			Id contactId = newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c;
+			
+			if(contactRightsMap.containsKey(contactId)){
+				contactRightsMap.get(contactId).Kavi_user__c = true;
 			}
 			
 		}
