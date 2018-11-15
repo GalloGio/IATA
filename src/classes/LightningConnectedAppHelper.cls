@@ -105,7 +105,14 @@ public without sharing class LightningConnectedAppHelper {
                 if(secondariesIds.size() < config.Max_Number_Of_Secondary_User__c){
                     automaticRole = 'Secondary User';
                 }
+                
+				// INC431553 : For verifiers, limits don't apply
+	            Id verifierRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Verifiers');
+	            Account acc = [select RecordTypeId from Account where Id =: usr.AccountId];
+				if(verifierRecordTypeId != acc.RecordTypeId){
+                    automaticRole = 'Secondary User';
             }
+        }
         }
         
         return automaticRole;

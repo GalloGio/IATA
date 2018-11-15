@@ -62,6 +62,8 @@
         <columns>Country__c</columns>
         <columns>Iso_Code__c</columns>
         <columns>Region__c</columns>
+        <columns>Sector__c</columns>
+        <columns>SETUP_TYPE</columns>
         <filterScope>Everything</filterScope>
         <label>Allowed Countries Per Button</label>
         <language>en_US</language>

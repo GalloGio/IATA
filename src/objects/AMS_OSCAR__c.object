@@ -347,6 +347,17 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>ANG_Share_documentation_with_vendor__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used on IEP Model B Oscar. If checked the documentation is marked as shared with the vendor. Required to pass application receipt step</description>
+        <externalId>false</externalId>
+        <label>Share documentation with vendor</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_Type_Of_Change__c</fullName>
         <description>Used for Newgen ISS project</description>
         <externalId>false</externalId>
@@ -3451,6 +3462,16 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <fullName>ANG.ANNUAL.REVALIDATION</fullName>
                     <default>false</default>
                     <label>ANG.ANNUAL.REVALIDATION</label>
+                </value>
+                <value>
+                    <fullName>IEP.MODEL.A.ACCOUNT.SETUP</fullName>
+                    <default>false</default>
+                    <label>IEP.MODEL.A.ACCOUNT.SETUP</label>
+                </value>
+                <value>
+                    <fullName>IEP.MODEL.B.ACCOUNT.SETUP</fullName>
+                    <default>false</default>
+                    <label>IEP.MODEL.B.ACCOUNT.SETUP</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -7760,6 +7781,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <columns>Date_Time_Closed__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
+        <filters>
+            <field>AMS_Online_Accreditation__c</field>
+            <operation>notEqual</operation>
+        </filters>
         <label>Agency Management - Africa &amp; ME</label>
         <language>en_US</language>
         <queue>AgencyManagementAfricaME</queue>
@@ -7780,6 +7805,11 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <columns>Date_Time_Closed__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Closed,Closed_Not Accepted,Closed_Rejected,Closed_Withdrawn</value>
+        </filters>
         <label>Agency Management - Americas</label>
         <language>en_US</language>
         <queue>AgencyManagementAmericas</queue>
@@ -7899,6 +7929,7 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
     </listViews>
     <listViews>
         <fullName>CasesACCEuropeOffOnshore_AMS_OSCAR</fullName>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
         <columns>NAME</columns>
         <columns>Account__c</columns>
         <columns>Country__c</columns>
@@ -7914,6 +7945,15 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             <field>Status__c</field>
             <operation>notEqual</operation>
             <value>Closed,Closed_ Not Accepted,Closed_Rejected,Closed_Withdrawn,Closed (Closed)</value>
+        </filters>
+        <filters>
+            <field>AMS_Online_Accreditation__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operation>equals</operation>
+            <value>VR.1.0,VR.1.0.CA,ANG.FS.OPTINOUT,CER.1.0</value>
         </filters>
         <label>Agency Management - Europe</label>
         <language>en_US</language>
@@ -25426,6 +25466,14 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>IEP%2EBANK%2EACCOUNT%2ESETUP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IEP%2EMODEL%2EA%2EACCOUNT%2ESETUP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IEP%2EMODEL%2EB%2EACCOUNT%2ESETUP</fullName>
                 <default>false</default>
             </values>
             <values>

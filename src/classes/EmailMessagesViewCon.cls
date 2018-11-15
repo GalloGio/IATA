@@ -226,7 +226,7 @@ public class EmailMessagesViewCon {
         try {
 
             // In any case, Region has to be 'Europe' or 'Africa & Middle East'
-            if (cse.Region__c == 'Europe' || cse.Region__c == 'Africa & Middle East' || cse.Region__c == 'Americas') {
+            if (cse.Region__c == 'Europe' || cse.Region__c == 'Africa & Middle East' || cse.Region__c == 'Americas' || cse.Region__c == 'Asia & Pacific') {
 
                 // if case record type is 'SAAM', caseArea has to be 'Risk Management Process', 'Accreditation Process', 'Accreditation Products'
                 // or 'Cargo Process'  

@@ -58,10 +58,12 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			log.Error_Code__c = 'Exception sending request';
 			log.Error_Message__c = e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage());
 			log.Success__c = false;
-			insert log;
 
+			//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' + log.Error_Code__c, e.getMessage(), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+            ServiceNow_Helper.sendRequestToSNOWMulesoft('SNOW1', iatacode, log);	
 			ANG_IEP_CalloutHelper.updateAgencyEvent(agencyUpdateId,false);			
-			ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' + log.Error_Code__c, e.getMessage(), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');			
+			
+			insert log;
 			return;
 		}
 
@@ -86,8 +88,8 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			log.Error_Code__c = String.valueOf(res.getStatusCode());
 			log.Error_Message__c = res.getStatus();
 			log.Success__c = false;
-			ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' +  String.valueOf(res.getStatusCode()),  String.valueOf(res.getStatusCode()), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');			
-
+			//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' +  String.valueOf(res.getStatusCode()),  String.valueOf(res.getStatusCode()), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');			
+            ServiceNow_Helper.sendRequestToSNOWMulesoft('SNOW2', iatacode, log);
 		}
 		else{
 			System.debug('ANG_CalloutIEPMasterdata: Payload sent with success.');

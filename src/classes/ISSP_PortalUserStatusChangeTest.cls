@@ -22,8 +22,13 @@ private class ISSP_PortalUserStatusChangeTest {
         actionName = ISSP_PortalUserStatusChange.getActionName(controler.con.User_Portal_Status__c,'');
         ISSP_PortalUserStatusChange.preformAction(actionName,controler.con.Id,controler.con.User_Portal_Status__c);
 
+        //ISSP_PortalUserStatusChange.isUserDisabel(con.Id);
+        //ISSP_PortalUserStatusChange.disabelUser(con.Id);
         Set<String> setIds = new Set<String>();
         setIds.add(con.Id);
+
+        //ISSP_PortalUserStatusChange.futureDeactivateUsers(setIds);
+        //ISSP_PortalUserStatusChange.futureUpdateUsers(setIds);
 
         controler.con.User_Portal_Status__c = 'Approved Admin';
         actionName = ISSP_PortalUserStatusChange.getActionName(controler.con.User_Portal_Status__c,'');
@@ -59,7 +64,7 @@ private class ISSP_PortalUserStatusChangeTest {
     public static testMethod void testISSP_PortalUserStatusChangeTest3() {
 
         //ISSP_ObjectFactory.fiilIncludedFields();
-        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
         //Account acc = (Account)ISSP_ObjectFactory.createSObject('Account',false,4);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;

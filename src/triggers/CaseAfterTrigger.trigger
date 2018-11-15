@@ -700,7 +700,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			            lstAccountsToUpdate.add( a );
 			        }
 			        // Set / unset the Collection Case Indicator
-			        if (c.RecordTypeId == RT_ICC_Id && c.CaseArea__c == 'Collection' && (c.Reason1__c == 'Debt Recovery' || c.Reason1__c == 'Annual Fees')) {
+			        if (c.RecordTypeId == RT_ICC_Id && c.CaseArea__c == 'Collection' && (c.Reason1__c == 'Debt Recovery' || c.Reason1__c == 'Annual Fees' || c.Reason1__c == 'Administrative Charges')) {
 			        	// TF - Open debts notification to Admins
 			        	if (Trigger.isInsert){
 			        		if (!ISSP_UserTriggerHandler.preventOtherTrigger){
@@ -717,12 +717,12 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			                	}
 			        		}
 			        	}
-			            if (c.IsClosed && c.Has_the_agent_paid_invoice__c != null && c.Has_the_agent_paid_invoice__c != 'Not paid') {
-			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = '');
-			                    lstAccountsToUpdate.add( a );
+			            if (c.IsClosed != true && c.Has_the_agent_paid_invoice__c != null && (c.Has_the_agent_paid_invoice__c == 'Not paid' || c.Has_the_agent_paid_invoice__c =='Partially unpaid')) {
+			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = 'Pending dues'); 
+			                    lstAccountsToUpdate.add( a );                            	
 			            }else{
-			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = 'Pending dues');
-			                    lstAccountsToUpdate.add( a );
+			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = '');
+			                    lstAccountsToUpdate.add( a ); 
 			            }
 			        }
 		    	} // if AccountId

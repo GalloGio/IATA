@@ -973,7 +973,7 @@ private class CaseBeforeTriggerTest {
 
     // create an Airline Coding Application case on the account
     ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
-    Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1');
+    Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1', Reason1__c='Designator Form');
     insert cs_coding1;
 
     //////////////////////////
@@ -1010,7 +1010,7 @@ private class CaseBeforeTriggerTest {
     // try to open a new Airline Coding case on the same account, check that it is not inserted
     Boolean isExceptionRaised = false;
     try {
-      Case cs_coding2 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs2');
+      Case cs_coding2 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs2', Reason1__c='Designator Form');
       insert cs_coding2;
     } catch (Exception e) {
       isExceptionRaised = true;

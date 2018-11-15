@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_PCI_Compliant NonBSP_reminder_RU</name>
+    <style>freeForm</style>
+    <subject>PCI DSS REMINDER</subject>
+    <textOnly>Уважаемый/ая {!Case.Contact},
+
+Код ИАТА: {!Case.IATA_Code__c} - No BSP,
+
+
+
+Напоминаем, что нами еще не получено Подтверждение соответствия стандарту PCI DSS (PCI DSS Attestation of Compliance) или Заявление об отсутствии продаж по кредитным картам (Nil Credit Card Self-Declaration). В случае, если Вы ранее направляли один из запрашиваемых документов, просьба игнорировать данное сообщение.
+
+
+Обращаем Ваше внимание на то, что крайний срок предоставления документа: {!Case.CreatedDate+30}.
+
+
+Для получения дополнительной информации о соответствии стандарту PCI DSS перейдите по следующей ссылке: http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+Если у Вас остались вопросы - обращайтесь через Клиентский Портал ИАТА: www.iata.org/cs.
+
+
+С уважением,
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+
+
+
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
