@@ -443,8 +443,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         if(accIdSet.isEmpty())return;
 
-        List<Id> listIDAccsToRetriveCons = new List<Id>();
-        map<string,AMS_Country_Specific_Attribute__c> rtsConfigMap= new map<string,AMS_Country_Specific_Attribute__c>();//iso_countr_isoCode__c =>AMS_Country_Specific_Attribute__c
+        Map<String,AMS_Country_Specific_Attribute__c> rtsConfigMap= new Map<String,AMS_Country_Specific_Attribute__c>();//iso_countr_isoCode__c =>AMS_Country_Specific_Attribute__c
         for(AMS_Country_Specific_Attribute__c csa: [
             SELECT IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c 
             FROM AMS_Country_Specific_Attribute__c 
@@ -467,20 +466,20 @@ public class ANG_RHCAlertTriggerHandler{
         WHERE ID IN :triggerNew
         AND ANG_Severity__c = 'Red'
         AND recordTypeId = :RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS') 
+        AND ANG_Account__c IN :accIdSet
         ),
         (SELECT Id, User_Portal_Status__c, AccountId, Account.Top_Parent__c, Financial_Assessment_Contact__c
         FROM contacts
         WHERE Status__c = 'Active'
         )
         FROM ACCOUNT
-        where ID IN :accIdSet]){
+        WHERE ID IN :accIdSet OR Top_Parent__c IN :accIdSet]){
             for(ANG_Risk_Alert__c ra: acc.Risk_Alerts__r){
                 redAlerts.add(ra);  
                 raAccMap.put(ra.id,acc);    
             }
 
             contactsPerAccount.put(acc.id,acc.contacts);
-            listIDAccsToRetriveCons.add( (acc.Top_Parent__c != null ? acc.Top_Parent__c : acc.id ) );
         }
        
 
@@ -537,7 +536,7 @@ public class ANG_RHCAlertTriggerHandler{
 
                     //we'll get the portal approved admin or if none the ifap contact 
                     //if has parent, use parent contacts. else, use theirs
-                    Id accId = (raAccMap.get(ra.id).Top_Parent__c != null ? raAccMap.get(ra.id).Top_Parent__c: ra.ANG_Account__c);
+                    Id accId = (raAccMap.get(ra.id).Top_Parent__c != null && contactsPerAccount.containsKey(raAccMap.get(ra.id).Top_Parent__c)? raAccMap.get(ra.id).Top_Parent__c: ra.ANG_Account__c);
 
                     for(Contact con :contactsPerAccount.get(accId)){                        
                         if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM){
