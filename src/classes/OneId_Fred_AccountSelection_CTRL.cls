@@ -104,7 +104,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
                 return new RegistrationResponse(false, Label.OneId_Max_Account_Reached);
             }
 			}else if ((createPrimary && nbOfPrimaryInAccount >= config.Invitation_Primary_Max__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Invitation_Secondary_Max__c)) {
-                return new RegistrationResponse(false, Label.OneId_Max_Account_Reached);
+                return new RegistrationResponse(false, Label.OneId_Max_Account_Reached2);
             }
 			}
                 
