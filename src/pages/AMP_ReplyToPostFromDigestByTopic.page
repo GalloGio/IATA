@@ -147,12 +147,6 @@
 
 			</apex:pageBlockSection>
 		
-			<apex:pageBlockSection columns="1" collapsible="false" rendered="{! step == 3}">
-
-				<apex:commandButton action="{!restartFromStep1}" value="New post" reRender="mainBlock" />
-
-			</apex:pageBlockSection>
-
 		</apex:pageBlock>
 
 	</apex:form>

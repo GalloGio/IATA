@@ -197,15 +197,6 @@ public class AMP_ReplyToPostFromDigestByTopic {
 		
 	}
 
-	public PageReference restartFromStep1(){
-		this.message = '';
-		this.acctListStr = '';
-		this.numberOfAccounts = 0;
-		reloadFeedItems();
-		this.step = 1;
-		return null;
-	}
-	
 	public PageReference previousStep(){
 		this.step = 1;
 		return null;
