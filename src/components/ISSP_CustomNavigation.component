@@ -87,7 +87,7 @@ window.onload = function HighlightBar() {
         var acceptTC = {!toAcceptTC};
         var thisURL = window.location.href;
 
-		var formsCollection = document.getElementsByTagName("form");
+    var formsCollection = document.getElementsByTagName("form");
         var skipredirect = false;
 
         //Skip redirect if exception page
@@ -109,7 +109,7 @@ window.onload = function HighlightBar() {
               }
           }
         }
-		/*
+    /*
         if (thisURL.indexOf("ISSP_ChangePassword") == -1){
             if (changePassword){
                 checkRedirectChangePassword();
@@ -120,7 +120,7 @@ window.onload = function HighlightBar() {
                 }
             }
         }
-		*/
+    */
 
         var mainvar = getUrlParameter('MainNav');
         var mid = getUrlParameter('mid');
@@ -190,8 +190,8 @@ $(".topmenu").hover(function(){
       }
       
        .bankDetails {
-        	min-height: 142px;
-      	}
+          min-height: 142px;
+        }
       }
 
    body{
@@ -631,7 +631,7 @@ background-color:#428bca;
       </select>
       -->
       <apex:form id="LselectLanguage" rendered="{!communityName!='CNS'}">
-      	<apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);"> 
+        <apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);"> 
               <apex:selectOption itemValue="-- Language --" itemLabel="Language"/>
               <apex:selectOptions value="{!languages}"/>
         </apex:selectList>
