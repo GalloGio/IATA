@@ -3319,11 +3319,11 @@ public class AMS_OSCARTriggerHandler {
             // ********* GENERIC VALIDATIONS FOR NEW APPLICATIONS**********
             // ************************************************************
             if(updatedOSCAR.Process__c != AMS_Utils.NGCHANGES){
-                if(oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)){
+                if((oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)) && !updatedOscar.Is_NewGen_Pilot__c){
                     updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');   
                 }
 
-                if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
+                if((oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed') && !updatedOscar.Is_NewGen_Pilot__c) {
                     updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
                 }
             }
@@ -3852,6 +3852,7 @@ public class AMS_OSCARTriggerHandler {
         ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
 
         String statusForCC = 'Active';
+        String statusForIEP = 'Active';
 
         if(oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NEWHESTANDARD)
             statusForCC = (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Corporate Card'  ? 'Active' : 'Non-Active');
@@ -3863,10 +3864,15 @@ public class AMS_OSCARTriggerHandler {
                 statusForCC = 'Non-Active';
         }
 
+        if(oscar.Is_NewGen_Pilot__c) {
+            statusForCC = 'Non-Active';
+            statusForIEP = 'Non-Active';
+        }
+
         authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = statusForCC, RecordTypeId = FormOfPaymentRT));
         if(oscar.Process__c == AMS_Utils.NEWHESTANDARD)
             authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = statusForIEP, RecordTypeId = FormOfPaymentRT));
 
         insert authorizations;
     }
