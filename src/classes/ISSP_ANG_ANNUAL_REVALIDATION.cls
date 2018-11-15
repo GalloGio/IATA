@@ -522,6 +522,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 			currentAccount.fw.newform.status__c = FORM_STATUS_INPROGRESS;
+			copyShippingCountry();
 
 			upsert currentAccount.fw.newform;
 
@@ -550,12 +551,19 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Savepoint sp = Database.setSavepoint();
 
 		try {
-
+			
+			copyShippingCountry();
 			upsert currentAccount.fw.newform;
 
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return null;
+	}
+	
+	private void copyShippingCountry() {
+		// Workaround to assign the previous value if not changed
+		if (!currentAccount.fw.newform.Notify_Change_Location__c)
+			currentAccount.fw.newform.Shipping_Country__c = currentAccount.account.ShippingCountry;
 	}
 
 	public PageReference confirmUpdate() {
@@ -570,6 +578,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			if(!errorFound) {
 				currentAccount.fw.newform.status__c = FORM_STATUS_COMPLETED;
+				migrateExtraFields();
 			}
 
 			//
@@ -588,6 +597,20 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return null;
+	}
+	
+	private void migrateExtraFields() {
+
+		String isoCountryForm = currentAccount.fw.newform.Shipping_Country__c;
+
+		if (String.isEmpty(isoCountryForm)) return;
+
+		for(IATA_ISO_Country__c ctr : [Select Id, Name from IATA_ISO_Country__c]){
+			if(ctr.Name.toupperCase() == isoCountryForm.toupperCase()){
+				currentAccount.fw.newform.Shipping_ISO_Country__c = ctr.Id;
+				break;
+			}
+		}
 	}
 
 	public PageReference cancelUpdate() {
@@ -925,7 +948,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'State_Province__c', 'BillingCity' => 'Branch_Office_City__c',
             'IATA_ISO_Country__c' => 'ISO_Country__c', 'IATA_ISO_Country__c' => 'Branch_Office_Country__c', 'Iso_State__c' => 'IATA_ISO_State__c', 'ShippingCountry' => 'Shipping_Country__c', 'ShippingStreet' => 'Shipping_Street__c',
             'ShippingPostalCode' => 'Shipping_Postal_Code__c', 'ShippingState' => 'Shipping_State__c', 'ShippingCity' => 'Shipping_City__c', 'Email__c' => 'Branch_Office_Email__c',
-            'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone_National__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c', 'Abbreviated_name__c' => 'Abbreviated_name__c',
+            'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c', 'Abbreviated_name__c' => 'Abbreviated_name__c',
             'Abbreviated_Address__c' => 'Abbreviated_Address__c', 'Remittance_frequency__c' => 'Remittance_frequency__c', 'Solicitation_Flag__c' => 'Solicitation_Flag__c',
             'VAT_Number_2__c' => 'VAT_Number_2__c', 'CASS_Number__c' => 'CASS_Number__c', 'VAT_Number__c' => 'ISSP_AMS_VAT_number__c', 'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c', 
             'License_Number__c' => 'ISSP_AMS_License_No__c', 'GDS__c' => 'ISSP_AMS_GDS_with_signed_contract__c', 'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c',
@@ -1209,6 +1232,14 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		errorFound = false;
 		Pattern iso8859 = Pattern.compile(ISO_8859_1_regEx);
 		Pattern postalCodeRegex;
+		
+		IATA_ISO_Country__c shippingCountryInfo = ISSP_ANG_ANNUAL_REV_UPDATE.postalCodeRegexByCountryMap.get(currentAccount.fw.newForm.Shipping_Country__c);
+
+		Pattern shippingCountryPostalCodeRegex;
+
+		if (shippingCountryInfo != null && shippingCountryInfo.Postal_Code_Format_regEx__c != null) {
+			shippingCountryPostalCodeRegex = Pattern.compile(shippingCountryInfo.Postal_Code_Format_regEx__c);
+		}
 
 		if (currentAccount.isocountry.Postal_Code_Format_regEx__c != null && currentAccount.isocountry.Postal_Code_Format_regEx__c != '')
 			postalCodeRegex = Pattern.compile(currentAccount.isocountry.Postal_Code_Format_regEx__c);
@@ -1313,16 +1344,31 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.fw.newform.Shipping_Postal_Code__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
+				if (currentAccount.fw.newform.Shipping_Country__c == null) {
+					currentAccount.fw.newform.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else if (currentAccount.fw.newform.Shipping_Country__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Country__c).matches()) {
+					currentAccount.fw.newform.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
+            		errorFound = true;
+				}
+
+
+				if (shippingCountryInfo != null && shippingCountryInfo.IEC_Zip_Postal_Code_required__c && currentAccount.fw.newform.Shipping_Postal_Code__c == null) {
+					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else if (currentAccount.fw.newform.Shipping_Postal_Code__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
 					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
-				} else if (postalCodeRegex != null && currentAccount.fw.newform.Shipping_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
+				} else if (shippingCountryPostalCodeRegex != null && currentAccount.fw.newform.Shipping_Postal_Code__c != null && !shippingCountryPostalCodeRegex.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
 					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
             		errorFound = true;
 				}
 
-				if (currentAccount.fw.newform.Shipping_ISO_State__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_ISO_State__c).matches()) {
-					currentAccount.fw.newform.Shipping_ISO_State__c.addError(Label.ISSP_EnterValidString);
+				if (shippingCountryInfo != null && shippingCountryInfo.State_Province_Mandatory__c && currentAccount.fw.newform.Shipping_State__c == null) {
+					currentAccount.fw.newform.Shipping_State__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else if (currentAccount.fw.newform.Shipping_State__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_State__c).matches()) {
+					currentAccount.fw.newform.Shipping_State__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
 				}
 
@@ -1351,7 +1397,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.fw.newform.Branch_Office_Postal_code__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_Postal_code__c).matches()) {
+				if (currentAccount.isocountry.IEC_Zip_Postal_Code_required__c && currentAccount.fw.newform.Branch_Office_Postal_code__c == null) {
+					currentAccount.fw.newform.Branch_Office_Postal_code__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else if (currentAccount.fw.newform.Branch_Office_Postal_code__c != null && !iso8859.matcher(currentAccount.fw.newform.Branch_Office_Postal_code__c).matches()) {
 					currentAccount.fw.newform.Branch_Office_Postal_code__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
 				} else if (postalCodeRegex != null && currentAccount.fw.newform.Branch_Office_Postal_code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Branch_Office_Postal_code__c).matches()) {
@@ -1359,7 +1408,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.fw.newform.State_Province__c != null && !iso8859.matcher(currentAccount.fw.newform.State_Province__c).matches()) {
+				if (currentAccount.isocountry.State_Province_Mandatory__c && currentAccount.fw.newform.State_Province__c == null) {
+					currentAccount.fw.newform.State_Province__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else if (currentAccount.fw.newform.State_Province__c != null && !iso8859.matcher(currentAccount.fw.newform.State_Province__c).matches()) {
 					currentAccount.fw.newform.State_Province__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
 				}
@@ -1370,12 +1422,18 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				}
 
 				if (currentAccount.isocountry.Local_language_Agency_details_required__c) {
-					if (postalCodeRegex != null && currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c).matches()) {
+					if (currentAccount.isocountry.IEC_Zip_Postal_Code_required__c && currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c == null) {
+						currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					} else if (postalCodeRegex != null && currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c).matches()) {
 						currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
             			errorFound = true;
 					}
 
-					if (postalCodeRegex != null && currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c).matches()) {
+					if (currentAccount.isocountry.IEC_Zip_Postal_Code_required__c && currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c == null) {
+						currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					} else if (postalCodeRegex != null && currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c != null && !postalCodeRegex.matcher(currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c).matches()) {
 						currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
             			errorFound = true;
 					}
@@ -1400,12 +1458,12 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 						errorFound = true;
 					} 
 
-					if (currentAccount.fw.newform.Local_Physical_Address_Province__c == null) {
+					if (currentAccount.isocountry.State_Province_Mandatory__c && currentAccount.fw.newform.Local_Physical_Address_Province__c == null) {
 						currentAccount.fw.newform.Local_Physical_Address_Province__c.addError(Label.ISSP_YouMustEnter);
 						errorFound = true;
 					} 
 
-					if (currentAccount.fw.newform.Local_Postal_Address_Province__c == null) {
+					if (currentAccount.isocountry.State_Province_Mandatory__c && currentAccount.fw.newform.Local_Postal_Address_Province__c == null) {
 						currentAccount.fw.newform.Local_Postal_Address_Province__c.addError(Label.ISSP_YouMustEnter);
 						errorFound = true;
 					}

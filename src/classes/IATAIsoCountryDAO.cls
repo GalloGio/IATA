@@ -51,6 +51,7 @@ public class IATAIsoCountryDAO {
                                                         Tax_Number_label__c, Tax_number_format__c,
                                                         Tax_number_help_text__c, Hide_Tax_Number_VAT__c,
                                                         Tax_Number_VAT_field_mandatory__c, Postal_Code_Format_regEx__c,
+														IEC_Zip_Postal_Code_required__c, State_Province_Mandatory__c, Postal_Code_Hint_Format__c,
                                                         EACP_Country__c, CASS_Import__c,
                                                         Disable_non_IATA_Cargo_Agents__c, original_bank_details_not_required__c,
                                                         Local_language_Agency_details_required__c, Prevent_Portal_Trade_Name_Change__c,
