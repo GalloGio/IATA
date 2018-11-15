@@ -234,7 +234,7 @@ public class HigherLogicIntegrationHelper {
 			
 			Id contactId = newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c;
 
-			if(!contactRightsMap.containsKey(contactId) && operation == DISABLE_EXISTING_MEMBERS){
+			if(!contactRightsMap.containsKey(contactId) || operation == DISABLE_EXISTING_MEMBERS){
 				activeUserMap.put(newUser.Id, false);
 				continue;
 			}
