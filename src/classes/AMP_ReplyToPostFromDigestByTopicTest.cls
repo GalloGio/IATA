@@ -124,8 +124,6 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 		
 		findApexMessage('The comments were successfully posted.', ApexPages.Severity.INFO);
 		
-		ctrl.restartFromStep1();
-		
 		List<FeedComment> feedCommentLst = new List<FeedComment>(
 			[SELECT 
 				Id,
