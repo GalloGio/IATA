@@ -286,7 +286,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>IATA Country Office</value>
+            <value>Standard Account</value>
         </criteriaItems>
         <criteriaItems>
             <field>Category__c</field>
