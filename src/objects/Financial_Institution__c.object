@@ -120,6 +120,21 @@
         <type>AutoNumber</type>
     </fields>
     <fields>
+        <fullName>Financial_Security_Country_Coverage__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Select all countries where this Financial Institution provides Financial Security. Used to show list of Fincacial Institutions on CS Portal.</inlineHelpText>
+        <label>Financial Security Country Coverage</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Financial_Security_Country_Coverage</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>First_Call_Letter_required__c</fullName>
         <description>States if financial securities under this Financial institution require First Call Letter</description>
         <externalId>false</externalId>
@@ -293,6 +308,15 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Website__c</fullName>
+        <externalId>false</externalId>
+        <label>Website</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
     </fields>
     <label>Financial Institution</label>
     <listViews>
