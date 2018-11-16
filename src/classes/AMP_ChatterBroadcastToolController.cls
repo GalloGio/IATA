@@ -1,4 +1,7 @@
 public with sharing class AMP_ChatterBroadcastToolController {
+
+	public Boolean showNotApplicableMsg {get; set;}
+
 	public Integer step {get; set;}
 	
 	public String message {get; set;}
@@ -21,9 +24,6 @@ public with sharing class AMP_ChatterBroadcastToolController {
 	public Integer numberOfAccounts {get; set;}
 
 	public String strRegion {get; set;}
-
-	public String broadCastRegion {get;set;}
-	public Boolean selectWholeRegion {get;set;} 
 
 	public String broadCastRegion {get;set;}
 	public Boolean selectWholeRegion {get;set;} 
@@ -148,17 +148,34 @@ public with sharing class AMP_ChatterBroadcastToolController {
 
 			lstFilteredAccounts.add(aw);
 		}
-numberOfAccounts = 0;
+		numberOfAccounts = 0;
 		lstAccounts = lstFilteredAccounts;
     }
     
 	public AMP_ChatterBroadcastToolController() {
-		step = 1;
-		numberOfAccounts = 0;
-		strRegion = '';
-		RefreshAccountsList();
-
+		
 		accountId =  ApexPages.currentPage().getParameters().get('accountId');
+		
+		Account acct = 
+			[SELECT 
+				Id, 
+				Membership_status__c
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	Id = :accountId
+			];
+		
+		showNotApplicableMsg = acct.Membership_status__c != 'IATA member';
+		
+		// Chatter broadcast tool is only available for IATA Members Airlines
+		if(!showNotApplicableMsg){
+			step = 1;
+			numberOfAccounts = 0;
+			strRegion = '';
+			RefreshAccountsList();
+		}
+		
 	}
 
 	public class AccountWrapper {
