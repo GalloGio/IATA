@@ -100,8 +100,7 @@ private class IEC_ENCH_Registration_test {
 		Test.startTest();
 		ISSP_Registration ctrl = new ISSP_Registration();
 		String ctZipCode = ctrl.countriesNamesWithoutZipCode;
-		//ctrl.searchCountryName = 'Portugal';
-		ctrl.searchCountryName = 'PT';
+		ctrl.searchCountryName = 'Portugal';
 		Boolean reqZipCode = ctrl.requiredZipCode;
 		ctrl.isGPSearchValid();
 		ctrl.getCustomerTypeList();
