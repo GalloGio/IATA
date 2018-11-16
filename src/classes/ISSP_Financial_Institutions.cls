@@ -29,13 +29,13 @@ public with sharing class ISSP_Financial_Institutions {
 	public Boolean hasGDIAppRight {
 		get {
 			if (hasGDIAppRight == null) {
-				List<Portal_Applications__c> portalAppList = [SELECT Id, (SELECT Id, Contact__c 
-																   		  FROM Portal_Application_Rights__r 
-																   		  WHERE Contact__c IN (SELECT ContactId 
-																   							   FROM User 
-																   							   WHERE Id = :UserInfo.getUserId())
-																   			AND Portal_Application__r.Name = :GDI_PORTAL_SERVICE
-																   		  LIMIT 1)
+				List<Portal_Applications__c> portalAppList = [SELECT Id, Application_URL__c, (SELECT Id, Contact__c 
+																   		  					  FROM Portal_Application_Rights__r 
+																   		                      WHERE Contact__c IN (SELECT ContactId 
+																   							   					   FROM User 
+																   							   					   WHERE Id = :UserInfo.getUserId())
+																   							  AND Portal_Application__r.Name = :GDI_PORTAL_SERVICE
+																   		  					  LIMIT 1)
 													   		  FROM Portal_Applications__c 
 													   		  WHERE Name = :GDI_PORTAL_SERVICE
 													   		  LIMIT 1];
@@ -66,10 +66,10 @@ public with sharing class ISSP_Financial_Institutions {
 		}
 		
 		Portal_Application_Right__c par = new Portal_Application_Right__c(Contact__c = conId,
-                                              Portal_Application__c = gdiPortalAppId,
-                                              Right__c = 'Access Requested',
-                                              Terms_Acceptance__c = termsAndConditions,
-                                              Terms_Acceptance_Date__c = Datetime.now());
+							                                              Portal_Application__c = gdiPortalAppId,
+							                                              Right__c = 'Access Requested',
+							                                              Terms_Acceptance__c = termsAndConditions,
+							                                              Terms_Acceptance_Date__c = Datetime.now());
 		insert par;
 
 		userFailedProvisioningCount = [SELECT COUNT() FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
