@@ -3473,6 +3473,11 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                     <default>false</default>
                     <label>IEP.MODEL.B.ACCOUNT.SETUP</label>
                 </value>
+                <value>
+                    <fullName>ANG.MAJOR.CHANGES.CHINA.1.0</fullName>
+                    <default>false</default>
+                    <label>ANG.MAJOR.CHANGES.CHINA.1.0</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
