@@ -12,7 +12,10 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	public User currentUser {get;set;}
 
 	public string preview {get;set;}
-
+	
+	//time range in minutes to include Feed Item createDate to compensate broadcast time skips
+	private static Integer rangeInMinutes = Integer.ValueOf(Account_Management_Settings__c.getInstance().Topic_Digest_Time_Range_Aggregator__c);
+	
 	public AMP_ChatterTopicSubscribeController() {
 		showPreview = false;
 		if(ApexPages.currentPage().getParameters().get('showPreview') == '1') showPreview = true;
@@ -417,7 +420,7 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
 		Integer amountOfFeedItems = 0;
-
+		
 		// get a count of how many chatter posts mention this topic
 		for(FeedItem fi : lsAllFeedItems) {
 			if(dayOrWeek == 'day' && fi.CreatedDate < System.now().addDays(-1) ) {
@@ -450,18 +453,28 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 
 
 			Integer feedItemCounter = 0;
+			Datetime timeRange = null;
+			
 			for(FeedItem fi : lsAllFeedItems) {
 				// for daily digest ignore older posts
 				if(dayOrWeek == 'day' && fi.CreatedDate < System.now().addDays(-1) ) {
 					continue;
 				}
 				if(fi.Body.toLowerCase().contains('#'+topicName.toLowerCase())) {
+					
 					topicFeedItemCounter++;
 					lsAccountIds.add(fi.ParentId);
-
+					
+					//aggregates each feed item created in this time range interval
+					if(timeRange == null){
+						timeRange = fi.CreatedDate;
+						timeRange.addMinutes(rangeInMinutes);
+					}
+					
 					// see if the next post is the same for different parent
 					if(	feedItemCounter < lsAllFeedItems.size()-1 &&
-						fi.CreatedDate == lsAllFeedItems[feedItemCounter+1].CreatedDate &&
+						fi.CreatedDate <= timeRange &&
+						fi.CreatedById == lsAllFeedItems[feedItemCounter+1].CreatedById &&
 						fi.Body ==  lsAllFeedItems[feedItemCounter+1].Body) {
 					}
 					// only add post if the next one is not the same
@@ -474,6 +487,8 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 						}
 
 						lsAccountIds.clear();
+						timeRange = null;
+						
 					}
 				}
 				feedItemCounter++;
