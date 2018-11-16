@@ -857,7 +857,7 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_XML_GEN_ERROR_RECEIVER</shortDescription>
-        <value>howj@iata.org.prod</value>
+        <value>howj@iata.org</value>
     </labels>
     <labels>
         <fullName>ANG_AE_separate_Legal_Entity</fullName>
@@ -5485,7 +5485,7 @@ Has read only access over different features of the service.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS More About Link</shortDescription>
-        <value>More about the New ICCS</value>
+        <value>ICCS Communications</value>
     </labels>
     <labels>
         <fullName>ICCS_Multiple_Signatories_Change_Message</fullName>
