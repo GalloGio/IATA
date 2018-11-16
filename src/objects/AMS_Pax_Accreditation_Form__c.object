@@ -1772,7 +1772,7 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <label>STAGING_AREA_FIELDS_TO_VALIDATE</label>
-    </fieldSets>    
+    </fieldSets>
     <fieldSets>
         <fullName>VMFR</fullName>
         <description>fields to be migrated when we have a vmfr process</description>
