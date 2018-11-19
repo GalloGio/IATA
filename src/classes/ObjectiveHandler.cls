@@ -1,16 +1,4 @@
-public without sharing class ObjectiveHandler {
-	//public static final map<String,Schema.RecordTypeInfo> MAP_RT = Schema.SObjectType.Objective__c.getRecordTypeInfosByName();
-	public static final map<String,Recordtype> MAP_RT = new map<String,Recordtype>();
-	static {
-		for ( RecordType rt: [
-				Select Id, Name, DeveloperName
-				From RecordType
-				Where SobjectType = 'Objective__c'] ) {
-			MAP_RT.put(rt.DeveloperName, rt);
-		}
-		
-	}
-
+public with sharing class ObjectiveHandler {
 	// this map has all parent Ids in the current list of Objectives
 	// and all children for these parents
 	private static map<Id,list<Objective__c>> mapParentObjectives;
@@ -165,16 +153,16 @@ public without sharing class ObjectiveHandler {
 		gets a formatted name for the objective based on its recordtype
 	**/
 	private static String getObjectiveName(Objective__c objective) { 
-		if (objective.RecordTypeId == MAP_RT.get('Division').Id ) {
+		if (objective.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division')) {
 			return nvl(objective.Division__c) + '-' + objective.Description__c + '-' + objective.Forecast_Deadline__c.year();
 
-		} else if (objective.RecordTypeId == MAP_RT.get('Region').Id ) {
+		} else if (objective.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Region')) {
 			return nvl(objective.Division__c) + '-' + nvl(objective.Region__c) + '-' + objective.Description__c + '-' + objective.Forecast_Deadline__c.year();
 
-		} else if (objective.RecordTypeId == MAP_RT.get('Area').Id ) {
+		} else if (objective.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Area')) {
 			return nvl(objective.Division__c) + '-' + nvl(objective.Area__c) + '-' + objective.Description__c + '-' + objective.Forecast_Deadline__c.year();
 
-		} else if (objective.RecordTypeId == MAP_RT.get('Account').Id ) {
+		} else if (objective.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account')) {
 			try {
 				Account account = mapAccount.get(objective.Account__c);
 				String objName = nvl(objective.Division__c) + '-' + account.Name + '-' + objective.Description__c + '-' +objective.Forecast_Deadline__c.year();
@@ -205,7 +193,7 @@ public without sharing class ObjectiveHandler {
 			list<String> listStrings = new list<String>();
 			set<String> setStrings = new set<String>();
 
-			if (objective.RecordTypeId == MAP_RT.get('Division').Id ) {
+			if (objective.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division')) {
 				listStrings = nvl(objective.Cascade_To_Region__c).split(';');
 				list<Objective__c> listChildren = mapChildrenObjectives.get(objective.Id);
 				if ( listChildren != null ) {
@@ -219,7 +207,7 @@ public without sharing class ObjectiveHandler {
 				objective.All_Regions_Created__c = newValueOnParent;
 			}
 
-			if (objective.RecordTypeId == MAP_RT.get('Region').Id ) {
+			if (objective.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Region')) {
 				listStrings = nvl(objective.Cascade_To_Area__c).split(';');
 				list<Objective__c> listChildren = mapChildrenObjectives.get(objective.Id);
 				if ( listChildren != null ) {
@@ -264,7 +252,7 @@ public without sharing class ObjectiveHandler {
 
 		for ( Objective__c objective: listNew) {
 
-			if (objective.RecordTypeId == MAP_RT.get('Region').Id ) {
+			if (objective.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Region')) {
 
 				Objective__c parent = mapParent.get(objective.Parent_Objective__c);
 				if (parent!= null ) {
@@ -282,7 +270,7 @@ public without sharing class ObjectiveHandler {
 						}
 					}
 				}
-			} else if (objective.RecordTypeId == MAP_RT.get('Area').Id ) {
+			} else if (objective.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Area')) {
 
 				Objective__c parent = mapParent.get(objective.Parent_Objective__c);
 				if (parent!= null ) {

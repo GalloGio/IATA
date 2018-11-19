@@ -144,9 +144,9 @@ global with sharing class IDCardUtil {
     public static final String FOLDER_NAME = 'a0W';
 
     @RemoteAction
-    public static Id IDCardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');
+    public static Id IDCardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
     @RemoteAction
-    public static Id IDCardcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Application');
+    public static Id IDCardcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application');
     public static String Key_Account_Feature_File    = 'CSV File Upload';
     public static String Key_Account_Feature_Email   = 'Email Application Before Renewal';
     public static String Key_Account_Feature_Payment_Wire_Check = 'Payment by Wire / Cheque';
@@ -219,7 +219,7 @@ global with sharing class IDCardUtil {
         if ( isoCountryPerIAtaCode.get(iataCode) != null)
             return isoCountryPerIAtaCode.get(iataCode);
         Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(iataCode);
-        IATA_ISO_Country__c[] listCountries = [Select i.Name, i.Id, i.ISO_Code__c, i.IATA_Regional_Office__c, i.AIMS_Area_Name__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+        IATA_ISO_Country__c[] listCountries = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
         if (listCountries == null || listCountries.size() == 0) {
             throw new IDCardApplicationException(string.format(Label.ID_Card_Invalid_ISO_Country, new string[] { theAccount.BillingCountry }));
         }
@@ -296,7 +296,7 @@ global with sharing class IDCardUtil {
         }
 
         if (isWithExpedite) {
-            if (applicationRecordType != null && applicationRecordType == TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c').get('Single_ID_Card_Operation'))
+            if (applicationRecordType != null && applicationRecordType == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation'))
                 detailledFee.put('ExpediteFee', (thePriceTable.Mass_Purchase_exp__c));
             else
                 detailledFee.put('ExpediteFee', (thePriceTable.Expedite__c));
@@ -312,74 +312,9 @@ global with sharing class IDCardUtil {
         return detailledFee;
     }
 
-    /**
-     * Generates a new UIR based on an account
-     * Format: <countryISOcode><6digits_counter>
-     *//*
-public static String generateUIR(Account theAccount) {
-
-    IATA_ISO_Country__c country = [Select i.Name, i.ISO_Code__c, i.AIMS_Area_ID__c From IATA_ISO_Country__c i where i.Name = :theAccount.BillingCountry limit 1];
-
-    Integer countryAreaID = Integer.valueOf(country.AIMS_Area_ID__c);
-
-    // select counter associated to the Area
-    Area_Counter__c counter = [Select a.Next_Counter_Value__c From Area_Counter__c a where a.AIMS_Area_Id__c = :countryAreaID limit 1];
-    if (counter == null) {
-        throw new IDCardApplicationException('No counter found for country ' + country.Name + ' (Area ' + country.AIMS_Area_ID__c + ')');
-    }
-
-    // reselect with FOR UPDATE
-    counter = [Select a.Next_Counter_Value__c From Area_Counter__c a where a.AIMS_Area_Id__c = :countryAreaID limit 1 FOR UPDATE];
-
-    // TODO: left pad de 6
-    string formattedCounter = String.valueOf(counter.Next_Counter_Value__c).leftpad(6).replace(' ', '0');
-    String newUIR = country.ISO_Code__c + formattedCounter;
-
-    // TODO: check if UIR already exist for a contact
-
-    // increment counter
-    counter.Next_Counter_Value__c = counter.Next_Counter_Value__c + 1;
-    update counter;
-
-    return newUIR;
-}*/
-
-    /**
-     * Generates a new VER based on an account
-     * Format: 5<country_numeric_code><6digits_counter>
-     *//*
-public static String generateVER(Account theAccount) {
-
-    IATA_ISO_Country__c country = [Select i.Name, i.ISO_Code_Numeric__c, i.AIMS_Area_ID__c From IATA_ISO_Country__c i where i.Name = :theAccount.BillingCountry limit 1];
-
-    Integer countryAreaID = Integer.valueOf(country.AIMS_Area_ID__c);
-
-    // select counter associated to the Area
-    Area_Counter__c counter = [Select a.Next_Counter_Value__c From Area_Counter__c a where a.AIMS_Area_Id__c = :countryAreaID limit 1];
-    if (counter == null) {
-        throw new IDCardApplicationException('No counter found for country ' + country.Name + ' (Area ' + country.AIMS_Area_ID__c + ')');
-    }
-
-    // reselect with FOR UPDATE
-    counter = [Select a.Next_Counter_Value__c From Area_Counter__c a where a.AIMS_Area_Id__c = :countryAreaID limit 1 FOR UPDATE];
-
-    string formattedIsoCodeNumeric = String.valueOf(country.ISO_Code_Numeric__c).leftpad(3).replace(' ', '0');
-    string formattedCounter = String.valueOf(counter.Next_Counter_Value__c).leftpad(6).replace(' ', '0');
-    string newVER = '5' + formattedIsoCodeNumeric + formattedCounter;
-
-    // increment counter
-    counter.Next_Counter_Value__c = counter.Next_Counter_Value__c + 1;
-    update counter;
-
-    return newVER;
-}*/
-
     public static void generateAndAssignVERandUIR(ID_Card_Application__c application, Account theAccount) {
         if (massCountry == null || massCountry.AIMS_Area_Name__c != theAccount.BillingCountry) {
-            massCountry = [Select i.Name, i.ISO_Code_Numeric__c, i.AIMS_Area_Name__c, i.AIMS_Area_ID__c, i.ISO_Code__c
-                           From IATA_ISO_Country__c i
-                           where i.AIMS_Area_Name__c = :theAccount.BillingCountry
-                                   limit 1];
+            massCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
             massCounter = null;
         }
         if (massCountry.ISO_Code_Numeric__c == null)
@@ -423,10 +358,8 @@ public static String generateVER(Account theAccount) {
 
     public static string generateTMPVER( Account theAccount) {
 
-        IATA_ISO_Country__c country = [Select i.Name, i.ISO_Code_Numeric__c, i.AIMS_Area_Name__c, i.AIMS_Area_ID__c, i.ISO_Code__c
-                                       From IATA_ISO_Country__c i
-                                       where i.AIMS_Area_Name__c = :theAccount.BillingCountry
-                                               limit 1];
+        IATA_ISO_Country__c country = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
+
         if (country.ISO_Code_Numeric__c == null)
             country.ISO_Code_Numeric__c = 0;
         string formattedIsoCodeNumeric =  String.valueOf(country.ISO_Code_Numeric__c).leftpad(3).left(3).replace(' ', '0');
@@ -440,7 +373,7 @@ public static String generateVER(Account theAccount) {
                                          'ORDER BY Ver_Number_2__c DESC LIMIT 1  ');
         List<ID_Card_Application__c> a = database.query('SELECT Ver_Number__c ' +
                                          'FROM ID_Card_Application__c ' +
-                                         'WHERE  CreatedDate > '+last12months+' AND Type_of_application__c = :newValue AND (Ver_Number__c LIKE \'5' + formattedIsoCodeNumeric + '%\' ' +
+                                         'WHERE  CreatedDate > ' + last12months + ' AND Type_of_application__c = :newValue AND (Ver_Number__c LIKE \'5' + formattedIsoCodeNumeric + '%\' ' +
                                          'or  Ver_Number__c LIKE \'Z5' + formattedIsoCodeNumeric + '%\')' +
                                          'ORDER BY Ver_Number__c DESC LIMIT 1  ');
 
@@ -461,17 +394,15 @@ public static String generateVER(Account theAccount) {
 
         string formattedCounter = String.valueOf(counter).right(6).leftpad(6).replace(' ', '0');
         string newVER = 'Z5' + formattedIsoCodeNumeric + formattedCounter;
-        system.debug('VER# '+ newVER);
+        system.debug('VER# ' + newVER);
         return newVer;
     }
 
 
     public static string generateTMPUIR( Account theAccount) {
 
-        IATA_ISO_Country__c country = [Select i.Name, i.ISO_Code_Numeric__c, i.AIMS_Area_Name__c, i.AIMS_Area_ID__c, i.ISO_Code__c
-                                       From IATA_ISO_Country__c i
-                                       where i.AIMS_Area_Name__c = :theAccount.BillingCountry
-                                               limit 1];
+        IATA_ISO_Country__c country = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
+
         if (country.ISO_Code_Numeric__c == null)
             country.ISO_Code_Numeric__c = 0;
         string formattedIsoCodeNumeric =  String.valueOf(country.ISO_Code_Numeric__c).leftpad(3).left(3).replace(' ', '0');
@@ -514,10 +445,8 @@ public static String generateVER(Account theAccount) {
 
     public static string generateVER( Account theAccount) {
 
-        IATA_ISO_Country__c country = [Select i.Name, i.ISO_Code_Numeric__c, i.AIMS_Area_Name__c, i.AIMS_Area_ID__c, i.ISO_Code__c
-                                       From IATA_ISO_Country__c i
-                                       where i.AIMS_Area_Name__c = :theAccount.BillingCountry
-                                               limit 1];
+        IATA_ISO_Country__c country = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
+
         if (country.ISO_Code_Numeric__c == null)
             country.ISO_Code_Numeric__c = 0;
         string formattedIsoCodeNumeric =  String.valueOf(country.ISO_Code_Numeric__c).leftpad(3).left(3).replace(' ', '0');
@@ -547,10 +476,8 @@ public static String generateVER(Account theAccount) {
 
     public static string generateUIR( Account theAccount) {
 
-        IATA_ISO_Country__c country = [Select i.Name, i.ISO_Code_Numeric__c, i.AIMS_Area_Name__c, i.AIMS_Area_ID__c, i.ISO_Code__c
-                                       From IATA_ISO_Country__c i
-                                       where i.AIMS_Area_Name__c = :theAccount.BillingCountry
-                                               limit 1];
+        IATA_ISO_Country__c country = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
+
         if (country.ISO_Code_Numeric__c == null)
             country.ISO_Code_Numeric__c = 0;
         string formattedIsoCodeNumeric =  String.valueOf(country.ISO_Code_Numeric__c).leftpad(3).left(3).replace(' ', '0');
@@ -590,9 +517,7 @@ public static String generateVER(Account theAccount) {
         // 2: I get country code for each country
         map<string, string> CountryToISOCode = new map<string, string>();
         set<string> filters = new set<string>();
-        for (IATA_ISO_Country__c c : [Select i.Name, i.ISO_Code_Numeric__c, i.AIMS_Area_Name__c, i.AIMS_Area_ID__c, i.ISO_Code__c
-                                      From IATA_ISO_Country__c i
-                                      where i.AIMS_Area_Name__c IN :BillingCountries]) {
+        for (IATA_ISO_Country__c c : IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(BillingCountries)){
 
             if (c.ISO_Code_Numeric__c == null)
                 c.ISO_Code_Numeric__c = 0;
@@ -646,9 +571,7 @@ public static String generateVER(Account theAccount) {
         // 2: I get country code for each country
         map<string, string> CountryToISOCode = new map<string, string>();
         set<string> filters = new set<string>();
-        for (IATA_ISO_Country__c c : [Select i.Name, i.ISO_Code_Numeric__c, i.AIMS_Area_Name__c, i.AIMS_Area_ID__c, i.ISO_Code__c
-                                      From IATA_ISO_Country__c i
-                                      where i.AIMS_Area_Name__c IN :BillingCountries]) {
+        for (IATA_ISO_Country__c c : IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(BillingCountries)) {
 
             if (c.ISO_Code__c == null)
                 c.ISO_Code__c = '';
@@ -1065,7 +988,7 @@ public static String generateVER(Account theAccount) {
             idCard.MustSyncWithAIMS__c = true;
 
             if (IdCardAIMSrt == null)
-                IdCardAIMSrt = [SELECT ID FROM RecordType WHERE DeveloperName = 'AIMS'][0].Id;
+                IdCardAIMSrt = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
             idcard.RecordTypeId = IdCardAIMSrt;
 
             //Get Start and End date and put them on the new idcard
@@ -1243,8 +1166,8 @@ public static String generateVER(Account theAccount) {
             bCountriesPerIATACode.get(acc.BillingCountry.tolowercase()).add(acc.IATACode__c);
         }
 
-        IATA_ISO_Country__c[] listCountries = [Select i.Name, i.AIMS_Area_Name__c, i.Id, i.ISO_Code__c, i.IATA_Regional_Office__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c in :bCountriesPerIATACode.keySet()];
-
+        IATA_ISO_Country__c[] listCountries = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(bCountriesPerIATACode.keySet());
+ 
         for (IATA_ISO_Country__c ac : listCountries) {
 
             try {
@@ -1362,11 +1285,9 @@ public static String generateVER(Account theAccount) {
 
         // Create the case
         Case newCase = new Case();
-        newCase.RecordTypeId =  clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Mass Application');
+        newCase.RecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
         newCase.Subject = 'Case for ID Card Mass Application ' + idCardApp.Name;
 
-
-        ID keyAccountIDCardCaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ID_Card_Mass_Application');
         newCase.Status = 'In progress';
         newCase.OwnerId = System.Userinfo.getUserId();
 
@@ -1382,8 +1303,7 @@ public static String generateVER(Account theAccount) {
         if (idCardApp.IDCard_Expedite_Delivery__c)
             newCase.Priority = 'Low';
 
-        List<IATA_ISO_Country__c> isoCountry = [select Case_BSP_Country__c, Region__c, AIMS_Area_Name__c  from IATA_ISO_Country__c where AIMS_Area_Name__c = : theAccount.BillingCountry limit 1];
-
+        List<IATA_ISO_Country__c> isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
 
         if (isoCountry[0].Case_BSP_Country__c != null && isoCountry[0].Case_BSP_Country__c != '')
             newCase.BSPCountry__c = isoCountry[0].Case_BSP_Country__c;
@@ -1408,8 +1328,6 @@ public static String generateVER(Account theAccount) {
         newCase.RecordTypeId = IDCardcaseRecordTypeID;
         newCase.Subject = 'Case for ID Card Application ' + idCardApp.Name;
 
-
-        ID keyAccountIDCardCaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ID_Card_Mass_Application');
         newCase.Status = 'In progress';
         newCase.OwnerId = System.Userinfo.getUserId();
 
@@ -1425,8 +1343,7 @@ public static String generateVER(Account theAccount) {
         if (idCardApp.IDCard_Expedite_Delivery__c)
             newCase.Priority = 'Low';
 
-        List<IATA_ISO_Country__c> isoCountry = [select Case_BSP_Country__c, Region__c, AIMS_Area_Name__c  from IATA_ISO_Country__c where AIMS_Area_Name__c = : theAccount.BillingCountry limit 1];
-
+        List<IATA_ISO_Country__c> isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
 
         if (isoCountry[0].Case_BSP_Country__c != null && isoCountry[0].Case_BSP_Country__c != '')
             newCase.BSPCountry__c = isoCountry[0].Case_BSP_Country__c;
@@ -1482,14 +1399,12 @@ public static String generateVER(Account theAccount) {
         //      newCase.ID_Card_Status__c = CASECARDSTATUS_PENDING_PAYMENT;
 
 
-        List<IATA_ISO_Country__c> isoCountry = [select Case_BSP_Country__c, Region__c, AIMS_Area_Name__c  from IATA_ISO_Country__c where AIMS_Area_Name__c = : theAccount.BillingCountry limit 1];
-
+       List<IATA_ISO_Country__c> isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
 
         if (isoCountry[0].Case_BSP_Country__c != null && isoCountry[0].Case_BSP_Country__c != '')
             newCase.BSPCountry__c = isoCountry[0].Case_BSP_Country__c;
         if (isoCountry[0].Region__c != null && isoCountry[0].Region__c != '')
             newCase.Region__c = isoCountry[0].Region__c;
-
 
 
         // set contact
@@ -1892,7 +1807,7 @@ public static String generateVER(Account theAccount) {
 
             ID_Card_Application__c newIDCardApplication = new ID_Card_Application__c();
 
-            ID idcaRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ID_Card_Application__c').get('Standard') ;
+            ID idcaRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard') ;
 
             newIDCardApplication.RecordTypeId = idcaRT;
             newIDCardApplication.Title__c = idcardObject.Title__c;
@@ -2073,5 +1988,5 @@ public static String generateVER(Account theAccount) {
         return '';
     }
 
- 
+
 }

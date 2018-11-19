@@ -1,8 +1,9 @@
 @isTest
 private class AMS_AccountRoleHelperTest {
-
-	@testSetup static void createData() {
-		Id agencyRecTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+	
+	@testSetup
+	private static void createData() {
+		Id agencyRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		
 		Account a = new Account(Name = 'Test Account', RecordTypeId = agencyRecTypeId);
 		insert a;
@@ -14,11 +15,12 @@ private class AMS_AccountRoleHelperTest {
 		insert new List<AMS_Person__c>{p1, p2, p3, p4};
 	}
 	
-	static testMethod void test_aimsOwnerMerge() {
+	@isTest
+	private static void test_aimsOwnerMerge() {
 		Account a = [SELECT Id FROM Account];
 		List<AMS_Person__c> persons = [SELECT Id, Name FROM AMS_Person__c ORDER BY Name ASC];
 
-		Id ownerRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+		Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
 		Test.startTest();
 

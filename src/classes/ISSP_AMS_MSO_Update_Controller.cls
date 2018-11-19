@@ -71,12 +71,8 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                     accreditationForm.Branch_Office_City__c = msoAccount.BillingCity;
                     accreditationForm.Branch_Office_Email__c = msoAccount.Email__c;
                     accreditationForm.Branch_Office_Phone__c = msoAccount.Phone;
-                    //accreditationForm.IATA_ISO_State__c = msoAccount.Iso_State__c;
                     accreditationForm.IATA_ISO_State__c = msoAccount.IATA_ISO_Billing_State__c;
-                    
-                    //accreditationForm.IATA_ISO_State__r.Name = msoAccount.Iso_State__r.Name;
                     accreditationForm.Branch_Office_Country__c = msoAccount.IATA_ISO_Country__c;
-                    //accreditationForm.Branch_Office_Country__r.Name = msoAccount.IATA_ISO_Country__r.Name;
                     accreditationForm.IATACode__c = msoAccount.IATACode__c;
                     accreditationForm.Account_Name__c = msoAccount.Name;
                     accreditationForm.Short_Name__c = msoAccount.Short_Name__c;
@@ -150,7 +146,8 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     }
     
     public void refreshStates(){
-        list<IATA_ISO_Country__c> isoList = [SELECT Name, Id, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c, IATA_Country_FR__c, IATA_Country_SP__c, IATA_Country_ZH__c, (SELECT Id, Name FROM IATA_ISO_States__r ORDER BY Name) FROM IATA_ISO_Country__c WHERE Id = :msoAccount.IATA_ISO_Country__c ORDER BY Name];
+        list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(
+            IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{msoAccount.IATA_ISO_Country__c}), 'Name');
         
         IATA_ISO_Country__c iso = isoList[0];    
             
@@ -257,11 +254,11 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
         try {
 
-            IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
+            IATA_ISO_Country__c selectedCountryInfo = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{countrySelected}).get(0);
 
             if (oscarCase.Id == null) {
                 // create new OSCAR
-                oscar.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c').get('CORRECTION');//oscarRT.Id;
+                oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');//oscarRT.Id;
                 oscar.Name = 'tempName'; //oscarCase.CaseNumber;                
                 oscar.Process__c = AMS_Utils.COR;
                 oscar.Account__c = msoAccount.Id;
@@ -275,8 +272,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 // create new OSCAR Communication case
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
-                oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
-                //oscarCase.Subject = 'Corrections - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
+                oscarCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');//caseRT.Id;
                 oscarCase.Subject = 'MSO code Corrections - (' + msoAccount.IATACode__c + ') - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
                 oscarCase.Reason1__c = 'Corrections';
@@ -291,7 +287,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id =:oscarCase.Id];
 
                 // create new accreditation form
-                accreditationForm.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Pax_Accreditation_Form__c'}).get('AMS_Pax_Accreditation_Form__c').get('GeneralOnlineAccreditation');//accreditationRT.Id;
+                accreditationForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'GeneralOnlineAccreditation');//accreditationRT.Id;
                 accreditationForm.SAAM_Case__c = oscarCase.Id;
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
@@ -300,10 +296,6 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscar.AMS_Online_Accreditation__c = accreditationForm.Id;
                 oscar.Name = oscarCase.CaseNumber;
                 update oscar;
-
-
-                //oscarCase.ContactId = currentUser.ContactId;
-                //update oscarCase;
 
 
             } else {
@@ -321,10 +313,10 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
     public PageReference terminate() {
         try {
-                IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
+                IATA_ISO_Country__c selectedCountryInfo = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{countrySelected}).get(0);
                 
                 // create new OSCAR
-                oscar.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c').get('VOLUNTARY_RELINQUISHMENT');
+                oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
                 oscar.Name = 'tempName'; 
                 oscar.Process__c = AMS_Utils.VOLRELINQUISH_CA;
                 oscar.Account__c = msoAccount.Id;
@@ -338,7 +330,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 // create new OSCAR Communication case
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
-                oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');
+                oscarCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
                 //oscarCase.Subject = 'MSO code Termination - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
                 //Termination of MSO code - (IATA Code) - Airline name
                 oscarCase.Subject = 'MSO code Termination - (' + msoAccount.IATACode__c + ') - ' + currentUserContact.Account.Name;
@@ -361,12 +353,6 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 oscar.STEP31__c = AMS_Utils.PASSED;
                 update oscar;
 
-                //oscarCase.ContactId = currentUser.ContactId;
-                //update oscarCase;
-
-                //sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, false);
-
-                //closeOscar(oscar.Id, oscarCase.Id, currentUser.ContactId, ACTION_TERMINATION);
 
         } catch (Exception ex) {
             ApexPages.addMessages(ex);
@@ -382,9 +368,6 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
             oscar.STEP6__c = AMS_Utils.PASSED;
             update oscar;
 
-            //sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, true);
-
-            //closeOscar(oscar.Id, oscarCase.Id, currentUser.ContactId, ACTION_CORRECTION);
 
         } catch (Exception ex){
             ApexPages.addMessages(ex);
@@ -403,13 +386,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
         update oscar;
 
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
-        //if (retURL == null) {
-			//FM AMSU-119
-            //return new Pagereference('/ISSP_AMS_MSO');
-            return new Pagereference('/ISSP_AMS_MSO_Update?action=' + ACTION_CORRECTION + '&msoId=' + msoAccount.Id + '&step=view');
-        /*} else {
-            return new Pagereference(retURL);
-        }*/
+        return new Pagereference('/ISSP_AMS_MSO_Update?action=' + ACTION_CORRECTION + '&msoId=' + msoAccount.Id + '&step=view');
     }
 
     public PageReference goBackToForm() {

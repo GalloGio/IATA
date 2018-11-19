@@ -68,14 +68,14 @@ private class ANG_MasterData_Interface_test {
                         Last_Request_Result__c ='testRequestResult',
                         status__c = 'Active',
                         ANG_FormOfPayment_ID__c='CC',
-                        recordtypeId =  AMS_Utils.getId('Agency_Authorization__c','BSPLink'),
+                        recordtypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','BSPLink'),
                         Unique_Identifier__c='aa'
                 );
 
                 Agency_Authorization__c agAurthRec2 = new Agency_Authorization__c(
                         Account__c= accChild.id,
                         Email_Used_for_BSP_Creation__c ='as5d@iata.org',
-                        recordtypeId =  AMS_Utils.getId('Agency_Authorization__c','FormOfPayment'),
+                        recordtypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment'),
                         Last_Request_Result__c ='testRequestResult',
                         status__c = 'Active',
                         ANG_FormOfPayment_ID__c='CC',

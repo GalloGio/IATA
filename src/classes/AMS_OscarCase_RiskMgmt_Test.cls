@@ -9,7 +9,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
         insert lsCountries;
 
         //Create Accounts
-        id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         list<Account> lsAccntHO = new list<Account>();
         lsAccntHO.add(new Account(Name='Accnt1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(0).Id, Location_Class__c='P', Location_type__c = 'HO', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA')); //Empty Location Class. Will give Error
         lsAccntHO.add(new Account(Name='Accnt2', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='C', Location_type__c = 'HO', Status__c = 'Approved', Reason__c = '90-MEETS CRITERIA'));
@@ -60,11 +60,12 @@ private class AMS_OscarCase_RiskMgmt_Test {
         insert oc;
     }
 
-    private static id SIDRALiteRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
-    private static id SIDRARTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
-    private static Id RTOSCAR = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
+    private static id SIDRALiteRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+    private static id SIDRARTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    private static Id RTOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
-    static testmethod void TestCountryNotPilot(){
+    @isTest
+	static void TestCountryNotPilot(){
         Account a = [select id from Account where name='Accnt1'];
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
         insert parent;
@@ -94,7 +95,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         test.StopTest();
     }
 
-    static testmethod void TestCCToSingleAgency(){
+    @isTest
+	static void TestCCToSingleAgency(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
         insert parent;
@@ -122,7 +124,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
     }
 
 
-    static testmethod void TestCCToAllHierarchyFromSA(){
+    @isTest
+	static void TestCCToAllHierarchyFromSA(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3.1.1'];
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
         insert parent;
@@ -152,7 +155,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         test.StopTest();
     }
 
-    static testmethod void TestCCToAllHierarchyFromBR(){
+    @isTest
+	static void TestCCToAllHierarchyFromBR(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3.1'];
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
         insert parent;
@@ -182,7 +186,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
     }
 
 
-    static testmethod void TestNewIrregularity(){
+    @isTest
+	static void TestNewIrregularity(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
         insert parent;
@@ -218,7 +223,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
     }
 
-    static testmethod void TestAll6Conditions(){
+    @isTest
+	static void TestAll6Conditions(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
         insert parent;
@@ -244,7 +250,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
     }
 
-    static testmethod void TestAll6Conditions2(){
+    @isTest
+	static void TestAll6Conditions2(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
         insert parent;
@@ -270,7 +277,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
     }
 
-    static testmethod void TestIrregularityWithdrawn(){
+    @isTest
+	static void TestIrregularityWithdrawn(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
         insert parent;
@@ -310,7 +318,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         test.StopTest();
     }
 
-    static testmethod void TestClearAllIRRs(){
+    @isTest
+	static void TestClearAllIRRs(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
         list<Agency_applied_change_code__c> lsCC = new list<Agency_applied_change_code__c>();
         lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRR', Effective_date__c = system.today(), Irregularities_Points__c=2, Operation__c='A', AIMS_ID__c='1'));
@@ -352,7 +361,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         test.StopTest();
     }
 
-    static testmethod void TestBulletinMemoText(){
+    @isTest
+	static void TestBulletinMemoText(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
         case cc = new case(AccountId = a.Id);
         insert cc;
@@ -440,7 +450,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         test.StopTest();
     }
 
-    static testmethod void TestBulletinMemoTextIRR(){
+    @isTest
+	static void TestBulletinMemoTextIRR(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
 
         list<Agency_applied_change_code__c> lsCC = new list<Agency_applied_change_code__c>();
@@ -508,7 +519,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
     }
 
 
-    static testmethod void checkConditionsType(){
+    @isTest
+	static void checkConditionsType(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
 
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id, status='Open');
@@ -613,7 +625,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
     }
 
 
-    static testMethod void checkPrevStatusReason(){
+    @isTest
+	static void checkPrevStatusReason(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3'];
 
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id, status='Open');
@@ -653,7 +666,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         test.StopTest();
     }
 	
-	static testMethod void TestCompliant() {
+	@isTest
+	static void TestCompliant() {
         AMS_OscarCase_RiskMgmt a = new AMS_OscarCase_RiskMgmt();
         a.isTestCompliant();
         AMS_AgencyRegulationTriggerHandler ar = new AMS_AgencyRegulationTriggerHandler();
@@ -662,7 +676,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         aq.isTestCompliant();
     }
 
-    static testMethod void checkPrevStatusReasonUpdated(){
+    @isTest
+	static void checkPrevStatusReasonUpdated(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3'];
 
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id, status='Open');
@@ -720,7 +735,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         test.StopTest();
     }
 
-    static testMethod void checkPrevStatusReasonUpdatedB(){
+    @isTest
+	static void checkPrevStatusReasonUpdatedB(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3'];
 
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id, status='Open');
@@ -779,7 +795,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         test.StopTest();
     }
 
-    static testMethod void checkPrevStatusReasonUpdatedC(){
+    @isTest
+	static void checkPrevStatusReasonUpdatedC(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3'];
 
         Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id, status='Open');

@@ -12,64 +12,10 @@ public class howto_Controller_Test {
 	  static List<PKB_Article_Feedback_Deflection__c> pafds;
 	  class TestException extends Exception { }
 
-	//static testMethod void testFaq2Case001() 
-	//{
-		//Account parent = ISSP_ObjectFactory.createNewAccount();
-        //parent.BillingCity = 'test';
-        //parent.Name = 'test';
-        //insert parent;
-        //System.debug('parent Id: ' + parent.Id);
-
-        //Account child = ISSP_ObjectFactory.createNewAccount();
-        //child.BillingCity = 'test2';
-        //child.Name = 'test2';
-        //child.Site = 'headSite';
-		//child.sector__c = 'Airline';
-        //child.Top_Parent__c = parent.Id;
-        //insert child;
-        //System.debug('child Id: ' + child.Id);
-        //Contact con = ISSP_ObjectFactory.createNewContact();
- 
-        //con.AccountId= child.Id;
-		//con.Email = 'Test@test11.com';
-        //insert con;
-        //System.debug('con Id: ' + con.Id);
-		 //User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        //System.debug('newUser Id: ' + newUser.Id);
-        //con.OwnerId = newUser.Id;
-        //update con;
-
-        //Test.startTest();
-
-        //System.runAs(newUser)
-        //{
-			////FAQ__kav faq1 = new FAQ__kav(Language='fr', UrlName='test111'  , IsVisibleInPkb=true, Title='test111');
-			////FAQ__kav faq2 = new FAQ__kav(Language='fr', UrlName='test222'  , IsVisibleInPkb=true, Title='test222');
-			////List<FAQ__kav> lstFaqs = new List<FAQ__kav>();
-			////lstFaqs.add(faq1);
-			////lstFaqs.add(faq2);
-			////insert lstFaqs ;	
-			//system.debug('SOS lstFaqs: ' + lstFaqs);
-			////TestObjectCreator.createFAQArticlesCategories(lstFaqs, groupName, catName);
-			////List<String> lstFormatArgs = new List<String> {'\'', 'fr', 'Draft', 'FAQ__kav'};
-			////String query = 'SELECT Title, UrlName, Id, KnowledgeArticleId, Language, PublishStatus FROM {3} WHERE Language = {0}{1}{0} AND PublishStatus = {0}{2}{0}';
-			////query = String.format(query, lstFormatArgs);
-			////lstFaqs = (List<FAQ__kav>)Database.query(query);
-			////for (FAQ__kav faq : lstFaqs)
-			////{
-				////KbManagement.PublishingService.publishArticle(faq.KnowledgeArticleId, true);
-			////}
-			//setupData();
-			//ApexPages.KnowledgeArticleVersionStandardController ctl =
-						//new ApexPages.KnowledgeArticleVersionStandardController(faq1);
-			//faq_controller controller = new faq_controller(ctl);
-			
-		//}
-		//Test.stopTest();
-	//}
 	
-	static testMethod void test1() {
-		String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+    @isTest
+	static void test1() {
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
     	
     	Account acc = ISSP_ObjectFactory.createNewAccount();
     	acc.IATACode__c = '100';
@@ -96,7 +42,8 @@ public class howto_Controller_Test {
 		}
 	}
 
-	static testMethod void test_searchString() {
+    @isTest
+	static void test_searchString() {
 
 		Test.startTest();
 		setupData();

@@ -124,7 +124,7 @@ public without sharing class vfIECUpdateAddress   extends IECPageController {
                 sAccountName = account.Name;
                 
                 // Retrieve Country ID for USA and Canada to be used for validation on the page
-                for (IATA_ISO_Country__c country : [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('US', 'CA')])
+                for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{'US', 'CA'}))
                 {
                 	setCountryRequireZipCode.add(country.Id);
                 }

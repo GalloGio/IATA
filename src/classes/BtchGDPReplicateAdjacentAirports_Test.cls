@@ -6,7 +6,6 @@ private class BtchGDPReplicateAdjacentAirports_Test {
             TestUtilities.createIECGDPReplicationSetting(true);
             Test.startTest();
             BtchGDPReplicateAdjacentAirports batch = new BtchGDPReplicateAdjacentAirports();
-            // batch.idRecordTypeGDP = [SELECT Id FROM RecordType WHERE SobjectType = 'GDP_Products_Account_View__c'][0].Id;
             batch.query = 'SELECT id, Airport_ID__c, AirportCode__c, AIMS_ID__c, Related_Account__r.IATACode__c, Related_Account__r.WebStar_ID__c'
             +' FROM Adjacent_Airport__c LIMIT 5';
             // try {

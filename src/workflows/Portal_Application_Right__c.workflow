@@ -523,48 +523,6 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ISSP Notify contact of access granted to TD Premium</fullName>
-        <actions>
-            <name>Notify_contact_of_access_granted_to_TD_Premium</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Granted</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Portal_Applications__c.Name</field>
-            <operation>equals</operation>
-            <value>Treasury Dashboard - Premium</value>
-        </criteriaItems>
-        <description>Send email to the contact who requested acces to the Service &apos;Treasury Dashboard - Premium&apos; 
-Field update of user &apos;Treasury Dashboard User&apos; = True</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP Notify contact of access granted to Treasury Dashboard</fullName>
-        <actions>
-            <name>Notify_contact_of_access_granted_to_Treasury_Dashboard</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Granted</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Portal_Applications__c.Name</field>
-            <operation>equals</operation>
-            <value>Treasury Dashboard</value>
-        </criteriaItems>
-        <description>Send email to the contact who requested acces to the Service &apos;Treasury Dashboard&apos;
-Field update of user &apos;Treasury Dashboard User&apos; = True</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ISSP TD Premium Request</fullName>
         <actions>
             <name>ISSP_Alert_Treasury_Dashboard_Manager_of_access_request</name>
