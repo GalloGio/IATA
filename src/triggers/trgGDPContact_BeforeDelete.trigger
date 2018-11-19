@@ -1,10 +1,10 @@
 trigger trgGDPContact_BeforeDelete on Contact (Before delete) {
     
     // Get Id of  the GDP Contact Record Type
-    ID gdpContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('GDP Contact');
+    ID gdpContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'GDP_Contact');
     
     // Get Id of  the Standard Contact Record Type
-    ID standardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');
+    ID standardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
     
     // Get the list of Profiles that have deletion rights on contacts when the record type is equal to GDP Contact
     List<Profile> profiles = [SELECT Name, Id FROM Profile WHERE  Name = 'GDP - Administrator' OR Name = 'System Administrator' ORDER BY Name DESC];

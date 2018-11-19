@@ -153,7 +153,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
                 list<selectoption> options= new list<selectoption>();
 
-                list<IATA_ISO_Country__c> contr= [select Id, Name  from IATA_ISO_Country__c where Region__c = :region order by Name];
+                list<IATA_ISO_Country__c> contr= IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{region}), 'Name');
 
                 if(contr.isEmpty()){
                     options.add(new selectoption('Select Country', 'Select Country'));

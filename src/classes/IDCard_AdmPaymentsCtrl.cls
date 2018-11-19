@@ -21,7 +21,7 @@ public class IDCard_AdmPaymentsCtrl extends IDCardAbstractController {
     
     private void loadContent() {
     	try{  
-               String massAppRT = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
+               String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
                if(Test.isRunningTest()){
                	iataCodeParameter = '76543210';
                }

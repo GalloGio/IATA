@@ -22,9 +22,7 @@ public class LVA_AfterChatTriggerTest {
             con.AccountId = a.Id;
             insert con;
             
-            
-            
-            Id recordTypeID = [select id from recordtype where name = 'Cases - Europe' limit 1][0].id;
+            Id recordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
             //10 because of trigger NewAttachment
             for(integer i=0; i<10; i++){
                 bulkCases.add(new Case(Subject='Case ' + i, 
@@ -109,9 +107,7 @@ public class LVA_AfterChatTriggerTest {
                 con.AccountId = a.Id;
                 insert con;
                 
-                
-                
-                Id recordTypeID = [select id from recordtype where name = 'Cases - Europe' limit 1][0].id;
+                Id recordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
                 for(integer i=0; i<10; i++){
                     bulkCases.add(new Case(Subject='Case ' + i, 
                                            RecordTypeId = recordTypeID, 

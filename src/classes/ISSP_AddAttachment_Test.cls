@@ -11,10 +11,7 @@ private class ISSP_AddAttachment_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
         insert country2;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType
-                      WHERE SobjectType = 'Account'
-                                          AND DeveloperName = 'IATA_Agency'][0].Id;
-
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -55,8 +52,8 @@ private class ISSP_AddAttachment_Test {
 
         Test.startTest();   
             
-        ID casesEurope = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Europe').RecordTypeId ;
-        ID saam = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId ;
+        ID casesEurope = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+        ID saam = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         Case newCase = ISSP_ObjectFactory.createNewCase();
         newcase.recordtypeid = casesEurope;

@@ -35,14 +35,14 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		AMS_Utils.AE
     };
 
-	private static Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-	private static Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
-	private static Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
-	private static Id rtAnnualRevalidation = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Annual Revalidation').getRecordTypeId();
-
-	private static Id ownershipId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Account_Role__c').get('Ownership');
-
+	private static Id rtAccreditContPreviousOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Owner');
+	private static Id rtAccreditContCurrentOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
+	private static Id rtAccreditContPreviousCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
+	private static Id rtAccreditContCurrentCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
+	private static Id rtAnnualRevalidation = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Annual_Revalidation'); 
+	
+	private static Id ownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+	
 	public static String DEFAULT_ICON { get{ return 'glyphicon glyphicon-refresh text-primary';} set;}
 	public static String OK_ICON { get{ return 'glyphicon glyphicon-ok text-success';} set;}
 	public static String CONFIRMED_ICON { get{ return 'glyphicon glyphicon-flag text-danger';} set;}
@@ -381,12 +381,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		isoCountryMap = new Map<String, IATA_ISO_Country__c>();
 
-        List<IATA_ISO_Country__c> aux = [Select Id, ISO_Code__c, Local_language_Agency_details_required__c, EU_Country__c, EACP_Country__c, 
-        								Hide_Tax_Number_VAT__c, IATA_Contry_KR__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Name, Tax_Number_label__c, Tax_number_help_text__c, Tax_number_format__c, Tax_Number_VAT_field_mandatory__c,
-        								Postal_Code_Format_regEx__c, IEC_Zip_Postal_Code_required__c, State_Province_Mandatory__c, Postal_Code_Hint_Format__c
-                                        From IATA_ISO_Country__c
-                                        Where ISO_Code__c In :isocodes];
-
+        List<IATA_ISO_Country__c> aux = IATAIsoCountryDAO.getIsoCountryByIsoCodes(isocodes);
 		for(IATA_ISO_Country__c ic : aux) {
 			isoCountryMap.put(ic.ISO_Code__c, ic);
 		}
@@ -556,6 +551,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Savepoint sp = Database.setSavepoint();
 
 		try {
+			
 			copyShippingCountry();
 			upsert currentAccount.fw.newform;
 
@@ -563,7 +559,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		return null;
 	}
-
+	
 	private void copyShippingCountry() {
 		// Workaround to assign the previous value if not changed
 		if (!currentAccount.fw.newform.Notify_Change_Location__c)
@@ -602,7 +598,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		return null;
 	}
-
+	
 	private void migrateExtraFields() {
 
 		String isoCountryForm = currentAccount.fw.newform.Shipping_Country__c;
@@ -971,7 +967,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
         List<AMS_Accreditation_Contact__c> lstAccreditationContact = new List<AMS_Accreditation_Contact__c>();
 
-        Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+        Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
 		List<AMS_Account_Role__c> amsOwners = [Select Account__c, Active__c, Employee_Name__c,Employee_type__c, Id,
 			                                          Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.IATACode__c,
@@ -1236,7 +1232,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		errorFound = false;
 		Pattern iso8859 = Pattern.compile(ISO_8859_1_regEx);
 		Pattern postalCodeRegex;
-
+		
 		IATA_ISO_Country__c shippingCountryInfo = ISSP_ANG_ANNUAL_REV_UPDATE.postalCodeRegexByCountryMap.get(currentAccount.fw.newForm.Shipping_Country__c);
 
 		Pattern shippingCountryPostalCodeRegex;
@@ -1368,7 +1364,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-
 				if (shippingCountryInfo != null && shippingCountryInfo.State_Province_Mandatory__c && currentAccount.fw.newform.Shipping_State__c == null) {
 					currentAccount.fw.newform.Shipping_State__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
@@ -1461,7 +1456,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					if (currentAccount.fw.newform.Local_Postal_Address_City__c == null) {
 						currentAccount.fw.newform.Local_Postal_Address_City__c.addError(Label.ISSP_YouMustEnter);
 						errorFound = true;
-					}
+					} 
 
 					if (currentAccount.isocountry.State_Province_Mandatory__c && currentAccount.fw.newform.Local_Physical_Address_Province__c == null) {
 						currentAccount.fw.newform.Local_Physical_Address_Province__c.addError(Label.ISSP_YouMustEnter);
@@ -1703,8 +1698,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	//
 	public void createAgencyContact() {
 
-        Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
-
         integer cntOwners;
         integer cntEmailContacts;
         contactSaved = true;
@@ -1749,8 +1742,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             }
         }
 
-        if (Test.IsRunningTest() == false) {
-            contactToUpsert.RecordTypeId = Schema.SObjectType.AMS_Accreditation_Contact__c.RecordTypeInfosByName.get(contactType).RecordTypeId;
+        if (!Test.IsRunningTest()) {
+            contactToUpsert.RecordTypeId = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AMS_Accreditation_Contact__c').get(contactType);
         }
 
 		if (currentAccount.newContact.Agencies_prev_worked_for__c == ''  || currentAccount.newContact.Agencies_prev_worked_for__c == 'none') {
@@ -2010,29 +2003,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
             list<IATA_ISO_Country__c> isoList;
             if (applyLanguage == 'es') {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                                  IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                                  IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                             FROM IATA_ISO_Country__c
-                            WHERE Case_BSP_Country__c != null
-                              AND Case_BSP_Country__c != ''
-                         ORDER BY IATA_Country_SP__c];
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_SP__c');
             } else if (applyLanguage == 'fr') {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                                  IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                                  IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                             FROM IATA_ISO_Country__c
-                            WHERE Case_BSP_Country__c != null
-                              AND Case_BSP_Country__c != ''
-                         ORDER BY IATA_Country_FR__c];
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_FR__c');
             } else {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                                  IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                                  IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                             FROM IATA_ISO_Country__c
-                            WHERE Case_BSP_Country__c != null
-                              AND Case_BSP_Country__c != ''
-                         ORDER BY Name];
+                isoList =IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
             }
 
             options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));

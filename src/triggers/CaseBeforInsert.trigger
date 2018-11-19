@@ -15,13 +15,13 @@ trigger CaseBeforInsert on Case (before insert,after insert) {
             CountryNameSet.add(newCase.Country_concerned_by_the_query__c);
         }
         
-        for(IATA_ISO_Country__c iso : [select Id,ISO_Code__c,Name,Region__c,Case_BSP_Country__c from IATA_ISO_Country__c where Name in:CountryNameSet]){
+        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.getIsoCountryByCountriesName(CountryNameSet)){
             IATAISOCountryMap.put(iso.Name ,iso);
         }
         
         for(Case newCase : trigger.new){
-            Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Security_Monitoring');
-            Id Financtial_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('EmailTemplate__c').get('FSM');
+            Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
+            Id Financtial_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'FSM');
             
             if(IATAISOCountryMap.get(newCase.Country_concerned_by_the_query__c)!=null){
                 system.debug('\n\n\n Region__c '+newCase.Region__c +'\n\n\n');
@@ -114,10 +114,10 @@ trigger CaseBeforInsert on Case (before insert,after insert) {
         Set<Id> setASCaseIds = new Set<Id>();
         Set<Id> setDIPCaseIds = new Set<Id>();
         
-        Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Suspension');
-        Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
-        Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Funds_Management');
-        Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
+        Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Suspension');
+        Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Deactivation');
+        Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Funds_Management');
+        Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DIP_Review_Process');
         
         for (Case c : trigger.new) {
             if (c.RecordTypeId == RT_AirlineSuspension_Id || c.RecordTypeId == RT_AirlineDeactivation_Id || c.RecordTypeId == RT_FundsManagement_Id) {

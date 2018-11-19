@@ -9,7 +9,7 @@ public with sharing class EmailMessageHandler {
 	 * on EmailMessage attachments. 
 	 */
 	public static void SetTheNOISentDateOnParentCase (list<EmailMessage> lstTriggerNew) {
-		ID SIDRAcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+		ID SIDRAcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 		
 		Set<String> cids = new Set<String>();
 		map<String, EmailMessage> messagesPerCaseId = new Map<String, EmailMessage>();

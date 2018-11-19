@@ -148,7 +148,9 @@ public class AMS_AgencyRegulationTriggerHandler {
             OR (RecordType.DeveloperName = 'Standard_Account' 
             AND (Location_type__c = 'HO' OR Location_type__c = 'BR')))
             AND Location_Class__c = 'C'];
-        List<IATA_ISO_Country__c> lsCountries = [SELECT Id, Name FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'CN'];
+
+        List<IATA_ISO_Country__c> lsCountries = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{'CN'});
+
         IATA_ISO_Country__c china;
         if(!lsCountries.isEmpty()) { china = lsCountries[0];}
         // fetch the existing regulations to make the count

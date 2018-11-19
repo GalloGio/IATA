@@ -108,7 +108,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,IATA Standard Account,Airline Headquarters</value>
+            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
         </criteriaItems>
         <criteriaItems>
             <field>Category__c</field>
@@ -263,7 +263,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>GDP Account,Agency</value>
+            <value>Agency</value>
         </criteriaItems>
         <criteriaItems>
             <field>Merged_Account__c</field>
@@ -286,7 +286,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>IATA Country Office</value>
+            <value>Standard Account</value>
         </criteriaItems>
         <criteriaItems>
             <field>Category__c</field>
@@ -557,7 +557,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Standard Account,Others,IATA Standard Account</value>
+            <value>Standard Account,Others</value>
         </criteriaItems>
         <criteriaItems>
             <field>Merged_Account__c</field>
