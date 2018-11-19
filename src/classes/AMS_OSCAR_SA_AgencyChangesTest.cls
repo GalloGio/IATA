@@ -111,6 +111,19 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.AMS_Target_Agency__c = targetAgencyId;
         update oscar;
 
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= stagingArea.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
         return [SELECT Id, Account__c, Type_of_change__c,Change_effective_as_of__c FROM AMS_OSCAR__c LIMIT 1];
 
     }

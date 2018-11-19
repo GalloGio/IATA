@@ -1511,6 +1511,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>Este servicio facilita la interacción y el intercambio de información entre los agentes / intermediarios de transporte y las aerolíneas que participan en el sistema de pago de las cuentas de transporte de IATA (CASS, por sus siglas en inglés).</label>
         <name>CASSLink_Description</name>
     </customLabels>
