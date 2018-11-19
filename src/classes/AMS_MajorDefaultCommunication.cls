@@ -1,8 +1,10 @@
 global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject>, Database.Stateful {
 	global Map<String,Set<Id>> accountIdsByCountry {get;set;}
 	global Map<Id,Case> caseByAccounts {get;set;}
+	global List<String> errors {get;set;}
 
 	public AMS_MajorDefaultCommunication(List<Agency_Applied_Change_code__c> changeCodes) {
+		this.errors = new List<String>();
 		Set<Id> caseIds = new Set<Id>();
 		for(Agency_Applied_Change_code__c ccode : changeCodes) {
 			if(ccode.SIDRA_Case__c != null) {
@@ -58,70 +60,78 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 	}
 
 	global void execute(Database.BatchableContext BC, List<Services_Rendered__c> scope) {
-		Map<String, Set<Id>> airlinesByCountry = new Map<String, Set<Id>>(); //Map airlines to notify per country	
-		Map<Id,Id> airlinesMap = new Map<Id,Id>(); //Map each airline to his parent (Headquarters are mapped to null)
-		for(Services_Rendered__c service : scope) {
-			Id airlineId = service.Services_Rendered_to_Airline__c;
-			Id airlineParentId = service.Services_Rendered_to_Airline__r.ParentId;
-			String country = service.ISO_Country_Code__c;
+		try {
+			Map<String, Set<Id>> airlinesByCountry = new Map<String, Set<Id>>(); //Map airlines to notify per country	
+			Map<Id,Id> airlinesMap = new Map<Id,Id>(); //Map each airline to his parent (Headquarters are mapped to null)
+			for(Services_Rendered__c service : scope) {
+				Id airlineId = service.Services_Rendered_to_Airline__c;
+				Id airlineParentId = service.Services_Rendered_to_Airline__r.ParentId;
+				String country = service.ISO_Country_Code__c;
 
-			airlinesMap.put(airlineId, airlineParentId);
-			if(airlineParentId != null) {
-				airlinesMap.put(airlineParentId, null);
-			}
-
-			Set<Id> countryAirlines = airlinesByCountry.get(country);
-			if(countryAirlines == null) {
-				countryAirlines = new Set<Id>();
-				airlinesByCountry.put(country, countryAirlines);
-			}
-			countryAirlines.add(airlineId);
-		}
-
-		Map<Id,Set<Contact>> executiveContacts = getExecutiveContacts(airlinesMap.keySet());
-		Map<String,Id> templates = getEmailTemplatesId();
-		List<Messaging.SingleEmailMessage> notifications = new List<Messaging.SingleEmailMessage>();
-
-		System.debug('airlinesByCountry: ' + airlinesByCountry);
-		System.debug('executiveContacts: ' + executiveContacts);
-		System.debug('templates: ' + templates);
-
-		Id orgEmailAddressId = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE Address = 'agencymanagement@iata.org'].Id;
-		for(String country : airlinesByCountry.keySet()) {
-			for(Id airlineId : airlinesByCountry.get(country)) {
-				Set<Contact> contacts = executiveContacts.get(airlineId);
-				if(contacts == null) {
-					continue;
+				airlinesMap.put(airlineId, airlineParentId);
+				if(airlineParentId != null) {
+					airlinesMap.put(airlineParentId, null);
 				}
-				Id parentId = airlinesMap.get(airlineId);
-				if(parentId != null) {
-					Set<Contact> parentContacts = executiveContacts.get(parentId);
-					if(parentContacts != null) {
-						contacts.addAll(parentContacts);
+
+				Set<Id> countryAirlines = airlinesByCountry.get(country);
+				if(countryAirlines == null) {
+					countryAirlines = new Set<Id>();
+					airlinesByCountry.put(country, countryAirlines);
+				}
+				countryAirlines.add(airlineId);
+			}
+
+			Map<Id,Set<Contact>> executiveContacts = getExecutiveContacts(airlinesMap.keySet());
+			Map<String,Id> templates = getEmailTemplatesId();
+			List<Messaging.SingleEmailMessage> notifications = new List<Messaging.SingleEmailMessage>();
+
+			System.debug('airlinesByCountry: ' + airlinesByCountry);
+			System.debug('executiveContacts: ' + executiveContacts);
+			System.debug('templates: ' + templates);
+
+			Id orgEmailAddressId = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE Address = 'agencymanagement@iata.org'].Id;
+			for(String country : airlinesByCountry.keySet()) {
+				for(Id airlineId : airlinesByCountry.get(country)) {
+					System.debug('AirlineId: ' + airlineId);
+					Set<Contact> contacts = executiveContacts.get(airlineId);
+					System.debug('Contacts for airline: ' + contacts);
+					if(contacts == null) {
+						contacts = new Set<Contact>();
 					}
-				}
-				for(Id agencyId : accountIdsByCountry.get(country)) {
-					Case cse = caseByAccounts.get(agencyId);
-					for(Contact con : contacts) {
-						Id templateId = templates.get(con.Preferred_Language__c);
-						if(templateId == null) {
-							templateId = templates.get('Default');
+					Id parentId = airlinesMap.get(airlineId);
+					if(parentId != null) {
+						Set<Contact> parentContacts = executiveContacts.get(parentId);
+						if(parentContacts != null) {
+							contacts.addAll(parentContacts);
 						}
-						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-						mail.setTargetObjectId(con.Id);
-						mail.setWhatId(cse.Id);
-						mail.setToAddresses(new String[] {con.Id});
-						mail.setOrgWideEmailAddressId(orgEmailAddressId);
-						mail.setSaveAsActivity(true);
-						mail.setTemplateId(templateId);	
-						notifications.add(mail);
+					}
+					System.debug('Final list of contacts for airline: ' + contacts);
+					for(Id agencyId : accountIdsByCountry.get(country)) {
+						Case cse = caseByAccounts.get(agencyId);
+						for(Contact con : contacts) {
+							Id templateId = templates.get(con.Preferred_Language__c);
+							if(templateId == null) {
+								templateId = templates.get('Default');
+							}
+							Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+							mail.setTargetObjectId(con.Id);
+							mail.setWhatId(cse.Id);
+							mail.setToAddresses(new String[] {con.Id});
+							mail.setOrgWideEmailAddressId(orgEmailAddressId);
+							mail.setSaveAsActivity(true);
+							mail.setTemplateId(templateId);	
+							notifications.add(mail);
+						}
 					}
 				}
 			}
-		}
 
-		if(!notifications.isEmpty()) {
-			Messaging.sendEmail(notifications);   
+			if(!notifications.isEmpty()) {
+				Messaging.sendEmail(notifications);   
+			}
+		} catch(Exception e) {
+			errors.add(e.getMessage());
+			errors.add(e.getStackTraceString());
 		}
 	}
 
@@ -159,6 +169,14 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 	}
 
 	global void finish(Database.BatchableContext BC) {
-	
+		UtilityCS__c cs = UtilityCS__c.getInstance('AMS_Notifiy_Errors_To');
+		if(!errors.isEmpty() && cs != null && String.isNotBlank(cs.Value__c)) {
+			List<String> receivers = cs.Value__c.split(';');
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setSubject('Default Agency Batch Errors');
+			mail.setPlainTextBody(String.join(errors, '\n'));
+			mail.setToAddresses(receivers);
+			Messaging.sendEmail(new List<Messaging.SingleEmailMessage> {mail}); 
+		}
 	}
 }
