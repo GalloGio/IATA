@@ -2096,6 +2096,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                 }
 
+                if(oscarIdcases.keySet().isEmpty()) return;
+                
                 for (AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
                                            Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
                                            Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c
