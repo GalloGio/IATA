@@ -12,7 +12,6 @@ public class ANG_RHCAlertTriggerHandler{
     public static final String DEFAULT_CODE = 'WW';
 
     private map<id,account> raAccMap{get;private set;}
-    private static final String ALL_COUNTRIES_ISOCODE ='WW';
 
     public final Double UPPERFLUCTUATION = 1;
     public final Double LOWERFLUCTUATION = 2;
@@ -504,7 +503,7 @@ public class ANG_RHCAlertTriggerHandler{
 
 
             for(ANG_Risk_Alert__c ra: redAlerts){
-                string configKey=rtsConfigMap.containsKey(raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c)?raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c:ALL_COUNTRIES_ISOCODE ;//checks if key exists in map, if not uses default key
+                string configKey=rtsConfigMap.containsKey(raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c)?raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c:DEFAULT_CODE ;//checks if key exists in map, if not uses default key
                 if(rtsConfigMap.get(configKey).ANG_Create_Sidra_Lite__c){
                     smapParentCase = new Case(
                         Region__c = raAccMap.get(ra.id).Region_formula__c,
@@ -602,7 +601,7 @@ public class ANG_RHCAlertTriggerHandler{
                     sidraLiteCase.Reason_for_Default__c = 'Under Review';
                     sidraLiteCase.Update_AIMS_DEF__c = Date.today();
                     sidraLiteCase.CS_Rep_Acc_DEF__c = userInfo.getUserId();
-                    sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); //already done on callout
+                    //sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); //already done on callout
                     sidraLiteCase.ContactId = smapParentCase.ContactId;
                     
                     //END -NEWGEN-1933
@@ -649,7 +648,7 @@ public class ANG_RHCAlertTriggerHandler{
                     List<Id> caseIds = new List<Id>();
                     List<Id> accountIds = new List<Id>();
                     for (Case sLiteCase : sidraLiteCases) {
-                        string configKey=rtsConfigMap.containsKey(accIsoCode.get(sLiteCase.AccountId))?accIsoCode.get(sLiteCase.AccountId):ALL_COUNTRIES_ISOCODE ;
+                        string configKey=rtsConfigMap.containsKey(accIsoCode.get(sLiteCase.AccountId))?accIsoCode.get(sLiteCase.AccountId):DEFAULT_CODE ;
                         if(rtsConfigMap.get(configKey).ANG_Remove_Ticketing_Authority__c){
                             caseIds.add(sLiteCase.Id);
                             accountIds.add(sLiteCase.AccountId);
@@ -786,7 +785,7 @@ public class ANG_RHCAlertTriggerHandler{
                     //NEWGEN-2006
                     if (!mapAccContacts.get(accountIds[i]).isEmpty()) {
                         for (Contact c: mapAccContacts.get(accountIds[i])) {
-                            string configKey=rtsConfigMap.containsKey(accIsoCode.get(accountIds[i]).IATA_ISO_Country__c)?accIsoCode.get(accountIds[i]).IATA_ISO_Country__c:ALL_COUNTRIES_ISOCODE ;
+                            string configKey=rtsConfigMap.containsKey(accIsoCode.get(accountIds[i]).IATA_ISO_Country__c)?accIsoCode.get(accountIds[i]).IATA_ISO_Country__c:DEFAULT_CODE ;
                             if(rtsConfigMap.get(configKey).ANG_Send_Email_Agent__c){
                                 notifications.add(new Notification__c(
                                     Contact__c = c.Id,
