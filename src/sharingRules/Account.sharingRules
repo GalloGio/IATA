@@ -266,7 +266,7 @@
             <value>Agency</value>
         </criteriaItems>
         <criteriaItems>
-           <field>Merged_Account__c</field>
+            <field>Merged_Account__c</field>
             <operation>notEqual</operation>
             <value>Merged</value>
         </criteriaItems>
