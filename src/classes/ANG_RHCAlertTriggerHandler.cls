@@ -663,17 +663,13 @@ public class ANG_RHCAlertTriggerHandler{
         }
     }
 
-    Private Map<Id,operational_Calendar__c> fetchCalendar(List<ANG_Risk_Alert__c> ras){
+    private Map<Id,operational_Calendar__c> fetchCalendar(List<ANG_Risk_Alert__c> ras){
 
-        Set<String> isoCodes = new Set<String>();
+        Set<String> issOperations = new Set<String>();
         Set<String> rfs = new Set<String>();
         Map<Id,operational_Calendar__c> ocMap = new Map<Id,operational_Calendar__c>();
         for(ANG_Risk_Alert__c ra : ras){
-
-            isoCodes.add('BSP-' +(raAccMap.get(ra.id).IATA_ISO_Country__r.BSP__c == 'Yes' ? 
-                            raAccMap.get(ra.id).IATA_ISO_Country__r.BSP_Country_free_text__c : 
-                            raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c));
-
+            issOperations.add(raAccMap.get(ra.id).IATA_ISO_Country__r.AMS_Settlement_System__c);
             rfs.add(raAccMap.get(ra.id).Remittance_frequency__c);
         }
 
@@ -682,18 +678,13 @@ public class ANG_RHCAlertTriggerHandler{
             WHERE Frequency_Code__c IN :rfs
                 AND First_Day__c <= :Date.today() 
                 AND Last_Day__c >= :Date.today() 
-                AND ISS_Operation__r.Name IN :isoCodes
+                AND ISS_Operation__c IN :issOperations
             ];
         for(ANG_Risk_Alert__c ra : ras){
-            for(Operational_Calendar__c op: ops){
+            for(Operational_Calendar__c op: ops){            
                 
-                String isoCode = 'BSP-' + (raAccMap.get(ra.id).IATA_ISO_Country__r.BSP__c == 'Yes' ? 
-                            raAccMap.get(ra.id).IATA_ISO_Country__r.BSP_Country_free_text__c : 
-                            raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c);
-                
-                if(op.ISS_Operation__r.Name == isoCode &&
-                    op.Frequency_Code__c == raAccMap.get(ra.id).Remittance_frequency__c
-                ){
+                if(op.ISS_Operation__c == raAccMap.get(ra.id).IATA_ISO_Country__r.AMS_Settlement_System__c &&
+                    op.Frequency_Code__c == raAccMap.get(ra.id).Remittance_frequency__c){
 
                     ocMap.put(ra.ANG_Account__c,op);
                     break;
