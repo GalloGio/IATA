@@ -82,7 +82,8 @@ private class ANG_financialReviewOnCaseTest {
                 Status = 'Open', 
                 Assessment_Performed_Date__c= System.today(),
                 Financial_Review_Result__c = 'Satisfactory - New Financial Security',
-                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'),IFAP_Area__c = 'asda'
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'),
+                IFAP_Area__c = 'asda'
                  );
         insert c;
                 
@@ -150,7 +151,7 @@ private class ANG_financialReviewOnCaseTest {
         system.assertEquals('B',beforeUpdateAcc.ANG_HE_RiskStatus__c);
         Test.startTest();
            Case c = new Case(
-                   RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE'),
+                   RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
                    AccountId = beforeUpdateAcc.Id, 
                    Subject = 'rception case2',
                    contactId=beforeUpdateAcc.contacts.get(0).Id,

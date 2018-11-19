@@ -1,7 +1,7 @@
 @isTest
 public class AMS_OSCAR_SA_AgencyChangesTest {
 
-	private static id rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+	private static id rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
     private static String SECTORPAX = 'Travel Agent';
     private static String CATEGORYPAX = 'IATA Passenger Sales Agent';
     private static String LOCCLASSPAX = 'P';
@@ -67,7 +67,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
     private static AMS_OSCAR__C createOSCAR(Account oscarAccount, String typeOfChange, String changeLocTypeBehavior, Account targetAgency){
 
-        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         C1 = [SELECT Id FROM Contact WHERE Email = 'thecontact1@gmail.com'];
 
@@ -82,7 +82,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                                                Change_effective_as_of__c = date.today());
         insert oscar;
 
-        ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         Case theCommunicationCase = new Case(RecordTypeId = rtCommCase, Subject = '' + oscarAccount.Name, OSCAR__c = oscar.Id,
                                              AccountId = (oscarAccount.ParentId == null ? oscarAccount.Id : oscarAccount.ParentId), ContactId = C1.Id);
         insert theCommunicationCase;
@@ -120,7 +120,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
@@ -130,7 +130,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
     @testSetup static void setup() {
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name = 'Portugal', ISO_Code__c = 'PT', Region__c = 'Europe', ISS_Office_Location__c = 'Portugal');
         insert portugal;

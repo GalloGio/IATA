@@ -46,6 +46,10 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
     // basic test: calling batch job, with test data
      @isTest (SeeAllData=false)  
    static void test03_BasicTestOnBatchJobWithTestData() {
+
+        //Generate SAP Settings
+        TestDataGenerator.generateSAPSettings();
+
         IECEBC_TestUtility.createEbcSetupAndRelatedData();
         IECEBC_TestUtility.createTestUser();
         Date dSubscriptionEndDate = Date.today().addMonths(6);

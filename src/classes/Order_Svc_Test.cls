@@ -1287,17 +1287,36 @@ private class Order_Svc_Test
     ****************************************************************************************************/
     @isTest (seeAllData=true) static void test_setOrderItemToPaid()
     {
+    	
+        TestDataGenerator.generateISOCountryState();
+        
+     	IECAddress__c oAddress = TestDataGenerator.generateAddresses(1, true)[0];
+
         //*** generate data
         List<Account> lstAccount = TestDataGenerator.generateAccounts(1,true);
         List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id,2,true);
+        
+        Location__c locSoldTo = TestDataGenerator.generateLocations(IECConstants.SOLDTO, oAddress.Id, lstAccount[0].Id, NULL, '325231');
+        Location__c locBillTo = TestDataGenerator.generateLocations(IECConstants.BILLTO, oAddress.Id, lstAccount[0].Id, lstContact[0].Id, '123623');
+        Location__c locShipTo = TestDataGenerator.generateLocations(IECConstants.SHIPTO, oAddress.Id, lstAccount[0].Id, lstContact[0].Id, '451154');
+        
         List<Order> lstOrder = TestDataGenerator.generateOrder(2, lstAccount[0].Id, lstContact[0].Id, lstContact[1].Id, false);
         lstOrder[0].BillToContact_Email__c = lstContact[0].Email;
         lstOrder[0].ShipToContact_Email__c = lstContact[0].Email;
         lstOrder[0].Shipping_Instruction__c = 'test';
+ 	    lstOrder[0].SoldTo_Location__c = locSoldTo.Id;
+	    lstOrder[0].BillTo_Location__c = locBillTo.Id;
+	    lstOrder[0].ShipTo_Location__c = locShipTo.Id;     
+	            
         lstOrder[1].BillToContact_Email__c = lstContact[0].Email;
         lstOrder[1].ShipToContact_Email__c = lstContact[0].Email;
         lstOrder[1].Shipping_Instruction__c = 'test';
+ 	    lstOrder[1].SoldTo_Location__c = locSoldTo.Id;
+	    lstOrder[1].BillTo_Location__c = locBillTo.Id;
+	    lstOrder[1].ShipTo_Location__c = locShipTo.Id;       
+        
         insert lstOrder;
+        
         List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 1, false);
         lstOrderItem.addAll(TestDataGenerator.generateOrderItem(lstOrder[1].Id, 1, false));
         insert lstOrderItem;
