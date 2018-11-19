@@ -8,8 +8,7 @@ public without sharing class LightningRegistrationProcess{
     @AuraEnabled
     public static String checkemail(String email) {
 
-        //acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
+        ID rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         User [] u = [SELECT Id FROM User
               WHERE email =: email AND IsActive = true limit 1];
         Contact [] c = [SELECT Id, email, RecordType.Id FROM Contact
@@ -20,7 +19,7 @@ public without sharing class LightningRegistrationProcess{
             if(c.size() == 0){
                 System.Debug('create_contactanduser');
                 return 'create_contactanduser';
-            } else if(c[0].RecordType.Id == rt.Id){
+            } else if(c[0].RecordType.Id == rtId){
                 System.Debug('create_user');
                 return 'create_user';
             } else {
@@ -203,13 +202,9 @@ public without sharing class LightningRegistrationProcess{
     }
 
     @AuraEnabled
-    public Static List<String> GetFieldPicklistValuesCountry()
-    {
-      List <IATA_ISO_Country__c> countries = [SELECT Name from IATA_ISO_Country__c ORDER BY Name];
-      List <SelectOption> options = new List <SelectOption>();
-      //for (integer i=0;i<countries.size();i++) {
-    //  options.add(new SelectOption(countries[i].name,countries[i].name));
-        //}
+    public Static List<String> GetFieldPicklistValuesCountry(){
+        List <IATA_ISO_Country__c> countries = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
+  
         List <String> cnt = new List <String>();
         cnt.add('');
         for (integer i=0;i<countries.size();i++)
@@ -424,14 +419,14 @@ public without sharing class LightningRegistrationProcess{
     @AuraEnabled
     public Static void checkConAvailable (Contact con){
         System.debug('CheckConAvailable: ' + con);
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];        
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');        
         Contact [] ec = [Select id, email, AccountId, RecordType.Id FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
-        System.debug('Record Type: ' + rt);
+        System.debug('Record Type: ' + rtId);
         
         if(ec.size() > 0){
             System.debug('Update Contact');
             con.Id = ec[0].Id;
-            con.RecordTypeId = rt.Id;
+            con.RecordTypeId = rtId;
             database.update(con);
         } else {
             System.debug('Insert new contact');
@@ -444,8 +439,8 @@ public without sharing class LightningRegistrationProcess{
         // ISSP_Registration registration = new ISSP_Registration();
         // Boolean b = registration.pageIsValid();
         serviceName = servName;
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
-        if(con.RecordType == null) con.RecordTypeId = rt.Id;
+        Id rt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        if(con.RecordType == null) con.RecordTypeId = rt;
 
         //Debug
         System.debug('Contact ' + con);
@@ -458,16 +453,16 @@ public without sharing class LightningRegistrationProcess{
                 //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
                 acc.ownerid = ISSP_Constant.newAccountOwnerId;
                 String recname = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
-                List<RecordType> rtSet = [select id from RecordType where DeveloperName=:recname];
-                    if (rtSet!=null && rtSet.size()>0 && rtSet.get(0)!=null)
-                acc.recordtypeid = rtSet[0].id;
+                Id rtID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', recname);
+                    if (rtID!=null)
+                acc.recordtypeid = rtID;
                 
                 if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
                     acc.Category_Other_Value__c = null;
                 
                 //Assign countries and states
                 if (!String.isBlank(acc.BillingCountry)) {
-                    List <Iata_Iso_Country__c> cn = [SELECT id FROM Iata_Iso_Country__c WHERE Name = :acc.BillingCountry LIMIT 1];
+                    List <Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
                         acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
                     }
@@ -549,10 +544,8 @@ public without sharing class LightningRegistrationProcess{
 
     @AuraEnabled
     public Static String createContactAndAccount (Contact con, Account acc, String customerType) {
-        // ISSP_Registration registration = new ISSP_Registration();
-        // Boolean b = registration.pageIsValid();
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
-        if(con.RecordType == null) con.RecordTypeId = rt.Id;
+        Id stdContactRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        if(con.RecordType == null) con.RecordTypeId = stdContactRtId;
 
         //Debug
         System.debug('Contact ' + con);
@@ -564,17 +557,19 @@ public without sharing class LightningRegistrationProcess{
                 acc.Reason_for_creation__c = 'Created by customer';
                 //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
                 acc.ownerid = ISSP_Constant.newAccountOwnerId;
-                String recname = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
-                List<RecordType> rtSet = [select id from RecordType where DeveloperName=:recname];
-                    if (rtSet!=null && rtSet.size()>0 && rtSet.get(0)!=null)
-                acc.recordtypeid = rtSet[0].id;
                 
+                String recname = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
+                Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', recname);
+                if (String.isNotBlank(rtId)){
+                    acc.recordtypeid = rtId;
+                }
+
                 if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
                     acc.Category_Other_Value__c = null;
                 
                 //Assign countries and states
                 if (!String.isBlank(acc.BillingCountry)) {
-                    List <Iata_Iso_Country__c> cn = [SELECT id FROM Iata_Iso_Country__c WHERE Name = :acc.BillingCountry LIMIT 1];
+                    List <Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
                         acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
                     }

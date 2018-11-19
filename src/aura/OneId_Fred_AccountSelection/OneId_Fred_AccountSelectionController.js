@@ -208,8 +208,19 @@
             
             if(!result) {
 
-               console.log(a.getReturnValue());
-                alert(a.getReturnValue().error);
+                console.log(a.getReturnValue());
+                //Previous message
+                //alert(a.getReturnValue().error);
+                var result = confirm(a.getReturnValue().error);
+                var txt;
+                if (result == true) {
+                    window.location.href = 'https://fred.iata.org/contact';
+                    txt = 'User redirected...'
+                    
+                } else {
+                    txt = "User canceled the operation...";
+                }
+                console.log(txt);
                 /*
                 // Show toast not working as guest (public pages)- Wok only when logged in
                 var toastEvent = $A.get("e.force:showToast");

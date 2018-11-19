@@ -30,7 +30,7 @@ global class ANG_BatchAggregatePwcData implements Database.Batchable<Account>, D
         mapAttibPerCountry = new map<string, AMS_Country_Specific_Attribute__c>();
         
         //Add to the countries' attributes map all the defaults (12 months for each type)
-        for(IATA_ISO_Country__c co:[select ISO_Code__c from IATA_ISO_Country__c]){
+        for(IATA_ISO_Country__c co : IATAIsoCountryDAO.getIsoCountries()){
             for(string locClass:locationClassesLimit){
                 mapAttibPerCountry.put(co.ISO_Code__c + '_' + locClass + '_' + sRTDevNameDEF_LFC, new AMS_Country_Specific_Attribute__c(Months_Count__c = 12));
                 mapAttibPerCountry.put(co.ISO_Code__c + '_' + locClass + '_' + sRTDevNameIRRS_LFC, new AMS_Country_Specific_Attribute__c(Months_Count__c = 12));

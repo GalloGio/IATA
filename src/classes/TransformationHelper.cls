@@ -1,299 +1,232 @@
 public class TransformationHelper {
-    
-    public static boolean NoStatusValidation = false;  
-    
-    public static boolean trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete= false;
-  
-    public static  boolean trgAccountISSP_AfterBeforInsertDeleteUpdateUndeleteGet(){
-        
-        return  trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete;
+
+  public static boolean NoStatusValidation = false;
+
+  public static boolean trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+
+  public static  boolean trgAccountISSP_AfterBeforInsertDeleteUpdateUndeleteGet() {
+
+    return  trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete;
+  }
+
+  public static void trgAccountISSP_AfterBeforInsertDeleteUpdateUndeleteSet() {
+    trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+
+  }
+
+  public static boolean CalculateBusinessHoursAges = false;
+
+  public static  boolean CalculateBusinessHoursAgesGet() {
+
+    return  trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete;
+  }
+  public static void CalculateBusinessHoursAgesSet() {
+    trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+
+  }
+
+  public static string buildSiteForAcli(String AccountingCode, string TwoCaracterCode, string IsoCOde, string AirlinePrefix) {
+    AccountingCode = AccountingCode <>  null ? AccountingCode.trim() : null;
+    TwoCaracterCode = TwoCaracterCode<>  null ? TwoCaracterCode.trim() : null;
+    IsoCOde = IsoCOde<>  null ? IsoCOde.trim() : null;
+    AirlinePrefix = AirlinePrefix<>  null ? AirlinePrefix.trim() : null;
+    String trellettere = !String.isblank(AccountingCode) ? AccountingCode.trim() :
+                         ! String.isblank(   AirlinePrefix ) ? AirlinePrefix.trim()
+                         : '' ;
+
+    string twoLetters = TwoCaracterCode == null || String.isblank(TwoCaracterCode)  ? '' : TwoCaracterCode.trim();
+    string isoC = IsoCOde == null || String.isblank(IsoCOde) ? '' : IsoCOde.trim();
+
+    string site = '';
+
+    if (twoLetters <> null && twoLetters <> '')
+      site =  twoLetters.trim();
+
+    if (trellettere <> null && trellettere <> '') {
+      if (twoLetters <> null && twoLetters <> '')
+        site += ' ' + trellettere.trim();
+      else
+        site += trellettere.trim();
     }
 
-    public static void trgAccountISSP_AfterBeforInsertDeleteUpdateUndeleteSet(){
-       trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete= true;
-         
+
+    if (isoC <> null && isoC <> '') {
+      if (
+        (twoLetters <> null && twoLetters <> '')
+        ||
+        (trellettere <> null && trellettere <> '')
+      )
+        site += ' ' + isoC.trim();
+      else
+        site += isoC.trim();
     }
-    
-    public static boolean CalculateBusinessHoursAges= false;
-  
-    public static  boolean CalculateBusinessHoursAgesGet(){
-        
-        return  trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete;
-    }
-    public static void CalculateBusinessHoursAgesSet(){
-       trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete= true;
-         
-    }
-    
-    public static string buildSiteForAcli(String AccountingCode,string TwoCaracterCode, string IsoCOde,string AirlinePrefix){
-            //  THROW NEW TRANSFORMATIONeXCEPTION('ASDSKJADSFDFAASAFJKNADSFO   ');
-                    AccountingCode = AccountingCode <>  null ? AccountingCode.trim() :null;
-                    TwoCaracterCode = TwoCaracterCode<>  null ? TwoCaracterCode.trim() :null;
-                    IsoCOde = IsoCOde<>  null ? IsoCOde.trim() :null;
-                    AirlinePrefix = AirlinePrefix<>  null ? AirlinePrefix.trim() :null;
-                    String trellettere = !String.isblank(AccountingCode) ? AccountingCode.trim() :
-                                            ! String.isblank(   AirlinePrefix ) ? AirlinePrefix.trim()
-                                            :'' ;
-                    
-                      string twoLetters = TwoCaracterCode == null || String.isblank(TwoCaracterCode)  ? '': TwoCaracterCode.trim();
-                      string isoC = IsoCOde == null || String.isblank(IsoCOde) ? '':IsoCOde.trim();
-                      
-                      string site = '';
-                      
-                     if(twoLetters <> null && twoLetters <> '')
-                            site =  twoLetters.trim();
-                  
-                     if(trellettere <> null && trellettere <> ''){
-                         if(twoLetters <> null && twoLetters <> '')
-                              site +=' '+ trellettere.trim();
-                          else
-                              site += trellettere.trim(); 
-                     }
-                           
+    site = site.ToUpperCase();
 
-                     if(isoC <> null && isoC <> ''){
-                          if(
-                              (twoLetters <> null && twoLetters <> '')
-                              ||
-                              (trellettere <> null && trellettere <> '')
-                           )  
-                            site +=' ' + isoC.trim(); 
-                          else  
-                          site += isoC.trim();
-                            }
-                site = site.ToUpperCase();
-                
-                return site;
-                
-    
-    }
-    
-    public static Set<String> getPicklistValues(String ObjectApi_name,String Field_name){ 
-
-      Set<String> lstPickvals=new Set<String>();
-      Map<String, Schema.SObjectField> field_map = Schema.getGlobalDescribe().get(ObjectApi_name).newSObject().getSObjectType().getDescribe().fields.getMap(); 
-
-       for (Schema.PicklistEntry a : field_map.get(Field_name).getDescribe().getPickListValues()) { 
-          lstPickvals.add(a.getValue());
-       }
-      
-      return lstPickvals;
-    }    
-  
-    public static String getAllFields(Map<String, Schema.SObjectField> fieldMap){
-        String result = '*';
-        for(String key: fieldMap.keyset())
-            result += ', ' + key;
-        result = result.replace('*,', '');
-        return result;
-        /*String result = '';
-        for (String f: fieldMap.keySet()) {
-            Schema.DescribeFieldResult field = fieldMap.get(f).getDescribe();
-            if(field.isAccessible())
-                result+= (result==''?'':', ')+field.getName();
-        } */
-        return result;
-    }
-    
-    
-
- public static map<String,list<String>> getAllFieldsPerDisplayType( string sObjectName){
-      
-       map<String,list<String>> returnListPerType = new  map<String,list<String>>();
+    return site;
 
 
-        Map<String, Schema.SObjectField>  fieldMap = Schema.getGlobalDescribe().get(sObjectName).getDescribe().fields.getMap();
+  }
 
-        for (String f: fieldMap.keySet()) {
-            string fieldType ='';
-            if(fieldMap.get(f).getDescribe().getType() == Schema.DisplayType.Reference) fieldType = 'Reference'; // Only reference for now...if you need other fields type help yourself            else continue;
-            if(returnListPerType.get(fieldType) == null)
-                returnListPerType.put(fieldType, new list<String>()); 
-            returnListPerType.get(fieldType).add(fieldMap.get(f).getDescribe().getName());  
-        }
+  public static Set<String> getPicklistValues(String ObjectApi_name, String Field_name) {
 
-      return returnListPerType;
+    Set<String> lstPickvals = new Set<String>();
+    Map<String, Schema.SObjectField> field_map = Schema.getGlobalDescribe().get(ObjectApi_name).newSObject().getSObjectType().getDescribe().fields.getMap();
+
+    for (Schema.PicklistEntry a : field_map.get(Field_name).getDescribe().getPickListValues()) {
+      lstPickvals.add(a.getValue());
     }
 
-    public static String selectAllFields(String SObjectName){
-        String result = '';
-        Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get(SObjectName).getDescribe().fields.getMap();
-        for (String f: fieldMap.keySet()) {
-            Schema.DescribeFieldResult field = fieldMap.get(f).getDescribe();
-            if(field.isAccessible())
-                result+= (result==''?'':', ')+field.getName();
-        }
-        
-        return result;
-    }
-    
+    return lstPickvals;
+  }
 
-     // store results in static map to be sure we won’t query for sqme object many times
-    private static  map<string,map<string,id>>  RtIDsPerDeveloperNamePerObjMap = new map<string,map<string,id>>();
- 
- 
-    // caution it's case sensitive
-    // It receives a list of string containing the API name of the objects we want the rt ids
-    // It returns a map : nameOfTheSobject => developerName of the RT => ID of the rt
-    public static map<string,map<string,id>> RtIDsPerDeveloperNamePerObj(list<string> SobjectTypes){
-    
-        map<string,map<string,id>> RtIDsPerDeveloperNamePerObjs = new map<string,map<string,id>>();
-        
-        List<String> newSobjectTypes = new List<String>();
-        for(String s:SobjectTypes){
-            system.debug('[Transformation] ask for RT for object  : '+s);
-            if(RtIDsPerDeveloperNamePerObjMap.containsKey(s)){
-                RtIDsPerDeveloperNamePerObjs.put(s, RtIDsPerDeveloperNamePerObjMap.get(s));
-                system.debug('[Transformation] RT allready searched  for object : '+s);
-            }
-            else{
-                newSobjectTypes.add(s);
-                RtIDsPerDeveloperNamePerObjMap.put(s,new map<String,Id>());
-                system.debug('[Transformation] new RT to search for object  : '+s);
-            }
-        }
-        if(newSobjectTypes.size()>0)
-            for(RecordType rT:[SELECT Id,DeveloperName,SObjectType FROM RecordType WHERE SObjectType IN:newSobjectTypes  AND IsActive = true]){
-                if(RtIDsPerDeveloperNamePerObjs.get(rt.SObjectType) == null)
-                        RtIDsPerDeveloperNamePerObjs.put(rt.SObjectType,new map<String,Id>());
-                        
-                if(RtIDsPerDeveloperNamePerObjMap.get(rt.SObjectType) == null){
-                        system.debug('[Transformation] add new Map entry  for SOBject : '+rt.SObjectType);
-                        RtIDsPerDeveloperNamePerObjMap.put(rt.SObjectType,new map<String,Id>());
-                }
-                        
-                RtIDsPerDeveloperNamePerObjs.get(rt.SObjectType).put(rt.Developername,rt.id);
-                RtIDsPerDeveloperNamePerObjMap.get(rt.SObjectType).put(rt.Developername,rt.id);
-            }
-    
-        return RtIDsPerDeveloperNamePerObjs;
-    }
-    
-     
-     public  static boolean triggerOnCaseNSerRen = false;
-     
-     public static void setComingFromCase(){        
-        triggerOnCaseNSerRen = true;
-     }
+  public static String getAllFields(Map<String, Schema.SObjectField> fieldMap) {
+    String result = '*';
+    for (String key : fieldMap.keyset())
+      result += ', ' + key;
+    result = result.replace('*,', '');
+    return result;
+  }
 
-    public static void sendSFDevsAlertMessage(String title, String message, String receiver){
-        sendSFDevsAlertMessage(title, message, new List<String>{receiver});
-    }
-    
-    public static void sendSFDevsAlertMessage(String title, String message, List<String> receivers){
-        try{  
-            system.debug('Try to send message . '+title+' ******  '+ message);
-            List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            mail.setSubject(title);
-            mail.setToAddresses(receivers) ;           
-            mail.setPlainTextBody(message);
-            emails.add(mail);
-            Messaging.sendEmail(emails);
-        }catch(Exception  e){
-            system.debug('Failed to send email to webdev');
-        }
-    }
-    
-    
-        public static map<string,id> AccRtNamePerIds (){
-        
-        return RtIDsPerDeveloperNamePerObj(new list<String>{'Account'}).get('Account');
-        
+  public static map<String, list<String>> getAllFieldsPerDisplayType( string sObjectName) {
+
+    map<String, list<String>> returnListPerType = new  map<String, list<String>>();
+
+
+    Map<String, Schema.SObjectField>  fieldMap = Schema.getGlobalDescribe().get(sObjectName).getDescribe().fields.getMap();
+
+    for (String f : fieldMap.keySet()) {
+      string fieldType = '';
+      if (fieldMap.get(f).getDescribe().getType() == Schema.DisplayType.Reference) fieldType = 'Reference'; // Only reference for now...if you need other fields type help yourself            else continue;
+      if (returnListPerType.get(fieldType) == null)
+        returnListPerType.put(fieldType, new list<String>());
+      returnListPerType.get(fieldType).add(fieldMap.get(f).getDescribe().getName());
     }
 
-    public static void sendEmailSupport( string subject, string message ){
-      if (Test.isRunningTest() ) {
-        System.debug('SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
-        return;
-      }
-      
-      List<ID> userIDs = getUserIds(getSupportEmails());
-      List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
+    return returnListPerType;
+  }
 
-      try{
-        system.debug('Try to send message . '+subject+' ******  '+ message);
+  public static String selectAllFields(String SObjectName) {
+    String result = '';
+    Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get(SObjectName).getDescribe().fields.getMap();
+    for (String f : fieldMap.keySet()) {
+      Schema.DescribeFieldResult field = fieldMap.get(f).getDescribe();
+      if (field.isAccessible())
+        result += (result == '' ? '' : ', ') + field.getName();
+    }
+
+    return result;
+  }
+
+  public  static boolean triggerOnCaseNSerRen = false;
+
+  public static void setComingFromCase() {
+    triggerOnCaseNSerRen = true;
+  }
+
+  public static void sendSFDevsAlertMessage(String title, String message, String receiver) {
+    sendSFDevsAlertMessage(title, message, new List<String> {receiver});
+  }
+
+  public static void sendSFDevsAlertMessage(String title, String message, List<String> receivers) {
+    try {
+      system.debug('Try to send message . ' + title + ' ******  ' + message);
+      List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+      Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+      mail.setSubject(title);
+      mail.setToAddresses(receivers) ;
+      mail.setPlainTextBody(message);
+      emails.add(mail);
+      Messaging.sendEmail(emails);
+    } catch (Exception  e) {
+      system.debug('Failed to send email to webdev');
+    }
+  }
 
 
-        for(ID userId : userIDs)
-        {
-          Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();      
-          mail.setTargetObjectId(userId);
-          mail.setSubject(subject);
-          mail.setSaveAsActivity(false);        
-          mail.setPlainTextBody(message);
-          emailsToSend.add(mail);
-        }
+  public static void sendEmailSupport( string subject, string message ) {
+    if (Test.isRunningTest()) {
+      System.debug('SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
+      return;
+    }
 
-        Messaging.sendEmail(emailsToSend); 
+    List<ID> userIDs = getUserIds(getSupportEmails());
+    List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
 
-        }catch(Exception  e){
-          system.debug('Failed to send email to users');
-        }
+    try {
+      system.debug('Try to send message . ' + subject + ' ******  ' + message);
 
+
+      for (ID userId : userIDs) {
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        mail.setTargetObjectId(userId);
+        mail.setSubject(subject);
+        mail.setSaveAsActivity(false);
+        mail.setPlainTextBody(message);
+        emailsToSend.add(mail);
       }
 
-    private static List<String> getSupportEmails()
-    {
-      List<String> emails = new List<String>();
+      Messaging.sendEmail(emailsToSend);
 
-      String supportEmails = UtilityCS__c.getInstance('Emails').value__c;
-      System.debug('SupportEmails: ' + supportEmails );
-      
-      if(supportEmails != null)
-        for(String email: supportEmails.split(',',0)){
-          if(validateEmail(email))
-            emails.add(email);
-        }
-
-      return emails;
+    } catch (Exception  e) {
+      system.debug('Failed to send email to users');
     }
 
-    public static Boolean validateEmail(String email) {
+  }
 
-        Boolean res = true;
+  private static List<String> getSupportEmails() {
+    List<String> emails = new List<String>();
 
-        String emailRegex = '^[a-zA-Z0-9._|\\\\%#~`=?&/$^*!}{+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'; 
-        // source: <a href="http://www.regular-expressions.info/email.html" target="_blank">http://www.regular-expressions.info/email.html</a>
-        Pattern MyPattern = Pattern.compile(emailRegex);
+    String supportEmails = UtilityCS__c.getInstance('Emails').value__c;
+    System.debug('SupportEmails: ' + supportEmails );
 
-        Matcher MyMatcher = MyPattern.matcher(email);
+    if (supportEmails != null)
+      for (String email : supportEmails.split(',', 0)) {
+        if (validateEmail(email))
+          emails.add(email);
+      }
 
-        if (!MyMatcher.matches())
-            res = false;
-        return res;
+    return emails;
+  }
+
+  public static Boolean validateEmail(String email) {
+
+    Boolean res = true;
+
+    String emailRegex = '^[a-zA-Z0-9._|\\\\%#~`=?&/$^*!}{+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$';
+    // source: <a href="http://www.regular-expressions.info/email.html" target="_blank">http://www.regular-expressions.info/email.html</a>
+    Pattern MyPattern = Pattern.compile(emailRegex);
+
+    Matcher MyMatcher = MyPattern.matcher(email);
+
+    if (!MyMatcher.matches())
+      res = false;
+    return res;
+  }
+
+  //Get the internal user IDs
+  private static List<ID> getUserIds(List<String> users) {
+    List<ID> userIDs = new List<ID>();
+
+    if (users != null && users.size() > 0) {
+      User[] userList = [select ID from User where Email in : users];
+      for (User user : userList)
+        userIDs.add(user.Id);
     }
 
-    //Get the internal user IDs
-    private static List<ID> getUserIds(List<String> users)
-    {
-        List<ID> userIDs = new List<ID>();
+    return userIDs;
+  }
 
-        if(users != null && users.size() > 0)
-        {
-            User[] userList =[select ID from User where Email in : users];
-            for(User user : userList)
-                userIDs.add(user.Id);
-        }
-
-        return userIDs;
+  /**
+   * Used to asynchronously delete SObject
+   */
+  @future
+  public static void deleteSObjects(Set<Id> idSet, String objType) {
+    List<SObject> objectList = new List<SObject>();
+    for (Id sid : idSet) {
+      sObject obj = Schema.getGlobalDescribe().get(objType).newSObject(sid);
+      objectList.add(obj);
     }
-    
-    /**
-     * Used to asynchronously delete SObject
-     */
-    @future 
-    public static void deleteSObjects(Set<Id> idSet, String objType) {
-        List<SObject> objectList = new List<SObject>();
-        for (Id sid : idSet) {
-            sObject obj = Schema.getGlobalDescribe().get(objType).newSObject(sid);
-            objectList.add(obj);
-        }
-        delete objectList;
-    }
-
-
-
-
+    delete objectList;
+  }
 
 }

@@ -1,0 +1,40 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><strong style="font-family: Arial; font-size: 12pt;">{!Account.Name}</strong></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><b style="mso-bidi-font-weight: normal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"><o:p></o:p></span></b></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><!--?xml:namespace prefix = st1 ns = "urn:schemas-microsoft-com:office:smarttags" /--><!--?XML:NAMESPACE PREFIX = ST1 /--><!--?xml:namespace prefix = st1 /--><!--?xml:namespace prefix = st1 /--><st1:address w:st="on"><st1:street w:st="on"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB">{!Account.BillingAddress}</span></st1:street></st1:address></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"></span><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p></o:p></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><u><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p><span style="TEXT-DECORATION: none"></span></o:p></span></u></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><br></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; text-align: justify;"><span lang="EN-GB" style="font-size: 12pt; font-family: Arial, sans-serif;">Dear Sir / Madam,</span><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; text-align: justify;"><span style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: Arial, sans-serif; background: white;">We
+noted that your Agency has existing insurance bond issued by&nbsp;THE UNITED
+INSURANCE COMPANY&nbsp; /&nbsp; CONTINENTAL INSURANCE CO LTD . &nbsp;Please proceed to request&nbsp;THE UNITED
+INSURANCE COMPANY / CONTINENTAL INSURANCE CO LTD to update your Agency
+shareholder details &amp; confirm of continue coverage for your Agency.
+&nbsp;Please request&nbsp;THE UNITED INSURANCE COMPANY /&nbsp; CONTINENTAL INSURANCE CO LTD to send a letter
+confirmation to IATA that they have updated your Agency shareholders
+record&nbsp;&amp; confirm of continue coverage for your Agency.</span><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: Arial, sans-serif; background: white;">&nbsp;</span><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p style="text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal">
+
+
+
+
+
+
+
+</p><p class="MsoNormal" style="margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: Arial, sans-serif; background: white;">Kindly
+comply the above before&nbsp;<b><u>dd / mm / 2016.&nbsp;&nbsp; </u></b>Please note that failure to comply by the deadline shall result in your
+Agency being served with two instances of irregularity and IATA shall withdraw
+all Standard Traffic Documents (STDs) and require the agent to comply with the
+conditions within 30 days as per Resolution 818g Section 2.2.1.3 of the Travel
+Agent’s Handbook.</span><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 10pt; font-family: Arial, sans-serif; background: white;"><o:p>&nbsp;</o:p></span></p><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); margin-bottom: 0.0001pt;"><br></p><p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="font-family: Arial; font-size: 12pt;">Yours sincerely,</span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><br><strong></strong></span></p><font style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><strong>
+<p>{!Case.OwnerFullName}</p>
+</strong></font><p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><strong></strong><span style="font-family: Arial, Helvetica, sans-serif; font-size: medium; text-align: start; background-color: rgb(255, 255, 255);">IATA Global Delivery Centre</span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"></span>&nbsp;</p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial;"><font size="2">International Air Transport Associaition</font></span></p><p class="MsoNormal" style="margin: 0in 0in 0pt; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial;"><font size="2">80 Pasir Panjang Road</font></span></p><p class="MsoNormal" style="margin: 0in 0in 0pt; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial;"><font size="2">#20-81 Mapletree Business City</font></span></p><p class="MsoNormal" style="margin: 0in 0in 0pt; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial;"><font size="2">Singapore 117372</font></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"></span>&nbsp;</p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="font-family: Arial;" lang="EN-GB"><font><a href="http://www.iata.org">www.iata.org</a></font></span></p>]]></td>
+</tr>
+</table>

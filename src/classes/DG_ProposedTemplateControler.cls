@@ -38,7 +38,7 @@ global with sharing class DG_ProposedTemplateControler{
     
         if(template!= '' && template != null){
             
-            Id devRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Internal Cases (IDFS ISS)').getRecordTypeId();
+            Id devRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');//Internal Cases (IDFS ISS)
             Group grp = new Group();
             grp = [select Id, Name from Group where Name = 'AI Template Team' and Type = 'Queue'];
             

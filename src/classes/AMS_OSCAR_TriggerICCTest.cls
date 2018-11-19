@@ -23,7 +23,7 @@ private class AMS_OSCAR_TriggerICCTest {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = country.Id,
-                RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
         );
 
         insert account;
@@ -31,7 +31,7 @@ private class AMS_OSCAR_TriggerICCTest {
         Contact C1 = new Contact(FirstName = 'First', LastName = 'Contact',  AccountId = account.Id, Email = 'thecontact1@gmail.com', Phone = '123123123');
         insert C1;
         
-        ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         Case theCommunicationCase = new Case(RecordTypeId = rtCommCase, Subject = 'AEIOU'/*, OSCAR__c = oscar.Id*/,
                                              AccountId = account.Id, ContactId = C1.Id);
         insert theCommunicationCase;
@@ -163,7 +163,7 @@ private class AMS_OSCAR_TriggerICCTest {
         oscar.STEP12__c = 'Passed';
         oscar.Validation_Status__c = AMS_Utils.PASSED;
         oscar.RPM_Approval__c = 'Authorize Disapproval';
-        oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
 
         update oscar;
@@ -185,7 +185,7 @@ private class AMS_OSCAR_TriggerICCTest {
                 STEP2__c = 'In Progress',
                 STEP6__c = 'In Progress',
                 AML_result__c = 'In Progress',
-                RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId()
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW')
             );
         
         insert oscar;
@@ -199,13 +199,13 @@ private class AMS_OSCAR_TriggerICCTest {
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
         oscar.First_Step_Completed__c = true;
         oscar.STEP6__c = 'Passed';
-        oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
         oscar.AMS_Correction_change_code__c = 'COR';
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
     
@@ -228,7 +228,7 @@ private class AMS_OSCAR_TriggerICCTest {
                 STEP2__c = 'In Progress',
                 STEP6__c = 'In Progress',
                 AML_result__c = 'In Progress',
-                RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId()
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NEW')
             );
      
         insert oscar;
@@ -242,13 +242,13 @@ private class AMS_OSCAR_TriggerICCTest {
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
         oscar.First_Step_Completed__c = true;
         oscar.STEP6__c = 'Passed';
-        oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
         oscar.AMS_Correction_change_code__c = 'CAD';
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
 
@@ -271,7 +271,7 @@ private class AMS_OSCAR_TriggerICCTest {
                 STEP2__c = 'In Progress',
                 STEP6__c = 'In Progress',
                 AML_result__c = 'In Progress',
-                RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId(),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW'),
                 Apply_Penalty_Fee__c = false
                 );
 
@@ -286,13 +286,13 @@ private class AMS_OSCAR_TriggerICCTest {
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
         oscar.First_Step_Completed__c = true;
         oscar.STEP6__c = 'Passed';
-        oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
         oscar.AMS_Correction_change_code__c = 'LET';
         oscar.Apply_Penalty_Fee__c = true;
         oscar.Type_of_change__c = 'Location';

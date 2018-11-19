@@ -1,17 +1,15 @@
 public class ISSP_WS_KAVI {
 
 	public static Boolean preventTrigger;
-	//private static String AGENCY_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId;
-	//private static String BRANCH_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId;
-	//private static String HEADQUARTER_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId;
+
 	private static String AGENCY_RECORD_TYPE_ID;
 	private static String BRANCH_RECORD_TYPE_ID;
 	private static String HEADQUARTER_RECORD_TYPE_ID;
 	static{
 		preventTrigger = false;
-		AGENCY_RECORD_TYPE_ID = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Agency');
-		BRANCH_RECORD_TYPE_ID = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline_BR');
-		HEADQUARTER_RECORD_TYPE_ID = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');
+		AGENCY_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		BRANCH_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+		HEADQUARTER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	}
 
 	public static String CLIENT_KEY {       
@@ -147,7 +145,8 @@ public class ISSP_WS_KAVI {
 					List<PermissionSetAssignment> listPsa = new List<PermissionSetAssignment>();
 					//New Code to Admit Internal Users
 					Map<Id,User> newUsersMap = new Map<Id,User>();
-					if (operation == 'create2'){ 
+					if (operation == 'create2'){
+
 						Map<Id,User> newUsersMap1 = new Map<Id,User>([Select Id,ContactKaviId__c,Username,Title,FirstName,LastName,Phone,Fax,IsActive,City,MobilePhone,State,Country,Street,Email,PostalCode,Contact.Account.RecordTypeId,Contact.Account.Field_Head_Office__c,Contact.AccountId,Contact.Account.ParentId,Contact.Account.Parent.ParentId
 						                                              From User 
 						                                              Where ContactKaviId__c In:(newContactsIds)]);
@@ -192,7 +191,7 @@ public class ISSP_WS_KAVI {
 						wsLogs.addAll(createOrUpdateKaviAccounts(newAccountsIds,accountStatusMap));
 					}
 
-					System.debug('VAMOS A VER QUE TIENE ' + accountStatusMap); 
+					System.debug('VAMOS A VER QUE TIENE ' + accountStatusMap);
 					for(User newUser :newUsersMap.values()){
 						String accId = retAccountId(newUser.Contact.AccountId,newUser.Contact.Account.RecordTypeId, newUser.Contact.Account.Field_Head_Office__c, newUser.Contact.Account.ParentId, newUser.Contact.Account.Parent.ParentId);
 						if(operation == 'update' || (accountStatusMap.containskey(accId) && accountStatusMap.get(accId)=='200') || operation =='create2'){
@@ -201,8 +200,8 @@ public class ISSP_WS_KAVI {
 							for(String fieldApi :userFieldsList)
 								xmlBody += notNull(fieldApi, newUser.get(fieldApi));
 
-							String xmlRequest = '<?xml version="1.0" encoding="utf-8"?>'+  
-									'<Request xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+ 
+							String xmlRequest = '<?xml version="1.0" encoding="utf-8"?>'+
+									'<Request xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
 									xmlBody +
 									notNull('EmailAddress', newUser.Email)+
 									notNull('Zip', newUser.PostalCode)+
@@ -238,13 +237,13 @@ public class ISSP_WS_KAVI {
 									System.debug('KIKE ENTRO PARA ACTUALIZAR EL VALOR DE PAR DEL CAMPO KAVI_USER_C_');
 								contactRightsMap.get(newUsersMap.get(newuser.Id).ContactKaviId__c).Kavi_user__c = true;
 								System.debug('KIKE EL VALOR DEL RECORD DE PORTAL APPLICATION RIGHT: ' +  contactRightsMap.get(newUsersMap.get(newuser.Id).ContactKaviId__c).Kavi_user__c);
-							}							
+							}
 						}
 					}
 
 					if(operation == 'create' || operation == 'create2'){
 						wsLogs.addAll(createKaviRelationShip(newRelationship));
-						update contactRightsMap.values();						
+						update contactRightsMap.values();
 					}
 
 					try{
@@ -255,28 +254,29 @@ public class ISSP_WS_KAVI {
 					}
 				}
 
-				//RN-ENHC0012059 grant and remove the permission set to the user
-				@future(callout=true) 
-				public static void addUserPSA(Set<Id> contactKaviAdd, String action){					
-					permissionset psID= [select id from permissionset where name = 'HL_UsersAccess'][0];
-					List<PermissionSetAssignment> listPsa = new List<PermissionSetAssignment>();
-					List<PermissionSetAssignment> listRemovePsa = new List<PermissionSetAssignment>();
-					List<User> userGrantPS = [SELECT id from User where ContactID in:contactKaviAdd];
-					for(User u: userGrantPS){		
-						listPsa.add(new PermissionSetAssignment (PermissionSetId = psID.id, AssigneeId = u.id));
-					}
-					if(!listPsa.isEmpty()){ 
-						if(action == 'grant'){
-							insert listPsa;
-						}
-					}
-					if(action == 'remove'){
-						listRemovePsa = [SELECT id from PermissionSetAssignment where AssigneeId in:userGrantPS and PermissionSetId =:psID.id];
-                        if(!listRemovePsa.isEmpty()){ 
-							delete listRemovePsa;
-                        }
-					}
-				}
+	//RN-ENHC0012059 grant and remove the permission set to the user
+	@future(callout=true) 
+	public static void addUserPSA(Set<Id> contactKaviAdd, String action){					
+		permissionset psID= [select id from permissionset where name = 'HL_UsersAccess'][0];
+		List<PermissionSetAssignment> listPsa = new List<PermissionSetAssignment>();
+		List<PermissionSetAssignment> listRemovePsa = new List<PermissionSetAssignment>();
+		List<User> userGrantPS = [SELECT id from User where ContactID in:contactKaviAdd];
+		for(User u: userGrantPS){		
+			listPsa.add(new PermissionSetAssignment (PermissionSetId = psID.id, AssigneeId = u.id));
+		}
+		if(!listPsa.isEmpty()){ 
+			if(action == 'grant'){
+				insert listPsa;
+			}
+		}
+		if(action == 'remove'){
+			listRemovePsa = [SELECT id from PermissionSetAssignment where AssigneeId in:userGrantPS and PermissionSetId =:psID.id];
+            if(!listRemovePsa.isEmpty()){ 
+				delete listRemovePsa;
+            }
+		}
+	}
+
 
 				public static List<ISSP_Web_Service_Log__c> createOrUpdateKaviAccounts(Set<Id> newAccountsIds,Map<String,String> accountStatusMap){
 

@@ -4,7 +4,6 @@ public class ISSP_AvailableServices_Test {
     @testSetup
     static void setup() {
 
-
         Portal_Applications__c easyPay1 = new Portal_Applications__c (
                 Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
                 ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
@@ -150,17 +149,6 @@ public class ISSP_AvailableServices_Test {
         );
 
         insert new List<Portal_Application_Right__c>{appRight,appRight2};
-        /*
-        Connected_App_Roles__c car = new Connected_App_Roles__c(
-            Name = 'ANG Test2',
-            Connected_App__c = 'IATA EasyPay (EDENRED)',
-            Permission_set_SSO__c = 'IEP_EdenRed',
-            Role__c = 'IEP Admin',
-            Default_User_Role__c = true,
-            Min_Users_With_Role__c = 2
-        );
-        insert car;
-        */
 
     }
 

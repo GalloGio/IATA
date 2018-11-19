@@ -39,7 +39,7 @@ public class trgIDCard_Contact_BeforeUpdateTest{
         
             List<ID_Card_Application__c> idCardAppToInsert = new List<ID_Card_Application__c>();
 
-            ID idcaRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ID_Card_Application__c').get('Standard') ;
+            ID idcaRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard') ;
             testData.IDCards_IDCardApplications[1].RecordTypeId = idcaRT;
             testData.IDCards_IDCardApplications[3].RecordTypeId = idcaRT;
             

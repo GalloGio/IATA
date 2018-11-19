@@ -3,14 +3,12 @@ private class trgOverwriteAirlineBranchAccountNameTest {
 
     static void testPositive(){
         
-        map<string,id> developerNamePerId = transformationTestHelper.AccRtNamePerIds();
-        
         IATA_ISO_Country__c myIataIso = new IATA_ISO_Country__c(ISO_Code__c = '12',name = 'moooon');
         insert myIataIso;
         
         Account head  = new Account(name = 'HEAD', Is_AIMS_Account__c = false
                                 ,IATA_ISO_Country__c = myIataIso.id, billingcity = 'Mars'
-                                , recordtypeId = developerNamePerId.get('IATA_Airline'),
+                                , recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
                                  Area_of_Operation__c = '1', 
                                  Type_of_Service__c = '1', 
                                 BSP_CI_Valid__c = true,
@@ -22,7 +20,7 @@ private class trgOverwriteAirlineBranchAccountNameTest {
          
         Account branch  = new Account(parentID = head.id, name = 'BRANCH', Is_AIMS_Account__c = false
                                 ,IATA_ISO_Country__c = myIataIso.id, billingcity = 'Mars' 
-                                , recordtypeId = developerNamePerId.get('IATA_Airline_BR'),
+                                , recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR'),
                                 TradeName__c ='this should be a workflow.......');
         insert branch;
         
@@ -33,8 +31,6 @@ private class trgOverwriteAirlineBranchAccountNameTest {
     
         static void testNegative(){
         
-        map<string,id> developerNamePerId = transformationTestHelper.AccRtNamePerIds();
-        
         IATA_ISO_Country__c myIataIso = new IATA_ISO_Country__c(ISO_Code__c = '12',name = 'moooon');
         insert myIataIso;
         
@@ -42,7 +38,7 @@ private class trgOverwriteAirlineBranchAccountNameTest {
                                  Is_AIMS_Account__c = false,
                                 IATA_ISO_Country__c = myIataIso.id,
                                  billingcity = 'Mars',
-                                 recordtypeId = developerNamePerId.get('IATA'),
+                                 recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA'),
                                  Area_of_Operation__c = '1', 
                                  Type_of_Service__c = '1', 
                                 BSP_CI_Valid__c = true,
@@ -54,7 +50,7 @@ private class trgOverwriteAirlineBranchAccountNameTest {
          
         Account branch  = new Account(parentID = head.id, name = 'BRANCH', Is_AIMS_Account__c = false
                                 ,IATA_ISO_Country__c = myIataIso.id, billingcity = 'Mars' 
-                                , recordtypeId = developerNamePerId.get('IATA_Airline_BR'),
+                                , recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR'),
                                 TradeName__c ='this should be a workflow.......');
         insert branch;
         

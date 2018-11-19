@@ -31,17 +31,13 @@ private class vfIECGADAgencyDetailsComponent_tst {
         oRefLocationTypeBR = IECTestUtil.createSampleGDPReferenceTableEntry('BR', 'Branch');
         insert oRefLocationTypeBR;
 
-        List<RecordType> rtypes = [Select Name, Id 
-        							From RecordType
-									where sObjectType='Account'
-										and Name = 'Agency'
-										and isActive = true];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'); 
         
         oAgencyAccount = IECTestUtil.createSampleAccount();
         oAgencyAccount.Name = AGENCY1_NAME;
         oAgencyAccount.IATACode__c = AGENCY1_CODE;
         oAgencyAccount.Status__c = 'Approved';
-        oAgencyAccount.RecordTypeId = rtypes.get(0).Id;
+        oAgencyAccount.RecordTypeId = rtId;
         insert oAgencyAccount;
         
         oGDPAccount1 = IECTestUtil.createSampleGDPAccount(AGENCY1_NAME, AGENCY1_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationTypeHO);
@@ -53,7 +49,8 @@ private class vfIECGADAgencyDetailsComponent_tst {
         insert oGDPAccount2;
 	}
 	
-	static testMethod void testDisplayAgencyDetails() {
+	@isTest
+	static void testDisplayAgencyDetails() {
     	setupData();
         try {
      		vfIECGADAgencyDetailsComponent controller = new vfIECGADAgencyDetailsComponent();
