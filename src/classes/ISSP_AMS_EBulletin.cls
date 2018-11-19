@@ -1,7 +1,7 @@
 public with sharing class ISSP_AMS_EBulletin {
 
-    private static String DAILY_RECORD_TYPE_ID = Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosByName.get('Daily').RecordTypeId;
-    private static String WEEKLY_RECORD_TYPE_ID = Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosByName.get('Weekly').RecordTypeId;
+    private static Id DAILY_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_eBulletin_Profile__c', 'Daily');
+    private static Id WEEKLY_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_eBulletin_Profile__c', 'Weekly');
 
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
 
@@ -587,51 +587,29 @@ public with sharing class ISSP_AMS_EBulletin {
         if(sRegion.size() > 0){
             list<IATA_ISO_Country__c> isoList;
             if (applyLanguage == 'es') {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                FROM IATA_ISO_Country__c
-                WHERE Case_BSP_Country__c != null
-                AND Case_BSP_Country__c != ''
-                AND Region__c in :sRegion
-                AND Sub_Region__c not in ('USA')
-                ORDER BY IATA_Country_SP__c];
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(sRegion), 'IATA_Country_SP__c');
             } else if (applyLanguage == 'fr') {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                FROM IATA_ISO_Country__c
-                WHERE Case_BSP_Country__c != null
-                AND Case_BSP_Country__c != ''
-                AND Region__c in :sRegion
-                AND Sub_Region__c not in ('USA')
-                ORDER BY IATA_Country_FR__c];
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(sRegion), 'IATA_Country_FR__c');
             } else {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                FROM IATA_ISO_Country__c
-                WHERE Case_BSP_Country__c != null
-                AND Case_BSP_Country__c != ''
-                AND Region__c in :sRegion
-                AND Sub_Region__c not in ('USA')
-                ORDER BY Name];
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(sRegion), 'Name');
             }
 
             //options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
             for (IATA_ISO_Country__c iso : isoList) {
-                if (applyLanguage == 'es') {
-                    if (iso.IATA_Country_SP__c != null)
-                        options.add(new SelectOption(iso.ISO_Code__c , iso.IATA_Country_SP__c));
-                    else
+                if(iso.Case_BSP_Country__c != null && iso.Case_BSP_Country__c != '' && iso.Region__c != 'USA'){
+                    if (applyLanguage == 'es') {
+                        if (iso.IATA_Country_SP__c != null)
+                            options.add(new SelectOption(iso.ISO_Code__c , iso.IATA_Country_SP__c));
+                        else
+                            options.add(new SelectOption(iso.ISO_Code__c , iso.Name));
+                    } else if (applyLanguage == 'fr') {
+                        if (iso.IATA_Country_FR__c != null)
+                            options.add(new SelectOption(iso.ISO_Code__c, iso.IATA_Country_FR__c));
+                        else
+                            options.add(new SelectOption(iso.ISO_Code__c, iso.Name));
+                    } else {
                         options.add(new SelectOption(iso.ISO_Code__c , iso.Name));
-                } else if (applyLanguage == 'fr') {
-                    if (iso.IATA_Country_FR__c != null)
-                        options.add(new SelectOption(iso.ISO_Code__c, iso.IATA_Country_FR__c));
-                    else
-                        options.add(new SelectOption(iso.ISO_Code__c, iso.Name));
-                } else {
-                    options.add(new SelectOption(iso.ISO_Code__c , iso.Name));
+                    }
                 }
             }
         }
@@ -653,17 +631,12 @@ public with sharing class ISSP_AMS_EBulletin {
         
             List<IATA_ISO_Country__c> isoList;
             
-            isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
-                IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                FROM IATA_ISO_Country__c
-                WHERE Case_BSP_Country__c != null
-                AND Case_BSP_Country__c != ''
-                AND Sub_Region__c not in ('USA')
-                ORDER BY Name];
+            isoList = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
             
             for (IATA_ISO_Country__c iso : isoList) {
-                mCountries.put(iso.ISO_Code__c , iso);
+                if(iso.Region__c != 'USA'){
+                    mCountries.put(iso.ISO_Code__c , iso);
+                }
             }
         }
 
@@ -1231,15 +1204,7 @@ public with sharing class ISSP_AMS_EBulletin {
     
     public IATA_ISO_Country__c fetchISOCountry(string isocode) {
 
-        IATA_ISO_Country__c isocountry = [
-                                             SELECT Id, Name, CurrencyIsoCode, EU_Country__c, AMS_Pilot_Country__c, Case_BSP_Country__c, IATA_Country_FR__c, IATA_Country_SP__c, IATA_COUNTRY_EN__c,
-                                             IATA_Contry_KR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Tax_Number_label__c, Tax_number_format__c, Branches_abroad_not_allowed__c,
-                                             Tax_number_help_text__c, Hide_Tax_Number_VAT__c, ISO_Code__c, EACP_Country__c, OSCAR_enabled__c, CASS_Import__c, CASS_Country_free_text__c, Region__c, Disable_non_IATA_Cargo_Agents__c,
-                                             original_bank_details_not_required__c, Local_language_Agency_details_required__c, Prevent_Portal_Trade_Name_Change__c, Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
-                                             Enable_Minor_Changes_from_Portal__c,EBulletin_enabled__c
-                                             FROM IATA_ISO_Country__c
-                                             WHERE ISO_Code__c = :isocode
-                                         ];
+        IATA_ISO_Country__c isocountry = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{isocode})[0];
 
         return isocountry;
     }

@@ -1,0 +1,51 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-family: Arial, sans-serif; font-size: small;">{!Account.Site}</span></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font face="Arial, sans-serif" size="2"><span lang="EN-GB"></span><span lang="EN-GB"><o:p></o:p></span>&nbsp;</font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><span lang="EN-GB"><o:p><strong><font size="2" face="Arial, sans-serif">{!Account.Name}</font></strong></o:p></span></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><b><span lang="EN-GB"><font size="2" face="Arial, sans-serif"></font></span></b></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><st1:address w:st="on"><st1:street w:st="on"><span lang="EN-GB"><font size="2" face="Arial, sans-serif">{!Account.BillingAddress}</font></span></st1:street></st1:address></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font size="2" face="Arial, sans-serif"><span lang="EN-GB"></span><span lang="EN-GB"><o:p></o:p></span></font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><u><span lang="EN-GB"><font size="2" face="Arial, sans-serif"></font></span></u></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font face="Arial, sans-serif" size="2"><u><span lang="EN-GB"></span></u>&nbsp;</font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-family: Arial, sans-serif; font-size: small; text-align: justify;">&nbsp;</span></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2"><span lang="ZH-TW">尊敬的 &nbsp;</span><span lang="ES-TRAD">{!Contact.Name},</span></font></p><p class="MsoNormal"><o:p><font face="Arial, sans-serif" size="2">&nbsp;</font></o:p></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2">We
+would like to let you know that we are checking the accuracy of the IATA
+accredited agent’s database and we would like to ask you to send us back the
+attached <b><u>Agency Status Form</u></b> to provide your actual details.<o:p></o:p></font></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2"><br></font></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2">Please
+return the form together with the <b><u>Certificate of Incorporation/Registration</u> </b>-<b> including the current Shareholding Details </b>-<b>&nbsp;</b>no later than <b><span style="background:yellow;mso-highlight:yellow">{DEADLINE DATE}</span></b> as an
+attachment to this email, indicating the case reference number in the subject,
+completed and signed by your authorized signatory. <b><i>Please be advised that
+each owners of the company must have an unique e-mail address.<o:p></o:p></i></b></font></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2"><span lang="ZH-TW">國際航協將對代理人進行資料庫準確性查核，請依附件</span><span lang="ZH-TW">「代理人資訊表</span>(Agency Status Form)<span lang="ZH-TW">」內容填寫，經貴公司代表人簽名,and also provide&nbsp;</span>股份有限公司變更登記<span lang="ZH-TW">，於</span><b><span style="background: yellow;">{DEADLINE DATE}</span></b>&nbsp;<span lang="ZH-TW">前以電子郵件附件方式回覆於此信箱。回覆時請於郵件標題註明個案編號</span>(<span lang="ZH-TW">見 代理人資訊表</span>)<span lang="ZH-TW">。</span></font></p><p class="MsoNormal"><span lang="ZH-TW" style="font-family: Arial, sans-serif; font-size: small;">請注意</span><span lang="ZH-TW" style="font-family: Arial, sans-serif; font-size: small;">：每位股東均須提供電子郵件信箱，不可與他人重複。</span></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2">&nbsp;</font></p><p><font face="Arial, sans-serif" size="2">Kindly note that IATA BSP shall always be notified
+of any changes that might affect the status of the agency, as prescribed in the
+Passenger Sales Agency Agreement (Resolution 824) and in Resolution 818g,
+Section 10 (available for download and review in (<a href="http://www.iata.org/services/accreditation-travel/travel-tourism/Pages/tah.aspx">http://www.iata.org/services/accreditation-travel/travel-tourism/Pages/tah.aspx</a>).<o:p></o:p></font></p><p><font face="Arial, sans-serif" size="2">依國際航協代理人銷售代理協議(第824決議)及國際航協818g決議第十部分的要求(可參考以下鏈結<a href="http://www.iata.org/services/accreditation-travel/travel-tourism/Pages/tah.aspx">http://www.iata.org/services/accreditation-travel/travel-tourism/Pages/tah.aspx</a>)，任何影響到公司狀態的變更，均須通知國際航協。<o:p></o:p></font></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2"><br></font></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2">We
+trust you give this matter your highest priority and appreciate your prompt cooperation
+in advance.<o:p></o:p></font></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2"><span lang="ZH-TW">感謝您的高度重視與積極配合</span><o:p></o:p></font></p><p class="MsoNormal"><o:p><font face="Arial, sans-serif" size="2">&nbsp;</font></o:p></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2">Looking
+forward to hearing from you soon.<o:p></o:p></font></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2"><span lang="ZH-TW">期待您的回覆</span><o:p></o:p></font></p><p><font face="Arial, sans-serif" size="2"><br></font></p><p><font face="Arial, sans-serif" size="2">Yours
+sincerely,<o:p></o:p></font></p><p class="MsoNormal">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p><p class="MsoNormal"><font face="Arial, sans-serif" size="2"><span lang="ZH-TW">謹上</span><o:p></o:p></font></p><font face="Arial, sans-serif" size="2">
+<p style="margin-bottom: 12pt;"><br></p><p style="margin-bottom: 12pt;">{!Case.OwnerFullName}</p><p class="MsoNormal"><a name="OLE_LINK2"><span lang="EN-GB"><br></span></a></p><p class="MsoNormal"><a name="OLE_LINK2"><span lang="EN-GB">IATA Global Delivery Center</span></a><span lang="EN-GB"><o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB">&nbsp;</span></p><p class="MsoNormal"><a name="OLE_LINK24"></a><a name="OLE_LINK23"><span lang="EN-GB">Please log your queries through IATA new portal:&nbsp;</span></a><a name="OLE_LINK6"></a><a name="OLE_LINK5"></a><a name="OLE_LINK4"></a><a href="http://www.iata.org/cs">http://www.iata.org/cs</a><span lang="EN-GB">.</span><o:p></o:p></p><p class="MsoNormal"><b>Welcome to the new portal and please</b><b>&nbsp;</b><a name="OLE_LINK9"></a><a name="OLE_LINK8"></a><a name="OLE_LINK7"></a><a href="http://portal.iata.org/"><b>login now</b></a><b>!</b></p><table class="MsoNormalTable" border="0" cellpadding="0" cellspacing="0" width="788" style="width: 472.5pt; background: white;"><tbody><tr style="height: 10.35pt;"><td style="padding: 0in; height: 10.35pt;"><br></td></tr></tbody></table></font>]]></td>
+</tr>
+</table>

@@ -5,8 +5,7 @@ public class IsoSingleton{
 	
 		private IsoSingleton(){
 					IsoCountriesPerAcliCountryNames = new map<string,IATA_ISO_Country__c>();
-					for(IATA_ISO_Country__c isoC : [SELECT ID,Acli_Country__c,ISO_Code__c,name
-													FROM IATA_ISO_Country__c]){
+					for(IATA_ISO_Country__c isoC : IATAIsoCountryDAO.getIsoCountries()){
 							if(isoC.Acli_Country__c  <> null)							
 							IsoCountriesPerAcliCountryNames.put(isoC.Acli_Country__c.trim(),isoC);
 						

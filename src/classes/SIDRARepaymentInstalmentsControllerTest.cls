@@ -40,8 +40,8 @@ private class SIDRARepaymentInstalmentsControllerTest {
     
     static testMethod void test_Controller_OK() {
         Case aCase = new Case();
-        acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'SIDRA');
         insert aCase;
         
         list<Case_Detail__c> rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
@@ -73,7 +73,7 @@ private class SIDRARepaymentInstalmentsControllerTest {
     
     static testMethod void test_Controller_OK2() {
         Case aCase = new Case();
-        acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
         
@@ -99,7 +99,7 @@ private class SIDRARepaymentInstalmentsControllerTest {
     
     static testMethod void test_Controller_OK3() {
         Case aCase = new Case();
-        acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         insert aCase;
         

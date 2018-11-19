@@ -52,8 +52,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     
     global Database.QueryLocator start(Database.BatchableContext BC) {
         Set<String> locations = new Set<String> {AMS_Utils.LC_PASSENGER, 'D'};
-        Id AGENCY_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordtypeId();
-        Id OSCARCOMMRTID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        Id AGENCY_RECORDTYPE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id OSCARCOMMRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         String reason = 'PCI DSS Compliant';
         Set<String> availableStatus = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, 
                                                        AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED,

@@ -17,7 +17,7 @@ private class ISSP_ANG_CodeSearchTest {
 
         insert portugal;
         
-        Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
 
         //TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
 

@@ -20,7 +20,7 @@ public class ISSP_CertificationCasesTest {
         acc1.IATACode__c = '1234567';
         acc1.Location_Type__c = 'HO';
         acc1.Is_your_firm_handling_Dangerous_Goods__c = 'No';
-        acc1.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
+        acc1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         insert acc1;
         Test.stopTest();
 /*
@@ -30,7 +30,7 @@ public class ISSP_CertificationCasesTest {
         acc2.IATACode__c = '1234568';
         acc2.Location_Type__c = 'BR';
         acc2.Is_your_firm_handling_Dangerous_Goods__c = 'No';
-        acc2.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
+        acc2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         acc2.ParentId = acc1.Id;
         insert acc2;
 */

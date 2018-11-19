@@ -9,7 +9,7 @@ private class AMS_OSCARTriggerHandlerTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true, AIMS_Area_ID__c='2') ;
         insert ctry ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account acc = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='12345610',Location_Type__c='HE',Name='Agency HE',Short_Name__c='Agency HE', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED, BillingCountry = 'US', Type = 'IATA Passenger Sales Agent');
 
@@ -74,7 +74,7 @@ private class AMS_OSCARTriggerHandlerTest {
         fieldsOfObject.put('Website__c',acc.Website);
 
         AMS_Pax_Accreditation_Form__c stagingArea = ANG_EntityCreator.createStagingArea(
-            Schema.AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId(), acc.Id, cse.Id, fieldsOfObject);
+        	RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes'), acc.Id, cse.Id, fieldsOfObject);
 
         insert stagingArea;
 
@@ -226,7 +226,7 @@ private class AMS_OSCARTriggerHandlerTest {
         insert aChangeCode;
 
         Agency_Authorization__c fop = new Agency_Authorization__c(Account__c = a1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', 
-                    RecordTypeId = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId());
+                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment'));
 
         insert fop;
 
@@ -246,7 +246,7 @@ private class AMS_OSCARTriggerHandlerTest {
         AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, agencylist[0].Id, fieldsOfObject);
         insert oscar;
         
-        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('Oscar__c',oscar.Id);
