@@ -2393,7 +2393,7 @@ public class AMS_OSCARTriggerHandler {
                 }
 
                 //AMSU-161 - adding new logic for VR CLO for GSA/AHA/GSSA
-                if (oldOSCAR.STEP31__c <> AMS_Utils.PASSED && oscar.STEP31__c == AMS_Utils.PASSED && oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+                if (oldOSCAR.STEP31__c <> AMS_Utils.PASSED && oscar.STEP31__c == AMS_Utils.PASSED && oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA && oscar.Location_Class__c != 'M'){
                     System.debug('updateOSCARAppointments oscar.Process__c: ' + oscar.Process__c);
                     inspectionsPerAccount = new Map<Id, List<AMS_Inspection__c>>();
                     for(AMS_Inspection__c insp: allInspectionsByAccount){
