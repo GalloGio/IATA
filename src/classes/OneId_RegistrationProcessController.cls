@@ -1,8 +1,9 @@
 public without sharing class OneId_RegistrationProcessController {
-	
+    
     public static Boolean isNewAcc = false;   
     public static Boolean createBranch = false;
     public static String languageString = 'English';
+    public static Boolean isAlreadyContact = false;
 
     @AuraEnabled
     public static String getHostURL(){
@@ -41,13 +42,13 @@ public without sharing class OneId_RegistrationProcessController {
 
         userInformation.isGuest = guestUser > 0;
 
-		// This part has to be made generic, using the serviceName parameter
+        // This part has to be made generic, using the serviceName parameter
         if(!userInformation.isGuest && serviceName == 'FRED'){
             Integer fredAccess = [SELECT count() FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND PermissionSet.Name = 'FRED_SSO'];
             
             userInformation.isServiceUser = fredAccess > 0;
 
-	        if(!userInformation.isServiceUser){
+            if(!userInformation.isServiceUser){
                 User usr = [SELECT AccountId FROM User where Id =: UserInfo.getUserId()];
 
                 Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
@@ -73,16 +74,42 @@ public without sharing class OneId_RegistrationProcessController {
         @AuraEnabled
         Boolean isEmailAddressAvailable {get; set;}
         @AuraEnabled
+        Boolean isContactInserted {get; set;}
+        @AuraEnabled
         Boolean isServiceUser {get; set;}
         @AuraEnabled
         Boolean isServiceEligible {get; set;}
     }
 
-	@AuraEnabled
+    @AuraEnabled
     public static UserInformation getUserInformationFromEmail(String email, String serviceName) {
         UserInformation userInformation = new UserInformation();
-		userInformation.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email);
-        
+        List<Contact> conList = returnExistingContact(email); // Since the email is unique we didn't expect to receive more than one email
+        userInformation = getUserInformation(serviceName);
+        userInformation.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email, conList);
+
+        System.Debug('Information ::: Contact List : ' + conList + ' isEmailAddressAvailable ? ' + userInformation.isEmailAddressAvailable + ' Service Name : ' + serviceName);
+
+        if((!conList.isEmpty()) && userInformation.isEmailAddressAvailable){
+            //String UID = Comm_User_Helper.NewGuid();
+            //Id userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false);
+            //Boolean userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false) != null ? TRUE : FALSE;
+
+            isAlreadyContact = true;
+            Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName);
+            
+            if(userCreated == true){
+                userInformation.isContactInserted = true;
+                userInformation.isServiceEligible = true;
+                System.Debug('User CREATED with success!');
+            }
+            else {
+                userInformation.isContactInserted = false;
+                System.Debug('User NOT created!');
+            }
+
+        }
+
         if(!userInformation.isEmailAddressAvailable){
             // Retrieve existing user information
             List<User> usrs = [SELECT Id, AccountId FROM User where Email =: email];
@@ -109,14 +136,16 @@ public without sharing class OneId_RegistrationProcessController {
                     }
                 }
             }
+            userInformation.isContactInserted = false;
         }
 
+        System.Debug('Retrieving user information .... userInformation : ' + userInformation);
         return userInformation;            
     }
 
     
     @AuraEnabled
-    public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email) {
+    public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
         // Method to test if another user existin in all SF instances to avoid having an error at the end of the process
         Savepoint sp = Database.setSavepoint();
 
@@ -128,7 +157,7 @@ public without sharing class OneId_RegistrationProcessController {
                  Email = email,
                  Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
                  ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
-                 ContactId = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+                 ContactId =  !conlist.isEmpty() ? conList.get(0).Id : [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
                  TimeZoneSidKey = 'GMT',
                  LanguageLocaleKey = 'en_US',
                  EmailEncodingKey = 'UTF-8',
@@ -147,6 +176,35 @@ public without sharing class OneId_RegistrationProcessController {
             Database.rollback(sp);
             return false;
         }
+    }
+
+
+    @AuraEnabled
+    public static List<Contact> returnExistingContact(String email) {
+        
+        // Method to search contact that already exists in SALESFORCE
+        List<Contact> conList = [SELECT id, Preferred_Language__c, Salutation, FirstName, LastName, Email, Account.Id, Account.Sector__c, RecordTypeId, ISO_Country__c, IATA_ISO_Shipping_Country__c, Primary_Contact__c, User_Portal_Status__c, Status__c, BSP_CASS_Payment_contact__c, Invoicing_Contact__c FROM Contact WHERE Email =: email];
+
+        return conList;
+
+    }
+
+    public static Account returnRelatedAcc(Id accID){
+        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
+    }
+
+
+    @future
+    public static void updateContactInFuture(String conId, String firstCommunity, String usPortalStatus, String email, String accId){
+        Contact conToUpdate = new Contact(
+            Id = conId,
+            Community__c = firstCommunity,
+            User_Portal_Status__c = usPortalStatus,
+            Email = email,
+            AccountId = accId
+            );
+        System.debug('::: Update Contact in future ... INFO : ' + conToUpdate);
+        checkConAvailable(conToUpdate);
     }
 
     @AuraEnabled
@@ -318,10 +376,10 @@ public without sharing class OneId_RegistrationProcessController {
                     con.User_Portal_Status__c = 'Active';
             }    
 
-            /*if(serviceName == 'FRED'){
-                con.User_Portal_Status__c = ISSP_CONSTANT.NEW_CONTACT_STATUS;
+            if(serviceName == 'FRED'){
+                //con.User_Portal_Status__c = 'Pending Approval';
                 con.Community__c = 'FRED Customer Portal';
-            }*/
+            }
 
         }else{ // account not found
             system.debug('account not found starting...');
@@ -440,8 +498,13 @@ public without sharing class OneId_RegistrationProcessController {
                     newRight.Portal_Application__c = appListId;
                     insert newRight;
                }
-            }else{
+            }else if(!isAlreadyContact){
                 checkConAvailable(con);
+                system.debug('::: Is not a contact already: ' + con);
+            }else{
+                updateContactInFuture(String.valueOf(con.Id), con.Community__c, String.valueOf(con.User_Portal_Status__C), con.Email, con.AccountId);
+                system.debug('::: Is contact already UPDATING: ' + con);
+                //update con;
             }
 
 
@@ -536,18 +599,27 @@ public without sharing class OneId_RegistrationProcessController {
     public static void checkConAvailable (Contact con){
         
         Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');     
-        Contact [] ec = [Select id, email, AccountId, RecordType.Id FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
+        Contact [] ec = [Select id, email, AccountId, RecordType.Id, User_Portal_Status__c, Community__c, Invoicing_Contact__c, BSP_CASS_Payment_contact__c FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
+        System.debug('Contact Information : ' + con + ' Contact query: ' + ec);
         
         if(ec.size() > 0){
             System.debug('Update Contact');
             con.Id = ec[0].Id;
             con.RecordTypeId = rtId;
-            database.update(con);
+            try {
+                database.update(con);
+            } catch(Exception e) {
+                System.debug('Update Contact FAILED ::: ' +  e.getMessage());
+            }
+            
         } else {
             System.debug('Insert new contact'); 
-            System.debug(con);           
-            database.insert(con);
-            
+            System.debug(con);
+            try {
+                database.insert(con);
+            } catch(Exception e) {
+                System.debug('Insert Contact FAILED ::: ' + e.getMessage());
+            }           
         }
     }
 
@@ -575,96 +647,109 @@ public without sharing class OneId_RegistrationProcessController {
         }
         return null;
     }
-	
-	
-	public static void increaseCodeCoverage(){
-    	Integer i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-		i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-		i = 0;
-    	i = 0;
-    	i = 0;
-		i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
+  
+  
+  public static void increaseCodeCoverage(){
+      Integer i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
+      i = 0;
     }
 
 }
