@@ -2795,6 +2795,17 @@ Format: YYYY</inlineHelpText>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Is_NewGen_Pilot__c</fullName>
+        <description>Indicates if the country is a NewGen pilot</description>
+        <externalId>false</externalId>
+        <formula>Account__r.IATA_ISO_Country__r.Enable_NewGen_Pilot__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is NewGen Pilot</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_NewGen__c</fullName>
         <description>Created to avoid extra queries on the code.</description>
         <externalId>false</externalId>
