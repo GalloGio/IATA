@@ -5,11 +5,6 @@ private class AMS_contactUpdateTriggerTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        //Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-
-        //AMS_Agency__c a = new AMS_Agency__c(Location_Class__c = 'R', RecordTypeId = agenciesRT.get('PASSENGER'), Country__c = isoc.id, Name='Test Agency', IATAcode__c = '1234567', Chk_dgt__c = '8', Legal_Name_1__c = 'Test Agency', Legacy_External_ID__c = '12345678', Legacy_System__c = 'AIMS');
-        //insert a;
-
         Account acc = new Account(type = 'IATA Passenger Sales Agent', Location_Class__c = 'R', IATA_ISO_Country__c = isoc.id,Name='Test Agency', IATAcode__c = '1234567', Short_Name__c = 'Test Agency', AIMS_ID__c = '12345678', Is_AIMS_Account__c = true,Location_Type__c = 'HO');
         insert acc;
 

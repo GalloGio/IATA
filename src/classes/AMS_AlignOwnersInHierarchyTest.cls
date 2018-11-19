@@ -5,9 +5,9 @@ private class AMS_AlignOwnersInHierarchyTest {
     
         Date myDate1 = Date.newInstance(2016, 2, 17);
 
-        Id ownerRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+        Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Portugal');
         insert portugal;

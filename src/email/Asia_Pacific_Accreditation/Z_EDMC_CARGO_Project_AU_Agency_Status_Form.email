@@ -1,0 +1,54 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-family: Arial, sans-serif; font-size: small;">{!Account.Site}</span></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font face="Arial, sans-serif" size="2"><span lang="EN-GB"></span><span lang="EN-GB"><o:p></o:p></span>&nbsp;</font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><span lang="EN-GB"><o:p><strong><font size="2" face="Arial, sans-serif">{!Account.Name}</font></strong></o:p></span></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><b><span lang="EN-GB"><font size="2" face="Arial, sans-serif"></font></span></b></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><st1:address w:st="on"><st1:street w:st="on"><span lang="EN-GB"><font size="2" face="Arial, sans-serif">{!Account.BillingAddress}</font></span></st1:street></st1:address></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font size="2" face="Arial, sans-serif"><span lang="EN-GB"></span><span lang="EN-GB"><o:p></o:p></span></font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><u><span lang="EN-GB"><font size="2" face="Arial, sans-serif"></font></span></u></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font face="Arial, sans-serif" size="2"><u><span lang="EN-GB"></span></u>&nbsp;</font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font face="Arial, sans-serif" size="2"><br></font></p><p class="MsoNormal"><font face="Arial, sans-serif" size="2">Dear <span style="background:yellow;mso-highlight:yellow">{!Contact.Name}</span>,<o:p></o:p></font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">&nbsp;</font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">We would like to inform you that that
+IATA is conducting an audit on the accuracy of information currently stored in
+all IATA Settlement Systems for accredited cargo agents in the South West
+Pacific. We therefore request your cooperation in completing the attached <b><u>Agency Status Form</u></b> with the most
+up to date information for your organization. <o:p></o:p></font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">&nbsp;</font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">Please return the completed form signed
+by the company’s director/owner, as an attachment to this email, indicating the
+case reference number in the subject heading- or if you wish you can also upload
+the form on the IATA Customer Portal. <b><u>Please
+do so by no later than COB <span style="background:yellow;mso-highlight:yellow;
+mso-bidi-font-weight:bold">{DEADLINE DATE}</span>.<o:p></o:p></u></b></font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">&nbsp;</font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2"><b>IMPORTANT REMINDER:</b> IATA is required at all times to
+be notified by IATA Accredited Agents of any changes that might affect the accuracy
+of information stored in the IATA Settlement Systems as well as the integrity
+of the Cargo Intermediary Agreement. Please refer to the Cargo Agent’s Handbook
+Resolution 809, Section 5.1 which is also available for download by clicking on
+the following link<a href="http://www.iata.org/customer-portal/Pages/LocalResourceCenter.aspx">http://www.iata.org/customer-portal/Pages/LocalResourceCenter.aspx</a>).<o:p></o:p></font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">&nbsp;</font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">We trust that you will treat our request with high
+priority and look forward to receiving the completed form by the prescribed deadline.
+<o:p></o:p></font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">&nbsp;</font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">Please do not hesitate to contact
+one of our Customer Service representatives should you require further
+clarification to the above.<o:p></o:p></font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">&nbsp;</font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">&nbsp;</font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">Yours sincerely,<o:p></o:p></font></p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2"><span style="background: yellow;">{!Case.OwnerFullName}</span><o:p></o:p></font></p><p class="MsoNoSpacing">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p><p style="margin: 0in 0in 0.0001pt;"><font face="Arial, sans-serif" size="2">&nbsp;</font></p><font face="Arial, sans-serif" size="2"><p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in 9pt 0.0001pt 0in;"><b><span lang="FR" style="color: rgb(51, 51, 153);">IATA Agency Management,</span></b></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in 9pt 0.0001pt 0in;"><b><span lang="FR" style="color: rgb(51, 51, 153);">Asia &amp; Pacific</span></b><span style="color: rgb(255, 255, 255);">!</span></p><table class="MsoNormalTable" border="0" cellpadding="0" cellspacing="0" width="788" style="color: rgb(0, 0, 0); width: 472.5pt; background: white;"><tbody><tr style="height: 10.35pt;"><td style="padding: 0in; height: 10.35pt;"><br></td></tr></tbody></table></font>]]></td>
+</tr>
+</table>

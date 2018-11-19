@@ -1,12 +1,12 @@
 @isTest
-public class trgCaseLastSIDRADateTest{
+public class trgCaseLastSIDRADateTest {
 
-    private static final ID iFDSRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - Americas');
-    private static final ID iFAPRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-    private static final ID sidraRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+    private static final ID iFDSRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
+    private static final ID iFAPRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+    private static final ID sidraRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 
-    static testMethod void testAllMethod()
-    {
+    @isTest
+	static void testAllMethod() {
         // create test contact
         Contact contact1 = new Contact();
         contact1.FirstName = 'Dummy';
@@ -37,8 +37,8 @@ public class trgCaseLastSIDRADateTest{
 
     }
 
-    static testMethod void testAllMethod2()
-    {
+    @isTest
+	static void testAllMethod2() {
         System.debug('********* ' + sidraRecordTypeId);
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -47,7 +47,7 @@ public class trgCaseLastSIDRADateTest{
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
 
-       insert account1;
+        insert account1;
 
         // create test contact
         Contact contact1 = new Contact();
@@ -76,8 +76,8 @@ public class trgCaseLastSIDRADateTest{
         Test.StopTest();
     }
 
-    static testMethod void testAllMethod3()
-    {
+    @isTest
+	static void testAllMethod3() {
         System.debug('********* ' + sidraRecordTypeId);
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -86,7 +86,7 @@ public class trgCaseLastSIDRADateTest{
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
 
-       insert account1;
+        insert account1;
 
         // create test contact
         Contact contact1 = new Contact();
@@ -115,7 +115,8 @@ public class trgCaseLastSIDRADateTest{
         Test.StopTest();
     }
 
-    static testMethod void testAddingComments_Case1() {
+    @isTest
+	static void testAddingComments_Case1() {
 
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -123,7 +124,7 @@ public class trgCaseLastSIDRADateTest{
         account1.BillingCountry = 'Canada';
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
-       insert account1;
+        insert account1;
 
         // create test contact
         Contact contact1 = new Contact();
@@ -157,7 +158,8 @@ public class trgCaseLastSIDRADateTest{
         Test.StopTest();
     }
 
-    static testMethod void testAddingComments_Case2() {
+    @isTest
+	static void testAddingComments_Case2() {
 
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -165,7 +167,7 @@ public class trgCaseLastSIDRADateTest{
         account1.BillingCountry = 'Canada';
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
-       insert account1;
+        insert account1;
 
         // create test contact
         Contact contact1 = new Contact();
@@ -199,7 +201,8 @@ public class trgCaseLastSIDRADateTest{
         Test.StopTest();
     }
 
-    static testMethod void testAddingComments_Case3() {
+    @isTest
+	static void testAddingComments_Case3() {
 
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -207,7 +210,7 @@ public class trgCaseLastSIDRADateTest{
         account1.BillingCountry = 'Canada';
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
-       insert account1;
+        insert account1;
 
         // create test contact
         Contact contact1 = new Contact();

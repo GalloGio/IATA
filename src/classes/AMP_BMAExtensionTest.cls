@@ -17,11 +17,11 @@ private class AMP_BMAExtensionTest
 
 		System.runAs(testUser) {
 
-			Id accountRecordTypeId = [SELECT Id FROM RecordType WHERE Name ='Airline Headquarters'].Id;
+			Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 			Account a = new Account(name='testAccount', RecordTypeId=accountRecordTypeId, Sector__c='Airline', Category__c='Passenger and Cargo');
 			insert a;
 
-			Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
+			Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division');
 
 			Objective__c o = new Objective__c();
 			o.Account__c = a.Id;

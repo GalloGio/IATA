@@ -1426,6 +1426,7 @@ public with sharing class TestDataGenerator
             listCountry.add(new IATA_ISO_Country__c(Name='Mexico', ISO_Code__c='MX'));
             listCountry.add(new IATA_ISO_Country__c(Name='United States', ISO_Code__c='US'));
             Database.upsert(listCountry, IATA_ISO_Country__c.ISO_Code__c, false);
+
         }
         catch (Exception e) {}
         
@@ -1445,9 +1446,11 @@ public with sharing class TestDataGenerator
         }
         catch (Exception e) {}
         
-        return [select Id, Name, ISO_Code__c, ISO_Code_Numeric__c, Region__c
-                     , (select Id, Name, ISO_Code__c from IATA_ISO_States__r)
-                from IATA_ISO_Country__c];
+        //Forcing the countries to be refetched
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
+        
+		return IATAIsoCountryDAO.getIsoCountries();
+		
     } //*** end of "generateISOCountryState"
     
     public static List<Term_And_Condition__c> generateTermAndConditions(Integer nb, Boolean doInsert)

@@ -1,14 +1,14 @@
 @isTest
 public class SurveyBatchTest {
 
-  public static final ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-  public static final ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
-  public static final ID europeRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesEurope');
-  public static final ID chinaRTID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_China_North_Asia');
-  public static final ID FDS_ICCS_Email_to_CaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Email_to_Case');
-  public static final ID Cases_SIS_Help_DeskRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
-  public static final ID processRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
-  public static final ID aCAId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
+  public static final ID hqrt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+  public static final ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+  public static final ID europeRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+  public static final ID chinaRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_China_North_Asia');
+  public static final ID FDS_ICCS_Email_to_CaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
+  public static final ID Cases_SIS_Help_DeskRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
+  public static final ID processRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+  public static final ID aCAId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application'); 
 
 
   @testSetup

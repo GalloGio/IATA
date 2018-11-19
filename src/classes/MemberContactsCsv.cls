@@ -21,7 +21,6 @@ public class MemberContactsCsv{
 
     public PageReference Next(){
         List<List<String>> parsedCSV;
-        string SeniorRecordTypeID =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'Contact'}).get('Contact').get('Senior');
         contactsFromCsv = new list<Contact>();
         try{
             if(contentFile == null)
@@ -37,7 +36,7 @@ public class MemberContactsCsv{
             
             //Country selection
             map<string, id> mapCountryCode = new map<string, id>();
-            for(IATA_ISO_Country__c c:[select id, ISO_Code__c from IATA_ISO_Country__c])
+            for(IATA_ISO_Country__c c:IATAIsoCountryDAO.getIsoCountries())
                 mapCountryCode.put(c.ISO_Code__c, c.Id);
             
             integer i = 0;
@@ -55,7 +54,7 @@ public class MemberContactsCsv{
                                             Senior_Contact_Email__c =row[5].replaceAll('"', '') ,
                                             Senior_Contact_Phone__c =row[7].replaceAll('"', '') ,
                                             Senior_Contact_Fax__c=row[8].replaceAll('"', '') ,
-                                            recordtypeID = SeniorRecordTypeID);
+                                            recordtypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Senior'));
                     if(row[6]!=null && row[6]!='' && row[6].replaceAll('"', '') != null)
                         c.ISO_Country__c = mapCountryCode.containsKey(row[6].replaceAll('"', ''))?mapCountryCode.get(row[6].replaceAll('"', '')):null;
                     else
@@ -72,30 +71,6 @@ public class MemberContactsCsv{
                     contactsFromCsv.add(c);
                 }
                 i++;
-                /*********** OLD PROCESS
-                if( !String.isEmpty(row[1].replaceAll('"', '')) && (!String.isEmpty(row[3].replaceAll('"', ''))||!String.isEmpty(row[5].replaceAll('"', '')) ) ){
-                    string nameEmailTrimToLower = row[5].replaceAll('"', '').trim().toLowerCase();
-                    string jobFunction = picklistValues.contains(row[0].replaceAll('"', ''))? row[0].replaceAll('"', ''):null;
-                    contact c = new contact(AccountID = acct.id,
-                                            Membership_Function__c= i == 0 || jobFunction == null  ? '': jobFunction + ';'  ,
-                                            Membership_Main_Contact__c = i==0 ? true: false,
-                                            LastName=row[1].replaceAll('"', '') ,
-                                            Title=row[2].replaceAll('"', '') ,
-                                            Senior_Contact_Phone__c =row[3].replaceAll('"', '') ,
-                                            Senior_Contact_Fax__c=row[4].replaceAll('"', '') ,  
-                                            Senior_Contact_Email__c =row[5].replaceAll('"', '') ,
-                                            recordtypeID = SeniorRecordTypeID);
-    
-                    contactsFromCsv.add(c);
-                    if(contactPerName.get(nameEmailTrimToLower ) == null){                                      
-                        Contact cToIns = c.clone();
-                        contactPerName.put(nameEmailTrimToLower ,cToIns);
-                    }else{
-                        contactPerName.get(nameEmailTrimToLower).Membership_Function__c +=jobFunction == null  ? '':  jobFunction + ';';
-                    }
-                }
-                i++;
-                ********************/
             }
             page = 2;
             contactsToInsert  =  contactPerName.values();
