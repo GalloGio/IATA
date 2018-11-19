@@ -51,7 +51,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
   };
 
   // List of the DeveloperNames of the Case record types that are in the scope of this customer recorvery process
-  global list<String> lstRecordTypesInScope = new list<String> { 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal', 'Cases_China_North_Asia', 'CasesEurope'/*, 'IATA_Financial_Review' */};
+  global list<String> lstRecordTypesInScope = new list<String> { 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global'};
 
 
 

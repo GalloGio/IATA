@@ -608,6 +608,21 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <customButtons>Mass_Update_Contracts</customButtons>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>Product_Family__c</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <fields>CONTRACT_TERM</fields>
+        <fields>Current_Cycle_Start_Date__c</fields>
+        <fields>Current_Cycle_End_Date__c</fields>
+        <fields>Contract_Renewal_Cycle_in_months__c</fields>
+        <fields>Status_formula__c</fields>
+        <relatedList>RelatedContractList</relatedList>
+        <sortField>CONTRACT.END_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>SAP_ID__c</fields>
         <fields>SAP_Account_type__c</fields>
