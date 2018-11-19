@@ -380,7 +380,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     //FM AMSU-1
     public Boolean isAgencyCorrection{
         get{
-            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.COR || oscarObj.Process__c == AMS_Utils.NGCORRECTION)) return true;
+            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.COR)) return true;
             else return false;
         }
         private set;
