@@ -31833,19 +31833,6 @@ myuser={!User.Id}</url>
         <url>/500/e?retURL=/{!Contact.Id}&amp;def_contact_id={!Contact.Id}&amp;cas14=IFAP user management query&amp;cas6=IFAP user management query&amp;cas15=Customer requests information on how to access the financial assessments portal.&amp;00N20000000h4cK={!Account.BillingCountry}&amp;00N20000000h23T=IFAP User Management&amp;00N20000000gzqc={!Account.Site}&amp;00N20000000h1xp=Risk Management&amp;def_account_id={!Account.Id}</url>
     </webLinks>
     <webLinks>
-        <fullName>Load_Member_Contacts</fullName>
-        <availability>online</availability>
-        <displayType>massActionButton</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
-        <linkType>url</linkType>
-        <masterLabel>Upload Contacts</masterLabel>
-        <openType>sidebar</openType>
-        <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
-        <url>/apex/ContactMembers?acctID={!Account.Id}</url>
-    </webLinks>
-    <webLinks>
         <fullName>Log_Phone_Case</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
