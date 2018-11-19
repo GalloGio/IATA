@@ -29,7 +29,7 @@ public class TestClass_SetupVariables {
     {
      	get
         {
-            return RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Service_Provider_Account');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard Account');
         }
     }
     public static ID ExternalCasesInvoicesWorksID {
