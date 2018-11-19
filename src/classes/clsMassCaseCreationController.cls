@@ -8,7 +8,7 @@ public with sharing class clsMassCaseCreationController {
     List<SelectOption> options = new List<SelectOption>();
     //Fill based on regions
     //Americas       where Region__c=:'Americas'
-    for (IATA_ISO_Country__c iso : [select Id, AIMS_Area_Name__c, ISO_Code__c from IATA_ISO_Country__c  order by AIMS_Area_Name__c]) {
+    for (IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'AIMS_Area_Name__c')) {
       options.add(new SelectOption(iso.AIMS_Area_Name__c, iso.AIMS_Area_Name__c));
     }
 
@@ -425,7 +425,7 @@ public with sharing class clsMassCaseCreationController {
       else if (email.equals('2'))
         openCasesReportURL += 'pn5=e';  // equals
       //openCasesReportURL += 'pv6=';     // Email equals/not equals null
-      List<IATA_ISO_Country__c> couutryName = [select Name from IATA_ISO_Country__c where Id = :country limit 1];
+      List<IATA_ISO_Country__c> couutryName = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<String>{country});
       
       //openCasesReportURL += '&pv6=' + EncodingUtil.urlEncode(String.escapeSingleQuotes(country).trim(), 'UTF-8'); // provide the country
       openCasesReportURL += '&pv6=' + EncodingUtil.urlEncode(String.escapeSingleQuotes(couutryName[0].Name).trim(), 'UTF-8'); // provide the country
@@ -481,7 +481,7 @@ public with sharing class clsMassCaseCreationController {
     String yearend = Apexpages.currentPage().getParameters().get('yearend');  //phase 1 release 2
     String targetFinancialYear = Apexpages.currentPage().getParameters().get('targetFinancialYear');  // phase 4
 
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
     // search for agents that have closed cases for the same financial year
     String soql = 'select c.Contact.Account.Id, c.Contact.Account.Name from Case c where c.RecordTypeId=\'' + IFAPcaseRecordTypeID + '\' and c.Status = \'Closed\' and c.IFAP_Financial_Year__c = \'' + targetFinancialYear + '\' and c.Contact.Account.name != null and c.Contact.Account.IATACode__c != null and c.Contact.Financial_Assessment_Contact__c = true';

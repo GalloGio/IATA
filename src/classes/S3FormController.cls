@@ -1,7 +1,7 @@
 public class S3FormController {
 	
  	public AWSKeys credentials {get;set;}
- 	private String AWSCredentialName = 'production'; //Modify this string variable to be the name of the AWS Credential record that contains the proper AWS keys and secret
+ 	@TestVisible private String AWSCredentialName = 'production'; //Modify this string variable to be the name of the AWS Credential record that contains the proper AWS keys and secret
  	public string secret { get {return credentials.secret;} }
 	public string key { get {return credentials.key;} }
 	
@@ -125,36 +125,4 @@ public class S3FormController {
 	   return null;	
 	}
 
-     	 
-	public static testmethod void t1() {
-		AWS_S3_Object__c a = new AWS_S3_Object__c();
-		
-		S3FormController s3 = new S3FormController(
-			new ApexPages.StandardController( a ) );
-		
-		AWSKey__c testKey = new AWSKey__c(name='test keys',key__c='key',secret__c='secret');
-        insert testKey;
-
-		s3.AWSCredentialName = testKey.name;
-		s3.constructor();
-		system.debug( s3.secret + ' '+ s3.key ); 
-		system.debug( s3.getpolicy() ); 
-		system.debug( s3.getSignedPolicy() ); 
-		system.debug( s3.getHexPolicy() ); 
-		
-		PageReference pageRef = Page.news3object;
-		pageRef.getParameters().put('urlParam','https://na22.salseforce.com/services/soap/14.0/c/');
-        Test.setCurrentPage(pageRef);
-        
-		s3.save1();
-		s3.page2onLoad(); 
-		system.debug( s3.getBucketOptions() );
-	}
-	
-	public static testmethod void t2() {
-		AWS_S3_Object__c a = new AWS_S3_Object__c();
-		S3FormController s3 = new S3FormController(new ApexPages.StandardController( a ) );
-		s3.AWSCredentialName = 'bad key name';
-		s3.constructor();
-	}
 }

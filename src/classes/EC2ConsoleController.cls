@@ -8,12 +8,7 @@ public class EC2ConsoleController {
     public String owner {get;set;}
     
     public EC2ConsoleController() {
-        //ec2 = new EC2Connection(AWSCredentialName);       
-        //this.owner = 'amazon'; //default owner
-        //try { 
-       //   getdescribeImages();
-       //   getdescribeInstances();
-       // } catch( exception ee ) {}     
+
     }
 
 
@@ -41,8 +36,6 @@ public class EC2ConsoleController {
              System.debug('Caught exception in AWS_S3_ExampleController: ' + AWSEx);
              ApexPages.Message errorMsg = new ApexPages.Message(ApexPages.Severity.FATAL, AWSEx.getMessage());
              ApexPages.addMessage(errorMsg);
-             //throw new AWSKeys.AWSKeysException(AWSEx);
-             //ApexPages.addMessage(AWSEx);    
         }
         
         
@@ -110,49 +103,5 @@ public class EC2ConsoleController {
         
      }
      
-    // EC2ConsoleController.t1();
-    /*public static testmethod void t1() { 
-        EC2ConsoleController ecc = new EC2ConsoleController();
-        String credName = ecc.createTestCredentials();
-        ecc.AWSCredentialName = credName;
-        ecc.constructor();
-        ecc.getdescribeInstances(); 
-    }*/
-    public static testmethod void t2() { 
-        try{
-        EC2ConsoleController ecc = new EC2ConsoleController();
-        ecc.getdescribeImages();
-        }catch(Exception ex){
-        }   
-    }
-    public static testmethod void t3() { 
-        try{
-            EC2ConsoleController ecc = new EC2ConsoleController();
-            ecc.refreshImages();    
-        }catch(Exception ex){
-        }
-    }
-    public static testmethod void t4() {
-        try{ 
-            EC2ConsoleController ecc = new EC2ConsoleController();
-            ecc.RebootInstances();
-        }catch(Exception ex){
-        }   
-    }
-    public static testmethod void t5() { 
-        try{
-            EC2ConsoleController ecc = new EC2ConsoleController();
-            ecc.getOwners();
-            ecc.TerminateInstances();
-        }catch(Exception ex){
-        }
-            
-    }
-    public static testmethod void t6() { 
-        try{
-            EC2ConsoleController ecc = new EC2ConsoleController();
-            ecc.RunInstances();
-        }catch(Exception ex){
-        }   
-    }
+    
 }

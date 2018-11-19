@@ -38,6 +38,7 @@ private class ISO_Country_State_Helper_Test {
 	    system.assert(listISOCountry.size() == 1, 'Size of listISOCountry: ' + listISOCountry.size());
 
 	    update new IATA_ISO_Country__c(Id=listISOCountry[0].Id, IEC_Zip_Postal_Code_required__c=true, VAT_Validation_Required__c=true);
+	    IATAIsoCountryDAO.resetMapIataIsoCountry();
 	    Map<Id, IATA_ISO_Country__c> mapId_Country = ISO_Country_State_Helper.requiredCountriesZipCode();
 	    system.assert(mapId_Country.size() == 1, 'Size of mapId_Country: ' + mapId_Country.size());
 	    system.assert(ISO_Country_State_Helper.requiredZipCode('CA') == true, 'Postal Code should be required for CA');

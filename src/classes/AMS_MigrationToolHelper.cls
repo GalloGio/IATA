@@ -1,9 +1,7 @@
 public without sharing class AMS_MigrationToolHelper {
 	// this class is responsible for migrating Portal SAAM cases and SAAM cases that need to be converted into Comunication Cases (w/ AMS_OSCAR__c objects)
 	
-	final static ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-
-	private Static Map<string, Id> oscarRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c');
+	final static ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	private static final Set<String> newgenProcesses = new Set<String>{'ANG.MAJOR.CHANGES.1.0','VR.1.0','CER.1.0','CORRECTION.1.0','BANK.ACCOUNT.CHANGES','NGFormsOfPayment','ANG_FS_OPTINOUT','ANG.NEW.HE.LITE.1.0','ANG.NEW.AE.1.0','ANG.NEW.HE.STANDARD.1.0'};
 
@@ -336,9 +334,9 @@ public without sharing class AMS_MigrationToolHelper {
 			Id oscarRTId = null;
 
 			if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
-				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
+				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
 			if(processType == 'CER.1.0')
-				oscarRTId = oscarRT.get('CERTIFICATE');
+				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = caseToProcess.AccountId, Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
 
@@ -398,35 +396,35 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static Id fetchAccreditationRT(String locationClass, String processType){
 
-		String devName = 'General Online Accreditation';
+		String devName = 'GeneralOnlineAccreditation';
 
 		if(locationClass == 'T'){
 			if(processType == 'NEW.TIDS.1.0')
-				devName = 'General Online Accreditation';
+				devName = 'GeneralOnlineAccreditation';
 		}
 
 		if(locationClass == 'P'){
 			if(processType == 'NEW.HO.1.0')
-				devName = 'Travel Agent - HO';
+				devName = 'Travel_Agent_HO';
 			if(processType == 'NEW.BR')
-				devName = 'Travel Agent - Branch';
+				devName = 'Travel_Agent_Branch';
 			if(processType == 'NEW.BR.ABROAD')
-				devName = 'Travel Agent - Branch Abroad';
+				devName = 'Travel_Agent_Branch_Abroad';
 		}
 
 		if(locationClass == 'C'){
 			if(processType == 'NEW.HO.1.0')
-				devName = 'Cargo Agent - HO';
+				devName = 'Cargo_Agent_HO';
 			if(processType == 'NEW.BR')
-				devName = 'Cargo Agent - Branch';
+				devName = 'Cargo_Agent_Branch';
 			if(processType == 'NEW.BR.ABROAD')
-				devName = 'Cargo Agent - Branch';
+				devName = 'Cargo_Agent_Branch';
 		}
 
 		if(processType == 'MAJOR.CHANGES')
-			devName = 'Other Changes';
+			devName = 'Other_Changes';
 
-		return Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get(devName).getRecordTypeId();
+		return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', devName);
 
 	}
 
@@ -604,8 +602,8 @@ public without sharing class AMS_MigrationToolHelper {
 		contact.Person_AMS__c = role.Person__c;
 		contact.Phone__c = role.Contact_Phone__c;
 
-		ID ownerRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-		ID companyOwnerRt = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
+		ID ownerRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
+		ID companyOwnerRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
 
 		contact.RecordTypeId = role.Owner_Account__c != null ? companyOwnerRt : ownerRT;
 
@@ -806,11 +804,11 @@ public without sharing class AMS_MigrationToolHelper {
 				oscarRTId = oscarNewgenRTMap.get(processType);
 
 			if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
-				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
+				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
 			if(processType == 'CER.1.0')
-				oscarRTId = oscarRT.get('CERTIFICATE');
+				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
 			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP ||  processType == AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
-				oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
+				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'BANK_ACCOUNT_SETUP');
 
 
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)

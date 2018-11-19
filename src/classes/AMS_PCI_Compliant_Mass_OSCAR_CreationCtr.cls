@@ -52,15 +52,11 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         get{
             if(availableCountries == null){
                 availableCountries = new List<SelectOption>();
-                for (IATA_ISO_Country__c c : [SELECT Name, Id, ANG_Enable_NewGen__c
-                                                FROM IATA_ISO_Country__c
-                                                WHERE Case_BSP_Country__c != null
-                                                AND Case_BSP_Country__c != ''
-                                                AND Region__c = :region
-                                                AND Sub_Region__c not in ('USA')
-                                                ORDER BY Name]) {
-                    if((operation == 'PCI' && !c.ANG_Enable_NewGen__c) || (operation != 'PCI' && c.ANG_Enable_NewGen__c)) {//AMSU-159
-                        availableCountries.add(new SelectOption(c.Id , c.Name));
+                for (IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name')) {
+                    if(c.Region__c == region && c.Sub_Region__c != 'USA'){
+                        if((operation == 'PCI' && !c.ANG_Enable_NewGen__c) || (operation != 'PCI' && c.ANG_Enable_NewGen__c)) {//AMSU-159
+                            availableCountries.add(new SelectOption(c.Id , c.Name));
+                        }
                     }
                 }
                 if(availableCountries.isEmpty()){

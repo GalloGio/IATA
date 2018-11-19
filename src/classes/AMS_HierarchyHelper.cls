@@ -534,7 +534,7 @@ global class AMS_HierarchyHelper {
 	// This will create a process detail for this Oscar for each account in the hierarhcy (except for the main account related to the oscar)
 	// This method won't create any duplicate if there is already a process detail with the same OSCAR-Account
 	webservice static void createProcessDetailForFullHierarchy(ID theOscarId, ID theMainAccountId) {
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 		Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies = getAccountsHierarchies(new Set<Id> {theMainAccountId});
 
 		Set<Id> accountIdToBeAdded = new Set<Id>();

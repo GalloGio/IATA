@@ -54,15 +54,15 @@ private class ISSP_TIP_Home_Controller_Test {
         //create partner product
         prod.Name = 'test prod'; 
         prod.PP_Payment_network__c = 'AX';
-        prod.PP_Payment_Product_Code__c = 'aa'; 
+        prod.PP_Payment_Product_Code__c = 'aa';
         prod.PP_Form_of_payment__c = 'CC';
-        prod.Provider__c = parent.id; 
-        prod.PP_Category__c = 'CONSUMER'; 
-        prod.PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE'; 
+        prod.Provider__c = parent.id;
+        prod.PP_Category__c = 'CONSUMER';
+        prod.PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE';
         prod.PP_Pay_in_model__c = 'PREPAID';
-        prod.PP_Accepted_transactions__c = 'PAYMENT'; 
-        prod.PP_VAN_type__c = 'SINGLE_USE_VAN'; 
-        prod.PP_Chargeback_airlines__c = 'N'; 
+        prod.PP_Accepted_transactions__c = 'PAYMENT';
+        prod.PP_VAN_type__c = 'SINGLE_USE_VAN';
+        prod.PP_Chargeback_airlines__c = 'N';
         prod.is_PCI_DSS_required__c = 'YES';
         prod.PP_Chargeback_airlines_duration__c = 1;
         prod.PP_Effective_from_Date__c = Date.newInstance(2019, 2, 2); 
@@ -74,7 +74,7 @@ private class ISSP_TIP_Home_Controller_Test {
         system.debug('##Account: ' + parent);
         //insert contact
         Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId= parent.Id;
+        con.AccountId = parent.Id;
         con.Email = 'Test@test11.com';
         con.Salutation = 'Mr.';
         con.Title = 'Eng.';
