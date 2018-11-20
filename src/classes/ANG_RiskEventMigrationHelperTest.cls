@@ -190,7 +190,7 @@ private class ANG_RiskEventMigrationHelperTest {
         		Status = 'Open', 
         		Assessment_Performed_Date__c= system.today(),
         		Financial_Review_Result__c='Satisfactory - New Financial Security',
-                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'IATA_Financial_Review'),
                 IFAP_Area__c='asda44'
                  );
         insert cFS;
@@ -199,7 +199,7 @@ private class ANG_RiskEventMigrationHelperTest {
 		Case caseSIdra = new Case(
 							BSP_CASS__c = 'BSP',
 							parentId=cFS.id,
-							RecordTypeid=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite'),
+							RecordTypeid=RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'SIDRA_Lite'),
 							Status = 'Open',
 							Origin = 'IATA Internal User',
 							Subject = 'subject');
@@ -587,10 +587,6 @@ private class ANG_RiskEventMigrationHelperTest {
 		system.assertEquals(reMap.get(listRisks.get(1).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION);
 		system.assertEquals(listRisks.get(1).ANG_Event_Status__c, ANG_Risk_Helper.STATUS_WITHDRAWN);
 
-
-
-
-
 	}
 
 	@isTest
@@ -719,7 +715,8 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	}
 
-	static testMethod void testForecast() {
+	@isTest
+	static void testForecast() {
 		Account a = createAccount(true);
 		a.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
 		a.Status__c = AMS_Utils.ACC_S9_APPROVED;
@@ -763,7 +760,7 @@ private class ANG_RiskEventMigrationHelperTest {
             
 
 	public static Case createCase(){
-		Id SIDRARecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+		Id SIDRARecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 		
 		Case c = new Case(RecordTypeid = SIDRARecordTypeId,
 							BSP_CASS__c = 'BSP',

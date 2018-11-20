@@ -593,6 +593,10 @@
         <name>AMS_RollbackCase_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_XML_GEN_ERROR_RECEIVER --></label>
+        <name>AMS_XML_GEN_ERROR_RECEIVER</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_AE_separate_Legal_Entity --></label>
         <name>ANG_AE_separate_Legal_Entity</name>
     </customLabels>
@@ -1505,6 +1509,10 @@
     <customLabels>
         <label><!-- Button View all --></label>
         <name>Button_View_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
     </customLabels>
     <customLabels>
         <label>Este servicio facilita la interacción y el intercambio de información entre los agentes / intermediarios de transporte y las aerolíneas que participan en el sistema de pago de las cuentas de transporte de IATA (CASS, por sus siglas en inglés).</label>
@@ -5628,6 +5636,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Apply_New_Branch_Office</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Head_Entity --></label>
         <name>ISSP_AMS_Apply_New_Head_Entity</name>
     </customLabels>
@@ -9362,6 +9374,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE --></label>
+        <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL --></label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
@@ -9388,6 +9404,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- Annual Revalidation work area title --></label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_SAME_OWNER_ERROR --></label>
+        <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
         <label><!-- Annual Revalidation confirmed status --></label>
@@ -11161,6 +11181,18 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Emergency Support --></label>
+        <name>ISSP_Emergency_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Emergency Support Subtitle --></label>
+        <name>ISSP_Emergency_Support_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Activar Servicio</label>
+        <name>ISSP_Enable_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
         <name>ISSP_Encolment_page_Office_address</name>
     </customLabels>
@@ -11756,6 +11788,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Contraseña no válida.</label>
         <name>ISSP_InvalidPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_InvalidPostalCode --></label>
+        <name>ISSP_InvalidPostalCode</name>
     </customLabels>
     <customLabels>
         <label>Presentar una Queja</label>
@@ -13203,6 +13239,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Service</name>
     </customLabels>
     <customLabels>
+        <label>¿ESTÁ SEGURO DE QUE QUIERE ACTIVAR ESTE SERVICIO?</label>
+        <name>ISSP_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
         <label>Confirma que está solicitando acceso a</label>
         <name>ISSP_ServiceRequestConfirm</name>
     </customLabels>
@@ -14336,6 +14376,14 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
+        <name>LVA_CallUsEmergencyAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_CallUsEmergencyPhoneNumber --></label>
+        <name>LVA_CallUsEmergencyPhoneNumber</name>
+    </customLabels>
+    <customLabels>
         <label>No se dispone de teléfono para el país seleccionado.</label>
         <name>LVA_CallUsNoConfigAvailable</name>
     </customLabels>
@@ -15014,6 +15062,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Fred_App_Description --></label>
+        <name>OneId_Fred_App_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Fred_Select_Type_of_Company --></label>

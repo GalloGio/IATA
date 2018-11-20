@@ -17,7 +17,7 @@ private class AMS_PCI_Batch_Remainder_Test {
 		insert state;
 
 		Account agency = new Account(Name= 'Agency');		
-		agency.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+		agency.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		agency.Location_Type__c = 'P';
 		agency.Location_Class__c = 'HO';
 		agency.Status__c = 'Approved';
@@ -43,7 +43,7 @@ private class AMS_PCI_Batch_Remainder_Test {
 		cse.Reason1__c = 'PCI DSS Compliant';
 		cse.ContactId = admin.Id;
 		cse.AccountId = agency.Id;
-		cse.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+		cse.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 		insert cse;
 		Test.setCreatedDate(cse.Id, DateTime.now().addDays(-30));
 	}

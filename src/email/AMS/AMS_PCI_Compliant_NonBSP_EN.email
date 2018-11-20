@@ -1,0 +1,171 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" >
+<tr valign="top" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div align="justify" style="margin: 0px;"><div align="justify" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><p class="MsoNormal" style="line-height:11.75pt"><span lang="PT" style="font-size:
+9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-ansi-language:PT">Dear
+Sir/Madam,</span><span lang="PT" style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-ansi-language:PT"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="line-height:11.75pt"><span lang="PT" style="font-size:
+9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-ansi-language:PT">&nbsp;</span><span lang="PT" style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ansi-language:
+PT"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span lang="ES" style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79;mso-ansi-language:ES">IATA Code:&nbsp;<b>{!Case.IATA_Code__c} - No BSP</b></span><span lang="PT" style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ansi-language:
+PT"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">In reference to advice given to IATA concerning the risks
+associated with payment card transactions and potential data breaches, there is
+a need to confirm the compliance of Accredited Agencies operating within the
+BSP to be Payment Card Industry (PCI) Data Security Standard (DSS) compliant</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif">.<o:p></o:p></span></p>
+
+<u1:p></u1:p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt; vertical-align: baseline;"><span style="font-size:
+9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">Under the Passenger Sales
+Agency Rules, all IATA Accredited Agencies must ensure its full compliance with
+the PCI DSS.</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<u1:p></u1:p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt; vertical-align: baseline;"><span style="font-size:
+9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt; vertical-align: baseline;"><span style="font-size:
+9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">The PCI DSS, is a global
+standard aimed at helping merchants (Agency) understand and implement standards
+for security policies, technologies and ongoing processes that protect their
+payment systems from breaches and theft of cardholder data.</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<u1:p></u1:p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">In light of the above, you are kindly requested to provide us
+with your Attestation of Compliance to indicate your company’s compliance.</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<u1:p></u1:p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">We would like to inform you that as per the PCI DSS guidelines,
+compliance certificates are not recognized for PCI DSS validation. The only
+documentation recognized for PCI DSS validation are the official documents from
+the PCI SSC website. Any other form of certificate or documentation issued for
+the purposes of illustrating compliance to PCI DSS or any other PCI standard
+are not authorized or validated.</span><span style="font-size:9.0pt;font-family:
+&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">The Attestation of Compliance is the document used to indicate
+that the appropriate Report on Compliance or Self-assessment Questionnaire has
+been performed, and to attest to your organization’s compliance status with PCI
+DSS.</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<u1:p></u1:p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">For further information about how to become PCI DSS compliance
+please visit our PCI DSS dedicated web page:&nbsp;</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx">http://www.iata.org/services/finance/Pages/pci-dss.aspx</a><o:p></o:p></span></p>
+
+<u1:p></u1:p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt; vertical-align: baseline;"><span style="font-size:
+9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt; vertical-align: baseline;"><span style="font-size:
+9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">In case you are currently
+not processing any transactions through BSP utilizing Credit Card form of
+payment and not intending to do so, you can submit the&nbsp;Nil Credit Card
+Self-Declaration, attached to this communication.<u1:p></u1:p></span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<p class="default"><span style="font-size:9.0pt;
+font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">&nbsp;</span></p>
+
+<p class="default"><span style="font-size:9.0pt;
+font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">It should be noted that upon
+completion of such declaration no further proof of compliance will be requested
+from your Agency, however Credit Card form of payment will be disabled for your
+Agency upon migration of your country of operation under NewGen environment and
+resolution 812.</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<p class="default"><span style="font-size:9.0pt;
+font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">&nbsp;</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">The above requested documentation (Attestation of Compliance or
+Nil Credit Card Self-Declaration) should be sent to IATA&nbsp;through our Customer
+Service Portal web page:&nbsp;</span><span style="font-size:9.0pt;font-family:
+&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/cs" target="_blank"><span style="color:#1F4E79"><span style="text-decoration-line: none">http://www.iata.org/cs</span></span></a><span style="color:#1F4E79">&nbsp;to arrive no later than&nbsp;</span><b>{!Today()+30}&nbsp;</b>.&nbsp;<span style="color:#1F4E79">Please attach a scanned copy to case</span>&nbsp;<a href="https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}">{!Case.CaseNumber}</a>&nbsp;<span style="color:#1F4E79">visible on your portal home page under ‘My recent cases’
+section.</span><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">The instructions about how to submit your documentation can be
+found as an attachment to this communication.</span><span style="font-size:
+9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">The Agency Management Department will carry out a review, and
+make a decision based upon the evidence available.<o:p></o:p></span></p>
+
+<u1:p></u1:p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif">&nbsp;</span></p>
+
+<div style="mso-element:para-border-div;border:solid windowtext 1.0pt;
+mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt">
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; border: none; padding: 0cm;"><b><span style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">Please note that failure to comply with this requirement per
+IATA’s request will result in a Notice of Non-Compliance / Administrative
+Non-Compliance being issued against the Agency.<o:p></o:p></span></b></p>
+
+</div>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+color:#1F4E79">&nbsp;</span></p>
+
+<span style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;color:#1F4E79;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">We
+would appreciate you will give this matter your immediate attention. Should you
+need any further information from IATA, please do not hesitate to login a new
+query via our Customer Portal:&nbsp;</span><span style="font-size:9.0pt;
+line-height:107%;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:Calibri;
+mso-fareast-theme-font:minor-latin;mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA"><a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span style="color:#1F4E79"><span style="text-decoration-line: none">www.iata.org/cs</span></span></a><span style="color:#1F4E79">.</span></span><span style="font-size:10.0pt;line-height:
+107%;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:Calibri;mso-fareast-theme-font:
+minor-latin;color:#1F4E79;mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA">&nbsp;</span><u1:p></u1:p></div></div>]]></td>
+</tr>
+</table>

@@ -521,11 +521,11 @@
                                                         <apex:outputText value="{! $Label.ICCS_Contact_Link}"/>
                                                     </a>
                                                 </li>
-                                                <li>
+                                                <!--li>
                                                     <a href="https://portal.iata.org/faq/articles/en_US/FAQ/What-is-ICCS-1432212713566" target="_blank">
                                                         <apex:outputText value="{! $Label.ICCS_FAQs_Link}"/>
                                                     </a>
-                                                </li>
+                                                </li-->
                                             </ul>
                                         </td>
                                         

@@ -1,7 +1,8 @@
 @isTest
 public class AMS_ISOCountryTest {
 	
-    public static testmethod void testCountrySegmentCreation(){
+    @isTest
+    public static void testCountrySegmentCreation(){
  		        
         Test.startTest();
     
@@ -12,7 +13,7 @@ public class AMS_ISOCountryTest {
         List<IATA_ISO_Country__c> resc = [SELECT Name, ISO_Code__c FROM IATA_ISO_Country__c];
         system.assertEquals(1, resc.size());
         
-        Id countryrt = Schema.getGlobalDescribe().get('AMS_Segment__c').getDescribe().getRecordTypeInfosByName().get('Country Area').getRecordTypeId();
+        Id countryrt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'Country_Area');
         List<AMS_Segment__c> ress = [SELECT ID FROM AMS_Segment__c WHERE RecordTypeId=:countryrt];
         system.assertEquals(1, ress.size());
         
@@ -34,21 +35,21 @@ public class AMS_ISOCountryTest {
         system.assertEquals(true, err);
     }
     
-    public static testmethod void testStateSegmentCreation(){
+    @isTest
+    public static void testStateSegmentCreation(){
  		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(ISO_Code__c = 'TS', Name = 'Test');
         insert isoc;
         
         Test.startTest();
         
         // if I create a new AMS Country, a segment should be created too
-        system.debug('---------------  AAAAAAAAAAAAAAAAAAA --------------------');
         IATA_ISO_State__c amss = new IATA_ISO_State__c(ISO_Code__c='TS01', IATA_ISO_Country__c=isoc.Id, Name='TestAMS'); 
         insert amss;
         
         List<IATA_ISO_State__c> resc = [SELECT ID FROM IATA_ISO_State__c];
         system.assertEquals(1, resc.size());
         
-        Id statert = Schema.getGlobalDescribe().get('AMS_Segment__c').getDescribe().getRecordTypeInfosByName().get('Country State Area').getRecordTypeId();
+        Id statert = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'Country_State_Area');
     	List<AMS_Segment__c> ress = [SELECT ID FROM AMS_Segment__c WHERE RecordTypeId=:statert];
         system.assertEquals(1, ress.size());
         
@@ -75,7 +76,8 @@ public class AMS_ISOCountryTest {
         
     }
 
-    public static testmethod void testPortalApplicationCountryCoverageUpdate() {
+    @isTest
+    public static void testPortalApplicationCountryCoverageUpdate() {
             
         Test.startTest();
 
@@ -286,7 +288,8 @@ public class AMS_ISOCountryTest {
     }
 
 
-    public static testmethod void testPortalApplicationCountryCoverageUpdateBulk() {
+    @isTest
+    public static void testPortalApplicationCountryCoverageUpdateBulk() {
             
         Test.startTest();
 
@@ -333,7 +336,8 @@ public class AMS_ISOCountryTest {
 
     }    
 
-    public static testmethod void testPortalApplicationCountryCoverageUpdateBulk2() {
+    @isTest
+    public static void testPortalApplicationCountryCoverageUpdateBulk2() {
             
         Test.startTest();
 
@@ -378,7 +382,8 @@ public class AMS_ISOCountryTest {
 
     }        
 
-    public static testmethod void testPortalApplicationCountryCoverageUpdateBulk3() {
+    @isTest
+    public static void testPortalApplicationCountryCoverageUpdateBulk3() {
             
         Test.startTest();
 
@@ -434,7 +439,8 @@ public class AMS_ISOCountryTest {
         Test.stopTest();
     }            
 
-    public static testmethod void testPortalApplicationCountryCoverageUpdateBulk4() {
+    @isTest
+    public static void testPortalApplicationCountryCoverageUpdateBulk4() {
             
         Test.startTest();
 

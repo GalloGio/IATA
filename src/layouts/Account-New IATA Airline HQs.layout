@@ -959,7 +959,6 @@
         <relatedList>RelatedOrderList</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>Load_Member_Contacts</customButtons>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
         <fields>Airline_Contact_Type__c</fields>
