@@ -585,7 +585,7 @@ public without sharing class Order_Svc
             return;
 
         if (mapCountry_ProfitCenter.size() > 0)
-            for (IATA_ISO_Country__c c : [select Profit_Center__c, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c in :mapCountry_ProfitCenter.keySet()])
+            for (IATA_ISO_Country__c c : IATAIsoCountryDAO.getIsoCountryByIsoCodes(mapCountry_ProfitCenter.keySet()))
                 mapCountry_ProfitCenter.put(c.ISO_Code__c, c.Profit_Center__c);
 
         //*** get product information and discount for order items sending to interface

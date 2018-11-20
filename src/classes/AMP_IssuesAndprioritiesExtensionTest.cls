@@ -20,11 +20,12 @@ private class AMP_IssuesAndprioritiesExtensionTest
 
 		System.runAs(testUser) {
 
-			Id accountRecordTypeId = [SELECT Id FROM RecordType WHERE Name ='Airline Headquarters'].Id;
-			Account a = new Account(name='testAccount', RecordTypeId=accountRecordTypeId);
+			Account a = new Account(name='testAccount', 
+									RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')
+									);
 			insert a;
 
-			Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName ='Account_Issues_and_Priorities'].Id;
+			Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
 
 			Objective__c o = new Objective__c();
 			o.Account__c = a.Id;

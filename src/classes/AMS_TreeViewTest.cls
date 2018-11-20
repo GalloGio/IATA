@@ -4,8 +4,8 @@ private class AMS_TreeViewTest {
     @testSetup static void setup(){
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
-        
-		Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+
+		Id standardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = standardAccountRt, Name='Test1 Agency', IATAcode__c = '1234567', Short_Name__c = 'Test1 Agency', /*Legacy_External_ID__c = '12345677',*/ Source_System__c = 'AIMS');
         Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = standardAccountRt, Name='Test2 Agency', IATAcode__c = '1234565', Short_Name__c = 'Test2 Agency', /*Legacy_External_ID__c = '12345678',*/ Source_System__c = 'AIMS');
@@ -68,9 +68,9 @@ private class AMS_TreeViewTest {
         Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
                 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
-		ID oscarNewHeRt = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+		ID oscarNewHeRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
         
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'US20', ISO_Code__c = 'US', IATA_ISO_Country__c = a1.IATA_ISO_Country__c);
         insert stt;    
@@ -84,7 +84,7 @@ private class AMS_TreeViewTest {
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
 	
-		ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
+		ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_no_Cash'); 
 
 		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
 
@@ -108,7 +108,7 @@ private class AMS_TreeViewTest {
 
 		insert theAccreditation;
 
-		ID personRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+		ID personRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'); 
 
 		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id, 
 			First_name__c='Bugs', Last_name__c='Bunny', Agency_owner__c = true, Email__c='bugsandbunny@imagsd.com' , PhoneNational__c = '123123123',

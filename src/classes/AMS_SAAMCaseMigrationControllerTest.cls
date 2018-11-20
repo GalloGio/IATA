@@ -3,7 +3,7 @@ private class AMS_SAAMCaseMigrationControllerTest {
 
 	@testSetup static void setup(){
 
-		RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+		Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
 		// create test account1
 		Account account1 = new Account();
@@ -32,7 +32,7 @@ private class AMS_SAAMCaseMigrationControllerTest {
 		saamCase.Subject = 'Test SAAM case';
 		saamCase.Description = 'Test SAAM case';
 		saamCase.Status = 'Open';
-		saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+		saamCase.RecordTypeId = SAAMcaseRecordTypeId;
 		saamCase.Reason1__c = 'New HO';
 		saamCase.CaseArea__c = 'Accreditation Process';
 		insert saamCase;
@@ -46,7 +46,7 @@ private class AMS_SAAMCaseMigrationControllerTest {
 		pageRef.getParameters().put('retURL', URL.getSalesforceBaseUrl()+'');
         Test.setCurrentPageReference(pageRef);
 
-		RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+		Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 		AMS_SAAMCaseMigrationController con = new AMS_SAAMCaseMigrationController();
 
 		Test.startTest();
@@ -56,7 +56,7 @@ private class AMS_SAAMCaseMigrationControllerTest {
 		con.searchOption = 'Specific Cases';
 		System.assert(con.showTextArea);
 
-		con.caseNumbers = [SELECT CaseNumber FROM Case WHERE RecordTypeId = :SAAMcaseRecordType.Id LIMIT 1].CaseNumber;
+		con.caseNumbers = [SELECT CaseNumber FROM Case WHERE RecordTypeId = :SAAMcaseRecordTypeId LIMIT 1].CaseNumber;
 		
 		System.assert(con.searchOptions.size() > 0);
 

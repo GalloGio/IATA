@@ -3,7 +3,7 @@ public class ObjectiveHandlerTest {
 
 	public static Objective__c getDivisionObjective() {
 		return new Objective__c(
-			RecordtypeId = ObjectiveHandler.MAP_RT.get('Division').id,
+			RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division'),
 			Name = 'testName',
 			Division__c = 'FDS',
 			Forecast_Deadline__c = Date.parse('12/31/2015')
@@ -12,7 +12,7 @@ public class ObjectiveHandlerTest {
 
 	public static Objective__c getRegionObjective() {
 		return new Objective__c(
-			RecordtypeId = ObjectiveHandler.MAP_RT.get('Region').id,
+			RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Region'),
 			Name = 'testName',
 			Division__c = 'FDS',
 			Region__c = 'Americas',
@@ -22,7 +22,7 @@ public class ObjectiveHandlerTest {
 
 	public static Objective__c getAreaObjective() {
 		return new Objective__c(
-			RecordtypeId = ObjectiveHandler.MAP_RT.get('Area').id,
+			RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Area'),
 			Name = 'testName',
 			Division__c = 'FDS',
 			Region__c = 'Americas',
@@ -32,7 +32,7 @@ public class ObjectiveHandlerTest {
 	}
 
 	public static Objective__c getAccountObjective() {
-		String rtAirlaine = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
+		String rtAirlaine = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account account = new Account(
 			Name = 'testAccount',
@@ -41,7 +41,7 @@ public class ObjectiveHandlerTest {
 		insert account;
 
 		return new Objective__c(
-			RecordtypeId = ObjectiveHandler.MAP_RT.get('Account').id,
+			RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account'),
 			Name = 'testName',
 			Division__c = 'FDS',
 			Region__c = 'Americas',

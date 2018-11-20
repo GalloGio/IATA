@@ -4,7 +4,7 @@ public with sharing class FinancialInstitutionHandlerTest {
     static testMethod void testupdateChildFinancialSecurities() {
         Account account = new Account(
             Name='test Account',
-            RecordtypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Agency').getRecordTypeId(),
+            RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
             Location_Type__c='HO');
         insert account;
         

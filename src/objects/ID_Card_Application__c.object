@@ -2597,7 +2597,7 @@ if (records.length &gt; 0) {
 		}
 		if(conf == true){
 			
-			var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setPendingAdditionalInfo&quot;, {applicationId:&quot;{!ID_Card_Application__c.Id}&quot;});
+			var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setPendingAdditionalInfo&quot;, {applicationIdParam:&quot;{!ID_Card_Application__c.Id}&quot;});
 			var contactId = &quot;&quot;;
                         parent.location.href = &quot;/&quot;+caseId; 
 			if(caseId == &quot;&quot;) 
@@ -2789,7 +2789,7 @@ conf = confirm(&quot;This ID Card will be &apos;To Be Approved&apos;&quot;);
 }
 if(conf == true){
 
-var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setTobeapproved&quot;, {applicationId:&quot;{!ID_Card_Application__c.Id}&quot;});
+var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setTobeapproved&quot;, {applicationIdParam:&quot;{!ID_Card_Application__c.Id}&quot;});
 var contactId = &quot;&quot;;
 
 

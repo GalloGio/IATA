@@ -1512,6 +1512,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>本サービスは、IATA Cargo Accounts Settlement System（CASS）に参加する貨物仲介会社/代理店と航空会社のやりとりおよび情報交換を円滑にします。</label>
         <name>CASSLink_Description</name>
     </customLabels>
