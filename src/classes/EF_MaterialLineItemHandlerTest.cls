@@ -12,7 +12,7 @@ private class EF_MaterialLineItemHandlerTest {
 			Product2 prod = new Product2(Name='Test', Family='EF');
 			insert prod;
 
-			Id contractMaterialRtId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Contract_Line_Item');
+			Id contractMaterialRtId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Contract_Line_Item');
 
 			List<ProcessInstanceWorkItem> pwiList = [SELECT Id, ActorId, ProcessInstance.TargetObjectId	FROM ProcessInstanceWorkitem];
 			System.assertEquals(1, pwiList.size());
@@ -37,8 +37,8 @@ private class EF_MaterialLineItemHandlerTest {
 			Product2 prod = new Product2(Name='Test', Family='EF');
 			insert prod;
 
-			Id contractMaterialRtId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Contract_Line_Item');
-			Id baMaterialRtId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item');
+			Id contractMaterialRtId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Contract_Line_Item');
+			Id baMaterialRtId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Relationship_Line_Item');
 
 			List<ProcessInstanceWorkItem> pwiList = [SELECT Id, ActorId, ProcessInstance.TargetObjectId	FROM ProcessInstanceWorkitem];
 			System.assertEquals(0, pwiList.size());
@@ -73,7 +73,7 @@ private class EF_MaterialLineItemHandlerTest {
 			Product2 prod2 = new Product2(Name='Test2', Family='EF');
 			insert prod2;
 
-			Id contractMaterialRtId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Contract_Line_Item');
+			Id contractMaterialRtId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Material_Line_Item__c', 'Contract_Line_Item');
 
 			List<ProcessInstanceWorkItem> pwiList = [SELECT Id, ActorId, ProcessInstance.TargetObjectId	FROM ProcessInstanceWorkitem];
 			System.assertEquals(0, pwiList.size());

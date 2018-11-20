@@ -926,7 +926,7 @@ public class VfIECShoppingCart extends IECPageController {
     public void updateContactInfo() {
     	Savepoint sp = Database.setSavepoint();
         try {
-            
+
             List<String> lstErrorMessages = new List<String>();
             
             // validate mandatory fields
@@ -951,7 +951,9 @@ public class VfIECShoppingCart extends IECPageController {
                 vatConfig = null;
             }
             else {
+
                 vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
+                System.debug('____ [cls VfIECShoppingCart - updateContactInfo] UpdateContactINfo - VATCONFIG.VATValidationRequired: ' + vatConfig);
 
                 if (vatConfig != null && vatConfig.TaxIDMandatory) {
                     if (vatConfig.ShowTax1) {
@@ -992,7 +994,6 @@ public class VfIECShoppingCart extends IECPageController {
                     }
                 }
 
-                
                 if (bStateAvailable && String.isBlank(oBillingAddress.ISO_State__c)) // Changed by Samy (2016-03-01) from State__c
                 {
                     lstErrorMessages.add(Label.IEC_Error_Required_field + ' State/Province');
@@ -1004,12 +1005,17 @@ public class VfIECShoppingCart extends IECPageController {
             }
             
             if (lstErrorMessages.isEmpty()) {
+
+
                 oContact.VAT_Country_Code__c = (vatConfig.VATValidationRequired) ? vatConfig.CountryCode : null;
+
                 update oContact;
                 
+
                 // First check if the address has been changed before trying to save, otherwise just ignore
                 if (IECAddress_Svc.isAddressChanged(oBillingAddress, oOriginalBillingAddress))
                 {
+
 	                // First insert a new Billing Address
 	                // TODO: Provide autocomplete feature in the page to avoid having alot of orphaned Addresses
 	                oBillingAddress.Id = null; // Reset the ID to be able to insert a new IEC Address record
@@ -1226,7 +1232,7 @@ public class VfIECShoppingCart extends IECPageController {
             errorCode = '';
             
             // create a dummy page reference just to parse the parameters returned by the HPM
-            PageReference curPage = new Pagereference(URL.getSalesforceBaseUrl().toExternalForm() + Site.getPrefix() + sErrorMsgFromHPM);
+            PageReference curPage = new Pagereference(URL.getSalesforceBaseUrl().toExternalForm() + Site.getPathPrefix() + sErrorMsgFromHPM);
             
             errorMessage = curPage.getParameters().get('errorMessage');
             errorCode = curPage.getParameters().get('errorCode');

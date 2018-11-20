@@ -2,7 +2,7 @@
 private class AMS_InspectionHelperTest {
 
     @isTest static void test_setStatusCodeOnAccountForDOM(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -105,7 +105,7 @@ private class AMS_InspectionHelperTest {
     }
 
     @isTest static void test_setStatusCodeOnAccount() {
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -268,7 +268,7 @@ private class AMS_InspectionHelperTest {
 
 
     @isTest static void test_SetStatusCodeToZeroUpdatesRecertExpiryDate(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -300,12 +300,12 @@ private class AMS_InspectionHelperTest {
     }
 
     @isTest static void test_1To1RelationshipAppointmentMSO(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        Id airlineRT = AMS_Utils.getId('Account', 'IATA_Airline');
+        Id airlineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account airline = new Account();
         airline.Name = 'TestAirline';
         airline.Sector__c = 'Airline';
@@ -338,7 +338,7 @@ private class AMS_InspectionHelperTest {
 
 
     @isTest static void test_checkActiveAppointments(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;

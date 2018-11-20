@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Application Disapprove</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>PK: DISAPPROVAL APP</name>
+    <style>freeForm</style>
+    <subject>Ref: {!Case.CaseNumber} - Application Disapproved - {!Account.Name}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -25,10 +25,10 @@ private class clsICHProcessImplementationTest {
 
     static testMethod void myUnitTest() {
     try {
-        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard' and r.SobjectType = 'Contact' limit 1];
+        Id standardContactRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         list<Case> theCases = new list<Case>() ;
 
-//adding an excluded subject and email address
+		//adding an excluded subject and email address
         ExcludedCaseSubject__c badSubject = new ExcludedCaseSubject__c();
         badSubject.Name = 'Bad Subject';
         badSubject.Application_Name__c = 'ANY';
@@ -38,20 +38,15 @@ private class clsICHProcessImplementationTest {
         badEmail.Name = 'bad@email.com' ;
         badEmail.ApplicationName__c = 'ANY';
         insert badEmail;
-//
-        ID IATAServiceProviderAccountRecordTypeID = TestClass_SetupVariables.IATAServiceProviderAccountRecordTypeID;
 
-
-
-
-
+        ID IATAAccountRecordTypeID = TestClass_SetupVariables.IATAAccountRecordTypeID;
         Account account1 = new Account();
         account1.Name = 'ICH Application Support';
         account1.BillingCity = 'Montreal';
         account1.BillingCountry = 'Canada';
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
-        account1.RecordTypeId = IATAServiceProviderAccountRecordTypeID;
+        account1.RecordTypeId = IATAAccountRecordTypeID;
         insert account1;
 
         Contact contact1 = new Contact();
@@ -61,7 +56,7 @@ private class clsICHProcessImplementationTest {
         contact1.AccountId = account1.Id;
         contact1.Email = 'some@email.org';
         contact1.Financial_Assessment_Contact__c = false;
-        contact1.RecordTypeId = StandardContactRecordType.Id;
+        contact1.RecordTypeId = StandardContactRecordTypeId;
         insert contact1;
 
         Contact contact2 = new Contact();
@@ -114,7 +109,7 @@ private class clsICHProcessImplementationTest {
 
 
         id rcrd;
-        rcrd = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
+        rcrd = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
         Case kCase = new Case();
         kCase.CaseArea__c = 'ICH';
         kCase.Subject = 'is this it';
@@ -204,7 +199,7 @@ private class clsICHProcessImplementationTest {
         cCase.Origin = 'E-mail to Case - IS Help Desk';
         cCase.Subject = 'RE: this is it';
         cCase.description = 'test';
-        cCase.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
+        cCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
         cCase.suppliedemail = 'afarak@iata.org';
 
 

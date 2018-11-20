@@ -8,13 +8,13 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
 	@testSetup
     static void setup() {
 
-		List<RecordType> recordTypes = [SELECT Id FROM RecordType WHERE SObjectType = 'One_Id_Service_Provider_Config__c' AND DeveloperName = 'Service_Provider'];
+		Id rtID = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Provider');
 
         //Create config service object
         One_Id_Service_Provider_Config__c serviceConfig = new One_Id_Service_Provider_Config__c();
         serviceConfig.Customer_Type_Activation__c = 'Aircraft Operator;ICAO Member State';
         serviceConfig.Service_Provider_Name__c = 'FRED';
-        serviceConfig.RecordTypeId = recordTypes[0].Id;
+        serviceConfig.RecordTypeId = rtID;
         Insert serviceConfig;
         
         //Create ICAO, Aircraft operators and verifier accounts
@@ -23,19 +23,19 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
         list<Account> accs = new list<Account>{
         	new Account(
         		name= 'Air France', 
-        		recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'IATA_Airline'][0].Id,
+        		recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
         		IATA_ISO_Country__c = isoCountry.Id
         		
         	),
         	new Account(
         		name= 'FR',
-        		recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'ICAO_Member_State'][0].Id,
+        		recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'ICAO_Member_State'),
         		IATA_ISO_Country__c = isoCountry.Id
         		
         	),
         	new Account(
         		name= 'Verifier1',
-        		recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'Verifiers'][0].Id,
+        		recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Verifiers'),
         		IATA_ISO_Country__c = isoCountry.Id
         		
         	)
@@ -107,7 +107,7 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
         
         Account acc = new Account(
                 name= 'Air France', 
-                recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'IATA_Airline'][0].Id,
+                recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
                 IATA_ISO_Country__c = isoCountry.Id,
                 Legal_name__c = 'legal',
                 BillingCity = 'test',

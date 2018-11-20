@@ -12,6 +12,9 @@ static testMethod void test_AllMethod()
 	lstSetting.add(new Apex_Setting__c(Name='Account fields to sync to SAP1', Text_1__c='Name,Phone,Email__c'));
 	lstSetting.add(new Apex_Setting__c(Name='Execute Trigger Account', Number_1__c=1));
 	insert lstSetting;
+
+	//Generate SAP Settings
+	TestDataGenerator.generateSAPSettings();
 	
 	Account oAccount = TestDataGenerator.generateAccounts(1, true)[0];
 	IECAddress__c oAddress = TestDataGenerator.generateAddresses(1, true)[0];

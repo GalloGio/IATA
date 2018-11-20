@@ -3,7 +3,7 @@
 **/
 public with sharing class CheckBusinessHoursHelperclass {
   /*recordtype*/
-  public static ID sisHelpDeskCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(Label.Cases_SIS_Help_Desk);
+  public static ID sisHelpDeskCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
   
   /*variable*/
   public static string caseArea, defect, cPriority, KeyString;

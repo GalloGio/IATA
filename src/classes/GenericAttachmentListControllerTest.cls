@@ -162,7 +162,7 @@ public class GenericAttachmentListControllerTest {
 	}
 
 	static testMethod void testIsOscarParent() {
-		ID rtOSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+		ID rtOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case parentCase = new Case();
 		parentCase.recordTypeId = rtOSCAR;
@@ -183,7 +183,7 @@ public class GenericAttachmentListControllerTest {
 	}
 
 	static testMethod void testIsOscarParent2() {
-		ID rtOSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Cases - Europe').getRecordTypeId();
+		ID rtOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
 
 		Case parentCase = new Case();
 		parentCase.recordTypeId = rtOSCAR;
@@ -204,7 +204,7 @@ public class GenericAttachmentListControllerTest {
 	}
 
 	static testMethod void testGetCanAttachFilesToCase() {
-		ID rtOSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Cases - Europe').getRecordTypeId();
+		ID rtOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
 
 		Case parentCase = new Case();
 		parentCase.recordTypeId = rtOSCAR;
@@ -227,7 +227,7 @@ public class GenericAttachmentListControllerTest {
 	}
 
 	static testMethod void testGetCanAttachFilesToCase2() {
-		ID rtOSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Cases - Europe').getRecordTypeId();
+		ID rtOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
 
 		Case parentCase = new Case();
 		parentCase.recordTypeId = rtOSCAR;
@@ -249,7 +249,7 @@ public class GenericAttachmentListControllerTest {
 	}
 
 	static testMethod void testgoToAttachmentPage() {
-		ID rtOSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Cases - Europe').getRecordTypeId();
+		ID rtOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
 
 		Case parentCase = new Case();
 		parentCase.recordTypeId = rtOSCAR;

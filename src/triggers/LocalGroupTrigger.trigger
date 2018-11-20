@@ -24,9 +24,8 @@ trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, b
 
     // I update the Local Group adding Region, Country manager and IATA office FROM COUNTRY
     if(countryIds.size()>0){
-        Map<Id,IATA_ISO_Country__c> countryMap = new Map<Id,IATA_ISO_Country__c> ([SELECT Name, Region__c, Country_Manager__c, ISS_Office_Location__c
-                                                                                   FROM IATA_ISO_Country__c
-                                                                                   WHERE ID IN :countryIds]);
+        Map<Id,IATA_ISO_Country__c> countryMap = new Map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(countryIds));
+
         for(LocalGovernance__c lg : Trigger.new){
             IATA_ISO_Country__c myCountry = countryMap.get(lg.Country__c);
             if(myCountry!=null){

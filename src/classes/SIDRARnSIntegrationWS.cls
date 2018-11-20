@@ -40,7 +40,7 @@ global class SIDRARnSIntegrationWS {
                                         if (!ValidateDateField(LatePaymentDate))
                                             return GetXmlResponse(STATUSFAIL, '', 'Invalid Late Payment date', '');
 
-                                ID caseRecordtypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(CaseType);
+                                ID caseRecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', CaseType);
 
                                 // Instanciate a new case object and set the Record Type
                                 Case theCase = new Case();
@@ -341,14 +341,14 @@ global class SIDRARnSIntegrationWS {
 
             String statementName = Client.trim() + Period.trim() + Operation.trim();
             list<Account_Statement__c> listStatement = [
-                Select Id, Name, Key__c, Account__c, Operation__c, Group__c, Period__c, Remittance_Date__c, Billing_Amount__c, Amount_to_be_Paid__c, Paid__c, Balance__c, CurrencyISOCode
-                from Account_Statement__c
-                Where Account__c = :account.Id
-                And Period__c = :Period
-                And Operation__c = :Operation
-            ];
+                        Select Id, Name, Key__c, Account__c, Operation__c, Group__c, Period__c, Remittance_Date__c, Billing_Amount__c, Amount_to_be_Paid__c, Paid__c, Balance__c, CurrencyISOCode
+                        from Account_Statement__c
+                        Where Account__c = :account.Id
+                                           And Period__c = :Period
+                                                   And Operation__c = :Operation
+                    ];
 
-            Account_Statement__c statement = listStatement.isEmpty()? null: listStatement.get(0);
+            Account_Statement__c statement = listStatement.isEmpty() ? null : listStatement.get(0);
 
             if  ( statement == null) {
                 statement = new Account_Statement__c();
@@ -380,11 +380,7 @@ global class SIDRARnSIntegrationWS {
     //date format: YYYY-MM-DD
     public SIDRA_eDefault__c CreateDefaultRow(Case theCase, date dateMovement, double sAmount, string sType) {
         SIDRA_eDefault__c oReturn;// = new SIDRA_eDefault__c();
-        string sRecordTypeId = '';
-
-        for (RecordType rt : [Select r.Id, r.DeveloperName From RecordType r Where SobjectType  = 'SIDRA_eDefault__c'])
-            if (rt.DeveloperName == sType)
-                sRecordTypeId = rt.Id;
+        Id sRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('SIDRA_eDefault__c', sType);
 
         if (sRecordTypeId != '') {
             if (sType != '') {
@@ -444,7 +440,7 @@ global class SIDRARnSIntegrationWS {
             if (theCurrency == '')
                 return GetXmlResponse(STATUSFAIL, '', 'theCurrency cannot be empty', '');
 
-            ID caseRecordtypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(CaseType);
+            ID caseRecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', CaseType);
 
             string sQuery = 'Select Id, BSPCountry__c, Remittance_Period__c, RecordTypeId, BSP_CASS__c, Currency__c from case ';
             sQuery +=       ' where RecordTypeId=\'' + caseRecordtypeId + '\'';
@@ -569,7 +565,7 @@ global class SIDRARnSIntegrationWS {
         writer.writeCharacters(Status);
         writer.writeEndElement();
         writer.writeStartElement(null, 'ErrorMsg', null);
-        writer.writeCharacters(errorMsg.length() > 2000? errorMsg.substring(0, 1999): errorMsg);
+        writer.writeCharacters(errorMsg.length() > 2000 ? errorMsg.substring(0, 1999) : errorMsg);
         writer.writeEndElement();
         writer.writeEndElement();
         writer.writeEndDocument();
