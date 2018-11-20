@@ -53023,10 +53023,10 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>ANG_NEW_GDI_STANDARD_1_0</fullName>
+        <fullName>ANG_GDI_SETUP</fullName>
         <active>true</active>
-        <description>Recordtype user for GDI process</description>
-        <label>ANG.NEW.GDI.STANDARD.1.0</label>
+        <description>Record type for GDI oscars</description>
+        <label>NG GDI SETUP</label>
         <picklistValues>
             <picklist>AML_result__c</picklist>
             <values>
