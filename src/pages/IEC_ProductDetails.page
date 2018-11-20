@@ -370,7 +370,7 @@
                                             <!-- <input type="number" class="user-input quantity js-input-quantity" /> -->
                                         </label>
 
-                                        <apex:commandButton styleClass="button {!IF(bIsPreOrder,'pre-order', 'wide')}" reRender="frmAddToCart" onclick="addToCartPush();blockme()" oncomplete="j$.unblockUI(); redirectToCart();" action="{!addToCart}" value="{!IF(bIsPreOrder,$Label.PreOrderAddToCart, $Label.AddToCart)}" />
+                                        <apex:commandButton styleClass="button {!IF(bIsPreOrder,'pre-order', 'wide')}" reRender="frmAddToCart" onclick="addToCartPush();blockme()" oncomplete="j$.unblockUI(); redirectToCart();" action="{!addToCart}" value="{!IF(bIsPreOrder,$Label.PreOrderAddToCart, $Label.BuyNow)}" />
                                   
                                     </apex:outputPanel>
                                 </apex:form>

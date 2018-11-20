@@ -13,7 +13,7 @@ public without sharing class RCRMUtil {
     public static void HandleRCRMOpportunityBeforeUpdate (Map<Id, Opportunity> mapTriggerNew, Map<Id, Opportunity> mapTriggerOld) {
         
         // Only interested in Opportunities with the RCRM Opportunity record type
-        Id RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Opportunity').get('RCRM_Opportunity');
+        Id RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'RCRM_Opportunity');
                 
         
         //////////////////////////
@@ -151,7 +151,7 @@ public without sharing class RCRMUtil {
      *  Checks whether it is a new contract, a renewal as-is or an amended contract.
      */
     public static void CreateUpdateContract (Map<Id,Opportunity> mapOpportunitiesPerId, Map<Id, List<OpportunityLineItem>> mapRcrmOLIPerOppId) {
-        Id RT_RCRM_Contract_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contract').get('RCRM_Contract');
+        Id RT_RCRM_Contract_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contract', 'RCRM_Contract');
         
         system.debug('Entrou no update do contracto');
         // List of Opportunities from the parameter map
@@ -392,7 +392,7 @@ public without sharing class RCRMUtil {
         // Map of new Opportunities to insert per Id of the old opportunity
         Map<Id,Opportunity> mapNewOppPerOldOppId = new Map<Id,Opportunity>();
         
-        Id RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Opportunity').get('RCRM_Opportunity');
+        Id RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'RCRM_Opportunity');
         
         // List of the Tasks to be inserted
         List<Task> lstTasksToInsert = new List<Task>();

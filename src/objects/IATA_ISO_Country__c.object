@@ -196,6 +196,37 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_IEP_Model__c</fullName>
+        <description>Defines the EasyPay Model to use by agencies from this country.</description>
+        <externalId>false</externalId>
+        <label>EasyPay Model</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Model A</fullName>
+                    <default>false</default>
+                    <label>Model A</label>
+                </value>
+                <value>
+                    <fullName>Model B</fullName>
+                    <default>true</default>
+                    <label>Model B</label>
+                </value>
+                <value>
+                    <fullName>Banking Model</fullName>
+                    <default>false</default>
+                    <label>Banking Model</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>ANG_Portal_Service__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>EasyPay portal service that can be subscribed in the country.</description>
@@ -2442,6 +2473,29 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Postal_Code_Format_regEx__c</fullName>
+        <description>regEx to validate correct Postal Code format on online forms</description>
+        <externalId>false</externalId>
+        <inlineHelpText>regEx to validate correct Postal Code format on online forms</inlineHelpText>
+        <label>Postal Code Format regEx</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Postal_Code_Hint_Format__c</fullName>
+        <externalId>false</externalId>
+        <label>Postal Code Hint / Format</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Prevent_Portal_Trade_Name_Change__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2568,6 +2622,15 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>State_Province_Mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>State/Province Mandatory</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sub_Region__c</fullName>
         <externalId>false</externalId>
         <label>Sub Region</label>
@@ -2645,6 +2708,17 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Tax ID Mandatory?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Number_VAT_field_mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</description>
+        <externalId>false</externalId>
+        <inlineHelpText>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</inlineHelpText>
+        <label>Tax Number / VAT field mandatory</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -2979,5 +3053,13 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <searchResultsAdditionalFields>Country_Manager__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>IEP_Model_required_for_Portal_Service</fullName>
+        <active>true</active>
+        <description>Makes ANG_IEP_Model__c mandatory when populating ANG_Portal_Service__c</description>
+        <errorConditionFormula>AND( ISBLANK(TEXT(ANG_IEP_Model__c)) ,  OR(ISCHANGED(ANG_Portal_Service__c),ISCHANGED(ANG_IEP_Model__c)) , NOT(ISBLANK(ANG_Portal_Service__c)))</errorConditionFormula>
+        <errorDisplayField>ANG_IEP_Model__c</errorDisplayField>
+        <errorMessage>EasyPay Model is required when enabling this country for the EasyPay Portal Service</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

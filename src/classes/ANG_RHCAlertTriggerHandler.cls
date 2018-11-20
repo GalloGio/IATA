@@ -176,9 +176,9 @@ public class ANG_RHCAlertTriggerHandler{
                     }
                 }
 
-                String processRecorType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
-                Database.DMLOptions dmlOpts = new Database.DMLOptions();
-                dmlOpts.assignmentRuleHeader.useDefaultRule = true;
+            String processRecorType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
+            Database.DMLOptions dmlOpts = new Database.DMLOptions();
+            dmlOpts.assignmentRuleHeader.useDefaultRule = true;
 
                 if(config.ANG_Create_Process_Case__c){
                     Account acc = accounts.get(a.ANG_Account__c);
@@ -233,7 +233,8 @@ public class ANG_RHCAlertTriggerHandler{
                 if(!notifications.isEmpty()) insert notifications;
             }
         }catch(Exception e){
-            ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_RHCAlertTriggerHandler', 'sendAlertNotification', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+            //ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_RHCAlertTriggerHandler', 'sendAlertNotification', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+            ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW14',e);
         }
     }
 
@@ -323,7 +324,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         String statusFOP = action == UPPERFLUCTUATION ? 'Non-Active' : 'Active';
 
-        Id formOfPaymentRT = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
+        Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
 
         List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and ANG_FormOfPayment_ID__c = 'CA' and recordTypeId = :formOfPaymentRT and Account__r.recordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 

@@ -1,0 +1,95 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p style="color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><strong style="font-family: Arial; font-size: 12pt;"><font size="2">{!Account.Name}</font></strong></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><b style="mso-bidi-font-weight: normal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"><o:p><font size="2"></font></o:p></span></b></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><!--?xml:namespace prefix = st1 ns = "urn:schemas-microsoft-com:office:smarttags" /--><!--?XML:NAMESPACE PREFIX = ST1 /--><!--?xml:namespace prefix = st1 /--><!--?xml:namespace prefix = st1 /--><st1:address w:st="on"><st1:street w:st="on"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"><font size="2">{!Account.BillingAddress}</font></span></st1:street></st1:address></p><p style="color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><st1:address w:st="on"><st1:street w:st="on"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"><font size="2"><br></font></span></st1:street></st1:address></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><font size="2"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"></span><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p></o:p></span></font></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"><u><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p><span style="TEXT-DECORATION: none"><font size="2"></font></span></o:p></span></u></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; margin: 0in 0in 0pt;" class="MsoNormal"></p>
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal"><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">Dear Sir or Madam,</span><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal"><b><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;"><br>
+<u>REQUEST FOR BANK GUARANTEE (BG)</u></span></b><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal"><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">We are pleased to inform that the result
+of your financial review is satisfactory.</span><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal"><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal"><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">Please provide us a Bank Guarantee
+of&nbsp;<b><u>BDT 5 Million&nbsp;</u></b></span><span style="font-size: 10pt; font-family: Arial, sans-serif;">with validity till&nbsp;<b><u>31</u></b>&nbsp;<b><u>December 2019</u></b>&nbsp;or
+any subsequent year, in strict accordance with the format attached from the
+banks approved by Central Bank of Bangladesh.</span><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoListParagraph" style="margin-bottom:12.0pt;mso-add-space:auto;
+text-align:justify;text-indent:-.25in;line-height:normal;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size: 12pt; font-family: Symbol;">·<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">Please submit the&nbsp;<b>Original&nbsp;</b>Bank
+Guarantee directly to&nbsp;IATA Bangladesh&nbsp;Office on the below
+address.&nbsp; Please upload a scan copy of the Bank Guarantee in your portal
+case.</span><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-indent:
+.5in;line-height:normal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#3333FF">IATA Bangladesh Office</span></b><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-indent:
+.5in;line-height:normal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#3333FF">Hosna Center, 2nd
+Floor, Suite # 210, 106 Gulshan Avenue</span></b></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-indent:
+.5in;line-height:normal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#3333FF">Block SE(C)</span></b><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-indent:
+.5in;line-height:normal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#3333FF">Gulshan, Dhaka -1212,
+Bangladesh<o:p></o:p></span></b></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#3333FF">&nbsp;</span></b></p><p class="MsoListParagraph" style="margin-bottom:0in;margin-bottom:.0001pt;
+mso-add-space:auto;text-indent:-.25in;line-height:normal;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span lang="EN-GB" style="font-size: 10pt; font-family: Symbol;">·<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><!--[endif]--><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">Please request the issuing bank to send
+&amp; email the enclosed Bank Guarantee Authentication letter to </span><a href="mailto:bdrecon@iata.org"><span lang="EN-GB" style="font-size:10.0pt;
+font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-GB">bdrecon@iata.org</span></a><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;"> <o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal"><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Deadline for submission is </span><b><u><span lang="EN-GB" style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:red;mso-ansi-language:EN-GB">DD MMM 2018.</span></u></b><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p style="text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<b><span lang="EN-GB" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif;">Note</span></b><span lang="EN-GB" style="font-size: 10pt; line-height: 107%; font-family: Arial, sans-serif;">: Non-receipt of the Bank
+Guarantee &amp; Bank Guarantee Authentication letter by the above mentioned due
+date will leave us with no other alternative but to disapprove your application
+with immediate effect.&nbsp;<br>
+<br>
+Should you have any questions or need any clarification regarding above, please
+reply to this email.&nbsp;</span></span></p><p style="color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="font-family: Arial;" lang="EN-GB"><font size="2" style=""><br></font></span><span style="font-size: 12pt; font-family: Arial;" lang="EN-GB"><o:p><font size="2"></font></o:p></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p><font size="2"></font></o:p></span></p>
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal"><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">Yours faithfully,</span><span style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"></font></span></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="font-family: Arial;" lang="EN-GB"><font size="2" style=""><br><strong></strong></font></span></p><font size="2" style="color: rgb(0, 0, 0); font-family: arial;"><strong>
+<p>{!Case.OwnerFullName}</p>
+</strong></font><p style="color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="font-family: Arial, Helvetica, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><font size="2">IATA Global Delivery Centre</font></span></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><font size="2"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"></span>&nbsp;</font></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2">International Air Transport Associaition</font></span></p><p style="color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2">80 Pasir Panjang Road</font></span></p><p style="color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2">#20-81 Mapletree Business City</font></span></p><p style="color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="font-family: Arial;" lang="EN-GB"><font size="2" style="">Singapore 117372</font></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><br></p>]]></td>
+</tr>
+</table>

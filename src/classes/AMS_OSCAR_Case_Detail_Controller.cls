@@ -18,7 +18,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean displayErrorMsg{get{return false;} set;}
 
     //FM AMSU-1
-    public ID corrRT {get{return Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();}set;}
+    public ID corrRT {get{return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');}set;}
         
 
         //this flag will controll if picklist or multipicklist is displayed for Remittance Frequency 
@@ -207,21 +207,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         return true;
     }
 
-    //private Set<String> tocList{
-    //    get{
-    //        tocList = new Set<String>();
-
-    //        if(oscarObj.ANG_Type_Of_Change__c != null) tocList.addAll(oscarObj.ANG_Type_Of_Change__c.split(';'));
-
-    //        return tocList;
-    //    }
-    //    set;
-    //}
 
     private List<AMS_Operation__c> operationCodes{
         get{
             if(this.operationCodes == null)
-                this.operationCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, accreditationObj.Branch_Office_Country__c, accreditationObj.Location_Class__c);
+                this.operationCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c','BSP'), accreditationObj.Branch_Office_Country__c, accreditationObj.Location_Class__c);
 
             return this.operationCodes;            
         } set;
@@ -390,7 +380,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     //FM AMSU-1
     public Boolean isAgencyCorrection{
         get{
-            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.COR)) return true;
+            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.COR || oscarObj.Process__c == AMS_Utils.NGCORRECTION)) return true;
             else return false;
         }
         private set;

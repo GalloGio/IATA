@@ -161,7 +161,7 @@ public without sharing class AMS_OSCAR_Rollback {
 		Database.DMLOptions dmo = new Database.DMLOptions();
 		dmo.assignmentRuleHeader.useDefaultRule= true;	
 
-		Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Internal Cases (IDFS ISS)').getRecordTypeId();
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 		
 		for(AMS_ChangeCodes__c changeCode : [SELECT Change_Code__c FROM AMS_ChangeCodes__c where Billable__c = true]) {
 			billableChangeCodes.add(changeCode.Change_Code__c);
@@ -297,7 +297,7 @@ public without sharing class AMS_OSCAR_Rollback {
 			mapIdToOwner.put(owner.Id, owner);
 		}
 
-		Id ownerRTId = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+		Id ownerRTId = AMS_Utils.AccountRoleOwnershipRT;
 		List<AMS_Account_Role__c> ownersToCheck = [SELECT Id, Account__c FROM AMS_Account_Role__c 
 												   WHERE Account__c IN :mapAccountToOwners.keySet() AND RecordTypeId = :ownerRTId AND Active__c = true];
 

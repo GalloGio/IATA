@@ -201,8 +201,8 @@ public without sharing class IECUtil {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('','-Select a Country-'));
         
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
-        options.add(new SelectOption(iso.Name,iso.Name));
+        for(IATA_ISO_Country__c iso: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+        	options.add(new SelectOption(iso.Name,iso.Name));
         }
         return options;
     }
@@ -214,8 +214,8 @@ public without sharing class IECUtil {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('','-Select a Country-'));
         
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
-        options.add(new SelectOption(iso.Id,iso.Name));
+        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+        	options.add(new SelectOption(iso.Id,iso.Name));
         }
         return options;
     }
@@ -411,11 +411,7 @@ public without sharing class IECUtil {
 		if (lstISOCode == null || lstISOCode.size() == 0) return null;
 		
 		List<String> lstCountryName = new List<String>();
-		for (IATA_ISO_Country__c country :
-			[SELECT Name
-			FROM IATA_ISO_Country__c
-			WHERE ISO_Code__c IN :lstISOCode
-			ORDER BY Name]) {
+		for (IATA_ISO_Country__c country : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>(lstISOCode)), 'Name')) {
 			lstCountryName.add(country.Name);
 		}
 		
@@ -425,12 +421,10 @@ public without sharing class IECUtil {
 	public static List<String> GetStateNameFromISOCode(List<String> lstISOCode) {
 		if (lstISOCode == null || lstISOCode.size() == 0) return null;
 		
+		Set<String> isoCodeSet = new Set<String>();
+		isoCodeSet.addAll(lstISOCode); 
 		List<String> lstStateName = new List<String>();
-		for (IATA_ISO_State__c state :
-			[SELECT Name
-			FROM IATA_ISO_State__c
-			WHERE ISO_Code__c IN :lstISOCode
-			ORDER BY Name]) {
+		for (IATA_ISO_State__c state : IATAIsoStateDAO.sortIATAIsoStateList(IATAIsoStateDAO.getIsoStateByIsoCodes(isoCodeSet), 'Name')){
 			lstStateName.add(state.Name);
 		}
 		
@@ -500,17 +494,7 @@ public without sharing class IECUtil {
 	 * @param DevName: the developer name of record type
 	 */
 	public static Id GetRecordTypeId(String ObjName, String DevName) {
-		return TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {ObjName}).get(ObjName).get(DevName);
-		/*
-		USING SIngleton rather than previous class. 
-		List<RecordType> lstRecType =
-			[SELECT Id
-			FROM RecordType
-			WHERE DeveloperName = :DevName
-				AND SobjectType = :ObjName];
-		
-		return (lstRecType.size() > 0) ? lstRecType.get(0).Id : null;
-		*/
+		return RecordTypeSingleton.getInstance().getRecordTypeId(ObjName, DevName);
 	}
 	
 	/**

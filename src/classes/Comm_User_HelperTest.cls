@@ -15,9 +15,9 @@ private class Comm_User_HelperTest {
         ISSP_CS__c identityPortalCS = new ISSP_CS__c(Name = 'IdentityPortal', Value__c = 'customer-portal-iata.force.com');
         insert new List<ISSP_CS__c>{profileCS, identityPortalCS};
 
-        ID standardRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
-        ID Branch  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId ;
-        ID Hq  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+        ID standardRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+        ID Branch  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ;
+        ID Hq  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
         
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );
@@ -79,9 +79,9 @@ private class Comm_User_HelperTest {
         
 
 
-        ID standardRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
-        ID Branch  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId ;
-        ID Hq  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+        ID standardRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+        ID Branch  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ;
+        ID Hq  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
         
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );
