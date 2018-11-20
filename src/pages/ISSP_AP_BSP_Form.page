@@ -313,16 +313,16 @@
                     </apex:pageBlockSectionItem>
                          
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="VAT/Tax number in your home country" for="vathomeno" />
+                        <apex:outputLabel value="VAT/Tax number in your home country" for="vathomeno" styleClass="ap-required" />
                          <apex:inputText id="vathomeno" value="{!newForm.VAT_Tax_number_in_your_home_country__c}" />
                     </apex:pageBlockSectionItem>
                         <apex:pageBlockSectionItem rendered="{!NOT(OR(apcountryisocode='BR',apcountryisocode='EC',apcountryisocode='MX',apcountryisocode='VE'))}">
-                            <apex:outputLabel value="VAT/Tax number in BSP {!apcountry}" for="vatbspno" />
+                            <apex:outputLabel value="VAT/Tax number in BSP {!apcountry}" for="vatbspno" styleClass="ap-required" />
                             <apex:inputText id="vatbspno" value="{!newForm.BSP_Country_VAT_Tax_number__c}" />
                         </apex:pageBlockSectionItem>
                         
                         <apex:pageBlockSectionItem rendered="{!OR(apcountryisocode='EC',apcountryisocode='VE')}">
-                            <apex:outputLabel value="{!CASE(apcountryisocode, 'EC', '* Your airlines VAT/RUC Number', '* Please provide the Registro Informacion Fiscal (RIF) information')}" for="vatrut" style="color:#a31717; font-weight: bold !important;"/>
+                            <apex:outputLabel value="{!CASE(apcountryisocode, 'EC', '* Your airlines VAT/RUC Number', '* Please provide the Registro Informacion Fiscal (RIF) information')}" for="vatrut" styleClass="ap-required" />
                             <apex:inputText id="vatrut" value="{!newForm.BSP_Country_VAT_Tax_number__c}" />
                         </apex:pageBlockSectionItem>
                         
@@ -373,18 +373,18 @@
                     <tr><td colspan="4" class="aplabel">Airline local address in BSP {!apcountry}</td></tr>
                     <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel for="aladdress" value="Address" />
+                            <apex:outputLabel for="aladdress" value="Address" styleclass="ap-required" />
                             <apex:inputField id="aladdress" value="{!newForm.BSP_Local_address__c}" />
                         </apex:pageBlockSectionItem>
                         <apex:outputText ><!--empty: move following field to next row --></apex:outputText> 
                         
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel for="zip" value="Zip code" />
+                            <apex:outputLabel for="zip" value="Zip code" styleclass="ap-required" />
                              <apex:inputText id="zip" value="{!newForm.BSP_Local_Zip_Code__c}" />
                         </apex:pageBlockSectionItem>
                         
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel for="city" value="City" />
+                            <apex:outputLabel for="city" value="City" styleclass="ap-required" />
                             <apex:inputField id="city" value="{!newForm.BSP_Local_City__c}" />
                         </apex:pageBlockSectionItem>
                     </apex:pageBlockSection>
@@ -546,7 +546,7 @@
                 <span id="commision-section" style="{!IF(newForm.Participate_in_any_Commission_Control__c=='Yes','','display:none')}">
                     <apex:pageBlockSection columns="1">
                         <apex:repeat value="{!MandatoryFieldsForCommission}" var="fieldName">
-                            <apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="* {!$ObjectType.AP_Process_Form__c.fields[fieldName].label}" style="color:#a31717; font-weight: bold !important;"/>
                                 <apex:inputField value="{!newForm[fieldName]}"/>
                             </apex:pageBlockSectionItem>
@@ -632,7 +632,7 @@
                 <apex:pageBlockSection title="6. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
                 
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="* {!CASE(apcountryisocode, 'BR','CNPJ', 'RFC')} # to be entered in IATA Systems" style="color:#a31717; font-weight: bold !important;"/>
+                        <apex:outputLabel value="* {!CASE(apcountryisocode, 'BR','CNPJ', 'RFC')} # to be entered in IATA Systems" styleClass="ap-required"/>
                         <apex:outputPanel >
                             <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" />
                             <apex:image value="/img/msg_icons/info16.png" title="{!CASE(apcountryisocode, 'BR', 'Format : XX.XXX.XXX/XXXX-XX. Must be that of the Bank Beneficiary Account Holder.', 'As per local law the RFC number (Local VAT no.) must correspond with the Local Fiscal Address of the Airline Participant and should be provided to IATA')}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>

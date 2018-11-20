@@ -25,8 +25,12 @@ ul li, ol li {
         }
        
         .ap-required {
-    		color:#a31717 !important;
-    	}
+            color: #a31717;
+            font-weight: bold;
+        }
+        .ap-required:before {
+            content: "*&nbsp;";
+        }
         
         .apcontainer div {
         border-top: 0px !important;
