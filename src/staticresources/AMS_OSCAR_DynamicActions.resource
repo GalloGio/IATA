@@ -643,5 +643,8 @@ var dyn_functions = {
             }else
                 alert(result[1]);
         }
+    },
+    openFS:function (args) {
+
     }
 };
