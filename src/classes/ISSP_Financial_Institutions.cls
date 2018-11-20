@@ -26,38 +26,111 @@ public with sharing class ISSP_Financial_Institutions {
 	}
 	private String gdiPortalAppId {get; set;}
 	private String conId {get; set;}
+	private String agencyCountry {get; set;}
 	public Boolean hasGDIAppRight {
 		get {
-			if (hasGDIAppRight == null) {
-				List<Portal_Applications__c> portalAppList = [SELECT Id, Application_URL__c, (SELECT Id, Contact__c 
-																   		  					  FROM Portal_Application_Rights__r 
-																   		                      WHERE Contact__c IN (SELECT ContactId 
-																   							   					   FROM User 
-																   							   					   WHERE Id = :UserInfo.getUserId())
-																   							  AND Portal_Application__r.Name = :GDI_PORTAL_SERVICE
-																   		  					  LIMIT 1)
-													   		  FROM Portal_Applications__c 
-													   		  WHERE Name = :GDI_PORTAL_SERVICE
-													   		  LIMIT 1];
-				hasGDIAppRight = false;
-				
-				if (!portalAppList.isEmpty()) {
-					gdiPortalAppId = portalAppList[0].Id;
-					
-					if (!portalAppList[0].Portal_Application_Rights__r.isEmpty()) {
-						conId = portalAppList[0].Portal_Application_Rights__r[0].Contact__c;
-						hasGDIAppRight = true;
-					} else
-						conId = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1].ContactId;
-				}
-			}
+			if (hasGDIAppRight == null) hasGDIAppRight = false;
 			return hasGDIAppRight;
 		}
 		private set;
 	}
 	private Integer userFailedProvisioningCount {get; set;}
+	public ApexPages.StandardSetController ssController {
+		get {
+			if (ssController == null) fetchFinancialInstitutions();
+			return ssController;
+		}
+		private set;
+	}
+	public List<SelectOption> paginationSizeOptions {
+		get {
+			if (paginationSizeOptions == null) {
+				paginationSizeOptions = new List<SelectOption>();
+	    
+			    paginationSizeOptions.add(new SelectOption('5','5'));
+			    paginationSizeOptions.add(new SelectOption('10','10'));
+			    paginationSizeOptions.add(new SelectOption('20','20'));
+			    paginationSizeOptions.add(new SelectOption('50','50'));
+			    paginationSizeOptions.add(new SelectOption('100','100'));
+			}
+
+			return paginationSizeOptions;
+		}
+		private set;
+	}
+	public Integer listSize {
+		get {
+			return (listSize == null) ? 10 : listSize;
+		} 
+		set;
+	}
+	public Boolean hasNext {
+		get {
+			return ssController.getHasNext();
+		} 
+		set;
+	}
+    public Boolean hasPrevious {
+    	get {
+    		return ssController.getHasPrevious();
+    	}
+    	set;
+    }
+	public List<Financial_Institution__c> financialInstitutionList {
+		get {
+			return (ssController != null) ? (List<Financial_Institution__c>) ssController.getRecords() : fetchFinancialInstitutions();
+		}
+		private set;
+	}
+	public Boolean financialInstitutionsFound {
+		get {
+			if (financialInstitutionsFound == null) financialInstitutionsFound = false;
+			return financialInstitutionsFound;
+		}
+		private set;
+	}
 
 	public ISSP_Financial_Institutions() {}
+
+	private List<Financial_Institution__c> fetchFinancialInstitutions() {
+		List<Portal_Applications__c> portalAppList = [SELECT Id, Application_URL__c, (SELECT Id, Contact__c, Contact__r.Account.Country_ISO_Code__c
+														   		  					  FROM Portal_Application_Rights__r 
+														   		                      WHERE Contact__c IN (SELECT ContactId 
+														   							   					   FROM User 
+														   							   					   WHERE Id = :UserInfo.getUserId())
+														   							  	AND Portal_Application__r.Name = :GDI_PORTAL_SERVICE
+														   		  					  LIMIT 1)
+											   		  FROM Portal_Applications__c 
+											   		  WHERE Name = :GDI_PORTAL_SERVICE
+											   		  LIMIT 1];
+				
+		if (!portalAppList.isEmpty()) {
+			gdiPortalAppId = portalAppList[0].Id;	
+
+			if (!portalAppList[0].Portal_Application_Rights__r.isEmpty()) {
+				conId = portalAppList[0].Portal_Application_Rights__r[0].Contact__c;
+				agencyCountry = portalAppList[0].Portal_Application_Rights__r[0].Contact__r.Account.Country_ISO_Code__c;
+				hasGDIAppRight = true;
+			} else {
+				User currentPortalUser = [SELECT Id, ContactId, Contact.Account.Country_ISO_Code__c FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+				conId = currentPortalUser.ContactId;
+				agencyCountry = currentPortalUser.Contact.Account.Country_ISO_Code__c;
+			}
+		}
+
+		List<Financial_Institution__c> financialInstitutions = [SELECT Id, Name, Website__c
+																FROM Financial_Institution__c
+																WHERE Institution_Status__c = 'Active'
+																	AND Financial_Security_Country_Coverage__c INCLUDES (:agencyCountry)];
+
+		if (!financialInstitutions.isEmpty()) {
+			financialInstitutionsFound = true;
+			ssController = new ApexPages.StandardSetController(financialInstitutions);
+			ssController.setPageSize(listSize);
+		}
+
+		return financialInstitutions;
+	}
 
 	public void createPortalAppRight() {
 		if (!termsAndConditions) {
@@ -102,6 +175,26 @@ public with sharing class ISSP_Financial_Institutions {
         	}
         }            
     }
+
+    public void previous() {  
+	    ssController.previous();  
+	}  
+	    
+	public void next() {  
+	    ssController.next();  
+	}  
+
+	public void last(){  
+	    ssController.last();  
+	}
+
+	public void first() {  
+	    ssController.first();  
+	}
+
+	public void refreshPageSize() {
+	    ssController.setPageSize(listSize);
+	}
 
 	/*private PageReference getCurrentPage() {
 		PageReference pageRef = ApexPages.currentPage();
