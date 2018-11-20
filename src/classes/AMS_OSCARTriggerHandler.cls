@@ -6,7 +6,7 @@ public class AMS_OSCARTriggerHandler {
 
     class AMSException extends Exception {}
     
-    private static ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+    private static ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
     //used to identify situations where the LocationType of an SA Agency should not be changed
     public static Boolean keepSALocationTypeFlag = false;
@@ -266,14 +266,14 @@ public class AMS_OSCARTriggerHandler {
             }
         }
 
-        Schema.RecordTypeInfo assessmentRT = Schema.SObjectType.AMS_Settlement_System__c.getRecordTypeInfosByName().get('BSP');
+        Id assessmentRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
         Set<String> locationsToCheck = new Set<String> {'P', 'D'};
-        if(!oscarsToValidate.isEmpty() && assessmentRT != null) {
+        if(!oscarsToValidate.isEmpty() && assessmentRTId != null) {
             List<AMS_Operation__c> operations = [SELECT Id, Name, Country__c, Country__r.ISO_Code__c,
                                                     (SELECT Class_Type__c FROM BSP_Attributes__r WHERE Class_Type__c IN :locationsToCheck) 
                                                  FROM AMS_Operation__c
                                                  WHERE Country__r.ISO_Code__c IN :mapClassAttributes.keySet() AND 
-                                                    Settlement__r.RecordtypeId = :assessmentRT.getRecordTypeId()]; 
+                                                    Settlement__r.RecordtypeId = :assessmentRTId]; 
 
             for(AMS_Operation__c operation : operations) {
                 for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
@@ -310,7 +310,7 @@ public class AMS_OSCARTriggerHandler {
     /*** AMSU-121 Start ***/
     public static void handleChangeOfLocation(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap) {
         List<AMS_Pax_Accreditation_Form__c> accreditationsToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
-        Id changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        Id changeRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         for(AMS_OSCAR__c oscar : oscars) {
             if(String.isBlank(oscar.Type_of_change__c)) {
@@ -712,7 +712,7 @@ public class AMS_OSCARTriggerHandler {
         for(AMS_OSCAR__c oscar : oscars)
             if(oscar.Type_of_change__c!=null && oscar.Type_of_change__c.contains(AMS_Utils.REMOVALTRADENAME))
                 AMS_AccountTriggerHandler.comingFromOSCARforRemoveTradeName = true;
-        Id changeRT = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        Id changeRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
         List<AMS_OSCAR__c> oscarsToValidate = filterOSCARbyRT(changeRT, oscars);
 
         if (oscarsToValidate.size() > 0) {
@@ -756,7 +756,7 @@ public class AMS_OSCARTriggerHandler {
 
         Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
-        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        ID changeRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         List<AMS_OSCAR__c> changeOscars = new List<AMS_OSCAR__c>();
         for (AMS_OSCAR__c oscar : oscars) {
@@ -2146,15 +2146,13 @@ public class AMS_OSCARTriggerHandler {
         //minimum requirements for location class 'R'
         Map<String, Integer> minimumHODgrRequirements = new Map<String, Integer>();
         Map<String, Integer> minimumBRDgrRequirements = new Map<String, Integer>();
-        for(IATA_ISO_Country__c country : [SELECT Id, (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c
-                                                       FROM AMS_Country_Specific_Attributes__r
-                                                       WHERE RecordType.Name = 'DGR Minimum Requirements')
-                                           FROM IATA_ISO_Country__c
-                                           WHERE Id IN :isoCountries])
-        {
+
+        for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(isoCountries)){
+ 
             system.debug('validateCertificates -> country.AMS_Country_Specific_Attributes__r ' + country.AMS_Country_Specific_Attributes__r);
+            
             for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-                if(att != null){
+                if(att != null && att.RecordType.Name == 'DGR Minimum Requirements'){
                     minimumHODgrRequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_HO__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_HO__c));
                     minimumBRDgrRequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_BR__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_BR__c));
                 }
@@ -2422,7 +2420,7 @@ public class AMS_OSCARTriggerHandler {
         List<AMS_OSCAR__c> triggerNew = (List<AMS_OSCAR__c>)Trigger.new;
         Map<Id, AMS_OSCAR__c> oldMap = (Map<Id, AMS_OSCAR__c>)Trigger.oldMap;
 
-        Id volRelRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('VOLUNTARY RELINQUISHMENT').getRecordTypeId();
+        Id volRelRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
         List<AMS_Oscar__c> oscars = filterOSCARbyRT(volRelRT, triggerNew);
 
         if(oscars.isEmpty()) return;
@@ -3418,11 +3416,11 @@ public class AMS_OSCARTriggerHandler {
 
     public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds, Set<AMS_Oscar__c> oscarsToCreateAuth) {
     
-        ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-        ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+        ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
+        ID newNGRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
-        ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
-        ID certRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId(); //FM AMSU-113
+        ID corrRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
+        ID certRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION'); //FM AMSU-113
         
         if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
         	//TD2080607: partially refactored below code
@@ -3899,7 +3897,7 @@ public class AMS_OSCARTriggerHandler {
 
     private static void createAgencyAuthorizations(AMS_OSCAR__c oscar){
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         String statusForCC = 'Active';
 
@@ -3923,7 +3921,7 @@ public class AMS_OSCARTriggerHandler {
 
     private static void copyAgencyAuthorizationsFromParent(AMS_OSCAR__c oscar){
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         Account account = [SELECT ParentId FROM Account WHERE Id =: oscar.Account__c ];
         List<Agency_Authorization__c> parentFormsOfPayment = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c =: account.ParentId AND Status__c = 'Active' AND RecordTypeId =: FormOfPaymentRT];
@@ -3991,7 +3989,7 @@ public class AMS_OSCARTriggerHandler {
             accountIdsInvolvedSet.addAll(accIds);
         }
 
-        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
         List<Agency_Authorization__c> formsOfPaymentList = [SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c in :accountIdsInvolvedSet and RecordTypeId =: FormOfPaymentRT and ANG_FormOfPayment_ID__c = 'CC'];
 
         Set<Id> oscarsFromPortal = new Set<Id>();

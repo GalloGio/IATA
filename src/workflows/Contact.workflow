@@ -270,26 +270,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIS_Assign_contact_recordtype</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IATA_SIS_Contact</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>SIS - Assign contact recordtype</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIS_Update_Contact_Owner</fullName>
-        <field>OwnerId</field>
-        <lookupValue>smitha@iata.org</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>SIS Update Contact Owner</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>STD_Opt_out</fullName>
         <description>STD Opt out</description>
         <field>HasOptedOutOfEmail</field>
@@ -459,25 +439,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>ISSP - Notification to new Portal user</fullName>
-        <actions>
-            <name>New_user_portal</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contact.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Standard</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.User_Portal_Status__c</field>
-            <operation>equals</operation>
-            <value>Approved User,Approved Admin,Pending Approval</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ISSP Notify Contact TD Granted</fullName>
         <actions>
             <name>ISSP_Notify_Contact_TD_Granted</name>
@@ -530,62 +491,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <value>0</value>
         </criteriaItems>
         <description>Sends email to notify Contact of access granted to Treasury Dashboard PREMIUM, with NO existing prior subscription to TD Basic</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP Notify Portal User Status Change</fullName>
-        <actions>
-            <name>ISS_Send_Change_Of_Portal_User_Status_Notification</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <description>Notify Portal User on change of their Portal Status. New users get the Welcome email message so we don&apos;t want to send this out to them, nor to Rejected or Inactivated users.</description>
-        <formula>ISCHANGED( User_Portal_Status__c ) &amp;&amp;  (PRIORVALUE(User_Portal_Status__c)  &lt;&gt;  &quot;&quot;) &amp;&amp;  ( NOT(ISPICKVAL(User_Portal_Status__c, &apos;Rejected&apos;))  || NOT(ISPICKVAL(User_Portal_Status__c, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL(User_Portal_Status__c, &apos;Approved User&apos;)  || ISPICKVAL(User_Portal_Status__c, &apos;Approved Admin&apos;)  || ISPICKVAL(User_Portal_Status__c, &apos;Regional Administrator&apos;) )</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP Notify Portal User Status Change_UnknownContact</fullName>
-        <actions>
-            <name>ISSP_Notify_Portal_User_Status_Change_UnknownContact</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <description>Notify Portal User on change of their Portal User, when Status = Rejected AND Reason for Inactivation = Unknown Contact</description>
-        <formula>ISCHANGED(Portal_Inactivation_Reason__c)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP deactivate inactive contact</fullName>
-        <actions>
-            <name>ISS_Portal_deactivate_inactive_contact</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contact.Status__c</field>
-            <operation>notEqual</operation>
-            <value>Active</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP new portal user</fullName>
-        <actions>
-            <name>Alert_admins_that_a_contact_has_registered</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contact.User_Portal_Status__c</field>
-            <operation>equals</operation>
-            <value>Pending Approval</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Community__c</field>
-            <operation>startsWith</operation>
-            <value>ISS</value>
-        </criteriaItems>
-        <description>If a contact is created as a &quot;pending approval&quot; contact the administrators should now it.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -676,24 +581,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         </criteriaItems>
         <description>Automatically Opt out all Key contact</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS HelpDesk - Assign SIS recordtype when new contact source system is SIS</fullName>
-        <actions>
-            <name>SIS_Assign_contact_recordtype</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Update_Contact_Owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contact.Source_System__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Update ID card contact checkbox</fullName>

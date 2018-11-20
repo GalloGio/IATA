@@ -1509,6 +1509,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>Bu servis, kargo aracı/acenteleri ile IATA Kargo CASS’a katılan hava yolları arasındaki etkileşim ve bilgi alışverişini kolaylaştırmaktadır.</label>
         <name>CASSLink_Description</name>
     </customLabels>

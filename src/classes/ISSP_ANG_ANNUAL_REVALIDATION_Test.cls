@@ -1,9 +1,9 @@
 @isTest
 private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
-	private static Id rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-	private static Id rtOscar = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('ANG.ANNUAL.REVALIDATION').getRecordTypeId();
-	private static Id rtCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+	private static Id rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	private static Id rtOscar = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_ANNUAL_REVALIDATION'); 
+	private static Id rtCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	@isTest
 	static void test1() {
@@ -135,7 +135,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true );
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true,
+                                    Postal_Code_Format_regEx__c = '\\d{4}([\\-]\\d{3})?');
 		insert country;
 
 		AMS_Accreditation_Country_CheckList__c aacc = new AMS_Accreditation_Country_CheckList__c(
@@ -207,7 +208,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
 
-		Test.stopTest();
 
 		String mode = ctrl.mode;
 
@@ -246,6 +246,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.confirmUpdate();
 
+		Test.stopTest();
+
 		ctrl.currentAccount.fw.newForm.Confirm_Legal_Details_are_correct__c = true;
 		ctrl.currentAccount.fw.newForm.Confirm_Location_Details_are_correct__c = true;
 		ctrl.currentAccount.fw.newForm.Confirm_Ownership_details_are_correct__c = true;
@@ -275,6 +277,14 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.fw.newForm.Notify_Change_Ownership__c = true;
 
 		ctrl.confirmUpdate();
+
+		ctrl.currentAccount.fw.newForm.Notify_Change_Ownership__c = true;
+		ctrl.currentAccount.fw.newform.ISSP_AMS_Legal_Status__c = 'Corporation';
+		ctrl.currentAccount.fw.newform.ISSP_AMS_Paidup_capital__c = null;
+
+		ctrl.confirmUpdate();
+
+		ctrl.currentAccount.fw.newform.ISSP_AMS_Paidup_capital__c = 123;
 
 		ctrl.currentAccount.fw.newForm.Notify_Change_Legal_Details__c = true;
 		ctrl.currentAccount.fw.newForm.Notify_Change_Location__c = false;
@@ -394,6 +404,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.fetchAgentDetails();
 		ctrl.iatacode = '87654321';
 		ctrl.fetchAgentDetails();
+		ctrl.iatacode = '12345678';
+		ctrl.fetchAgentDetails();
 
 		ctrl.currentAccount.newContact = new AMS_Accreditation_Contact__c();
 		ctrl.contactType = 'Person';
@@ -441,6 +453,18 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.confirmUpdate();
 
+		ctrl.currentAccount.fw.newform.Account_Name__c = '中文';
+		ctrl.currentAccount.fw.newform.Trade_Name__c = '中文';
+		ctrl.currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c = null;
+		ctrl.currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c = true;
+
+		ctrl.confirmUpdate();
+
+		ctrl.currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c = '123';
+		ctrl.currentAccount.fw.newForm.INVALID_Tax_Number__c = true;
+
+		ctrl.confirmUpdate();
+
 		ctrl.currentAccount.fw.newform.Branch_Office_City__c = null;
 
 		ctrl.confirmUpdate();
@@ -474,6 +498,29 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		upd.validateVATNumber();
 
+		aacc.License_required__c = true;
+		aacc.Registration_required__c = true;
+		update aacc;
+
+		ctrl.confirmUpdate();
+
+		country.IEC_Zip_Postal_Code_required__c = true;
+		country.State_Province_Mandatory__c = true;
+		update country;
+
+		ctrl.currentAccount.isocountry.State_Province_Mandatory__c = true;
+		ctrl.currentAccount.isocountry.IEC_Zip_Postal_Code_required__c = true;
+
+		ctrl.currentAccount.fw.newform.Shipping_Postal_Code__c = null;
+		ctrl.currentAccount.fw.newform.Shipping_State__c = null;
+		ctrl.currentAccount.fw.newform.Branch_Office_Postal_code__c = null;
+		ctrl.currentAccount.fw.newform.State_Province__c = null;
+		ctrl.currentAccount.fw.newform.Local_Physical_Address_Postal_Code__c = null;
+		ctrl.currentAccount.fw.newform.Local_Postal_Address_Postal_Code__c = null;
+		ctrl.currentAccount.fw.newform.Local_Physical_Address_Province__c = null;
+		ctrl.currentAccount.fw.newform.Local_Postal_Address_Province__c = null;
+
+		ctrl.confirmUpdate();
 	}
 
 	@isTest
@@ -646,7 +693,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true );
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', 
+                                    Region__c = 'Europe', ANG_Enable_NewGen__c = true );
 		insert country;
 
         Account account = ISSP_ObjectFactory.createNewAccount();
@@ -705,6 +753,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		);
 
 		insert testcase;
+
+		Test.startTest();
 
 		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
@@ -773,6 +823,15 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact.Prev_Job2_employer__c = '111';
 
 		ctrl.createAgencyContact();
+
+		ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
+
+		System.assert(upd.countryInfoByCountryNameMapString == '\'\'');
+		System.assert(upd.countryList.size() > 0);
+		System.assert(upd.countryInfoByCountryNameMapString.startsWith('{'));
+
+
+		Test.stopTest();
 
 	}
 

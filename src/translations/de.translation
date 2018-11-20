@@ -1513,6 +1513,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>Dieser Dienst erleichtert das Zusammenspiel und den Informationsaustausch zwischen Frachtgut-Zwischenhändlern/Frachtspediteuren und Fluglinien, die am Cargo Accounts Settlement System (CASS) der IATA teilnehmen.</label>
         <name>CASSLink_Description</name>
     </customLabels>

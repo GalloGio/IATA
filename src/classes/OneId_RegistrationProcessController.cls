@@ -249,8 +249,12 @@ public without sharing class OneId_RegistrationProcessController {
 
     @AuraEnabled
     public static CountryInformation getISOCountries() {
-        List<IATA_ISO_Country__c> countries = [select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
-                                    where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name];
+        List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
+        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+            if (iso.Name != 'All Countries' &&  iso.Name != 'NO COUNTRY'){
+                countries.add(iso);
+            }
+        }
         return new CountryInformation(countries);
     }
 
@@ -328,7 +332,7 @@ public without sharing class OneId_RegistrationProcessController {
             system.debug('account not found --> sector ' + acc.Sector__c);
             system.debug('account not found --> category ' + acc.Category__c);            
             isNewAcc = true;
-            acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();                     
+            acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');                     
 
             if(serviceName == 'ISSP'){
                 con.User_Portal_Status__c ='Active';
@@ -382,25 +386,25 @@ public without sharing class OneId_RegistrationProcessController {
         system.debug('createContactAndAccount starting contact -->  ' + con);
         system.debug('createContactAndAccount starting account -- ' + acc);
         
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
-        if(con.RecordType == null) 
-            con.RecordTypeId = rt.Id;
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        
+        if(con.RecordType == null){
+            con.RecordTypeId = rtId;
+        }
         
         try {
             if(acc.Id == null) {
-                //acc.phone = null;
-                //acc.name = acc.Legal_name__c;
                 acc.Reason_for_creation__c = 'Created by customer';
                 //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
                 acc.ownerid = ISSP_Constant.newAccountOwnerId;
-                acc.recordtypeid = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+                acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
                 
                 if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
                     acc.Category_Other_Value__c = null;
                 
                 //Assign countries and states
                 if (!String.isBlank(acc.BillingCountry)) {
-                    List <Iata_Iso_Country__c> cn = [SELECT id FROM Iata_Iso_Country__c WHERE Name = :acc.BillingCountry LIMIT 1];
+                    List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
                         acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
                     }
@@ -471,65 +475,13 @@ public without sharing class OneId_RegistrationProcessController {
             
             system.debug('aqui userID ' + u);
 
-            //User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);            
-            /*system.debug('aqui user ' + u);
-            if(servName == 'FRED') {
-                // JIRA ISI-51 + ISI-14: Self registration primary or secondary 
-                String profileID = '';
-                list<Profile> fredProfiles = [SELECT Id FROM profile WHERE name like '%Fred%' ORDER BY Name];
-                // Check if primary user exists on request account
-                list<User> primaryUsers = [SELECT ProfileId FROM User WHERE Contact.AccountId =: con.accountId AND Profile_Name__c like '%Primary%'];
-                if(primaryUsers.isEmpty()) {
-                   // Create primary as primary exists yet
-                   profileID = fredProfiles[0].Id;
-                } else {
-                    // Create secondary as primary exists
-                    profileID = fredProfiles[1].Id;
-                }
-                u.ProfileID = profileID;
-            }
-            
-            if(servName == 'ISSP' || servName == 'FRED')
-                u.Community__c = servName;
-
-            String password = Comm_User_Helper.generateRandomString(6) + '1a';
-            System.debug('password ' + password);
-            System.debug('con ' + con.accountId);
-            System.debug('u ' + u);
-            System.debug('servName ' + servName);
-            //String userId = Site.createPortalUser(u, con.accountId, password, false);
-            
-            System.debug('userId ' + userId);
-            
-            sendWelcomeEmail(con, u, password, servName);*/
-
             return u;
-            
 
         } catch (Exception e) {
             return e.getMessage() + '\nStack Trace:' + e.getStackTraceString() + ' \nline: ' + e.getLineNumber();
         }
 
     }
-
-    /*public static void sendWelcomeEmail(Contact con, User u, String password, String serviceName){
-        System.debug('sendWelcomeEmail starting... ');
-        String cleanUsername = u.userName.replace('+', Comm_User_Helper.plusReplacer);
-        String encodedPart ='c='+EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+u.UID__c), 'UTF-8');
-        String template = 'Identity_Portal_New_User';
-        string prefix = OneIdUtils.getSiteCompleteUrl();
-        String link = prefix + '/s/IdentityFirstLogin?' + encodedPart;
-
-        if(serviceName == Comm_User_Helper.ISSP){ // OneIdEnh CSP-ID002: change the login URL for the customer portal
-            template = 'Identity_Portal_ISSP_New_User';
-            link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/ISSP_First_Login?'+encodedPart;
-        } 
-
-        Map<String,String> emailWrap = new Map<String,String>();
-        
-        emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper(con, password, link, Comm_User_Helper.ONEIDENTITY, serviceName);
-        Comm_User_Helper.sendEmail(template, emailWrap, con, Comm_User_Helper.ONEIDENTITY);
-    }*/
 
     @future
     public static void updatePortalUseProfile(String userId){
@@ -583,14 +535,13 @@ public without sharing class OneId_RegistrationProcessController {
     @AuraEnabled
     public static void checkConAvailable (Contact con){
         
-        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];        
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');     
         Contact [] ec = [Select id, email, AccountId, RecordType.Id FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
-        System.debug('Record Type: ' + rt);
         
         if(ec.size() > 0){
             System.debug('Update Contact');
             con.Id = ec[0].Id;
-            con.RecordTypeId = rt.Id;
+            con.RecordTypeId = rtId;
             database.update(con);
         } else {
             System.debug('Insert new contact'); 

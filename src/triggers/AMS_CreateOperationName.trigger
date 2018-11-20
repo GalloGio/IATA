@@ -8,7 +8,7 @@ trigger AMS_CreateOperationName on AMS_Operation__c (before insert) {
         
         
     map<String, IATA_ISO_Country__c> countries= new Map<String,IATA_ISO_Country__c>();
-    for(IATA_ISO_Country__c c:[select Id ,Name, ISO_Code__c from IATA_ISO_Country__c])
+    for(IATA_ISO_Country__c c:IATAIsoCountryDAO.getIsoCountries())
         countries.put(c.Id,c);
         
         
