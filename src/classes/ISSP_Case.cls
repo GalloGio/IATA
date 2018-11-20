@@ -302,7 +302,7 @@ public without sharing class ISSP_Case {
                                            WHERE Name LIKE :paramTopicString ORDER BY Sort_Order__c, Name];
             newCase.Country_concerned_by_the_query__c = con.Account.IATA_ISO_Country__r.Name;
             newCase.Region__c = con.Account.IATA_ISO_Country__r.Region__c;
-            newCase.Dossier_reception_date__c = datetime.now().date();
+            newCase.Dossier_reception_date__c = datetime.now();
             newCase.Visible_on_ISS_Portal__c = true;
 
             if (paramTopic == 'SA') {

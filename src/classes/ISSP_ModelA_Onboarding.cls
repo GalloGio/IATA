@@ -87,7 +87,7 @@ public class ISSP_ModelA_Onboarding {
 			oscar.OwnerId = getRegionalQueue();
 			update oscar;
 
-			this.onBoardingOSCARCase.Dossier_reception_date__c = Datetime.now().date();
+			this.onBoardingOSCARCase.Dossier_reception_date__c = Datetime.now();
 			update this.onBoardingOSCARCase;
 
 			return new PageReference('/ISSP_Homepage');
