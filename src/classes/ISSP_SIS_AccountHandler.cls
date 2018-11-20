@@ -5,7 +5,7 @@
 **/
 public with sharing class ISSP_SIS_AccountHandler {
     
-    public static final ID RT_AGENCY = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+    public static final ID RT_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
     public static set<ID> ALLOWED_COUNTRIES = null;
     public static Boolean BLOCK_EXECUTION = false;
     
@@ -17,9 +17,8 @@ public with sharing class ISSP_SIS_AccountHandler {
         //initialize map only once
         if (MAP_SIS_ACCOUNT_STATUS == null) {
             MAP_SIS_ACCOUNT_STATUS = new map<String,list<ISSP_SIS_Account_Status__c>>();
-            Map<String,Id> mapAccountRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account');
             for (ISSP_SIS_Account_Status__c setting: ISSP_SIS_Account_Status__c.getAll().values()) {
-                String key = mapAccountRT.get(setting.Recordtype__c) + ' ' + setting.Status__c;
+                String key = RecordTypeSingleton.getInstance().getRecordTypeId('Account', setting.Recordtype__c) + ' ' + setting.Status__c;
                 list<ISSP_SIS_Account_Status__c> listSettings = MAP_SIS_ACCOUNT_STATUS.get(key);
                 if (listSettings==null) {
                     listSettings = new list<ISSP_SIS_Account_Status__c>();
@@ -116,10 +115,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         try {
             // if is null initialize list of allowed countries using the CS
             if (ALLOWED_COUNTRIES==null) {
-                ALLOWED_COUNTRIES = new map<Id,IATA_ISO_Country__c>(
-                    [SELECT Id
-                    FROM IATA_ISO_Country__c
-                    WHERE ISO_Code__c IN :ISSP_SIS_Account_Allowed_Countries__c.getAll().keyset()]).keyset();
+                ALLOWED_COUNTRIES = new map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountryByIsoCodes(ISSP_SIS_Account_Allowed_Countries__c.getAll().keyset())).keyset();
             }
             return account.RecordtypeId==RT_AGENCY &&
                 (account.Quality__c.contains('YES') || account.Quality__c.contains('015w0000001yCfW')) &&
@@ -185,6 +181,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         for (Account account: listAccount) {
             setCountryId.add(account.IATA_ISO_Country__c);
         }
+        map<String,IATA_ISO_Country__c> mapCountries = new map<String,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(setCountryId));
         
         for (Account account: listAccount) {
             // include country objetct in the account

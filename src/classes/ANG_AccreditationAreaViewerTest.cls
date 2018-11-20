@@ -5,7 +5,7 @@ private class ANG_AccreditationAreaViewerTest {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', Region__c = 'Europe', ANG_Enable_NewGen__c = true);
         insert ctry ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account acct = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='The Agency CIA',Short_Name__c='The Agency CIA', Sector__c = 'Travel Agent', Type ='IATA Passenger Sales Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
         
@@ -93,7 +93,7 @@ private class ANG_AccreditationAreaViewerTest {
 		String valueForAccountAirport = acct.In_a_Airport__c == true ? 'Yes' : 'No';
 		fieldsOfObject.put('ISSP_AMS_Premises_located_at_airport__c',valueForAccountAirport);
 
-		AMS_Pax_Accreditation_Form__c accr = ANG_EntityCreator.createStagingArea(Schema.AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId(), acct.Name, [select Id from case where Account.IATACODE__c = :acct.IATACode__c and reason1__c = 'Annual revalidation' and Status <> 'Closed'].Id, fieldsOfObject);
+		AMS_Pax_Accreditation_Form__c accr = ANG_EntityCreator.createStagingArea(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes'), acct.Name, [select Id from case where Account.IATACODE__c = :acct.IATACode__c and reason1__c = 'Annual revalidation' and Status <> 'Closed'].Id, fieldsOfObject);
 		accr.HO_Account__c = acct.Id;
 		accr.IATACode__c = acct.IATACode__c;
 
@@ -297,7 +297,7 @@ private class ANG_AccreditationAreaViewerTest {
 		String valueForAccountAirport = acct.In_a_Airport__c == true ? 'Yes' : 'No';
 		fieldsOfObject.put('ISSP_AMS_Premises_located_at_airport__c',valueForAccountAirport);
 
-		AMS_Pax_Accreditation_Form__c accr = ANG_EntityCreator.createStagingArea(Schema.AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId(), acct.Name, [select Id from case where Account.IATACODE__c = :acct.IATACode__c and reason1__c = 'Annual revalidation' and Status <> 'Closed'].Id, fieldsOfObject);
+		AMS_Pax_Accreditation_Form__c accr = ANG_EntityCreator.createStagingArea(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes'), acct.Name, [select Id from case where Account.IATACODE__c = :acct.IATACode__c and reason1__c = 'Annual revalidation' and Status <> 'Closed'].Id, fieldsOfObject);
 		accr.HO_Account__c = acct.Id;
 		accr.IATACode__c = acct.IATACode__c;
 

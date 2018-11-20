@@ -24,8 +24,8 @@ private class DPCCasesUtilTest {
 
     static testMethod void StatusHandlingTest() {
         // gather necessary record type Ids
-        Id RT_ACR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Application_Change_Request');
-        ID RT_StdAcc_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');
+        Id RT_ACR_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
+        ID RT_StdAcc_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c = 'CH', AIMS_Area_Name__c = 'Suisse', AIMS_Area_ID__c = '1' );
         insert isoCountry;
@@ -102,8 +102,8 @@ private class DPCCasesUtilTest {
      */
     static testMethod void FieldValidationTest() {
         // gather necessary record type Ids
-        Id RT_ACR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Application_Change_Request');
-        ID RT_StdAcc_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');
+        Id RT_ACR_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
+        ID RT_StdAcc_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c = 'CH', AIMS_Area_Name__c = 'Suisse', AIMS_Area_ID__c = '1' );
         insert isoCountry;

@@ -14,10 +14,7 @@ public class IDCardApplicationFactory {
         if (theAccounts == null)
             theAccounts = new map<Id, Account>();
         Account theAccount = theAccounts.get(c.AccountId);
-        //Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
-        Map<string, Id> idcardAppRT =  RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ID_Card_Application__c');
-        for (String s : idcardAppRT.keySet())
-            system.debug(s + '  -> ' + idcardAppRT.get(s));
+
         ID_Card_Application__c application ;
         if (theAccount == null) {
             theAccount = [select Id, ID_Card_Key_Account_Discount__c, IDCard_Key_Account__c, Type, ID_Card_Corporate_Validation_Date__c, BillingState, BillingCountry, IATACode__c  from Account where Id = :c.accountId];
@@ -27,9 +24,9 @@ public class IDCardApplicationFactory {
             theAccounts.put(theAccount.Id, theAccount);
         }
         if (theAccount.IDCard_Key_Account__c)
-            application = new ID_Card_Application__c(RecordTypeId = idcardAppRT.get('Single_ID_Card_Operation'));
+            application = new ID_Card_Application__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation'));
         else
-            application = new ID_Card_Application__c(RecordTypeId = idcardAppRT.get('Standard'));
+            application = new ID_Card_Application__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard'));
 
         application.Type_of_application__c = appType;
 
@@ -47,13 +44,11 @@ public class IDCardApplicationFactory {
         if (c.ver_number_2__c == null) {
             throw new IDCardApplicationException('Impossible to create an Id card to a contact without VERNUM');
         }
-        //Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
-        Map<string, Id> idcardAppRT =  RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ID_Card_Application__c');
         ID_Card_Application__c application ;
         if (acc.IDCard_Key_Account__c)
-            application = new ID_Card_Application__c(RecordTypeId = idcardAppRT.get('Single_ID_Card_Operation'));
+            application = new ID_Card_Application__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation'));
         else
-            application = new ID_Card_Application__c(RecordTypeId = idcardAppRT.get('Standard'));
+            application = new ID_Card_Application__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard'));
         application.Type_of_application__c = appType;
 
         applyContactInformations(application, c);
@@ -70,9 +65,6 @@ public class IDCardApplicationFactory {
         if (c.ver_number_2__c == null) {
             throw new IDCardApplicationException('Impossible to create an Id card to a contact without VERNUM');
         }
-        //Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
-        Map<string, Id> idcardAppRT =  RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ID_Card_Application__c');
-
 
         Map<String, Account> iatacodeToAccount = new Map<String, Account>();
         Set<String> alliatacodes = new Set<String>();
@@ -89,7 +81,7 @@ public class IDCardApplicationFactory {
         }
 
         Account massAccount = iatacodeToAccount.get(c.IATA_Code__c);
-        ID_Card_Application__c application = new ID_Card_Application__c(RecordTypeId = idcardAppRT.get('Mass_Order_Application'));
+        ID_Card_Application__c application = new ID_Card_Application__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application'));
         application.Application_Status__c = '';
         applyContactInformations(application, c);
         applyAccountInformations(application, massAccount);
@@ -291,7 +283,7 @@ public class IDCardApplicationFactory {
         /*
         If single app: expedite alway false. Will be set separated
         */
-        if (application.RecordTypeId == TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c').get('Single_ID_Card_Operation'))
+        if (application.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation'))
             isExpedite = false;
         Boolean isITDIPackage = selectedITDICourses.size() > 0;
         detailledFees = IDCardUtil.GetDetailledFees(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion);

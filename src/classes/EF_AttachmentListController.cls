@@ -359,9 +359,9 @@ global with sharing class EF_AttachmentListController {
             );
 
             if (recordType != null) {
-                RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get(recordType.replaceAll('_', ' '));
+                RecordType rtInfo = RecordTypeSingleton.getInstance().getRecordType('AmazonFile__c', recordType);
                 if (rtInfo != null) {
-                    amazonFile.RecordTypeId = rtInfo .getRecordTypeId();
+                    amazonFile.RecordTypeId = rtInfo.Id;
                 }
             }
 

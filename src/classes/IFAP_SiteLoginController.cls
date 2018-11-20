@@ -18,7 +18,7 @@ public class IFAP_SiteLoginController {
     
     private static String IFAP_PORTAL_LANG = 'ifap_portal_lang';
     private boolean languageChanged = false;
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
     
     private String selectedLanguage;
     public String getSelectedLanguage() {

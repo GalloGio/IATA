@@ -12,7 +12,6 @@ public class ANG_RHCAlertTriggerHandler{
     public static final String DEFAULT_CODE = 'WW';
 
     private map<id,account> raAccMap{get;private set;}
-    private static final String ALL_COUNTRIES_ISOCODE ='WW';
 
     public final Double UPPERFLUCTUATION = 1;
     public final Double LOWERFLUCTUATION = 2;
@@ -181,9 +180,9 @@ public class ANG_RHCAlertTriggerHandler{
                     }
                 }
 
-                String processRecorType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
-                Database.DMLOptions dmlOpts = new Database.DMLOptions();
-                dmlOpts.assignmentRuleHeader.useDefaultRule = true;
+            String processRecorType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
+            Database.DMLOptions dmlOpts = new Database.DMLOptions();
+            dmlOpts.assignmentRuleHeader.useDefaultRule = true;
 
                 if(config.ANG_Create_Process_Case__c){
                     Account acc = accounts.get(a.ANG_Account__c);
@@ -329,7 +328,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         String statusFOP = action == UPPERFLUCTUATION ? 'Non-Active' : 'Active';
 
-        Id formOfPaymentRT = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
+        Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
 
         List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and ANG_FormOfPayment_ID__c = 'CA' and recordTypeId = :formOfPaymentRT and Account__r.recordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 
@@ -459,7 +458,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         for(Account acc :[
             SELECT id,Name, IATACode__c, Location_Class__c, ANG_IsNewGenAgency__c, Top_Parent__c, CurrencyIsoCode, Guaranteed_amount__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.BSP_Country_free_text__c,Remittance_frequency__c,IATA_ISO_Country__c,IATA_ISO_Country__r.Name,
-                    IATA_ISO_Country__r.ISO_Code__c, Region_formula__c,
+                    IATA_ISO_Country__r.ISO_Code__c, Region_formula__c, IATA_ISO_Country__r.AMS_Settlement_System__c,
         
         (SELECT ID,Name,ANG_Account__c,CurrencyIsoCode,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c
         FROM Risk_Alerts__r 
@@ -504,7 +503,7 @@ public class ANG_RHCAlertTriggerHandler{
 
 
             for(ANG_Risk_Alert__c ra: redAlerts){
-                string configKey=rtsConfigMap.containsKey(raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c)?raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c:ALL_COUNTRIES_ISOCODE ;//checks if key exists in map, if not uses default key
+                string configKey=rtsConfigMap.containsKey(raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c)?raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c:DEFAULT_CODE ;//checks if key exists in map, if not uses default key
                 if(rtsConfigMap.get(configKey).ANG_Create_Sidra_Lite__c){
                     smapParentCase = new Case(
                         Region__c = raAccMap.get(ra.id).Region_formula__c,
@@ -602,7 +601,7 @@ public class ANG_RHCAlertTriggerHandler{
                     sidraLiteCase.Reason_for_Default__c = 'Under Review';
                     sidraLiteCase.Update_AIMS_DEF__c = Date.today();
                     sidraLiteCase.CS_Rep_Acc_DEF__c = userInfo.getUserId();
-                    sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); //already done on callout
+                    //sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); //already done on callout
                     sidraLiteCase.ContactId = smapParentCase.ContactId;
                     
                     //END -NEWGEN-1933
@@ -649,7 +648,7 @@ public class ANG_RHCAlertTriggerHandler{
                     List<Id> caseIds = new List<Id>();
                     List<Id> accountIds = new List<Id>();
                     for (Case sLiteCase : sidraLiteCases) {
-                        string configKey=rtsConfigMap.containsKey(accIsoCode.get(sLiteCase.AccountId))?accIsoCode.get(sLiteCase.AccountId):ALL_COUNTRIES_ISOCODE ;
+                        string configKey=rtsConfigMap.containsKey(accIsoCode.get(sLiteCase.AccountId))?accIsoCode.get(sLiteCase.AccountId):DEFAULT_CODE ;
                         if(rtsConfigMap.get(configKey).ANG_Remove_Ticketing_Authority__c){
                             caseIds.add(sLiteCase.Id);
                             accountIds.add(sLiteCase.AccountId);
@@ -663,17 +662,13 @@ public class ANG_RHCAlertTriggerHandler{
         }
     }
 
-    Private Map<Id,operational_Calendar__c> fetchCalendar(List<ANG_Risk_Alert__c> ras){
+    private Map<Id,operational_Calendar__c> fetchCalendar(List<ANG_Risk_Alert__c> ras){
 
-        Set<String> isoCodes = new Set<String>();
+        Set<String> issOperations = new Set<String>();
         Set<String> rfs = new Set<String>();
         Map<Id,operational_Calendar__c> ocMap = new Map<Id,operational_Calendar__c>();
         for(ANG_Risk_Alert__c ra : ras){
-
-            isoCodes.add('BSP-' +(raAccMap.get(ra.id).IATA_ISO_Country__r.BSP__c == 'Yes' ? 
-                            raAccMap.get(ra.id).IATA_ISO_Country__r.BSP_Country_free_text__c : 
-                            raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c));
-
+            issOperations.add(raAccMap.get(ra.id).IATA_ISO_Country__r.AMS_Settlement_System__c);
             rfs.add(raAccMap.get(ra.id).Remittance_frequency__c);
         }
 
@@ -682,18 +677,13 @@ public class ANG_RHCAlertTriggerHandler{
             WHERE Frequency_Code__c IN :rfs
                 AND First_Day__c <= :Date.today() 
                 AND Last_Day__c >= :Date.today() 
-                AND ISS_Operation__r.Name IN :isoCodes
+                AND ISS_Operation__c IN :issOperations
             ];
         for(ANG_Risk_Alert__c ra : ras){
-            for(Operational_Calendar__c op: ops){
+            for(Operational_Calendar__c op: ops){            
                 
-                String isoCode = 'BSP-' + (raAccMap.get(ra.id).IATA_ISO_Country__r.BSP__c == 'Yes' ? 
-                            raAccMap.get(ra.id).IATA_ISO_Country__r.BSP_Country_free_text__c : 
-                            raAccMap.get(ra.id).IATA_ISO_Country__r.ISO_Code__c);
-                
-                if(op.ISS_Operation__r.Name == isoCode &&
-                    op.Frequency_Code__c == raAccMap.get(ra.id).Remittance_frequency__c
-                ){
+                if(op.ISS_Operation__c == raAccMap.get(ra.id).IATA_ISO_Country__r.AMS_Settlement_System__c &&
+                    op.Frequency_Code__c == raAccMap.get(ra.id).Remittance_frequency__c){
 
                     ocMap.put(ra.ANG_Account__c,op);
                     break;
@@ -795,7 +785,7 @@ public class ANG_RHCAlertTriggerHandler{
                     //NEWGEN-2006
                     if (!mapAccContacts.get(accountIds[i]).isEmpty()) {
                         for (Contact c: mapAccContacts.get(accountIds[i])) {
-                            string configKey=rtsConfigMap.containsKey(accIsoCode.get(accountIds[i]).IATA_ISO_Country__c)?accIsoCode.get(accountIds[i]).IATA_ISO_Country__c:ALL_COUNTRIES_ISOCODE ;
+                            string configKey=rtsConfigMap.containsKey(accIsoCode.get(accountIds[i]).IATA_ISO_Country__c)?accIsoCode.get(accountIds[i]).IATA_ISO_Country__c:DEFAULT_CODE ;
                             if(rtsConfigMap.get(configKey).ANG_Send_Email_Agent__c){
                                 notifications.add(new Notification__c(
                                     Contact__c = c.Id,

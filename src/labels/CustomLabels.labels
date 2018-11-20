@@ -878,7 +878,7 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_XML_GEN_ERROR_RECEIVER</shortDescription>
-        <value>howj@iata.org.prod</value>
+        <value>howj@iata.org</value>
     </labels>
     <labels>
         <fullName>ANG_AE_separate_Legal_Entity</fullName>
@@ -28921,7 +28921,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Max_Account_Reached</shortDescription>
-        <value>Maximum number of accounts reached. Please click on troubleshooting link in the page footer</value>
+        <value>This account has one or more active users. Any additional users(s) must be invited by the Primary User of this account. Please contact the IATA FRED+ Team ( https://fred.iata.org/contact ) for more details.</value>
     </labels>
     <labels>
         <fullName>OneId_Max_Account_Reached2</fullName>

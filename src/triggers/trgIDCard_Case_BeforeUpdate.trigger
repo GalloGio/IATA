@@ -1,6 +1,6 @@
 trigger trgIDCard_Case_BeforeUpdate on Case (before update) {
     
-    ID caseRecordType = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('ID Card Application');
+    ID caseRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application');
     List<Profile> currentUserProfile; 
     Boolean isCurrentUserProfileInit = false;    
     Boolean isSiteGuestUser = false;

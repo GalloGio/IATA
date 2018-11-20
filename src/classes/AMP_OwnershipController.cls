@@ -17,7 +17,7 @@ public with sharing class AMP_OwnershipController {
     public AMP_OwnershipController(ApexPages.StandardController stdController) {
         this.acc = (Account)stdController.getRecord();
 
-        OwnershipRtId = [SELECT Id FROM RecordType WHERE SObjectType = 'AMS_Account_Role__c' AND DeveloperName = 'Ownership'].Id;
+        OwnershipRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
         owners = getOwners();
         subsidiaries = getSubsidiaries();
@@ -88,9 +88,9 @@ public with sharing class AMP_OwnershipController {
     public static AMS_Account_Role__c upsertAccount(AMS_Account_Role__c accountRole ) {
         System.debug(accountRole);
 
-        if (accountRole.RecordTypeId == null) {
-            accountRole.RecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'AMS_Account_Role__c' AND DeveloperName = 'Ownership'].Id;
-        }
+            if (accountRole.RecordTypeId == null) {
+                accountRole.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+            }
 
         upsert accountRole;
         return accountRole;
