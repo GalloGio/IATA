@@ -25,20 +25,17 @@ public class PlatformEvents_Helper {
         
         try{
             Map<Id,sObject> InternalObjectMap = new map<id, sObject>();
-            Map<ID, Schema.RecordTypeInfo> mapRT = new Map<ID, Schema.RecordTypeInfo>(); 
-            
-            mapRT.putAll(Schema.getGlobalDescribe().get(ObjSource).getDescribe().getRecordTypeInfosById());
+            List<RecordType> rtList = RecordTypeSingleton.getInstance().getRecordTypesBySObject(ObjSource);
             
             if(ObjSource == 'Account'){
-            	mapRT.putAll(Schema.getGlobalDescribe().get('Account_Role__c').getDescribe().getRecordTypeInfosById());
+            	rtList.addAll(RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account_Role__c'));
             	InternalObjectMap = getAccountRoleToPublish(ObjectMap);
             }
             else if( ObjSource =='Contact'){
-            	mapRT.putAll(Schema.getGlobalDescribe().get('Account_Contact_Role__c').getDescribe().getRecordTypeInfosById());
+                rtList.addAll(RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account_Contact_Role__c'));
             	InternalObjectMap = getAccountContactRoleToPublish(ObjectMap);
             }
             else InternalObjectMap = ObjectMap;
-            
             
             List<SObject> lstSObjs = new list<SObject>();
             
@@ -48,8 +45,8 @@ public class PlatformEvents_Helper {
                 SObject sObj = Schema.getGlobalDescribe().get(PEObjName.get(string.valueOf(ObjId.getsobjecttype()))).newSObject();
                 for(string FieldSource:MapMapping.keyset()){
                     if(FieldSource=='Recordtype')
-                        if(mapRT.size()>1) //master is there. check if there is anything else. if no other recortyoe but master, field "RecorDTypeId" doesn't exist....
-                            sObj.put(MapMapping.get(FieldSource) , RTName(string.valueOf(ObjId.getsobjecttype()), (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))));
+                        if(!rtList.isEmpty()) 
+                            sObj.put(MapMapping.get(FieldSource) , RecordTypeSingleton.getInstance().getRecordTypeById(ObjSource, (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))).Name);
                         else
                             sObj.put(MapMapping.get(FieldSource), null);
                         
@@ -86,11 +83,6 @@ public class PlatformEvents_Helper {
         }
         
         if(!lsLogs.isEmpty()) insert lsLogs;
-    }
-    
-    private static string RTName(string theObject, id RTId){
-        if(RTId==null)  return null;
-        return Schema.getGlobalDescribe().get(theObject).getDescribe().getRecordTypeInfosById().get(RTId).getName();
     }
     
     private static map<string, string> getMappingMap(string sObj){

@@ -671,7 +671,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
           update IDCardApplicationNR;
 
           //upgrade for payment: according to record type will redirect to payment or not.
-          String singleRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+          String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
           
           if (IDCardApplicationNR.RecordTypeId != null && IDCardApplicationNR.RecordTypeId.equals(singleRT)) {
@@ -731,7 +731,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
           update IDCardApplicationNR;
 
           //upgrade for payment: according to record type will redirect to payment or not.
-          String singleRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+          String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
           if (IDCardApplicationNR.RecordTypeId != null && IDCardApplicationNR.RecordTypeId.equals(singleRT)) {
             Pagereference checkoutPage = Page.IDCard_CheckoutSingleApplication;
             checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationNR.Id));
@@ -1105,7 +1105,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
     Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(iataCode);
 
-    IATA_ISO_Country__c[] listCountries = [Select i.Name, i.AIMS_Area_Name__c, i.Id, i.ISO_Code__c, IATA_Regional_Office__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+    List<IATA_ISO_Country__c> listCountries = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
     if (listCountries == null || listCountries.size() == 0) {
       throw new IDCardApplicationException(string.format(Label.ID_Card_Invalid_ISO_Country, new string[] { theAccount.BillingCountry }));
     }

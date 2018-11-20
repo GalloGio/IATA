@@ -29,8 +29,7 @@ private class IDCard_CheckoutController_KATest {
 
     private static void createTestData() {
 
-        Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account');
-        Id rtidca = idcardAppRT.get('IATA_Agency');
+		Id rtidca = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account account1 = new Account();
         account1.RecordTypeId = rtidca;
@@ -46,36 +45,38 @@ private class IDCard_CheckoutController_KATest {
         account1.Is_AIMS_Account__c = true;
         insert account1;
 
-        ID_Card_Application__c idCardApplication1 = new ID_Card_Application__c();
-        idCardApplication1.Approving_Manager_s_Name__c = 'Manager Name';
-        idCardApplication1.Approving_Manager_s_Email__c = 'manager@email.com';
-        idCardApplication1.Date_of_Birth__c = date.newInstance(1980, 1, 1);
-        idCardApplication1.Displayed_Name__c = 'ContactOne UserOne';
-        idCardApplication1.Duties_in_Current_Agency__c = 'Administration';
-        idCardApplication1.Email_admin__c = 'johnsonk@iata.org';
-        idCardApplication1.First_Name__c = 'ContactOne';
-        idCardApplication1.Gender__c = 'M';
-        idCardApplication1.Hours_worked__c = '35h or more';
-        idCardApplication1.Hours_Worked_Validation_Failed__c =false;
-        idCardApplication1.IATA_Code__c = '67504242';
-        idCardApplication1.IDCard_Expedite_Delivery__c  = false;
-        idCardApplication1.Last_Name__c = 'UserOne';
-        idCardApplication1.Middle_Initial__c = 'K';
-        idCardApplication1.Package_of_Travel_Professionals_Course_1__c = 'Geography in Travel Planning';
-        idCardApplication1.Package_of_Travel_Professionals_Course_2__c = 'Destination Geography';
-        idCardApplication1.Position_in_Current_Agency__c = 'Director';
-        idCardApplication1.Promotion_Code__c = 'Inv';
-        idCardApplication1.Renewal_From_Replace__c = false;
-        idCardApplication1.Revenue_Confirmation__c = true;
-        idCardApplication1.Solicitation_Flag__c = false;
-        idCardApplication1.Start_Date_Agency_Month__c = 'January';
-        idCardApplication1.Start_Date_Agency_Year__c = '2003';
-        idCardApplication1.Start_Date_Industry__c = '2000';
-        idCardApplication1.Telephone__c = '5145550001';
-        idCardApplication1.Title__c = 'Mrs.';
-        idCardApplication1.Type_of_application__c = IDCardUtil.APPLICATIONTYPE_NEW;
-        idCardApplication1.UIR__c = '';
-        idCardApplication1.VER_Number__c = '';
-        insert idCardApplication1;
-    }
+		ID_Card_Application__c idCardApplication1 = new ID_Card_Application__c();
+		idCardApplication1.Approving_Manager_s_Name__c = 'Manager Name';
+		idCardApplication1.Approving_Manager_s_Email__c = 'manager@email.com';
+		idCardApplication1.Date_of_Birth__c = date.newInstance(1980, 1, 1);
+		idCardApplication1.Displayed_Name__c = 'ContactOne UserOne';
+		idCardApplication1.Duties_in_Current_Agency__c = 'Administration';
+		idCardApplication1.Email_admin__c = 'johnsonk@iata.org';
+		idCardApplication1.First_Name__c = 'ContactOne';
+		idCardApplication1.Gender__c = 'M';
+		idCardApplication1.Hours_worked__c = '35h or more';
+		idCardApplication1.Hours_Worked_Validation_Failed__c =false;
+		idCardApplication1.IATA_Code__c = '67504242';
+		idCardApplication1.IDCard_Expedite_Delivery__c  = false;
+		idCardApplication1.Last_Name__c = 'UserOne';
+		idCardApplication1.Middle_Initial__c = 'K';
+		idCardApplication1.Package_of_Travel_Professionals_Course_1__c = 'Geography in Travel Planning';
+		idCardApplication1.Package_of_Travel_Professionals_Course_2__c = 'Destination Geography';
+		idCardApplication1.Position_in_Current_Agency__c = 'Director';
+		idCardApplication1.Promotion_Code__c = 'Inv';
+		idCardApplication1.Renewal_From_Replace__c = false;
+		idCardApplication1.Revenue_Confirmation__c = true;
+		idCardApplication1.Solicitation_Flag__c = false;
+		idCardApplication1.Start_Date_Agency_Month__c = 'January';
+		idCardApplication1.Start_Date_Agency_Year__c = '2003';
+		idCardApplication1.Start_Date_Industry__c = '2000';
+		idCardApplication1.Telephone__c = '5145550001';
+		idCardApplication1.Title__c = 'Mrs.';
+		idCardApplication1.Type_of_application__c = IDCardUtil.APPLICATIONTYPE_NEW;
+		idCardApplication1.UIR__c = '';
+		idCardApplication1.VER_Number__c = '';
+		idCardApplication1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application'); 
+
+		insert idCardApplication1;
+	}
 }

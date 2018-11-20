@@ -19,14 +19,11 @@ private class ANG_BatchAggregatePwcDataTest {
         currentDateTime = DateTime.now();
 
         // Required record types for AMS_Country_Specific_Attribute__c
-       	// RecordType recordTypeDefLfc = [SELECT Id FROM RecordType WHERE SobjectType = 'AMS_Country_Specific_Attribute__c' AND DeveloperName = 'DEF_LFC'];
-       	Id recordTypeDefLfcId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByName().get('DEF LFC').getRecordTypeId();
+       	Id recordTypeDefLfcId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'DEF_LFC');
         
-        //RecordType recordTypeIrrsLfc = [SELECT Id FROM RecordType WHERE SobjectType = 'AMS_Country_Specific_Attribute__c' AND DeveloperName = 'IRRS_LFC'];
-       	Id recordTypeIrrsLfcId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByName().get('IRRS LFC').getRecordTypeId();
+       	Id recordTypeIrrsLfcId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'IRRS_LFC');
         
-       	//RecordType recordTypeIrrCpe = [SELECT Id FROM RecordType WHERE SobjectType = 'AMS_Country_Specific_Attribute__c' AND DeveloperName = 'IRR_CPE'];
-        Id recordTypeIrrCpeId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByName().get('IRR CPE').getRecordTypeId();
+        Id recordTypeIrrCpeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'IRR_CPE');
 
         // Create ISO countries
         IATA_ISO_Country__c isoCountry1 = new IATA_ISO_Country__c();
@@ -87,7 +84,7 @@ private class ANG_BatchAggregatePwcDataTest {
         countrySpecificAttributesWithoutId.add(countrySpecificAttribute4);
         insert countrySpecificAttributesWithoutId;
 
-        Id accRTId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        Id accRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         // Create accounts
         Account account1 = new Account(
@@ -154,11 +151,9 @@ private class ANG_BatchAggregatePwcDataTest {
         insert accountsWithoutId;
 
         // Required record types for Agency_Applied_Change_code__c
-        //RecordType recordTypeStandard = [SELECT Id FROM RecordType WHERE SobjectType = 'Agency_Applied_Change_code__c' AND DeveloperName = 'Standard'];
-        Id recordTypeStandard =  Schema.SObjectType.Agency_Applied_Change_code__c.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        Id recordTypeStandard =  RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Standard');
 
-        //RecordType recordTypeIrregularities = [SELECT Id FROM RecordType WHERE SobjectType = 'Agency_Applied_Change_code__c' AND DeveloperName = 'Irregularities'];
-        Id recordTypeIrregularities = Schema.SObjectType.Agency_Applied_Change_code__c.getRecordTypeInfosByName().get('Irregularities').getRecordTypeId();
+        Id recordTypeIrregularities = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
 
         // Create agency applied change codes for DEF & DEFNONPAY
         Agency_Applied_Change_code__c agencyAppliedChangeCode1 = new Agency_Applied_Change_code__c();

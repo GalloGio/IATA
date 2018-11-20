@@ -19,7 +19,9 @@ global class AMS_ValidateAccSpecialChars_Batch implements Database.Batchable<sOb
 		get {
 			if(countriesIds == null){
 				List<String> sCountries = UtilityCS__c.getInstance('AMS_ValidateAccSpecialChars_Countries').Value__c.split(';');
-				List<IATA_ISO_Country__c> lstCountries = [select ID, Name from IATA_ISO_Country__c where Name IN :sCountries];
+				Set<String> sCountriesSet = new Set<String>();
+				sCountriesSet.addAll(sCountries);
+				List<IATA_ISO_Country__c> lstCountries = IATAIsoCountryDAO.getIsoCountryByCountriesName(sCountriesSet);
 				List<Id> ids = new List<Id>();
 				for(IATA_ISO_Country__c ctr : lstCountries){
 					System.debug('countriesIds - Name: '+ ctr.Name +' - Id: ' + ctr.Id);

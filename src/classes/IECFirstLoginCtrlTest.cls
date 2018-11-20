@@ -22,7 +22,7 @@ private class IECFirstLoginCtrlTest {
     @isTest static void changePWDPage() {
 
         String UID =  Comm_User_Helper.NewGuid();
-        ID Hq  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+        ID Hq  =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
         
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );

@@ -3,7 +3,7 @@ private class AMS_PCI_Complaint_Batch_Test {
 
 	@testSetup static void setup() {		
 
-		ID certRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId(); //FM AMSU-113
+		ID certRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION'); //FM AMSU-113
 		
 		DateTime dt = system.now()+90;
 		Date d = date.newinstance(dt.year(), dt.month(), dt.day());
@@ -18,24 +18,13 @@ private class AMS_PCI_Complaint_Batch_Test {
 		insert countrylist;
 		
 		List<Account> agencylist = new List<Account>();
-		Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account a1 = new Account(Name='Test1 Agency', RecordtypeId=agencyRT,
 			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
 			IATACode__c = '12345678', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED, 
 			Is_PCI_compliant__c = 'No', ANG_PCI_compliance_expiry_date__c = d);
-		/*
-		Account a2 = new Account(Name='Test1 Agency', RecordtypeId=agencyRT,
-			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
-			IATACode__c = '12345679', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED, 
-			Is_PCI_compliant__c = 'Yes', ANG_PCI_compliance_expiry_date__c = d);
-		Account a3 = new Account(Name='Test1 Agency', RecordtypeId=agencyRT,
-			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
-			IATACode__c = '12345679', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED, 
-			Is_PCI_compliant__c = 'Nil CC', ANG_PCI_compliance_expiry_date__c = d);
-		*/
 		agencylist.add(a1);
-		//agencylist.add(a2);
-		//agencylist.add(a3);
+
 		insert agencylist;
 
         Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1_2', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'testmauz@testmauz.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
@@ -63,7 +52,8 @@ private class AMS_PCI_Complaint_Batch_Test {
 
 	}
 	
-	static testMethod void runStartTest() {		
+	@isTest
+	static void runStartTest() {		
 		Test.startTest();
 		AMS_PCI_Complaint_Batch.start('0 1 * * * ?', 1);
 		AMS_PCI_Complaint_Batch.ErrorWrapper err = new AMS_PCI_Complaint_Batch.ErrorWrapper(null, 'test');
@@ -75,7 +65,7 @@ private class AMS_PCI_Complaint_Batch_Test {
 		try {
 			DateTime dt = system.now();
 			Date d2 = date.newinstance((dt.year() + 1), dt.month(), dt.day());
-			Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+			Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 			List<Account> agencylist = [SELECT Id, Name, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c, Abbreviated_address__c, Abbreviated_name__c, BillingState, BillingCity, IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode, BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c, Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c,Location_Type__c, Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c FROM Account WHERE RecordtypeId=:agencyRT];
 			System.debug('agencylist: ' + agencylist);
 		    AMS_PCI_Complaint_Batch.validateCandidatesForRenewal(agencylist, resChunk, false);

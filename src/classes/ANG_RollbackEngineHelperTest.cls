@@ -5,7 +5,7 @@ private class ANG_RollbackEngineHelperTest {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
         Account a1 = new Account(
 			Is_PCI_compliant__c = 'Yes',
@@ -104,18 +104,18 @@ private class ANG_RollbackEngineHelperTest {
 
 		insert newContact1;
 
-		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+		Id ownerRtId = AMS_Utils.AccountRoleOwnershipRT;
         
         AMS_Account_Role__c role1 = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = a1.Id, Person__c = null, Contact__c = newContact1.Id, Percentage__c=100.0);
         insert role1;
 
-		Id	formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		Id	formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
         authorizations.add(new Agency_Authorization__c(Account__c = a1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         insert authorizations;
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = AMS_Utils.RECTYPE_NGCHANGES;
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
 			Account__c = useAEAccount ? a2.id : a1.id,
@@ -125,14 +125,14 @@ private class ANG_RollbackEngineHelperTest {
 		insert oscar;
 
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = useAEAccount ? a2.id : a1.id;
         oscarCase.ContactId = newContact1.Id;
         insert oscarCase;
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
 		Account accountToUse = useAEAccount ? a2 : a1;
 
@@ -191,7 +191,7 @@ private class ANG_RollbackEngineHelperTest {
 			aa.Status__c = 'Non-Active';
 		}
 
-		Id	formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		Id	formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
 
         Agency_Authorization__c aa = new Agency_Authorization__c(Account__c = accts.get(0).Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT);
 
@@ -269,7 +269,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		insert newContact;
 
-		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+		Id ownerRtId = AMS_Utils.AccountRoleOwnershipRT;
 
 		AMS_Account_Role__c oldRole = [select Id, Percentage__c from AMS_Account_Role__c];
 		oldRole.Percentage__c = 50.0;
@@ -333,7 +333,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
         Account a1 = new Account(
 			Is_PCI_compliant__c = 'Yes',
@@ -463,7 +463,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
 		Test.StopTest();
 /*
@@ -526,7 +526,7 @@ private class ANG_RollbackEngineHelperTest {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
         Account a1 = new Account(
 			Is_PCI_compliant__c = 'Yes',
@@ -588,7 +588,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		insert newContact1;
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = AMS_Utils.RECTYPE_NGCHANGES;
 
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
@@ -599,14 +599,14 @@ private class ANG_RollbackEngineHelperTest {
 		insert oscar;
 
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
         oscarCase.ContactId = newContact1.Id;
         insert oscarCase;
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
                  // Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -684,7 +684,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
         Account a1 = new Account(
 			Is_PCI_compliant__c = 'Yes',
@@ -776,7 +776,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
         Account a1 = new Account(
 			Is_PCI_compliant__c = 'Yes',
@@ -899,7 +899,7 @@ private class ANG_RollbackEngineHelperTest {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
         Account a1 = new Account(
 			Is_PCI_compliant__c = 'Yes',
@@ -937,12 +937,12 @@ private class ANG_RollbackEngineHelperTest {
 
 		insert newContact1;
 
-		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+		Id ownerRtId = AMS_Utils.AccountRoleOwnershipRT;
         
         AMS_Account_Role__c role1 = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = a1.Id, Person__c = null, Contact__c = newContact1.Id, Percentage__c=100.0);
         insert role1;
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = AMS_Utils.RECTYPE_NGCHANGES;
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
 			Account__c = a1.id,
@@ -951,7 +951,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		insert oscar;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.id;
@@ -1001,7 +1001,7 @@ private class ANG_RollbackEngineHelperTest {
         insert re1;	
 
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
 		Test.StopTest();
 		

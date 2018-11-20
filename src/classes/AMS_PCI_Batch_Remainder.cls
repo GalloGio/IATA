@@ -64,7 +64,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
     }
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         String accountStatus = AMS_Utils.ACC_S0_TERMINATED;
         String reason = 'PCI DSS Compliant';        
 
