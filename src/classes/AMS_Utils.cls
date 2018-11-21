@@ -154,6 +154,8 @@ public without sharing class AMS_Utils {
     public static final String AE = 'AE';
 
     public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
+    public static final String PORTAL_APP_ACCESS_REQUESTED = 'Access Requested';
+    public static final String PORTAL_APP_ACCESS_DENIED = 'Access Denied';
 
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;

@@ -25,12 +25,27 @@ public with sharing class ISSP_Financial_Institutions {
 		set;
 	}
 	private String gdiPortalAppId {get; set;}
+	public String gdiPortalAppURL {get; private set;}
 	private String conId {get; set;}
 	private String agencyCountry {get; set;}
-	public Boolean hasGDIAppRight {
+	public Boolean gdiAppRightGranted {
 		get {
-			if (hasGDIAppRight == null) hasGDIAppRight = false;
-			return hasGDIAppRight;
+			if (gdiAppRightGranted == null) gdiAppRightGranted = false;
+			return gdiAppRightGranted;
+		}
+		private set;
+	}
+	public Boolean gdiAppRightDenied {
+		get {
+			if (gdiAppRightDenied == null) gdiAppRightDenied = false;
+			return gdiAppRightDenied;
+		}
+		private set;
+	}
+	public Boolean gdiAppRightRequested {
+		get {
+			if (gdiAppRightRequested == null) gdiAppRightRequested = false;
+			return gdiAppRightRequested;
 		}
 		private set;
 	}
@@ -89,11 +104,12 @@ public with sharing class ISSP_Financial_Institutions {
 		}
 		private set;
 	}
+	private Portal_Application_Right__c gdiPar {get; set;}
 
 	public ISSP_Financial_Institutions() {}
 
 	private List<Financial_Institution__c> fetchFinancialInstitutions() {
-		List<Portal_Applications__c> portalAppList = [SELECT Id, Application_URL__c, (SELECT Id, Contact__c, Contact__r.Account.Country_ISO_Code__c
+		List<Portal_Applications__c> portalAppList = [SELECT Id, Application_URL__c, (SELECT Id, Contact__c, Contact__r.Account.Country_ISO_Code__c, Right__c
 														   		  					  FROM Portal_Application_Rights__r 
 														   		                      WHERE Contact__c IN (SELECT ContactId 
 														   							   					   FROM User 
@@ -105,12 +121,25 @@ public with sharing class ISSP_Financial_Institutions {
 											   		  LIMIT 1];
 				
 		if (!portalAppList.isEmpty()) {
-			gdiPortalAppId = portalAppList[0].Id;	
+			Portal_Applications__c gdiPortalApp = portalAppList[0];
+			
+			gdiPortalAppId = gdiPortalApp.Id;
+			gdiPortalAppURL = gdiPortalApp.Application_URL__c;
 
-			if (!portalAppList[0].Portal_Application_Rights__r.isEmpty()) {
-				conId = portalAppList[0].Portal_Application_Rights__r[0].Contact__c;
-				agencyCountry = portalAppList[0].Portal_Application_Rights__r[0].Contact__r.Account.Country_ISO_Code__c;
-				hasGDIAppRight = true;
+			if (!gdiPortalApp.Portal_Application_Rights__r.isEmpty()) {
+				Portal_Application_Right__c existingGDIPortalAppRight = gdiPortalApp.Portal_Application_Rights__r[0];
+
+				conId = existingGDIPortalAppRight.Contact__c;
+				agencyCountry = existingGDIPortalAppRight.Contact__r.Account.Country_ISO_Code__c;
+				//hasGDIAppRight = true;
+
+				if (existingGDIPortalAppRight.Right__c == AMS_Utils.PORTAL_APP_ACCESS_DENIED)
+					gdiAppRightDenied = true;
+				else if (existingGDIPortalAppRight.Right__c == AMS_Utils.PORTAL_APP_ACCESS_GRANTED)
+					gdiAppRightGranted = true;
+				else if (existingGDIPortalAppRight.Right__c == AMS_Utils.PORTAL_APP_ACCESS_REQUESTED)
+					gdiAppRightRequested = true;
+
 			} else {
 				User currentPortalUser = [SELECT Id, ContactId, Contact.Account.Country_ISO_Code__c FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
 				conId = currentPortalUser.ContactId;
@@ -121,7 +150,8 @@ public with sharing class ISSP_Financial_Institutions {
 		List<Financial_Institution__c> financialInstitutions = [SELECT Id, Name, Website__c
 																FROM Financial_Institution__c
 																WHERE Institution_Status__c = 'Active'
-																	AND Financial_Security_Country_Coverage__c INCLUDES (:agencyCountry)];
+																	AND Financial_Security_Country_Coverage__c INCLUDES (:agencyCountry)
+																ORDER BY Name ASC];
 
 		if (!financialInstitutions.isEmpty()) {
 			financialInstitutionsFound = true;
@@ -132,22 +162,24 @@ public with sharing class ISSP_Financial_Institutions {
 		return financialInstitutions;
 	}
 
-	public void createPortalAppRight() {
+	public void startGDIPortalAppRightCreation() {
 		if (!termsAndConditions) {
 			currentErrorMessage = 'Please accept Terms & Conditions';
 			return;
 		}
-		
-		Portal_Application_Right__c par = new Portal_Application_Right__c(Contact__c = conId,
-							                                              Portal_Application__c = gdiPortalAppId,
-							                                              Right__c = 'Access Requested',
-							                                              Terms_Acceptance__c = termsAndConditions,
-							                                              Terms_Acceptance_Date__c = Datetime.now());
-		insert par;
-
-		userFailedProvisioningCount = [SELECT COUNT() FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
 
 		gdiPolling = true;
+	}
+
+	public void createPortalAppRight() {
+		gdiPar = new Portal_Application_Right__c(Contact__c = conId,
+							                     Portal_Application__c = gdiPortalAppId,
+							                     Right__c = 'Access Requested',
+							                     Terms_Acceptance__c = termsAndConditions,
+							                     Terms_Acceptance_Date__c = Datetime.now());
+		insert gdiPar;
+
+		userFailedProvisioningCount = [SELECT COUNT() FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
 		getSSOPermissionSet();
 	}
 
@@ -166,6 +198,9 @@ public with sharing class ISSP_Financial_Institutions {
         if (!gdiPermSetAssignmentList.isEmpty()) {
         	gdiPolling = false;
         	ssoPermSetAssigned = true;
+
+        	gdiPar.Right__c = 'Access Granted';
+        	update gdiPar;
         } else {
         	List<UserProvisioningRequest> provRequestFailedList = [SELECT Id FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
 
