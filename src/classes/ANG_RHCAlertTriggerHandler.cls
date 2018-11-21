@@ -712,7 +712,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         List<String> toAddresses = new List<String>();
         for (RTS_Senior_Manager__c sManager: sManagers) {
-            if (sManager.Active__c && String.isNotBlank(sManager.sManager.Email__c))
+            if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
                 toAddresses.add(sManager.Email__c);
         }
 
