@@ -5,7 +5,7 @@ trigger trgCaseEscalationMailNotificationICH on Case ( after insert, after updat
  // Create Contact
  boolean hasEmail = false;
  
-ID RecId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
+ID RecId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
     list<Case> cases = new list<Case>();
     for (Case c : trigger.new)
     {

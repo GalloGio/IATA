@@ -381,8 +381,8 @@ public class ISSP_Ctrl_BuyCertificate {
         try 
         {      
             //Assign RecordType
-            Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
-            Id CaseOSCARid = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+            Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
+            Id CaseOSCARid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
             
             //Assign Account_Concerned__c
             List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name,IATA_ISO_Country__r.OSCAR_enabled__c, Site, Sector__c, IATACode__c, Field_Head_Office__c ,Region_formula__c

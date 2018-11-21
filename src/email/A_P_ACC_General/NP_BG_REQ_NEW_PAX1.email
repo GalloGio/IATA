@@ -1,0 +1,58 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); margin: 0in 0in 0pt;" class="MsoNormal"><strong style="font-family: Arial; font-size: 12pt;"><font size="2">{!Account.Name}</font></strong></p>
+<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); margin: 0in 0in 0pt;" class="MsoNormal"><b style="mso-bidi-font-weight: normal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"><o:p><font size="2"></font></o:p></span></b></p>
+<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); margin: 0in 0in 0pt;" class="MsoNormal"><!--?xml:namespace prefix = st1 ns = "urn:schemas-microsoft-com:office:smarttags" /--><!--?XML:NAMESPACE PREFIX = ST1 /--><!--?xml:namespace prefix = st1 /--><!--?xml:namespace prefix = st1 /--><st1:address w:st="on"><st1:street w:st="on"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"><font size="2">{!Account.BillingAddress}</font></span></st1:street></st1:address></p>
+<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); margin: 0in 0in 0pt;" class="MsoNormal"><font size="2"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"></span><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p></o:p></span></font></p>
+<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); margin: 0in 0in 0pt;" class="MsoNormal"><u><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p><span style="TEXT-DECORATION: none"><font size="2"></font></span></o:p></span></u></p>
+<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); margin: 0in 0in 0pt;" class="MsoNormal"></p>
+<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"><br></font></span></p><div style="font-family: Arial; font-size: 13.3333px;"><p class="MsoNormal"><span lang="EN-GB">Dear Sir/ Madam<o:p></o:p></span></p>
+
+<p class="MsoNormal"><b><u><span lang="EN-GB">&nbsp;</span></u></b></p>
+
+<p class="MsoNormal"><b><u><span lang="EN-GB">Request
+for Bank Guarantee<o:p></o:p></span></u></b></p>
+
+<p class="MsoNormal"><br></p>
+
+<p class="MsoNormalCxSpMiddle" style="text-align:justify;text-justify:inter-ideograph">This has reference to your application for IATA Accreditation. Based on
+your productivity report and financial review result you are requested to
+submit a Bank Guarantee for an amount of <b><u><span lang="EN-GB" style="background: white;">NPR 1,100,000/-</span></u></b> with validity till 31 December 2019 in accordance with the format
+attached.<o:p></o:p></p>
+
+<p class="MsoNormalCxSpLast" style="text-align:justify;text-justify:inter-ideograph;
+line-height:150%"><o:p>&nbsp;</o:p></p>
+
+<p class="MsoBodyText"><span lang="EN-GB">We enclose guidelines for your perusal
+and compliance. If the guidelines are not strictly adhered, the Bank Guarantee
+will be returned<b><i>. <o:p></o:p></i></b></span></p>
+
+<p class="MsoBodyText"><b><i><span lang="EN-GB">&nbsp;</span></i></b></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+mso-layout-grid-align:none;text-autospace:none"><span lang="EN-GB">You are
+required to comply and ensure that the BG reaches <b>IATA Nepal address</b> by <b>12 noon of 07 FEB 2018.<o:p></o:p></b></span></p>
+
+<p class="MsoBodyText"><span lang="EN-GB">&nbsp;</span></p>
+
+<p class="MsoNormalCxSpFirst" style="text-align:justify;text-justify:inter-ideograph">Please note, non receipt of the bank guarantee by the above mentioned
+deadline will leave us with no other option but to disapprove of your
+application <o:p></o:p></p>
+
+<p class="MsoNormalCxSpMiddle" style="text-align:justify;text-justify:inter-ideograph"><o:p>&nbsp;</o:p></p>
+
+<p class="MsoNormalCxSpMiddle" style="text-align:justify;text-justify:inter-ideograph">For any clarifications, please do not hesitate to contact us.<o:p></o:p></p>
+
+<p class="MsoNormalCxSpMiddle" style="text-align:justify;text-justify:inter-ideograph;
+line-height:150%">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormalCxSpMiddle">Thanking you and assuring you of our services and co-operation at all<span lang="EN-GB"><o:p></o:p></span></p></div><p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"><br></font></span><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p><font size="2"></font></o:p></span></p>
+<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p><font size="2"></font></o:p></span></p>
+<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2">Yours sincerely,</font></span> </p>
+<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"></font></span></p>
+<p style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0); text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"><br><strong></strong></font></span></p><font size="2" style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);"><strong>
+<p>{!Case.OwnerFullName}</p>
+</strong></font><p style="color: rgb(0, 0, 0); text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><font face="Arial" size="2">IATA Global Delivery Center&nbsp;</font></p>]]></td>
+</tr>
+</table>

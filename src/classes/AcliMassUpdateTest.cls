@@ -25,8 +25,8 @@ private class AcliMassUpdateTest {
                 upsert d;
            
            
-           ID hdqid = [SELECT ID FROM RECORDTYPE WHERE SOBJECTTYPE = 'account' and recordtype.developername = 'iata_airline' limit 1].id;
-           
+           ID hdqid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+         	
            account a = new account(name = 'pippo', NAme_on_AOC__c = 'pippo', acli_status__c = 'Active Company', recordtypeID = hdqid);
            insert a;
            PageReference pageRef = Page.ACliMassUpdate;

@@ -2,10 +2,10 @@
 private class Test_ISSP_PortalUserCreation {
     
     @isTest static void test_method_one() {
-        RecordType rt = [Select id From RecordType Where DeveloperName = 'IATA_Airline' AND sObjectType='Account' limit 1];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = new Account();
         acc.Name = 'Test_PortalUserCreation';
-        acc.RecordTypeId = rt.id;
+        acc.RecordTypeId = rtId;
         insert acc;
         IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
         insert ISO_Country;

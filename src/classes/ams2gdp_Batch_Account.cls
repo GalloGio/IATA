@@ -20,7 +20,6 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		processNextBatch = runNext;
 		extraIds = ids;
 		secondRun = secondR;
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
 		//-- Fields used for Sync
 
@@ -45,18 +44,9 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 				idsCondition += ' AND Location_Class__c IN:  locationsSet';
 			}
 		}
-		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')';
-		// } else {
-		// }
-		// }else if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
-		// 	locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
-		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Location_Class__c IN:  locationsSet';
-		// } else {
-		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')';
-		// }
 
 		//-- Query conditions
-		List<String> conditions = new List<String> {'RecordTypeId= \'' + recordTypes.get('Agency') + '\''
+		List<String> conditions = new List<String> {'RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''
 		        ,	'IATACode__c != null'
 		        ,	'CNS_Agency__c = false'
 		        ,	'CNS_Account__c = false'

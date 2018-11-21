@@ -5,11 +5,12 @@ public with sharing class iecWebDownload_Ctrl_Test {
 	static void test_iecWebDownload_Ctrl(){
 
 		User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
-		
+
 		iecWebDownload_Ctrl iecWebDownloadNot = new iecWebDownload_Ctrl();
 		iecWebDownloadNot.pageLoad();
-
+		
 		System.runAs(usr){
+			
 			// Create Orders 
 			TestDataGenerator.generateApexSetting();
 			List<Account> accounts = TestDataGenerator.generateAccounts(1,true); // 1 Account
@@ -35,6 +36,7 @@ public with sharing class iecWebDownload_Ctrl_Test {
 			iecWebDownload.secretAccessKey = 'secretAccessKey';
 
 			iecWebDownload_Ctrl.updateOrderItemDownloadNumber(orderItems[0].OrderItemNumber, 'OneTimeWebDownload/9648-53/Visio-Quote_Business_Process.pdf');
+
 
 			System.assertEquals(1*24*60*60,iecWebDownload.expires);
 			System.assertEquals(1,orders.size());
