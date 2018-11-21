@@ -333,6 +333,7 @@ private class IDCardUtilTest {
         
         insert application;
         Test.startTest();
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
         ID contactID = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
         Test.stopTest();
     }
@@ -662,9 +663,9 @@ private class IDCardUtilTest {
     }
     
     TestMethod static void UpdateCaseToApproved_RejectedTest(){
-        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
-        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        String massAppRT = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
+        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', AIMS_Area_Name__c = 'test', Enable_Minor_Changes_from_Portal__c = true,
                                     Local_language_Agency_details_required__c = true, ISO_Code__c = 'tq');
         insert country;

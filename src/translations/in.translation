@@ -1512,6 +1512,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>Layanan ini memfasilitasi interaksi dan pertukaran informasi antara perantara kargo/agen serta maskapai yang berpartisipasi dalam Skema Tagihan dan Penyelesaian (BSP) IATA.</label>
         <name>CASSLink_Description</name>
     </customLabels>

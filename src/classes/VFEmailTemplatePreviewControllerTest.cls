@@ -1,13 +1,13 @@
 @isTest
 private class VFEmailTemplatePreviewControllerTest {
 
-    static testMethod void testController() {
+    @isTest
+	static void testController() {
         //create data
         Id countryId = createIsoCountry();
 
-        List<RecordType> emailTempRecordTypes = [Select r.Name, r.Id From RecordType r where r.SobjectType = 'EmailTemplate__c' and r.Name = 'IFAP' limit 1];
-        ID IFAPRecordTypeId = emailTempRecordTypes[0].Id;
-
+        ID IFAPRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'IFAP');
+        
         EmailTemplate__c newTemplate = new EmailTemplate__c (RecordTypeId = IFAPRecordTypeId, Name = 'testET', Template_Type__c = 'FA - Financial Assessment',
                                                     Agent_Type__c = 'IATA Cargo Agent', Template_Language__c = 'English', IATA_ISO_Country__c = countryId,
                                                     Review_Types__c = 'New', Subject__c = 'testSubject', Greeting_Line__c = 'Hello', Body_Section_1__c = 'test Body',

@@ -36,7 +36,7 @@ private class clMassCaseCreationNonComplianceTest {
         con.Financial_Assessment_Contact__c = true;
         insert con;
 
-        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
         Case aCase = new Case();
         aCase.ContactId = con.Id;

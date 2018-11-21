@@ -54,12 +54,12 @@ public with sharing class pkb_SiteMap {
 	// A property to return the proper Sites URL, used to build our full URL later
 	public string siteUrl{
 		get{
-			String surl = site.getcustomwebaddress();
+			String surl = site.getBaseCustomUrl();
 			if ( !String.isNotBlank(surl) ) {
-				surl = site.getcurrentsiteurl();
-				String pref = site.getPrefix();
+				surl = site.getBaseUrl();
+				String pref = site.getPathPrefix();
 				if (pref != null && String.isNotBlank(pref) )
-					surl = surl.removeEndIgnoreCase(site.getPrefix()+'/');
+					surl = surl.removeEndIgnoreCase(site.getPathPrefix()+'/');
 				else
 					surl = surl.removeEndIgnoreCase('/');
 			}

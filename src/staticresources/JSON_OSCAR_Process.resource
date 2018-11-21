@@ -6534,6 +6534,90 @@
             ]
           }
         ]
+      },
+      {
+        "Name": "ANG.GDI.1.0",
+        "Flows": [
+          {
+            "Name": "AMS_OSCAR_GDI_fees",
+            "Steps": [
+              {
+                "Name": "STEP46",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                  "STEP46__c"                  
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP47",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                  "Billing_Document_Number__c",
+                  "Send_invoice__c",
+                  "STEP47__c"                  
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP48",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                  "STEP48__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+
+          {
+            "Name": "AMS_OSCAR_GDI_ENDORSEMENT",
+            "Steps": [
+              {
+                "Name": "STEP49",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                  "Endorsement_Requested__c",
+                  "STEP49__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_GDI_FINANCIAL_SECURITY",
+            "Steps": [
+              {
+                "Name": "STEP50",
+                "Required": [],
+                "Actions": [
+	                {
+	                    "FunctionName": "openFS",
+	                    "ActionLabel": "AMS_OSCAR_Action20",
+	                    "args": [
+	                      "oscarid"
+	                    ]
+	          		}
+          		],
+                "Automations": [],
+                "DisplayFields": [
+                  "Financial_Security_Received__c",
+                  "Financial_Security_Information__c",
+                  "STEP50__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
       }   
     ]
   }

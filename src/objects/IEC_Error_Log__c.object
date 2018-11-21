@@ -379,6 +379,36 @@
         <label>Zuora</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>e_commerce</fullName>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Displayed_Message__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Extra_Information__c</columns>
+        <columns>Source__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Data__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>11/9/2018 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>CREATEDBY_USER</field>
+            <operation>equals</operation>
+            <value>Helga Lopez</value>
+        </filters>
+        <filters>
+            <field>CREATEDBY_USER</field>
+            <operation>equals</operation>
+            <value>Tanya McKay</value>
+        </filters>
+        <label>e-commerce</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>E-{0000000000}</displayFormat>
         <label>IEC Error Log Name</label>

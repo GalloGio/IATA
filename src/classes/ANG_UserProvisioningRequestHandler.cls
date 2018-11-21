@@ -8,7 +8,7 @@ public class ANG_UserProvisioningRequestHandler {
 	public ANG_UserProvisioningRequestHandler() {}
 
 	public void onAfterUpdate() {
-		checkIataEasyPayUserProvisioning();
+		checkUserProvisioning();
 	}
 
 	/*public void onAfterInsert() {
@@ -16,15 +16,15 @@ public class ANG_UserProvisioningRequestHandler {
 	}*/
 
 	//
-	// Find all failing EasyPay Provisioning request and delete their portal service access requests (Status = "Access requested")
+	// Find all failing EasyPay or GDI Provisioning request and delete their portal service access requests (Status = "Access requested")
 	//
-	public void checkIataEasyPayUserProvisioning() {
+	public void checkUserProvisioning() {
 
 		Set<String> connectedAppRoles = new Set<String>();
 		Set<String> iepNames = new Set<String>();
 
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()) {	
-			if(role.Connected_App__c != null && role.Connected_App__c.contains('IATA EasyPay')) {
+			if(role.Connected_App__c != null && (role.Connected_App__c.contains('IATA EasyPay') || role.Connected_App__c.contains('Global Default Insurance'))) {
 				connectedAppRoles.add(role.Connected_App_Provisioning_Name__c);
 				iepNames.add(role.Connected_App__c);
 			}

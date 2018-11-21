@@ -235,6 +235,14 @@
         <shortDescription>AMS_OSCAR_Action18</shortDescription>
         <value>Restore Forms of Payment</value>
     </labels>
+
+    <labels>
+        <fullName>AMS_OSCAR_Action20</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action20</shortDescription>
+        <value>Open related Financial Security</value>
+    </labels>
     <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
@@ -766,6 +774,41 @@
         <value>Notice of Termination</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP46</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP46</shortDescription>
+        <value>Request invoice</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP47</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP47</shortDescription>
+        <value>Issue billing document</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP48</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP48</shortDescription>
+        <value>Confirm payment received</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP49</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP49</shortDescription>
+        <value>Request endorsement details</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP50</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP50</shortDescription>
+        <value>Confirm Financial Security Information</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -848,7 +891,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_RollbackCase_Description</shortDescription>
-        <value>Dear colleagues, 
+        <value>Dear colleagues,
 
 Please issue a Credit Note in order to refund the change fee.</value>
     </labels>
@@ -857,7 +900,7 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_XML_GEN_ERROR_RECEIVER</shortDescription>
-        <value>howj@iata.org.prod</value>
+        <value>howj@iata.org</value>
     </labels>
     <labels>
         <fullName>ANG_AE_separate_Legal_Entity</fullName>
@@ -2638,6 +2681,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>Button View all</shortDescription>
         <value>View all</value>
+    </labels>
+    <labels>
+        <fullName>BuyNow</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Buy Now</shortDescription>
+        <value>Buy now</value>
     </labels>
     <labels>
         <fullName>CASSLink_Description</fullName>
@@ -5478,7 +5528,7 @@ Has read only access over different features of the service.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS More About Link</shortDescription>
-        <value>More about the New ICCS</value>
+        <value>ICCS Communications</value>
     </labels>
     <labels>
         <fullName>ICCS_Multiple_Signatories_Change_Message</fullName>
@@ -23921,7 +23971,7 @@ Indicate if this product has chargeback right: Yes or No</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Portal Product VAN Type Label</shortDescription>
-        <value>Enter  if the product is an Agent&apos;s Single-use VAN (Virtual Account Number) or Agent’s Multi-use VAN.  
+        <value>Enter  if the product is an Agent&apos;s Single-use VAN (Virtual Account Number) or Agent’s Multi-use VAN.
 If the product is an Agent&apos;s single-use VAN, then a unique Agent’s VAN number is created for every transaction.
 If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s unique card/account number that can be used multiple times.</value>
     </labels>
@@ -28864,7 +28914,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Max_Account_Reached</shortDescription>
-        <value>Maximum number of accounts reached. Please click on troubleshooting link in the page footer</value>
+        <value>This account has one or more active users. Any additional users(s) must be invited by the Primary User of this account. Please contact the IATA FRED+ Team ( https://fred.iata.org/contact ) for more details.</value>
     </labels>
     <labels>
         <fullName>OneId_Max_Account_Reached2</fullName>
@@ -29255,7 +29305,7 @@ If you believe that it is a mistake, please follow the link below to contact us.
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_UneligibleLoggedUserRegisteringError</shortDescription>
-        <value>You already have an active 1ID session opened. 
+        <value>You already have an active 1ID session opened.
 &lt;br/&gt;
 Note that your user is not eligible for FRED+ access.
 &lt;br/&gt;
@@ -32300,4 +32350,28 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+
+    <labels>
+        <fullName>AMS_OSCAR_GDI_fees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_fees</shortDescription>
+        <value>GDI fees</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_ENDORSEMENT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>GDI Endorsement</value>
+    </labels>
+
+    <labels>
+        <fullName>AMS_OSCAR_GDI_FINANCIAL_SECURITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>Financial Security</value>
+    </labels>
+    
 </CustomLabels>

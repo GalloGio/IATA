@@ -20,8 +20,6 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 		processNextBatch = runNext;
 		extraIds = ids;
 
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
-
 		//-- Fields used for Sync
 		String fields = ' Id, BillingStreet, BillingCity, BillingCountry, IATA_ISO_Country__c, BillingState, IATA_ISO_Billing_State__c, BillingPostalCode'
 			+	', ShippingStreet, ShippingCity, IATA_ISO_Shipping_Country__c, ShippingState,ShippingCountry, IATA_ISO_Shipping_State__c, ShippingPostalCode'
@@ -29,7 +27,7 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 
 		String idsCondition;
 		//-- Query conditions
-		List<String> conditions = new List<String>{'RecordTypeId= \''+recordTypes.get('Agency')+'\''
+		List<String> conditions = new List<String>{'RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''
 		, 'IATACode__c != null'
 		, 'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
 		, 'CNS_Agency__c = false'
@@ -96,78 +94,6 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 			new List<String>{fields,String.join(conditions, ' AND ')}
 		);
 
-		/*String fields = 'Id, Name, Telephone_Int__c, Telephone_STD__c, Telephone__c, Address_1__c, Address_2__c, Address_3__c, City__c, AMS_ZipCode__c, Email__c, Website__c, TTY__c, Address_Type__c'
-			+	', Fax_Int__c, Fax_STD__c, Fax__c '
-			+	', Account__c, Account__r.Phone_Number__c, Account__r.Fax, Account__r.IATACode__c, '
-			+		'Account__r.Check_Digit__c, Account__r.CASS_Number__c, Account__r.Location_Type__c, Account__r.Airline_Code__c, Account__r.Short_Name__c, Account__r.TradeName__c, Account__r.PAX_Cargo__c'
-			+		', Account__r.Company_Type__c, Account__r.GDP_Opt_In__c, Account__r.Ticketing_Agent_First_Name__c, Account__r.Ticketing_Agent_Last_Name__c, Account__r.Manager_First_Name__c'
-			+		', Account__r.Manager_Last_Name__c, Account__r.VAT_Number__c, Account__r.VAT_Number_2__c, Account__r.BSP_CASS_Code__c, Account__r.License_Number__c, Account__r.Preferred_Language__c'
-			+	', Country__c, Country__r.Name, Country__r.International_dialing_code_ISD__c, Country__r.ISO_Code__c'
-			+   ', State__c, State__r.ISO_Code__c' ;
-
-		//-- Query conditions
-		String accreditation_condition = 'SELECT Related_Account__c '
-			+	'FROM Accreditation__c '
-			+	'WHERE Endorsed_Accredited_By__c IN (\'IATA\',\'IATAN\',\'DOM\')'
-			+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
-
-		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
-			, 'Account__r.IATACode__c != null'
-			, 'Account__c IN ('+accreditation_condition+')'
-		};
-
-		if(extraIds!=null && extraIds.size() > 0) {
-			//Run batch on specific Ids
-			List<String> specificIds = new List<String>();
-			for(String s: extraIds)
-			{
-				if(s.length() >= 15)
-					specificIds.add(s.left(15));
-			}
-
-			if(specificIds.size() > 0)	conditions.add('Id IN (\''+String.join(specificIds,'\', \'')+'\')');
-		}else{
-			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
-			if(batchInfo != null)
-			{
-				//Run only on the deltas
-				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
-
-				if(String.isNotBlank(batchInfo.Failed_Records__c))
-				{
-					// Reprocess failed records
-					List<String> failedAccountRecordIds = new List<String>();
-					List<String> failedAddressRecordIds = new List<String>();
-
-					for(String s: batchInfo.Failed_Records__c.split(';'))
-					{
-						if(s.length() >= 15)
-						{
-							if(s.left(3) == '001')
-								failedAccountRecordIds.add(s.left(15));
-							else
-								failedAddressRecordIds.add(s.left(15));
-						}
-					}
-
-					if(failedAddressRecordIds.size() > 0)
-						deltaConditions += ' OR Id IN (\'' + String.join(failedAddressRecordIds, '\' , \'') + '\') ';
-					else if(failedAccountRecordIds.size() > 0)
-						deltaConditions += ' OR Account__c IN (\'' + String.join(failedAccountRecordIds, '\' , \'') + '\') ';
-
-				}
-
-				conditions.add('('+deltaConditions+')');
-			}
-		}
-
-		query = String.format('SELECT {0} '
-			+	'FROM AMS_Address__c '
-			+ 	'WHERE {1} '
-			+	'ORDER BY Account__c ',
-			new List<String>{fields,String.join(conditions, ' AND ')}
-		);*/
 	}
 
 	global ams2gdp_Batch_Address()
