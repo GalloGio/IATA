@@ -48,13 +48,13 @@
     </style>
 
 
-	<flow:interview name="OSCAR_Wizard_SIMPLEX" interview="{!myflow}"  buttonLocation="bottom"  rerender="myPageBlock" buttonStyle="color:black; background-color:#fed; border:1px solid;"  rendered="{!NOT(Account.ANG_IsNewGenAgency__c)}" >
+	<flow:interview name="OSCAR_Wizard_SIMPLEX" interview="{!myflow}"  buttonLocation="bottom"  rerender="myPageBlock" buttonStyle="color:black; background-color:#fed; border:1px solid;"  rendered="{!(NOT(Account.ANG_IsNewGenAgency__c) && NOT(Account.IATA_ISO_Country__r.Enable_NewGen_Pilot__c))}"></flow:interview>
 
-	</flow:interview>
+    <flow:interview name="NewGen_OSCAR_Wizard_SIMPLEX" interview="{!myflowNG}"  buttonLocation="bottom"  rerender="myPageBlock" buttonStyle="color:black; background-color:#fed; border:1px solid;"  rendered="{!(Account.ANG_IsNewGenAgency__c && NOT(Account.IATA_ISO_Country__r.Enable_NewGen_Pilot__c))}"></flow:interview>
 
-    <flow:interview name="NewGen_OSCAR_Wizard_SIMPLEX" interview="{!myflowNG}"  buttonLocation="bottom"  rerender="myPageBlock" buttonStyle="color:black; background-color:#fed; border:1px solid;"  rendered="{!Account.ANG_IsNewGenAgency__c}">
+    <flow:interview name="NewGen_Pilot_OSCAR_Wizard_China" interview="{!myFlowNGPilot}"  buttonLocation="bottom"  rerender="myPageBlock" buttonStyle="color:black; background-color:#fed; border:1px solid;" rendered="{!Account.IATA_ISO_Country__r.Enable_NewGen_Pilot__c}"></flow:interview>
 
-    </flow:interview>
+    
     
     <apex:form >
        
