@@ -22,7 +22,7 @@ public class AMS_AccountOscarWizardController {
 
     public Account getAccount() {
         if(ApexPages.currentPage().getParameters().get('accountId') != null)
-            return [select ANG_IsNewGenAgency__c from Account
+            return [select ANG_IsNewGenAgency__c, IATA_ISO_Country__r.Enable_NewGen_Pilot__c from Account
                     where id = :ApexPages.currentPage().getParameters().get('accountId')];
         return null;
     }
