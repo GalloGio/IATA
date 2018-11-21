@@ -23,10 +23,6 @@
             });
 		}
 		
-		function checkMulticountry(isMulticountry){
-			if(isMulticountry)
-				refreshTab();
-		}
 	</script>
 
 

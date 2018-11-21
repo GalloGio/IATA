@@ -104,7 +104,6 @@ public with sharing class ANG_MulticountryAccountCreatorController {
     }
 
     public PageReference saveAccount() {
-        System.debug('ACCOUNTS: ' + listAccount);
         For(Account acct : listAccount){
 
             if(acct.id == null){
@@ -126,7 +125,6 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	
 	public PageReference removeAccount() {
 		
-		system.debug('ACCOUNT INDEX: ' + accIndex);
         Account acct = listAccount.remove(accIndex);
         
         if(acct.id != null){
@@ -149,21 +147,21 @@ public with sharing class ANG_MulticountryAccountCreatorController {
     		ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,'You need at least 2 accounts from different countries to have a multicountry hierarchy');
         	ApexPages.addMessage(myMsg);   
     	}
-        
     }
     
     private boolean checkMulticountry(){
+    	
     	isHierarchyMulticountry = false;
     	if(listAccount.size() < 2){
-    		System.debug('Is Hierarchy Multicountry ? ' + isHierarchyMulticountry);
     		return isHierarchyMulticountry;
     	}
+    	
     	Account firstAcc = listAccount.get(0);
     	for(Account ac: listAccount){
     		if(firstAcc.IATA_ISO_Country__c != ac.IATA_ISO_Country__c)
     			isHierarchyMulticountry = true;
     	}
-    	System.debug('Is Hierarchy Multicountry ? ' + isHierarchyMulticountry);
+    	
     	return isHierarchyMulticountry;
     }
 }
