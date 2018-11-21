@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>AFR 2012 - Missing Information</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AFR 2012 - Missing Information</name>
+    <style>freeForm</style>
+    <subject>Annual Financial Review 2012 - Missing Information</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

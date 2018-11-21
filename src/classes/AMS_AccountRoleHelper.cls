@@ -6,7 +6,7 @@ public class AMS_AccountRoleHelper {
 	public Map<Id, AMS_Account_Role__c> newMap = (Map<Id,AMS_Account_Role__c>) Trigger.newMap;
 	public Map<Id, AMS_Account_Role__c> oldMap = (Map<Id,AMS_Account_Role__c>) Trigger.oldMap;
 
-	public Id ownerRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+	public Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
 	private List<String> aimsLegacySystems{
 		get{
@@ -21,7 +21,7 @@ public class AMS_AccountRoleHelper {
 		System.debug(loggingLevel.Debug, '\n____ [cls AMS_AccountRoleHelper - aimsOwnerMerge] ************ start ');
 
 		List<AMS_Account_Role__c> ownersToCheck = new List<AMS_Account_Role__c>();
-		Id ownerRecType = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+		Id ownerRecType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		for(AMS_Account_Role__c owner : triggerNew){
 		    if(owner.Percentage__c != null && owner.Owner_Sequence__c != null && owner.RecordTypeId == ownerRecTypeId) ownersToCheck.add(owner);
 		}
@@ -109,7 +109,7 @@ public class AMS_AccountRoleHelper {
 
 	/*** AMSU-171 ***/
 	public static void calculateCoveredOwnership(List<AMS_Account_Role__c> records, Map<Id,AMS_Account_Role__c> oldMap) {
-		Id ownerRecordTypeId = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+		Id ownerRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		Set<Id> accountIds = new Set<Id>();
 		for(AMS_Account_Role__c record : records) {
 			Boolean checkAccount = oldMap == null || (record.Percentage__c != oldMap.get(record.Id).Percentage__c);
@@ -144,81 +144,4 @@ public class AMS_AccountRoleHelper {
 		}
 	}
 
-	/*public void verifyAccountRole(List<AMS_Account_Role__c> newAccountRoles) {
-		System.debug('verifyAccountRole ' + newAccountRoles);
-		Set<Id> stAccountIds = new Set<Id>();
-		Map<Id, Decimal> mpAccountTotalOwnerShip = new Map<Id, Decimal>();
-		Id accountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName = 'IATA_Airline'].Id;
-
-		for(AMS_Account_Role__c ar : newAccountRoles) {
-			stAccountIds.add(ar.Account__c);
-		}
-		List<Account> lsAccounts = [SELECT Id FROM Account WHERE RecordTypeId =:accountRecordTypeId AND Id IN :stAccountIds];
-		stAccountIds.clear();
-		for(Account a: lsAccounts) {stAccountIds.add(a.Id);}
-
-		List<AMS_Account_Role__c> lsExistingAccountRoles =
-			[SELECT Id, Account__c, Owner_Account__c, Percentage__c
-			FROM AMS_Account_Role__c
-			WHERE Account__c IN :stAccountIds
-			AND Active__c = true];
-
-		for(AMS_Account_Role__c ar2 : lsExistingAccountRoles) {
-
-			// 1. get the values of only the ones we're not updating on this run
-			Boolean found = false;
-			for(AMS_Account_Role__c ar : newAccountRoles) {
-				if(ar.Id == ar2.Id) {
-					found = true;
-					break;
-				}
-			}
-			// 2. if this line is not being updated in the trigger, just add to the sum
-			if(!found) {
-				if(!mpAccountTotalOwnerShip.containsKey(ar2.Account__c)) {
-					mpAccountTotalOwnerShip.put(ar2.Account__c, ar2.Percentage__c);
-				} else {
-					Decimal sum = mpAccountTotalOwnerShip.get(ar2.Account__c) + ar2.Percentage__c;
-					mpAccountTotalOwnerShip.put(ar2.Account__c, sum);
-				}
-			}
-		}
-
-		for(AMS_Account_Role__c ar : newAccountRoles) {
-			if(ar.Active__c && stAccountIds.contains(ar.Account__c) ) {
-				if(ar.Percentage__c <= 0) {
-					ar.addError('Percentage cannot be less than 0');
-				}
-				if(ar.Percentage__c > 100) {
-					ar.addError('Percentage cannot be more than 100');
-				}
-				if(ar.Owner_Account__c == ar.Account__c) {
-					ar.addError('The account cannot own itself');
-				}
-				for(AMS_Account_Role__c ar2 : newAccountRoles) {
-					if(ar.Id != ar2.Id  && ar.Owner_Account__c == ar2.Owner_Account__c && ar.Account__c == ar2.Account__c) {
-						ar.addError('The same owner/subsidiary cannot be listed twice');
-					}
-
-				}
-				for(AMS_Account_Role__c ar2 : lsExistingAccountRoles) {
-
-					if(ar.Id != ar2.Id && ar.Owner_Account__c == ar2.Owner_Account__c && ar.Account__c == ar2.Account__c) {
-						ar.addError('The same owner/subsidiary cannot be listed twice');
-					}
-				}
-				if(!mpAccountTotalOwnerShip.containsKey(ar.Account__c)) {
-					mpAccountTotalOwnerShip.put(ar.Account__c, ar.Percentage__c);
-				} else {
-					Decimal sum = mpAccountTotalOwnerShip.get(ar.Account__c) + ar.Percentage__c;
-					if(sum  > 100) {
-						ar.addError('The total ownership cannot be more than 100%');
-					} else {
-						mpAccountTotalOwnerShip.put(ar.Account__c, sum);
-
-					}
-				}
-			}
-		}
-	}*/
 }

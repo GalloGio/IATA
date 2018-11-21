@@ -125,7 +125,7 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
     }
     
     public void newContact(){
-        Id rtsingleapp =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+        Id rtsingleapp =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Single_ID_Card_Operation');
         showNewContact=true;
         showNewContactQuestion=false;
         app = new ID_Card_Application__c(RecordTypeId = rtsingleapp);

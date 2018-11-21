@@ -1,7 +1,7 @@
 public with sharing class SIDRAliteMassApprovalController{
 
     public static final Integer MAX_SEARCH_ELEMENTS = 900;
-    public static final Id SIDRA_LITE_RECORDTYPE = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite').getRecordtypeId();
+    public static final Id SIDRA_LITE_RECORDTYPE = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     public static final String APPROVED = 'Approved';
     public static final String REJECTED = 'Rejected';
 

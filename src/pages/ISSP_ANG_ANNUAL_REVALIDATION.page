@@ -360,9 +360,8 @@
                                 <apex:actionFunction name="cancelUpdate" action="{!cancelUpdate}" status="WaitingStatus" reRender="treeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
                                 <apex:actionFunction name="discardDetails" action="{!discardDetails}" status="WaitingStatus" reRender="treeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
 
-                                <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact, ownershipMessage"/>
-                                <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany, ownershipMessage"/>
-
+                                <apex:actionFunction name="bodyRerender" status="WaitingStatus" rerender="componentsArea, buttonsArea" />
+                                
                                 <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact, ownershipMessage, noUpdateMessage"/>
                                 <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany, ownershipMessage, noUpdateMessage"/>
 
@@ -375,7 +374,7 @@
                                         oncomplete="if ({!contactSaved==true}){hideNewCompanyDialog(); cancelCompanyUpdate();} $('[id$=companySubmitBut]').removeAttr('disabled');">
                                     <apex:param value="" name="contype" assignTo="{!contactType}" />
                                 </apex:actionFunction>
-                                <apex:actionFunction name="fetchTravelAgent3" action="{!fetchAgentDetails}" status="loadingDetailsCompanyModal" reRender="companyModalIataCodeValidation, ownershipMessage, noUpdateMessage">
+                                <apex:actionFunction name="fetchTravelAgent3" action="{!fetchAgentDetails}" status="loadingDetailsCompanyModal" reRender="companyModalIataCodeValidation, ownershipMessage, noUpdateMessage" oncomplete="if({!ownerWithSameIATACode} || ({!companyModalNameOfEmployer == ''} && {!iatacode != ''} && {!iatacode != null})) {$('[id$=companySubmitBut]').attr('disabled','disabled');} else {$('[id$=companySubmitBut]').removeAttr('disabled');}">
                                     <apex:param name="travelAgentCode" assignTo="{!iatacode}" value=""/>
                                     <apex:param name="AgentSector" assignTo="{!agentsector}" value="Both"/>
                                     <apex:param name="isAddCompanyModal" assignTo="{!isAddCompanyModal}" value="true"/>
@@ -982,7 +981,7 @@
 
                                 <apex:inputField value="{!currentAccount.newContact.Registration_number__c}" required="true" />
 
-                                <apex:inputField value="{!currentAccount.newContact.IATACode__c}" onblur="fetchTravelAgent3(this.value.trim())"/>
+                                <apex:inputField value="{!currentAccount.newContact.IATACode__c}" onblur="fetchTravelAgent3(this.value.trim());"/>
 
                                 <apex:actionStatus id="loadingDetailsCompanyModal" startStyleClass="bg-info">
                                     <apex:facet name="start">

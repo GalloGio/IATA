@@ -101,6 +101,33 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>AMS_Country_Configuration__c</fullName>
+        <description>Created by AMS Enhancements to be used instead of checkboxes for new country specific AMS configurations.</description>
+        <externalId>false</externalId>
+        <label>AMS Country Configuration</label>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>TIDS HO</fullName>
+                    <default>false</default>
+                    <label>TIDS HO</label>
+                </value>
+                <value>
+                    <fullName>TIDS BR</fullName>
+                    <default>false</default>
+                    <label>TIDS BR</label>
+                </value>
+
+            </valueSetDefinition>
+        </valueSet>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>AMS_Default_State__c</fullName>
         <description>Some countries don&apos;t have ISO State Mandatory.
 This field will store, for these countries a reference (text) to the &quot;Default&quot; state.
@@ -2473,6 +2500,29 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Postal_Code_Format_regEx__c</fullName>
+        <description>regEx to validate correct Postal Code format on online forms</description>
+        <externalId>false</externalId>
+        <inlineHelpText>regEx to validate correct Postal Code format on online forms</inlineHelpText>
+        <label>Postal Code Format regEx</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Postal_Code_Hint_Format__c</fullName>
+        <externalId>false</externalId>
+        <label>Postal Code Hint / Format</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Prevent_Portal_Trade_Name_Change__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2595,6 +2645,15 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <externalId>false</externalId>
         <label>Sanctioned Country</label>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>State_Province_Mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>State/Province Mandatory</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

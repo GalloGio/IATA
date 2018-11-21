@@ -48,7 +48,7 @@ private class ISSP_ChangePassword_Test {
     	
     	// insert account
         Account newAccount = new Account();
-        newAccount.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+        newAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         newAccount.Name = 'Company';
         insert newAccount;
  
@@ -56,7 +56,6 @@ private class ISSP_ChangePassword_Test {
         Contact newContact = new Contact();
         newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
         newContact.AccountId = newAccount.Id;
-        newContact.OwnerId = IECUserManager.getIECContactOwnerId();
         newContact.FirstName = 'Test';
         newContact.LastName = 'User';
         newContact.Title = 'TestTitle';
@@ -88,6 +87,10 @@ private class ISSP_ChangePassword_Test {
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
         IECUserManager.login(u.Username, 'testpassword', null);
     	
+    	//List <User> userList = [SELECT Id, UID__c FROM User WHERE Id = :usr.Id];
+    	//User myUser = userList[0];
+    	//myUser.UID__c = '1234';
+    	//update myUser;
     	System.runAs(u) {
 	        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();	        
 	        // Test 001: Leave all fields blank

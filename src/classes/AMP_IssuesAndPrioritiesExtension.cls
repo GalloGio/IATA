@@ -20,7 +20,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
     // controller.
     public AMP_IssuesAndPrioritiesExtension(ApexPages.StandardController stdController) {
         this.myAccount = (Account)stdController.getRecord();
-        this.objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName ='Account_Issues_and_Priorities'].Id;
+        this.objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
         showAllItems = false;
         isEditMode = false;
         isNewLine = false;
@@ -170,7 +170,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
   @AuraEnabled
   public static List<Objective__c> getIssuesAndPriorities(Id accountId, String SortOrder) {
-      Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName ='Account_Issues_and_Priorities'].Id;
+      Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
       List<Objective__c> lsIssuesAndPriorities = new List<Objective__c>();
         List<String> lsIssueFields = getIssueFields();
 
@@ -194,7 +194,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
     @AuraEnabled
     public static Objective__c upsertIssue(Objective__c issue) {
         if(issue.RecordTypeId == null ) {
-            Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName ='Account_Issues_and_Priorities'].Id;
+            Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
             issue.RecordTypeId = objectiveRecordTypeId;
         }
         System.debug(issue);

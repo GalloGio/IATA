@@ -67,16 +67,14 @@ public class AcctNoDupe {
             
             /* we search for the ISO code cause we need it to search for the Site*/
             set<Id> iataIsoIDs = intAccPerIso.keySet(); 
-            for(IATA_ISO_Country__c ISO: [SELECT ID,ISO_Code__c 
-                                          FROM IATA_ISO_Country__c
-                                          WHERE ID IN: iataIsoIDs ]){
+
+            for(IATA_ISO_Country__c ISO: IATAIsoCountryDAO.getIsoCountriesByIds(iataIsoIDs)){
                 for(integer i: intAccPerIso.get(ISO.ID))    
                     IsoCodePerACcID.put(i,ISO.ISO_Code__c);                   
                                                       
             }
                             
-                                          
-            
+                                        
             string site;
             string designator;
             string IataCode;

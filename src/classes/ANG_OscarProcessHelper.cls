@@ -125,6 +125,16 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1','A New MSO cannot have more than one Appointment. Please review the appointments section and try again.','-1'};
 			}
 
+			/*** AMSU-161 Start ***/
+			if(oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_GSA 
+			    || oscar.Process__c == AMS_Utils.new_AHA){
+			    String sError = AMS_InspectionHelper.validateGSAforAppointments(oscar, updater.onlineAMap);
+			    if(!sError.equalsIgnoreCase('')){
+			    	return new String[]{'-1',sError+'\n\r','-1'};
+			    }
+			}
+			/*** AMSU-161 End ***/ 
+			
 			System.debug('[ANG_OscarProcessHelper] Execution time so far:' + (datetime.now().getTime() - processStartTime.getTime()) /1000);
 
 			/*** AMSU-37 ***/
@@ -550,7 +560,7 @@ global class ANG_OscarProcessHelper {
 			updater = new EntityUpdater();
 
 
-            ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
+            ID InternalCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 
             List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c from Case where OSCAR__c = : oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
@@ -933,7 +943,7 @@ global class ANG_OscarProcessHelper {
 
 			insert oscar;
 
-	        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+	        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	        fieldsOfObject = new Map<String,Object>();
 	        fieldsOfObject.put('Oscar__c',oscar.Id);
@@ -1098,13 +1108,28 @@ global class ANG_OscarProcessHelper {
 		for (Account acc: accs){
 
 			if(accsToSendEmail.contains(acc.Id))
-	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
+	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(filterContacts(keyContactMap.get(acc.Id)), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
 
 		}
 
         return casesToUpdate;
     }
 
+	public static List<Contact> filterContacts(List<Contact> contacts){
+
+		List<Contact> contactsToReturn = new List<Contact>();
+
+		for(Contact con : contacts){
+
+			if(con.User_Portal_Status__c == 'Approved Admin')
+				contactsToReturn.add(con);
+			else if (con.Financial_Assessment_Contact__c)
+				contactsToReturn.add(con);
+		}
+
+		return contactsToReturn;
+
+	}
 /*
 	private static Contact fetchKeyContact(Account acc, List<Contact> contacts){
 
@@ -1150,7 +1175,7 @@ global class ANG_OscarProcessHelper {
 
 			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c,SIDRA_Lite_Reason__c from Case where Id = :newAccr.SAAM_Case__c LIMIT 1 ];
 
-	        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+	        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 			Map<String,Object> fieldsOfObject = new Map<String,Object>();
 

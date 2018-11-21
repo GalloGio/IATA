@@ -1,0 +1,63 @@
+<apex:page showHeader="false" standardStylesheets="true" sidebar="false"
+  applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" controller="AMP_KeyContactsController">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+	    <head>
+	      <!-- <title>Account Plan</title> -->
+	      <!-- <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/> -->
+	      <style>
+	        @page {
+	            size: A4 landscape; /* A4 landscape (297mm×210mm) */
+	            margin: 3%;
+	        }
+	
+	        .maingroup {background-color:  #f0f0f0;}
+	        th { text-align: left;}
+	        th.narrowColumn {width: 10%;}
+	        th.headerRow {background-color: #bdbdbd !important;}
+	        td { white-space: normal; word-wrap: break-word; max-width: 10em; vertical-align: top !important; border-width: 1px !important;}
+	        /*tr.odd { background: #eee;}*/
+	        table.milestones {width: 98%; margin-left: auto; margin-right: auto; border: 1px solid #aaa; margin-bottom: 2em;}
+	      </style>
+	    </head>
+	
+	    <body onload="window.print()" >
+		    <apex:form >
+		        <apex:pageBlock >
+			        <apex:outputPanel id="issueTable">
+					    <apex:pageMessages />
+					    <table class="list"  border="0" cellpadding="0" cellspacing="0">
+					        <thead class="rich-table-thead">
+					            <tr class="headerRow" >
+					                <th class="headerRow" scope="col" colspan="7" ><div style="text-align:center;">Key Contacts for {!accountName}</div></th>
+					            </tr>
+					            <tr class="headerRow" >
+					                <th class="headerRow" ><div>Contact Name</div></th>
+					                <th class="headerRow" ><div>Contact Type</div></th>
+					                <th class="headerRow" ><div>Primary for</div></th>
+					                <th class="headerRow" ><div>Title</div></th>
+					                <th class="headerRow" ><div>Phone</div></th>
+					                <th class="headerRow" ><div>Mobile</div></th>
+					                <th class="headerRow" ><div>Email</div></th>
+					            </tr>
+					        </thead>
+					
+					        <apex:repeat value="{!lsKeyContactsWrapped}" var="i">
+					            <tr class="dataRow" >
+					
+					                <td class="dataCell " >{!i.con.Name}</td>
+					                <td class="dataCell " ><apex:outputField value="{!i.con.Airline_Contact_Type__c}"/></td>
+					                <td class="dataCell " ><apex:outputText value="{!i.primaryFor}" escape="false"/></td>
+					                <td class="dataCell " >{!i.con.Title}</td>
+					                <td class="dataCell " >{!i.con.Phone}</td>
+					                <td class="dataCell " >{!i.con.MobilePhone}</td>
+					                <td class="dataCell " >{!i.con.Email}</td>
+					            </tr>
+					        </apex:repeat>
+					    </table>
+			        </apex:outputPanel>
+		        </apex:pageBlock>
+		    </apex:form>
+	    </body>
+    </html>
+</apex:page>

@@ -52,8 +52,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     
     global Database.QueryLocator start(Database.BatchableContext BC) {
         Set<String> locations = new Set<String> {AMS_Utils.LC_PASSENGER, 'D'};
-        Id AGENCY_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordtypeId();
-        Id OSCARCOMMRTID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        Id AGENCY_RECORDTYPE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id OSCARCOMMRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         String reason = 'PCI DSS Compliant';
         Set<String> availableStatus = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, 
                                                        AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED,
@@ -69,7 +69,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                        ' ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c,' + 
                        ' Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, BillingCountry,' +
                        ' Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,' +
-                       ' IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c ' +
+                       ' IATA_ISO_Country__r.ISO_Code__c, Company_Type__c, Status__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, Top_Parent__c, ' +
+                       ' IATA_ISO_Country__r.BSP__c ' + //AMSU-177
                        'FROM Account ' + 
                        'WHERE';
 
@@ -173,7 +174,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
         //get contacts of first accounts
         if(!accountIds.isEmpty()) {
-            List<Contact> allContacts = new List<Contact>([SELECT Id, Name, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+            //AMSU-177 -  added "Account.IATA_ISO_Country__r.BSP__c,"
+            List<Contact> allContacts = new List<Contact>([SELECT Id, Name, Email, AccountId, Account.IATA_ISO_Country__r.BSP__c, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
 
             for(Contact c: allContacts){
                 if(!keyContactsPerAccount.containsKey(c.AccountId))
@@ -186,7 +188,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         system.debug('accountIdsHOs: ' + accountIdsHOs);
         //get contacts of topParents and relate them with first account
         if(!accountIdsHOs.isEmpty()){
-            List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Name, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+            //AMSU-177 -  added "Account.IATA_ISO_Country__r.BSP__c,"
+            List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Name, Email, AccountId, Account.IATA_ISO_Country__r.BSP__c, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
 
             for(Contact cHO: allContactsHOs){
 
@@ -217,7 +220,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                                                                    Location_Type__c, Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry,
                                                                    ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, TradeName__c,
                                                                    VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,
-                                                                   IATA_ISO_Country__r.ISO_Code__c, Company_Type__c
+                                                                   IATA_ISO_Country__r.ISO_Code__c, Company_Type__c,
+                                                                   IATA_ISO_Country__r.BSP__c //AMSU-177
                                                             FROM Account WHERE Id IN :accountIds]);
 
         for(Account acc: accountData.values())
@@ -404,7 +408,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             }
             
             //put the contacts in recipents list
-            recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend];
+            //AMSU-177 -  added "Account.IATA_ISO_Country__r.BSP__c,"
+            recipents = [SELECT Id, Email, AccountId, Account.IATA_ISO_Country__r.BSP__c, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend];
             System.debug('IATA recipents list: ' + recipents);
         }
 
@@ -432,13 +437,13 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             //FM 24/10/2017 - AMSU-32 - when DGR case use only one mail message for all the Portal Admin, instead of a mail message per each
             List<String> lPortalAdminsEmailsDGR = new List<String>();
             Map<String, List<Id>> mPortalAdminsEmailsDGR = new Map<String, List<Id>>();
-            Map<String, Contact> mRecipientPortalAdminsEmailsDGR = new Map<String, Contact>();
+            //Map<String, Contact> mRecipientPortalAdminsEmailsDGR = new Map<String, Contact>();
 
             for(Contact recipient: recipents){
                 Id userId = mapContactsVs_User.get(recipient.Id);
 
                 /**For testing purposes**/
-                if(Test.isRunningTest()) userId = UserInfo.getUserId();
+                //if(Test.isRunningTest()) userId = UserInfo.getUserId();
 
                 system.debug('DGR sendEmailAlert: userId : ' + userId);
 
@@ -456,7 +461,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                         if(templateToIATA){
                             mail.setTemplateId(tempIata.get(0).Id);
                         } else {
-                            mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+                            //AMSU-177 - added "+ recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'' "
+                            mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'') , countryTemplates));
                         }
                         //mail.setTargetObjectId(recipient.Id);
                         
@@ -475,28 +481,38 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                         //FM 24/10/2017 - AMSU-32 
                         if(recipient.User_Portal_Status__c == 'Approved Admin'){
 
+                            //AMSU-177
+                            String sPreferred_Language = recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'');
+
                             system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
-                            system.debug('DGR sendEmailAlert: Pref Lang ' + recipient.Preferred_Language__c);
+                            //system.debug('DGR sendEmailAlert: Pref Lang ' + recipient.Preferred_Language__c);
+                            system.debug('DGR sendEmailAlert: Pref Lang ' + sPreferred_Language); //AMSU-177
 
                             //lPortalAdminsEmailsDGR.add(recipient.Email);
-                            if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
-                                system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + recipient.Preferred_Language__c);
+                            //if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
+                            if(mPortalAdminsEmailsDGR.containsKey(sPreferred_Language)){ //AMSU-177
+                                //system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + recipient.Preferred_Language__c);
+                                system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + sPreferred_Language); //AMSU-177
                                 
                                 //List<String> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
                                 //aux.add(recipient.Email);
-                                List<Id> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
+                                //List<Id> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
+                                List<Id> aux = mPortalAdminsEmailsDGR.get(sPreferred_Language); //AMSU-177
                                 aux.add(userId);
                                 
-                                mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
+                                //mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
+                                mPortalAdminsEmailsDGR.put(sPreferred_Language, aux); //AMSU-177
                             }else{
-                                system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + recipient.Preferred_Language__c);
+                                //system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + recipient.Preferred_Language__c);
+                                system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + sPreferred_Language); //AMSU-177
                                 //List<String> aux = new List<String>();
                                 //aux.add(recipient.Email);
                                 List<Id> aux = new List<Id>();
                                 aux.add(userId);
                                 
-                                mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
-                                mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
+                                //mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
+                                mPortalAdminsEmailsDGR.put(sPreferred_Language, aux); //AMSU-177
+                                //mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
                             }
 
                             system.debug('DGR sendEmailAlert: mPortalAdminsEmailsDGR ' + mPortalAdminsEmailsDGR);
@@ -510,7 +526,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                             if(templateToIATA){
                                 mail.setTemplateId(tempIata.get(0).Id);
                             } else {
-                                mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+                                //AMSU-177 - added "+ recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'' "
+                                mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'') , countryTemplates));
                             }
                             //.setTargetObjectId(recipient.Id);
                             mail.setTargetObjectId(userId);
@@ -687,15 +704,21 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
         for(Schema.Picklistentry pe: prefLanguages){
             EmailTemplate langTemplate = auxCountryTemplates.get('AMS_' + type + '_Compliant_' + pe.getValue());
+            EmailTemplate langTemplateNoBSP = auxCountryTemplates.get('AMS_' + type + '_Compliant_NonBSP_' + pe.getValue()); //AMSU-177
 
             //English is default and must exist in the system
             if(langTemplate == null) langTemplate = auxCountryTemplates.get('AMS_' + type + '_Compliant_EN');
+            if(langTemplateNoBSP == null) langTemplateNoBSP = auxCountryTemplates.get('AMS_' + type + '_Compliant_NonBSP_EN'); //AMSU-177
 
             multilangTemplates.put(pe.getValue(), langTemplate.Id);
+            multilangTemplates.put(pe.getValue()+'_NonBSP', langTemplateNoBSP.Id); //AMSU-177
         }
 
         //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
-        if(multilangTemplates.isEmpty()) multilangTemplates.put('English', auxCountryTemplates.get('AMS_' + type + '_Compliant_EN').Id);
+        if(multilangTemplates.isEmpty()){
+            multilangTemplates.put('English', auxCountryTemplates.get('AMS_' + type + '_Compliant_EN').Id);
+            multilangTemplates.put('English', auxCountryTemplates.get('AMS_' + type + '_Compliant_NonBSP_EN').Id); //AMSU-177
+        } 
 
         system.debug(type + ' templates mapping ' + multilangTemplates);
 
