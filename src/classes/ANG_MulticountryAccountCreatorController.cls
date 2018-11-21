@@ -1,5 +1,8 @@
 public with sharing class ANG_MulticountryAccountCreatorController {
     
+    public Integer accIndex {get;set;}
+    public boolean isHierarchyMulticountry {get;set;}
+    
     public List<SelectOption> getItems() {
 
         List<SelectOption> options = new List<SelectOption>();
@@ -8,6 +11,8 @@ public with sharing class ANG_MulticountryAccountCreatorController {
         return options;
     }
 
+	public Boolean hasErrors { get; set;}
+	
     public Boolean closeTab{
 		get{
 			if(closeTab == null) closeTab = false;
@@ -71,6 +76,8 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 
     public ANG_MulticountryAccountCreatorController(ApexPages.StandardController stdController){
         
+        hasErrors = false;
+        
         if(!Test.isRunningTest())
             stdController.addFields(new List<String>(oscarFields));
 
@@ -87,9 +94,8 @@ public with sharing class ANG_MulticountryAccountCreatorController {
                 mainAccount = acct;
             else
                 listAccount.add(acct);
-            
-        
-    }
+        isHierarchyMulticountry = false;
+	}
 
     public void addAccount(){
         
@@ -98,7 +104,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
     }
 
     public PageReference saveAccount() {
-        
+        System.debug('ACCOUNTS: ' + listAccount);
         For(Account acct : listAccount){
 
             if(acct.id == null){
@@ -114,17 +120,50 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 
         if(!listAccount.isEmpty())
             upsert listAccount;
-
+      
+      	return null;
+    }
+	
+	public PageReference removeAccount() {
+		
+		system.debug('ACCOUNT INDEX: ' + accIndex);
+        Account acct = listAccount.remove(accIndex);
+        
+        if(acct.id != null){
+        	delete acct;
+        }
         return null;
     }
-
+	
     public void submitHierarchy(){
-        oscar.ANG_Hierarchy_Created__c = true;
-        update oscar;
-
-        if(!listAccount.isEmpty())
-            upsert listAccount;
-
-        closeTab = true;
+    	if(checkMulticountry()){
+    		oscar.ANG_Hierarchy_Created__c = true;
+	        
+	        upsert listAccount;
+	        update oscar;
+	        
+	        closeTab = true;
+    	}
+    	else{
+    		hasErrors = true;
+    		ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,'You need at least 2 accounts from different countries to have a multicountry hierarchy');
+        	ApexPages.addMessage(myMsg);   
+    	}
+        
+    }
+    
+    private boolean checkMulticountry(){
+    	isHierarchyMulticountry = false;
+    	if(listAccount.size() < 2){
+    		System.debug('Is Hierarchy Multicountry ? ' + isHierarchyMulticountry);
+    		return isHierarchyMulticountry;
+    	}
+    	Account firstAcc = listAccount.get(0);
+    	for(Account ac: listAccount){
+    		if(firstAcc.IATA_ISO_Country__c != ac.IATA_ISO_Country__c)
+    			isHierarchyMulticountry = true;
+    	}
+    	System.debug('Is Hierarchy Multicountry ? ' + isHierarchyMulticountry);
+    	return isHierarchyMulticountry;
     }
 }
