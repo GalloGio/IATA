@@ -98,6 +98,9 @@ public without sharing class AMS_Utils {
 	//AMSU-162
     public static final Set<String> AMS_ProcessesAddressToValidate = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA, new_MSO};
 
+    //AMSU-180
+    public static final Set<String> oscarAMSProcesses_ValidateOwnership = new Set <String>{new_HO, AGENCYCHANGES, new_TIDS, COR};
+
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
     public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE};
 
@@ -129,8 +132,8 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWGENFOP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
     public static final String RECTYPE_NEWGENOPTINOUT  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
     public static final String RECTYPE_NEWGENANNUALREVAL = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
+    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
 
-    public static final String RECTYPE_IEPMODELA   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK ACCOUNT SETUP');
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
@@ -1541,9 +1544,39 @@ public without sharing class AMS_Utils {
 
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + account);
 
-        Map<String, String> fieldsMapping = new Map<String, String>(fieldsMap.clone());
-        fieldsMapping.put('Short_Name__c', 'Short_Name__c');
-        
+        Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
+                                                                    ,'IATACode__c' => 'IATACode__c'
+                                                                    ,'Short_Name__c' => 'Short_Name__c'
+                                                                    ,'TradeName__c' => 'Trade_Name__c'
+                                                                    ,'License_Number__c' => 'ISSP_AMS_License_No__c'
+                                                                    ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
+                                                                    ,'BillingStreet' => 'Branch_Office_Street_name_number__c'
+                                                                    ,'Website' => 'Website__c'
+                                                                    ,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
+                                                                    ,'BillingCity' => 'Branch_Office_City__c'
+                                                                    ,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
+                                                                    ,'Iso_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'ShippingStreet' => 'Shipping_Street__c'
+                                                                    ,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
+                                                                    ,'Email__c' => 'Branch_Office_Email__c'
+                                                                    ,'Phone' => 'Branch_Office_Phone__c'
+                                                                    ,'Fax' => 'Branch_Office_FAX__c'
+                                                                    ,'ShippingCity' => 'Shipping_City__c'
+                                                                    ,'Operation__c' => 'Operation__c'
+                                                                    ,'Abbreviated_name__c' => 'Abbreviated_name__c'
+                                                                    ,'Abbreviated_address__c' => 'Abbreviated_Address__c'
+                                                                    ,'Remittance_frequency__c' => 'Remittance_frequency__c'
+                                                                    ,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
+                                                                    ,'VAT_Number_2__c' => 'VAT_Number_2__c'
+                                                                    ,'CASS_Number__c' => 'CASS_Number__c'
+                                                                    ,'Location_Class__c' => 'Location_Class__c'
+                                                                    ,'Location_Type__c' => 'Location_Type__c'
+                                                                    ,'Mobile__c' => 'Mobile__c'
+                                                                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
+                                                                    ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
+                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
+
         if (fieldsToMigrate != null && onlineAccreditation != null) {
                 Map<String, Object> onlineAccreditationFieldNewValue = new Map<String,Object>();
 
@@ -1560,7 +1593,7 @@ public without sharing class AMS_Utils {
                 if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
                     onlineAccreditationFieldNewValue.put('ISSP_AMS_Premises_located_at_airport__c', (account.In_a_Airport__c == true) ? 'Yes' : 'No');
                 if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
-                    onlineAccreditationFieldNewValue.put('ISSP_AMS_Legal_Status__c', account.Company_Type__c);
+                    onlineAccreditationFieldNewValue.put('ISSP_AMS_Legal_Status__c', transformLegalStatus(account.Company_Type__c));
                 if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
                     onlineAccreditationFieldNewValue.put('ISSP_AMS_GDS_with_signed_contract__c', account.GDS__c);
 
@@ -2500,14 +2533,14 @@ public without sharing class AMS_Utils {
     /**
     *   Method that validates if the record fields contain only latin characters
     **/
-    public static List<String> validateCharacters(sObject record, List<Schema.SObjectField> fieldsToCheck) {
+    public static List<String> validateCharacters(sObject record, List<Schema.FieldSetMember> fieldsToCheck) {
         List<String> res = new List<String>();
         String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
-        for(Schema.SObjectField field : fieldsToCheck) {
-            String fieldAPIName = field.getDescribe().getName();
-            String fieldLabel = field.getDescribe().getLabel();
+        for(Schema.FieldSetMember field : fieldsToCheck) {
+            String fieldAPIName = field.getFieldPath();
+            String fieldLabel = field.getLabel();
             Object value = record.get(fieldAPIName);
             if( value == null || !(value instanceof String)) {
                 continue; //Skip non String fields
@@ -2525,28 +2558,11 @@ public without sharing class AMS_Utils {
         return res;
     }
 
-    public static final List<Schema.SObjectField> STAGING_AREA_FIELDS_TO_VALIDATE = new List<Schema.SObjectField> {
-        AMS_Pax_Accreditation_Form__c.Account_Name__c, 
-        AMS_Pax_Accreditation_Form__c.IATACode__c, 
-        AMS_Pax_Accreditation_Form__c.CASS_Number__c, 
-        AMS_Pax_Accreditation_Form__c.Short_Name__c, 
-        AMS_Pax_Accreditation_Form__c.Trade_Name__c, 
-        AMS_Pax_Accreditation_Form__c.ISSP_AMS_License_No__c, 
-        AMS_Pax_Accreditation_Form__c.ISSP_AMS_VAT_number__c,
-        AMS_Pax_Accreditation_Form__c.Branch_Office_Street_name_number__c, 
-        AMS_Pax_Accreditation_Form__c.Branch_Office_Postal_code__c, 
-        AMS_Pax_Accreditation_Form__c.Branch_Office_City__c, 
-        AMS_Pax_Accreditation_Form__c.Shipping_Street__c, 
-        AMS_Pax_Accreditation_Form__c.Shipping_Postal_Code__c,
-        AMS_Pax_Accreditation_Form__c.Shipping_City__c, 
-        AMS_Pax_Accreditation_Form__c.Branch_Office_Email__c, 
-        AMS_Pax_Accreditation_Form__c.Website__c, 
-        AMS_Pax_Accreditation_Form__c.Abbreviated_name__c, 
-        AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c, 
-        AMS_Pax_Accreditation_Form__c.VAT_Number_2__c
-    };
+    public static final List<Schema.FieldSetMember> STAGING_AREA_FIELDS_TO_VALIDATE = SObjectType.AMS_Pax_Accreditation_Form__c.FieldSets.STAGING_AREA_FIELDS_TO_VALIDATE.getFields();
     /*** AMSU-166 End ***/
 
+    /*** AMSU-179 ***/
+        public static final List<Schema.FieldSetMember> ACCOUNT_FIELDS_TO_VALIDATE = SObjectType.Account.FieldSets.AMS_ACCOUNT_FIELDS_TO_VALIDATE.getFields();
 
     /*** AMSU-173 ***/
     public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};

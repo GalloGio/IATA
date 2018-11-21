@@ -97,14 +97,14 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 			System.debug('SMH LIMIT PRIMARY: '+nbOfPrimaryInAccount+' over '+config.Max_Number_Of_Primary_User__c);
 			System.debug('SMH LIMIT SECONDARY: '+nbOfSecondaryInAccount+' over '+config.Max_Number_Of_Secondary_User__c);
 			System.debug('SMH isGuest '+isGuest);
-
-            if(!isInvitation) {
-                if((createPrimary && nbOfPrimaryInAccount >= config.Max_Number_Of_Primary_User__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Max_Number_Of_Secondary_User__c)) {
-                    // Limit reached
-                    return new RegistrationResponse(false, Label.OneId_Max_Account_Reached);
-                }
-            } else if ((createPrimary && nbOfPrimaryInAccount >= config.Invitation_Primary_Max__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Invitation_Secondary_Max__c)) {
+			
+			if(!isInvitation) {
+            if((createPrimary && nbOfPrimaryInAccount >= config.Max_Number_Of_Primary_User__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Max_Number_Of_Secondary_User__c)) {
+                // Limit reached
                 return new RegistrationResponse(false, Label.OneId_Max_Account_Reached);
+            }
+			}else if ((createPrimary && nbOfPrimaryInAccount >= config.Invitation_Primary_Max__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Invitation_Secondary_Max__c)) {
+                return new RegistrationResponse(false, Label.OneId_Max_Account_Reached2);
             }
 			}
                 

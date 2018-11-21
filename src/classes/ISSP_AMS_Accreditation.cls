@@ -2,8 +2,6 @@ public without sharing class ISSP_AMS_Accreditation {
     private static String SAAM_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     private static String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     private static String RECORD_TYPE_ID = SAAM_RECORD_TYPE_ID;
-    
-    private Map<String, String> amsAccrContactRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AMS_Accreditation_Contact__c');
 
     public static String FILE_ID_FOR_PARTNERSHIP  {get{ return 'Signed Application Form';}}
     public static  Integer MAX_IFAP_Contacts {get{ return 1;} private set;}
@@ -2166,7 +2164,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         if (!Test.IsRunningTest()) {
-            contactToUpsert.RecordTypeId = amsAccrContactRecordTypesMap.get(contactType);
+            contactToUpsert.RecordTypeId = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AMS_Accreditation_Contact__c').get(contactType);
         }
 
         if (sector == AMS_Utils.SECTOR_PASSENGER) {

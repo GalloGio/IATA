@@ -9,24 +9,26 @@ showHeader="true" sidebar="true"  >
   <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
 </head>
 <apex:pageBlock >
-    <apex:pageBlockTable value="{!lsKeyContacts}" var="c">
+    <apex:pageBlockTable value="{!lsKeyContactsWrapped}" var="c">
         <apex:column >
         	<apex:facet name="header">Contact Name</apex:facet>
 
-        	<apex:outputLink target="_blank" value="/{!c.Id}" rendered="{! OR(c.AM_First_Name_Latin_Char__c != null, c.AM_Last_Name_Latin_Char__c != null)}">{!c.AM_First_Name_Latin_Char__c} {!c.AM_Last_Name_Latin_Char__c}</apex:outputLink>
+        	<apex:outputLink target="_blank" value="/{!c.con.Id}" rendered="{! OR(c.con.AM_First_Name_Latin_Char__c != null, c.con.AM_Last_Name_Latin_Char__c != null)}">{!c.con.AM_First_Name_Latin_Char__c} {!c.con.AM_Last_Name_Latin_Char__c}</apex:outputLink>
 
-            <apex:outputLink target="_blank" value="/{!c.Id}" rendered="{! AND(c.AM_First_Name_Latin_Char__c == null, c.AM_Last_Name_Latin_Char__c == null)}">{!c.Name}</apex:outputLink>
+            <apex:outputLink target="_blank" value="/{!c.con.Id}" rendered="{! AND(c.con.AM_First_Name_Latin_Char__c == null, c.con.AM_Last_Name_Latin_Char__c == null)}">{!c.con.Name}</apex:outputLink>
         </apex:column>
-        <apex:column value="{!c.Airline_Contact_Type__c}" />
-        <apex:column value="{!c.Function__c}" headerValue="Primary for"/>
+        <apex:column value="{!c.con.Airline_Contact_Type__c}" />
+        <apex:column headerValue="Primary for">
+        	<apex:outputText value="{!c.primaryFor}" escape="false"/>
+        </apex:column>
         <apex:column >
             <apex:facet name="header">Title</apex:facet>
 
-            <apex:outputText value="{! IF(c.AM_Job_Title_English__c != null, c.AM_Job_Title_English__c, c.Title) }" />
+            <apex:outputText value="{! IF(c.con.AM_Job_Title_English__c != null, c.con.AM_Job_Title_English__c, c.con.Title) }" />
         </apex:column>
-        <apex:column value="{!c.Phone}" />
-        <apex:column value="{!c.MobilePhone}" />
-        <apex:column value="{!c.Email}" />
+        <apex:column value="{!c.con.Phone}" />
+        <apex:column value="{!c.con.MobilePhone}" />
+        <apex:column value="{!c.con.Email}" />
     </apex:pageBlockTable>
 
 </apex:pageBlock>

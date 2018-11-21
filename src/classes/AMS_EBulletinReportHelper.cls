@@ -1223,7 +1223,7 @@ public without sharing class AMS_EBulletinReportHelper {
         public AMSEBulletinFilters(AMS_eBulletin_Profile__c eBulletinProfile, Datetime fromCCDate, Datetime toCCDate){
         		//Daily or Weekly by record type
 			
-			recordTypeName =Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBulletinProfile.RecordTypeId).Name;
+			recordTypeName = RecordTypeSingleton.getInstance().getRecordTypeById('AMS_eBulletin_Profile__c', eBulletinProfile.RecordTypeId).Name;
 
 			this.typeEBulletin = recordTypeName.substring(0, 1).ToUpperCase();
 			

@@ -190,6 +190,19 @@ private class AMS_OSCAR_TriggerICCTest {
         
         insert oscar;
 
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= stagingArea.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
         oscar.First_Step_Completed__c = true;
         oscar.STEP6__c = 'Passed';
         oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
@@ -219,6 +232,19 @@ private class AMS_OSCAR_TriggerICCTest {
             );
      
         insert oscar;
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= stagingArea.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
 
         oscar.First_Step_Completed__c = true;
         oscar.STEP6__c = 'Passed';
@@ -250,6 +276,19 @@ private class AMS_OSCAR_TriggerICCTest {
                 );
 
         insert oscar;
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= stagingArea.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
 
         oscar.First_Step_Completed__c = true;
         oscar.STEP6__c = 'Passed';
