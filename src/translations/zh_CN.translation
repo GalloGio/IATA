@@ -1509,6 +1509,10 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
+    </customLabels>
+    <customLabels>
         <label>此项服务能促进参与 IATA 货运结算系统 (CASS) 的货物中介/代理与航空公司之间的信息交互及交流。</label>
         <name>CASSLink_Description</name>
     </customLabels>

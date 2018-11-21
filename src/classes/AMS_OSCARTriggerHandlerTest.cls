@@ -226,7 +226,7 @@ private class AMS_OSCARTriggerHandlerTest {
         insert aChangeCode;
 
         Agency_Authorization__c fop = new Agency_Authorization__c(Account__c = a1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', 
-                    RecordTypeId = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId());
+                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment'));
 
         insert fop;
 

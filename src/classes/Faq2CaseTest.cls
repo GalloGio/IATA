@@ -1204,13 +1204,9 @@ private class Faq2CaseTest {
     {
         //ISSP_ObjectFactory.fiilIncludedFields();
 
-        Id rtIdHq = [ SELECT Id FROM RecordType 
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Airline'][0].Id;
+        Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Airline_BR'][0].Id;                       
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
 
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account parent = ISSP_ObjectFactory.createNewAccount();

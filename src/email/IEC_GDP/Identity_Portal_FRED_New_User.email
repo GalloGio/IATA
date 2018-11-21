@@ -151,7 +151,7 @@
             Welcome to {!Community_Name}.<br />Your e-mail address is
             {!Receiving_User.Email} <br />
 Your temporary password is
-            {!Contact.Password} <br />
+            <span>{!Contact.Password}</span><br />
           </p>
           <p>Please click on the button below to finalize your registration process:<br>
           </p>
