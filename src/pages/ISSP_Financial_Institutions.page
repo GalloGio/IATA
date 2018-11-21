@@ -54,9 +54,16 @@
   				}
   			</script>
 
-  			<c:ISSP_CustomNavigation />
   			<div class="container">
+  				<c:ISSP_CustomNavigation />
   				<div id="contentWrapper">
+  					<h4>
+  						{!$Label.ISSP_services} 
+  						<span class="glyphicon glyphicon-chevron-right small" aria-hidden="true"></span>
+         				{!$Label.ISSP_Financial_Insititutions}
+         				<span class="glyphicon glyphicon-chevron-right small" aria-hidden="true"></span>
+        				<small>missing description</small>
+        			</h4>
   					<div>
 		                <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float: left;"/>
 		            </div>
@@ -96,7 +103,7 @@
 				            	</apex:pageBlockTable>
 			            	</apex:pageBlockSection>
 
-			            	<apex:pageBlockButtons id="pageButtonBlock" location="bottom" rendered="{!financialInstitutionsFound}" style="padding-bottom: 10px;">
+			            	<apex:pageBlockButtons id="pageButtonBlock" location="bottom" rendered="{!financialInstitutionsFound}" style="padding-bottom: 10px; width: 100%;">
 				                Display records per page: &nbsp;
 				                <apex:selectList styleClass="form-control selector" style="width: 10%; display: initial; height: 30px;" value="{!listSize}" size="1" onchange="refreshPageSize();">
 				                    <apex:selectOptions value="{!paginationSizeOptions}"/>
@@ -156,8 +163,8 @@
 					    <!-- End Modal GDI Portal App Request --> 
 			    	</apex:form>
   				</div>
+  				<c:ISSP_CustomFooter />
   			</div>
-  			<c:ISSP_CustomFooter />
   		</body>
   	</html>
 </apex:page>
