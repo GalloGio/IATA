@@ -21,19 +21,28 @@
                     closeTab();
                 });
             });
-
 		}
+		
 	</script>
 
 
     <apex:sectionHeader title="Newgen Multi-Country Hierarchy Account Creator" subtitle="{!AMS_OSCAR__c.Account__r.Name}" />
 
-    <apex:form styleClass="pos-relative">
+    <apex:form styleClass="pos-relative" id="formId">
 		<apex:pageMessages id="pageMessages"/>
         <apex:pageBlock rendered="{!canbeedited}"> 
+        	<apex:variable value="{!0}" var="index"/>
             <apex:pageBlockTable value="{!listAccount}" var="acc">
-
-                <apex:column headerValue="Account Name">
+	        	
+	        	<apex:column headerValue="">
+                    <apex:commandButton action="{!removeAccount}" value="X" rerender="formId" >
+                    	<apex:param name="removeIndex" value="{!index}" assignTo="{!accIndex}" />
+                    </apex:commandButton>
+                    
+                    <apex:variable var="index" value="{!index + 1}"/>
+                </apex:column>
+                
+				<apex:column headerValue="Account Name">
                     <apex:inputField value="{!acc.Name}" />
                 </apex:column>
 
@@ -42,12 +51,10 @@
                 </apex:column>
 
                 <apex:column headerValue="Location Class">
-                    
                     <!--<apex:inputField value="{!acc.Location_Class__c}" />-->
                     <apex:selectList value="{!acc.Location_Class__c}" size="1">
                         <apex:selectOptions value="{!items}"/>
                     </apex:selectList>
-                    
                 </apex:column>
 
                 <apex:column headerValue="ISO Country">
@@ -72,14 +79,15 @@
                 <apex:column headerValue="Billing Postal Code">
                     <apex:inputField value="{!acc.BillingPostalCode}" />
                 </apex:column>
-
+                
             </apex:pageBlockTable>
             <apex:pageBlockButtons location="bottom">
                 <apex:commandButton value="Add New Account" action="{!addAccount}" />
                 <apex:commandButton value="Save/Update Accounts" action="{!saveAccount}" />
             </apex:pageBlockButtons>
+            
             <apex:pageBlockButtons location="top">
-                <apex:commandButton value="Confirm and submit hierarchy" action="{!submitHierarchy}" oncomplete="{refreshTab();}"/>
+                <apex:commandButton value="Confirm and submit hierarchy" action="{!submitHierarchy}" oncomplete="if({!not(hasErrors)}) {refreshTab();} else {return;}" rerender="formId" />
             </apex:pageBlockButtons>
         </apex:pageBlock>
 
