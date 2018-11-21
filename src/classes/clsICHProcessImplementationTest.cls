@@ -24,6 +24,7 @@ isTest
 private class clsICHProcessImplementationTest {
 
     static testMethod void myUnitTest() {
+	Test.startTest();
     try {
         Id standardContactRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         list<Case> theCases = new list<Case>() ;
@@ -119,7 +120,7 @@ private class clsICHProcessImplementationTest {
 
         kCase.Type = 'Feature Request';
 
-        Test.startTest();
+        
         try {
             update kCase;
         } catch (Dmlexception e) {
