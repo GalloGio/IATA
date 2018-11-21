@@ -2306,6 +2306,16 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Endorsement_requested_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Endorsement requested date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Fees_refund_requested__c</fullName>
         <externalId>false</externalId>
         <label>Fees refund requested</label>
@@ -2592,6 +2602,16 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <fullName>Financial_Security_released_withdrawal__c</fullName>
         <externalId>false</externalId>
         <label>Financial Security released</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Financial_security_information_confirmed__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial security information confirmed</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
