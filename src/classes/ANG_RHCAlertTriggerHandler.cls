@@ -696,17 +696,31 @@ public class ANG_RHCAlertTriggerHandler{
     // NEWGEN-2005
     private void sendNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts) {
         List<RTS_Senior_Manager__c> sManagers = RTS_Senior_Manager__c.getAll().values();
-        List<EmailTemplate> eTemplates = [SELECT Id, Subject,Body FROM EmailTemplate WHERE DeveloperName = 'RTS_Notification_Manager'];
-        List<OrgWideEmailAddress> orgWideEmail = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
-        if (sManagers.isEmpty() || eTemplates.isEmpty() || orgWideEmail.isEmpty()) {
-            System.debug('Warning: Senior Management or email template or org wide email not found');
+
+        if(sManagers.isEmpty()){
+            System.debug('Warning: No RTS Senior Managemrs found');
             return;
         }
-        List<String> toAddresses = new List<String>(); 
+
+        List<EmailTemplate> eTemplates = [SELECT Id, Subject,Body FROM EmailTemplate WHERE DeveloperName = 'RTS_Notification_Manager'];
+        List<OrgWideEmailAddress> orgWideEmail = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+
+        if (eTemplates.isEmpty() || orgWideEmail.isEmpty()) {
+            System.debug('Warning: No email template or org wide email found');
+            return;
+        }
+
+        List<String> toAddresses = new List<String>();
         for (RTS_Senior_Manager__c sManager: sManagers) {
-            if (sManager.Active__c)
+            if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
                 toAddresses.add(sManager.Email__c);
         }
+
+        if(toAddresses.isEmpty()){
+             System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
+             return;
+        }
+
         EmailTemplate template = eTemplates.get(0);
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         mail.setToAddresses(toAddresses);
