@@ -190,8 +190,6 @@ public without sharing class AMS_Utils {
     public static final String NGANNUALREVAL    = 'ANG.ANNUAL.REVALIDATION';
     public static final String NGGDI            = 'ANG.GDI.1.0';
 
-    public static final String GDI              = 'ANG.GDI.1.0';
-
     //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 
@@ -236,7 +234,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL A ONBOARDING');
     public static final String RECTYPE_IEPMODELB    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL B SCREENING');
 
-    public static final String RECTYPE_GDI    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG GDI SETUP');
+    public static final String RECTYPE_GDI    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_GDI_SETUP');
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
