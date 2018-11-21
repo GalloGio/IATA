@@ -125,6 +125,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
                                AND Instant_Survey_Feedback_requested__c = false
                                AND RecordType.DeveloperName <> 'IATA_Financial_Review' /*exclude IFAP cases*/
+                               AND CaseArea__c != 'E&F Operations' AND Reason1__c != 'Debt Recovery' AND Reason1__c != 'Dispute' //ICSC-36 exclude Cases with Reason =  Debt Recovery or Dispute
                                    ORDER BY ClosedDate DESC]);
 
     CasesPart1 = new Set<Id>();
@@ -629,6 +630,15 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
       */
       //end INC306722 - EXCLUDE the email invitation to fill in the survey from IFAP cases
+
+
+          /****** For Cases - Global Record Type******/
+      } else if(c.RecordType.DeveloperName == 'Cases_Global' && !c.Contact.Email.contains('@iata.org') && !c.Contact.Email.contains('@salesforce.com') && c.Status == 'Closed'){
+
+          template = templates.get('Clicktools_Contact_Email_EN');
+
+
+
         /****** New rule January 2015 ******/
       } else if (c.RecordType.DeveloperName == 'FDS_ICCS_Email_to_Case' && /*FDS ICCS Generic Request Management*/
                  !c.Contact.Email.contains('@iata.org') &&
