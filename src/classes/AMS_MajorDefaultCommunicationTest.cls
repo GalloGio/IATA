@@ -67,6 +67,8 @@ private class AMS_MajorDefaultCommunicationTest {
 		cc.SIDRA_Case__c = cse.Id;
 		cc.Change_Code__c = 'DEF';
 		insert cc;
+
+		AMS_MajorDefaultCommunicationEmailSender.sendErrorMessage(new List<String> {'test@mail.com'}, new List<String> {'ab\ncs'} );
 		Test.stopTest();
 	}
 	

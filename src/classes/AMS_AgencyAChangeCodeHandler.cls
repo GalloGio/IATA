@@ -58,7 +58,7 @@ public class AMS_AgencyAChangeCodeHandler {
     
     /*** AMSU-198 ***/
     public static void notifyAirlines(List<Agency_Applied_Change_code__c> aaccs) {
-        Database.executeBatch(new AMS_MajorDefaultCommunication(aaccs), 5);
+        Database.executeBatch(new AMS_MajorDefaultCommunication(aaccs), 50);
     }
     
     public static void handleBeforeUpdate(List<Agency_Applied_Change_code__c> aacc){
