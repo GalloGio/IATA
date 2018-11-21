@@ -5933,7 +5933,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Apartment &amp; Villa Rental</fullName>
                     <default>false</default>
-                    <label>Apartment &amp; Villa Rental</label>
+                    <label>Apartment and Villa Rental</label>
                 </value>
                 <value>
                     <fullName>Banking Service</fullName>
@@ -6153,7 +6153,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Non Governmental Organization</fullName>
                     <default>false</default>
-                    <label>Non Governmental Organization</label>
+                    <label>Non-Governmental Organization</label>
                 </value>
                 <value>
                     <fullName>Non-IATA Cargo Agent</fullName>
