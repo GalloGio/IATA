@@ -98,9 +98,7 @@ public class AMS_OSCAR_ProcessViewerController {
            
         // NG Processes specific conditions
         if(oscar.Process__c <> AMS_Utils.NGGDI) return false;
-        if(oscar.Oscar_Communication_Case_Id__c == null) return true;
-
-        case c = [SELECT parentid FROM CASE WHERE ID = :oscar.Oscar_Communication_Case_Id__c];
+        case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
         return (c.parentid == null);
         
     }
