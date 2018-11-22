@@ -131,7 +131,6 @@ public with sharing class ISSP_Financial_Institutions {
 
 				conId = existingGDIPortalAppRight.Contact__c;
 				agencyCountry = existingGDIPortalAppRight.Contact__r.Account.Country_ISO_Code__c;
-				//hasGDIAppRight = true;
 
 				if (existingGDIPortalAppRight.Right__c == AMS_Utils.PORTAL_APP_ACCESS_DENIED)
 					gdiAppRightDenied = true;
@@ -150,6 +149,7 @@ public with sharing class ISSP_Financial_Institutions {
 		List<Financial_Institution__c> financialInstitutions = [SELECT Id, Name, Website__c
 																FROM Financial_Institution__c
 																WHERE Institution_Status__c = 'Active'
+																	AND Financial_Security_Country_Coverage__c != null
 																	AND Financial_Security_Country_Coverage__c INCLUDES (:agencyCountry)
 																ORDER BY Name ASC];
 
@@ -230,10 +230,4 @@ public with sharing class ISSP_Financial_Institutions {
 	public void refreshPageSize() {
 	    ssController.setPageSize(listSize);
 	}
-
-	/*private PageReference getCurrentPage() {
-		PageReference pageRef = ApexPages.currentPage();
-    	pageRef.setRedirect(false);
-    	return pageRef;
-	}*/
 }

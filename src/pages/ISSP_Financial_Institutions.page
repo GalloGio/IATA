@@ -90,11 +90,11 @@
 				                        
 				                        <apex:commandButton styleClass="btn_iata_primary btn" value="Request Access" onclick="showTermsAndConditionsModal(); return false;" reRender="" rendered="{!AND(NOT(gdiAppRightDenied), NOT(gdiAppRightGranted), NOT(gdiAppRightRequested), financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
 
-				                        <apex:outputText value="Access Denied" rendered="{!gdiAppRightDenied}" style="float: right;"/>
+				                        <apex:outputText value="Access Denied" rendered="{!AND(gdiAppRightDenied, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
 
-				                        <apex:outputText value="Access Request" rendered="{!gdiAppRightRequested}" style="float: right;"/>
+				                        <apex:outputText value="Access Request" rendered="{!AND(gdiAppRightRequested, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
 
-				                        <apex:commandButton styleClass="btn_iata_primary btn" value="Go to GDI Portal" onclick="navigateToGDIPortal();" reRender="" rendered="{!gdiAppRightGranted}" style="float: right;"/>
+				                        <apex:commandButton styleClass="btn_iata_primary btn" value="Go to GDI Portal" onclick="navigateToGDIPortal();" reRender="" rendered="{!AND(gdiAppRightGranted, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
 				                        
 				                        <apex:facet name="header">
 				                            <apex:outputText escape="false" value="{!$ObjectType.Financial_Institution__c.fields.Name.Label}"/>
