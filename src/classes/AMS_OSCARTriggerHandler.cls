@@ -3830,6 +3830,36 @@ public class AMS_OSCARTriggerHandler {
                 }
             }
         }
+        //ACAMBAS - NEWGEN-4445 - Start
+        else if (updatedOscar.recordTypeID == chinaRT) {
+
+            //If Perform Sanity Check changed to Passed
+            if(oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed') {
+
+                Case c = [SELECT Reason1__c from Case where Id = :updatedOscar.Oscar_Communication_Case_Id__c];
+
+                String caseReason = c.Reason1__c;
+                String changeCode;
+
+                if(caseReason == 'Conversion to GoLite') {
+                    changeCode = 'PLT';
+                }
+                else if(caseReason == 'Conversion to Domestic with Cash') {
+                    changeCode = 'LGC';
+                }
+                else if(caseReason == 'Conversion to international') {
+                    changeCode = 'DOM';
+                }
+                else {
+                   changeCode = 'ERROR'; 
+                }
+
+                //ANG_OscarProcessHelper.EntityUpdater updater = 
+                ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);              
+            }
+            
+        }
+        //ACAMBAS - NEWGEN-4445 - End
     }
 
         private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
