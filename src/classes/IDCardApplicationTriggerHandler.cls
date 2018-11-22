@@ -1,6 +1,6 @@
 public class IDCardApplicationTriggerHandler extends TriggerHandler {
 	protected override List<Schema.SObjectType> getSObjectTypes(){
-		return new List<Schema.SObjectType>{Case.SObjectType};
+		return new List<Schema.SObjectType>{Case.SObjectType, ID_Card_Application__c.SObjectType};
 	}
 
 	protected override List<Type> getAfterInsertActions(){

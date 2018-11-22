@@ -1,5 +1,7 @@
 public class ProcessIDCardMassApplications extends TriggerAction {
 	
+	private Set<String> idCardAppToUpdate;
+
 	/**
 	 * Method that checks if the relevant fields for this action were changed
 	 * @param s the affected record
@@ -25,6 +27,8 @@ public class ProcessIDCardMassApplications extends TriggerAction {
 	 * @return
 	 */
 	protected override void execute(List<SObject> records, UnitOfWork uw) {
+
+		idCardAppToUpdate = new Set<String>();
 
 		Map<Id, ID_Card_Application__c> oldMap = (Map<Id, ID_Card_Application__c>) Trigger.oldMap;
 
@@ -79,8 +83,9 @@ public class ProcessIDCardMassApplications extends TriggerAction {
 			} else if(appStatus.tolowerCase().equals('paid') || ( trigger.isUpdate && app.Payment_Date__c != NULL && !app.Payment_Date__c.equals(oldMap.get(app.Id).Payment_Date__c) )) {
 				//should update all id cards application related to this one as paid.
 				System.debug('____ [cls ProcessIDCardMassApplications - execute: update card paymnent status]');
-				IDCardMassApplicationBatch.triggerPaidMassApplication(app.Id);
-
+				idCardAppToUpdate.add(app.Id);
+				registerFuture();
+				
 			} else {
 				System.debug('____ [cls ProcessIDCardMassApplications - execute: do nothing]');
 			}
@@ -90,6 +95,17 @@ public class ProcessIDCardMassApplications extends TriggerAction {
 			System.debug('____ [cls ProcessIDCardMassApplications - execute: process card 1] Mass Apps which should be starteed : ' + app.Id + ' and session id = ' + UserInfo.getSessionid());
 
 			IDCardMassApplicationBatch.startJob(app.Id, 'IDCA_MASS_PROCESS_' + app.Name, UserInfo.getSessionid());
+		}
+	}
+
+	protected override void futureAction(UnitOfWork uw) {
+		List<ID_Card_Application__c> singleApps = IDCardMassApplicationBatch.triggerPaidMassApplication(idCardAppToUpdate);
+
+		if(!singleApps.isEmpty()) {
+			Map<String, SObjectField> sObjectFieldMap = Schema.getGlobalDescribe().get('ID_Card_Application__c').getDescribe().fields.getMap();
+			uw.registerDirty(singleApps, new List<SObjectField>{sObjectFieldMap.get('Payment_Credit_Card_Number__c'),sObjectFieldMap.get('Payment_Type__c'),
+																sObjectFieldMap.get('Payment_Currency__c'),sObjectFieldMap.get('Payment_Transaction_Number__c'),
+																sObjectFieldMap.get('Payment_Date__c'),sObjectFieldMap.get('Application_Status__c')});
 		}
 	}
 }

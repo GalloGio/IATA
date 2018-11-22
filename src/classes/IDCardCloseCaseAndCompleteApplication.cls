@@ -49,13 +49,15 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 			idcardAppToUpdate.add(singleApp);
 		}
 
-		if(massApplicationIds.isEmpty()) return;
+		List<ID_Card_Application__c> massApplication = new List<ID_Card_Application__c>();
+		if(!massApplicationIds.isEmpty()) {
 
-		System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [UP] Should consider ' + singlesApplication.size() + ' Single APp for ' + massAppStatus.size() + ' mass appli');
-		
-		List<ID_Card_Application__c> massApplication = [SELECT Id , Mass_order_Application__c FROM ID_Card_Application__c WHERE recordTypeID = :IDCardUtil.IDCARDMASSAPPLICATION_RTID and Id in :massApplicationIds ];
-		
-		for(ID_Card_Application__c ma:massApplication){
+			System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [UP] Should consider ' + singlesApplication.size() + ' Single APp for ' + massAppStatus.size() + ' mass appli');
+			
+			massApplication = [SELECT Id , Mass_order_Application__c FROM ID_Card_Application__c WHERE recordTypeID = :IDCardUtil.IDCARDMASSAPPLICATION_RTID and Id in :massApplicationIds ];
+		}
+
+		for(ID_Card_Application__c ma : massApplication){
 
 			allSingleAppPerMassId.put(ma.Id, new List<ID_Card_Application__c>());
 		}
@@ -64,10 +66,12 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 		
 		System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [DOWN] ');
 
-		if(allSingleAppPerMassId.isEmpty()) return;
-
 		//Now get all all single from all mass and get all card card from all single
-		List<ID_Card_Application__c> allSinglesApplication = [select Id , Mass_order_Application__c from ID_Card_Application__c where recordTypeID = :IDCardUtil.IDCARDSINGLEAPPLICATION_RTID and Mass_order_Application__c in :allSingleAppPerMassId.keySet() ];
+		List<ID_Card_Application__c> allSinglesApplication = new List<ID_Card_Application__c>();
+		if(!allSingleAppPerMassId.isEmpty()){
+
+			allSinglesApplication = [select Id , Mass_order_Application__c from ID_Card_Application__c where recordTypeID = :IDCardUtil.IDCARDSINGLEAPPLICATION_RTID and Mass_order_Application__c in :allSingleAppPerMassId.keySet() ];
+		}
 		
 		for(ID_Card_Application__c sa:allSinglesApplication){
 
@@ -75,13 +79,15 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 			massAppIdFromSingleAppid.put(sa.Id, sa.Mass_order_Application__c);
 		}
 
-		if(massAppIdFromSingleAppid.isEmpty()) return;
+		List<ID_Card__c> allCard = new List<ID_Card__c>();
+		if(!massAppIdFromSingleAppid.isEmpty()){
 
-		System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [DOWN] All single from MAss:  ' + allSinglesApplication.size());
+			System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [DOWN] All single from MAss:  ' + allSinglesApplication.size());
 
-		List<ID_Card__c> allCard = [select Id , Card_Status__c, ID_Card_Application__c from ID_Card__c where ID_Card_Application__c in :massAppIdFromSingleAppid.keySet() ];
-		
-		System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [DOWN] All card from Mass: ' + allCard.size());
+			allCard = [select Id , Card_Status__c, ID_Card_Application__c from ID_Card__c where ID_Card_Application__c in :massAppIdFromSingleAppid.keySet() ];
+			
+			System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [DOWN] All card from Mass: ' + allCard.size());
+		}
 		
 		//from all card: if card status isn t printed/delvied: then mass related application status shlould be false
 		//else we let it at true.
@@ -94,7 +100,7 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 			}
 		}
 		
-		//now we know which application hshould have their case upodated
+		//now we know which application should have their case updated
 		List<String> massApplicationIdForCaseUpdate = new List<String>();
 			
 		for(String key : massAppStatus.keySet()) {
@@ -106,7 +112,6 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 			}
 		}
 			
-		//fix : if massApplicationIdForCaseUpdate is empty, error can occured
 		if(!massApplicationIdForCaseUpdate.isEmpty()){
 
 			List<Case> cases2update = [select Id,Status, Related_ID_Card_Application__c from Case  where Related_ID_Card_Application__c in :massApplicationIdForCaseUpdate];
@@ -122,7 +127,6 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 			}		
 		}
 
-		//INC293102
 		if(!idcardAppToUpdate.isEmpty()){
 
 			for(ID_Card_Application__c idapp : idcardAppToUpdate)

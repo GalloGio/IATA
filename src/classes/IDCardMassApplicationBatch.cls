@@ -26,6 +26,7 @@ global class IDCardMassApplicationBatch implements Schedulable {
         this.sessionId = Userinfo.getSessionId();
         this.batchName = name;
         List<ID_Card_Application__c> singlesApps = [select Id, Name, Application_Status__c ,Single_Application_Processing_Step__c from ID_Card_Application__c  where (Single_Application_Processing_Step__c = null or  Single_Application_Processing_Step__c = :IDcardUtil.single_application_status_waiting ) and Mass_order_Application__c = :massApplication.id ];
+
         for(ID_Card_Application__c app:singlesApps)
             app.Single_Application_Processing_Step__c = 'In Queue for processing';
         update singlesApps;
@@ -80,6 +81,7 @@ global class IDCardMassApplicationBatch implements Schedulable {
         System.abortJob(cronid);
         */
         List<ID_Card_Application__c> singlesApps = [select Id, Name, Application_Status__c ,Single_Application_Processing_Step__c from ID_Card_Application__c  where Single_Application_Processing_Step__c = 'In Queue for processing' and Mass_order_Application__c = :massApplication.id limit 1];
+
         if(singlesApps.size() ==0){
             //kill current process
             try{
@@ -96,11 +98,13 @@ global class IDCardMassApplicationBatch implements Schedulable {
                         IDCardMassApplicationBatch.triggerPaidMassApplication(massApplication.Id);
                         
                         List<Case> cases = [SELECT Id FROM Case WHERE Related_ID_Card_Application__c = :massApplication.id];
+
                         if(cases.size()>0)
                             cases[0].Status = 'Ready for production';
                         update cases[0];
                         
                     } 
+
                     update massApplication;
                 }
                 catch(FinalException fe){
@@ -150,19 +154,41 @@ global class IDCardMassApplicationBatch implements Schedulable {
         return s;
     }
     
+    /**
+    Method called in this batch to update single apps according to the related mass app
+    */
     @future(callout=true)
     public static void triggerPaidMassApplication(String appId){
-        ID_Card_Application__c massApp = [select  Application_Status__c, Payment_Credit_Card_Number__c, Payment_Type__c, Payment_Date__c,Payment_Currency__c, Payment_Transaction_Number__c FROM ID_Card_Application__c where   Id = :appId ];
-        List<ID_Card_Application__c> singlesApps = [select   Payment_Credit_Card_Number__c, Payment_Date__c, Payment_Type__c, Payment_Currency__c, Payment_Transaction_Number__c FROM ID_Card_Application__c where   Mass_order_Application__c = :appId ];
-        for(ID_Card_Application__c app:singlesApps) {
-                app.Payment_Credit_Card_Number__c = massApp.Payment_Credit_Card_Number__c;
-                app.Payment_Type__c = massApp.Payment_Type__c;
-                app.Payment_Currency__c = massApp.Payment_Currency__c;
-                app.Payment_Transaction_Number__c = massApp.Payment_Transaction_Number__c;
-                app.Payment_Date__c = massApp.Payment_Date__c;
+        
+        update triggerPaidMassApplications(new Set<String>{appId});
+    }
+
+    /**
+    Method called in the ProcessIDCardMassApplications trigger action to update single apps according to the related mass app
+    */
+    public static List<ID_Card_Application__c> triggerPaidMassApplication(Set<String> appIds){
+
+        return triggerPaidMassApplications(appIds);
+    }
+
+    private static List<ID_Card_Application__c> triggerPaidMassApplications(Set<String> idCardApps) {
+
+        List<ID_Card_Application__c> singlesApps = new List<ID_Card_Application__c>();
+        singlesApps = [SELECT Payment_Credit_Card_Number__c, Mass_order_Application__r.Payment_Credit_Card_Number__c, Payment_Date__c, 
+                              Mass_order_Application__r.Payment_Date__c, Payment_Type__c, Mass_order_Application__r.Payment_Type__c, Payment_Currency__c, 
+                              Mass_order_Application__r.Payment_Currency__c, Payment_Transaction_Number__c, Mass_order_Application__r.Payment_Transaction_Number__c, 
+                              Application_Status__c FROM ID_Card_Application__c WHERE Mass_order_Application__c IN :idCardApps];
+        
+        for(ID_Card_Application__c app : singlesApps) {
+                app.Payment_Credit_Card_Number__c = app.Mass_order_Application__r.Payment_Credit_Card_Number__c;
+                app.Payment_Type__c = app.Mass_order_Application__r.Payment_Type__c;
+                app.Payment_Currency__c = app.Mass_order_Application__r.Payment_Currency__c;
+                app.Payment_Transaction_Number__c = app.Mass_order_Application__r.Payment_Transaction_Number__c;
+                app.Payment_Date__c = app.Mass_order_Application__r.Payment_Date__c;
                 app.Application_Status__c = 'Paid';
-        }                   
-        update singlesApps;
+        }
+
+        return singlesApps;
     }
 
 }

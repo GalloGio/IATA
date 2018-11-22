@@ -4,14 +4,14 @@ public abstract class TriggerHandler {
 	private UnitOfWork uw;
 	private String handlerName;
 
-	private static void runHandler(String handlerName){
+	public static void runHandler(String handlerName){
 
 		TriggerHandler handler = (TriggerHandler)Type.forName(handlerName).newInstance();
 		handler.handlerName = handlerName;
 		handler.run();
 	}
 
-	public void run() {
+	private void run() {
 
 		//check for trigger bypass
 		uw = getUnitOfWork();
