@@ -1,7 +1,8 @@
 public class AgentStatusExtension {
     public Boolean IsAgent {get; set;}
     public Agents__c agent {get; set;}
-    public DateTime logoutTime{get; set;}
+    public String exactLogOffTime{get; set;}
+    public String LogOffTimeAfterTimeout{get; set;}
     
     public AgentStatusExtension () {
         try
@@ -28,6 +29,11 @@ public class AgentStatusExtension {
                         this.agent.Log_Off_Time_After_Timeout__c =  this.agent.Exact_Log_Off_Time__c;
                 }
             }
+
+            if(this.agent.Exact_Log_Off_Time__c != null)
+            	this.exactLogOffTime = this.agent.Exact_Log_Off_Time__c.format();
+            if(this.agent.Log_Off_Time_After_Timeout__c != null)
+            	this.LogOffTimeAfterTimeout = this.agent.Log_Off_Time_After_Timeout__c.format();
         }
         catch(System.QueryException e){
             IsAgent = false;
@@ -57,5 +63,4 @@ public class AgentStatusExtension {
         upsert agent;
         return ApexPages.currentPage().setRedirect(true);
     }
-
 }

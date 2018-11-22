@@ -26,7 +26,7 @@
 						<td>Logout Time (now): </td>
 						</apex:outputPanel>
 						<apex:outputPanel >
-						<td colspan="2"> <span>{!agent.Exact_Log_Off_Time__c}</span> </td>
+						<td colspan="2"> <span>{!exactLogOffTime}</span> </td>
 						</apex:outputPanel>
 				</tr>
                 <tr class="bold">
@@ -34,7 +34,7 @@
 						<td>Reassignment Time: </td>
 						</apex:outputPanel>
 						<apex:outputPanel >
-						<td colspan="2"> <span>{!agent.Log_Off_Time_After_Timeout__c}</span> </td>
+						<td colspan="2"> <span>{!LogOffTimeAfterTimeout}</span> </td>
 						</apex:outputPanel>
 				</tr>
 				<tr class="bold"><td>
