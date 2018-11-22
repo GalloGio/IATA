@@ -581,7 +581,7 @@ public class ANG_RHCAlertTriggerHandler{
                 //map to get account's IsoCode- used to control RTS actions
                 map<id,string>  accIsoCode = new map<id,string>();
 
-                for(Case parentCase :[Select Id, IATAcode__c,AccountId, Account.Name,Account.IATACode__c, Account.Site,Account.IATA_ISO_Country__r.ISO_Code__c, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
+                for(Case parentCase :[Select Id, IATAcode__c,AccountId, Account.Name,Account.IATACode__c, Account.Site,Account.IATA_ISO_Country__r.ISO_Code__c, Region__c, BSPCountry__c, ParentId, OwnerId FROM Case WHERE Id IN: smapParentCases]){
                     
                     accIsoCode.put(parentCase.AccountId,parentCase.Account.IATA_ISO_Country__r.ISO_Code__c);
 
@@ -601,6 +601,7 @@ public class ANG_RHCAlertTriggerHandler{
                     sidraLiteCase.Reason_for_Default__c = 'Under Review';
                     sidraLiteCase.Update_AIMS_DEF__c = Date.today();
                     sidraLiteCase.CS_Rep_Acc_DEF__c = userInfo.getUserId();
+                    sidraLiteCase.OwnerId = parentCase.OwnerId;
                     //sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); //already done on callout
                     sidraLiteCase.ContactId = smapParentCase.ContactId;
                     
