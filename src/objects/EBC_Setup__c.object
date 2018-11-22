@@ -272,14 +272,29 @@
     </fields>
     <fields>
         <fullName>Member_Email_Block_Product__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>This is the zproduct that will be the base of the Rate Plans for the Email Blocks, for member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the zproduct that will be the base of the Rate Plans for the Email Blocks, for member</inlineHelpText>
+        <label>Member Email Block Product</label>
+        <referenceTo>zqu__ZProduct__c</referenceTo>
+        <relationshipLabel>EBC Setups for Member Email Block Product</relationshipLabel>
+        <relationshipName>Member_Email_Block_EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>New_Member_Email_Block_Product__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
         <description>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</description>
         <externalId>false</externalId>
         <inlineHelpText>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</inlineHelpText>
         <label>Member Email Block Product</label>
         <referenceTo>Product2</referenceTo>
         <relationshipLabel>EBC Setups for Member Email Block Product</relationshipLabel>
-        <relationshipName>Member_Email_Block_EBC_Setups</relationshipName>
+        <relationshipName>New_Member_Email_Block_EBC_Setups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -366,6 +381,21 @@ There is no recurring charge for this.</inlineHelpText>
     </fields>
     <fields>
         <fullName>Non_Member_Email_Block_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the zproduct that will be the base of the Rate Plans for the Email Blocks, for non member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the zproduct that will be the base of the Rate Plans for the Email Blocks, for non member</inlineHelpText>
+        <label>Non Member Email Block Product</label>
+        <referenceTo>zqu__ZProduct__c</referenceTo>
+        <relationshipLabel>EBC Setups (Non Member Email Block Product)</relationshipLabel>
+        <relationshipName>Non_Member_Email_Block_EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>New_Non_Member_Email_Block_Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>This is the product that will be the base of the Rate Plans for the Email Blocks, for non member</description>
         <externalId>false</externalId>

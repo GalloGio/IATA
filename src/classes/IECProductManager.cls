@@ -103,7 +103,7 @@ public with sharing class IECProductManager {
         if (IECConstants.isProductCategoryCode(sProductCategoryCode) == false)
             throw new IECApplicationException(IECConstants.Error_InvalidProductCode + ': ' + sProductCategoryCode);
             
-        return [SELECT Id, IsDeleted, Product_Audience__c, Name, Related_Product__c, Related_Product_Category__c
+        return [SELECT Id, IsDeleted, Product_Audience__c, Name, New_Related_Product__c, Related_Product_Category__c
                     , Has_Most_Popular_Counter__c 
                 FROM Product_Information__c
                 WHERE IsDeleted = false
@@ -161,7 +161,7 @@ public with sharing class IECProductManager {
 
         List<string> listAvailableProductAudience = getAvailableProductAudienceByClientType(sClientType);
         
-        return [SELECT Id, IsDeleted, Product_Audience__c, Name, Related_Product__c, Related_Product_Category__c
+        return [SELECT Id, IsDeleted, Product_Audience__c, Name, New_Related_Product__c, Related_Product_Category__c
                     , Has_Most_Popular_Counter__c 
                 FROM Product_Information__c
                 WHERE IsDeleted = false
@@ -214,7 +214,7 @@ public with sharing class IECProductManager {
                     , Related_Product_Information__r.Related_Product_Category__r.Product_Icon__c
                     , Related_Product_Information__r.Related_Product_Category__r.Show_price_on_eCommerce__c
                     , Related_Product_Information__c 
-                    , Related_Product_Information__r.Related_Product__r.zqu__SKU2__c
+                    , Related_Product_Information__r.New_Related_Product__r.zqu__SKU2__c
                 FROM Product_Rate_Plan_Information__c
                 WHERE Id = :idProductRatePlan
                     AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
@@ -241,7 +241,7 @@ public with sharing class IECProductManager {
                     , Related_Product_Information__r.Related_Product_Category__r.Button_Type__c
                     , Related_Product_Information__r.Related_Product_Category__r.Display_Name__c
                     , Related_Product_Information__c 
-                    , Related_Product_Information__r.Related_Product__r.zqu__SKU2__c
+                    , Related_Product_Information__r.New_Related_Product__r.zqu__SKU2__c
                 FROM Product_Rate_Plan_Information__c
                 WHERE Product_Rate_Plan__r.zqu__ZuoraId__c = :sZuoraIdProductRatePlan
                     AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true

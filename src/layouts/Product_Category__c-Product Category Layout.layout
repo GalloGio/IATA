@@ -325,7 +325,7 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Related_Product__c</fields>
+        <fields>New_Related_Product__c</fields>
         <fields>Product_Audience__c</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>Product_Information__c.Related_Product_Category__c</relatedList>

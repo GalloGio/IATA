@@ -1921,8 +1921,8 @@ public with sharing class IECSubscriptionManager {
             //                                                 , Utility.getTextSetting('Zuora tax Charge id')};
             //*** (Thai 2016-11-03) added to filter only hierarchy products
             List<Id> lstHierProductId = new List<Id>();
-            for (Product_Information__c p : [select Related_Product__c from Product_Information__c where Related_Product__c != null])
-                lstHierProductId.add(p.Related_Product__c);
+            for (Product_Information__c p : [select New_Related_Product__c from Product_Information__c where New_Related_Product__c != null])
+                lstHierProductId.add(p.New_Related_Product__c);
         
             if (idBillingAccount != null) {
                 subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c
@@ -2049,8 +2049,8 @@ public with sharing class IECSubscriptionManager {
             List<Zuora__Subscription__c> subscriptions = null;
             //*** (Thai 2016-11-07) added to filter only hierarchy products
             List<Id> lstHierProductId = new List<Id>();
-            for (Product_Information__c p : [select Related_Product__c from Product_Information__c where Related_Product__c != null])
-                lstHierProductId.add(p.Related_Product__c);
+            for (Product_Information__c p : [select New_Related_Product__c from Product_Information__c where New_Related_Product__c != null])
+                lstHierProductId.add(p.New_Related_Product__c);
         
             if (idBillingAccount != null) {
                 subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, Zuora__Status__c, 
@@ -2246,7 +2246,7 @@ public with sharing class IECSubscriptionManager {
             oSubHist.Purchased_Product_Category__c = lstRatePlanInfo.get(0).Related_Product_Information__r.Related_Product_Category__c;
             oSubHist.Purchased_Product_Information__c = lstRatePlanInfo.get(0).Related_Product_Information__c;
             oSubHist.Purchased_Product_Rate_Plan_Information__c = lstRatePlanInfo.get(0).Id;
-            oSubHist.Purchased_Product_SKU__c = lstRatePlanInfo.get(0).Related_Product_Information__r.Related_Product__r.zqu__SKU2__c;
+            oSubHist.Purchased_Product_SKU__c = lstRatePlanInfo.get(0).Related_Product_Information__r.New_Related_Product__r.zqu__SKU2__c;
             oSubHist.Rate_Plan_Quantity__c = iQuantity;
             
             // fill subscription related info

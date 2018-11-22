@@ -258,7 +258,7 @@ public with sharing class IECSubscriptionManager_tst {
 		system.assertEquals(listCartItems.get(0).Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__c, oSubHist.Purchased_Product_Category__c, 'The appropriate Product Category should be saved');
 		system.assertEquals(listCartItems.get(0).Related_Rate_Plan_Information__r.Related_Product_Information__c, oSubHist.Purchased_Product_Information__c, 'The appropriate Product Information should be saved');
 		system.assertEquals(listCartItems.get(0).Related_Rate_Plan_Information__c, oSubHist.Purchased_Product_Rate_Plan_Information__c, 'The appropriate Rate Plan Information should be saved');
-		system.assertEquals(listCartItems.get(0).Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product__r.zqu__SKU2__c, oSubHist.Purchased_Product_SKU__c, 'The appropriate Product SKU should be saved');
+		system.assertEquals(listCartItems.get(0).Related_Rate_Plan_Information__r.Related_Product_Information__r.New_Related_Product__r.zqu__SKU2__c, oSubHist.Purchased_Product_SKU__c, 'The appropriate Product SKU should be saved');
 		system.assertEquals(iQuantity, oSubHist.Rate_Plan_Quantity__c, 'The appropriate quantity should be saved');
 		system.assertEquals(res.InvoiceNumber, oSubHist.Invoice_Number__c, 'The appropriate Invoice Number should be saved');
 		// doesnt work, dont know why...

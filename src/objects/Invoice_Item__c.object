@@ -113,9 +113,21 @@
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Product</label>
-        <referenceTo>Product2</referenceTo>
+        <referenceTo>zqu__ZProduct__c</referenceTo>
         <relationshipLabel>Invoice Items</relationshipLabel>
         <relationshipName>Invoice_Items</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>New_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>New Invoice Items</relationshipLabel>
+        <relationshipName>New_Invoice_Items</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>

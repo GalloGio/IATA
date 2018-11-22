@@ -65,7 +65,7 @@ public without sharing class IECTestUtil {
         Product_Information__c pi = new Product_Information__c();
             pi.Name = sName;
             pi.Related_Product_Category__c = oProductCategory.Id;
-            pi.Related_Product__c = oProduct.Id;
+            pi.New_Related_Product__c = oProduct.Id;
             pi.Product_Audience__c = productAudience;
 
             return pi;
@@ -79,7 +79,7 @@ public without sharing class IECTestUtil {
         Product_Information__c pi = new Product_Information__c();
             pi.Name = sName;
             pi.Related_Product_Category__c = oProductCategory.Id;
-            pi.Related_Product__c = oProduct.Id;
+            pi.New_Related_Product__c = oProduct.Id;
             pi.Product_Audience__c = productAudience;
 
             return pi;

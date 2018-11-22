@@ -203,7 +203,7 @@ public with sharing class IECShoppingCartHelper {
 											Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Product_Icon__c,
 											Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Is_Quantifiable_Product__c,
 											Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Application_URL__c,
-											Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product__r.zqu__SKU2__c,
+											Related_Rate_Plan_Information__r.Related_Product_Information__r.New_Related_Product__r.zqu__SKU2__c,
 											Related_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c,
 											Related_Rate_Plan_Information__r.Product_Rate_Plan__r.Name,
 											Related_Rate_Plan_Information__r.Product_Rate_Plan__r.IsTriable__c,

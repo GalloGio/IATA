@@ -82,11 +82,11 @@ public class IEC_ZuoraPricing2SAP_Svc
         Map<Id, Product2> mapZProductId_Product = new Map<Id, Product2>();
         if (!String.isBlank(strSOQL))
         {
-            strSOQL = 'select SAP_Material_Number__c, ZProduct__c from Product2'
-                    + ' where SAP_Material_Number__c != null and ZProduct__c != null and SAP_Status_Code__c in (\'A\', \'Z4\')'
+            strSOQL = 'select Id, SAP_Material_Number__c from Product2'
+                    + ' where SAP_Material_Number__c != null and SAP_Status_Code__c in (\'A\', \'Z4\')'
                     + ' and (' + strSOQL.substring(4) + ')';
             for (Product2 p : Database.query(strSOQL))
-                mapZProductId_Product.put(p.ZProduct__c, p);
+                mapZProductId_Product.put(p.Id, p);
         }
         return mapZProductId_Product;
     }
