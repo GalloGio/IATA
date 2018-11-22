@@ -112,8 +112,8 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 		} else {
 			// GENERATE CHILD CASES
 			
-			Id RT_AirlineParticipationProcess_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IDFS_Airline_Participation_Process');
-			Id RT_InternalCases_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE');
+			Id RT_AirlineParticipationProcess_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+			Id RT_InternalCases_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 			
 			List<Case> lstChildCases = new List<Case>();
 			
@@ -343,8 +343,9 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 	global void finish(Database.BatchableContext BC){
 		if (!isCloseChildCases) {
 			list<Case> listInsertCases = new list<Case>();
+
 			// create one single case for AP for the suspension
-			Id RT_AirlineParticipationProcess_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IDFS_Airline_Participation_Process');
+			Id RT_AirlineParticipationProcess_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
 			
 			Case APchildCase = new Case();
 			APchildCase.ParentId = ParentCase.Id;
@@ -365,12 +366,10 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 			Database.DMLOptions dmo = new Database.DMLOptions();
 			dmo.assignmentRuleHeader.useDefaultRule= true;
 			APchildCase.setOptions(dmo);
-			
-			insert APchildCase;
-			
+			listInsertCases.add(APchildCase);
 			
 			// create one single case for the Coding Team
-			Id RT_InternalCases_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE');
+			Id RT_InternalCases_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 			
 			Case CodingChildCase = new Case();
 			CodingChildCase.ParentId = ParentCase.Id;

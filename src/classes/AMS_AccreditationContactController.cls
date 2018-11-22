@@ -79,13 +79,13 @@ public with sharing class AMS_AccreditationContactController {
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person') => 'Person',
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Owner') => 'Person',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person') => 'Person',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner') => 'Person',
 
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company') => 'Company',
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner') => 'Company',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company') => 'Company',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner') => 'Company',
 
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff') => 'Trained Staff'
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff') => 'Trained Staff'
 
 
     };
@@ -105,7 +105,6 @@ public with sharing class AMS_AccreditationContactController {
         Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=edge');
         if(aoa == null)
         {
-            //String acCompanyRtId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
             
             List<AMS_Pax_Accreditation_Form__c> aoaList = [select id, Name, Account_Name__c, IATACode__c, Type_of_Operation__c, Shipping_Street__c, Shipping_Postal_Code__c, 
                             Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, 
@@ -174,10 +173,10 @@ public with sharing class AMS_AccreditationContactController {
          
         }
 
-        AcPersonRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
-        AcCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
-        AcCurrentCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
-        AcCurrentOwnerRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Owner');
+        AcPersonRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
+        AcCompanyRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
+        AcCurrentCompanyRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
+        AcCurrentOwnerRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
 
         forDeletion = new List<AMS_Accreditation_Contact__c>();
 
@@ -461,7 +460,7 @@ public with sharing class AMS_AccreditationContactController {
             // Save Company Ownership
             if(accountWrapper.size() > 0)
             {
-                Id standardAccountRtId = AMS_Utils.getId('Account', 'Standard_Account');
+                Id standardAccountRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
                 List<Account> accountInsertList = new List<Account>();
                 List<AMS_Accreditation_Contact__c> acUpsertList = new List<AMS_Accreditation_Contact__c>();
                 List<Account> acList = new List<Account>();
@@ -1099,8 +1098,8 @@ public with sharing class AMS_AccreditationContactController {
             this.financialInterest = accountAc.Financial_Interest__c;
             this.registrationNumber = accountAc.Registration_Number__c;
             this.accountAc.Company__c = this.account.Id;
-            this.account.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
-            //AMS-1669 this.accountAc.RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
+            this.account.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
             if(this.account.Legal_Name__c == null)
             {
                 this.account.Legal_Name__c = this.AccountAc.Name;

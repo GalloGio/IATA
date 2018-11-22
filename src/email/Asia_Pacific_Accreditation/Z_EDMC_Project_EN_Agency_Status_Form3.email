@@ -1,0 +1,38 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-family: Arial, sans-serif; font-size: small;">{!Account.Site}</span></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font face="Arial, sans-serif" size="2"><span lang="EN-GB"></span><span lang="EN-GB"><o:p></o:p></span>&nbsp;</font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><span lang="EN-GB"><o:p><strong><font size="2" face="Arial, sans-serif">{!Account.Name}</font></strong></o:p></span></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><b><span lang="EN-GB"><font size="2" face="Arial, sans-serif"></font></span></b></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><st1:address w:st="on"><st1:street w:st="on"><span lang="EN-GB"><font size="2" face="Arial, sans-serif">{!Account.BillingAddress}</font></span></st1:street></st1:address></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font size="2" face="Arial, sans-serif"><span lang="EN-GB"></span><span lang="EN-GB"><o:p></o:p></span></font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><u><span lang="EN-GB"><font size="2" face="Arial, sans-serif"></font></span></u></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font face="Arial, sans-serif" size="2"><u><span lang="EN-GB"></span></u>&nbsp;</font></p><p class="MsoNormal" style="margin: 0in 0in 0pt;"><font face="Arial, sans-serif" size="2"><br></font></p><p class="MsoNoSpacing"><font face="Arial, sans-serif" size="2">Dear<span lang="ES-TRAD" style="background: rgb(255, 255, 255);">&nbsp;</span><span lang="ES-TRAD">{!Contact.Name},</span><span style="background-color: white;">&nbsp;</span></font></p><p class="MsoNoSpacing"><span style="background-color: white;"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style="text-align: left;"><font face="Arial, sans-serif" size="2"><span style="line-height: 107%; background: white;">We
+are currently reviewing and updating your Agency data in our records, and are
+positive that your Agency would also prefer IATA to keep a record of your
+latest agency information. We seek your cooperation to fill the attached <b><u>Agent Status Form (ASF)</u></b>.</span><o:p></o:p></font></p><p class="MsoNormal" style="text-align: left;"><span style="line-height: 107%; background: white;"><font face="Arial, sans-serif" size="2"><br></font></span></p><p class="MsoNormal" style="text-align: left;"><font face="Arial, sans-serif" size="2">Please return the form no later
+than <b><span style="background:yellow;
+mso-highlight:yellow">{NEXT 7 CALENDAR DAYS }</span></b> as an attachment to
+this email, indicating the case reference number in the subject, completed and signed
+by your authorized signatory.</font></p><p class="MsoNormal" style="text-align: left;"><u><font face="Arial, sans-serif" size="2">Please be advised that each
+owners of the company must have an unique e-mail address.<o:p></o:p></font></u></p><p class="MsoNormal" style="text-align: left;"><u><font face="Arial, sans-serif" size="2"><br></font></u></p><p class="MsoNormal" style="text-align: left;"><font face="Arial, sans-serif" size="2">Please note that IATA BSP shall
+always be notified of any changes that might affect the status of the agency,
+as prescribed in the Passenger Sales Agency Agreement (Resolution 824) and in
+Resolution 818g, Section 10 (available for download and review in
+(http://www.iata.org/services/accreditation-travel/travel-tourism/Pages/tah.aspx).<o:p></o:p></font></p><p class="MsoNormal" style="text-align: left;"><font face="Arial, sans-serif" size="2"><br></font></p><p class="MsoNormal" style="text-align: left;"><font face="Arial, sans-serif" size="2">Non-compliance action may be
+taken for failing to comply with this request as per the governing Resolution
+818g Paragraph 2, Sec. 2.6. Hence we
+seek your cooperation to complete the form by the given deadline.<o:p></o:p></font></p><p class="MsoNormal" style="text-align: left;"><font face="Arial, sans-serif" size="2"><br></font></p><p class="MsoNormal">
+
+
+
+
+
+
+
+
+
+<span style="line-height: 107%;"><font face="Arial, sans-serif" size="2">We trust you give this matter your highest
+priority and appreciate your prompt cooperation in advance.</font></span></p><p class="MsoNoSpacing"><font face="Arial, sans-serif" size="2"><br></font></p><p class="MsoNormal" style="text-align: justify;"><font face="Arial, sans-serif" size="2">Looking forward to hearing from
+you soon.<o:p></o:p></font></p><p class="MsoNormal" style="text-align: justify;"><o:p><font face="Arial, sans-serif" size="2">&nbsp;</font></o:p></p><p class="MsoNoSpacing">
+
+
+
+</p><p class="MsoNormal" style="text-align: justify;"><font face="Arial, sans-serif" size="2">Yours sincerely,</font></p><font face="Arial, sans-serif" size="2">
+<p style="margin-bottom: 12pt;">{!Case.OwnerFullName}</p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in 9pt 0.0001pt 0in;"><b><span lang="FR" style="color: rgb(51, 51, 153);">IATA Agency Management,</span></b></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in 9pt 0.0001pt 0in;"><b><span lang="FR" style="color: rgb(51, 51, 153);">Asia &amp; Pacific</span></b><span style="color: rgb(255, 255, 255);">!</span></p><table class="MsoNormalTable" border="0" cellpadding="0" cellspacing="0" width="788" style="color: rgb(0, 0, 0); width: 472.5pt; background: white;"><tbody><tr style="height: 10.35pt;"><td style="padding: 0in; height: 10.35pt;"><br></td></tr></tbody></table></font>]]></td>
+</tr>
+</table>

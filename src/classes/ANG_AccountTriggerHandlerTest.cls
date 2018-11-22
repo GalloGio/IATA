@@ -195,7 +195,7 @@ private class ANG_AccountTriggerHandlerTest {
 	static testMethod void test_shortNameModification() {
 		
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
-		ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+		ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 
 		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344560', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');	
 		Account a2 = new Account(Name = 'NameTest2', IATACode__c = '12344568', TradeName__c = 'tradeName2', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example2');
@@ -249,7 +249,7 @@ private class ANG_AccountTriggerHandlerTest {
 		//
 
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
-		ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+		ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account a = new Account(ANG_FA_Opt_out__c = true, Name = 'NameTest1', IATACode__c = '12344567', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');
 
@@ -307,7 +307,7 @@ private class ANG_AccountTriggerHandlerTest {
 		//
 
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
-		ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+		ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account a = new Account(ANG_FA_Opt_out__c = true, Name = 'NameTest1', IATACode__c = '12344567', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');
 
@@ -390,7 +390,7 @@ private class ANG_AccountTriggerHandlerTest {
 				Status = 'Open', 
 				Assessment_Performed_Date__c = system.today(),
 				Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY,
-				RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'),
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'),
 				IFAP_Area__c = 'asda44'
 			);
 		insert cFS;

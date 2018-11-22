@@ -42,7 +42,7 @@ public class IECEBC_Utility {
     a.Activity_Type__c = 'Send';
     a.Name = 'Cancel campaign: ' + c.Name;
     a.Activity_Date_Time__c  = Datetime.now();
-        a.Reason__c='Cancelled by the customer';
+    a.Reason__c='Cancelled by the customer';
     insert a;
   }
   
@@ -84,9 +84,9 @@ public class IECEBC_Utility {
     if (columns==null && elastic_switch) return ES_getSOQLFromMasterFilter(masterFilter); 
     return getSOQLFromMasterFilter(columns, masterFilter); 
   }
-    public static String getSOQLFromMasterFilter(List<String> columns, Id masterFilterId) {
+  public static String getSOQLFromMasterFilter(List<String> columns, Id masterFilterId) {
         return getSOQLFromMasterFilter(columns,masterFilterId,false);
-    }
+  }
   
     /*
     # Elastic Search Project
@@ -94,10 +94,9 @@ public class IECEBC_Utility {
     # Get the search query based on the elastic search version 5
     # Will return a string to send to elastic search using the webservice and used only with
     # and for the count operation
-  # ANY query the agency only  (A Or B Or C Or NOT(D) Or NOT(E)....OR X) AND (G AND NOT(F))
+    # ANY query the agency only  (A Or B Or C Or NOT(D) Or NOT(E)....OR X) AND (G AND NOT(F))
     # ALL query the agency only  (A AND B AND C AND NOT(D) AND NOT(E)....AND X) AND (G AND NOT(F))
     # Aggregation and listing and filter
-  
     */
   public static String ES_getSOQLFromMasterFilter(EBC_Master_Filter__c masterFilter) {
     List<String> queryFields = new List<String>();
@@ -105,7 +104,11 @@ public class IECEBC_Utility {
     List<String> queryRefinementFilters = new List<String>();
     String table = (masterFilter.Audience__c == 'Agent' ? 'agent' : 'agency');
     String emailField = (table == 'agent' ? 'Email__c' : 'Email_Address__c');
-        integer line_index=0;
+    integer line_index=0;
+    String clc='';
+    if (ebcSetup.Included_Location_Classes__c!=null) clc=ebcSetup.Included_Location_Classes__c;
+    String nclc = String.Join(clc.split(';'),'","');
+    if (nclc!='') clc=nclc;
     for(EBC_Customer_Filter__c cf : masterFilter.EBC_Customer_Filters__r) {
       if (String.isBlank(cf.Field_Operator__c) || (String.isBlank(cf.EBC_Application_Filter__c) && cf.EBC_Application_Filter__r == null)) continue;
       
@@ -162,7 +165,7 @@ public class IECEBC_Utility {
       if (cf.Field_Operator__c=='<='){ 
           filter='{"range": {"' + relationship + fieldName + '":{ "lte": ' + filterValue + dateformat+  '}}}';
       }
-            /*
+      /*
       if (af.Filter_RelatedList__c != null) {
         filter = 'id in (Select ' + af.Filter_RelatedList_Field__c  + ' From ' + af.Filter_RelatedList__c + ' Where ' + filter + ')';
       }
@@ -185,7 +188,7 @@ public class IECEBC_Utility {
         if (queryRefinementFilters.size()>0) nextline = ',';
         queryRefinementFilters.add(nextline + filter);
       }
-            line_index++;
+      line_index++;
     }
     
     System.debug(masterFilter.Audience__c);
@@ -199,11 +202,12 @@ public class IECEBC_Utility {
         queryWhereClauses.add('{"database":"iata", "document":"'+table+'", "request":{"_source": false, "explain": false,  "size":0,"query": {"bool": {"must": [');
         queryWhereClauses.add('{"bool": {"must": [');
         if (masterFilter.Audience__c == 'Agent') { 
-          queryWhereClauses.add('{"bool":{"must": [{"match": {"Opt_in__c": true}}]}},');
-          queryWhereClauses.add('{"bool":{"must": [{"match": {"Is_Active_Card__c": true}}]}},');
+             queryWhereClauses.add('{"bool":{"must": [{"match": {"Opt_in__c": true}}]}},');
+             queryWhereClauses.add('{"bool":{"must": [{"match": {"Is_Active_Card__c": true}}]}},');
         }else{
-          queryWhereClauses.add('{"bool":{"must": [{"terms": {"Agency_Status_Code__c": [4,5,6,7,8,9]}}]}},');
-          queryWhereClauses.add('{"bool":{"must": [{"match": {"GDP_Opt_In__c": true}}]}},');
+            if (clc!='') queryWhereClauses.add('{"bool":{"must": [{"terms": {"Related_Accreditation_Class_Code__c.keyword": ["'+clc+'"]}}]}},');
+            queryWhereClauses.add('{"bool":{"must": [{"terms": {"Agency_Status_Code__c": [4,5,6,7,8,9]}}]}},');
+            queryWhereClauses.add('{"bool":{"must": [{"match": {"GDP_Opt_In__c": true}}]}},');
         }
          //not and or
         queryWhereClauses.add('{"bool": {"must_not": [');
@@ -273,16 +277,22 @@ public class IECEBC_Utility {
     return query;
   }
 
-    public static String getSOQLFromMasterFilter(List<String> columns, EBC_Master_Filter__c masterFilter, boolean elastic_switch) {
+  public static String getSOQLFromMasterFilter(List<String> columns, EBC_Master_Filter__c masterFilter, boolean elastic_switch) {
         //eBroadcast_Counter_Switch__c
     if (columns==null && elastic_switch) return ES_getSOQLFromMasterFilter(masterFilter); 
     return getSOQLFromMasterFilter(columns, masterFilter);
-    }
+  }
   
   public static String getSOQLFromMasterFilter(List<String> columns, EBC_Master_Filter__c masterFilter) {
     List<String> queryFields = new List<String>();
     List<String> queryGeoFilters = new List<String>();
     List<String> queryRefinementFilters = new List<String>();
+
+    String clc='';
+    if (ebcSetup.Included_Location_Classes__c!=null) clc=ebcSetup.Included_Location_Classes__c;
+    String nclc = String.Join(clc.split(';'),'\',\'');
+    if (nclc!='') clc='Related_Accreditation_Class_Code__c in (\''+nclc+'\')';
+
     String table = (masterFilter.Audience__c == 'Agent' ? 'ID_Card__c' : 'GDP_Products_Account_View__c');
     String emailField = (table == 'ID_Card__c' ? 'Email__c' : 'Email_Address__c');
     
@@ -353,6 +363,7 @@ public class IECEBC_Utility {
       queryWhereClauses.add('Is_Active_Card__c = true');
       queryWhereClauses.add('Id NOT IN (Select ID_Card__c From EBC_Email_Exclusion_Relation__c Where Is_Global__c = true OR Billing_Account__c = \'' + masterFilter.Billing_Account__c + '\')');
     } else {
+      if (clc!='') queryWhereClauses.add(clc);
       queryWhereClauses.add('Agency_Status_Code__c >= 4');
       queryWhereClauses.add('GDP_Opt_In__c = true');
       queryWhereClauses.add('Id NOT IN (Select GDP_Products_Account_View__c From EBC_Email_Exclusion_Relation__c Where Is_Global__c = true OR Billing_Account__c = \'' + masterFilter.Billing_Account__c + '\')');
@@ -477,7 +488,7 @@ public class IECEBC_Utility {
                 , Member_Prepaid_Product_Rate_Plan_03__c
                 , Member_Prepaid_Product_Rate_Plan_04__c
                                                    
-                                , E_Member_Prepaid_Product_Rate_Plan_01__c
+                , E_Member_Prepaid_Product_Rate_Plan_01__c
                 , E_Member_Prepaid_Product_Rate_Plan_02__c
                 , E_Member_Prepaid_Product_Rate_Plan_03__c
                 , E_Member_Prepaid_Product_Rate_Plan_04__c
@@ -489,7 +500,7 @@ public class IECEBC_Utility {
                 , Non_Member_Prepaid_Product_Rate_Plan_03__c
                 , Non_Member_Prepaid_Product_Rate_Plan_04__c
                                                    
-                                , E_N_Member_Prepaid_Product_Rate_Plan_01__c
+                , E_N_Member_Prepaid_Product_Rate_Plan_01__c
                 , E_N_Member_Prepaid_Product_Rate_Plan_02__c
                 , E_N_Member_Prepaid_Product_Rate_Plan_03__c
                 , E_N_Member_Prepaid_Product_Rate_Plan_04__c
@@ -505,6 +516,7 @@ public class IECEBC_Utility {
                 , E_Commerce_Base_Url__c
                 , Product_Category__c
                 , Renewal_Window__c
+                , Included_Location_Classes__c
               from EBC_Setup__c
               order by CreatedDate Desc
               limit 1];
@@ -577,7 +589,7 @@ public class IECEBC_Utility {
         if (ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_03__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_03__c);
         if (ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_04__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_04__c);
                 
-                if (ebcSetup.E_Member_Prepaid_Product_Rate_Plan_01__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_Member_Prepaid_Product_Rate_Plan_01__c);
+        if (ebcSetup.E_Member_Prepaid_Product_Rate_Plan_01__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_Member_Prepaid_Product_Rate_Plan_01__c);
         if (ebcSetup.E_Member_Prepaid_Product_Rate_Plan_02__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_Member_Prepaid_Product_Rate_Plan_02__c);
         if (ebcSetup.E_Member_Prepaid_Product_Rate_Plan_03__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_Member_Prepaid_Product_Rate_Plan_03__c);
         if (ebcSetup.E_Member_Prepaid_Product_Rate_Plan_04__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_Member_Prepaid_Product_Rate_Plan_04__c);
@@ -625,5 +637,4 @@ public class IECEBC_Utility {
     result = (result.length() <= EBC_PAYMENT_TOKEN_MAX_LENGTH) ? result : result.substring(0, EBC_PAYMENT_TOKEN_MAX_LENGTH);
     return result;
   } // end of generatePaymentToken
-  
 }

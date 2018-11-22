@@ -192,13 +192,7 @@ global without sharing class ISSP_OperationalCalendarController {
         // countries
         String fieldName = getIsoCountryFieldName();
         map<String,IATA_ISO_Country__c> mapNameCountry = new map<String,IATA_ISO_Country__c>();
-        for (IATA_ISO_Country__c country: [SELECT Id, Name,
-                    IATA_COUNTRY_EN__c, IATA_Country_ZH__c, IATA_Country_SP__c,
-                    IATA_Country_PT__c, IATA_Country_JP__c, IATA_Country_IT__c,
-                    IATA_Country_FR__c, IATA_Contry_KR__c
-                FROM IATA_ISO_Country__c 
-                WHERE Id IN :setCountryId
-            ]) {
+        for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(setCountryId)) {
             String countryName = (String)country.get(fieldName);
             if (countryName==null) countryName = country.Name;
             mapNameCountry.put(countryName, country);

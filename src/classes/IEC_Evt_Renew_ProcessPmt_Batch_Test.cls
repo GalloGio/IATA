@@ -26,6 +26,8 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 			[5] SUCCESS - Paid with ICH
 			[6] SUCCESS - Paid with Credit Card
 		*/
+
+        TestDataGenerator.generateISOCountryState();
 		
 	    /*****************************************
 	    **	Create Accounts
@@ -118,6 +120,12 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 	    oEventRelease = TestDataGenerator.generateEventRelease(oProduct.Id, 'Member Airline', true);
 	    oEventRelease2 = TestDataGenerator.generateEventRelease(oProduct.Id, 'Member Airline', true);
         
+        IECAddress__c oAddress = TestDataGenerator.generateAddresses(1, true)[0];
+        
+        Location__c locSoldTo = TestDataGenerator.generateLocations(IECConstants.SOLDTO, oAddress.Id, lstAccount[0].Id, NULL, '321231');
+        Location__c locBillTo = TestDataGenerator.generateLocations(IECConstants.BILLTO, oAddress.Id, lstAccount[0].Id, lstContact[0].Id, '123123');
+        Location__c locShipTo = TestDataGenerator.generateLocations(IECConstants.SHIPTO, oAddress.Id, lstAccount[0].Id, lstContact[0].Id, '456654');
+        
         /*****************************************
 	    **	Create Orders
 	    *****************************************/
@@ -135,6 +143,11 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 
 	        lstOrder[i].IEC_Event_Release__c = oEventRelease.Id;
 	        lstOrder[i].IEC_Event_Subscription__c = lstSubscription[i].Id;
+	        
+	        lstOrder[i].SoldTo_Location__c = locSoldTo.Id;
+	        lstOrder[i].BillTo_Location__c = locBillTo.Id;
+	        lstOrder[i].ShipTo_Location__c = locShipTo.Id;
+	        
         }
         lstOrder[0].IEC_Event_Subscription__c = null;
         lstOrder[1].IEC_Event_Subscription__c = null;
@@ -175,7 +188,7 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 		IEC_Evt_Renew_ProcessPmt_Batch batch = new IEC_Evt_Renew_ProcessPmt_Batch(oEventRelease.Id);
 		Database.ExecuteBatch(batch,7);
 		Test.stopTest();
-
+		
 		// Run the asserts after the STOPTEST to make sure the batch has finished
 		List<IEC_Event_Release_Log__c> lstLog = [SELECT Id, Order__c FROM IEC_Event_Release_Log__c WHERE IEC_Event_Release__c = :oEventRelease.Id AND Order__c IN :setOrderId];
 		//System.assertEquals(5, lstLog.size(), 'Five errors should be generated based on the document scenarios in the InitializeData function.');

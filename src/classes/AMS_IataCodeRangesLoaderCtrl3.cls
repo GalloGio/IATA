@@ -42,25 +42,23 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 	private static Integer INDEX_START_RANGES 	= 5;  
 	private static Integer INDEX_END_RANGES 	= 6;
 	private static Integer INDEX_PROGRAM 		= 7;
-	private Map<string, Id> rangesRT = null;
 	private Map<String, AMS_Segment__c> programs = new Map<String,AMS_Segment__c>();
-	private Id programRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c').get('IATA_Code_Programs');
+	private Id programRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs');
 
 	public AMS_IataCodeRangesLoaderCtrl3(){
 		ApexPages.Message infoMessage= new ApexPages.Message(ApexPages.severity.INFO,'Please load IATA Code CSV file');
 		ApexPages.addMessage(infoMessage);
 		
-		rangesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Code_Range__c'}).get('Code_Range__c');
 		csvAsString = null;
 		aimsArea  ='1';
 		
 		//set the list of Country
-		for(IATA_ISO_Country__c c:[select Name,AIMS_Area_Name__c, Id,ISO_Code__c from IATA_ISO_Country__c ]){
+		for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries()){
 			countryMap.put(c.ISO_Code__c.toLowerCase().trim() ,c);
 			countryMapPerId.put(c.id ,c);
 		}
 
-		for(IATA_ISO_State__c c:[select Name, Id,ISO_Code__c, IATA_ISO_Country__c from IATA_ISO_State__c])
+		for(IATA_ISO_State__c c : IATAIsoStateDAO.getIsoStates())
 			statesMap.put(c.ISO_Code__c.toLowerCase().trim(),c);
 	}
 
@@ -175,9 +173,7 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 									system.debug('[IATA CODE GENERATION] program found  '+(program.Id ==null?'TOCREATE':'EXISTING'));
 								}
 								
-								//system.debug('Try cto create range with data: Name ='+rName +'Area__c='+Integer.valueOf(aimsArea) +'Area_Code__c='+j +'IATA_ISO_Country__c='+isoCountry.Id +'Country_Code__c='+ countryCode +' Max_Range__c='+ maxR +'Min_Range__c='+minR);
-
-								Code_Range__c newRange = new Code_Range__c(RecordTypeId = rangesRT.get('IATA_Code') ,
+								Code_Range__c newRange = new Code_Range__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Code_Range__c', 'IATA_Code') ,
 																		   Name =rName,
 																		   Area__c=Integer.valueOf(aimsArea) ,
 																		   Area_Code__c=j, 
@@ -220,7 +216,8 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 		}  
 
 		//clean DATA
-		List<Code_Range__c > crs =[select Id, name from Code_Range__c ];
+		List<Code_Range__c> crs = CodeRangeDAO.getAllCodeRanges();
+
 		System.debug('[IATA CODE GENERATION] Existing Ranges : '+crs.size());
 		for(Code_Range__c c:crs){
 			newIataCodeRanges.remove(c.Name);

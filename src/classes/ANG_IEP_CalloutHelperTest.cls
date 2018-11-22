@@ -48,7 +48,7 @@ private class ANG_IEP_CalloutHelperTest {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
 		insert ctry ;
 
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account a1 = new Account(ANG_IEP_Status__c = 'Open', IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 		

@@ -3,11 +3,27 @@ private class ANG_RiskAdvancedReportTest {
 	
 	@testSetup static void setup() {
 
+		list<String> listAirlineId = new list<String>();
+        for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']) {
+            listAirlineId.add(profile.Id);
+        }
+        System.assert(!listAirlineId.isEmpty(), 'No airline profiles found');
+        list<String> listAgencyId = new list<String>();
+        for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Agency%']) {
+            listAgencyId.add(profile.Id);
+        }
+        System.assert(!listAgencyId.isEmpty(), 'No agency profiles found');
+        list<ISSP_CS__c> listCs = new list<ISSP_CS__c>();
+        listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Airline Profil',Value__c=String.join(listAirlineId,',')));
+        listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Agency Profile',Value__c=String.join(listAgencyId,',')));
+        insert listCs;
+
 		IATA_ISO_Country__c ISOCountry = new IATA_ISO_Country__c(name = 'FR', 
 			ISO_Code__c = 'FR', 
 			BSP_Country_free_text__c = 'FR',
 			ISO_Code_Numeric__c = 123,
-			Region__c = 'Europe');
+			Region__c = 'Europe',
+			ANG_Enable_NewGen__c= true);
 		insert ISOCountry;
 
 		Account parent = new Account(Name = 'Parent Account', 
