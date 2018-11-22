@@ -372,7 +372,7 @@ public with sharing class ISSP_ObjectFactory {
         return newUser;
     }
 	
-	public static void fakemethod() {
+	public void fakemethod() {
 		Integer i = 0;
 		i++;
 		i++;
