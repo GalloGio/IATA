@@ -174,7 +174,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 
 	global void finish(Database.BatchableContext BC) {
 		if(!contactIds.isEmpty()) {
-			Database.executeBatch(new AMS_MajorDefaultCommunicationEmailSender(contactIds, mapContactToCase, mapContactToTemplate), 50);
+			Database.executeBatch(new AMS_MajorDefaultCommunicationEmailSender(contactIds, mapContactToCase, mapContactToTemplate), 25);
 		}
 	}
 }
