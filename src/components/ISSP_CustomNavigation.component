@@ -732,7 +732,7 @@ background-color:#428bca;
                 </a>
         </li>
         <li>
-            <a href="/ISSP_Financial_Institutions?MainNav=Services&subNav=Financial&mid=M3S2" id="M3S2" style="display:{!IF('{!showFinancialInstitution}','','none')}">
+            <a href="/ISSP_Financial_Institutions?MainNav=Services&subNav=Financial&mid=M3S2" id="M3S2" style="display:{!IF(showFinancialInstitution,'','none')}">
                 {!$Label.ISSP_Financial_Insititutions}
             </a>
         </li>
