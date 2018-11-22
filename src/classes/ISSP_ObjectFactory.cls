@@ -373,6 +373,7 @@ public with sharing class ISSP_ObjectFactory {
     }
 	
 	public static void fakemethod() {
+		Integer i = 0;
 		i++;
 		i++;
 		i++;
