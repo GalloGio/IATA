@@ -1,3 +1,12 @@
+// Vanja Djurdjevic | vanja.djurdjevic@b-i.com
+// 20/11/2018
+// This classs is called from a process builder
+// object: Agents__c
+// condition: Logged_on__c field changed to false
+//
+// note: the timers that are being processed by the class can be pre-set by a visualpage controller,
+// if they are set previously, this class skips them and doesn't do any changes
+// *************************************
 public class UpdateAgentLogOffTime {
     @InvocableMethod(label='Update Agents Log Off Time')
     public static void AgentUpdateTime(List<Id> agentIds)

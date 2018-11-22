@@ -1,3 +1,15 @@
+// *************************************
+// Vanja Djurdjevic | vanja.djurdjevic@b-i.com
+// 20/11/2018
+// Note: since the custom metadata entries are matched using queue id, this test
+// will most likely pass when the queue Id's are intentical across orgs.
+// This is like this because:
+// 1) Id field can't be instantiated (predefined) when creating queue
+// 2) custom metadata records creation from apex test is cumbersome (possible, but not easy)
+//
+// Solution: when storing information about a queue in custom metadata, refer to a queue by
+// unique API name not the id. Then in test a queue with identical name is created.
+// *************************************
 @isTest
 public class AutoAssignmentAgentToQueueTest {
     @isTest static void agentToQueueTest() {
