@@ -22,7 +22,8 @@ public without sharing class AMS_MigrationToolHelper {
 			AMS_Utils.NGOPTINOUT => 'Financial review opt-in / opt-out',
 			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => 'IEP Bank account setup',
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP => 'Onboarding IEP Model A',
-			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP => 'Screening IEP Model B'
+			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP => 'Screening IEP Model B',
+			AMS_Utils.NGGDI => 'GDI setup'
 		};
 		}
 		set;
@@ -41,7 +42,8 @@ public without sharing class AMS_MigrationToolHelper {
 			'ANG.NEW.HE.STANDARD.1.0' => AMS_Utils.RECTYPE_NEWHE,
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELA,
 			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELB,
-			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP 
+			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,
+			AMS_Utils.NGGDI => AMS_Utils.RECTYPE_GDI
 		};
 		}
 		set;
@@ -710,7 +712,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 			oscar = updateDatesFromSAAM(oscar,oscarCase.Id);
 
-			if (AMS_Utils.IEP_PROCESSES.contains(oscar.Process__c))
+			if (AMS_Utils.IEP_PROCESSES.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGGDI)
 				oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 
 			if(oscar == null)
@@ -753,7 +755,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 		caseToProcess.RecordTypeId = rtCommCase;
 
-		if(isNewgenAccount || AMS_Utils.IEP_PROCESSES.contains(processType)){
+		if(isNewgenAccount || AMS_Utils.IEP_PROCESSES.contains(processType) || processType == AMS_Utils.NGGDI){
 			caseToProcess.CaseArea__c = 'Accreditation Process';
 			caseToProcess.Reason1__c = newgenCaseReason.get(processTypeInput);
 			caseToProcess.Subject = caseToProcess.Reason1__c +(isNewgenAccount ? ' - ' + caseToProcess.Account.ANG_Accreditation_Model__c : '')+ ' - ' + caseToProcess.Account.Name;
