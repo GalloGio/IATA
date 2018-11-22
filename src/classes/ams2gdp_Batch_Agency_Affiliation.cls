@@ -29,13 +29,9 @@ global class ams2gdp_Batch_Agency_Affiliation implements Database.Batchable<sObj
 			+ ', Affiliation__r.Name, Affiliation__r.Affiliation_Code__c ';
 
 
-		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''
-			, 'Account__r.IATACode__c != null'
-			, 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-			, 'Account__r.CNS_Agency__c = false'
-			, 'Account__r.CNS_Account__c = false'
-			// , 'Account__c IN ('+accreditation_condition+')'
-		};
+	    List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''};
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
+
 
 		if(extraIds!=null && extraIds.size() > 0) {
 			 if(extraIds[0]=='none'){
