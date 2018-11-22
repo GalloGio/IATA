@@ -31,12 +31,12 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         Controller
     **/
     public ISSP_SISMembershipApplicationForm_Ctrl(){
-        String formId = Apexpages.CurrentPage().getParameters().get('id');
+        // this id can be a APProcessForm or a Case Id
+        String inputId = Apexpages.CurrentPage().getParameters().get('id');
         String inputStep = Apexpages.CurrentPage().getParameters().get('step');
-        this.newForm = retrieveAPProcessForm(formId);
+        this.newForm = retrieveAPProcessForm(inputId);
         this.newCase = this.newForm.Case__r;
         this.account = retrieveAccount(this.newForm.Airline__c);
-        
         this.sisType = retrieveSisType();
         // step 1 is for requirements, if there are no requirements then begin in step 2
         this.currentStep = this.sisType.Requirements_Text__c==null? 2: 1;
@@ -68,9 +68,9 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
     }
 
     /**
-        Get all record from input AP_Process_Form__c Id
+        Get all fields in object AP_Process_Form__c form input id (case id or form id)
     **/
-    public AP_Process_Form__c retrieveAPProcessForm(Id formId){
+    public AP_Process_Form__c retrieveAPProcessForm(Id inputId){
         return [
             SELECT Id, Type__c, Type_of_participation_desired__c, Airline_Local_address_in_the_BSP_Country__c,
             Desired_commencment_date__c, Accept_terms_and_conditions__c, Accept_payment_Cards_for_BSP_ticket__c , Airline__c,
@@ -113,9 +113,10 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
             RecordTypeId, RecordType.DeveloperName, Do_you_want_to_add_Bank_Details__c, Data_Exporting_Organization_Name__c,Data_Exporting_Organization_Address__c,
             Data_Exporting_Organization_Phone__c,Data_Exporting_Organization_Fax__c,Data_Exporter_Name__c,Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,
             Contact_Title__c,Contact_First_name__c,Contact_Last_name__c,Contact_email__c,Contact_number__c,
-            Case__c, Case__r.CaseNumber, Case__r.BSPCountry__c, Case__r.Id, Case__r.RecordtypeId, Case__r.AccountId, Case__r.CaseArea__c, Case__r.Reason1__c, Case__r.Status, Case__r.Type
+            Case__c, Case__r.CaseNumber, Case__r.BSPCountry__c, Case__r.Id, Case__r.RecordtypeId, Case__r.AccountId, Case__r.CaseArea__c, Case__r.Reason1__c, Case__r.Status, Case__r.Type,
+            Case__r.Visible_on_ISS_Portal__c
             FROM AP_Process_Form__c
-            WHERE Id = :formId
+            WHERE Id = :inputId OR Case__c = :inputId
         ];
     }
 
@@ -124,7 +125,9 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
     **/
     private Account retrieveAccount(Id accountId){
         Account account = [
-            SELECT Id,Name,Sector__c,Category__c,Legal_name__c,Airline_designator__c,BillingStreet,BillingCity,BillingState,BillingPostalCode,BillingCountry, IATA_ISO_Country__c
+            SELECT Id,Name,Sector__c,Category__c,Legal_name__c,Airline_designator__c,
+                BillingStreet,BillingCity,BillingState,BillingPostalCode,BillingCountry,
+                IATA_ISO_Country__c, Date_of_last_clearance__c, Clearance_level__c
             FROM Account 
             WHERE Id=:accountId 
         ];
@@ -170,6 +173,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
                 if (!listCountries.isEmpty()) {
                     this.newCase.BSPCountry__c = listCountries[0].Name;
                 }
+                this.newCase.Visible_on_ISS_Portal__c = true;
                 //Apply default case assignment rules
                 Database.DMLOptions dmo = new Database.DMLOptions();
                 dmo.assignmentRuleHeader.useDefaultRule= true;

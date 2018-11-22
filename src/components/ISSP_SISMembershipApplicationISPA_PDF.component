@@ -5,6 +5,388 @@
 <div id="form-container">
 
     <h2 class="panel-title">
+        CHAPTER B16 — STANDARD AGREEMENT FOR SIS PARTICIPATION
+    </h2>
+
+    <div class="grey-box" style="width: auto;">
+        <p>This SIS Participation Agreement “<apex:outputText styleclass="bold" value="{!$Label[sisType.MasterLabel]}"/>” is entered on “<apex:outputText styleclass="bold" value="{0, date, MMMM d yyyy}"><apex:param value="{!NOW()}"/></apex:outputText>”</p>
+        <p>by and between <span class="bold">{!newForm.Legal_Name_of_company__c}</span> </p>
+        <p>a company incorporated under the laws of <span class="bold">{!newForm.Company_State__c}/{!newForm.Company_Country__r.Name}</span> </p>
+        <p>with its head office located at:	</p>
+        <p class="bold margin-3">{!newForm.Company_address__c}</p>
+        <p class="bold margin-3">{!newForm.Company_city__c}, {!newForm.Company_State__c}</p>
+        <p class="bold margin-3">{!newForm.Company_Country__r.Name}</p>
+        <p class="bold margin-3">{!newForm.Postal_code__c}</p>
+        <br/>
+        <p>
+            (“<span class="bold">Participant</span>”) and the <span class="bold">INTERNATIONAL AIR TRANSPORT ASSOCIATION</span>, an association incorporated by Special Act of the Parliament of Canada, with its head office at 800 Place Victoria. P.O. Box 113, Montreal, Quebec, Canada, H4Z 1M1 (“<span class="bold">IATA</span>”) (each a “<span class="bold">Party</span>” and collectively, the “<span class="bold">Parties</span>”). 
+        </p>
+    </div>
+
+    <br/>
+
+    <center class="bold underline">PREAMBLE</center>
+
+    <p>
+        <span class="bold">WHEREAS</span> IATA is an international association of airlines that promotes safe, regular and economical air transport and facilitates collaboration among air transport enterprises engaged directly or indirectly in international air transport services; 
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> IATA operates and manages one or more industry clearing houses as a service to the airline industry on a cost recovery basis; 
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> in 2007, to enhance the efficiency and reduce the cost of clearing house operations, IATA has developed an integrated billing and settlement solution to operate on a paperless basis and simplify existing processes (the “<span class="bold">SIS Project</span>”); 
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> the information technology solution resulting from the SIS Project to provide the air transport industry simplified, enhanced and optimized IATA settlement systems consists of: 
+        <ul style="list-style-type: none;">
+            <li>(i) streamlining and integrating the industry settlement systems into a single coherent settlement process that can handle each and all types of billing (passenger, cargo, UATP, miscellaneous/non-transportation) including such as original billings, rejections, billing/credit memos and correspondence; </li>
+            <li>(ii) adding electronic invoicing and support functionalities and services to reduce the cost of settlement, and </li>
+            <li>(iii) making all of these enhancements available to all other air transport industry settlement processes involved in or forming part of the industry settlement systems (such as industry clearing houses) (all together “<span class="bold">SIS Solution</span>”); </li>
+        </ul>
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> IATA operates and provides the SIS Solution, the Service and the Additional Services (both terms Service and the Additional Services are defined below) from various locations worldwide, including through the use of subcontractors; 
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> The Parties now wish to set out the terms and conditions pursuant to which IATA has agreed to provide the Service and Additional Services to Participant, and Participant has agreed to accept the Service, and may elect to choose Additional Services, in exchange for certain fees, and where the Participant recognizes that IATA operates the Service and any Additional Services through sub-contractors worldwide not with the intent of generating profits and, to the extent practicable, essentially on a cost recovery basis, the whole as further set forth below; and 
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> the Parties understand and agree that IATA's willingness to perform the Services and the Additional Services on a cost recovery basis hereunder was and is a material factor in making the Parties agree to the terms and conditions herein, including in particular the provider-limited liability regime set forth in this Agreement. 
+    </p>
+    <p>This Preamble shall form an integral part of this Agreement.</p>
+    <p class="bold">NOW THEREFORE THE PARTIES SIGNING THE VARIOUS COUNTERPARTS HEREOF AGREE AMONGST THEMSELVES AS FOLLOWS: </p>
+
+    <p class="bold">1. SUBMISSION OF ELECTRONIC INVOICE DATA VIA ELECTRONIC DATA INTERCHANGE (EDI) FOR THE PURPOSE OF INTERLINE BILLING </p>
+    <p class="margin-3 indent-1_5">1.1 The Parties agree to submit and receive (as applicable) electronic interline invoices in accordance with the procedures and standards set out in this Agreement. </p>
+    <p class="margin-3 indent-1_5">1.2 The provisions of this Agreement are in addition to the procedures set out in the IATA Revenue Accounting Manual (“<span class="bold">RAM</span>”) and the Airline Clearing House (“<span class="bold">ACH</span>”) Manual of Procedure as amended from time to time. </p>
+    <p class="margin-3 indent-1_5">1.3 This Agreement includes the Attachments A, B, C, D, E, F and G which may be amended in accordance with this Agreement, and published by IATA from time to time. </p>
+    <p class="margin-3 indent-1_5">1.4 IATA shall enter into agreements with additional airlines, suppliers and other related parties for the provision of the Service and Additional Services (“<span class="bold">SIS Participants</span>”) only on the same standards, terms and conditions as set out herein. </p>
+    <p class="margin-3 indent-1_5">1.5 Whenever used in this Agreement “<span class="bold">includes</span>” and “<span class="bold">including</span>” mean “including (or includes) without limitation”. </p>
+
+    <p class="bold">2. PROVISION OF SERVICE </p>
+    <p class="margin-3 indent-1_5">2.1 As of the Effective Date and during the Term of this Agreement, IATA shall be responsible for providing to the Participant, and Participant agrees to use the  Simplified Invoicing and Settlement (SIS) services described in the <span class="underline">Attachment D</span> (the “<span class="bold">Service</span>”) </p>
+    <p class="margin-3 indent-1_5">2.2 Participant may also elect to use certain additional services in accordance with the <span class="underline">Attachment B</span> (“<span class="bold">Additional Services</span>”). </p>
+
+    <p class="bold">3. PARTICIPATION IN THE SERVICE </p>
+    <p class="margin-3 indent-1_5">3.1 Obligations and Responsibilities of the Participant </p>
+    <p class="margin-6 indent-3">3.1.1 Participant shall pay IATA the fees and charges set out in Section 8 for the provision of the Service. </p>
+    <p class="margin-6 indent-3">3.1.2 If Participant elects to use any Additional Services it shall pay IATA the fees and charges set out in Section 8 for the provision of such Additional Services as selected in Attachment B. </p>
+    <p class="margin-3 indent-1_5">
+        3.1.3 Participation in this Agreement is conditional upon Participant agreeing that IATA will be generating electronic invoices on the Participant's behalf, and on agreeing to accept electronic invoices from all other SIS Participants. Invoices are deemed to be received as soon as notification has been sent to the Participant. It is the Participant's responsibility to secure any permissions or authorizations that may be required in their country or countries of base regarding the use of electronic invoices, and to comply with laws that those countries may apply to the creation of invoices, determination of applicable taxes, management of access controls, record keeping and legal archiving. The correctness of any data submitted to the Service and/or Additional Services remains the responsibility of the Participant at all times. Where electronic signatures have been requested, the Participant authorizes IATA to apply or validate the electronic signature through the electronic signature service providers listed in Attachment D and as amended from time to time.
+    </p>
+    <p class="margin-6 indent-3">3.1.4 Participation is conditional upon preliminary testing and successful completion of the certification process for the file types that Participant intends to submit. </p>
+    <p class="margin-6 indent-3">3.1.5 Settlement of invoices entered into the Service will be made directly by the debtor to the creditor using such channels as may have been agreed between them. Where settlement is to be effected through an industry clearing house, each SIS Participant must have access to and act in compliance with the rules of a clearing house. </p>
+    <p class="margin-6 indent-3">3.1.6 The Participant acknowledges that settlement of electronically submitted invoices via the Service could generate an automatic default notice if payment is made by any Participant not based on the gross amount of the invoice, but on the gross amount net of deduction or withholdings based on taxes or other governmental charges. </p>
+    <p class="margin-3 indent-1_5">
+        3.1.7 In supplying Data (as further defined) and any other data to be included in the Service and Simplified Invoicing and Settlement (SIS) system (“<span class="bold">System</span>”), the Participant shall comply with the procedures and standards provided for in this Agreement. All invoice data supplied must be transmitted in compliance with the published IS-XML or IS-IDEC standards as valid at the time, or be entered by the Participant via the user interface provided. The Participant shall maintain in the System a full and up to date list of the names of persons authorized by it to supply, modify, or withdraw data on its behalf or to issue instructions concerning the applicability or distribution thereof. IATA will make all reasonable efforts to conform to the Participant's instructions in a timely manner.
+    </p>
+    <p class="margin-6 indent-3">3.1.8 Where a Participant has issued an electronic invoice that it believes to be in error, it must promptly notify IATA and the designated recipient, and take the necessary steps to correct the situation in accordance with the procedures described in the RAM, the ACH Manual of Procedure and/or other clearing house procedures, as applicable. </p>
+    <p class="margin-6 indent-3">3.1.9 The Participant holds the entire responsibility for the accuracy and the completeness of the tax and VAT-related information it provides to IATA and third parties in connection with the Service. When national legislations provide for specific validation procedure for the tax or VAT identification number of the customer, the obligation to perform such validation remains with the Participant. </p>
+    <p class="margin-6 indent-3">
+        3.1.10 It is the sole responsibility of the Participant to ensure the Data or any other information transmitted via the Service and/or Additional Services is in compliance with applicable laws, including applicable privacy laws. To the extent applicable, any payment card data supplied under the Service by the Participant or any third party acting on its behalf shall be masked in accordance with Payment Card Industry Digital Security Standard (PCI-DSS) specifications using the format 123456XXXXXX7890.
+    </p>
+    <p class="margin-3 indent-1_5">3.2 Personal Data </p>
+    <p class="margin-3">
+        IATA may receive Personal Data (as defined below) under this Agreement from the Participant or its employees. IATA shall process such Personal Data solely as needed for the performance of the Service and/or Additional Services. Furthermore, in accordance with EU Directive 95/46/EC, if requested by Participant, the Parties shall sign the EU Standard Contractual Clauses, as attached hereto as Attachment G, pursuant to which IATA may transfer the Personal Data to its subcontractors on condition that such subcontractors have entered into the same obligations. “<span class="bold">Personal Data</span>” means any data, which permits the identification of an individual. IATA hereby notifies Participant of such processing and Participant hereby grants consent required for the processing of Personal Data. Participant agrees that IATA shall not be in breach of this Agreement if IATA refuses to perform any transaction offered as part of the Service and/or Additional Services described in this Agreement to Participant when Participant's employee, agent and/or representative refuses to consent to the processing of its necessary Personal Data for the performance of such transaction(s). 
+    </p>
+    <p class="margin-3 indent-1_5">3.3 For the purpose of this Agreement “<span class="bold">Data</span>” includes all information (including Personal Data) to be provided to or otherwise made available to or processed by the System, the SIS Solution, the Service, the Additional Services or IATA, by the Participant or any third party acting on its behalf for purposes of or in relation to this Agreement, the SIS Solution, the Service or the Additional Services. </p>
+
+    <p class="bold">4. GENERAL ADMINISTRATION OF STANDARD AGREEMENT </p>
+    <p class="margin-3 indent-1_5">4.1 The general administration of this Agreement shall be undertaken by IATA. </p>
+    <p class="margin-3 indent-1_5">4.2 The cost of administering the Service is met by charging a combination of a participation fee plus transaction fees in accordance with the Pricing Schedule in Attachment A and as amended from time to time in order to recover Service operating costs. </p>
+    <p class="margin-3 indent-1_5">4.3 All communications from the Participant concerning this Agreement shall be addressed to IATA. All communications from the Participant concerning problems in the delivery of the Service and/or Additional Services should be referred to the help desk as detailed in Attachment E. </p>
+    <p class="margin-3 indent-1_5">4.4 IATA may undertake any study, and perform any other acts, that are designed solely to develop and improve the Service at no cost to the Participants unless otherwise agreed with the SIS Steering Group. </p>
+    <p class="margin-3 indent-1_5">4.5 Any failure identified in the provision of the Service will be directed in the first instance to the designated help desk as provided in Attachment E, which shall log the failure and identify the action required. </p>
+    <p class="margin-3 indent-1_5">
+        4.6 Each Participant shall file a signed copy of this Agreement with IATA, together with a schedule of dates outlining when the Participant will implement Simplified Invoicing and Settlement (SIS) processes for each clearing house transaction category. IATA Revenue Accounting will publish, in the form of Attachment F to this Agreement, the names of the SIS Participants that are participating in the “<span class="bold">Service</span>” and in which clearing house transaction categories they participate. In the case of SIS Participants that are members of the ACH, IATA will also notify the ACH Secretary-Treasurer, who will publish to ACH members.
+    </p>
+
+    <p class="bold">5. GOVERNANCE </p>
+    <p class="margin-3 indent-1_5">5.1 The Service is governed by the groups referred to below and described in Attachment C. </p>
+    <p class="margin-3 indent-1_5">5.2 IATA shall hold a general meeting of the SIS Participants annually, and additional general meetings shall be held at any time at the discretion of IATA or on the request of a majority of SIS Participants (“<span class="bold">SIS General Meeting</span>”). </p>
+    <p class="margin-3 indent-1_5">5.3 A written notice of the intention to hold such SIS General Meeting shall be communicated by IATA to the SIS Participants not less than three (3) months before the date scheduled for such SIS General Meeting. Agenda items must be submitted at least forty-five (45) days before the date of such meeting, and the agenda will be issued thirty (30) days before the date of such meeting. </p>
+    <p class="margin-3 indent-1_5">5.4 Voting will take place at the SIS General Meeting to elect five (5) representatives to the SIS Steering Group for a term of three (3) years. Nominations shall be made to IATA before the date of the meeting, at which the nominees must be present. The Participants will elect the representatives by majority vote. </p>
+    <p class="margin-3 indent-1_5">5.5 In IATA or SIS Steering Group's opinion, when elections or other measures require action by Participants outside the schedule of SIS General Meetings, Participant agrees that a mail vote may be taken as an alternative. </p>
+
+    <p class="bold">6. MODIFICATIONS </p>
+    <p class="margin-3 indent-1_5">
+        6.1 Amendments to System functionality may be submitted as a proposal to the SIS General Meeting duly convened in accordance with paragraph 5.2 and shall be referred initially to the SIS Steering Group for review. If accepted by the SIS Steering Group they will be referred to SIS Operations (as defined in Attachment C) for analysis and costing. SIS Operations will then develop the specifications. The final agreed proposal shall be submitted to the SIS Steering Group for approval. Changes to system functionality may be proposed by the Participants at any time before the deadline of the SIS General Meeting. Major changes to system functionality must be approved by IATA to ensure operational efficiency.
+    </p>
+    <p class="margin-3 indent-1_5">6.2 Amendments to System functionality as a result of industry mandated changes shall be initiated by the SIS Steering Group and referred to SIS Operations for review and costing. SIS Operations will then develop the specifications. The final agreed proposal shall be submitted to the SIS Steering Group for approval. </p>
+    <p class="margin-3 indent-1_5">6.3 Amendments to the then current Agreement which are accepted by IATA and agreed by seventy five percent (75%) of those present at the SIS General Meeting, duly convened in accordance with paragraphs 5.2 and 5.3 shall become effective and shall be applied by all SIS Participants, as from a date which shall be determined by the SIS Participants present and entitled to vote at the SIS General Meeting. </p>
+    <p class="margin-3 indent-1_5">6.4 To be eligible to vote for changes to this Agreement with Attachments, the Participant must be transmitting and receiving invoices through the Service. </p>
+    <p class="margin-3 indent-1_5">6.5 Where changes to the RAM, ACH Manual of Procedure, or other industry rulings require changes to this Agreement, the SIS Steering Group is empowered to agree to the appropriate amendments to this Agreement. The SIS Steering Group shall notify the Participants of all amendments, giving their date of effectiveness. </p>
+    <p class="margin-3 indent-1_5">6.6 In addition, when IATA's review of an operational and/or individual Participant problem suggests that an editorial change would improve understanding, IATA may make editorial amendments provided they do not change the intent of the Agreement and/or procedures. Editorial amendments that do not change the intent of the Agreement and/or procedures will be notified via the RAM. IATA will notify the ACH Secretary-Treasurer. </p>
+    <p class="margin-3 indent-1_5">6.7 All changes and amendments made in accordance with paragraphs 6.5 and 6.6 above will be submitted to the next SIS General Meeting for final ratification. </p>
+
+    <p class="bold">7. SERVICE LEVEL </p>
+    <p class="margin-3 indent-1_5">7.1 General </p>
+    <p class="margin-3">The level of performance of the Service shall be at least consistent with the service levels described in Attachment E (“<span class="bold">Service Levels</span>”). </p>
+    <p class="margin-3 indent-1_5">7.2 Failure to Perform </p>
+    <p class="margin-3">In the event IATA fails to meet any Service Level requirement, IATA shall, or shall cause its sub-contractor to, (i) investigate the causes of such failure; (ii) take the necessary measures to correct such failure within the time frames set forth in Attachment E and start implementing the corrective measures, and (iv) take appropriate preventive measures so that such failure does not reoccur. </p>
+    <p class="margin-3 indent-1_5">7.3 Service Level Credits </p>
+    <p class="margin-3">
+        Any Service Level credit available to IATA will be applicable for the benefit of all SIS Participants and/or the industry. Such Service Level credits shall not be Participant's exclusive remedy for any failure to meet the Service Levels; however, any amount of Service Level credits effectively received by Participant will be deducted from monetary damages recovered by Participant from IATA as a result of an event also giving rise to a Service Level credit. The balance of any such monetary damages will be recoverable under Section 13.
+    </p>
+    <p class="margin-3 indent-1_5">7.4 Measurement and Monitoring Tools </p>
+    <p class="margin-6 indent-3">7.4.1 IATA will monitor that the provision of the Service and Additional Services is in accordance with the Service Levels described in Attachment E. IATA shall use the necessary measurement and monitoring tools and procedures required to measure the performance of the Service and Additional Services against the applicable Service Levels. </p>
+    <p class="margin-6 indent-3">
+        7.4.2 Each Service Level shall be measured on a monthly basis and reported to the SIS Steering Group quarterly, unless stated otherwise in Attachment E. IATA shall, upon request of the Steering Group, provide reports at a sufficient level of detail, to verify the Service performance and compliance with the Service Levels. This data shall be provided to the Steering Group, and shall be considered Confidential Information. For the avoidance of doubt, any such report shall not contain any Data (as defined below).
+    </p>
+
+    <p class="bold">8. FEES AND CHARGES </p>
+    <p class="margin-3 indent-1_5">8.1 Fees and charges for the Service and the Additional Services as described in Attachment A will be paid by the Participant for the Service and/or the Additional Services. </p>
+    <p class="margin-3 indent-1_5">
+        8.2 The fees and charges do not include, communication charges relating to the Participant's transmission of input or receipt of output files, customization of software, systems integration, any implementation in the Participant's premises, audit certification or other legal process requested by the Participant, set-up fees, or enhancements. Fees for any such services that might be required for Participant and have been received shall be agreed separately and in advance between the Participant and IATA or its service providers.
+    </p>
+    <p class="margin-3 indent-1_5">
+        8.3 Fees and charges are payable to IATA within thirty (30) days of billing. Fees and charges against members of the IATA Clearing House (“<span class="bold">ICH</span>”) or the Airlines Clearing House (“<span class="bold">ACH</span>”) shall be collected through the appropriate clearing house unless otherwise agreed. IATA may suspend provision of the Service upon thirty (30) days prior written notice in the event of failure by the Participant to settle any invoice or charge for the Service in a timely manner.
+    </p>
+    <p class="margin-3 indent-1_5">8.4 Any surplus revenues for the provision of the Service and the Additional Services will be reviewed by the SIS Steering Group, who shall have the right to propose an apportionment of the surplus to cover further development and/or a reduction in operating charges. IATA will use its best efforts to provide the Service at the lowest cost practicable. </p>
+    <p class="margin-3 indent-1_5">8.5 The Parties recognize that the charges for the Service and/or Additional Services shall be calculated using a cost recovery model which is to balance over a one (1) year period unless an alternative period is agreed by the SIS Steering Group. </p>
+
+    <p class="bold">9. TAXES </p>
+    <p class="margin-3 indent-1_5">
+        9.1 Payment for fees and charges related to the use of the Service and/or Additional Services must be made by the Participant without any set-off or counter claim and free of deduction or withholding of any taxes or governmental charges (except as required by law). If any deduction or withholding is required by law, the Participant must pay the required amount to the relevant governmental authority, and pay to IATA as the case may be, in addition to the payment to which it is otherwise entitled under this Agreement, such additional amount as is necessary to ensure that the net amount actually received by IATA, free and clear of all taxes, equals the full amount IATA would have received had no such deduction or withholding been required.
+    </p>
+    <p class="margin-3 indent-1_5">
+        9.2 Should any taxes, levies, charges or duties (including any goods and services or other value added tax) be imposed, levied or become payable on the supply of the Service and/or Additional Services made to Participant pursuant to this Agreement, the Participant shall pay any and all such taxes, levies, charges and duties, in addition to any other payments due under this Agreement. In the event IATA pays any such tax or assessment, Participant will immediately reimburse IATA upon demand. Notwithstanding the foregoing, neither Party shall be responsible for the other Party's taxes which are based on net or gross income or capital.
+    </p>
+
+    <p class="bold">10. WARRANTIES AND LIABILITIES </p>
+    <p class="margin-3 indent-1_5">10.1 The Participant hereby represents and warrants that: </p>
+    <p class="margin-6 indent-2">10.1.1 it has obtained all operating licenses or government authorizations required for engaging in business; </p>
+    <p class="margin-6 indent-3">
+        10.1.2 it owns or has obtained all required rights in respect of any and all Data, including in relation to its collection, processing, provision, use, disclosure, validation and/or disposal as part of or in relation to this Agreement, the System, the SIS Solution, the Service or the Additional Services and all required rights otherwise necessary for the purposes of this Agreement, the whole in compliance with all applicable laws, including data privacy and data security laws;
+    </p>
+    <p class="margin-6 indent-3">
+        10.1.3 it will use, handle, protect, dispose of and otherwise deal with any and all data of any and all other SIS Participants made available to it via the System and/or SIS Solution and/or otherwise by or through IATA solely for the purposes contemplated by this Agreement and in compliance with the terms and conditions of this Agreement and all applicable laws, and with a degree of care at least as high as the one that is applied to its own Data hereunder; and
+    </p>
+    <p class="margin-6 indent-3">
+        10.1.4 it shall be responsible for ensuring that the Data or any attachment supplied by itself, its respective employees, agents, and contractors does not contain or introduce any Destructive Elements. If Participant becomes aware that a Destructive Element has been so introduced, Participant will eliminate the effects of the Destructive Element and, if the Destructive Element causes a loss (e.g., of operational efficiency or data), assist IATA to mitigate and restore such losses provided that it shall not prevent IATA from exercising any recourse it may have against Participant under this Agreement or at law. “<span class="bold">Destructive Elements</span>” means any software, data or tool (e.g., “viruses”, “worms” or “trojan” programs) that (i) are intentionally designed to disrupt, disable, harm or otherwise impede in any manner, including aesthetical disruptions or distortions, the operation of the Service or related systems of IATA, including, for example, based on the elapsing of a period of time, exceeding an authorized number of copies, advancement to a particular date or other numeral (e.g., “time bombs”, “time locks” or “drop dead” devices), (ii) would permit Participant or third parties to access the Service or related systems, to cause such disablement or impairment, or otherwise to circumvent the security features of the Service or related systems, or (iii) contain any other harmful, malicious or hidden procedures, routines or mechanisms which would cause the Service or related systems to cease functioning, or to damage or corrupt software, data or communications, or otherwise interfere with operations. 
+    </p>
+    <p class="margin-3 indent-1_5">10.2 IATA hereby represents and warrants that: </p>
+    <p class="margin-6 indent-3">10.2.1 it has obtained all operating licenses or government authorizations required to engage in its business; </p>
+    <p class="margin-6 indent-3">10.2.2 it will use all commercially reasonable efforts to implement the Service. However, if IATA is unable, for any reason (including due to a Force Majeure Event), to implement the Service or similar Service or discontinues the Service or similar Service in accordance with this Agreement, IATA will have no further liability nor obligation to Participant other than to:
+        <ul style="list-style-type: none;" class="margin-9 indent-1_5">
+            <li>(a) mitigate the disruption to the interline settlement process; </li>
+            <li>(b) provide SIS Participants with continued access to the ICH and ACH (the latter being to the extent ACH authorizes IATA to provide such access) in accordance with the generally applicable terms of access to and use of the ICH and/or ACH, as the case may be; and </li>
+            <li>(c) propose an alternate service provider to provide the Service or similar Service and/or Additional Services in consultation with the SIS Steering Group, as further set out in Section 18.5. </li>
+        </ul>
+    </p>
+    <p class="margin-6">The Steering Group may determine, upon IATA's consultation, that either option (b) or (c) is in particular circumstances not required, having taken due account of the operational requirements of the individual SIS Participants. </p>
+    <p class="margin-6 indent-3">
+        10.2.3 it will use all commercially reasonable efforts to perform or ensure that any of its subcontractors perform the Service and Additional Services and operate the System and SIS Solution in conformity to the Service Levels and Service Description as defined in Attachments D and E; in the event of any failure to meet such warranty, IATA shall promptly take corrective actions for future performance of such obligations in order to meet such warranty requirement;
+    </p>
+    <p class="margin-6 indent-3">10.2.4 it will use all commercially reasonable efforts to ensure that the Data supplied by the Participant and its respective employees, agents, and contractors, are promptly and accurately incorporated into the System, and made available for the purpose of the Service in accordance with the published calendars; </p>
+    <p class="margin-6 indent-3">
+        10.2.5 it shall be responsible for ensuring that any data and/or attachment supplied by itself, its respective employees, agents, and contractors for the purposes of performing the Service and/or Additional Services hereunder do not contain or introduce any Destructive Elements. If IATA becomes aware that a Destructive Element has been so introduced, IATA will eliminate the effects of the Destructive Element, and, if the Destructive Element causes a loss (e.g., of operational efficiency or data), assist Participant to mitigate and restore such losses, provided that it shall not prevent Participant from exercising any recourse it may have against IATA under this Agreement; 
+    </p>
+    <p class="margin-6 indent-3">10.2.6 the performance of the Service and/or Additional Services under this Agreement and any related software which is used to provide, or which forms part of or is used in connection with the Service and/or applicable Additional Services, if any, do not and shall not infringe or misappropriate any intellectual property rights of a third party; </p>
+    <p class="margin-6 indent-3">
+        10.2.7 it will use, handle, protect, dispose of and otherwise deal with any and all data of Participant and other SIS Participants made available to IATA via the System and/or SIS Solution solely for the performance of the Service and Additional Services and other purposes as permitted by this Agreement, and in compliance with all applicable laws, including data privacy and data security laws, all of the foregoing being subject to Participant's representations and warranties in Sections 10.1.2 and 10.1.3 above; and
+    </p>
+    <p class="margin-6 indent-3">10.2.8 it has, and shall, at all relevant times, have the necessary rights to provide the Service and/or applicable Additional Services. </p>
+    <p class="margin-3 indent-1_5">
+        10.3 Notwithstanding any other provision of this Agreement to the contrary, each Party will be liable to the other Party for any actual direct damages incurred by the non-breaching Party as a result of the breaching Party's failure to perform its obligations in accordance with this Agreement, provided, however, that any and all liability and costs (including attorney's fees and legal expenses) incurred by IATA as a result of IATA's liability hereunder or inability to recover in whole or in part from Participant are subject to the cost recovery mechanism set out in Section 13. 
+    </p>
+    <p class="margin-3 indent-1_5">
+        10.4 EXCEPT FOR THE LIMITED EXPRESS WARRANTIES PROVIDED IN SECTION 10.2 ABOVE, TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IATA DISCLAIMS AND EXCLUDES ALL EXPRESS, IMPLIED, STATUTORY OR OTHER REPRESENTATIONS, WARRANTIES, AND CONDITIONS WHATSOEVER, INCLUDING THOSE PERTAINING TO TITLE, NON-INFRINGEMENT, SATISFACTORY CONDITION, MERCHANTABILITY AND FITNESS FOR PARTICULAR PURPOSE. IATA DOES NOT WARRANT THAT THE OPERATION OF THE SYSTEM AND THE SERVICE AND ADDITIONAL SERVICES WILL BE UNINTERRUPTED, AND/OR ERROR-FREE. 
+    </p>
+    <p class="margin-3 indent-1_5">
+        10.5 NOTWITHSTANDING ANY OTHER PROVISION OF THIS AGREEMENT TO THE CONTRARY AND TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, NEITHER PARTY SHALL BE LIABLE TO THE OTHER PARTY FOR, AND EACH PARTY WAIVES AND RELEASES ANY CLAIMS AGAINST THE OTHER PARTY FOR, ANY CONSEQUENTIAL, SPECIAL, PUNITIVE, INDIRECT, OR INCIDENTAL DAMAGES RESULTING FROM PERFORMANCE OR FAILURE TO PERFORM UNDER THIS AGREEMENT, EVEN IF THE PARTIES KNEW OR SHOULD HAVE KNOWN OF THE EXISTENCE OR POSSIBILITY OF SUCH DAMAGES. 
+    </p>
+
+    <p class="bold">11. INDEMNIFICATION </p>
+    <p class="margin-3 indent-1_5">
+        11.1 The Participant shall indemnify and hold IATA, its directors, officers, employees and representatives, as well as the members of the SIS Steering Group and members of any other group of Participant representatives constituted to support the operation of the Service, harmless from any claim made by third parties (including other SIS Participants) in relation to any loss, prejudice or damage arising out of or in connection to this Agreement including acceptance, use, or distribution of the Data, or any subsequent use, distribution or loss of the Data by any party or person. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">11.2 Intellectual Property Indemnification</p>
+    <p class="margin-6 indent-3">
+        11.2.1 IATA agrees to indemnify, defend and hold harmless Participant, its directors, officers, employees, representatives from and against all claims made by third parties (including other SIS Participants) as a result of any breach or inaccuracy of Section 10.2.6, provided that: (i) Participant provides IATA timely written notice of any applicable claim, (ii) Participant tenders the defense of any such claim to IATA for which IATA will thereafter select counsel and control the defense, (iii) Participant may participate in such defense at its own cost, (iii) Participant will cooperate as needed in the defense of any such claim, and (iv) any and all costs relating to such indemnification are subject to the cost recovery mechanism set out in Section 13. 
+    </p>
+    <p class="margin-6 indent-3">11.2.2 Without limiting the above, in the event of any such claim, IATA shall also, at its option, either: 
+        <ul style="list-style-type: none;" class="margin-9 indent-1_5">
+            <li>(a) obtain the right to use the items or materials subject to such claim; or </li>
+            <li>(b) modify or replace such items or materials to become non-infringing. </li>
+        </ul>
+    </p>
+    <p class="margin-6 indent-3">11.2.3 Said IATA indemnification shall not extend to any liability which arises as a result of (i) use of such items or materials, Service and/or Additional Services in a manner inconsistent with instructions or documentation provided by IATA; (ii) combination of such items or materials, Service and/or Additional Services with software or other programs not provided by IATA, its subcontractors or agents. </p>
+
+    <p class="bold">12. VALIDATION OF DATA </p>
+    <p class="margin-3 indent-1_5">
+        12.1 IATA will not be responsible for nor have any liability to Participant for the content, correctness and validation of Data provided hereunder by the Participant or any third party acting on behalf of Participant, and Participant will indemnify and hold IATA, and its directors, officers, employees and agents harmless from and against any claim, loss, damage and costs (including reasonable legal and attorney's fees) suffered or incurred by IATA or its directors, officers employees and agents arising out of, or relating to, directly or indirectly, the content, correctness and validation of data transmitted by Participant or any third party acting on behalf of Participant hereunder or otherwise in connection with the Service and/or Additional Services. 
+    </p>
+    <p class="margin-3 indent-1_5">
+        12.2 Participant will, on a timely basis, inspect and review all reports submitted to it through the Service and/or Additional Services hereunder and will notify IATA of any errors therein no later than ninety (90) days following the receipt of such reports. Failure to notify IATA of any such errors within this period shall be deemed to constitute acceptance of such reports, but any errors may be reported at any time for the purpose of preventing similar errors in the future and enabling IATA to take appropriate action, if applicable. 
+    </p>
+
+    <p class="bold">13. COST RECOVERY </p>
+    <p class="margin-3 indent-1_5">
+        13.1 Given IATA's willingness to perform the Service and the Additional Services on cost recovery basis hereunder, Participant recognizes and agrees that IATA shall, at all times, be entitled to invoke cost recovery for any and all costs, liability, loss, prejudice and damage (including attorney's fees and legal expenses) incurred in connection to or arising out of the performance and operation of the Service and/or Additional Services, including costs, liability, loss, prejudice and damage in connection to or arising out of any (i) claims made by third parties as a result of IATA's performance or intended performance hereunder for, in relation to or for the intended benefit of Participant, or as a result of Participant's acts or omissions in connection to this Agreement, (ii) claims made by the Participant against IATA and (iii) claims made by IATA against any Participant, (altogether “<span class="bold">Claim(s)</span>”); provided, however, that such cost recovery shall be subject to the following process:
+    </p>
+    <p class="margin-6 indent-3">13.1.1 IATA shall provide prompt notice to the SIS Steering Group of any Claim or assertion of liability which could give rise to a loss that would be allocated to the Participants; </p>
+    <p class="margin-6 indent-3">13.1.2 IATA shall advise and consult with the SIS Steering Group with respect to the defense of any such Claim; </p>
+    <p class="margin-6 indent-3">13.1.3 If any loss or settlement of a Claim will result in recovery pursuant to the cost recovery of this Section 13, IATA shall provide to the affected SIS Participants prior written notice, for information purposes only, and include an explanation of the method of calculating the cost recovery allocation before taking action to recover such allocated amounts from the SIS Participant; </p>
+    <p class="margin-6 indent-3">13.1.4 Any cost recovery allocation or calculation will be based on the relative utilization of the Service and/or Additional Services and in relation to the specific loss. The allocation methodology used by IATA will be subject to subsequent review by the Financial Committee upon request; </p>
+    <p class="margin-6 indent-3">13.1.5 IATA will make all commercially reasonable efforts to mitigate losses, including by the use of disaster recovery services and the pursuit of insurance claims and other available recourse against third parties. Any such mitigation efforts shall be made in consultation with the SIS Steering Group; </p>
+    <p class="margin-6 indent-3">13.1.6 IATA will communicate regularly with the SIS Steering Group with respect to the strategy, progress and costs of recovery efforts from third parties. </p>
+    <p class="margin-6 indent-3">13.2 In the event that IATA invokes cost recovery from Participant and Participant pays its allocated share, thereafter, upon written request to IATA, Participant may be subrogated to any rights IATA may have had against any non-SIS Participant third party up to the amount actually paid, and IATA will cooperate in any efforts to independently assert such subrogated rights. </p>
+
+    <p class="bold">14. INTELLECTUAL PROPERTY RIGHTS </p>
+    <p class="margin-3 indent-1_5">
+        14.1 IATA or its licensors, suppliers or subcontractors shall have sole and exclusive ownership of all rights, titles and interests in and to the Service and/or Additional Services, including all intellectual property rights and any accompanying written or printed materials and copies thereof, and including all changes, derivations, modifications and enhancements thereto, including modifications pursuant to Section 6 hereof (together, the “<span class="bold">Materials</span>”). This Agreement does not provide Participant with title or ownership of the Materials, but only a right of limited access and use as described in Section 14.3.
+    </p>
+    <p class="margin-3 indent-1_5">14.2 Without limiting the foregoing, IATA is the owner of the SIS Solution and the System, and Participant is the owner of its Data. </p>
+    <p class="margin-3 indent-1_5">
+        14.3 IATA grants to Participant a limited right to access and use the System and the SIS Solution solely for the purposes of enabling Participant to obtain the benefit of the Service and applicable Additional Services during the Term of this Agreement and without further consideration to IATA. The foregoing right to access and use includes the right to permit contractors and other agents to access and use the System and the SIS Solution on Participant's behalf and the right to make and provide copies of user guides and other instructions to contractors and other agents, provided that such contractors and/or other agents have agreed that their access and use of the System and the SIS Solution and any user guides and instructions are subject to the same conditions and restrictions that apply to such access and use by Participant. It is agreed that any breach by such contractors and/or other agents of any such terms and conditions shall be deemed to be a breach by Participant of this Agreement and shall entitle IATA to pursue any and all remedies available to IATA. 
+    </p>
+    <p class="margin-3 indent-1_5">14.4 During the Term of this Agreement, Participant grants IATA an irrevocable license to use, reuse, modify, create derivative works from and sublicense Data solely for the purpose or performing the Service and/or Additional Services hereunder. </p>
+    <p class="margin-3 indent-1_5">
+        14.5 IATA reserves the right to perpetually and irrevocably use and sublicense the Data in a Collated Data form (hereinafter further defined) solely for non-commercial purposes in promoting and reporting performance of the Service and/or Additional Services to present and prospective SIS Participants, including operational efficiency, training and international trending and benchmarking initiatives with respect to the Service and/or Additional Services. Any other use of Collated Data by IATA shall be agreed to in writing by the Participant in a separate agreement duly signed by Participant's and IATA's respective authorized representatives. For the purpose of this Agreement “<span class="bold">Collated Data</span>” means a set of de-identified and aggregated Data collated by IATA from the Participant and other SIS Participants in the Service, which contains no names or information that would, in any way, allow identification of the Data of Participant or any other individual SIS Participant. 
+    </p>
+    <p class="margin-3 indent-1_5">14.6 The terms and conditions set forth in this Section 14 shall survive termination or expiry of this Agreement. </p>
+
+    <p class="bold">15. CONFIDENTIALITY </p>
+    <p class="margin-3 indent-1_5">
+        15.1 Each Party may be given access to information (verbally or in hardcopy and/or electronic form) that relates to the other Party's past, present, and future research, development, business activities, products, services, and technical knowledge, which is identified by the discloser as confidential or would be treated as confidential by a reasonable person given the nature of the information or the circumstances surrounding its disclosure or access (“<span class="bold">Confidential Information</span>”). Notwithstanding the foregoing, Confidential Information will not include any information which (i) is at the time of its disclosure publicly known or within the public domain without recipient's breach of this Agreement (ii) is, prior to its initial disclosure hereunder, in the possession of the disclosing Party as evidenced in a documentary form and was not the subject of an earlier confidential relationship with the other Party; (iii) is independently developed by the disclosing Party without use of or reference to any of the other Party's Confidential Information; or (iv) is acquired by the disclosing Party from any third party having a right to disclose it to the receiving party. Each Party may disclose Confidential Information to the extent required by a court of competent jurisdiction or other governmental authority or otherwise as required by law, provided that the disclosing Party will, to the extent permitted pursuant to such disclosure order or law, use commercially reasonable efforts to notify the other Party in advance of such disclosure so as to permit such Party to request confidential treatment or a protective order prior to such disclosure. 
+    </p>
+    <p class="margin-3 indent-1_5">
+        15.2 Each Party shall keep confidential, and shall not disclose to any third party for any reason, any Confidential Information of the disclosing Party without the prior written consent of the disclosing Party at its sole discretion, except to (i) its respective employees, agents and contractors on a need to know basis and (ii) in case of IATA, to its service providers that are directly responsible for operating and managing the Service and/or Additional Services, but only to the extent necessary for purposes of this Agreement provided that such service providers are bound by same or substantially similar terms and conditions than those contained in this Section 15. Furthermore, IATA may use or make copies of the Confidential Information of the Participant only to the extent necessary for purposes of this Agreement. 
+    </p>
+    <p class="margin-3 indent-1_5">15.3 Subject to this Section 15, IATA reserves the right to use the Data for purposes of allowing IATA to perform the Service and/or Additional Services. </p>
+    <p class="margin-3 indent-1_5">15.4 The terms and conditions set forth in this Section 15 shall survive termination or expiry of this Agreement. </p>
+
+    <p class="bold">16. MONITORING </p>
+    <p class="margin-3">IATA may monitor individual use of and access to the Service to ensure compliance with the rules, policies, deadlines and instructions applicable thereto. The Participant using the Service expressly consents to such monitoring. If such monitoring reveals possible criminal activity or unauthorized use, IATA may immediately suspend the individual user's access and/or the Participant's access to the Service and/or provide the evidence of such monitoring to law enforcement officials. IATA shall notify the Participant of any such action to be taken unless instructed otherwise by the law enforcement officials. IATA reserves the right to maintain and, for any legitimate reason, review logs containing any inquiry details and other activities performed by the Participant in connection with the Participant's use of the Service. Participants will be notified if any potential fraud or breach of security is identified. 
+    </p>
+
+    <p class="bold">17. PUBLICATION </p>
+    <p class="margin-3">All notices and documents to be issued under this Agreement shall be issued by IATA and distributed to all interested parties. </p>
+
+    <p class="bold">18. TERM AND TERMINATION </p>
+    <p class="margin-3 indent-1_5">18.1 This Agreement shall commence on the Effective Date and, subject to paragraph 18.2, shall continue for an initial term of one (1) year, and thereafter shall automatically renew for successive periods of twelve (12) months each (the “<span class="bold">Term</span>”). </p>
+    <p class="margin-3 indent-1_5">18.2 Either Party may terminate this Agreement by giving the other not less than six (6) months written notice, which notice shall be given in accordance with Section 22. However, no such notice of termination may become effective before the expiration of twelve (12) months from the Effective Date. The Steering Group may agree to reduce or waive any of the notice requirements set out in this Section 18.2. </p>
+    <p class="margin-3 indent-1_5">18.3 In the event of a termination of this Agreement by IATA in accordance with Section 18.2, IATA, at the Participant's request, will provide mutually agreed upon transition services for a period of at least ninety (90) days from the effective date of the termination or any other mutually agreed to period of time to allow the Participant to find and retain alternative application and service providers. </p>
+    <p class="margin-3 indent-1_5">
+        18.4 During the Term of this Agreement, in the event of a material breach, the non-breaching Party may terminate the Agreement, in whole or in part, by giving thirty (30) days written notice to the breaching Party specifically identifying the breach, unless the breach is cured by the breaching Party within the thirty (30) day period. Material breach by Participant includes when Participant is in default of payment of fees and charges for Service and/or Additional Services as per Section 8.3 for more than sixty (60) days (unless such fees and charges are subject to a legitimate dispute between the Parties acting in good faith). For sake of clarity, IATA's acceptance of the indemnification under Section 11.2 shall constitute a cure for the purposes of this Section 18.4. Either Party may also terminate this Agreement on written notice to the other Party (i) if an Event of Insolvency occurs with respect to the other Party, or (ii) as otherwise expressly allowed hereunder. A Party affected by an Event of Insolvency in respect of itself must immediately notify the other Party in writing of the occurrence of such Event of Insolvency. “<span class="bold">Event of Insolvency</span>” means any instance where a Party makes a general assignment for the benefit of creditors, or files a voluntary petition in bankruptcy or petitions for reorganization or arrangement, or where a petition in bankruptcy is filed against a Party, or where a receiver or trustee is appointed for all or any part of the property and asset of a Party, or otherwise commit any act of insolvency, under any Laws of New York and of any other jurisdiction in the world relating to bankruptcy, insolvency, stay of creditor remedies, moratorium, compromise, arrangement, extension, adjustment or reorganization of debts or other liabilities, liquidation, winding-up or dissolution, excluding any solvent reorganization or scheme arrangement. 
+    </p>
+    <p class="margin-3 indent-1_5 bold">18.5 Withdrawal from providing the Service and Additional Services</p>
+    <p class="margin-6 indent-3">
+        18.5.1 In the event IATA, for any reason (including due to a Force Majeure Event), completely withdraws from providing the Service and Additional Services, and does not offer any comparable service providing similar functionalities, IATA agrees to transfer to an alternate service provider necessary license(s) and related intellectual property to provide the Service and Additional Services, subject to a commercially reasonable process intended for IATA to recover all investment costs put in the SIS Project, including cost of capital, which process shall be at IATA's discretion. 
+    </p>
+
+    <p class="bold">19. INSURANCE </p>
+    <p class="margin-3 indent-1_5">19.1 IATA hereunder shall, during the Term of this Agreement (as regards insurance on an event-occurring basis) and for at least 6 years after expiry or termination of the Agreement for insurance on a claims made basis, maintain at its own cost the following insurance coverage: </p>
+    <p class="margin-6 indent-3">19.1.1 Commercial general liability insurance for bodily injury and property damage in an amount not less than US$2 million each occurrence; and </p>
+    <p class="margin-6 indent-3">19.1.2 Professional and Technology Liability/Errors and Omissions, including professional liability, technology products, employee fraud/dishonesty and computer fraud insurance in an amount not less than US$5 million. </p>
+    <p class="margin-3 indent-1_5">19.2 In the event that the insurance coverage is to be cancelled or materially changed, IATA shall give Participant at least thirty (30) calendar days prior written notice. </p>
+    <p class="margin-3 indent-1_5">19.3 IATA shall provide Participant with a certificate of insurance in customary form evidencing such coverage upon request. </p>
+
+    <p class="bold">20. FORCE MAJEURE </p>
+    <p class="margin-3">
+        Neither IATA nor Participant shall be liable for any default, delay or failure to provide the Service and/or Additional Services under this Agreement caused directly or indirectly from any cause beyond IATA's or Participant's reasonable control including, acts of God, acts of governmental agencies, acts of war, riots, fires, freight embargoes, severe weather, floods, earthquakes, natural disasters, explosions or other catastrophes (“<span class="bold">Force Majeure Event</span>”). Delays by suppliers or vendors are not considered Force Majeure Events, unless those suppliers or vendors themselves are prevented from delivering the service or otherwise performing their obligations due to a Force Majeure Event. Notwithstanding the above, IATA shall make all reasonable efforts to restore the Service and/or Additional Services as promptly as possible. 
+    </p>
+
+    <p class="bold">21. ASSIGNMENT </p>
+    <p class="margin-3">
+        Neither Party may assign its respective rights and/or obligations under this Agreement without the prior written consent of the other subject to the following exceptions: (a) if the Participant wishes to assign its rights or obligations IATA's consent shall not be unreasonably withheld or delayed; and (b) IATA may assign this Agreement to a successor entity that is a not for profit trade association performing substantially the same functions as IATA, effective on notice to Participant but without needing Participant's prior written consent. 
+    </p>
+
+    <p class="bold">22. NOTICE </p>
+    <p class="margin-3">Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending. </p>
+
+    <div class="grey-box" style="width: 60%; text-align: left;">
+        <p ><span class="bold">Name:</span> {!newForm.Legal_Name_of_company__c}</p>
+        <p ><span class="bold">Address: </span></p>
+        <p class="margin-3">
+            {!newForm.Company_address__c}<br/>
+            {!newForm.Company_city__c}, {!newForm.Company_State__c}<br/>
+            {!newForm.Company_Country__r.Name}<br/>
+            {!newForm.Postal_code__c}
+        </p>
+        <p ><span class="bold">Attn: </span>{!newForm.Contact_First_name__c} {!newForm.Contact_Last_name__c}</p>
+        <br/>
+        <p class="bold">IATA:</p>
+        <p class="margin-3">
+            International Air Transport Association<br/>
+            800 Place Victoria, P.O. Box 113<br/>
+            Montréal, Québec<br/>
+            Canada<br/>
+            H4Z 1M1
+        </p>
+        <p><span class="bold">Attn:</span> GDC Participation</p>
+        <p><span class="bold">Website:</span> www.iata.org/cs </p>
+    </div>
+
+    <p class="bold">23. GOVERNING LAW AND DISPUTE RESOLUTION </p>
+    <p class="margin-3 indent-1_5">23.1 Laws </p>
+    <p class="margin-3">This Agreement shall be governed by and construed in accordance with the laws of the State of New York, United States of America, without regards to any conflict of law provisions. To the extent applicable, the Parties expressly agree to exclude the application of the U.N. Convention on Contracts for the International Sale of Goods (1980) to this Agreement. </p>
+    <p class="margin-3 indent-1_5">23.2 Dispute Resolution </p>
+    <p class="margin-6 indent-3">23.2.1 Amicable Resolution </p>
+    <p class="margin-6">
+        The Parties shall attempt to amicably resolve any dispute, controversy or claim relating directly or indirectly to, or arising out of, or in connection with, this Agreement (the “<span class="bold">Dispute</span>”). In the event the Parties have failed to resolve such Dispute within twenty (20) calendar days after receipt of a notice, then the Parties shall refer such Dispute for settlement to their respective officers who shall make every effort to reach an agreement on such Dispute. In the event the Parties' respective officers fail to resolve such Dispute within fifteen (15) calendar days, either Party may, without further notice, submit such Dispute to arbitration in accordance with Section 23.2.2. 
+    </p>
+    <p class="margin-6 indent-3">23.2.2 Arbitration </p>
+    <p class="margin-6">
+        If the Parties fail to amicably settle a Dispute in accordance with Section 23.2.1 above, either Party may, without further notice, submit the Dispute to arbitration. The Parties agree that such Dispute shall be exclusively and finally settled by arbitration conducted in accordance with the Rules of Arbitration of the International Chamber of Commerce (the “Rules”) in effect on the date of notification of arbitration hereunder submitted in accordance with the Rules, or such other procedures as the parties may agree in writing. The Parties agree to permit an ICC arbitration panel to grant preliminary or permanent relief available pursuant to the Rules and New York law. The arbitration shall take place in Montreal (Quebec, Canada) and the language for the proceedings shall be English. The arbitral tribunal will be composed of three (3) arbitrators appointed in accordance with the Rules. The arbitration award shall be final and binding upon the Parties, the Parties renouncing to appeal against the arbitration award by any ordinary or extraordinary means. The arbitration award may be enforced by action before any court of competent jurisdiction. The Parties shall treat as confidential the arbitration, the content of the proceedings, the terms of any order or award and any documentary or other evidence disclosed during the arbitration. Service of any request for arbitration made pursuant to this Section must be made in accordance with the Notice provisions in Section 22. 
+    </p>
+    <p class="margin-6 indent-3">23.2.3 Arbitration–Joining Disputes </p>
+    <p class="margin-6">
+        If any dispute arising out of or relating to this agreement (hereinafter referred to as a “<span class="bold">Related Dispute</span>”) raises issues which are substantially the same as or connected with issues raised in another dispute which has already been referred to arbitration by another signatory to the IATA standard agreement for SIS participation (an “<span class="bold">Existing Dispute</span>”), the tribunal appointed or to be appointed in respect of any such Existing Disputes shall also be appointed as the tribunal in respect of any such Related Dispute, if: 
+        <ul style="list-style-type: none;" class="margin-6">
+            <li>(a) the request for arbitration in the Related Dispute is submitted, in accordance with Clause 23.2.1, prior to the terms of reference of the Existing Dispute being signed or approved in the Existing Dispute in accordance with Article 18(2) or 18(3) of the Rules; or </li>
+            <li>(b) the parties to both the Existing Dispute and the Related Dispute agree to the disputes being heard together. </li>
+        </ul>
+    </p>
+    <p class="margin-6">Where, pursuant to the foregoing provisions, the same tribunal has been appointed in relation to two or more disputes (i.e. an Existing Dispute and a Related Dispute), the tribunal shall order that the whole or part of the matters at issue shall be heard together upon such terms or conditions as the tribunal thinks fit. The appointment of arbitrators where there are multiple parties to the arbitration shall be in accordance with Article 10 of the Rules. </p>
+
+    <p class="bold">24. NATURE OF THIS AGREEMENT </p>
+    <p class="margin-3">This Agreement shall be solely for the benefit of, and shall be enforceable only by, the Parties and their respective successors and permitted assigns, and no other person or entity is or shall be entitled to bring any action to enforce any provision of this Agreement against either Party. </p>
+
+    <p class="bold">25. COUNTERPARTS </p>
+    <p class="margin-3">This Agreement may be signed in any number of counterparts. Each signatory shall hold one counterpart. </p>
+
+    <p class="bold">26. SEVERABILITY </p>
+    <p class="margin-3">The invalidity, illegality or unenforceability of the whole or part of any clause or term or condition does not affect or impair the continuation in full force and effect of the remainder of this Agreement. </p>
+
+    <p class="bold">27. USE OF SYMBOL &amp; LOGOS </p>
+    <p class="margin-3">
+        Except as otherwise provided in this Agreement, the Parties shall not use, display or reproduce the symbols or logos of each other in any way without the prior written permission of the other Party. Without limiting the foregoing, any proposed use of the name or logo of each Party must be submitted to the appropriate Party's corporate secretary division for prior written approval. Notwithstanding the above, the Participant shall be deemed having given its consent to IATA, for the purposes of providing the Service or Additional Services, to use, display or reproduce its logo and/or symbol by loading them into the System. 
+    </p>
+
+    <p class="bold">28. SURVIVAL </p>
+    <p class="margin-3">
+        Notwithstanding any termination of this Agreement, either Party's rights and obligations under Sections 10 (“Warranty”), 11 (“Indemnification”), 13 (“Cost Recovery”), 14 (“Intellectual Property Rights”), 15 (“Confidentiality”), 18.3, 18.5, 19 (Insurance”), 23 (“Governing Law and Dispute Resolution”), Attachment G (Data Security Agreement) where applicable and any other Sections or clauses which by their nature should survive termination of this Agreement, shall survive any such termination. 
+    </p>
+
+    <p class="bold">29. LANGUAGE </p>
+    <p class="margin-3">The Participant and IATA have mutually agreed to draft the Agreement in the English language. Les parties acceptent que la présente entente, ainsi que tout avis ou document y afférent, soient rédigés en langue anglaise.</p>
+    <p class="margin-3">Done this day <apex:outputText value="{0, date, MMMM d 'of' yyyy}"><apex:param value="{!NOW()}"/></apex:outputText></p>
+
+    <div class="grey-box" style="display:inline-block; width: 40%; text-align: left;">
+        <p ><span class="bold">For the International Air Transport Association </span></p>
+        <p ><span class="bold">Signature: </span></p>
+        <p ><span class="bold">Name: </span>Adina Minculescu</p>
+        <p ><span class="bold">Position: </span>Head, e-Invoicing Services, GDC </p>
+        <p ><span class="bold">Date: </span></p>
+    </div>
+    <div class="grey-box" style="display:inline-block; width: 40%; text-align: left;">
+        <p ><span class="bold">For the Participant </span></p>
+        <p ><span class="bold">Signature: </span></p>
+        <p ><span class="bold">Name: </span></p>
+        <p ><span class="bold">Position: </span></p>
+        <p ><span class="bold">Date: </span></p>
+    </div>
+    <div class="grey-box" style="display:inline-block; width: 40%; text-align: left;">
+        <p ><span class="bold">For the Participant </span></p>
+        <p ><span class="bold">Signature: </span></p>
+        <p ><span class="bold">Name: </span></p>
+        <p ><span class="bold">Position: </span></p>
+        <p ><span class="bold">Date: </span></p>
+    </div>
+
+    <h2 class="panel-title new-line">
         ATTACHMENT A — PRICING SCHEDULE
     </h2>
 
@@ -200,14 +582,45 @@
 
     <div class="regular-table regular-table-center no-page-break">
         <table style="width: 80%; margin-left: 10%;">
+            
             <tr><th>Optional Service</th><th>ON/OFF</th></tr>
-            <tr><td>Digital Signature application</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
-            <tr><td>Digital Signature verification</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
-            <tr><td>Legal Archiving</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
-            <tr><th>Applicable to A&amp;A Members only</th><th>ON/OFF</th></tr>
-            <tr><td>Billing Value Determination</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
-            <tr><td>Billing Value Confirmation</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
-            <tr><td>Auto-billing</td><td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td></tr>
+            <tr><td>Digital Signature application</td>
+                <td>ON {!IF(newForm.Digital_Signature_application__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Digital_Signature_application__c=='No','☑','☐')}
+                </td>
+            </tr>
+            <tr><td>Digital Signature verification</td>
+                <td>ON {!IF(newForm.Digital_Signature_verification__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Digital_Signature_verification__c=='No','☑','☐')}
+                </td>
+            </tr>
+            <tr><td>Legal Archiving</td>
+                <td>ON {!IF(newForm.Legal_Archiving__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Legal_Archiving__c=='No','☑','☐')}
+                </td>
+            </tr>
+            <tr style="{!IF(newForm.Is_AA_Member__c=='Yes','','display:none;')}"><th>Applicable to A&amp;A Members only</th><th>ON/OFF</th></tr>
+            <tr style="{!IF(newForm.Is_AA_Member__c=='Yes','','display:none;')}"><td>Billing Value Determination</td>
+                <td>ON {!IF(newForm.Billing_Value_Determination__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Billing_Value_Determination__c=='No','☑','☐')}
+                </td>
+            </tr>
+            <tr style="{!IF(newForm.Is_AA_Member__c=='Yes','','display:none;')}"><td>Billing Value Confirmation</td>
+                <td>ON {!IF(newForm.Billing_Value_Confirmation__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Billing_Value_Confirmation__c=='No','☑','☐')}
+                </td>
+            </tr>
+            <tr style="{!IF(newForm.Is_AA_Member__c=='Yes','','display:none;')}"><td>Auto-billing</td>
+                <td>ON {!IF(newForm.Auto_billing__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Auto_billing__c=='No','☑','☐')}
+                </td>
+            </tr>
         </table>
     </div>
 

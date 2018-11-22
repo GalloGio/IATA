@@ -1433,15 +1433,24 @@
             </tr>
             <tr>
                 <td>Digital Signature application</td>
-                <td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td>
+                <td>ON {!IF(newForm.Digital_Signature_application__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Digital_Signature_application__c=='No','☑','☐')}
+                </td>
             </tr>
             <tr>
                 <td>Digital Signature verification</td>
-                <td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td>
+                <td>ON {!IF(newForm.Digital_Signature_verification__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Digital_Signature_verification__c=='No','☑','☐')}
+                </td>
             </tr>
             <tr>
                 <td>Legal Archiving</td>
-                <td>ON &#9744;&nbsp;&nbsp;&nbsp;OFF &#9744;</td>
+                <td>ON {!IF(newForm.Legal_Archiving__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Legal_Archiving__c=='No','☑','☐')}
+                </td>
             </tr>
         </table>
     </div>

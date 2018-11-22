@@ -392,10 +392,6 @@
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
 
-        <apex:outputPanel rendered="{!AND(newForm.Is_AA_Member__c=='Yes',OR(newForm.Billing_Value_Determination__c='Yes',newForm.Digital_Signature_verification__c='Yes',newForm.Billing_Value_Confirmation__c='Yes',newForm.Legal_Archiving__c='Yes',newForm.Auto_billing__c='Yes'))}">
-            Download File
-        </apex:outputPanel>
-
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
             <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_application__c.label}"/>
             <apex:actionRegion >
@@ -551,7 +547,7 @@
     <apex:pageBlockSection columns="1" id="section8" collapsible="false">
         <apex:facet name="header">
             <apex:outputpanel >
-                {!$Label.ISSP_SIS_Membership_ISPA_Section7_Title}
+                {!$Label.ISSP_SIS_Membership_ISPA_Section8_Title}
             </apex:outputpanel>
         </apex:facet>
 

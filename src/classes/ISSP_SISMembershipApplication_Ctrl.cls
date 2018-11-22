@@ -1,6 +1,6 @@
 global class ISSP_SISMembershipApplication_Ctrl {
     
-    public static final String APP_NAME = 'SIS Membership';
+    public static final String APP_NAME = 'SIS Membership Application';
     public static final Id CASE_RT_AIRLINE_PARTICIPATION = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('IDFS_Airline_Participation_Process').getRecordTypeId();
     public static final Map<String,Schema.RecordTypeInfo> MAP_AP_RT = Schema.SObjectType.AP_Process_Form__c.getRecordTypeInfosByDeveloperName();
     public static final Id AP_RT_ISPA = MAP_AP_RT.get('SIS_Application_ISPA').getRecordTypeId();

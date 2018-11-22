@@ -177,6 +177,11 @@ public without sharing class ISSP_Case {
                 return pr;
             }
 
+            //if case is a SIS Joining Form
+            if(newCase.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process' && newCase.Classification_SIS__c == 'SIS Membership'
+                    && newCase.Status == 'Draft' && !newCase.isClosed && !newCase.Owner.Name.StartsWith('Recycle Bin')){
+                return new PageReference('/ISSP_SISMembershipApplicationForm?id=' + caseId + '&step=2');
+            }
             showAlertMessage();
 
         }
