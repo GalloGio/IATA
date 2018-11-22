@@ -1,5 +1,7 @@
 @isTest
 private class ISSP_ObjectFactoryTest {
+
+	ISSP_ObjectFactory.fakemethod();
 	//Giving intermittent CPU time exceeded
 	/*
     static testMethod void testAll() {
