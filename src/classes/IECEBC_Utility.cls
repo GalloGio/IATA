@@ -470,7 +470,7 @@ public class IECEBC_Utility {
       if (ebcSetup==null)
       {
         List<EBC_Setup__c> ebcSetupList = [select Id, Name
-                , Member_Email_Block_Product__c
+                , New_Member_Email_Block_Product__c
                 , Member_Pay_As_You_Go_Plan__c
                 , Member_Prepaid_Product_Rate_Plan_01__c
                 , Member_Prepaid_Product_Rate_Plan_02__c
@@ -482,7 +482,7 @@ public class IECEBC_Utility {
                 , E_Member_Prepaid_Product_Rate_Plan_03__c
                 , E_Member_Prepaid_Product_Rate_Plan_04__c
                 
-                , Non_Member_Email_Block_Product__c
+                , New_Non_Member_Email_Block_Product__c
                 , Non_Member_Pay_As_You_Go_Plan__c
                 , Non_Member_Prepaid_Product_Rate_Plan_01__c
                 , Non_Member_Prepaid_Product_Rate_Plan_02__c

@@ -126,13 +126,13 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Non_Member_Email_Block_Product__c</field>
+                <field>New_Non_Member_Email_Block_Product__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Member_Email_Block_Product__c</field>
+                <field>New_Member_Email_Block_Product__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

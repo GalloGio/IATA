@@ -403,7 +403,7 @@ There is no recurring charge for this.</inlineHelpText>
         <label>Non Member Email Block Product</label>
         <referenceTo>Product2</referenceTo>
         <relationshipLabel>EBC Setups (Non Member Email Block Product)</relationshipLabel>
-        <relationshipName>Non_Member_Email_Block_EBC_Setups</relationshipName>
+        <relationshipName>New_Non_Member_Email_Block_EBC_Setups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

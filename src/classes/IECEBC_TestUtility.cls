@@ -225,8 +225,8 @@ public with sharing class IECEBC_TestUtility {
 					, Pay_Exact_Amount_Member__c = oEbcProductRatePlanPaysExactAmount.Id
 					, Pay_Exact_Amount_Non_Member__c = oEbcProductRatePlanPaysExactAmount.Id
 					
-					, Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
-					, Non_Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
+					, New_Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
+					, New_Non_Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
 					
 					, Storage_Product_Rate_Plan__c = oEbcProductRatePlanAddOnStorage.Id
 					, Enhanced_Reporting_Product_Rate_Plan__c = oEbcProductRatePlanAddOnReporting.Id
