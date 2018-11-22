@@ -7,17 +7,16 @@ public class AMS_AccountOscarWizardController {
     ApexPages.StandardController controller;
 
     public String oscarId;
-
     public String caseId;
-
     public String oscarName;
-
     public String errorMessage{set;}
+    public Boolean isNewGenPilot{ get; set; }
 
     public AMS_AccountOscarWizardController(ApexPages.StandardController stdController) {
-
         this.controller = stdController;
-       
+
+        String newGenPilotParam = ApexPages.currentPage().getParameters().get('NewGenPilot');
+        this.isNewGenPilot = newGenPilotParam == null ? false : Boolean.valueOf(newGenPilotParam);  
     }
 
     public Account getAccount() {
