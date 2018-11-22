@@ -708,6 +708,11 @@ background-color:#428bca;
                 {!$Label.ISSP_Available_services}
                 </a>
 </li>
+    <li>
+        <a href="/ISSP_Financial_Institutions?MainNav=Services&subNav=Financial&mid=M3S2" id="M3S2" style="display:{!IF(showFinancialInstitution,'','none')}">
+            {!$Label.ISSP_Financial_Insititutions}
+        </a>
+    </li>
     </ul>
      <ul class="nav navbar-nav collapse" id="four" >
       <li>
@@ -730,11 +735,6 @@ background-color:#428bca;
     <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M4S5{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S5" >
                {!$Label.ISSP_Manage_Services}
                 </a>
-        </li>
-        <li>
-            <a href="/ISSP_Financial_Institutions?MainNav=Services&subNav=Financial&mid=M3S2" id="M3S2" style="display:{!IF('{!showFinancialInstitution}','','none')}">
-                {!$Label.ISSP_Financial_Insititutions}
-            </a>
         </li>
          <li>
     <a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6" style="display:{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','none')}">
