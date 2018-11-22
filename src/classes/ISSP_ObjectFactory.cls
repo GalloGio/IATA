@@ -9,8 +9,8 @@ public with sharing class ISSP_ObjectFactory {
     public static Contact createNewContact(){
         Contact newContact = new Contact();
         newContact.FirstName = 'test';
-        newContact.LastName = 'test';
-        newContact.Email = 'ISSP_test@test.test';
+        newContact.LastName = 'test'; 
+        newContact.Email = DateTime.now().getTime() +'ISSP_test@test.test';
         return newContact;
     }
     
