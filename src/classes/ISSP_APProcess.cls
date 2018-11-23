@@ -352,7 +352,7 @@ public without sharing class ISSP_APProcess {
                             break;
                         }
                     }
-                    
+
                     // Patch to make mandatory some fields dependent from Participate_in_any_Commission_Control__c
                     if (newForm.Participate_in_any_Commission_Control__c=='Yes') {
                         for (String fieldName: getMandatoryFieldsForCommission()) {
@@ -362,6 +362,11 @@ public without sharing class ISSP_APProcess {
                             }
                         }
                     }
+
+                    // either one or the other field is mandatory
+                    if (newForm.VAT_Tax_number_in_your_home_country__c==null && newForm.BSP_Country_VAT_Tax_number__c==null ) {
+                        allfieldsfilled = false;
+                    }
                     
                 } else if(isCASS && strAreaType=='Airline Joining') {  //Test CASS mandatory fields
                     if(ISSP_AP_FieldLists.cass_MandatoryFieldsbyCountry.get(apcountryisocode) != null) {
@@ -370,11 +375,16 @@ public without sharing class ISSP_APProcess {
                             ISSP_AP_fieldLists.cassMandatoryFields.put(tmp, extraMandatoryFields.get(tmp));
                         }
                     }
-
+                    if (this.countryRequirement.Local_VAT_Mandatory__c=='YES') {
+                        ISSP_AP_fieldLists.cassMandatoryFields.putAll(ISSP_AP_fieldLists.cassLocalVATMandatoryFields);
+                    } else {
+                        ISSP_AP_fieldLists.cassMandatoryFields.putAll(ISSP_AP_fieldLists.cassLocalVATNOTMandatoryFields);
+                    }
                     for (String fldLabel : ISSP_AP_fieldLists.cassMandatoryFields.keySet())
                     {
                         System.Debug('CASS FldLabel: '+ fldLabel);
                         if (newForm.get(fldLabel)==null) {
+                            System.Debug('CASS FldLabel FAIL');
                             allfieldsfilled = false;
                             break;
                         }
