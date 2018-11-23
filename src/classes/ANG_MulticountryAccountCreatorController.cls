@@ -2,6 +2,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
     
     public Integer accIndex {get;set;}
     public boolean isHierarchyMulticountry {get;set;}
+    public Boolean hasErrors { get; set;}
     
     public List<SelectOption> getItems() {
 
@@ -10,8 +11,6 @@ public with sharing class ANG_MulticountryAccountCreatorController {
         options.add(new SelectOption('D','D'));
         return options;
     }
-
-	public Boolean hasErrors { get; set;}
 	
     public Boolean closeTab{
 		get{
@@ -75,9 +74,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	}
 
     public ANG_MulticountryAccountCreatorController(ApexPages.StandardController stdController){
-        
-        hasErrors = false;
-        
+                
         if(!Test.isRunningTest())
             stdController.addFields(new List<String>(oscarFields));
 
@@ -95,32 +92,41 @@ public with sharing class ANG_MulticountryAccountCreatorController {
             else
                 listAccount.add(acct);
         isHierarchyMulticountry = false;
+        hasErrors = (listAccount.size() < 2)? true : false;
 	}
 
     public void addAccount(){
         
         Account acc = new Account();
         listAccount.add(acc);
+        hasErrors = (listAccount.size() < 2)? true : false;
     }
 
     public PageReference saveAccount() {
-        For(Account acct : listAccount){
-
-            if(acct.id == null){
-                acct.Location_Type__c = 'AE';
-                acct.ParentId = mainAccount.Id;
-                acct.Top_Parent__c = mainAccount.Id;
-                acct.Category__c = mainAccount.Category__c;
-                acct.RecordTypeId	= mainAccount.RecordTypeId;
-                acct.Sector__c = mainAccount.Sector__c;
-                acct.Reason_for_creation__c = 'Account is missing';
-            }
+        try{
+	        For(Account acct : listAccount){
+	
+	            if(acct.id == null){
+	                acct.Location_Type__c = 'AE';
+	                acct.ParentId = mainAccount.Id;
+	                acct.Top_Parent__c = mainAccount.Id;
+	                acct.Category__c = mainAccount.Category__c;
+	                acct.RecordTypeId	= mainAccount.RecordTypeId;
+	                acct.Sector__c = mainAccount.Sector__c;
+	                acct.Reason_for_creation__c = 'Account is missing';
+	            }
+	        }
+	        if(!listAccount.isEmpty())
+				upsert listAccount;
+	        return null;
+	      
         }
-
-        if(!listAccount.isEmpty())
-            upsert listAccount;
-      
-      	return null;
+        catch(Exception e){
+			hasErrors = true;
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, '' + e);
+        	ApexPages.addMessage(myMsg);
+        	return null;
+        }
     }
 	
 	public PageReference removeAccount() {
@@ -128,25 +134,35 @@ public with sharing class ANG_MulticountryAccountCreatorController {
         Account acct = listAccount.remove(accIndex);
         
         if(acct.id != null){
+        	acct.name = 'toDeleteAccount';
+        	acct.IATA_ISO_Country__c = new IATA_ISO_Country__c().id;
         	delete acct;
         }
         return null;
     }
 	
     public void submitHierarchy(){
-    	if(checkMulticountry()){
-    		oscar.ANG_Hierarchy_Created__c = true;
-	        
-	        upsert listAccount;
-	        update oscar;
-	        
-	        closeTab = true;
+    	
+    	try{
+	    	if(checkMulticountry()){
+	    		oscar.ANG_Hierarchy_Created__c = true;
+		        
+		        upsert listAccount;
+		        update oscar;
+		        
+		        closeTab = true;
+	    	}
+	    	else{
+	    		hasErrors = true;
+	    		ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,'You need at least 2 accounts from different countries to have a multicountry hierarchy');
+	        	ApexPages.addMessage(myMsg);   
+	    	}
     	}
-    	else{
+    	catch(Exception e){
     		hasErrors = true;
-    		ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,'You need at least 2 accounts from different countries to have a multicountry hierarchy');
-        	ApexPages.addMessage(myMsg);   
-    	}
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, '' + e);
+        	ApexPages.addMessage(myMsg);
+        }
     }
     
     private boolean checkMulticountry(){
