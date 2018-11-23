@@ -200,7 +200,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 		//*** set price book entries to items
 		for (Invoice_Item__c invItem : lstInvoiceItemRequireOrder)
 		{
-			ItemInfo = mapInvZId_mapSubZId_mapZProdId_Data.get(invItem.New_Invoice__c).get(invItem.Subscription_Zuora_ID__c).get(invItem.New_Product__c);
+			ItemInfo = mapInvZId_mapSubZId_mapZProdId_Data.get(invItem.Invoice__c).get(invItem.Subscription_Zuora_ID__c).get(invItem.New_Product__c);
 			
 			//*** get price book entry from hierarchy product based on subscription product charge
 			String strSearchKey = invItem.Subscription_Product_Charge_Zuora_ID__c;
