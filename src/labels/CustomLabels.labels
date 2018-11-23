@@ -21278,6 +21278,14 @@ Please add below all your company valid email domains, including different ones 
         <value>Please help us keep our records up-to-date by completing your user profile.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Filter_By_Product_Type</fullName>
+        <categories>ISSP, Documents</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Filter By Product Type</shortDescription>
+        <value>Filter By Product Type</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Filter_by_Country</fullName>
         <categories>ISSP, s6</categories>
         <language>en_US</language>
