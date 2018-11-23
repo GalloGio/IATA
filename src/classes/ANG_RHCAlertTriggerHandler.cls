@@ -525,13 +525,13 @@ public class ANG_RHCAlertTriggerHandler{
                         smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
                         smapParentCase.End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c;
                     }else {
-                        SNOWBody theBody = new SNOWBody();
+                        ServiceNow_Helper.SNOWBody theBody = new ServiceNow_Helper.SNOWBody();
                         theBody.description = 'A RTS Red Alert was received for agency with IATA code: '+raAccMap.get(ra.id).IATACode__c +
                             ' but the SMAP and SIDRA Lite Cases failed to be created. Please check if active Operational_Calendar__c records exist for '+
-                            mapAccountOpCalendar.get(ra.ANG_Account__c).IATA_ISO_Country__r.AMS_Settlement_System__r.Name+' and Remittance frequency: '+
-                            mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_frequency__c);
+                            raAccMap.get(ra.id).IATA_ISO_Country__r.AMS_Settlement_System__r.Name+' and Remittance frequency: '+
+                            raAccMap.get(ra.id).Remittance_frequency__c;
 
-                        sendRequestToSNOW(theBody, 'SNOW13');               
+                        ServiceNow_Helper.sendRequestToSNOW(theBody, 'SNOW18');               
                         System.debug('## Creating Red Alert Only - No case is created');
                         // We are not creating any case - just the alert
                         continue;                      
