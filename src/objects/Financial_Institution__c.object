@@ -132,7 +132,7 @@
             <restricted>true</restricted>
             <valueSetName>Financial_Security_Country_Coverage</valueSetName>
         </valueSet>
-        <visibleLines>4</visibleLines>
+        <visibleLines>20</visibleLines>
     </fields>
     <fields>
         <fullName>First_Call_Letter_required__c</fullName>
