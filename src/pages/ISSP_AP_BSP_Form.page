@@ -629,7 +629,7 @@
                 
                 <span id="nav_six"></span>
                 <!-- BRAZIL / MEXICO - START -->
-                <apex:pageBlockSection title="6. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
+                <apex:pageBlockSection title="6. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" columns="1" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
                 
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* {!CASE(apcountryisocode, 'BR','CNPJ', 'RFC')} # to be entered in IATA Systems" style="color:#a31717; font-weight: bold !important;"/>
@@ -655,24 +655,17 @@
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSection title="Please enclose" columns="1" rendered="{!apcountryisocode='BR'}">
-                        1) A copy of the CNPJ Certification<br/>
-                        2) The ANAC Authorization or Publication provided by the Offical Gazetta
-                        
-                        <apex:inputFile style="width:100%" id="fileToUpload" value="{!fileBody}" filename="{!fileName}" />
-                        <apex:commandButton id="btnUpload" value="Upload File" action="{!UploadFile}" />
+                        <apex:iframe scrolling="false" height="160px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=0&reqRequired=Mandatory&reqName=1) A copy of the CNPJ Certification&reqDescription=&reqIdentifier=Additional_Information_BR&onlyOne=true"/>
+                        <apex:iframe scrolling="false" height="160px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=2) The ANAC Authorization or Publication provided by the Offical Gazetta&reqDescription=&reqIdentifier=Additional_Information_BR&onlyOne=true"/>
                     </apex:pageBlockSection>
                     
-                    <!-- Attachment List -->
-                    <apex:pageBlockSection title="Attachments" rendered="{!apcountryisocode='BR'}">
-                        <apex:pageBlockTable value="{!attachList}" var="attach" >
-                            <apex:column value="{!attach.Name}" />
-                        </apex:pageBlockTable>
-                    </apex:pageBlockSection>
                 </apex:pageBlockSection>
                 <!--  END OF Brazil / MEX  -->
                 
                 <!-- ARGENTINA - START -->
-                <apex:pageBlockSection columns="2" rendered="{!apcountryisocode='AR'}">
+                <apex:pageBlockSection columns="1" rendered="{!apcountryisocode='AR'}">
                     <apex:facet name="header">
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="6. Additional Information - Clave Bancaria Unificada (CBU)"/>    
                     </apex:facet>
@@ -685,31 +678,17 @@
                         
                     </apex:pageBlockSectionItem>
                     <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                    
-                    <apex:pageBlockSection columns="1">
-                        <apex:facet name="header">
-                            Please provide copies of the following documents:
-                        </apex:facet>
-                        <apex:pageBlockSectionItem >   
-                        a.  Permission granted by the Civil Aviation Authority (Administracion Nacional de Aviacion Civil  -- ANAC) for your Airline to operate regular flights in Argentina. If you are joining the BSP through a General Sales Agent (GSA), permission should be granted to the GSA, authorizing tickets sales in the country.<br/><br/>
-                        b.  Fiscal ID registration number (Clave Unica de Identificacion Tributaria  -- CUIT) granted by the Fiscal Authority (AFIP).  If you are joining the BSP through a GSA, the GSA's fiscal ID number/CUIT will be accepted.<br/><br/>
-                        c.  Registered in-laws and Power of Attorney to show your Airline's representation in Argentina.  If you are joining the BSP through a GSA, a copy of the GSA agreement must be presented.
-                        </apex:pageBlockSectionItem>   
-                            <apex:inputFile style="width:100%" id="fileToUpload" value="{!fileBody}" filename="{!fileName}" />
-                            <apex:commandButton id="btnUpload" value="Upload File" action="{!UploadFile}" />
-                        </apex:pageBlockSection>
-                    
-                    <!-- Attachment List -->
-                    <apex:pageBlockSection columns="1">
-                        <apex:facet name="header">
-                            Attachments
-                        </apex:facet>
-                            <apex:pageBlockTable value="{!attachList}" var="attach" >
-                                <apex:column value="{!attach.Name}" />
-                            </apex:pageBlockTable>
+
+                    <apex:pageBlockSection title="Please provide copies of the following documents:" columns="1">
+                        <apex:iframe scrolling="false" height="230px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=a. Permission granted by the Civil Aviation Authority (Administracion Nacional de Aviacion Civil  -- ANAC) for your Airline to operate regular flights in Argentina.&reqDescription=If you are joining the BSP through a General Sales Agent (GSA), permission should be granted to the GSA, authorizing tickets sales in the country.&reqIdentifier=Additional_Information_AR&onlyOne=true"/>
+                        <apex:iframe scrolling="false" height="230px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=b. Fiscal ID registration number (Clave Unica de Identificacion Tributaria  -- CUIT) granted by the Fiscal Authority (AFIP).&reqDescription=If you are joining the BSP through a GSA, the GSA's fiscal ID number/CUIT will be accepted.<br/><br/>&reqIdentifier=Additional_Information_AR&onlyOne=true"/>
+                        <apex:iframe scrolling="false" height="230px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=c. Registered in-laws and Power of Attorney to show your Airline's representation in Argentina.&reqDescription=If you are joining the BSP through a GSA, a copy of the GSA agreement must be presented.&reqIdentifier=Additional_Information_AR&onlyOne=true"/>
                     </apex:pageBlockSection>
                 </apex:pageBlockSection>
-                
+
                 <!-- COLOMBIA - START -->
                 <apex:pageBlockSection title="6. Additional Information - ICA Taxes" columns="2" rendered="{!apcountryisocode='CO'}">
                     <tr class="aplabel">

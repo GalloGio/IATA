@@ -20,7 +20,7 @@
                 }
             
             .bPageBlock {
-                border-top-width : thin !important;
+                border-top : 0px;
             }
             
             ul li, ol li {
@@ -44,26 +44,6 @@
                        </style>
                        
                        <script>
-                           function hideText(myValue){
-                           
-                           var inputs = document.getElementsByTagName("input");
-                           var theValue = document.getElementById(myValue).value;
-                           //  alert(theValue);
-                           if (theValue == 'Yes' ){
-                               document.getElementById('bankmandate_p').style.display='none';
-                               document.getElementById('bankmandatelink_p').style.display='none';
-                               document.getElementById('bankmandateupload_p').style.display='none';
-                               document.getElementById('bankmandatenotes_p').style.display='block';
-                               document.getElementById('bankmandateattachment_p').style.display='none';    
-                           } else {
-                               document.getElementById('bankmandate_p').style.display='block';
-                               document.getElementById('bankmandatelink_p').style.display='block';
-                               document.getElementById('bankmandateupload_p').style.display='block';   
-                               document.getElementById('bankmandateattachment_p').style.display='block';       
-                               document.getElementById('bankmandatenotes_p').style.display='none';
-                           }
-                       }
-                       
                        $(document).ready(function() {
                            $(".cass-airlines-select").select2({width : "resolve"});
                        
