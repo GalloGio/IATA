@@ -36,7 +36,7 @@ public without sharing class ISSP_APProcess {
     public boolean countryRequirementFound {get;set;}
     public boolean dupeDraftExists{get;set;}
     public string BankMandateUrl {get;set;}
-  	public string strOperationType { get; set; } //BSP, CASS Import or CASS Export from Step 1 selection
+    public string strOperationType { get; set; } //BSP, CASS Import or CASS Export from Step 1 selection
     public string strAreaType{ get; set; } //AP Joining or Change
     public string strChangeType{ get; set; } //AP Joining or Change
     public string strLoB { get; set; } //Line of Business, BSP or CASS
@@ -127,7 +127,7 @@ public without sharing class ISSP_APProcess {
         isMandatory = false;
         isGSSAUser = false; //AS R03-SP03
         displayPopup = false;
-		flagShowCountries = false;
+        flagShowCountries = false;
         isoCountryEligible = false;
 
         newForm = new AP_Process_Form__c();
@@ -179,7 +179,7 @@ public without sharing class ISSP_APProcess {
         }
 
         if(ApexPages.currentPage().getParameters().containsKey('step'))
-          	stepNumber = ApexPages.currentPage().getParameters().get('step');
+            stepNumber = ApexPages.currentPage().getParameters().get('step');
 
         if(stepNumber == '1' || stepNumber == null) {
             isStep1= true;
@@ -216,7 +216,7 @@ public without sharing class ISSP_APProcess {
             newCase = retrieveCase(vCaseId);
 
             if(newCase==null)
-              	redirectToCasesList();
+                redirectToCasesList();
 
             if(newCase.IFAP_Country_ISO__c != null) {
                 isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
@@ -286,12 +286,12 @@ public without sharing class ISSP_APProcess {
                 newForm.Submitted_to_IATA__c = FALSE;
 
                 // TF - Type of Change Requested
-        		typeOfChangeRequested = new List<String>();
-        		if (newForm.Type_of_Change_Requested__c != null){
-          			for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
-            			typeOfChangeRequested.add(thisValue);
-          			}
-        		}
+                typeOfChangeRequested = new List<String>();
+                if (newForm.Type_of_Change_Requested__c != null){
+                    for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
+                        typeOfChangeRequested.add(thisValue);
+                    }
+                }
 
             }else if(stepNumber == '4'){
                 system.debug('STEP 4 - 1');
@@ -301,12 +301,12 @@ public without sharing class ISSP_APProcess {
                 newForm.Submitted_to_IATA__c = FALSE;
 
                 // TF - Type of Change Requested
-        		typeOfChangeRequested = new List<String>();
-        		if (newForm.Type_of_Change_Requested__c != null){
-          			for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
-            			typeOfChangeRequested.add(thisValue);
-          			}
-        		}
+                typeOfChangeRequested = new List<String>();
+                if (newForm.Type_of_Change_Requested__c != null){
+                    for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
+                        typeOfChangeRequested.add(thisValue);
+                    }
+                }
 
                 //TF
                 String nameString = apcountryisocode + '-' + strLOB + '%';
@@ -322,6 +322,18 @@ public without sharing class ISSP_APProcess {
                 } else {
                     AP_Country_specs__c apcdef = AP_Country_specs__c.getValues('DEFAULT-BankMandate');
                     BankMandateUrl = apcdef.Download_URL__c;
+                }
+
+                // check if all mandatory files were uploaded
+                List<String> listMandatoryFiles = new list<String>();
+                if (strAreaType=='Airline Joining' && apcountryisocode=='AR') {
+                    listMandatoryFiles.add('Additional_Information_AR');
+                }
+                if (apcountryisocode=='BR') {
+                    listMandatoryFiles.add('Additional_Information_BR');
+                }
+                if (!checkMandatoryFiles(listMandatoryFiles)) {
+                    allfieldsfilled = false;
                 }
 
                 //Test if BSP / CASS compulsory fields are filled
@@ -370,10 +382,10 @@ public without sharing class ISSP_APProcess {
                 } else if(strAreaType=='Airline Change' && strChangeType=='Minor database changes') {
                     if(newForm.Type_of_Change_Requested__c != null) {
                         if(newForm.Type_of_Change_Requested__c.contains('Master')) { //Need to include MasterTable mandatory fields
-                          	Map<String, String> masterTableMandatoryFields = ISSP_AP_FieldLists.changeMasterTableMandatoryFields;
-                            	for(String tmp : masterTableMandatoryFields.keySet()) {
-                                	ISSP_AP_fieldLists.changeMandatoryFields.put(tmp, masterTableMandatoryFields.get(tmp));
-                            	}
+                            Map<String, String> masterTableMandatoryFields = ISSP_AP_FieldLists.changeMasterTableMandatoryFields;
+                                for(String tmp : masterTableMandatoryFields.keySet()) {
+                                    ISSP_AP_fieldLists.changeMandatoryFields.put(tmp, masterTableMandatoryFields.get(tmp));
+                                }
                           }
                     }
                     for (String fldLabel : ISSP_AP_fieldLists.changeMandatoryFields.keySet()) {
@@ -384,7 +396,7 @@ public without sharing class ISSP_APProcess {
                         }
                     }
                 } else if(strAreaType=='Airline Change' && strChangeType=='Bank Account Instructions') {
-                   	for (String fldLabel : ISSP_AP_fieldLists.changeBankMandatoryFields.keySet()) {
+                    for (String fldLabel : ISSP_AP_fieldLists.changeBankMandatoryFields.keySet()) {
                         System.Debug('Change FldLabel: '+ fldLabel);
                         if (newForm.get(fldLabel)==null) {
                             allfieldsfilled = false;
@@ -644,7 +656,7 @@ public without sharing class ISSP_APProcess {
         newCase.CaseArea__c = strAreaType;
 
         if(strAreaType=='Airline Joining') {
-          	newCase.Reason1__c = caseReason(strOperationType, strParentMembershipstatus);
+            newCase.Reason1__c = caseReason(strOperationType, strParentMembershipstatus);
             newCase.Subject='Airline Participation - '+ strOperationType + ' Joining Process - ' + newCase.Country_concerned_by_the_query__c;
         } else {
             newCase.Reason1__c = strChangeType;
@@ -827,13 +839,22 @@ public without sharing class ISSP_APProcess {
     }
 
     public Pagereference goToFinalStep(){
-        List<Attachment> attch = getAttachList();
-
-        if(newForm.Airline_wish_to_join_ICCS__c == 'No' && attch.size() < 1) {
-            newForm.addError('Please attach the bank mandate (one for each currency) before submitting the application.');
-            return null;
+        List<String> listMandatoryFiles = new list<String>();
+        if (newForm.Airline_wish_to_join_ICCS__c=='Yes' && hqaccount.ICCS_Membership_Status__c!='Member') {
+            //check ICCS_Join
+            listMandatoryFiles.add('ICCS_Join');
         }
-
+        if (newForm.Airline_wish_to_join_ICCS__c=='Yes') {
+            //check ICCS_Join_market
+            listMandatoryFiles.add('ICCS_Join_market');
+        }
+        if(newForm.Airline_wish_to_join_ICCS__c == 'No') {
+            //check Bank_Mandate
+            listMandatoryFiles.add('Bank_Mandate');
+        }
+        if (!checkMandatoryFiles(listMandatoryFiles)) {
+            newForm.addError('There are missing files to upload, Please attach them before submitting the application.');
+        }
         try{
 
             newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today() && isocountry.Airline_EasyPay_Opt_Out_Date__c != null);
@@ -1086,35 +1107,35 @@ public without sharing class ISSP_APProcess {
     }
 
     private void poupulateOptInOutOptions() {
-    	optInOutOptions = new List<SelectOption>();
-    	optInOutOptions.add(new SelectOption('', '-Select-'));
-    	optInOutOptions.add(new SelectOption('IN', 'Opt-In to IATA EasyPay'));
-    	optInOutOptions.add(new SelectOption('OUT', 'Opt-Out from IATA EasyPay'));
+        optInOutOptions = new List<SelectOption>();
+        optInOutOptions.add(new SelectOption('', '-Select-'));
+        optInOutOptions.add(new SelectOption('IN', 'Opt-In to IATA EasyPay'));
+        optInOutOptions.add(new SelectOption('OUT', 'Opt-Out from IATA EasyPay'));
     }
 
     private void populateCountriesMap() {
         airlineOptInDays = Integer.valueOf(ISSP_CS__c.getValues('EasyPay Opt-In Days').Value__c);
         airlineOptOutDays = Integer.valueOf(ISSP_CS__c.getValues('EasyPay Opt-Out Days').Value__c);
 
-    	countriesIn = new List<SelectOption>();
-    	hasCountriesIn = false;
-    	countriesOut = new List<SelectOption>();
-    	hasCountriesOut = false;
+        countriesIn = new List<SelectOption>();
+        hasCountriesIn = false;
+        countriesOut = new List<SelectOption>();
+        hasCountriesOut = false;
 
-    	for(Services_Rendered__c service : [SELECT Id, ISO_Country_formula__c, ANG_IATA_EasyPay_Opt_out__c, Services_Rendered_to_Airline__r.IATA_ISO_Country__c
-    										FROM Services_Rendered__c
-    										WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Airline_EasyPay_Opt_Out_Date__c <= :Date.today()
-    											AND Services_Rendered_Type__c = 'BSP Participation'
-    											AND Services_Rendered_By__c = :vHQAccountId
+        for(Services_Rendered__c service : [SELECT Id, ISO_Country_formula__c, ANG_IATA_EasyPay_Opt_out__c, Services_Rendered_to_Airline__r.IATA_ISO_Country__c
+                                            FROM Services_Rendered__c
+                                            WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Airline_EasyPay_Opt_Out_Date__c <= :Date.today()
+                                                AND Services_Rendered_Type__c = 'BSP Participation'
+                                                AND Services_Rendered_By__c = :vHQAccountId
                                                 AND Services_Rendered_Status__c = 'Active']) {
-    		if (service.ANG_IATA_EasyPay_Opt_out__c) {
-    			countriesIn.add(new SelectOption(service.Services_Rendered_to_Airline__r.IATA_ISO_Country__c, service.ISO_Country_formula__c));
-    			hasCountriesIn = true;
-    		} else {
-    			countriesOut.add(new SelectOption(service.Services_Rendered_to_Airline__r.IATA_ISO_Country__c, service.ISO_Country_formula__c));
-    			hasCountriesOut = true;
-    		}
-    	}    	
+            if (service.ANG_IATA_EasyPay_Opt_out__c) {
+                countriesIn.add(new SelectOption(service.Services_Rendered_to_Airline__r.IATA_ISO_Country__c, service.ISO_Country_formula__c));
+                hasCountriesIn = true;
+            } else {
+                countriesOut.add(new SelectOption(service.Services_Rendered_to_Airline__r.IATA_ISO_Country__c, service.ISO_Country_formula__c));
+                hasCountriesOut = true;
+            }
+        }       
     }
 
     public PageReference submitOptInOutServer() {
@@ -1133,21 +1154,21 @@ public without sharing class ISSP_APProcess {
         for (IATA_ISO_Country__c country: isoCountriesMap.values()) countryNames.add(country.Name);
 
         Case optInOutParentCase = new Case(RecordTypeId = RECORD_TYPE_ID,
-        								   Description = String.join(countryNames, ', '),
-        								   Status = 'For Review and Acceptance',
-        								   CaseArea__c = 'Airline Change',
-        								   Reason1__c = 'IATA Easy Pay',
-        								   IFAP_Country_ISO__c = isoCountriesMap.get(countriesParam[0]).ISO_Code__c,
-        								   Visible_on_ISS_Portal__c = true,
-        								   IATAcode__c = con.Account.IATACode__c,
-        								   BSPCountry__c = isoCountriesMap.get(countriesParam[0]).Name,
-        							 	   Region__c = isoCountriesMap.get(countriesParam[0]).Region__c,
-        							 	   Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
+                                           Description = String.join(countryNames, ', '),
+                                           Status = 'For Review and Acceptance',
+                                           CaseArea__c = 'Airline Change',
+                                           Reason1__c = 'IATA Easy Pay',
+                                           IFAP_Country_ISO__c = isoCountriesMap.get(countriesParam[0]).ISO_Code__c,
+                                           Visible_on_ISS_Portal__c = true,
+                                           IATAcode__c = con.Account.IATACode__c,
+                                           BSPCountry__c = isoCountriesMap.get(countriesParam[0]).Name,
+                                           Region__c = isoCountriesMap.get(countriesParam[0]).Region__c,
+                                           Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
                                                                     con.Account.IATACode__c,
                                                                     isoCountriesMap.get(countriesParam[0]).ISO_Code__c, con.Account.Name, vHqAccountId),
-        							 	   Origin = 'Portal',
-        							 	   Subject = 'Airline Participation - IATA EasyPay ' + optInOutSubject + ' - ' + isoCountriesMap.get(countriesParam[0]).Name,
-        							 	   Provider__c = con.AccountId,
+                                           Origin = 'Portal',
+                                           Subject = 'Airline Participation - IATA EasyPay ' + optInOutSubject + ' - ' + isoCountriesMap.get(countriesParam[0]).Name,
+                                           Provider__c = con.AccountId,
                                            Type_of_customer__c = 'Airline Passenger',
                                            Verification__c = 'BSP');
 
@@ -1157,41 +1178,41 @@ public without sharing class ISSP_APProcess {
         Date parsedDate = Date.newInstance(Integer.valueOf(splittedDate[0]), Integer.valueOf(splittedDate[1]), Integer.valueOf(splittedDate[2]));
 
         AP_Process_Form__c processForm = new AP_Process_Form__c(Case__c = optInOutParentCase.Id,
-        														IATA_EasyPay_Effective_Date__c = parsedDate,
-        														IATA_EasyPay_Opt_In_Opt_Out__c = optInOutParam,
-        														RecordTypeId = AMS_Utils.RECTYPE_IATAEASYPAY);
+                                                                IATA_EasyPay_Effective_Date__c = parsedDate,
+                                                                IATA_EasyPay_Opt_In_Opt_Out__c = optInOutParam,
+                                                                RecordTypeId = AMS_Utils.RECTYPE_IATAEASYPAY);
 
         insert processForm;
 
         Case childCase;
 
         if (countriesParam.size() > 1) {
-        	List<Case> childCases = new List<Case>();
-        	for (Integer i = 1; i < countriesParam.size(); i++) {
-        		childCase = new Case(RecordTypeId = RECORD_TYPE_ID,
-        							 Description = isoCountriesMap.get(countriesParam[i]).Name,
-        					    	 Status = 'For Review and Acceptance',
-        							 CaseArea__c = 'Airline Change',
-        							 Reason1__c = 'IATA Easy Pay',
-        							 ParentId = optInOutParentCase.Id,
-        							 IFAP_Country_ISO__c = isoCountriesMap.get(countriesParam[i]).ISO_Code__c,
-        							 IATAcode__c = con.Account.IATACode__c,
-        							 Visible_on_ISS_Portal__c = false,
-        							 BSPCountry__c = isoCountriesMap.get(countriesParam[i]).Name,
-        							 Region__c = isoCountriesMap.get(countriesParam[i]).Region__c,
-        							 Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
+            List<Case> childCases = new List<Case>();
+            for (Integer i = 1; i < countriesParam.size(); i++) {
+                childCase = new Case(RecordTypeId = RECORD_TYPE_ID,
+                                     Description = isoCountriesMap.get(countriesParam[i]).Name,
+                                     Status = 'For Review and Acceptance',
+                                     CaseArea__c = 'Airline Change',
+                                     Reason1__c = 'IATA Easy Pay',
+                                     ParentId = optInOutParentCase.Id,
+                                     IFAP_Country_ISO__c = isoCountriesMap.get(countriesParam[i]).ISO_Code__c,
+                                     IATAcode__c = con.Account.IATACode__c,
+                                     Visible_on_ISS_Portal__c = false,
+                                     BSPCountry__c = isoCountriesMap.get(countriesParam[i]).Name,
+                                     Region__c = isoCountriesMap.get(countriesParam[i]).Region__c,
+                                     Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
                                                                     con.Account.IATACode__c,
                                                                     isoCountriesMap.get(countriesParam[i]).ISO_Code__c, con.Account.Name, vHqAccountId),
-        							 Origin = 'Portal',
-        							 Subject = 'Airline Participation - IATA EasyPay ' + optInOutSubject + ' - ' + isoCountriesMap.get(countriesParam[i]).Name,
-        							 Provider__c = con.AccountId,
+                                     Origin = 'Portal',
+                                     Subject = 'Airline Participation - IATA EasyPay ' + optInOutSubject + ' - ' + isoCountriesMap.get(countriesParam[i]).Name,
+                                     Provider__c = con.AccountId,
                                      Type_of_customer__c = 'Airline Passenger',
                                      Verification__c = 'BSP');
-        		
-        		childCases.add(childCase);
-        	}
+                
+                childCases.add(childCase);
+            }
 
-        	insert childCases;
+            insert childCases;
         }
 
         return null;
@@ -1220,25 +1241,6 @@ public without sharing class ISSP_APProcess {
             return false;
         }
         return true;
-    }
-
-    public pagereference UploadFile(){
-        if(fileBody == null || fileName == null)  {
-            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Please select a file.');
-            ApexPages.addMessage(myMsg);
-            fileBody = null;
-        } else {
-            Attachment myAttachment  = new Attachment();
-            myAttachment.Body = fileBody;
-            myAttachment.Name = fileName;
-            myAttachment.ParentId = vCaseId;
-            insert myAttachment;
-        }
-        return null;
-    }
-
-    public List<Attachment> getAttachList(){
-        return [SELECT Id, Name FROM Attachment WHERE ParentId = :vCaseId];
     }
 
     //TF
@@ -1299,7 +1301,8 @@ public without sharing class ISSP_APProcess {
             SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode,
             BillingCountry, Airline_designator__c, TradeName__c, Membership_status__c, IATACode__c, Top_Parent__c, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode,
             Top_Parent__r.BillingCountry, Top_Parent__r.Membership_status__c, Top_Parent__r.Name, Top_Parent__r.Airline_designator__c, Top_Parent__r.IATACode__c, Top_Parent__r.TradeName__c,
-            Sector__c, Category__c, Due_Diligence_Status__c, Due_Diligence_Remarks__c, Level_of_risk__c, Airline_Prefix__c
+            Sector__c, Category__c, Due_Diligence_Status__c, Due_Diligence_Remarks__c, Level_of_risk__c, Airline_Prefix__c, ICCS_Membership_Status__c,
+            (SELECT Id FROM Authorized_Signatories_Packages__r)
             FROM Account
             WHERE Id = :hqId
             LIMIT 1
@@ -1385,6 +1388,24 @@ public without sharing class ISSP_APProcess {
 
     public IATA_ISO_Country__c fetchISOCountry(string isocode) {
         return IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{isocode}).get(0);
+    }
+
+    /**
+        Finds the ICCS Product country for the current ISO country and a type (BSP or CASS)
+    **/
+    public ICCS_Product_Country__c getICCSProductCountry() {
+        try {
+            String productType = '';
+            if (this.isBSP) productType = 'BSP';
+            if (this.isCASS) productType = 'CASS';
+            return [
+                SELECT Id, Product__r.Name
+                FROM ICCS_Product_Country__c
+                WHERE Country__c = :this.isocountry.Id
+                AND Product__r.Name = :productType];
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public List<SelectOption> getChangeItems() {
@@ -1525,6 +1546,39 @@ public without sharing class ISSP_APProcess {
     }
     
     /**
+        Find all related amazon files to current AP process form
+    **/
+    private map<String,list<AmazonFile__c>> retrieveMapAmazonFiles() {
+        map<String,list<AmazonFile__c>> mapAmazonFiles = new map<String,list<AmazonFile__c>>();
+        for (AmazonFile__c file: [
+                SELECT Id, File_Identifier__c
+                FROM AmazonFile__c
+                WHERE Case__c = :this.newCase.Id]) {
+            list<AmazonFile__c> listFiles = mapAmazonFiles.get(file.File_Identifier__c);
+            if (listFiles==null) {
+                listFiles = new list<AmazonFile__c>();
+            }
+            listFiles.add(file);
+            mapAmazonFiles.put(file.File_Identifier__c, listFiles);
+        }
+        return mapAmazonFiles;
+    }
+
+    /**
+        Check if an Amazon File is mandatory for current AP process form
+    **/
+    private Boolean checkMandatoryFiles(list<String> listMandatoryFileId) {
+        map<String,list<AmazonFile__c>> mapFiles = retrieveMapAmazonFiles();
+        for (String fielId: listMandatoryFileId) {
+            list<AmazonFile__c> listAmazonFiles = mapFiles.get(fielId);
+            if (listAmazonFiles==null || listAmazonFiles.isEmpty()) {
+                return false;
+            } 
+        }
+        return true;
+    }
+    
+    /**
         Find in ISSP_AP_FieldLists those fields marked as mandatory for current DPC System
     **/
     public list<String> getMandatoryFieldsForCommission() {
@@ -1533,4 +1587,15 @@ public without sharing class ISSP_APProcess {
         if (listFieldsToCheck==null) return new list<String>();
         return listFieldsToCheck;
     }
+
+    /**
+        Find all related authorized signatories from the airline
+    **/
+    public list<Authorized_Signatory__c> getAuthorizedSignatories() {
+        return [
+            SELECT Id, Contact__r.Name
+            FROM Authorized_Signatory__c
+            WHERE Authorized_Signatories_Package__c IN :hqAccount.Authorized_Signatories_Packages__r];
+    }
+
 }

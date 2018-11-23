@@ -4,7 +4,10 @@
     <apex:attribute name="reqRequired" type="String" required="true" description="Mandatory, Optional" />
     <apex:attribute name="reqName" type="String" required="true" description="Requirement name" />
     <apex:attribute name="reqDescription" type="String" required="true" description="Requirement description" />
-    <apex:attribute name="reqIdentifier" type="String" required="true" description="Requirement Identifier" />
+    <apex:attribute name="reqIdentifier" type="String" required="true" description="Requirement Identifier" assignTo="{!currentIdentifier}"/>
+    <apex:attribute name="onlyOne" type="Boolean" required="false" description="True if only one file is allowed" default="false"/>
+
+    <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
 
     <div class="well">
     <form action="{!AMAZONURL}" method="POST" enctype="multipart/form-data" class="direct-upload-{!reqCnt}">
@@ -16,7 +19,7 @@
         <input type="hidden" name="policy" value="{!policy}"/>
         <input type="hidden" name="signature" value="{!signedPolicy}"/>
 
-        <div class="row">
+        <apex:outputPanel id="mainblock" layout="block" styleclass="row">
             <!-- Progress Bar to show upload completion percentage -->
                                 <div class="col-md-6">
                                     <apex:outputText >
@@ -27,12 +30,21 @@
                                 <div class="col-md-4">
                                     <apex:variable var="reviewStatuses" value="{!''}{!reviewStatusMap}" />
                                     <apex:variable var="FileIdInReviewStatuses" value="{!reqIdentifier}=true"/>
+                                    <apex:variable var="showUploadButton" value="{!OR(NOT(onlyOne),AND(onlyOne,countFiles=0))}"/>
 
-                                    <apex:outputText rendered="{!reqRequired!=null}">
-                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', caseOwnerNewgenPCI, caseOwnerModelA, !CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
+                                    <script>
+                                        if ({!countFiles}==0 && {!reqRequired=='Mandatory'}) {
+                                            $("div.well").addClass("empty-list");
+                                        } else {
+                                            $("div.well").removeClass("empty-list");
+                                        }
+                                    </script>
+
+                                    <apex:outputText rendered="{!reqRequired!=null && showUploadButton}">
+                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', caseOwnerNewgenPCI, !CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
                                             <input type="file" id="input-{!reqCnt}" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent'"/>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', !caseOwnerNewgenPCI, !caseOwnerModelA, CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
+                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', !caseOwnerNewgenPCI, CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
                                             <input type="file" class="input-{!reqCnt}" name="file" style="color:transparent;" disabled="true"/>
                                         </apex:outputText>
                                     </apex:outputText>
@@ -40,7 +52,7 @@
                                 <div class="col-md-2">
                                     {!CASE(reqRequired, 'Mandatory', '*', 'Optional', '(', '')}{!CASE(reqRequired, 'Mandatory', $Label.ISSP_Mandatory, 'Optional', $Label.ISSP_Optional, '')}{!CASE(reqRequired, 'Optional', ')', '')}
                                 </div>
-                            </div>
+        </apex:outputPanel>
         <div class="progress" style="height:8px;display:{!IF(reqRequired!=null,'','none')}"><div class="uploadbar-{!reqCnt} progress-bar progress-bar-success progress-bar-striped"></div></div>
         </form>
         <div class="row">
@@ -54,7 +66,7 @@
                                 <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
                             </div>
                         </div>
-                            <apex:actionFunction name="createAmazonFileObject{!reqCnt}_JS" action="{!createAmazonFileObject}" reRender="AmazonDocs,UniqueFileNamesList">
+                            <apex:actionFunction name="createAmazonFileObject{!reqCnt}_JS" action="{!createAmazonFileObject}" reRender="AmazonDocs,UniqueFileNamesList,mainblock">
                                 <apex:param assignTo="{!uploadedFileName}" name="filename" value=""/>
                                 <apex:param assignTo="{!uploadedFileSize}" name="filesize" value=""/>
                                 <apex:param assignTo="{!uploadedFileIdentifier}" name="fileidentifier" value="{!reqIdentifier}"/>
@@ -85,11 +97,11 @@
                                       <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
                                       <a class="actionLink" title="view" escape="false" target="_blank" onclick="getFileLink('{!theFile.fullName}');" style="color:#015ba7; cursor: pointer;  text-decoration: underline;"  >{!$Label.ISSP_View}</a>
                                        {!If(OR(caseStatus=='Draft',caseStatus=='Open - EDMC'),' | ','')}
-                                       <span class="glyphicon glyphicon-trash" aria-hidden="true" style="display: {!IF(OR(caseStatus=='Draft',caseStatus=='Open - EDMC', caseOwnerNewgenPCI, caseOwnerModelA),"inline","none")}"></span>
+                                       <span class="glyphicon glyphicon-trash" aria-hidden="true" style="display: {!IF(OR(caseStatus=='Draft',caseStatus=='Open - EDMC', caseOwnerNewgenPCI),"inline","none")}"></span>
                                        <apex:commandLink value="{!$Label.IDCard_Delete}"
                                             action="{!deleteThisFile}"
                                             onclick="if(!confirm('{!$Label.ISSP_Confirm_File_Delete}'))return false;"
-                                            rendered="{!OR(caseStatus=='Draft',caseStatus=='Open - EDMC', caseOwnerNewgenPCI, caseOwnerModelA)}"
+                                            rendered="{!OR(caseStatus=='Draft',caseStatus=='Open - EDMC', caseOwnerNewgenPCI)}"
                                             status="WaitingStatus"
                                             reRender="AmazonDocs"
                                            oncomplete="location.reload();"
@@ -110,13 +122,46 @@
     <script>
     var folderInit = '{!storageFolder}';
 
+    function isIE(){
+        if (/MSIE/.test(navigator.userAgent)){
+            return true;
+        }
+        else if (/rv:11/.test(navigator.userAgent)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    function getFileLink(fileName) {
+        // alert(''+fileName);
+        $("#loading").show();
+        setTimeout(function(){
+        try{
+            ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event){
+                var result2= result.replace("&amp;","&");
+                var newWin = window.open(result2);
+                if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+                    alert('{!$Label.ISSP_AMS_ACCR_Alert1}');
+                }
+                $("#loading").hide();
+            },{escape:false});
+        }catch(err){alert( err.message);}
+        },500);
+    }
+
     function getAllFileNames(){
         var res=[];
         for(i=0 ; i<$(".UniqueFileNames").length ; i++){
             var currFileNamesList = ($(".UniqueFileNames")[i].value).split(",");
             for(j=0 ; j<currFileNamesList.length ; j++){
-                if(res.indexOf(currFileNamesList[j])==-1)
-                    res.push(currFileNamesList[j]);
+                if(res.indexOf(currFileNamesList[j])==-1) {
+                    var filename = currFileNamesList[j];
+                    if (filename>'') {
+                        res.push(filename);
+                    }
+                }
             }
         }
         return res;

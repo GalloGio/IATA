@@ -46,87 +46,64 @@
                             
                         </div>
                     </apex:outputText>
-                    <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="* Does your Airline wish to join ICCS (IATA Currency Clearance Service) in this market, if available?" style="color:#a31717; font-weight: bold !important;"/>
-                        <!-- <apex:inputField value="{!newForm.Airline_wish_to_join_ICCS__c}" label="" onchange="$('#bankmandate').toggle();"/> -->
-                        <apex:inputField id="mandateSelect" value="{!newForm.Airline_wish_to_join_ICCS__c}" label="" onchange="hideText('{!$Component.mandateSelect}');"/>
-                    </apex:pageBlockSectionItem>      
-                    <apex:outputText id="bankmandate">
-                            <div id="bankmandate_p" style="padding-left:20px;{!IF (newForm.Airline_wish_to_join_ICCS__c == 'No', '', 'display:none')}" >
-                                
-                                <b>Please download the Bank Mandate form using the link below:</b><br/>
-                                <div id="bankmandatelink_p">
-                                    <u><a href="{!BankMAndateUrl}" target="_blank">BSP / CASS Local Bank Account Beneficiary</a></u>
-                                </div>
-                                <br/>
-                                Kindly note the bank mandate must be issued from your Company’s Head Office and signed by two Head Office senior officers, at least one of which must be:<br/>
-                                <ul style="display:lock;list-style-type: disc;">
-                                    <li>Chief Financial Officer (CFO) or</li>
-                                    <li>Head of Treasury or Cash Management Department</li>
-                                </ul>
-                                <apex:outputPanel rendered="{!(strChangeType!='Bank Account Instructions')}">
-                                <div style="padding-bottom:5px">1) A scanned version of the local bank mandate shall be attached to this process to proceed with its validation prior the original being sent to IATA. The result of the validation will be communicated to you. Additional banking information may be requested according to the existing banking requirements in the country concerned.</div>
-                                <div style="padding-bottom:5px">2) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process):</div>
-                                </apex:outputPanel>
-                                <apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
-                                <div style="padding-bottom:5px">1) A scanned version of the local bank mandate shall be attached to this process to proceed with its validation prior the original being sent to IATA. The result of the validation will be communicated to you. Additional banking information may be requested according to the existing banking requirements in the country concerned.</div>
-                                <div style="padding-bottom:5px">2) Kindly note any change in the bank account instructions must be requested by the participant at least 15 days in advance. The implementation of such instructions can only be considered as valid by the participant when acknowledged by IATA, including the settlement date in which the new instructions will be effective. Until such confirmation, please ensure that you current account remains active.</div>
-                                <div style="padding-bottom:5px">3) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process). Please follow the instructions to fill in the bank information. If the document does not comply with IATA requirements it can delay the process.</div>
-                                </apex:outputPanel>
-                                <br/>
-                                <div style="font-weight:bold;margin-left:100px;display:block">
-                                    IATA Global Delivery Center (GDC)<br/>
-                                    Attn: Participation Department<br/>
-                                    Torre Europa<br/>
-                                    Paseo de la Castellana, 95, 4th floor<br/>
-                                    28046 Madrid<br/>
-                                    Spain<br/>
-                                </div>
-                                <br/>
-                                <div style="padding-bottom:5px"><b>NOTE:</b>&nbsp;For countries / operations with dual currencies, please submit separate bank mandates for each currency.</div>
-                                <apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
-                                    <div style="padding-bottom:5px"><b>NOTE II:</b>&nbsp;In case you are applying for a change from ICCS to a Local Bank Account in the concerned operation, you are requested to coordinate with ICCS team (ICCSO@iata.org) in order to take the necessary adjustments in regards to your ICCS participation.</div>
-                                </apex:outputPanel>
-                                <apex:outputText rendered="{!apCountryISOCode='BO'}">
-                                    <br/><br/><b>NOTE:</b>&nbsp;If you choose only one currency that travel agents may use to issue tickets, please inform your travel agents accordingly.  However, please note that GDSs do not have the capability to restrict ticketing to only one currency.
-                                </apex:outputText>
-                            </div>
-                  
-                    </apex:outputText>
-                <p/>
-                    
-                    <apex:outputText id="ICCS">
-                        <div class="aplabel">
-                            <p id="bankmandatenotes_p" style="{!IF (newForm.Airline_wish_to_join_ICCS__c == 'Yes', '', 'display:none')}" >
-                                
-                                Please coordinate directly with ICCS department via our Customer Portal. Please ensure the ICCS documents are submitted directly to ICCS Geneva.<br/>
-                                <br/>NOTE: The Bank account change from your local Bank account to ICCS will only start once the ICCS Agreement is received and validated by IATA's ICCS department.
-                                
+
+                    <apex:pageBlockSectionItem rendered="{!NOT(ISNULL(ICCSProductCountry))}">
+                        <apex:outputLabel value="Does your Airline wish to join ICCS (IATA Currency Clearance Service) in this market" styleclass="ap-required"/>
+                        <apex:inputField id="mandateSelect" value="{!newForm.Airline_wish_to_join_ICCS__c}">
+                            <apex:actionSupport event="onchange" rerender="FinalForm"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+
+                    <!-- Without ICCS -->
+                    <apex:outputPanel layout="block" rendered="{!OR(ISNULL(ICCSProductCountry),newForm.Airline_wish_to_join_ICCS__c == 'No')}">
+                        Scenario A and B<br/>
+                        This panel shows because the account has no ICCS Product country OR user selected No in last question<br/>
+
+                        <apex:outputPanel layout="block" styleclass="red-box" rendered="{!AuthorizedSignatories.size=0}">
+                            No authorized signatories. Text to be defined
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="block" styleclass="red-box" rendered="{!AuthorizedSignatories.size>0}">
+                            <p>
+                                Kindly note the bank mandate must be issued from your Company's Head Office and signed by two (2) officers that are authorized as per your company's IATA FDS Authorized Signatories Package (ASP).
+                                The following authorized officers can sign:
                             </p>
-                        </div>
-                    </apex:outputText>
-                    
+                            <ul style="display:lock;list-style-type: disc;">
+                                <apex:repeat value="{!AuthorizedSignatories}" var="signatory" >
+                                    <li>{!signatory.Contact__r.Name}</li>
+                                </apex:repeat>
+                            </ul>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
                 </apex:pageBlockSection>
-                <div id="bankmandateupload_p" style="{!IF (newForm.Airline_wish_to_join_ICCS__c == 'No', '', 'display:none')}">
-                    <apex:pageBlockSection title="Upload Bank Mandate" columns="1">
-                        
-                        Please upload the completed Bank Mandates.                
-                        <apex:inputFile style="width:100%" id="fileToUpload" value="{!fileBody}" filename="{!fileName}" />
-                        <apex:commandButton id="btnUpload" value="Upload File" action="{!UploadFile}" />                        
-                    </apex:pageBlockSection>
-                </div>
-                
-                <!-- Attachment List -->
-                <div id="bankmandateattachment_p" style="{!IF(OR(newForm.Airline_wish_to_join_ICCS__c == 'No'), '', 'display:none')}">
-                    <apex:pageBlockSection title="Attachments">
-                        
-                        <apex:pageBlockTable value="{!attachList}" var="attach" >
-                            <apex:column value="{!attach.Name}" />
-                        </apex:pageBlockTable>
-                        
-                    </apex:pageBlockSection>
-                </div>
-                
+
+                <!-- With ICCS and is not a Member -->
+                <apex:pageBlockSection title="Information required to join ICCS" columns="1"
+                    rendered="{!AND(newForm.Airline_wish_to_join_ICCS__c=='Yes',hqaccount.ICCS_Membership_Status__c!='Member')}">
+                    Scenario D<br/>
+                    <a href="#" style="text-decoration: underline">Download a file</a><br/>
+                    
+                    <apex:iframe scrolling="false" height="160px"
+                        src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Information required to join ICCS&reqDescription=&reqIdentifier=ICCS_Join&onlyOne=true"/>
+                </apex:pageBlockSection>
+
+                <!-- With ICCS and is Member -->
+                <apex:pageBlockSection title="Information required to join ICCS in this market" columns="1"
+                    rendered="{!newForm.Airline_wish_to_join_ICCS__c=='Yes'}">
+                    Scenario C<br/>
+                    information required to join ICCS in this market. <br/>
+                    <a href="#" style="text-decoration: underline">Download a file</a><br/>
+
+                    <apex:iframe scrolling="false" height="160px"
+                        src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=Information required to join ICCS in this market&reqDescription=&reqIdentifier=ICCS_Join_market&onlyOne=true"/>
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection title="Upload Bank Mandate" columns="1"
+                        rendered="newForm.Airline_wish_to_join_ICCS__c=='No'">
+                    Please upload the completed Bank Mandates.
+                    <apex:iframe scrolling="false" height="160px"
+                        src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription=&reqIdentifier=Bank_Mandate&onlyOne=true"/>
+                </apex:pageBlockSection>
+
                 <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='IL',apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'))}">
                     <apex:outputText rendered="{!apcountryisocode='IL'}">
                         It is a legal requirement in {!strLOB} Israel that the participating Airline signs and submits the Antitrust Document.<br/>
