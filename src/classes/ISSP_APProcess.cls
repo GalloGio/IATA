@@ -1312,6 +1312,7 @@ public without sharing class ISSP_APProcess {
             BillingCountry, Airline_designator__c, TradeName__c, Membership_status__c, IATACode__c, Top_Parent__c, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode,
             Top_Parent__r.BillingCountry, Top_Parent__r.Membership_status__c, Top_Parent__r.Name, Top_Parent__r.Airline_designator__c, Top_Parent__r.IATACode__c, Top_Parent__r.TradeName__c,
             Sector__c, Category__c, Due_Diligence_Status__c, Due_Diligence_Remarks__c, Level_of_risk__c, Airline_Prefix__c, ICCS_Membership_Status__c,
+            BSP_CI_Valid__c, CASS_CI_Valid__c, BSP_FOC_Valid__c, CASS_FOC_Valid__c,
             (SELECT Id FROM Authorized_Signatories_Packages__r)
             FROM Account
             WHERE Id = :hqId
