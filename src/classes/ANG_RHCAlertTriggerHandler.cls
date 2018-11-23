@@ -458,7 +458,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         for(Account acc :[
             SELECT id,Name, IATACode__c, Location_Class__c, ANG_IsNewGenAgency__c, Top_Parent__c, CurrencyIsoCode, Guaranteed_amount__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.BSP_Country_free_text__c,Remittance_frequency__c,IATA_ISO_Country__c,IATA_ISO_Country__r.Name,
-                    IATA_ISO_Country__r.ISO_Code__c, Region_formula__c, IATA_ISO_Country__r.AMS_Settlement_System__c,
+                    IATA_ISO_Country__r.ISO_Code__c, Region_formula__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Name,
         
         (SELECT ID,Name,ANG_Account__c,CurrencyIsoCode,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c
         FROM Risk_Alerts__r 
@@ -525,6 +525,13 @@ public class ANG_RHCAlertTriggerHandler{
                         smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
                         smapParentCase.End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c;
                     }else {
+                        SNOWBody theBody = new SNOWBody();
+                        theBody.description = 'A RTS Red Alert was received for agency with IATA code: '+raAccMap.get(ra.id).IATACode__c +
+                            ' but the SMAP and SIDRA Lite Cases failed to be created. Please check if active Operational_Calendar__c records exist for '+
+                            mapAccountOpCalendar.get(ra.ANG_Account__c).IATA_ISO_Country__r.AMS_Settlement_System__r.Name+' and Remittance frequency: '+
+                            mapAccountOpCalendar.get(ra.ANG_Account__c).Remittance_frequency__c);
+
+                        sendRequestToSNOW(theBody, 'SNOW13');               
                         System.debug('## Creating Red Alert Only - No case is created');
                         // We are not creating any case - just the alert
                         continue;                      
