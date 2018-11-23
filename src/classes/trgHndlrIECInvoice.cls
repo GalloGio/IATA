@@ -192,7 +192,7 @@ public with sharing class trgHndlrIECInvoice {
 					, Charge_Date__c = (DateTime)zInvoiceItem.getValue('ChargeDate')
 					, Charge_Name__c = (String)zInvoiceItem.getValue('ChargeName')
 					, Invoice__r = new Zuora__ZInvoice__c (Zuora__External_Id__c = sInvoiceId)
-					, Product__r = new Product2 (zqu__ZuoraId__c = (String)zInvoiceItem.getValue('ProductId'))
+					, New_Product__r = new Product2 (zqu__ZuoraId__c = (String)zInvoiceItem.getValue('ProductId'))
 					, Subscription_Number__c = (String)zInvoiceItem.getValue('SubscriptionNumber')
 					//, Subscription__r = new Zuora__Subscription__c (Zuora__External_Id__c = (String)zInvoiceItem.getValue('SubscriptionId'))
 					//, Subscription_Product_Charge__r = new Zuora__SubscriptionProductCharge__c (Zuora__External_Id__c = (String)zInvoiceItem.getValue('RatePlanChargeId'))
