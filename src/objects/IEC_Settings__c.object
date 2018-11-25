@@ -15,6 +15,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>BATCH_AWS_URL__c</fullName>
+        <description>Used to connect with the amazon url to run batches</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to connect with the amazon url to run batches</inlineHelpText>
+        <label>BATCH AWS URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>CAC_Web_Service_API_Gateway__c</fullName>
         <description>The API Gateway Key to retrieve the usage and perform all kind of action like apply credit, suspend service...</description>
         <externalId>false</externalId>

@@ -250,6 +250,38 @@ Dedicated to the eBroadcast application.</description>
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <fields>
+        <fullName>Source__c</fullName>
+        <description>Indicates if the Filter applies to Elastic or Salesforce Only or to both</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if the Filter applies to Elastic or Salesforce Only or to both</inlineHelpText>
+        <label>Source</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Elastic</fullName>
+                    <default>true</default>
+                    <label>Elastic</label>
+                </value>
+                <value>
+                    <fullName>Salesforce</fullName>
+                    <default>false</default>
+                    <label>Salesforce</label>
+                </value>
+                <value>
+                    <fullName>Elastic/Salesforce</fullName>
+                    <default>false</default>
+                    <label>Elastic/Salesforce</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
     <label>EBC Application Filter</label>
     <listViews>
         <fullName>Agency_Filters</fullName>

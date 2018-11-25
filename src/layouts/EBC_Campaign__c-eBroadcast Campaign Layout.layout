@@ -411,6 +411,25 @@
         <relatedList>RelatedProcessHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Process_Status__c</fields>
+        <fields>Task_Status__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>AWS_Task__c.Task_Campaign__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Email__c</fields>
+        <fields>GDP_Products_Account_View__c</fields>
+        <fields>ID_Card__c</fields>
+        <fields>SFDC_Id__c</fields>
+        <relatedList>EBC_Campaign_Emails__c.EBC_Campaign__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>Activity_Date_Time__c</fields>
         <fields>Activity_Type__c</fields>
