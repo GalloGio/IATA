@@ -3,12 +3,12 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 	global Map<Id,Case> caseByAccounts {get;set;}
 	global Set<Id> contactIds {get;set;}
 	global Map<Id,List<Id>> mapContactToCase {get;set;}
-	global Map<Id,Id> mapContactToTemplate {get;set;}
+	global Map<Id,EmailTemplate> mapContactToTemplate {get;set;}
 
 	public AMS_MajorDefaultCommunication(List<Agency_Applied_Change_code__c> changeCodes) {
 		this.contactIds = new Set<Id>();
 		this.mapContactToCase = new Map<Id,List<Id>>();
-		this.mapContactToTemplate = new Map<Id,Id>();
+		this.mapContactToTemplate = new Map<Id,EmailTemplate>();
 
 		Set<Id> caseIds = new Set<Id>();
 		for(Agency_Applied_Change_code__c ccode : changeCodes) {
@@ -89,7 +89,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 		}
 
 		Map<Id,Set<Contact>> executiveContacts = getExecutiveContacts(airlinesMap.keySet());
-		Map<String,Id> templates = getEmailTemplatesId();
+		Map<String,EmailTemplate> templates = getEmailTemplatesId();
 		List<Messaging.SingleEmailMessage> notifications = new List<Messaging.SingleEmailMessage>();
 
 		System.debug('airlinesByCountry: ' + airlinesByCountry);
@@ -115,7 +115,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 				for(Id agencyId : accountIdsByCountry.get(country)) {
 					Case cse = caseByAccounts.get(agencyId);
 					for(Contact con : contacts) {							
-						Id templateId = templates.get(con.Preferred_Language__c);
+						EmailTemplate templateId = templates.get(con.Preferred_Language__c);
 						List<Id> caseIds = mapContactToCase.get(con.Id);
 						if(caseIds == null) {
 							caseIds = new List<Id>();
@@ -134,15 +134,15 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 		}
 	}
 
-	private static Map<String,Id> getEmailTemplatesId() {
-		Map<String,Id> res = new Map<String,Id>();
+	private static Map<String,EmailTemplate> getEmailTemplatesId() {
+		Map<String,EmailTemplate> res = new Map<String,EmailTemplate>();
 		List<EmailTemplate> templates = [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName LIKE 'Major_Default_Communication%'];
 		for(EmailTemplate template : templates) {
 			List<String> nameSplit = template.DeveloperName.split('_');
 			String lang = nameSplit[nameSplit.size() - 1];
-			res.put(lang, template.Id);
+			res.put(lang, template);
 			if(lang == 'English') {
-				res.put('Default', template.Id);
+				res.put('Default', template);
 			}
 		}
 		return res;
