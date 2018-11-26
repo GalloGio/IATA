@@ -9554,7 +9554,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <label>SIS 3-Digit Code</label>
         <length>15</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -9566,7 +9566,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <label>SIS 2-Letter Code</label>
         <length>2</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
