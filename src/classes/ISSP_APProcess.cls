@@ -43,8 +43,7 @@ global without sharing class ISSP_APProcess {
     public string dupLoB { get; set; } //INC300017
 
     public string strParentMembershipStatus {get; set;}
-    public string strParentLegalName {get; set;}
-    public string strParentTradeName {get; set;}
+    public string strParentAOCName {get; set;}
     public string strParentDesignator {get; set;}
     public string strParentIATACode {get; set;}
     public string strParentBillingStreet {get; set;}
@@ -1308,7 +1307,7 @@ global without sharing class ISSP_APProcess {
 
     public void retrieveHQAccountDetails (Id hqId){
         hqAccount = [
-            SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode,
+            SELECT Id, Name, Name_on_AOC__c, BillingStreet, BillingCity, BillingState, BillingPostalCode,
             BillingCountry, Airline_designator__c, TradeName__c, Membership_status__c, IATACode__c, Top_Parent__c, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode,
             Top_Parent__r.BillingCountry, Top_Parent__r.Membership_status__c, Top_Parent__r.Name, Top_Parent__r.Airline_designator__c, Top_Parent__r.IATACode__c, Top_Parent__r.TradeName__c,
             Sector__c, Category__c, Due_Diligence_Status__c, Due_Diligence_Remarks__c, Level_of_risk__c, Airline_Prefix__c, ICCS_Membership_Status__c,
@@ -1322,8 +1321,7 @@ global without sharing class ISSP_APProcess {
         //Only want to display AL HQ details on the joining form, so need to get them if the user applying is from a Branch office
         strParentMembershipStatus = hqAccount.Membership_status__c;
 
-        strParentLegalName = hqAccount.Name;
-        strParentTradeName = hqAccount.TradeName__c;
+        strParentAOCName = hqAccount.Name_on_AOC__c;
         strParentDesignator = hqAccount.Airline_designator__c;
         strParentIATACode = hqAccount.IATACode__c;
         strParentBillingStreet = hqAccount.BillingStreet;

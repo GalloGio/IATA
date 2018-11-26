@@ -151,8 +151,7 @@
         <p><a href="#nav_six">6.Reporting</a></p>
         <p><a href="#nav_seven">7.CASSLink</a></p>
         <p><a href="#nav_eight">8.Commission</a></p>
-        <p><a href="#nav_nine">9.Cargo services</a></p>
-        <apex:outputLink value="#nav_ten" rendered="{!OR(apcountryisocode='BR',apcountryisocode='AR',apcountryisocode='MX',apcountryisocode='PH',apcountryisocode='CO', apcountryisocode='IN')}">10.Additional Info</apex:outputLink>
+        <apex:outputLink value="#nav_nine" rendered="{!OR(apcountryisocode='BR',apcountryisocode='AR',apcountryisocode='MX',apcountryisocode='PH',apcountryisocode='CO', apcountryisocode='IN')}">9.Additional Info</apex:outputLink>
         <div style="border-top: 1px #fff dotted; padding-top: 5px; padding-bottom: 5px;">
             <a data-toggle="modal" data-target="#ModalCountryReqs" href="#">Country Requirements</a>
         </div>
@@ -289,8 +288,7 @@
                         </apex:outputpanel>
                     </apex:facet>           
                     <apex:outputText label="Operation specified" value="{!newCase.Reason1__c}"/>
-                    <apex:outputText label="Legal Name of  the Airline" value="{!strParentLegalName}"/>
-                    <apex:outputText label="Trading Name of the Airline" value="{!strParentTradeName}"/>
+                    <apex:outputText label="Name of the airline on AOC" value="{!strParentAOCName}"/>
                     <apex:outputText label="Airline Designator Code (2 character code)" value="{!strParentDesignator}"/>
                     <apex:outputText label="Airline Prefix Code (3 digit code)" value="{!strParentIATACode}"/>
                     <apex:outputText label="IATA Member Airline?" value="{!strParentMembershipStatus}"/>
@@ -299,7 +297,6 @@
                         <apex:param value="{!strParentBillingCity},&nbsp;{!strParentBillingCode}"/>
                         <apex:param value="{!strParentBillingState},&nbsp;{!strParentBillingCountry}"/>
                     </apex:outputText>
-                    <apex:outputText >&nbsp;</apex:outputText>
                     <apex:pageBlockSectionItem helpText=" If YES, please provide your Airline's local name.">
                         <apex:outputLabel value="Is your Airline registered in {!apcountry} under a different name?"/>
                         <apex:inputField value="{!newForm.Airline_Registered_under_other_name__c}" label=""/>
@@ -440,27 +437,12 @@
                     </apex:pageBlockSectionItem>                
                     <apex:inputField label="Fax number" value="{!newForm.CASSLink_Contact_Fax__c}" />
                     <apex:outputText ><!--empty: move following field to next row --></apex:outputText>                       
-                    <div class="aplabel">                
-                        Email address for correction notifications (up to 4 allowed)
-                    </div>            
-                    <apex:outputText ><!--empty: move following field to next row --></apex:outputText>                     
-                    <apex:inputField label="Email 1" value="{!newForm.CASS_Corrections_Email_1__c}"/> 
-                    <apex:inputField label="Email 2" value="{!newForm.CASS_Corrections_Email_2__c}"/>               
-                    <apex:inputField label="Email 3" value="{!newForm.CASS_Corrections_Email_3__c}"/>
-                    <apex:inputField label="Email 4" value="{!newForm.CASS_Corrections_Email_4__c}"/>
-                    
                     <div class="aplabel">             
                         Email address for Defaults (up to 2 allowed)
                     </div>
                     <apex:outputText ><!--empty: move following field to next row --></apex:outputText>                     
                     <apex:inputField label="Email 1" value="{!newForm.CASS_Defaults_Email_1__c}"/>
                     <apex:inputField label="Email 2" value="{!newForm.CASS_Defaults_Email_2__c}"/>
-                    <div class="aplabel">            
-                        Email address for ad-hoc bulletins (up to 2 allowed)
-                    </div>
-                    <apex:outputText ><!--empty: move following field to next row --></apex:outputText>                     
-                    <apex:inputField label="Email 1" value="{!newForm.CASS_Ad_Hoc_Bulletins_Email_1__c}"/>
-                    <apex:inputField label="Email 2" value="{!newForm.CASS_Ad_Hoc_Bulletins_Email_2__c}"/>
                 </apex:pageBlockSection>    
                 <span id="nav_four"></span>
                 <apex:pageBlockSection title="4. GSSA Information" columns="2" >
@@ -594,16 +576,16 @@
                     </tr>
                     
                     <apex:outputText ><!--empty: move following field to next row --></apex:outputText>                     
-                    <apex:inputField label="CASSlink Username 1" value="{!newForm.CASSLink_Username_1__c}"/>
+                    <apex:inputField label="CASSlink User Email 1" value="{!newForm.CASSLink_Username_1__c}"/>
                     <apex:inputField label="System functions required for this User:" value="{!newForm.CASSLink_User_1_System_Functions__c}"/>
-                    <apex:inputField label="CASSlink Username 2" value="{!newForm.CASSLink_Username_2__c}"/>
+                    <apex:inputField label="CASSlink User Email 2" value="{!newForm.CASSLink_Username_2__c}"/>
                     <apex:inputField label="System functions required for this User:" value="{!newForm.CASSLink_User_2_System_Functions__c}"/>
-                    <apex:inputField label="CASSlink Username 3" value="{!newForm.CASSLink_Username_3__c}"/>
+                    <apex:inputField label="CASSlink User Email 3" value="{!newForm.CASSLink_Username_3__c}"/>
                     <apex:inputField label="System functions required for this User:" value="{!newForm.CASSLink_User_3_System_Functions__c}"/>
               </apex:pageBlockSection>
               <apex:pageBlockSection columns="1">  
                     <tr class="aplabel">              
-                        <td colspan="2">If more than 3 existing users need to be created, please provide details and the corresponding functions required.</td>
+                        <td colspan="2">If more than 3 existing users need to be created, please provide user emails and the corresponding functions required.</td>
                     </tr>            
                     <apex:inputField label="Extra existing users" value="{!newForm.CASSLink_Extra_Existing_Users__c}" style="width:50%"/>
               </apex:pageBlockSection>
@@ -689,33 +671,14 @@
                 </apex:pageBlockSection>    
                 
                 <span id="nav_nine"></span>   
-                <apex:pageBlockSection title="9. Other Cargo services" columns="2">
+                <apex:pageBlockSection title="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Other Cargo services"/>
+                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas jur?dicas)', 'Local VAT - RFC #')}"/>
                         </apex:outputpanel>
                     </apex:facet>
-                <tr class="aplabel">              
-                        <td colspan="4">CargoLink listing details (HQ only unless Premium)</td>
-                </tr>
-                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>   
-                <apex:pageBlockSectionItem >
-                    <apex:outputLabel escape="false" value="<b>AWB Stock Management</b><br/>Are you interested in participating in the CASSLink stock Management system for distribution of AWB Serial Numbers?"/>
-                    <apex:inputField value="{!newForm.Participate_in_AWB_Stock_Management__c}" label=""/>
-                </apex:pageBlockSectionItem>  
-                <apex:pageBlockSectionItem >
-                    <apex:outputLabel escape="false" value="<b>Statistics</b></br>Airlines/GSSAs can order specific cargo Business Intelligence statiistics from <a href=http://www.iata.org/cargois target=_blank>www.iata.org/cargois</a>" />
-                    <apex:inputField value="{!newForm.Receive_Cargo_BI_statistics__c}" label=""/>
-                </apex:pageBlockSectionItem>  
-                </apex:pageBlockSection>
-                
-                <span id="nav_ten"></span>   
                 <apex:pageBlockSection title="10. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" columns="1" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
-                    <apex:facet name="header">
-                        <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="10. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas jurídicas)', 'Local VAT - RFC #')}"/>
-                        </apex:outputpanel>
-                    </apex:facet>
                     <apex:pageBlockSectionItem helpText="{!CASE(apcountryisocode, 'BR', 'Format : XX.XXX.XXX/XXXX-XX. Must be that of the Bank Beneficiary Account Holder.', 'As per local law the RFC number (Local VAT no.) must correspond with the Local Fiscal Address of the Airline Participant and should be provided to IATA')}">
                         <apex:outputLabel styleClass="{!IF(localVATMandatory,'ap-required','')}" value="{!CASE(apcountryisocode, 'BR','* CNPJ # to be entered in IATA Systems', '* RFC # to be entered in IATA Systems')}"/>
                         <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label=""/>
@@ -748,7 +711,7 @@
                 <apex:pageBlockSection title="10. Additional Information - Clave Bancaria Unificada (CBU)" columns="1" rendered="{!apcountryisocode='AR'}">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="10. Additional Information - Clave Bancaria Unificada (CBU)"/>
+                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - Clave Bancaria Unificada (CBU)"/>
                         </apex:outputpanel>
                     </apex:facet>
                     <apex:pageBlockSectionItem helpText="The CBU, usually referred to as the Bank Code, consists of 22 digits and is mandatory for Airline settlements.">
@@ -795,10 +758,10 @@
                 </apex:pageBlockSection>   
                 
                 <!-- COLOMBIA - START -->
-                <apex:pageBlockSection title="10. Additional Information - ICA Taxes" columns="2" rendered="{!apcountryisocode='CO'}">
+                <apex:pageBlockSection title="9. Additional Information - ICA Taxes" columns="2" rendered="{!apcountryisocode='CO'}">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="10. Additional Information - ICA Taxes"/>
+                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - ICA Taxes"/>
                         </apex:outputpanel>
                     </apex:facet>
                     <tr class="aplabel">

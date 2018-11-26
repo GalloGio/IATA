@@ -298,8 +298,8 @@
                             2. Airline information
                         </apex:outputpanel>
                     </apex:facet>
-                    <apex:outputText label="Legal Name of the Airline" value="{!strParentLegalName}"/>
-                    <apex:outputText label="Airline trade name" value="{!strParentTradeName}"/>
+                    <apex:outputText label="Name of the airline on AOC" value="{!strParentAOCName}"/>
+                    <apex:outputText >&nbsp;</apex:outputText>
                     
                     <apex:outputText label="Airline Designator Code (2 character code)" value="{!strParentDesignator}"/>
                     <apex:outputText label="Airline Prefix Code (3 digit code)" value="{!strParentIATACode}"/>
