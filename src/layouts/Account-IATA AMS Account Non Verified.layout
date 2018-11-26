@@ -84,6 +84,10 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_IsNewGenAgency__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSP_non_air__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

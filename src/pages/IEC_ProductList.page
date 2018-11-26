@@ -360,9 +360,14 @@
 													<h2 class="item-name">
 														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">{!prod.ProductName}</a>
 													</h2>
-													<h3 class="item-description-title">{!prod.Media}</h3>
-                                                    <p class="item-description" style="{! IF(prod.ProductInfoId == null, '', 'display:none')}">
-														Edition: {!prod.Edition} <br />
+													<h3 class="item-description-title" style="{! IF(isBlank(prod.Media), 'display:none', 'display:inline')}">
+														{!prod.Media}
+													</h3>
+													<br/>
+                                                    <p class="item-edition" style="{! IF(isBlank(prod.Edition), 'display:none', 'display:inline')}">
+														Edition: {!prod.Edition}<br />
+													</p>
+													<p class="item-language" style="{! IF(isBlank(prod.Language), 'display:none', 'display:inline')}">												
 														Language: {!prod.Language}
 													</p>
 													<p class="item-description">{!prod.ProductShortDesc}</p>
