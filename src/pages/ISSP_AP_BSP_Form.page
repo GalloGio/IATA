@@ -371,7 +371,7 @@
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel for="bspflights" value="Please indicate the flights the airline operates in BSP {!apcountry}" />
+                        <apex:outputLabel for="bspflights" value="Please indicate the flights the airline operates in BSP {!apcountry}" styleclass="ap-required"/>
                          <apex:inputField id="bspflights" value="{!newForm.Flights_operated_in_the_BSP_country__c}" />
                     </apex:pageBlockSectionItem>
                     
@@ -507,7 +507,7 @@
                 </apex:pageBlockSection>
                 
                 <span id="nav_four"></span>
-                <apex:pageBlockSection title="4. Product Subscriptions" columns="2">
+                <apex:pageBlockSection id="section-product-subscriptions" title="4. Product Subscriptions" columns="2">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             4. Product Subscriptions
@@ -516,14 +516,26 @@
                     
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Does your Airline wish to receive HOT files?" style="color:#a31717; font-weight: bold !important;"/>
-                        <apex:inputField value="{!newForm.Receive_HOT_files__c}" />
+                        <apex:inputField value="{!newForm.Receive_HOT_files__c}">
+                            <apex:actionSupport event="onchange" rerender="section-product-subscriptions"/>
+                        </apex:inputField>
                     </apex:pageBlockSectionItem>            
-                    <apex:inputField value="{!newForm.Hot_files_delivery_format__c}" label="If YES, please specify delivery format"/>
+                    <apex:pageBlockSectionItem>
+                        <apex:actionRegion>
+                            <apex:outputLabel value="If YES, please specify delivery format"
+                                styleclass="{!IF(OR(newForm.Receive_HOT_files__c=='YES - Daily',newForm.Receive_HOT_files__c=='YES - Per Period') ,'ap-required','')}"/>
+                        </apex:actionRegion >
+                        <apex:inputField value="{!newForm.Hot_files_delivery_format__c}">
+                            <apex:actionSupport event="onchange" rerender="section-product-subscriptions"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem helpText="Must be 4 chars in length">
-                        <apex:outputLabel value="If iiNET please provide your account number"/>
-                        <apex:inputField value="{!newForm.IINET_account_number__c}"/>
-                    </apex:pageBlockSectionItem>  
+                        <apex:actionRegion>
+                            <apex:outputLabel value="If iiNET please provide your account number" styleclass="{!IF(newForm.Hot_files_delivery_format__c=='iiNET','ap-required','')}" />
+                        </apex:actionRegion >
+                        <apex:inputField value="{!newForm.IINET_account_number__c}" html-pattern="[A-Z]{2}[0-9]{2}" html-placeholder="Example: AA11"/>
+                    </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* What BSPlink access level does your Airline require?" style="color:#a31717; font-weight: bold !important;"/>

@@ -2485,6 +2485,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <default>false</default>
                     <label>E-mail and Download</label>
                 </value>
+                <value>
+                    <fullName>Not required</fullName>
+                    <default>false</default>
+                    <label>Not required</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -2954,6 +2959,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <fullName>YES - Remittance Period HOT</fullName>
                     <default>false</default>
                     <label>YES - Remittance Period HOT</label>
+                </value>
+                <value>
+                    <fullName>Not required</fullName>
+                    <default>false</default>
+                    <label>Not required</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -6453,6 +6463,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 <fullName>E-mail and Download</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Not required</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
@@ -6591,6 +6605,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>YES - Remittance Period HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not required</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

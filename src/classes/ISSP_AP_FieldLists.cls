@@ -38,6 +38,7 @@ public class ISSP_AP_FieldLists {
             'Participate_in_any_Remit_scheme__c' 		=> '',
             'Accept_payment_Cards_for_BSP_ticket__c' 	=> '',
             'Join_BSP_ECCB__c' 							=> '',
+            'Flights_operated_in_the_BSP_country__c'	=> ''
             'BSP_Local_address__c' 						=> '',
             'BSP_Local_Zip_Code__c'						=> '',
             'BSP_Local_City__c' 						=> ''
@@ -153,9 +154,9 @@ public class ISSP_AP_FieldLists {
             'Billing_File_Emrgcy_Contact_Job_Title__c' 		=> '',
             'Billing_File_Emrgcy_Contact_Email__c' 			=> '',
             'Receive_HOT_files__c' 							=> '',
-            'PDF_Report_Delivery_Format__c' 				=> '',
             'Receive_XLS_Reports__c' 						=> '',
-            'Pay_Commission_to_agents__c' 					=> ''
+            'Pay_Commission_to_agents__c' 					=> '',
+            'Flights_operated_in_the_BSP_country__c'		=> ''
             };
 
 

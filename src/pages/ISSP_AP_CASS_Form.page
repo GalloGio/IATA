@@ -327,7 +327,7 @@
                         <apex:inputField value="{!newForm.Online_carrier_in_the_BSP_country__c}" label=""/>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="* Please indicate the flights the airline operates in CASS {!apcountry}"/>
+                        <apex:outputLabel value="Please indicate the flights the airline operates in CASS {!apcountry}" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.Flights_operated_in_the_BSP_country__c}" label=""/>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem rendered="{!apcountryisocode='CY'}">

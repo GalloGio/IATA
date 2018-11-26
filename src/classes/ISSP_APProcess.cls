@@ -343,7 +343,14 @@ global without sharing class ISSP_APProcess {
                             ISSP_AP_fieldLists.bspMandatoryFields.put(tmp, extraMandatoryFields.get(tmp));
                         }
                     }
-
+                    
+                    
+                    if (newForm.Receive_HOT_files__c=='YES - Daily' || newForm.Receive_HOT_files__c=='YES - Per Period') {
+                        ISSP_AP_fieldLists.bspMandatoryFields.put('Hot_files_delivery_format__c', '');
+                    }
+                    if (newForm.Hot_files_delivery_format__c=='iiNET') {
+                        ISSP_AP_fieldLists.bspMandatoryFields.put('IINET_account_number__c', '');
+                    }
                     for (String fldLabel : ISSP_AP_fieldLists.bspMandatoryFields.keySet())
                     {
                         if (newForm.get(fldLabel)==null) {
