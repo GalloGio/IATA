@@ -855,7 +855,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
                currentSiteUrl = Page.pkb_Home.getUrl();
         }
       }
-      return currentSiteUrl;
+      return currentSiteUrl +'/';
     }
   }
 
