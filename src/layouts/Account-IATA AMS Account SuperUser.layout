@@ -154,6 +154,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSP_non_air__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -848,6 +852,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Year__c</fields>
+        <fields>AmountLastYearSales__c</fields>
+        <fields>Amount_Currency__c</fields>
+        <fields>Number_Of_Vouchers__c</fields>
         <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
