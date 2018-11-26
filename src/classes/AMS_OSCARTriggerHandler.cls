@@ -442,6 +442,18 @@ public class AMS_OSCARTriggerHandler {
 
             processFieldsTracking(oldOSCAR, updatedOscar);
 
+            //ACAMBAS - NEWGEN-4445 - Start           
+            //ID chinaRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('ANG Agency Changes China').getRecordTypeId();
+
+            //if(updatedOscar.recordTypeID == chinaRT) {
+            if(updatedOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
+                //If Perform Sanity Check passed
+                if(oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed') {
+                    ChinaConversionsHelper.convertAccountsHierarchy(updatedOSCAR);
+                }
+            }
+            //ACAMBAS - NEWGEN-4445 - End
+
             //check for each OSCAR which steps were changed
             for (String step : stepsOSCAR) {
 
@@ -3078,7 +3090,7 @@ public class AMS_OSCARTriggerHandler {
         if (oldOSCAR.Send_FS_request__c == false && updatedOscar.Send_FS_request__c == true) {
             updatedOSCAR.Bank_Guarantee_requested__c = Date.today();
 
-            if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c) && updatedOSCAR.Process__c <> AMS_Utils.NGOPTINOUT && !updatedOSCAR.Is_NewGen_Pilot__c )
+            if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c) && updatedOSCAR.Process__c <> AMS_Utils.NGOPTINOUT)
                 updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 40;
             else
                 updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
@@ -3160,17 +3172,19 @@ public class AMS_OSCARTriggerHandler {
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE){
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE || updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION){
 
                 if (updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD && updatedOscar.STEP34__c != AMS_Utils.PASSED)
                      updatedOscar.addError('Approval can\'t be set if Request financial security step is not Passed.');
 
-                System.debug('Sending the email for the user to anounce approval of the oscar');
+                if(updatedOscar.Process__c != AMS_Utils.NGCHINACONVERSION) {
+                    System.debug('Sending the email for the user to anounce approval of the oscar');
 
-                //using an already existing method to send email aler to user.
-                AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
+                    //using an already existing method to send email aler to user.
+                    AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
+                }
 
-                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
+                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION)
                     createAgencyAuthorizations(updatedOscar);
                 else if(updatedOscar.Process__c == AMS_Utils.NEWAE)
                     copyAgencyAuthorizationsFromParent(updatedOscar);
@@ -3373,6 +3387,7 @@ public class AMS_OSCARTriggerHandler {
 
         ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
         ID certRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId(); //FM AMSU-113
+        ID chinaRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('ANG Agency Changes China').getRecordTypeId(); //ACAMBAS - NEWGEN-4445
         
         if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
         	//TD2080607: partially refactored below code
@@ -3833,29 +3848,48 @@ public class AMS_OSCARTriggerHandler {
         //ACAMBAS - NEWGEN-4445 - Start
         else if (updatedOscar.recordTypeID == chinaRT) {
 
-            //If Perform Sanity Check changed to Passed
+            system.debug('---> CHIIIIIINA!!!');
+
+            Case c = [SELECT Reason1__c from Case where Id = :updatedOscar.Oscar_Communication_Case_Id__c];
+
+            String caseReason = c.Reason1__c;
+            String changeCode;
+
+
+            //If Perform Sanity Check passed
             if(oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed') {
 
-                Case c = [SELECT Reason1__c from Case where Id = :updatedOscar.Oscar_Communication_Case_Id__c];
-
-                String caseReason = c.Reason1__c;
-                String changeCode;
-
-                if(caseReason == 'Conversion to GoLite') {
+                if(caseReason == AMS_Utils.CONVERTTONEWGENPILOT) {
                     changeCode = 'PLT';
                 }
-                else if(caseReason == 'Conversion to Domestic with Cash') {
+                else if(caseReason == AMS_Utils.CONVERTTOLEGACY) {
                     changeCode = 'LGC';
                 }
-                else if(caseReason == 'Conversion to international') {
+                else if(caseReason == AMS_Utils.CONVERTTOINTERNATIONAL) {
                     changeCode = 'DOM';
                 }
                 else {
-                   changeCode = 'ERROR'; 
+                   updatedOscar.addError('Type of change unknown: ' + caseReason);
                 }
 
-                //ANG_OscarProcessHelper.EntityUpdater updater = 
                 ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);              
+            }
+
+            //If Approval Step passed  
+            else if(oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
+
+                system.debug('---> STEP2 PASSED');
+
+                if(caseReason == AMS_Utils.CONVERTTONEWGENPILOT) {
+                    changeCode = 'PLF';
+                }
+                else if(caseReason == AMS_Utils.CONVERTTOLEGACY) {
+                    changeCode = 'LGF';
+                }
+
+                system.debug('---> changeCode: ' + changeCode);
+
+                ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);  
             }
             
         }
