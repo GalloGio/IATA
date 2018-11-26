@@ -2550,7 +2550,7 @@ NOT( ISPICKVAL( Region__c , &quot;China &amp; North Asia&quot;) )
         <fullName>SARA_Security_must_be_linked_to_HO</fullName>
         <active>false</active>
         <description>check that the financial security is linked to the HO account of the agent (except for cross border guarantees and GDI).</description>
-        <errorConditionFormula>AND(NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HO&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HE&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;AO&quot;)) , ISNEW(),  not(ispickval(Security_Type__c , &quot;Cross Border Guarantee&quot;)),not(ispickval(Security_Type__c , &quot;GDI&quot;)))</errorConditionFormula>
+        <errorConditionFormula>AND(NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HO&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HE&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;GE&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;AO&quot;)) , ISNEW(),  not(ispickval(Security_Type__c , &quot;Cross Border Guarantee&quot;)),not(ispickval(Security_Type__c , &quot;GDI&quot;)))</errorConditionFormula>
         <errorDisplayField>Account__c</errorDisplayField>
         <errorMessage>The financial security must be linked to the HO/AO account of the agent, never to a branch. Please classify the security accordingly or contact your administrator if any doubts.</errorMessage>
     </validationRules>
