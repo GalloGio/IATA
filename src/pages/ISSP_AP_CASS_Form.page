@@ -674,11 +674,10 @@
                 <apex:pageBlockSection title="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas jur?dicas)', 'Local VAT - RFC #')}"/>
+                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas jurídicas)', 'Local VAT - RFC #')}"/>
                         </apex:outputpanel>
                     </apex:facet>
-                <apex:pageBlockSection title="10. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" columns="1" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
-                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="10. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas jurídicas)', 'Local VAT - RFC #')}"/>
+                
                     <apex:pageBlockSectionItem helpText="{!CASE(apcountryisocode, 'BR', 'Format : XX.XXX.XXX/XXXX-XX. Must be that of the Bank Beneficiary Account Holder.', 'As per local law the RFC number (Local VAT no.) must correspond with the Local Fiscal Address of the Airline Participant and should be provided to IATA')}">
                         <apex:outputLabel styleClass="{!IF(localVATMandatory,'ap-required','')}" value="{!CASE(apcountryisocode, 'BR','* CNPJ # to be entered in IATA Systems', '* RFC # to be entered in IATA Systems')}"/>
                         <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label=""/>
@@ -708,7 +707,7 @@
                 </apex:pageBlockSection>
                 
                 <!-- ARGENTINA - START -->
-                <apex:pageBlockSection title="10. Additional Information - Clave Bancaria Unificada (CBU)" columns="1" rendered="{!apcountryisocode='AR'}">
+                <apex:pageBlockSection title="9. Additional Information - Clave Bancaria Unificada (CBU)" columns="1" rendered="{!apcountryisocode='AR'}">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - Clave Bancaria Unificada (CBU)"/>
@@ -732,7 +731,7 @@
                 </apex:pageBlockSection>
                 
                 <!-- PHILIPPINES - START -->
-                <apex:pageBlockSection title="10. Additional Legal Requirements - CASS Philippines" columns="1" rendered="{!apcountryisocode='PH'}">
+                <apex:pageBlockSection title="9. Additional Legal Requirements - CASS Philippines" columns="1" rendered="{!apcountryisocode='PH'}">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="10. Additional Legal Requirements - CASS Philippines"/>
