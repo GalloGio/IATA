@@ -19,7 +19,7 @@ public with sharing class ANG_DGIStagingAreaCtrl {
         if(!toReturn.isEmpty())
             currentFS = toReturn.get(0);
 
-        if(stagingFs != null)
+        if(stagingFs != null && currentFS != null)
             this.stagingFs.Financial_Security__c = currentFS.Id;
 
         return currentFS;
@@ -56,10 +56,13 @@ public with sharing class ANG_DGIStagingAreaCtrl {
         this.stagingFs = (Opportunitylineitem)stdController.getRecord();
         fetchStagingFs();
 
-        currentFS = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
-
-        this.stagingFs.Financial_Security__c = currentFS.Id;
-        
+        List<Financial_Security__c> currentFSLst = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
+		
+        if(!currentFSLst.isEmpty()){ 
+        	currentFS=currentFSLst.get(0);
+			this.stagingFs.Financial_Security__c = currentFS.Id;
+        }
+                
         this.oscarObj = [Select Id, step50__c  from AMS_OSCAR__c where Id=:stagingFs.OSCAR_GDI__c];
     }
 
@@ -167,6 +170,9 @@ public with sharing class ANG_DGIStagingAreaCtrl {
             currentFS.Release_Reason__c = 'Security Update';
             update currentFS;
         }
+
+        newFSId = fs.Id;
+
 
     }
 }
