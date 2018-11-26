@@ -3,8 +3,6 @@ private class trgProcessISSCaseTest {
 
 	@testSetup static void setupInit() {
 		// create Sam case
-		RecordType IFAPcaseRecordType = ams_utils.getRecordType('Case', 'IATA_Financial_Review');
-
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
 		    Name = 'Canada',
 		    ISO_Code__c = 'CA',
@@ -42,7 +40,7 @@ private class trgProcessISSCaseTest {
 		    Subject = 'ifapCase',
 		    Description = 'Test ifapCase case',
 		    Status = 'Open',
-		    RecordTypeId = IFAPcaseRecordType.Id,
+		    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'),
 		    Reason1__c = 'New HO',
 		    IFAP_Financial_Year__c = String.valueOf(Date.today().year()));
 		insert ifapCase;
@@ -52,7 +50,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void insertFirstBRuleSaamCase() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -65,7 +62,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'New HO');
 			insert saamCase;
 		} catch (Exception e) {
@@ -77,7 +74,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void insertSecondBRuleSaamCase() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -90,7 +86,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'New HO');
 			insert saamCase;
 		} catch (Exception e) {
@@ -102,7 +98,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void insertThirdBRuleSaamCase() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 
 		test.StartTest();
@@ -116,7 +111,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'New HO');
 			insert saamCase;
 		} catch (Exception e) {
@@ -128,7 +123,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void assignNonComplianceDatesErr() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -141,7 +135,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    New_IFAP_Deadline_date__c = system.today(),
@@ -156,7 +150,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void assignNonComplianceDatesDeadlineErr() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -171,7 +164,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -184,7 +177,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void isDomestic() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -197,7 +189,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -210,7 +202,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void isCargoCASSnoDeadline() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		Account acc = [Select id, Type, IATACode__c from Account where IATACode__c = '4242424'];
 		test.StartTest();
@@ -226,7 +217,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -239,7 +230,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void isCargoCASSDeadline() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		Account acc = [Select id, Type, IATACode__c from Account where IATACode__c = '4242424'];
 		test.StartTest();
@@ -255,7 +245,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process',
@@ -270,7 +260,6 @@ private class trgProcessISSCaseTest {
 
 
 	@isTest static void secondFSnonCompliance() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -285,7 +274,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -299,7 +288,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void secondFSnonComplianceIsPassenger() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -314,7 +302,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -327,7 +315,6 @@ private class trgProcessISSCaseTest {
 		test.StopTest();
 	}
 	@isTest static void secondFSnonComplianceisCargoCASSnoDeadline() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		Account acc = [Select id, Type, IATACode__c from Account where IATACode__c = '4242424'];
 		test.StartTest();
@@ -345,7 +332,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -358,7 +345,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void secondFSnonComplianceisCargoCASSDeadline() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		Account acc = [Select id, Type, IATACode__c from Account where IATACode__c = '4242424'];
 		test.StartTest();
@@ -376,7 +362,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process',
@@ -390,7 +376,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void thirdFSnonCompliance() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -406,7 +391,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -420,7 +405,6 @@ private class trgProcessISSCaseTest {
 	}	
 
 	@isTest static void firstFAnonCompliance() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -433,7 +417,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -447,7 +431,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void firstFAnonComplianceDomestic() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -460,7 +443,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -474,7 +457,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void firstFAnonComplianceisCargoCASSnoDeadline() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		Account acc = [Select id, Type, IATACode__c from Account where IATACode__c = '4242424'];
 		test.StartTest();
@@ -490,7 +472,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -503,7 +485,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void firstFAnonComplianceisCargoCASSDeadline() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		Account acc = [Select id, Type, IATACode__c from Account where IATACode__c = '4242424'];
 		test.StartTest();
@@ -519,7 +500,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process',
@@ -533,7 +514,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void secondFAnonCompliance() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -548,7 +528,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -562,7 +542,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void secondFAnonComplianceDomestic() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -577,7 +556,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -592,7 +571,6 @@ private class trgProcessISSCaseTest {
 
 
 	@isTest static void secondFAnonComplianceCargoCASS() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		Account acc = [Select id, Type, IATACode__c from Account where IATACode__c = '4242424'];
 		test.StartTest();
@@ -610,7 +588,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -624,7 +602,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void secondFAnonComplianceCargoCASSDeadline() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		Account acc = [Select id, Type, IATACode__c from Account where IATACode__c = '4242424'];
 		test.StartTest();
@@ -642,7 +619,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process',
@@ -657,7 +634,6 @@ private class trgProcessISSCaseTest {
 	}
 	
 	@isTest static void thirdFAnonComplianceDomestic() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -674,7 +650,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -687,7 +663,6 @@ private class trgProcessISSCaseTest {
 	}
 
 	@isTest static void fourthFAnonComplianceDomestic() {
-		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
@@ -705,7 +680,7 @@ private class trgProcessISSCaseTest {
 			    Description = 'Test SAAM case',
 			    Status = 'Open',
 			    ParentId = parentCase.id,
-			    RecordTypeId = SAAMcaseRecordType.Id,
+			    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
 			    Reason1__c = 'FA/ FS Non-Compliance',
 			    Origin = 'Internal Case',
 			    CaseArea__c = 'Accreditation Process');
@@ -716,8 +691,5 @@ private class trgProcessISSCaseTest {
 		}
 		test.StopTest();
 	}
-
-
-
 
 }

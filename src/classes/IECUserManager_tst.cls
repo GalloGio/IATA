@@ -54,6 +54,8 @@ private class IECUserManager_tst {
       Id recordTypeId;
       Id zid = IECUserManager.getContactId();
 
+	  currentContact.ownerid = currentUser.id;
+	  update currentContact;
 
       System.runAs(currentUser) {
         recordTypeId = IECUserManager.getAccountRecordTypeByName(IECConstants.Account_RecordType_Airline);
@@ -113,32 +115,6 @@ private class IECUserManager_tst {
 
         IECUserManager.notFirstLogin(pr, 'invalid@xpto.com', currentContact.Id);
 
-        /*
-        IATA_ISO_Country__c country2 = [SELECT Id, Name, ISO_Code__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'CA' LIMIT 1];        
-
-        IECAddress__c address = new IECAddress__c(
-          Contact__c = currentContact.Id,
-          Address_Type__c = IECConstants.IECAddress_AddressType_Billing,
-          State__c = 'MR',
-          Street__c = 'Right Street',
-          City__c = 'Montreal',
-          Country__c = 'Canada',
-          ZipCode__c = '1111',
-          ISO_Country__c = country2.Id
-        );
-
-        insert address;
-
-        Location__c location = new Location__c(
-          Address__c = address.Id,
-          Contact__c = currentContact.Id,
-          Active__c = true,
-          Type__c = IECConstants.IECAddress_AddressType_Billing
-        );
-
-        insert location;
-        */
-        
         zbool = IECUserManager.isBillingAddressFilled(currentContact.Id);
 
         Test.stopTest();

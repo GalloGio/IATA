@@ -13,7 +13,7 @@ private class ang_AmendFS_test {
 			Remittance_frequency__c='M',
 			ANG_Accreditation_Model__c ='Cash',
 			IATA_ISO_Country__c = country.Id,
-        	RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+        	RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
         );
         insert a;        
         
@@ -31,7 +31,7 @@ private class ang_AmendFS_test {
         		Subject = 'first case', 
         		AccountId = a.Id, 
         		Status = 'Open', 
-                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
                 Financial_Security_Amount__c=10000,
                 Financial_Security_Currency__c='EUR'
         );
@@ -78,12 +78,14 @@ private class ang_AmendFS_test {
 	 	//new minimum fs on rhc == inserted financial security
 	 	system.assertEquals([select ANG_Minimum_Financial_Security__c from ANG_RHC_Information__c limit 1].get(0).ANG_Minimum_Financial_Security__c,[select id,ANG_Minimum_Financial_Security__c from Financial_Security__c limit 1].get(0).ANG_Minimum_Financial_Security__c);
 	 	ANG_AmendFS plugin = new ANG_AmendFS();
+		
+		Test.startTest();
 
 	 	Case c = new Case(
         		Subject = 'second case', 
         		AccountId = [select id from account limit 1].get(0).id,
         		Status = 'Open', 
-                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
                 Financial_Security_Amount__c=20000,
                 Financial_Security_Currency__c='EUR'
         );
@@ -101,7 +103,9 @@ private class ang_AmendFS_test {
     	Process.PluginRequest request = new Process.PluginRequest(inputParams);
     	Process.PluginResult result = plugin.invoke(request);
     	Process.PluginDescribeResult describeresult= plugin.describe();
-
+		
+		Test.stopTest();
+		
     	string newFSId= String.valueOF(result.outputParameters.get('CreatedFSId'));
     	
     	//new minimum fs on rhc from selected case

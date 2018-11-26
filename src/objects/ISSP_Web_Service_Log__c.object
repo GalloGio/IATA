@@ -384,6 +384,35 @@
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>SAP_syncCustomerWithSAP1</fullName>
+        <columns>NAME</columns>
+        <columns>Error_Code__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Input_Description__c</columns>
+        <columns>Account__c</columns>
+        <columns>Method__c</columns>
+        <columns>Response__c</columns>
+        <columns>Web_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>11/9/2018 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>Success__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Web_Service__c</field>
+            <operation>contains</operation>
+            <value>sap</value>
+        </filters>
+        <label>SAP syncCustomerWithSAP1</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>SIS</fullName>
         <columns>NAME</columns>
         <columns>OBJECT_ID</columns>
@@ -412,7 +441,7 @@
     </listViews>
     <listViews>
         <fullName>Today_s_logs</fullName>
-        <booleanFilter>1 AND 2</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <columns>NAME</columns>
         <columns>OBJECT_ID</columns>
         <columns>Contact__c</columns>
@@ -430,14 +459,19 @@
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CREATED_DATE</field>
+            <field>Error_Code__c</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>Exception sending request</value>
         </filters>
         <filters>
-            <field>Method__c</field>
-            <operation>notEqual</operation>
-            <value>checkIpCountry</value>
+            <field>Success__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>11/9/2018 12:00 AM</value>
         </filters>
         <label>Today&apos;s logs</label>
         <language>en_US</language>
@@ -464,7 +498,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>8/31/2018 12:00 AM</value>
+            <value>10/15/2018 12:00 AM</value>
         </filters>
         <filters>
             <field>Method__c</field>

@@ -6,7 +6,7 @@ public class AMS_OSCAR_SupportPanelTest {
         PageReference pageRef = Page.AMS_OSCAR_SupportPanel;
         Test.setCurrentPage(pageRef);
         
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc1 = new Account(RecordTypeId = agencyRT, Name='Test1 Account');
         insert acc1;
         
@@ -21,9 +21,7 @@ public class AMS_OSCAR_SupportPanelTest {
         oscar.STEP1__c = 'Passed';
         update oscar;
 
-        Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-        
-        Case c = new Case(OSCAR__c = oscar.Id, recordtypeid = caseRT.get('OSCAR_Communication'));
+        Case c = new Case(OSCAR__c = oscar.Id, recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
         insert c;
                 
         Complaint__c cmplt = new Complaint__c(Complaint_Opened_Date__c=System.today(), Related_Case_Number__c=c.Id);
@@ -44,28 +42,8 @@ public class AMS_OSCAR_SupportPanelTest {
  
     }
     
-    /*static testMethod void testRightPanelComplaints(){
-        
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c();
-        insert oscar;
-        
-        oscar = [SELECT Id FROM AMS_OSCAR__c limit 1];
-        
-        Case c = new Case(OSCAR__c = oscar.Id);
-        insert c;*/
-        /*setTestData();
-        AMS_OSCAR__c oscar = [SELECT Id FROM AMS_OSCAR__c limit 1];
-        
-        Test.startTest();
-        AMS_OSCAR_ComplaintsController controller = new AMS_OSCAR_ComplaintsController();
-        controller.intVal = new AMS_IntegerCarrier();
-        controller.oscarId = oscar.Id;
-        controller.getComplaints();
-        Test.stopTest();
-        
-    }*/
-    
-    static testMethod void testRightPanelHistory(){
+    @isTest
+    static void testRightPanelHistory(){
 
         setTestData();
         
@@ -77,7 +55,8 @@ public class AMS_OSCAR_SupportPanelTest {
         
     }
     
-    static testMethod void AMS_OSCAR_RelatedCasesController(){
+    @isTest
+    static void AMS_OSCAR_RelatedCasesController(){
         
         setTestData();
         
@@ -90,7 +69,8 @@ public class AMS_OSCAR_SupportPanelTest {
         
     }
 
-    static testMethod void AMS_OSCAR_CommunicationController(){
+    @isTest
+    static void AMS_OSCAR_CommunicationController(){
         setTestData();
 
         AMS_OSCAR__c oscar = [select id from AMS_OSCAR__c];

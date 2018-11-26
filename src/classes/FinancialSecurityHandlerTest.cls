@@ -6,7 +6,7 @@ private class FinancialSecurityHandlerTest {
         insert country;
         
         // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id);
         insert a;        
         
@@ -16,7 +16,7 @@ private class FinancialSecurityHandlerTest {
         
         // create a reception case
         Case c = new Case(Subject = 'rception case', AccountId = a.Id, Status = 'Open', 
-                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE') );
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE') );
         insert c;
                 
         // Create a new Financial Security

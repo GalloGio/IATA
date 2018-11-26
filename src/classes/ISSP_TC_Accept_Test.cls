@@ -2,7 +2,7 @@
 private class ISSP_TC_Accept_Test {
 
 	static testMethod void myUnitTest_1() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -27,11 +27,12 @@ private class ISSP_TC_Accept_Test {
 		
     	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
     	insert issc;
+        //Instantiated outside of the RunAs just to be able to access to a field that a newUser don't have access
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
     	system.runAs(newUser){
             system.setPassword(newUser.id, 'testpassword1');
-
-        	ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+        	
         	cttr.accept = false;
         	cttr.redirectChangePassword();
         	cttr.redirectTC_Accept();
@@ -50,7 +51,7 @@ private class ISSP_TC_Accept_Test {
     }
     
     static testMethod void myUnitTest_2() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -89,9 +90,10 @@ private class ISSP_TC_Accept_Test {
 		
     	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
     	insert issc;
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
     	system.runAs(newUser){
-        	ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+        	
         	cttr.accept = true;
         	cttr.redirectChangePassword();
         	cttr.redirectTC_Accept();
@@ -103,7 +105,7 @@ private class ISSP_TC_Accept_Test {
     }
     
     static testMethod void myUnitTest_3() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -135,15 +137,16 @@ private class ISSP_TC_Accept_Test {
     	newSurvey.Survey_Link__c = 'http:\\test&iv=1234';
     	newSurvey.isActive__c = true;
     	insert newSurvey;
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
     	system.runAs(newUser){
-        	ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+        	
         	cttr.CheckLogoutorSurvey();
     	}
     }
     
     static testMethod void myUnitTest_4() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -179,9 +182,9 @@ private class ISSP_TC_Accept_Test {
     	newSurvey1.SurveyUserID__c = newUser.Id;
     	newSurvey1.SurveyURL__c = '1234';
     	insert newSurvey1;
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
-    	system.runAs(newUser){
-        	ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+    	system.runAs(newUser){	
         	cttr.CheckLogoutorSurvey();
     	}
     }

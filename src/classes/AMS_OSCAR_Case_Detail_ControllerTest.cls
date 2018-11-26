@@ -63,7 +63,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
         
 		Case c = [SELECT Id FROM Case WHERE Oscar__c IN (SELECT Id FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '') LIMIT 1];
 
-		Id aRTId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+		Id aRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
 			Name= 'Testland',
@@ -104,7 +104,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 			update oscar;
 
-			Id settlementRTId = Schema.AMS_Settlement_System__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BSP').getRecordTypeId();
+			Id settlementRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 
 			AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
 				Name = 'test settlement',
@@ -188,7 +188,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
         
         AMS_OSCAR__c oscar = [SELECT Id, AMS_Online_Accreditation__c FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '' LIMIT 1];
 
-        Id aRTId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+        Id aRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(
             Name= 'Testland',
@@ -222,7 +222,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
         update accredForm;      
 
-        Id settlementRTId = Schema.AMS_Settlement_System__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BSP').getRecordTypeId();
+        Id settlementRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 
         AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
             Name = 'test settlement',

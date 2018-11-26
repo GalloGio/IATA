@@ -55,54 +55,20 @@ public without sharing class ISSP_ICCS_Utils{
     public static final String ICCS_DOCUMENT_REVISED_INSTRUCTIONS = 'Revised Instructions';
 
     // Account record type Ids
-    public static final Id ACCOUNT_RECORD_TYPE_AGENCY;
-    public static final Id ACCOUNT_RECORD_TYPE_AIRLINE_HQ;
-    public static final Id ACCOUNT_RECORD_TYPE_AIRLINE_BRANCH;
+    public static final Id ACCOUNT_RECORD_TYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+    public static final Id ACCOUNT_RECORD_TYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+    public static final Id ACCOUNT_RECORD_TYPE_AIRLINE_BRANCH = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
 
     // ICCS Case record types Ids
-    public static final Id CASE_RECORD_TYPE_ASP;
-    public static final Id CASE_RECORD_TYPE_BANK_ACCT;
-    public static final Id CASE_RECORD_TYPE_MEMBERSHIP;
-    public static final Id CASE_RECORD_TYPE_PARTICIPATION;
+    public static final Id CASE_RECORD_TYPE_ASP = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management');
+    public static final Id CASE_RECORD_TYPE_BANK_ACCT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
+    public static final Id CASE_RECORD_TYPE_MEMBERSHIP = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Membership_Management');
+    public static final Id CASE_RECORD_TYPE_PARTICIPATION = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
     
-    public static final List<Id> CASE_RECORD_TYPES;
-	static {
-		List<RecordType> recordTypes = [SELECT Id, SObjectType, DeveloperName FROM RecordType WHERE SObjectType = 'Account' OR SObjectType = 'Case'];
-		for(RecordType rt : recordTypes){
-			if(rt.SObjectType == 'Account'){
-				if(rt.DeveloperName == 'IATA_Agency'){
-					ACCOUNT_RECORD_TYPE_AGENCY = rt.id;
-				}
-				else if(rt.DeveloperName == 'IATA_Airline'){
-					ACCOUNT_RECORD_TYPE_AIRLINE_HQ = rt.id;
-				}
-				else if(rt.DeveloperName == 'IATA_Airline_BR'){
-					ACCOUNT_RECORD_TYPE_AIRLINE_BRANCH = rt.id;
-				}
-			}
-			else if(rt.SObjectType == 'Case'){
-				if(rt.DeveloperName == 'FDS_ASP_Management'){
-					CASE_RECORD_TYPE_ASP = rt.id;
-				}
-				else if(rt.DeveloperName == 'FDS_ICCS_Bank_Account_Management'){
-					CASE_RECORD_TYPE_BANK_ACCT = rt.id;
-				}
-				else if(rt.DeveloperName == 'FDS_ICCS_Membership_Management'){
-					CASE_RECORD_TYPE_MEMBERSHIP = rt.id;
-				}
-				else if(rt.DeveloperName == 'FDS_ICCS_Product_Management'){
-					CASE_RECORD_TYPE_PARTICIPATION = rt.id;
-				}
-			}
-		}
-		
-		CASE_RECORD_TYPES = new List<Id>{
-			CASE_RECORD_TYPE_ASP,
-			CASE_RECORD_TYPE_BANK_ACCT,
-			CASE_RECORD_TYPE_MEMBERSHIP,
-			CASE_RECORD_TYPE_PARTICIPATION
-		};
-	}
+    public static final List<Id> CASE_RECORD_TYPES = new List<Id>{CASE_RECORD_TYPE_ASP,
+																  CASE_RECORD_TYPE_BANK_ACCT,
+																  CASE_RECORD_TYPE_MEMBERSHIP,
+																  CASE_RECORD_TYPE_PARTICIPATION};
 
 	// Cases Areas
 	public static final String CASE_AREA_JOIN_SERVICE = 'ICCS – Join Service';
@@ -365,7 +331,7 @@ public without sharing class ISSP_ICCS_Utils{
 				System.debug('Portal_Service_Access__r.Top_Account__c : ' + userPreference.Portal_Service_Access__r.Top_Account__c);
 				System.debug('accountId : ' + accountId);
 				
-				if(userPreference.Portal_Service_Access__r.Top_Account__c == accountId.substring(0,15)){
+				if(userPreference.Portal_Service_Access__r.Top_Account__c == accountId){
 					usersToNotify.add(userPreference.Portal_Service_Access__c);
 				}
 			}

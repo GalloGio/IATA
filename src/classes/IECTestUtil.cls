@@ -184,10 +184,10 @@ public without sharing class IECTestUtil {
     }
     
     public static Contact createSampleContact(Account oAccount) {
-        return new Contact(
-            RecordTypeId = IECUserManager.getContactRecordTypeForIEC()
+    	
+        Contact contact = new Contact(
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Contact', 'Standard_Contact')
             , AccountId = oAccount.Id
-            , OwnerId = IECUserManager.getIECContactOwnerId()
             , FirstName = 'Test'
             , LastName = 'User'
             , Title = 'TestTitle'
@@ -195,6 +195,15 @@ public without sharing class IECTestUtil {
             , Phone = '514123345'
             , User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS
         );
+        
+        Id ownerId = IECUserManager.getIECContactOwnerId();
+        
+        if(ownerId != null){
+        	contact.OwnerId = ownerId;
+        }
+        
+        return contact;
+        
     }
     
     public static User createSampleGuestUserAndLogin() {
@@ -204,66 +213,6 @@ public without sharing class IECTestUtil {
       public static User createSampleGuestUserAndLoginOlder() {
         return createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
     }
-    //public static User createSampleGuestUserAndLoginOLD(String ClientType) {
-    //    // insert account
-    //    Account newAccount = createSampleAccount(ClientType);
-    //    insert newAccount;
-
-    //    // create Bill To contact info
-    //    Contact newContact = new Contact();
-    //    newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
-    //    newContact.AccountId = newAccount.Id;
-    //    newContact.OwnerId = IECUserManager.getIECContactOwnerId();
-    //    newContact.FirstName = 'Test';
-    //    newContact.LastName = 'User';
-    //    newContact.Title = 'TestTitle';
-    //    newContact.Email = 'testIECGuest@test.iata.org';
-    //    newContact.Phone = '514123345';
-    //    newContact.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
-    //    insert newContact;
-        
-    //    Zuora__CustomerAccount__c oBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
-    //    insert oBillingAccount;        
-
-    //    User u = new User(
-    //        Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
-    //        , Email = 'testIECGuest@test.iata.org'
-    //        , emailencodingkey = 'UTF-8'
-    //        , Alias = IECUserManager.createAliasFromName(newContact.LastName)
-    //        , FirstName = newContact.FirstName
-    //        , LastName = newContact.LastName
-    //        , LocaleSidKey = 'en_US'
-    //        , CommunityNickname = 'testIECGuest@iata.org'
-    //        , ProfileId = IECUserManager.getProfileIdForIECUser()
-    //        , LanguageLocaleKey = 'en_US'
-    //        , timezonesidkey = 'America/New_York'
-    //        , ContactId = newContact.Id
-    //        , IsActive = true
-    //        , ReceivesAdminInfoEmails = false
-    //        , ReceivesInfoEmails = false
-    //    );
-    //    insert u;
-    //    trgPortalUserAfterInserUpdate = true;
-    //    String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
-    //    PortalUserAccountId = newAccount.Id;
-    //  //  trgPortalUserAfterInserUpdate = false;
-    //    /*
-    //    // assign Permission Set to provide access to objects
-    //    Id permissionSetId = IECUserManager.getCustomerPermissionSetId();
-    //    if (permissionSetId != null) {
-    //        PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
-    //        oPermissionSetAssignment.AssigneeId = userId;
-    //        oPermissionSetAssignment.PermissionSetId = permissionSetId;
-    //        insert oPermissionSetAssignment;
-    //    }
-    //    */
-        
-    //    IECUserManager.login(u.Username, 'testpassword', null);
-           
-    //    return u;
-    //}
-    
-    
 
     public static User createSampleGuestUserAndLogin(String ClientType) {
         // insert account
@@ -274,7 +223,6 @@ public without sharing class IECTestUtil {
         Contact newContact = new Contact();
         newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
         newContact.AccountId = newAccount.Id;
-        newContact.OwnerId = IECUserManager.getIECContactOwnerId();
         newContact.FirstName = 'Test';
         newContact.LastName = 'User';
         newContact.Title = 'TestTitle';
@@ -304,6 +252,10 @@ public without sharing class IECTestUtil {
             , ReceivesInfoEmails = false
         );
         insert u;
+        
+        newContact.OwnerId = u.Id;
+        update newContact;
+        
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
       //  trgPortalUserAfterInserUpdate = false;
@@ -730,7 +682,7 @@ public without sharing class IECTestUtil {
         IATA_ISO_Country__c country;
         try
         {
-            country = [select Id, ISO_Code__c, Name from IATA_ISO_Country__c where ISO_Code__c='CA' limit 1][0];
+            country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{'CA'})[0];
         }
         catch (Exception e)
         {

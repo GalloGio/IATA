@@ -15,7 +15,7 @@ public class AMS_OSCAR_WebserviceTest {
     private static Case oscarCase;
 
     private static void setup(){
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
         
@@ -25,7 +25,7 @@ public class AMS_OSCAR_WebserviceTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         a1 = new Account(RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
         a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Name='Test1 Agency',Short_Name__c='Test1 Agency',BillingCountry='Brazil');
         a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
@@ -50,7 +50,7 @@ public class AMS_OSCAR_WebserviceTest {
         Contact co2 = new Contact(AccountId = a5.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = true);
         insert new List<Contact>{co1, co2};
 
-        oscarCase = new Case(Oscar__c = oscar6.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+        oscarCase = new Case(Oscar__c = oscar6.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = a5.Id;
         oscarCase.ContactId = co2.Id;
         insert oscarCase;  
