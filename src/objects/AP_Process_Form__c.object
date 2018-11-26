@@ -1928,6 +1928,20 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Download_Guide_Counter__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>This filed allows to control how many time the guide was downloaded from a specific form</description>
+        <externalId>false</externalId>
+        <label>Download Guide Counter</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ETSP_Contact_Address__c</fullName>
         <externalId>false</externalId>
         <label>ETSP Contact Address</label>
