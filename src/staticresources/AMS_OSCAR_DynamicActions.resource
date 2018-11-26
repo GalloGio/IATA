@@ -645,6 +645,24 @@ var dyn_functions = {
         }
     },
     openFS:function (args) {
+        var s = "select account__c from ams_oscar__c where id = '"+args+"'";
+            var accountID = sforce.connection.query(s).getArray("records")[0].Account__c;
 
+
+        var c = sforce.connection.query("select id from OpportunityLineItem where opportunity.accountid = '"+accountID+"' and opportunity.recordtype.name = 'GDI Financial Security' LIMIT 1").getArray("records")[0].Id;
+
+
+
+
+        var changeTab = function(result){
+        };
+
+        // Use the results primary tab id and open a new subtab
+        var openSubtab = function(result)
+        {               
+            sforce.console.openSubtab(result.id, '/apex/ANG_DGIStagingArea?Id='+c, true, 'Multicountry - Account Hierarchy Selection', null, changeTab);   
+        };
+
+        sforce.console.getEnclosingPrimaryTabId(openSubtab);
     }
 };
