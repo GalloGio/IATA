@@ -7,22 +7,21 @@ public class AMS_AccountOscarWizardController {
     ApexPages.StandardController controller;
 
     public String oscarId;
-
     public String caseId;
-
     public String oscarName;
-
     public String errorMessage{set;}
+    public Boolean isNewGenPilot{ get; set; }
 
     public AMS_AccountOscarWizardController(ApexPages.StandardController stdController) {
-
         this.controller = stdController;
-       
+
+        String newGenPilotParam = ApexPages.currentPage().getParameters().get('NewGenPilot');
+        this.isNewGenPilot = newGenPilotParam == null ? false : Boolean.valueOf(newGenPilotParam);  
     }
 
     public Account getAccount() {
         if(ApexPages.currentPage().getParameters().get('accountId') != null)
-            return [select ANG_IsNewGenAgency__c, IATA_ISO_Country__r.Enable_NewGen_Pilot__c from Account
+            return [select ANG_IsNewGenAgency__c from Account
                     where id = :ApexPages.currentPage().getParameters().get('accountId')];
         return null;
     }
