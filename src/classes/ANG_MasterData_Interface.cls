@@ -242,7 +242,13 @@ global class ANG_MasterData_Interface{
                     this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, rhc.ANG_Financial_Security__c);
                 
 
-                if(this.RHCInfo ==null)this.RHCInfo = new RHCInfoClass(null, null, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c,acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode));
+                string sBSPCurrency = acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode;
+                if(this.RHCInfo ==null)
+                this.RHCInfo = new RHCInfoClass(null,
+                    null,
+                    String.IsBlank(sBSPCurrency)?acc.CurrencyIsoCode:sBSPCurrency,
+                    String.IsBlank(sBSPCurrency)?acc.Guaranteed_amount__c:ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c,acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode)
+                );
                 //List  of children IATACode
                 //Returned only if specifically requested
                 if(getChildren){

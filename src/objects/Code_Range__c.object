@@ -361,6 +361,30 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>China_Ranges</fullName>
+        <columns>NAME</columns>
+        <columns>AMS_Deplicate_Prevention_Lock__c</columns>
+        <columns>Area__c</columns>
+        <columns>Area_Code__c</columns>
+        <columns>Country_Code__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Max_Range__c</columns>
+        <columns>Min_Range__c</columns>
+        <columns>Original_Max_Range__c</columns>
+        <columns>Original_Min_Range__c</columns>
+        <columns>Prefix__c</columns>
+        <columns>ProgramCode__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>startsWith</operation>
+            <value>China</value>
+        </filters>
+        <label>China Ranges</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>JG_view</fullName>
         <columns>NAME</columns>
         <columns>IATA_ISO_Country__c</columns>

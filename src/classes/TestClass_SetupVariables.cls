@@ -29,7 +29,7 @@ public class TestClass_SetupVariables {
     {
      	get
         {
-            return RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard Account');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         }
     }
     public static ID ExternalCasesInvoicesWorksID {

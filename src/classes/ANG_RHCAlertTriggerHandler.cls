@@ -779,7 +779,7 @@ public class ANG_RHCAlertTriggerHandler{
         }
         
         //NEWGEN-2006
-        List<Notification__c> notifications = new List<Notification__c>();
+        Map<Id,Notification__c> notifications = new Map<Id,Notification__c>();
         List<Contact> agents = [
             SELECT Id, Name, AccountId, Account.Top_Parent__c FROM Contact WHERE AccountId in (
                 SELECT id FROM Account WHERE Top_Parent__c in :accountIds OR Id in :accountIds
@@ -808,8 +808,8 @@ public class ANG_RHCAlertTriggerHandler{
                     if (!mapAccContacts.get(accountIds[i]).isEmpty()) {
                         for (Contact c: mapAccContacts.get(accountIds[i])) {
                             string configKey=rtsConfigMap.containsKey(accIsoCode.get(accountIds[i]).IATA_ISO_Country__c)?accIsoCode.get(accountIds[i]).IATA_ISO_Country__c:DEFAULT_CODE ;
-                            if(rtsConfigMap.get(configKey).ANG_Send_Email_Agent__c){
-                                notifications.add(new Notification__c(
+                            if(!notifications.containsKey(c.Id) && rtsConfigMap.get(configKey).ANG_Send_Email_Agent__c){
+                                notifications.put(c.Id, new Notification__c(
                                     Contact__c = c.Id,
                                     Subject__c = Label.RTS_TAR_Notification_Title,
                                     Message__c = '<div style="text-align: justify">' + Label.RTS_TAR_Notification_Message.replace('{{name}}', c.Name) + Label.RTS_TAR_Notification_MessageB + '</div>',
@@ -841,8 +841,8 @@ public class ANG_RHCAlertTriggerHandler{
             }
             logs.add(log);
         }// end for loop
-        if (!notifications.isEmpty()) {
-            insert notifications;
+        if (!notifications.values().isEmpty()) {
+            insert notifications.values();
         }
         insert logs;
     }
