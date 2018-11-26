@@ -22,21 +22,30 @@ private class AMS_MajorDefaultCommunicationTest {
 		agency.IATA_ISO_Country__c = country.Id;
 		insert new List<Account> {airline, agency};
 
-		Contact airlineContact = new Contact();
-		airlineContact.FirstName = 'FirstName';
-		airlineContact.LastName = 'LastName';
-		airlineContact.Email = 'test@mail.com';
-		airlineContact.Status__c = 'Active';
-		airlineContact.AccountId = airline.Id;
-		airlineContact.PSG_Member__c = true;
-		airlineContact.PaConf_Representative__c = true; 
+		Contact airlineContact1 = new Contact();
+		airlineContact1.FirstName = 'FirstName';
+		airlineContact1.LastName = 'LastName';
+		airlineContact1.Email = 'test@mail.com';
+		airlineContact1.Status__c = 'Active';
+		airlineContact1.AccountId = airline.Id;
+		airlineContact1.PSG_Member__c = true;
+		airlineContact1.PaConf_Representative__c = true; 
+
+		Contact airlineContact2 = new Contact();
+		airlineContact2.FirstName = 'FirstName2';
+		airlineContact2.LastName = 'LastName2';
+		airlineContact2.Email = 'test2@mail.com';
+		airlineContact2.Status__c = 'Active';
+		airlineContact2.AccountId = airline.Id;
+		airlineContact2.PSG_Member__c = true;
+		airlineContact2.PaConf_Representative__c = true; 
 
 		Contact agencyContact = new Contact();
 		agencyContact.FirstName = 'FirstName';
 		agencyContact.LastName = 'LastName';
 		agencyContact.Email = 'mail@test.com';
 		agencyContact.AccountId = agency.Id;
-		insert new List<Contact> {airlineContact, agencyContact};
+		insert new List<Contact> {airlineContact1, airlineContact2, agencyContact};
 
 		Case cse = new Case();
 		cse.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
@@ -59,9 +68,25 @@ private class AMS_MajorDefaultCommunicationTest {
 	}
 	
 	@isTest static void testDefaultNotification() {
+		User admin = [SELECT Id, ProfileId FROM User WHERE Id <> :UserInfo.getUserId() AND ProfileId = :UserInfo.getProfileId() AND IsActive = true LIMIT 1];
+
+		//Avoid MIXED_DML_OPERATION on setup and non-setup objects exception
+		System.runAs(admin) {
+			Group g = [SELECT Id FROM Group WHERE DeveloperName = 'AMS_Agency_Default_Notification'];
+			GroupMember gm = new GroupMember();
+			gm.GroupId = g.Id;
+			gm.UserOrGroupId = UserInfo.getUserId();
+			insert gm;
+
+			Contact c = [SELECT Id, FirstName, LastName, Email FROM Contact WHERE Email = 'test2@mail.com'];
+			User u = ISSP_WS_Utilities.createUser(c.FirstName, c.LastName, c.email, 'OtherCompany', c.Id, false);
+        	u.FederationIdentifier = String.valueOf(c.Id).substring(0, 15);
+        	u.ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline Delegated Admin User'].Id;
+        	insert u;
+		}
+
 		Test.startTest();
 		Case cse = [SELECT Id, AccountId FROM Case];
-		System.debug('CHECK: ' + [SELECT Id, Services_Rendered_to_Airline__r.Name, ISO_Country_Code__c FROM Services_Rendered__c]);
 		Agency_Applied_Change_code__c cc = new Agency_Applied_Change_code__c();
 		cc.Account__c = cse.AccountId;
 		cc.SIDRA_Case__c = cse.Id;
