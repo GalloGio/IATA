@@ -177,7 +177,12 @@
             D. Submit to IATA
             </div>
         </div>
-    
+
+    <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
+        Any doubts? Please check out our&nbsp;
+        <apex:outputLink value="{!URLFOR($Action.Document.Download, DocumentGuide.Id)}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
+    </apex:outputPanel>
+
     <apex:form id="CASSForm" styleClass="inline">
         <apex:pageBlock mode="edit">
             

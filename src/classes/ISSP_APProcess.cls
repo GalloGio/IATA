@@ -2,7 +2,7 @@
     Controller class used in many ISS portal pages to handle the process for 
     Airline Participation Joining Applications and Change Requests
 **/
-public without sharing class ISSP_APProcess {
+global without sharing class ISSP_APProcess {
 
     private static Id RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
     private Map<String, String> apProcessFormRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AP_Process_Form__c');
@@ -1597,6 +1597,35 @@ public without sharing class ISSP_APProcess {
         list<String> listFieldsToCheck = ISSP_AP_FieldLists.bspCommissionMandatoryFields.get(dpcSystem);
         if (listFieldsToCheck==null) return new list<String>();
         return listFieldsToCheck;
+    }
+
+    /**
+        Get the document guide record
+    **/
+    public Document getDocumentGuide() {
+        return [
+            SELECT Id
+            FROM Document
+            WHERE DeveloperName = 'Airline_Process_User_Guide'];
+    }
+
+    /**
+        Increase download counter for the user guide
+    **/
+    @RemoteAction
+    global static void updateGuideCounter(Id caseId) {
+        try {
+            AP_Process_Form__c form = [
+                SELECT Id, Download_Guide_Counter__c
+                FROM AP_Process_Form__c
+                WHERE Case__c = :caseId];
+            Decimal counter = form.Download_Guide_Counter__c;
+            counter = counter==null? 1: ++counter;
+            form.Download_Guide_Counter__c = counter;
+            update form;
+        } catch (Exception e) {
+            System.debug('ERROR, updateGuideCounter failed, '+ e.getMessage());
+        }
     }
 
     /**
