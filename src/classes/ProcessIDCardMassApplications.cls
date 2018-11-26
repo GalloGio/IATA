@@ -13,7 +13,7 @@ public class ProcessIDCardMassApplications extends TriggerAction {
 
 		Map<Id, ID_Card_Application__c> oldMap = (Map<Id, ID_Card_Application__c>) Trigger.oldMap;
 
-		if(idCardAppRecord.RecordTypeId == IDCardUtil.IDCARDMASSAPPLICATION_RTID 
+		if(idCardAppRecord.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application') 
 			&& (Trigger.isInsert || (Trigger.isUpdate && idCardAppRecord.Application_Status__c != oldMap.get(idCardAppRecord.Id).Application_Status__c)))
 			return true;
 

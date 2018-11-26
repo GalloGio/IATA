@@ -9,7 +9,7 @@ public class CloseCasesForCancelledIDCardApplications extends TriggerAction {
 
 		ID_Card_Application__c idCardAppRecord = (ID_Card_Application__c) s;
 
-		if(idCardAppRecord.RecordTypeId == IDCardUtil.IDCARDMASSAPPLICATION_RTID 
+		if(idCardAppRecord.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application') 
 			&& idCardAppRecord.Application_Status__c == 'Cancelled')
 			return true;
 

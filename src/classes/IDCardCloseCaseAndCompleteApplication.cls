@@ -39,7 +39,7 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 
 		System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [UP]Should consider ' + singleApplicationIds.size() + ' ID CARD for update ');
 
-		List<ID_Card_Application__c> singlesApplication = [SELECT Id , Application_Status__c, Mass_order_Application__c FROM ID_Card_Application__c WHERE recordTypeID = :IDCardUtil.IDCARDSINGLEAPPLICATION_RTID and Id in :singleApplicationIds ];
+		List<ID_Card_Application__c> singlesApplication = [SELECT Id , Application_Status__c, Mass_order_Application__c FROM ID_Card_Application__c WHERE RecordTypeID = :RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation') and Id in :singleApplicationIds ];
 		
 		//Get Mass application from single App
 		for(ID_Card_Application__c singleApp :singlesApplication){
@@ -54,7 +54,7 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 
 			System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [UP] Should consider ' + singlesApplication.size() + ' Single APp for ' + massAppStatus.size() + ' mass appli');
 			
-			massApplication = [SELECT Id , Mass_order_Application__c FROM ID_Card_Application__c WHERE recordTypeID = :IDCardUtil.IDCARDMASSAPPLICATION_RTID and Id in :massApplicationIds ];
+			massApplication = [SELECT Id , Mass_order_Application__c FROM ID_Card_Application__c WHERE RecordTypeID = :RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application') and Id in :massApplicationIds ];
 		}
 
 		for(ID_Card_Application__c ma : massApplication){
@@ -70,7 +70,7 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 		List<ID_Card_Application__c> allSinglesApplication = new List<ID_Card_Application__c>();
 		if(!allSingleAppPerMassId.isEmpty()){
 
-			allSinglesApplication = [select Id , Mass_order_Application__c from ID_Card_Application__c where recordTypeID = :IDCardUtil.IDCARDSINGLEAPPLICATION_RTID and Mass_order_Application__c in :allSingleAppPerMassId.keySet() ];
+			allSinglesApplication = [select Id , Mass_order_Application__c from ID_Card_Application__c where RecordTypeID = :RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation') and Mass_order_Application__c in :allSingleAppPerMassId.keySet() ];
 		}
 		
 		for(ID_Card_Application__c sa:allSinglesApplication){
