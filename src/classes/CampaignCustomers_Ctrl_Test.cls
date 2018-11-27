@@ -114,7 +114,7 @@ public class CampaignCustomers_Ctrl_Test
 		List<Id> lstSelectedProdId = new List<Id>();
 		for (Integer id : ctrl.selectedProducts.keySet())
 			lstSelectedProdId.add(ctrl.selectedProducts.get(Id).id);
-		orderItems = [select Id, PriceBookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c, ServiceDate, Product__c, Invoice_Date__c, Order.BillToContactId
+		orderItems = [select Id, PriceBookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c, ServiceDate, Product__c, Invoice_Date__c, Order.BillToContactId, Product_Number__c
 		              from OrderItem where OrderId = :orders[0].Id and PricebookEntry.Product2.Id in :lstSelectedProdId];
 
 		insert new CampaignMember(CampaignId = campaigns[1].Id, ContactId = usr.ContactId );

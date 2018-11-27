@@ -95,6 +95,7 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 		//oProduct.Activity_Code__c = '8888';
 		oProduct.Activity_Code__c = oProduct.SAP_Material_Number__c.left(4);
 		oProduct.Line_of_Business__c = 'Publications';
+        oProduct.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId().get('Product2', 'Publication');
  		update oProduct;
  		
 

@@ -33,7 +33,7 @@ public without sharing class IEC_Invoice_Item_Sel extends Selector {
             'SELECT {0}, Name, Service_Start_Date__c, Service_End_Date__c ' + 
             '     , Invoice__r.Zuora__Account__c, Invoice__r.Zuora__BillingAccount__r.Contact__c ' +
             '     , Invoice__r.Name, Invoice__r.Zuora__External_Id__c, Invoice__r.Zuora__InvoiceDate__c ' +
-            '     , Product__r.SAP_Material_Number__c, Product__r.Name, Product__c ' +
+            '     , New_Product__r.SAP_Material_Number__c, New_Product__r.Name, New_Product__c ' +
             '     , Subscription_Product_Charge__r.Product_Rate_Plan_Charge__r.zqu__ZuoraId__c ' +
             'FROM {1} ' + 
             ' WHERE Id IN :setInvoiceItemId ' +

@@ -65,7 +65,7 @@ public without sharing class IECTestUtil {
         Product_Information__c pi = new Product_Information__c();
             pi.Name = sName;
             pi.Related_Product_Category__c = oProductCategory.Id;
-            pi.New_Related_Product__c = oProduct.Id;
+            pi.Related_Product__c = oProduct.Id;
             pi.Product_Audience__c = productAudience;
 
             return pi;
@@ -128,6 +128,7 @@ public without sharing class IECTestUtil {
             prp.zqu__EffectiveStartDate__c = Date.today().addDays(-15);
             prp.zqu__EffectiveEndDate__c = Date.today().addDays(15);
             prp.IsTriable__c = triable?'Yes':'No';
+            prp.zqu__Deleted__c = false;
             
             return prp;
     }
