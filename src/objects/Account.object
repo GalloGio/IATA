@@ -6604,10 +6604,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Payment Provider</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>DPC</controllingFieldValue>
-                <valueName>DPC</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
                 <valueName>Civil Aviation Authority</valueName>
             </valueSettings>
@@ -15122,7 +15118,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=ZACCMGT_KF%26X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://bw.iata.org/redirect?url=/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=TDS_LO_SD_SABYACC&amp;X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -15454,11 +15450,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Cargo Agent</fullName>
                     <default>false</default>
                     <label>Cargo Agent</label>
-                </value>
-                <value>
-                    <fullName>DPC</fullName>
-                    <default>false</default>
-                    <label>DPC</label>
                 </value>
                 <value>
                     <fullName>Education</fullName>
@@ -59860,10 +59851,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>DPC</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Education</fullName>
                 <default>false</default>
             </values>
@@ -76014,10 +76001,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>DPC</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Education</fullName>
                 <default>false</default>
             </values>
@@ -90801,10 +90784,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DPC</fullName>
                 <default>false</default>
             </values>
             <values>

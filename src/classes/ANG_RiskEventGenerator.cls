@@ -257,6 +257,7 @@ public class ANG_RiskEventGenerator {
 
 		riskEvents.clear();
 		//check if risk events to update already exists and apply new status
+		if(riskEventsToUpdate.keySet().isEmpty()) return;
 		for(ANG_Agency_Risk_Event__c risk : [SELECT Id, ANG_UniqueKey__c, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c WHERE ANG_UniqueKey__c IN :riskEventsToUpdate.keySet()]){
 			String status = riskEventsToUpdate.get(risk.ANG_UniqueKey__c);
 			if(risk.ANG_Event_Status__c != status){
