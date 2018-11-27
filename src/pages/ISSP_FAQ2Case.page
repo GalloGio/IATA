@@ -762,7 +762,7 @@
                                                             </div>
                                                         </div>
                                                         <apex:outputpanel rendered="{!AND(field.required,field.fieldValue == 'Description')}"> <!--Description text area-->
-                                                            <apex:inputfield styleclass="form-control descriptiontextarea rec mandatory" value="{!newCase[field.fieldValue]}" html-maxlength="32000"/>
+                                                            <apex:inputfield styleclass="form-control descriptiontextarea rec mandatory" value="{!newCase[field.fieldValue]}" html-maxlength="31900"/>
                                                         </apex:outputpanel>
                                                     </li>
                                                 </apex:outputpanel>
