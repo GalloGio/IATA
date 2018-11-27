@@ -190,7 +190,7 @@ public without sharing class AMS_Utils {
     public static final String NGVR             = 'VR.1.0';
     public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
     public static final String NGANNUALREVAL    = 'ANG.ANNUAL.REVALIDATION';
-    public static final String NGCHINACHANGES	= 'ANG.MAJOR.CHANGES.CHINA.1.0';
+    public static final String NGCHINACONVERSION = 'ANG.MAJOR.CHANGES.CHINA.1.0';
 
     //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
