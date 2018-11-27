@@ -1285,7 +1285,7 @@ global with sharing class ANG_ConversionHelper {
         
         List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c from Account where Id in:accts];
         
-        String statusAA = null;
+        String statusAA, statusCC = null;
 
         for(Account acct:acctToInsert){
 
@@ -1293,7 +1293,11 @@ global with sharing class ANG_ConversionHelper {
 
         		statusAA = acct.Status__c == AMS_utils.ACC_S0_TERMINATED ? 'Non-Active' :  'Active';
 
-        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
+        		statusCC = acct.Is_PCI_compliant__c == '' || acct.Is_PCI_compliant__c == null ? 'Non-Active' 
+        					: (acct.Is_PCI_compliant__c == 'Yes' && acct.ANG_PCI_compliance_expiry_date__c < System.today() ? 'Non-Active' 
+        					: (acct.Is_PCI_compliant__c == 'Yes' ? 'Active' : (acct.Is_PCI_compliant__c =='No' ? 'Non-Active' : 'Not Authorized')));
+
+        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = statusCC, RecordTypeId = FormOfPaymentRT));
         		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
         		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
 			}
