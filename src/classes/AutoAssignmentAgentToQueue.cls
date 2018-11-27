@@ -20,7 +20,7 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
         for (sObject c : scope)
             assignCaseBackToQueue(c.Id);
     }
-    
+
     global void finish(Database.BatchableContext BC) {
         System.debug('+++ The job just finished!');
     }

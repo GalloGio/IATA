@@ -25,12 +25,12 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Queue_Id__c</fullName>
-        <description>Id of queue</description>
+        <fullName>Queue_API_Name__c</fullName>
+        <description>The API name of the queue</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
-        <label>Queue Id</label>
-        <length>30</length>
+        <label>Queue API Name</label>
+        <length>120</length>
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
