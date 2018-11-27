@@ -905,7 +905,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 	        ANG_Send_Email_Agent__c=true ,
 	        ANG_Create_Sidra_Lite__c= true, 
 	        ANG_Remove_Ticketing_Authority__c= true,
-	        recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification')
+	        recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
      	);
 
       	insert csa;
@@ -958,7 +958,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 	        ANG_Remove_Ticketing_Authority__c= false,
 	        ANG_Send_Email_Agent__c=false ,
 	        ANG_RTS_Severity__c='Red',
-	        recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification')
+	        recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
 	    );
 
 	    insert csa;
@@ -971,7 +971,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		    Remittance_frequency__c='Monthly',
 		    ANG_Accreditation_Model__c ='Cash',
 		    IATA_ISO_Country__c = country2.id,
-		    RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+		    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
 	    );
 	   	insert a;     
 	    
