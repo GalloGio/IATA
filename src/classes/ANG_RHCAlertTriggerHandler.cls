@@ -604,7 +604,6 @@ public class ANG_RHCAlertTriggerHandler{
                     sidraLiteCase.Origin = 'Risk Monitoring Engine'; 
                     sidraLiteCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
                     sidraLiteCase.Priority = 'High'; 
-                    sidraLiteCase.DEF_Approval_Rejection__c = 'Approved';
                     sidraLiteCase.Reason_for_Default__c = 'Under Review';
                     sidraLiteCase.Update_AIMS_DEF__c = Date.today();
                     sidraLiteCase.CS_Rep_Acc_DEF__c = userInfo.getUserId();
