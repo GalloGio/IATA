@@ -122,6 +122,9 @@ public class PlatformEvents_Helper {
     private static Map<Id,sObject> getAccountRoleToPublish(Map<Id,sObject> mapAccnt){
     	map<id, sObject> mapToRet = new map<id, sObject>();
     	mapToRet.putAll(mapAccnt);
+
+        if(mapAccnt.keyset().isEmpty()) return mapToRet;
+
     	for(Account_Role__c AccntRole: [select id, RecordTypeId, Account__c from Account_Role__c where Account__c in:mapAccnt.keyset() and recordtypeId=:TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID]){
 //    		if(mapToRet.ContainsKey(accntRole.Account__c))
 //    			mapToRet.remove(accntRole.Account__c);

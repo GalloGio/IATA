@@ -29,6 +29,8 @@ public class AMS_OscarCaseTriggerHelper {
         for(Case c: triggerNew)
             if(c.ParentId != null)
                 parentcaseIds.add(c.ParentId);
+
+        if(parentcaseIds.isEmpty()) return;
                 
         Map<Id, Case> parentCase = new Map<Id, Case>([SELECT Id, Oscar__c, RecordTypeId FROM Case WHERE Id IN :parentcaseIds AND RecordTypeId = :OSCARCaseRecordTypeID]);
         
@@ -86,8 +88,10 @@ public class AMS_OscarCaseTriggerHelper {
         Map<Id, Case> caseOSCARMap = new Map<Id, Case>();
 
         //see if the oscars had a case before the insert/update
-        for(Case c :  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscarIds AND ParentId = null AND Id NOT IN :oscarCases]){
-            caseOSCARMap.put(c.OSCAR__c, c);
+        if(!oscarIds.isEmpty() && !oscarCases.isEmpty()) {
+            for(Case c :  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscarIds AND ParentId = null AND Id NOT IN :oscarCases]){
+                caseOSCARMap.put(c.OSCAR__c, c);
+            }
         }
 
         for(Case c: oscarCases){
