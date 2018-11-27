@@ -62,6 +62,33 @@ public class AMS_OSCARTriggerHandler {
         set;
     }
 
+    //ACAMBAS - NEWGEN-4445 - Start
+    public static Map<String, Map<String, String>> changeCodesForChina {
+        get {
+            return new Map<String, Map<String, String>> {
+                'STEP6' => new Map<String, String> {
+                                    AMS_Utils.CONVERTTONEWGENPILOT => 'PLT',
+                                    AMS_Utils.CONVERTTOLEGACY => 'LGC',
+                                    AMS_Utils.CONVERTTOINTERNATIONAL => 'DOM'
+                                },
+                'STEP2' => new Map<String, String> {
+                                    AMS_Utils.CONVERTTONEWGENPILOT => 'PLF',
+                                    AMS_Utils.CONVERTTOLEGACY => 'LGF'
+                                },
+                'STEP3' => new Map<String, String> {
+                                    AMS_Utils.CONVERTTONEWGENPILOT => 'DIS-CHINA-TO-NEWGEN',
+                                    AMS_Utils.CONVERTTOLEGACY => 'DIS-CHINA-TO-LEGACY'
+                                },
+                'STEP4' => new Map<String, String> {
+                                    AMS_Utils.CONVERTTONEWGENPILOT => 'CWD-CHINA-TO-NEWGEN',
+                                    AMS_Utils.CONVERTTOLEGACY => 'CWD-CHINA-TO-LEGACY'
+                                }
+            };
+        }
+        set;
+    }
+    //ACAMBAS - NEWGEN-4445 - End
+
     /*** AMSU-113 Start ***/
     public static Set<String> pciCompliantProcesses {
         get {
@@ -3184,11 +3211,14 @@ public class AMS_OSCARTriggerHandler {
                     AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
                 }
 
-                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION)
+                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || (updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION && updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTONEWGENPILOT))
                     createAgencyAuthorizations(updatedOscar);
                 else if(updatedOscar.Process__c == AMS_Utils.NEWAE)
                     copyAgencyAuthorizationsFromParent(updatedOscar);
-
+                //ACAMBAS - NEWGEN-4445 - Start
+                else if(updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION && updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTOLEGACY)
+                    ChinaConversionsHelper.deleteAccountsFoPs(updatedOscar.account__c);
+                //ACAMBAS - NEWGEN-4445 - End
             }
 
             // Approve the Approval Process from the Manager's perspective
@@ -3847,51 +3877,34 @@ public class AMS_OSCARTriggerHandler {
         }
         //ACAMBAS - NEWGEN-4445 - Start
         else if (updatedOscar.recordTypeID == chinaRT) {
-
-            system.debug('---> CHIIIIIINA!!!');
-
-            Case c = [SELECT Reason1__c from Case where Id = :updatedOscar.Oscar_Communication_Case_Id__c];
-
-            String caseReason = c.Reason1__c;
+            
             String changeCode;
-
+            String caseReason = updatedOscar.ANG_Type_Of_Change__c;
 
             //If Perform Sanity Check passed
             if(oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed') {
-
-                if(caseReason == AMS_Utils.CONVERTTONEWGENPILOT) {
-                    changeCode = 'PLT';
-                }
-                else if(caseReason == AMS_Utils.CONVERTTOLEGACY) {
-                    changeCode = 'LGC';
-                }
-                else if(caseReason == AMS_Utils.CONVERTTOINTERNATIONAL) {
-                    changeCode = 'DOM';
-                }
-                else {
-                   updatedOscar.addError('Type of change unknown: ' + caseReason);
-                }
-
+                changeCode = changeCodesForChina.get('STEP6').get(updatedOscar.ANG_Type_Of_Change__c);
                 ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);              
             }
 
-            //If Approval Step passed  
+            //If Approval step passed  
             else if(oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
-
-                system.debug('---> STEP2 PASSED');
-
-                if(caseReason == AMS_Utils.CONVERTTONEWGENPILOT) {
-                    changeCode = 'PLF';
-                }
-                else if(caseReason == AMS_Utils.CONVERTTOLEGACY) {
-                    changeCode = 'LGF';
-                }
-
-                system.debug('---> changeCode: ' + changeCode);
-
+                changeCode = changeCodesForChina.get('STEP2').get(updatedOscar.ANG_Type_Of_Change__c);
                 ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);  
             }
-            
+
+            //If Disapproval Finalization step passed  
+            else if(oldOSCAR.STEP3__c != 'Passed' && updatedOscar.STEP3__c == 'Passed') {
+                changeCode = changeCodesForChina.get('STEP3').get(updatedOscar.ANG_Type_Of_Change__c);
+                ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);  
+            }   
+
+            //If Withdrawal Finalization step passed  
+            else if(oldOSCAR.STEP4__c != 'Passed' && updatedOscar.STEP4__c == 'Passed') {
+                changeCode = changeCodesForChina.get('STEP4').get(updatedOscar.ANG_Type_Of_Change__c);
+                ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);  
+            }
+
         }
         //ACAMBAS - NEWGEN-4445 - End
     }

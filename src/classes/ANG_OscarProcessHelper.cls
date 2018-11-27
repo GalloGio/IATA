@@ -547,12 +547,11 @@ global class ANG_OscarProcessHelper {
 	//ACAMBAS - NEWGEN-4445 - Start
 	public static void createGenericChangeCode(AMS_Oscar__c theOSCAR, String changeCodeId) {
 
+		if(changeCodeId == null) return;
+
 		Savepoint sp = Database.setSavepoint();
 
         try {
-        	//if(updater == null)
-			//ntityUpdater updater = new EntityUpdater();
-
 			Account accnt = [SELECT Name, Status__c, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 					BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
 					ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
@@ -564,14 +563,7 @@ global class ANG_OscarProcessHelper {
 					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 					FROM Account
 					WHERE Id = :theOSCAR.account__c FOR UPDATE];
-					
 
-			system.debug('---> account: ' + accnt);
-
-			//updater.acctMap.put(accnt.Id, accnt);
-			//updater.oscarMap.put(theOSCAR.Id, theOSCAR);
-
-			//String changeCodeId = 'NEW-' + theOSCAR.Business_Process__c;
 			AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 	        AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
 
@@ -583,10 +575,12 @@ global class ANG_OscarProcessHelper {
 	        changeCode.name = n.Change_Code__c;
 	        changeCode.reasonCode = n.Reason_Code__c;
 
-	        if(n==null)
-	        	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
-	        else
-	        	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
+	        if(theOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
+	        	changeCode.memoText = n.Bulletin_Memo_Text__c;
+	        }
+        	else {
+        		changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
+        	}
 	        
 	        changeCode.reasonDesc  = n.Reason_Code_Description__c;
 	        changeCode.status  = n.Account_status_change__c;
@@ -594,20 +588,9 @@ global class ANG_OscarProcessHelper {
 			
 			List<Account> acctList = AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {accnt}, false);
 
-			//if(!acctList.isEmpty())
-			//	updater.acctMap.put(acctList.get(0).Id, acctList.get(0));
-
-			//updater.oscarMap.get(theOSCAR.Id).First_Step_Completed__c = true;
 			theOSCAR.First_Step_Completed__c = true;
 
-			//updater.toUpdate = true;
-
-			//return updater;
-			//
-			//updateUpdater(updater);
-
         } catch (Exception ex) {
-            System.debug('Exception: ' + ex);
             Database.rollback(sp); 
             throw ex;
         }

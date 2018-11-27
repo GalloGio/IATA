@@ -86,6 +86,21 @@ global with sharing class ChinaConversionsHelper {
         delete accountsWithFoPs;
     }
 
+    public static void deleteAccountsFoPs(String accountId) {
+
+    	List<AMS_Agencies_relationhip__c> allRelations = getAllAccountRelations(accountId);
+
+		Map<Id, Account> allAccounts = getAllHierarchyAccounts(allRelations);
+
+    	Id formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		List<Agency_Authorization__c> accountsWithFoPs = [SELECT Id 
+														  FROM Agency_Authorization__c 
+														  WHERE Account__c IN :allAccounts.keyset() AND RecordTypeId = :formOfPaymentRT];
+        
+        delete accountsWithFoPs;
+    }
+
     public static void updateAccountRelations(List<AMS_Agencies_relationhip__c> accntRelations, String caseReason) {
     	
 		for(AMS_Agencies_relationhip__c r : accntRelations) {
