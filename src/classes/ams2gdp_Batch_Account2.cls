@@ -32,6 +32,7 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		} else {
 			if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
 				statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
+				if (idsCondition!=null) idsCondition += ' AND '; else idsCondition='';
 				idsCondition = 'Status__c IN :statusSet ';
 
 			}

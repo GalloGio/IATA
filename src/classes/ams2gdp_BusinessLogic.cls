@@ -595,7 +595,6 @@ public class ams2gdp_BusinessLogic {
 		{
 		    if(a.Account__c == null) continue;
 		    accountIds.add(a.Account__c);
-		    recordexists.add(false);
 		    //userNameList.add(arole.Owner_Name__c);
 		}
 		//Reload the same list
@@ -637,6 +636,8 @@ public class ams2gdp_BusinessLogic {
 		List<Agency_Owner__c> toDelete = new List<Agency_Owner__c>();
 		List<Agency_Owner__c> toUpdate = new List<Agency_Owner__c>();
 		Integer i=-1;
+        for(AMS_Account_Role__c a: roles)recordexists.add(false);
+		
 
 		for(Agency_Owner__c r:result){
 		    i=-1;
@@ -1084,5 +1085,3 @@ public class ams2gdp_BusinessLogic {
 
 		return result;
 	}
-
-}
