@@ -294,6 +294,15 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		return null;
 	}
 
+    public Boolean getDisablePrevious() { 
+		//this will disable the previous and beginning buttons
+		return (currentPage <= 0);
+	}
+    
+	public Boolean getDisableNext() { //this will disable the next and end buttons
+		return (currentPage >= hierarchyValuesForDisplay.size()-1);
+	}
+	
 	public void save(){
 
 		if([Select Id, STEP45__C from AMS_OSCAR__c where Id = :oscarId].get(0).STEP45__C == AMS_Utils.PASSED){
