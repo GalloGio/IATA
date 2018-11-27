@@ -605,7 +605,6 @@ public class ANG_RHCAlertTriggerHandler{
                     sidraLiteCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
                     sidraLiteCase.Priority = 'High'; 
                     sidraLiteCase.Reason_for_Default__c = 'Under Review';
-                    sidraLiteCase.Update_AIMS_DEF__c = Date.today();
                     sidraLiteCase.CS_Rep_Acc_DEF__c = userInfo.getUserId();
                     sidraLiteCase.OwnerId = parentCase.OwnerId;
                     //sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); //already done on callout
@@ -642,6 +641,7 @@ public class ANG_RHCAlertTriggerHandler{
                                        
                     list<Case> sidrasToGenerateChangeCode = new list<Case>();
                     for(Case sidraToUpdate : sidraLiteCases){
+                        sidraToUpdate.Update_AIMS_DEF__c = Date.today();
                         sidraToUpdate.DEF_Approval_Rejection__c = 'Approved';
                         sidraToUpdate.SIDRA_Lite_Default_Date__c = Date.today();
                         sidraToUpdate.Reason_for_Default__c = 'Under Review';
