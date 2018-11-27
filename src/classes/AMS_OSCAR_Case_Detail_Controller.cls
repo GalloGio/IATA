@@ -635,7 +635,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             System.debug('## Could not fetch any Oscar or does not have an accreditation object');
         }
         
-        this.showStagingArea = (oscarObj.Process__c != AMS_Utils.NGCHINACONVERSION);
+        this.showStagingArea = (oscarObj.Process__c != AMS_Utils.NGCHINACHANGES);
 
     }
 
