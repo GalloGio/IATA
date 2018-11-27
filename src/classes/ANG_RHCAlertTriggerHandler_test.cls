@@ -894,4 +894,114 @@ private class ANG_RHCAlertTriggerHandler_test {
 		return oscar;
 	}
 
+	private static testmethod void testTicketingAuthorityRemoval(){
+
+    	Account a = [Select Id, Remittance_frequency__c from Account limit 1];
+    	System.debug('##Account: '+ a.Remittance_frequency__c);
+
+    	AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
+	    	IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where Name = 'France'].id,
+	        ANG_RTS_Severity__c='Red',
+	        ANG_Send_Email_Agent__c=true ,
+	        ANG_Create_Sidra_Lite__c= true, 
+	        ANG_Remove_Ticketing_Authority__c= true,
+	        recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification')
+     	);
+
+      	insert csa;
+
+	    AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-FR');
+	    insert iss;
+
+	    Operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
+	    	First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
+
+	    insert op;
+	    
+	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id);
+	    insert con;
+
+	    //NEWGEN-2005
+	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
+
+	    test.StartTest();
+
+	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+		    Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+		    ang_Severity__c='Red',
+		    ANG_Account__c = a.Id
+	    );
+	    insert ra;
+
+	    test.StopTest();
+
+	    List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
+	    System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
+
+	    List<ISSP_Web_Service_Log__c> logs = [Select Id From ISSP_Web_Service_Log__c where Case__c = :c.get(0).Id];
+	    System.assertEquals(logs.size(), 1, 'Response was not saved');
+
+  	}
+
+  	private static testmethod void testRedAlertCreationNoConfigurationMatched(){
+	    // no configuration for the account country found, so it will use the default one
+	    IATA_ISO_Country__c  country2= new IATA_ISO_Country__c(
+		    Name = 'Portugal', 
+		    ISO_Code__c = 'PT'
+	    );
+
+	    insert country2 ;
+
+	    AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
+	        IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where iso_code__C='WW'].id,
+	        ANG_Create_Sidra_Lite__c= true, 
+	        ANG_Remove_Ticketing_Authority__c= false,
+	        ANG_Send_Email_Agent__c=false ,
+	        ANG_RTS_Severity__c='Red',
+	        recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification')
+	    );
+
+	    insert csa;
+
+	    Account a = new Account(
+	    	name='acc1',
+		    Location_Type__c='HE',
+		    Location_Class__c='P',
+		    IATAcode__c = '0000',
+		    Remittance_frequency__c='Monthly',
+		    ANG_Accreditation_Model__c ='Cash',
+		    IATA_ISO_Country__c = country2.id,
+		    RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+	    );
+	   	insert a;     
+	    
+	    AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
+	    insert iss;
+
+	    operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
+	    	First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
+
+	    insert op;
+	    
+	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id);
+	    insert con;
+
+	    //NEWGEN-2005
+	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
+	    
+	    test.StartTest();
+	    
+	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+		    Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+		    ang_Severity__c='Red',
+		    ANG_Account__c = a.Id
+	    );
+	    insert ra;
+	    
+	    test.StopTest();
+	    
+	    List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
+	    System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
+	}
+
 }
