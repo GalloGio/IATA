@@ -1085,3 +1085,4 @@ public class ams2gdp_BusinessLogic {
 
 		return result;
 	}
+}
