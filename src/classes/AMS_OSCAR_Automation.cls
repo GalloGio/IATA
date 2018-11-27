@@ -1357,7 +1357,6 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.Proof_of_payment_received__c = Date.today();
                 oscar.Invoice_status__c = 'Paid';
 
-                oscar.STEP48__c = 'In Progress';
 
                 res = true;
             }
