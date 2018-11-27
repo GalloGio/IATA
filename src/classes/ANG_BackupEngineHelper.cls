@@ -57,6 +57,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		'Accreditation type' => new List<String>{'Agency_Authorization__c', 'Portal_Application_Right__c', 'ANG_RHC_Information__c'},
 		'Location type to different legal entity' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Agency_Authorization__c'},
 		'Trade name' => new List<String>{'ANG_RHC_Information__c'}
+		'Conversion to GoLite' => new List<String>{'Agency_Authorization__c','ANG_Agency_Risk_Event__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
+		'Conversion to Domestic with Cash' => new List<String>{'Agency_Authorization__c','ANG_Agency_Risk_Event__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'}
 	};
 
 	private Map<String,String> whereClausesMap = new Map<String,String>{

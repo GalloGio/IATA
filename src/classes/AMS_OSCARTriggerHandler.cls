@@ -161,6 +161,7 @@ public class AMS_OSCARTriggerHandler {
         copyDataFromTargetAgency();
     
         processGeneralActionsOnOscarBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);
+        performBackupANGBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);//Tick rollback in course
     }
 
     public static void handleAfterInsert() {
@@ -4240,6 +4241,12 @@ public class AMS_OSCARTriggerHandler {
 
     }
 
+    public static void performBackupANGBeforeInsert(list<AMS_OSCAR__c> newList){ //activates backup in progress flag in before insert context
+        for(AMS_OSCAR__c oscarrec:newList){
+            if(oscarrec.ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessSet.contains(oscarrec.Process__c) && oscarrec.ANG_Type_of_change__c !=AMS_Utils.CONVERTTOINTERNATIONAL) oscarrec.Backup_In_Progress__c = true;
+        }
+    }
+
     public static void performBackupANG(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
         
         if(ANG_AgencyChangesHelper.testRunnningForNonBackup)
@@ -4248,10 +4255,8 @@ public class AMS_OSCARTriggerHandler {
         List<Id> oscarsToProcess = new List<Id>();
 
         if(Trigger.isInsert){
-
             for(ID oscarId:newMap.keySet()){
-
-                if(newMap.get(oscarId).Process__c == AMS_Utils.NGCHANGES && newMap.get(oscarId).ANG_Type_Of_Change__c != null)
+                if(newMap.get(oscarId).ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessSet.contains(newMap.get(oscarId).Process__c) && newMap.get(oscarId).ANG_Type_of_change__c != AMS_Utils.CONVERTTOINTERNATIONAL)
                     oscarsToProcess.add(oscarId);
             }
         }
@@ -4259,18 +4264,16 @@ public class AMS_OSCARTriggerHandler {
         if(Trigger.isUpdate){
 
             for(ID oscarId:oldMap.keySet()){
-
-                if(newMap.get(oscarId).Process__c == AMS_Utils.NGCHANGES && oldMap.get(oscarId).ANG_Type_Of_Change__c != newMap.get(oscarId).ANG_Type_Of_Change__c && newMap.get(oscarId).ANG_Type_Of_Change__c != null)
+                if(newMap.get(oscarId).ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessSet.contains(newMap.get(oscarId).Process__c) && oldMap.get(oscarId).ANG_Type_Of_Change__c != newMap.get(oscarId).ANG_Type_Of_Change__c &&  newMap.get(oscarId).ANG_Type_of_change__c !='Conversion to International'){
                     oscarsToProcess.add(oscarId);
+                    newMap.get(oscarId).Backup_In_Progress__c = true;
+                }
 
             }
         }
        
 
         for(Id oscarId: oscarsToProcess){
-            
-            newMap.get(oscarId).Backup_In_Progress__c = true;
-            
             ID jobID = System.enqueueJob(new ANG_BackupEngineHelper(oscarId,true));
             
         }
@@ -4287,7 +4290,7 @@ public class AMS_OSCARTriggerHandler {
 
         for(ID oscarId:oldMap.keySet()){
 
-            if(newMap.get(oscarId).Process__c == AMS_Utils.NGCHANGES && oldMap.get(oscarId).Step4__c != newMap.get(oscarId).Step4__c && newMap.get(oscarId).Step4__c == AMS_Utils.PASSED)
+            if(AMS_Utils.OSCARBackupProcessSet.contains(newMap.get(oscarId).Process__c) && oldMap.get(oscarId).Step4__c != newMap.get(oscarId).Step4__c && newMap.get(oscarId).Step4__c == AMS_Utils.PASSED)
                 oscarsToProcess.add(oscarId);
 
         }
