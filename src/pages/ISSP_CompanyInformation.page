@@ -49,11 +49,13 @@
                                 </div>
                             </apex:outPutPanel>
                             </div>
+                            <apex:outPutPanel layout="block" rendered="{!isIATAAirlineAcct}">
                             <div class="row">
                                 <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Name_on_AOC__c.Label}</label>
                                 <div class="col-lg-7">
                                     {!con.Account.Top_Parent__r.Name_on_AOC__c}
                                 </div>
+                            </apex:outPutPanel>
                             </div>
                             <apex:outputText rendered="{!isIATAAgencyAcct}">
                                 <div class="row form-group">
