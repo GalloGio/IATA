@@ -2911,6 +2911,20 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>All_The_Countries</fullName>
+        <columns>NAME</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>Region__c</columns>
+        <columns>Sub_Region__c</columns>
+        <columns>AMS_Settlement_System__c</columns>
+        <columns>BSP_Country_free_text__c</columns>
+        <columns>BSP__c</columns>
+        <columns>AMS_Settlement_System_CASS__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Countries</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Americas_Countries</fullName>
         <columns>NAME</columns>
         <columns>BSP_Country_free_text__c</columns>
