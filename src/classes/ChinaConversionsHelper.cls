@@ -2,7 +2,7 @@ global with sharing class ChinaConversionsHelper {
 
 	public static void convertAccountsHierarchy(AMS_Oscar__c oscar) {
 
-		system.debug('---> ChinaConversionsHelper.convertAccountsHierarchy');
+		//system.debug('---> ChinaConversionsHelper.convertAccountsHierarchy');
 
 		String accountId = oscar.account__c;
 
@@ -11,15 +11,15 @@ global with sharing class ChinaConversionsHelper {
 
 		List<AMS_Agencies_relationhip__c> allRelations = getAllAccountRelations(accountId);
 
-		system.debug('---> allRelations: ' + allRelations);
+		//system.debug('---> allRelations: ' + allRelations);
 
 		Map<Id, Account> allAccounts = getAllHierarchyAccounts(allRelations);
 
-		system.debug('---> allAccounts: ' + allAccounts);
+		//system.debug('---> allAccounts: ' + allAccounts);
 
 		for(Account acc : allAccounts.values()) {
 
-			system.debug('---> current account: ' + acc.Name + ' - ' + acc.Location_Type__c);
+			//system.debug('---> current account: ' + acc.Name + ' - ' + acc.Location_Type__c);
 
             if(caseReason == AMS_Utils.CONVERTTONEWGENPILOT) {
         		if(acc.Location_Type__c == 'HO') {
@@ -60,22 +60,10 @@ global with sharing class ChinaConversionsHelper {
             }
 		}
 
-		system.debug('---> accounts to update: ' + allAccounts.values());
+		//system.debug('---> accounts to update: ' + allAccounts.values());
 		update allAccounts.values();
 
-		/*List<Account> updatedAccounts = [SELECT Id, Name, Location_Type__c, ANG_Accreditation_Model__c, Status__c, ParentId, Top_Parent__c
-										 FROM Account
-										 WHERE Id in :allAccounts.values()];
-
-		system.debug('---> accounts updated: ' + updatedAccounts);*/
-
 		updateAccountRelations(allRelations, caseReason);
-
-		/*List<Account> updatedAccounts2 = [SELECT Id, Name, Location_Type__c, ANG_Accreditation_Model__c, Status__c, ParentId, Top_Parent__c
-										  FROM Account
-										  WHERE Id in :allAccounts.values()];
-
-		system.debug('---> accountsafter relations updated: ' + updatedAccounts2);*/
     }
 
     public static void deleteAccountsFoPs(Set<Id> accntIds) {
@@ -105,17 +93,17 @@ global with sharing class ChinaConversionsHelper {
     	
 		for(AMS_Agencies_relationhip__c r : accntRelations) {
 			if(caseReason == AMS_Utils.CONVERTTONEWGENPILOT) {
-				system.debug('---> update to newgen relation!!!');
+				//system.debug('---> update to newgen relation!!!');
 				r.Is_Newgen_Relation__c = true;
 			}
 			else {
-				system.debug('---> update to NON-newgen relation!!!');
+				//system.debug('---> update to NON-newgen relation!!!');
 				r.Is_Newgen_Relation__c = false;
 			}
 
 			//convert relations in the 3rd level (ex: SA) to 2nd level of the hierarchy (ex: AE)
 			if(r.Child_Account__r.ParentId != r.Child_Account__r.Top_Parent__c) {	
-				system.debug('---> update parent account!!!');			
+				//system.debug('---> update parent account!!!');			
 				r.Parent_Account__c = r.Child_Account__r.Top_Parent__c;
 			}
 		}
