@@ -76,4 +76,14 @@
         <default>false</default>
         <label>Priority 4 (Trivial Defects)</label>
     </standardValue>
+    <standardValue>
+        <fullName>Emergency</fullName>
+        <default>false</default>
+        <label>Emergency</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Emergency not valid</fullName>
+        <default>false</default>
+        <label>Emergency not valid</label>
+    </standardValue>
 </StandardValueSet>

@@ -828,15 +828,9 @@
         <columns>NAME</columns>
         <columns>Reference__c</columns>
         <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
-        <columns>Frequency__c</columns>
         <columns>Magnitude__c</columns>
-        <columns>Atom__c</columns>
+        <columns>Reference_Clause__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Order_By__c</field>
-            <operation>equals</operation>
-        </filters>
         <filters>
             <field>Product_Type__c</field>
             <operation>equals</operation>
@@ -844,8 +838,13 @@
         </filters>
         <filters>
             <field>Reference__c</field>
-            <operation>contains</operation>
-            <value>MITA</value>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Class__c</field>
+            <operation>equals</operation>
+            <value>&quot;C,R&quot;</value>
         </filters>
         <label>ZZ-MISC SEARCHES</label>
         <language>en_US</language>

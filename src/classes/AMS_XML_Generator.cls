@@ -310,6 +310,11 @@ public with sharing class AMS_XML_Generator {
     //Type - determinates if it's "MasterData" or "ECC"
     //case -  Brings the OSCAR case Id for getting the ECC data
     public String getAgencyDetail(List<Account> agency, String[] r, String type, String caseId){
+        return getAgencyDetail(agency, r, type, caseId, new List<String>());
+    }
+
+    /*** AMSU-158 ***/
+    public String getAgencyDetail(List<Account> agency, String[] r, String type, String caseId, List<String> listOfErrors){
         
         Integer inicioCPU = Limits.getCpuTime();
         Integer inicioCPUx = Limits.getLimitCpuTime();
@@ -359,12 +364,12 @@ public with sharing class AMS_XML_Generator {
         System.debug('orderedAgencyIds:' + orderedAgencyIds);
 
         //Get AMS_Segment__c RecordType ID for "IATA Code Programs"
-        Id rtProgram = Schema.SObjectType.AMS_Segment__c.getRecordTypeInfosByName().get('IATA Code Programs').getRecordTypeId();
+        Id rtProgram = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs');
         //Get AMS_Agencies_Hierarchy__c RecordType ID for "MAIN"
-        Id rtHierarchy = Schema.SObjectType.AMS_Agencies_Hierarchy__c.getRecordTypeInfosByName().get('MAIN').getRecordTypeId();
+        Id rtHierarchy = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agencies_Hierarchy__c', 'MAIN');
 
-        Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
-        Id rtAccRoleEmployee = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Employee').getRecordTypeId();
+        Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+        Id rtAccRoleEmployee = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
         
         System.debug('XML Generator - Requested Agencies from MDM PI - ' + agency);
         sDebug += '\nAgencies List:' + agency;
@@ -457,15 +462,13 @@ public with sharing class AMS_XML_Generator {
             setAddressStateKeys.add(add.State__c);
         }
 
-        //REFERENCE
-        lCountry = [SELECT AIMS_Area_ID__c,AIMS_Area_Name__c,AIMS_Region__c,BSP_Country_free_text__c,Case_BSP_Country__c,
-                CASS_Country_free_text__c,Country_Manager__c,IATA_Regional_Office__c,Id,International_dialing_code_ISD__c,
-                ISO_Code__c,Name,Region__c,SLA_Type__c,Sub_Region__c,Country_Manager__r.Name
-                FROM IATA_ISO_Country__c where Id in :setAddressCountryKeys or Id in :setAgencyCountryKeys];
+        Set<ID> globalCountryIDList = new Set<ID>();
+        globalCountryIDList.addAll(setAddressCountryKeys);
+        globalCountryIDList.addAll(setAgencyCountryKeys);
+        lCountry = IATAISOCountryDAO.getIsoCountriesByIds(globalCountryIDList);
         
         //REFERENCE
-        lState = [SELECT Name,ISO_Code__c,ISO_CODE_STANDARD__c FROM IATA_ISO_State__c where Id in :setAddressStateKeys];
-
+        lState = IATAIsoStateDAO.getIsoStatesByIds(setAddressStateKeys);
 
         lAgenciesContacts = [SELECT AccountId,AMS_isManager__c,AMS_isTicketingAgent__c,AMS_Position__c,
                             AMS_Valid__c,FirstName,Id,LastName,Name,Person__c,Status__c,Title,Email,
@@ -689,7 +692,7 @@ public with sharing class AMS_XML_Generator {
                     RecordTypeId,RecordType.Name,
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
-                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c FROM Account WHERE Id in :setAccountKeys]; 
+                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c, Reason__c FROM Account WHERE Id in :setAccountKeys]; 
 
         for (Account o : lAccount) {
             //20-06-2017 - Change AMSU-93 - special chars replacement
@@ -733,7 +736,7 @@ public with sharing class AMS_XML_Generator {
             }
         }
 
-        Id formOfPaymentRTId   = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
+        Id formOfPaymentRTId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
 
 /*  NEWGEN-801 */
 
@@ -1257,48 +1260,33 @@ public with sharing class AMS_XML_Generator {
                         Datetime dtDefault_date = ag.Default_date__c == Null ? Null : Datetime.newInstance(ag.Default_date__c.year(), ag.Default_date__c.month(),ag.Default_date__c.day());
                         getElementNode(agEndorsementNode, 'organization_last_change_date', dtDefault_date == Null ? Null : String.valueOf(dtDefault_date.format('yyyyMMdd')));
 
-                        /* 
-                        //FM 19-04-2017 - removed by enhancement AMSU-18
-                        
-                        Datetime dtOrganization_Last_Change_Date = ag.Organization_Last_Change_Date__c == Null ? Null : Datetime.newInstance(ag.Organization_Last_Change_Date__c.year(), ag.Organization_Last_Change_Date__c.month(),ag.Organization_Last_Change_Date__c.day());
-                        getElementNode(agEndorsementNode, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
-                    
-                        //FM 24-11-2016
-                        //Get Record with "Default" (DEF) change code information
-                        Agency_Applied_Change_code__c auxAgAppChangeCodeDEF = mAg_VS_AgChangeCodeDEF.get(ag.Id);
-                        String sIATANumericStatus = AMS_Utils.getIATANumericStatus(ag.Status__c);
+                        /*** AMSU-158 Begin ***/
+                        if(String.isNotBlank(ag.Reason__c)) {
+                            List<String> reasonParsed = ag.Reason__c.split('-');
+                            String code = '';
+                            String description = '';
 
-                        //If Terminated need to insert another Endorsement entry with the default information, but only if this exist
-                        // the default status code is set to '5' - "Cash basis/no commission"
-                        if((sIATANumericStatus == '0' || sIATANumericStatus == '6') && auxAgAppChangeCodeDEF != null){
-
-                            Dom.Xmlnode agEndorsementNodeDEF = inspectionNode.addChildElement('endorsement', null, null);
-                            getElementNode(agEndorsementNodeDEF, 'accreditation_endorsement_status_code',  '5' );
-
-                            //Set the "Date_Organisation_Status_attained" value to the created date of the "DEF" change code
-                            Datetime dtOrgStatusAttained = Datetime.newInstance(auxAgAppChangeCodeDEF.Created_Date_To_Show__c.year(), auxAgAppChangeCodeDEF.Created_Date_To_Show__c.month(),auxAgAppChangeCodeDEF.Created_Date_To_Show__c.day());
-                            getElementNode(agEndorsementNodeDEF, 'date_organisation_status_attained', dtOrgStatusAttained == Null ? Null : String.valueOf(dtOrgStatusAttained.format('yyyyMMdd')));
-                            
-                            getElementNode(agEndorsementNodeDEF, 'last_inspection_date', dtLast_Inspection_Date == Null ? Null : String.valueOf(dtLast_Inspection_Date.format('yyyyMMdd')));
-                    
-                            if(ag.Accreditation_date__c != null){
-                                Datetime dtAccreditation_date = Datetime.newInstance(ag.Accreditation_date__c.year(), ag.Accreditation_date__c.month(),ag.Accreditation_date__c.day());
-                                getElementNode(agEndorsementNodeDEF, 'original_approval_date', dtAccreditation_date == Null ? Null : String.valueOf(dtAccreditation_date.format('yyyyMMdd')));
-                            }else if(ag.Original_Approval_DAte__c != null){
-                                Datetime dtOriginal_Approval_DAte = ag.Original_Approval_DAte__c == Null ? Null : Datetime.newInstance(ag.Original_Approval_DAte__c.year(), ag.Original_Approval_DAte__c.month(),ag.Original_Approval_DAte__c.day());
-                                getElementNode(agEndorsementNodeDEF, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
-                            }else if(auxAgAppChangeCodeFIN != null){
-                                Datetime dtOriginal_Approval_DAte = Datetime.newInstance(auxAgAppChangeCodeFIN.Created_Date_To_Show__c.year(), auxAgAppChangeCodeFIN.Created_Date_To_Show__c.month(),auxAgAppChangeCodeFIN.Created_Date_To_Show__c.day());
-                                getElementNode(agEndorsementNodeDEF, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
-                            }else{
-                                //If none of the options above is valid no value is sent!
-                                getElementNode(agEndorsementNodeDEF, 'original_approval_date',  Null);
+                            if(reasonParsed.isEmpty()) {
+                                if(!ag.CNS_Account__c) {                                
+                                    listOfErrors.add(ag.Id + ',' + (String.isBlank(ag.Reason__c) ? '' : ag.Reason__c).escapeCSV());
+                                }
+                            } else  {
+                                String firstElem = reasonParsed.remove(0);
+                                if(firstElem.isNumeric()) {
+                                    code = firstElem;
+                                } else {
+                                    if(reasonParsed.isEmpty()) {
+                                        reasonParsed.add(firstElem);
+                                    }
+                                    listOfErrors.add(ag.Id + ',' + (String.isBlank(ag.Reason__c) ? '' : ag.Reason__c).escapeCSV());
+                                }
+                                description = String.join(reasonParsed, '-');
                             }
 
-                            getElementNode(agEndorsementNodeDEF, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
-                    
+                            getElementNode(agEndorsementNode, 'accreditation_endorsement_reason_code',  code);
+                            getElementNode(agEndorsementNode, 'accreditation_endorsement_reason_description',  description);
                         }
-                        */
+                        /*** AMSU-158 End ***/
                     }
                    
                     Boolean bHier = False;
@@ -1370,9 +1358,6 @@ public with sharing class AMS_XML_Generator {
         
         return doc.toXmlString();   
     }
-
-
-
 
     public void getHeaderNode(Dom.Xmlnode rootNode, Map<String, String> mValues){
         

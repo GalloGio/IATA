@@ -10,7 +10,7 @@
 	
     <aura:attribute name="index" type="Integer" />
     <aura:attribute name="accountId" type="String" />
-    
+
     
     <aura:registerEvent name="updateAccount" type="c:AMP_updateAccount"/>
     <aura:registerEvent name="deleteAccount" type="c:AMP_deleteAccount"/>
@@ -75,14 +75,31 @@
 					</aura:if>
 				</td>
                 <aura:if isTrue="{!v.displayType == 'Owners'}">
-                    <td><a href="{!'/'+ v.relatedAccount.Owner_Account__r.Id }" target="_blank">{! v.relatedAccount.Owner_Account__r.Name }</a></td>
-                    <td><span class="slds-truncate">{! v.relatedAccount.Owner_Account__r.Membership_status__c }</span></td>                        
-                <aura:set attribute="else">
-                    <td><a href="{!'/'+ v.relatedAccount.Account__r.Id }" target="_blank">{! v.relatedAccount.Account__r.Name }</a></td>
-                    <td><span class="slds-truncate">{! v.relatedAccount.Account__r.Membership_status__c }</span></td>          
-                </aura:set>
+                    <aura:if isTrue="{! v.relatedAccount.Other_Stakeholder_Types__c == false}">
+                        <td><a href="{!'/'+ v.relatedAccount.Owner_Account__r.Id }" target="_blank">{! v.relatedAccount.Owner_Account__r.Name }</a></td>
+                        <td><span class="slds-truncate">{! v.relatedAccount.Owner_Account__r.Membership_status__c }</span></td>                        
+                    	
+                        <aura:set attribute="else">
+                            <td><span class="slds-truncate">{!$Label.c.Remaining_Owners}</span></td>
+                            <td/>                    	
+                        </aura:set>
+                    </aura:if>
+	                <td><span class="slds-truncate">{!v.relatedAccount.Percentage__c}<aura:if isTrue="{!v.relatedAccount.Percentage__c >= 0}">%</aura:if></span></td>                 
+
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{! v.relatedAccount.No_Airline_Subsidiaries__c == false}">
+                            <td><a href="{!'/'+ v.relatedAccount.Account__r.Id }" target="_blank">{! v.relatedAccount.Account__r.Name }</a></td>
+                            <td><span class="slds-truncate">{! v.relatedAccount.Account__r.Membership_status__c }</span></td>                        
+	                        <td><span class="slds-truncate">{!v.relatedAccount.Percentage__c}<aura:if isTrue="{!v.relatedAccount.Percentage__c >= 0}">%</aura:if></span></td>
+                            
+                            <aura:set attribute="else">
+                                <td><span class="slds-truncate">{!$Label.c.No_Subsidiaries}</span></td>
+                                <td/>                    	
+                                <td/>                    	
+                            </aura:set>
+                        </aura:if>
+	                </aura:set>
                 </aura:if>          
-                <td><span class="slds-truncate">{!v.relatedAccount.Percentage__c}<aura:if isTrue="{!v.relatedAccount.Percentage__c >= 0}">%</aura:if></span></td>                 
             <!-- </tr> -->
         </aura:set>
     </aura:if>

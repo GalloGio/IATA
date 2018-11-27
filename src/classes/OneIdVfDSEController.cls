@@ -56,14 +56,10 @@ public without sharing class OneIdVfDSEController {
     public list<String> infoMessage {get; set;}
     private String log;
     private string generalError =  Label.ISSP_Registration_generalError;
-    //public String caseSubject {get; set;}
     public Boolean passwordReset {get; set;}//TF-SP11
-   // public String caseDescription {get; set;}
-   // public OneIdVfDSEController thisCtrlForNewCaseForm {get{return this;}}
     public boolean displayNewCaseForm {get; set;}
 
     //EM
-    //public ISSP_reCAPTCHA  reCAPTCHA {get; set;}
     public vfIECreCAPTCHA  reCAPTCHA    {get; set;}
 
     public string selectedCustomerType{get;set;}
@@ -98,7 +94,6 @@ public without sharing class OneIdVfDSEController {
     public boolean showConfirmMessage {get; set;}
     public boolean createAccountErroeMode {get; set;}
     public boolean preventAddressDoctorService {get; set;}
-    //public Case case {get; set;}
 
     public Boolean isAirline {get; set;}
     public Boolean isAgency {get; set;}
@@ -122,26 +117,18 @@ public without sharing class OneIdVfDSEController {
 
     public Boolean captchaVerified {get; set;}
     public String captchaId {get; set;}
-    //public String captchaAnswer {get; set;}
 
     public Boolean show90Days {get; set;}
 
     public String country {get; set;}
 
     // Start MM: "Project Registration Merge" - Define a referrer which will be checked against parameters included in the URL �First_Community�:
-    //public string sRefererCommunity {get; set;}
     // EM: New
-    //public string urlredirect {get; set;}
-    //public string constIEC {get {return 'iec';}}
-    //public string constISS {get {return 'iss';}}
     //End
     public String templatename {get;set;}
     public Boolean onegpa {get;set;}
 
     //EM
-    //public String phone1 {get;set;}
-    //public String phone2 {get;set;}
-    //public String phone3 {get;set;}
     public boolean showcreateother {get;set;}
     public String except {get;set;}
     public String addressdoctorerror {get;set;}
@@ -181,26 +168,14 @@ public without sharing class OneIdVfDSEController {
         errorMessage = new list<string>();
         infoMessage = new list<string>();
         log = '';
-        //String urlSubject = ApexPages.currentPage().getParameters().get('subject');
         country = ApexPages.currentPage().getParameters().get('country');
         lang = ApexPages.currentPage().getParameters().get('language');
 
-        //if(urlSubject <> null) {
-        //    caseSubject = urlSubject;
-        //} else {
-        //    caseSubject = Label.ISSP_Registration_Subject_Default; //TF - SP11
-        //}
-
         passwordReset = false; //TF - SP11
 
-        //con = new Contact(User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS);
         con = new Contact();
-        //if (sRefererCommunity == constIEC)    con.User_IECPortal_Status__c = IECConstants.NEW_CONTACT_STATUS;
         accList = new list<Account>();
         acc = new Account(name='');
-        //reCAPTCHA = new ISSP_reCAPTCHA();
-        //reCAPTCHA.verified = false;
-        //reCAPTCHA.verified = true;
         captchaVerified = false;
         createBranch = false;
         accountFound = false;
@@ -234,8 +209,6 @@ public without sharing class OneIdVfDSEController {
 
 
     }
-
- 
 
 
     /*
@@ -299,14 +272,7 @@ public without sharing class OneIdVfDSEController {
                 return null;
             }
         }
-            /*
-            else if (isGSA){
-                if (searchIATACode.length() != 3){
-                    errorMessage.add(Label.ISSP_IATA_Code_GSA);
-                    return null;
-                }
-            }
-            */
+            
         else if (isAgency){
             try {
                 iataCodeInput =  Decimal.valueOf(searchIATACode);
@@ -375,11 +341,7 @@ public without sharing class OneIdVfDSEController {
         else if (isAirline && !toSearchDesignatorCode) {
             whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\' AND Sector__c != \'General Public\'';
         }
-            /*
-            else if (isGSA) {
-                whereStr = 'IATACode__c=\'' + searchIATACode + '\' and IATA_ISO_Country__c=\'' + searchCountry + '\'';
-            }
-            */
+            
         else if (isGSA) {
             whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\'';
         }
@@ -564,11 +526,6 @@ public without sharing class OneIdVfDSEController {
         if (accList.size()==1)
             selectedAccId = accList.get(0).id;
 
-        //if (accList.size()==1 && isGeneral) {
-        //  onegpa=true;
-        //    infoMessage.add('AAA');
-        //}
-
         system.debug('selectedAccId after search: ' + selectedAccId);
 
         if (!accList.isEmpty()){
@@ -599,97 +556,12 @@ public without sharing class OneIdVfDSEController {
             //EM: Back to the community page
             //EM : Back to the starting page
             //PageReference pr;
-            //pr = new PageReference('/login');
 
-            //return pr;
             returnToParent = ReturnToParentEnum.ReturnToLogin;
             return null;
         }
 
-        /*else{
-            PageReference pr = new PageReference('/ISSP_Login');
-            return pr;
-        }
-
-        errorMessage.clear();
-        selectedCustomerType = GeneralPublic;
-        return Page.ISSP_createContact;
-        */
     }
-
-    /*
-     * First step: User
-     * user exist --> dont do anything
-     * contact exist --> create new user
-     * contact not exist --> move to next page
-     * is also called at the end of account and contact creation
-     */
-    /*
-    public PageReference submitUser() {
-       //if(!pageIsValid())
-        //    return null;
-        String IATAusername = ISSP_Utilities.buildPortalUserName(con.email);
-
-        system.debug('submitUser email: ' + con.email);
-        system.debug('submitUser IATAusername: ' + IATAusername);
-        //list<User> userList = [select Id from User where email =:con.email];
-        list<User> userList = [select Id, isActive, Portal_User_Frozen_Checkbox__c, Email from User where Username =:IATAusername];
-        list<Contact> conList;
-        RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
-        if(con.Id == null) {
-            //conList = [select accountId,firstName,lastName,Email from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
-            conList = [select accountId,firstName,lastName,Email,Salutation, Account.RecordType.DeveloperName,
-                (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE Is_Active_Card__c = true)
-                from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
-        }
-        else
-            conList = new list<Contact>{con};
-       
-        // new contact
-        if (conList.size()==0) {
-            con.RecordTypeId = rt.id;
-            return Page.ISSP_CreateContact;
-        }
-        
-        if (userList.size()==0 && conList.size()>0) {
-            // existing contact
-            return createNewUser(conList.get(0));
-        } else {
-          //if (userList[0].IsActive){
-            //user is active
-            log += 'userList.size()'+userList.size() + ', conList.size()'+conList.size();
-            log(log);
-            errorMessage.add(Label.ISSP_Registration_UserExist); 
-            return null;
-                     */
-          /*}
-          else if (userList[0].Portal_User_Frozen_Checkbox__c){
-            //user is frozen
-            log += 'userList.size()'+userList.size() + ', conList.size()'+conList.size();
-            log(log);
-            show90Days = true;
-            ISSP_Login.reactivateUser(userList[0]);
-            return null;            
-          }
-          else{
-            //user is inactive
-            log += 'userList.size()'+userList.size() + ', conList.size()'+conList.size();
-            log(log);
-            errorMessage.add(Label.ISSP_Registration_inactiveUserExist+' ('+con.Email+')'); 
-            //ISSP_Utilities.SendErrorNotificationEMail('LOG:'+log+' /n ErrorMessage: '+Label.ISSP_Registration_inactiveUserExist+' ('+con.Email+')');
-            displayNewCaseForm = true;
-            return null;            
-          }
-            log += 'userList.size()'+userList.size() + ', conList.size()'+conList.size();
-            log(log);
-            errorMessage.add(Label.IEC_Registration_UserExist); 
-            //ISSP_Utilities.SendErrorNotificationEMail('LOG:'+log+' /n ErrorMessage: '+Label.ISSP_Registration_UserExist);
-           // displayNewCaseForm = true;
-            return null;
-
-        }
-    }
-*/
 
 
     /*
@@ -735,7 +607,7 @@ public without sharing class OneIdVfDSEController {
             }
             system.debug('RecordTypeId: ' + getRecordTypeCode(customerTypeCreate));
             system.debug('createBranch: ' + createBranch);
-            acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+            acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
             acc.OwnerId = ISSP_Constant.newAccountOwnerId;
             if (createBranch){
                 acc.Reason_for_creation__c = 'Branch is missing';
@@ -755,10 +627,22 @@ public without sharing class OneIdVfDSEController {
 
                 //EM: Management of state/provinces picklists
                 if (!String.isBlank(acc.billingstate)) {
-                    List <IATA_ISO_State__c> states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.billingcountry AND Informatica_value__c = :acc.billingstate LIMIT 1];
+                    List<IATA_ISO_State__c> states = new List<IATA_ISO_State__c>();
+                    for(IATA_ISO_State__c sta : IATAIsoStateDAO.getIsoStates()){
+                        if(sta.IATA_ISO_Country__r.Name == acc.billingcountry && sta.Informatica_value__c == acc.billingstate){
+                            states.add(sta);
+                            break;
+                        }
+                    }
+
                     system.debug('states 1+++ ' + states);
                     if (states.size() == 0) {
-                        states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.billingcountry AND ISO_code__c = :acc.billingstate LIMIT 1];
+                        for(IATA_ISO_State__c sta : IATAIsoStateDAO.getIsoStatesByIds(new Set<String>{acc.billingstate})){
+                            if(sta.IATA_ISO_Country__r.Name == acc.billingcountry){
+                                states.add(sta);
+                                break;
+                            }
+                        }
                     }
                     system.debug('states 2+++ ' + states);
                     if (states.size()!=0)
@@ -769,9 +653,21 @@ public without sharing class OneIdVfDSEController {
                     if (acc.shippingstate == acc.billingstate && acc.shippingcountry == acc.billingcountry)
                         acc.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Billing_State__c;
                     else {
-                        List <IATA_ISO_State__c> states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.shippingcountry AND Informatica_value__c = :acc.shippingstate LIMIT 1];
+                        List<IATA_ISO_State__c> states = new List<IATA_ISO_State__c>();
+                        for(IATA_ISO_State__c sta : IATAIsoStateDAO.getIsoStates()){
+                            if(sta.IATA_ISO_Country__r.Name == acc.shippingcountry && sta.Informatica_value__c == acc.shippingstate){
+                                states.add(sta);
+                                break;
+                            }
+                        }
+
                         if (states.size() == 0) {
-                            states = [SELECT id FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :acc.shippingcountry AND ISO_code__c = :acc.shippingstate LIMIT 1];
+                            for(IATA_ISO_State__c sta : IATAIsoStateDAO.getIsoStatesByIds(new Set<String>{acc.shippingstate})){
+                                if(sta.IATA_ISO_Country__r.Name == acc.shippingcountry){
+                                    states.add(sta);
+                                    break;
+                                }
+                            }
                         }
                         if (states.size()!=0)
                             acc.IATA_ISO_Shipping_State__c = states[0].id;
@@ -804,7 +700,6 @@ public without sharing class OneIdVfDSEController {
 
         if (searchCountry!=null && searchCountry!=''){
             con.ISO_Country__c = searchCountry;
-            //con.MailingCountry = searchCountryName;
             //EM: Handle ISO Shipping Country
             con.IATA_ISO_Shipping_Country__c = searchCountry;
             con.Country__c = searchCountryName;
@@ -839,14 +734,9 @@ public without sharing class OneIdVfDSEController {
             return null;
 
         }
-        //errorMessage.add(System.Label.ISSP_Registration_Thank_you);
-        //errorMessage.add(System.Label.ISSP_Registration_Redirection);
 
         sendEmailToAdmin = true;
 
-        // create new User
-        //return submitUser();
-        
         acc.Legal_name__c = acc.Name;
         String languageString = 'English';
         if (lang != null && lang != ''){
@@ -890,60 +780,7 @@ public without sharing class OneIdVfDSEController {
         }
 
     }
-/*
-    public PageReference submitCase() {
-        system.debug('\n\n\n Creating Case \n\n\n');
-        system.debug('Password reset: ' + passwordReset);
-        String subject = (errorMessage!=null && errorMessage.size()>0 ? errorMessage[0] : label.ISSP_generalError);
-        createCase(subject, con, selectedCustomerType, searchIATACode, caseDescription);
-        displayNewCaseForm = false;
-        PageReference ThanksPage = new PageReference(label.ISSP_SharePoint_Thanks);
-        ThanksPage.setRedirect(true);
-        return ThanksPage ;
-    }
 
-    public void createCase(String subject, Contact con, String customerType, String IATACode, String description) {
-        if (countryMap==null)
-            getISOCountry();
-        String country = countryMap.get(con.ISO_Country__c);
-        String allSubject = 'REGISTRATION ERROR - ' + subject + ' (' + con.Email + '), Name: ' + con.FirstName + ' ' + con.LastName + ', Type: ' + customerType + ', Country: ' + countryMap.get(con.ISO_Country__c) + ', IATA Code: ' + IATACode;
-        if (allSubject.length() > 255)
-            allSubject = allSubject.substring(0,254);
-        String reason = '';
-        String contactId = null;
-        if (passwordReset){//TF - SP11
-            allSubject = caseSubject;//TF - SP11
-            reason = 'Registration process';
-            List <Contact> searchContactList = [SELECT Id FROM Contact WHERE Email = :con.Email];
-            if (searchContactList.size() == 1){
-                contactId = searchContactList[0].Id;
-            }
-        }
-        Case cas = new Case(
-                CaseArea__c = 'Customer Portal Enquiry',
-            //Subject  = 'REGISTRATION ERROR - ' + subject + ' (' + con.Email + ')',
-                Subject  = allSubject,
-                SuppliedName = con.Salutation + ' ' + con.FirstName + ' ' + con.LastName,
-                SuppliedEmail = con.Email,
-                SuppliedPhone = con.Phone,
-                Description = description,
-                Country_concerned_by_the_query__c = countryMap.get(con.ISO_Country__c),
-                Cargo_Business__c = customerType,
-                IATAcode__c = IATACode,
-                Origin = 'Portal',
-                Reason1__c = reason,
-                ContactId = contactId
-        );
-        try {
-            insert cas;
-            system.debug('\n\n\n cas: ' + cas + '\n\n\n');
-            //errorMessage.add(cas + '');
-        } catch (Exception e) {
-            system.debug('\n\n\n Error: ' + e + '\n\n\n');
-            errorMessage.add('Error in creation of a new case: ' + e);
-        }
-    }
-*/
     @TestVisible
     private String getRecordTypeCode(String customerType) {
         String devName = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
@@ -951,9 +788,10 @@ public without sharing class OneIdVfDSEController {
             return null;
         log(customerType + ', ' + devName);
         try {
-            List<RecordType> rtSet = [select id from RecordType where DeveloperName=:devName];
-            if (rtSet!=null && rtSet.size()>0 && rtSet.get(0)!=null)
-                return rtSet.get(0).id;
+            Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', devName);
+            if(String.isNotBlank(rtId)){
+                return rtId;
+            }
         } catch (Exception e) {
             log('error getting type');
         }
@@ -966,7 +804,7 @@ public without sharing class OneIdVfDSEController {
         if (countryMapEmpty)
             countryMap = new Map<Id, String>();
 
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
+        for(IATA_ISO_Country__c iso: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
             if (iso.Name != 'All Countries'){
                 options.add(new SelectOption(iso.Id,iso.Name));
                 if (countryMapEmpty) {

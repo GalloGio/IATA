@@ -11,7 +11,7 @@ public class ISSP_PortalService_Test {
 		acc.IATACode__c = '1111';
 		acc.IATA_ISO_Country__c = ISO_Country.Id;
 		acc.BillingCity = 'Test';
-		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		insert acc;
 		
 		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
@@ -80,7 +80,7 @@ public class ISSP_PortalService_Test {
 		acc.IATACode__c = '1111';
 		acc.IATA_ISO_Country__c = ISO_Country.Id;
 		acc.BillingCity = 'Test';
-		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		insert acc;
 		
 		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
@@ -160,7 +160,7 @@ public class ISSP_PortalService_Test {
 		acc.IATACode__c = '1111';
 		acc.IATA_ISO_Country__c = ISO_Country.Id;
 		acc.BillingCity = 'Test';
-		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		insert acc;
 		
 		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
@@ -249,7 +249,7 @@ public class ISSP_PortalService_Test {
 		acc.IATACode__c = '1111';
 		acc.IATA_ISO_Country__c = ISO_Country.Id;
 		acc.BillingCity = 'Test';
-		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		insert acc;
 		
 		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;

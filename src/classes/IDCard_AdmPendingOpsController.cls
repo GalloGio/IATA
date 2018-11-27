@@ -105,8 +105,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
         validatedApplication = new Map<String, ID_Card_Application__c> ();
         contactsPerApplication = new Map<String, ContactProxy>();
         isApplicationreadyMap = new Map<String, boolean> ();
-        Map<string, Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
-        singeAppRT = idcardAppRT.get('Single_ID_Card_Operation');
+        singeAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
         system.debug('[IDCard_AdmPendingOpsController] LOAD LIST');
         try {

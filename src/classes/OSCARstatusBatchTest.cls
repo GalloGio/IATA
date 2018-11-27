@@ -4,15 +4,14 @@ private class OSCARstatusBatchTest {
 	
 	@testSetup static void initialize() {
 		List<AMS_OSCAR__c> oscarList = new List<AMS_OSCAR__c>();
-		String Voluntary_Relinquishment_Id = [SELECT id from RecordType where DeveloperName = 'Voluntary_Relinquishment'].id;
-		List<RecordType> Change_Id = [SELECT id from RecordType where DeveloperName = 'CHANGE']; //there are 2 recordtypes with developerName 'change'
+		String Voluntary_Relinquishment_Id = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
+		Id Change_Id = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
-		String Certification_Id = [SELECT id from RecordType where DeveloperName = 'certification'].id;
+		Id Certification_Id = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
 
 		Date today = System.today();
-		system.debug('Today:' + today);
 		
-		Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account account = new Account(RecordTypeId = agencyRT, Name = 'Test Account');
 		insert account;
 		
@@ -23,7 +22,7 @@ private class OSCARstatusBatchTest {
 		                                     Termination_Date__c = System.today(), Status__c='Accepted_Future Date', RecordTypeId=Voluntary_Relinquishment_Id);
 		
 		AMS_OSCAR__c osc3 = new AMS_OSCAR__c(Name = 'Change1', Account__c = account.Id,
-		                                     Change_effective_as_of__c = System.today(), Status__c='Accepted_Future Date', RecordTypeId=Change_Id[1].id);
+		                                     Change_effective_as_of__c = System.today(), Status__c='Accepted_Future Date', RecordTypeId=Change_Id);
 		
 		AMS_OSCAR__c osc4 = new AMS_OSCAR__c(Name = 'certification1', Account__c = account.Id,
 		                                     Sanity_check_deadline__c = System.today(), Status__c='Accepted_Future Date', RecordTypeId=Certification_Id);

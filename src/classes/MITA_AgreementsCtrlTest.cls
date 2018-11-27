@@ -17,7 +17,7 @@ private class MITA_AgreementsCtrlTest {
 			new Account(
 				Name = 'Air France',
 				IATA_ISO_Country__c = countryFR.Id,
-				RecordtypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId(),
+				RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
 				Field_Head_Office__c = 'Headquearter',
 				ACLI_Status__c = 'Active Company',
 				Airline_designator__c = 'AF',
@@ -33,7 +33,7 @@ private class MITA_AgreementsCtrlTest {
 			new Account(
 				Name = 'Swissair',
 				IATA_ISO_Country__c = countryCH.Id,
-				RecordtypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId(),
+				RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
 				Field_Head_Office__c = 'Headquearter',
 				ACLI_Status__c = 'Active Company',
 				Airline_designator__c = 'SA',

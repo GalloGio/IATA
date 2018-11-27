@@ -831,8 +831,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		Set<Id> toReturn = new Set<Id>();
 
-		For(AMS_Process_Detail__c pd : [Select Id, Account__c from AMS_Process_Detail__c where OSCAR__c = :oscarId]){
-			toReturn.add(pd.Account__c);
+		if(oscarId != null){
+			For(AMS_Process_Detail__c pd : [Select Id, Account__c from AMS_Process_Detail__c where OSCAR__c = :oscarId]){
+				toReturn.add(pd.Account__c);
+			}
 		}
 
 		return toReturn;
@@ -855,6 +857,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		if(toReturn == null)
 			toReturn = new AChangeStructure();
+
+		Set<Id> accountsToUpdateRHC = new Set<Id>();
 
 		System.debug('[ANG_AgencyChangesHelper] - Types of Change (' + oscarToProcess.ANG_Type_Of_Change__c + ') ');
 
@@ -971,6 +975,11 @@ public with sharing class ANG_AgencyChangesHelper {
 					if (oldValue != newValue)
 						objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
 
+                    
+					if(toReturn.accountsMap.containsKey(accId) && toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.HE && oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.VFMR){
+						if(accFieldApiName == 'Remittance_frequency__c' && oldValue != newValue)
+							accountsToUpdateRHC.add(accId);
+					}
 
 					acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
 				}
@@ -984,6 +993,8 @@ public with sharing class ANG_AgencyChangesHelper {
 					toReturn.changesStruct.get(acc.Id).changes.addAll(objectChangesList);
 			}
 
+			if(!accountsToUpdateRHC.isEmpty())
+				recalculateRHCInformation(accountsToUpdateRHC);
 		}
 
 		//this would overwrite existing struct, create a new method in the wrapper to add content in this struct
@@ -991,6 +1002,29 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		return toReturn;
 
+	}
+
+	public static void recalculateRHCInformation(Set<Id> accountIds){
+
+		List<ANG_RHC_Information__c> rhcInfoList = new List<ANG_RHC_Information__c>();
+		Set<Id> accountIdsToProcess = new Set<Id>();
+
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
+			rhcInfoList.add(r);
+			accountIdsToProcess.add(r.ANG_AccountId__c);
+		}
+
+		if(!rhcInfoList.isEmpty()){
+			ANG_RHCHelper.calculateRHCAmount(rhcInfoList);
+			update rhcInfoList;
+		}
+
+		if(!accountIdsToProcess.isEmpty()){
+			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs())
+				Database.executeBatch(new ANG_UpdateRHCInformationBatch(accountIdsToProcess, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, false, 1));
+			else 
+				System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accountIdsToProcess, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, false, 1));
+		}
 	}
 
 	public static AChangeStructure applyChangeOfOwnership(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn, Boolean isCorrection){
@@ -1161,7 +1195,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		Id formOfPaymentRT = null;
 
 		if(!accountsToProcess.isEmpty())
-			formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+			formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		For(Id accountId: accountsToProcess){
 

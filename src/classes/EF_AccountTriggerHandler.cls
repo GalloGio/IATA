@@ -208,7 +208,7 @@ public class EF_AccountTriggerHandler {
 	}
 
 	public static void inactiveEFContracts(Set<Id> inactiveAccsSet){
-		Id contractRTId = AMS_Utils.getId('Contract', 'EF_Client_Agreement');
+		Id contractRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Contract', 'EF_Client_Agreement');
 
 		//query for Contracts, Billing Agreements and Related Contacts on the accounts inactivated.
 		Map <Id,Contract> contractMap = new Map <Id,Contract> ([Select Id, EF_Status__c, EF_Comments__c,
@@ -393,7 +393,7 @@ public class EF_AccountTriggerHandler {
 			//loop over accounts to check if any of them need to trigger a notification.
 			for(Account a: accs){			
 				//check fields for Clients
-				if(a.RecordTypeId==AMS_Utils.getId('Account', 'Others') ){
+				if(a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others') ){
 					
 					for(String s: criticalClientFieldList){
 									
@@ -405,9 +405,9 @@ public class EF_AccountTriggerHandler {
 				}
 
 				//check fields for Customers
-				if(a.RecordTypeId==AMS_Utils.getId('Account', 'Operator') ||
-					a.RecordTypeId==AMS_Utils.getId('Account', 'IATA_Airline_BR') ||
-					a.RecordTypeId==AMS_Utils.getId('Account', 'IATA_Airline')){
+				if(a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Operator') ||
+					a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ||
+					a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')){
 					for(String s: criticalAirlineFieldList){
 									
 		           	
@@ -444,7 +444,7 @@ public class EF_AccountTriggerHandler {
              	}
            }
            emailBody = emailBody + '</table>';
-           if(a.RecordTypeId==AMS_Utils.getId('Account', 'Others')){
+           if(a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others')){
            		if(a.EF_Client_Services_Specialist__c!=null){
            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
            mail.setSaveAsActivity(false);

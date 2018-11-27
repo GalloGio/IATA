@@ -593,7 +593,11 @@
         <name>AMS_RollbackCase_Description</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_AE_separate_Legal_Entity --></label>
+        <label><!-- AMS_XML_GEN_ERROR_RECEIVER --></label>
+        <name>AMS_XML_GEN_ERROR_RECEIVER</name>
+    </customLabels>
+    <customLabels>
+        <label>* บริษัทในเครือแห่งนี้มีสถานะทางกฎหมายแยกออกจากนิติบุคคลหลักหรือไม่?</label>
         <name>ANG_AE_separate_Legal_Entity</name>
     </customLabels>
     <customLabels>
@@ -637,43 +641,43 @@
         <name>ANG_Conversion_Tool_Workaround</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Effective_Date --></label>
+        <label>วันที่เริ่มมีผลบังคับ:</label>
         <name>ANG_Effective_Date</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP CashlessMessage --></label>
+        <label>&quot;&lt;a href=&quot;&quot;/ISSP_AMSCases&quot;&quot;&gt;สมัคร&lt;/a&gt;เพื่อเปลี่ยนประเภทการรับรองเป็น GoStandard ในกรณีที่ต้องการออกตั๋วโดยใช้ระบบรับชำระด้วยเงินสด&quot;</label>
         <name>ANG_ISSP_AFP_CashlessMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP CashlessMessage --></label>
+        <label>&quot;คำขอเพื่อเข้าสู่บริการ&lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt;การรับรอง IATA และการเปลี่ยนแปลง&lt;/a&gt; ในกรณีที่เปลี่ยนการรับรองไปเป็น GoLite&quot;</label>
         <name>ANG_ISSP_AFP_CashlessMessageNoAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AFP_CreditCardNoAccess --></label>
+        <label>&quot;คำขอเพื่อเข้าสู่บริการ&lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt;การรับรอง IATA และการเปลี่ยนแปลง&lt;/a&gt; ในกรณีที่ยื่นเอกสารหลักฐานความสอดคล้อง PCI&quot;</label>
         <name>ANG_ISSP_AFP_CreditCardNoAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP NoCreditCardMessage --></label>
+        <label>&quot;&lt;a href=&quot;&quot;/ISSP_ANG_PCI?&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt;คำขอเพื่อใช้ระบบชำระเงินด้วยบัตรเครดิต&lt;/a&gt;&quot;</label>
         <name>ANG_ISSP_AFP_NoCreditCardMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationType --></label>
+        <label>ประเภทการรับรอง</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationTypeRequired --></label>
+        <label>กรุณาเลือกประเภทการดำเนินการ</label>
         <name>ANG_ISSP_AccreditationTypeRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationTypeTitle --></label>
+        <label>ประเภทของการรับรอง</label>
         <name>ANG_ISSP_AccreditationTypeTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AnnualFees --></label>
+        <label>ค่าธรรมเนียมรายปี:</label>
         <name>ANG_ISSP_AnnualFees</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AssociateEntity --></label>
+        <label>บริษัทในเครือ:</label>
         <name>ANG_ISSP_AssociateEntity</name>
     </customLabels>
     <customLabels>
@@ -685,19 +689,19 @@
         <name>ANG_ISSP_ChangeContactHierarchyError</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1 --></label>
+        <label>ขอแสดงความยินดีกับการเปิดบัญชีใหม่กับ IATA EasyPay</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1 --></label>
+        <label>กรุณาอ่านข้อความต่อไปนี้</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2 --></label>
+        <label>คำถามที่พบบ่อย</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3 --></label>
+        <label>เพื่อทราบข้อมูลเพิ่มเติมเกี่ยวกับการจัดการบัญชี EasyPay และเริ่มต้นใช้บริการ</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</name>
     </customLabels>
     <customLabels>
@@ -705,31 +709,31 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3 --></label>
+        <label>&quot;เพื่อนร่วมงานสามารถสมัครเข้าใช้บัญชีซึ่งคุณเพิ่งทำการเปิดผ่านทางพอร์ทัลบริการลูกค้า IATA &amp;lt;a href=&quot;&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot;&gt;คำถามที่พบบ่อย&amp;lt;/a&gt;ข้างต้นอธิบายถึงวิธีบริหารผู้เข้าใช้บัญชีของคุณ&quot;</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail --></label>
+        <label>ขอแสดงความยินดีกับการเปิดบัญชีใหม่กับ IATA EasyPay กรุณาศึกษาข้อมูลวิธีบริหารและจัดการบัญชี EasyPay รวมทั้งขั้นตอนปฏิบัติเบื้องต้นในการโอนเงิน เพื่อที่คุณจะได้เริ่มออกตั๋ว EasyPay เพื่อนร่วมงานสามารถสมัครเข้าใช้บัญชีซึ่งคุณเพิ่งทำการเปิดผ่านทางพอร์ทัลบริการลูกค้า IATA ข้อความข้างต้นอธิบายถึงวิธีบริหารผู้เข้าใช้บัญชีของคุณ ขอขอบคุณ, แผนกลูกค้าสัมพันธ์ IATA</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_1 --></label>
+        <label>กรุณาเลือกสถานะผู้เข้าใช้งานระบบ IATA EasyPay</label>
         <name>ANG_ISSP_ConfirmRequestIEP_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_2 --></label>
+        <label>เมื่อคุณยืนยันการเข้าใช้งานแล้ว ระบบจะส่งคำขอไปยังผู้ดูแลและผู้จัดการกองทุน IATA EasyPay ของคุณ เพื่อการพิจารณาอนุมัติต่อไป</label>
         <name>ANG_ISSP_ConfirmRequestIEP_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_3 --></label>
+        <label>สำหรับข้อมูลเพิ่มเติมในหมวดต่าง ๆ กรุณาคลิก</label>
         <name>ANG_ISSP_ConfirmRequestIEP_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From --></label>
+        <label>การแปลงสถานะจาก</label>
         <name>ANG_ISSP_ConversionFrom</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From GoLite Tooltip --></label>
+        <label>ตัวช่วยเหลือการแปลงสถานะจาก GoLite</label>
         <name>ANG_ISSP_ConversionFromGoLiteTooltip</name>
     </customLabels>
     <customLabels>
@@ -737,7 +741,7 @@
         <name>ANG_ISSP_ConversionFromGoStandardGoLiteTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From GoStandard Tooltip --></label>
+        <label>ตัวช่วยเหลือการแปลงสถานะจาก GoStandard</label>
         <name>ANG_ISSP_ConversionFromGoStandardTooltip</name>
     </customLabels>
     <customLabels>
@@ -745,67 +749,67 @@
         <name>ANG_ISSP_ConversionFromTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryConcerned --></label>
+        <label>ประเทศที่เกี่ยวข้อง</label>
         <name>ANG_ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsGoBack --></label>
+        <label>กลับสู่การเปรียบเทียบการรับรองประเภทต่าง ๆ</label>
         <name>ANG_ISSP_CountryRequirementsGoBack</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsGoBackToOnlineAcc --></label>
+        <label>กลับสู่หน้าการรับรองผ่านและเปลี่ยนแปลงผ่านระบบออนไลน์</label>
         <name>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsTitle --></label>
+        <label>การรับรองบริษัทตัวแทนผ่านระบบออนไลน์ของ IATA</label>
         <name>ANG_ISSP_CountryRequirementsTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_EasyPayLegalConfirmation --></label>
+        <label>คุณกำลังเข้าสู่ระบบซึ่งจะนำไปสู่ขั้นตอนการกรอกข้อมูลใบสมัครเพื่อเปิดบัญชี IATA EasyPay ของบริษัทคุณ&lt;br/&gt;&lt;br/&gt;เมื่อคุณเลือกดำเนินการนี้ คุณตกลงยอมรับกับ IATA ในการแจ้งชื่อ นามสกุล ที่อยู่อีเมล รหัส IATA รวมถึงข้อมูลส่วนตัวอื่น ๆ ไปยังผู้จัดหา IATA EasyPay ข้อมูลต่าง ๆ ข้างต้นจะนำไปใช้โดยผู้จัดหา IATA EasyPay เท่านั้น ทั้งนี้เพื่อจุดประสงค์การเปิดและบริหารบัญชี EasyPay รวมทั้งการดำเนินบริการ EasyPay โดยทั่วไป หรือกระทำการตามที่กฎหมายกำหนด&lt;br/&gt;&lt;br/&gt;คุณต้องการดำเนินการต่อหรือไม่?</label>
         <name>ANG_ISSP_EasyPayLegalConfirmation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_AccessRequest2_IEP --></label>
+        <label>บริการได้ถูกโอนไปยังเจ้าหน้าที่ดูแล IEP/ผู้จัดการกองทุนของบริษัทคุณ</label>
         <name>ANG_ISSP_Email_AccessRequest2_IEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP --></label>
+        <label>ได้รับอนุญาตให้เข้าหน้าเว็บที่เปิดให้บริการดังต่อไปนี้</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2 --></label>
+        <label>คุณสามารถเข้าสู่ระบบ</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3 --></label>
+        <label>หรือจากหน้าหลักของพอร์ทัลลูกค้า IATA</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_AppReq_BeInformed --></label>
+        <label>โปรดทราบว่า ผู้ใช้งานตามรายชื่อด้านล่างนี้ได้ขอเข้าใช้บริการระบบ IATA EasyPay</label>
         <name>ANG_ISSP_Email_AppReq_BeInformed</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP --></label>
+        <label>เรียน เจ้าหน้าที่ดูแล IEP / ผู้จัดการกองทุน</label>
         <name>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_1 --></label>
+        <label>นี่คือการแจ้งให้คุณทราบว่า</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_2 --></label>
+        <label>พอร์ทัลที่เปิดให้บริการได้มีการเปลี่ยนแปลงเป็น</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_Subject --></label>
+        <label>พอร์ทัลลูกค้า IATA - การเปลี่ยนแปลง</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_Subject2 --></label>
+        <label>บทบาทบริการผ่านทางพอร์ทัล</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_HeadEntity --></label>
+        <label>นิติบุคคลหลัก:</label>
         <name>ANG_ISSP_HeadEntity</name>
     </customLabels>
     <customLabels>
@@ -813,31 +817,43 @@
         <name>ANG_ISSP_IATA_EasyPay</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_Abroad_Account_error_msg --></label>
+        <label>สาขาของคุณตั้งอยู่คนละประเทศกับที่ตั้งสำนักงานใหญ่ ขออภัย บริการ IATA EasyPay ยังไม่สามารถใช้ได้กับสำนักงานของคุณในขณะนี้ กรุณาติดต่อแผนกบริการลูกค้า IATA หากคุณต้องการรายละเอียดเพิ่มเติม</label>
         <name>ANG_ISSP_IEP_Abroad_Account_error_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg --></label>
+        <label>&quot;บริษัทของคุณยังไม่ได้เปิดบัญชี IATA EasyPay&lt;br/&gt;&lt;br/&gt;กรุณาติดต่อผู้มีอำนาจลงนามจากสำนักงานใหญ่ของคุณเพื่อเปิดบัญชี IATA EasyPay การเปิดบัญชี IATA EasyPay คุณจะต้องเป็นทั้งเจ้าหน้าที่ดูแลพอร์ทัลและมีอำนาจลงนามของบริษัท&lt;br/&gt;&lt;br/&gt;กรุณา&lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt;ติดต่อแผนกบริการ&lt;/a&gt; หากคุณต้องการความช่วยเหลือ&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg --></label>
+        <label>&quot;บริษัทของคุณยังไม่ได้เปิดบัญชี IATA EasyPay&lt;br/&gt;&lt;br/&gt;กรุณาติดต่อผู้มีอำนาจลงนามจากนิติบุคคลหลักของคุณเพื่อเปิดบัญชี IATA EasyPay{0}&lt;br/&gt;&lt;br/&gt;กรุณา&lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt;ติดต่อแผนกบริการ&lt;/a&gt; หากคุณต้องการความช่วยเหลือ&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg --></label>
+        <label>&quot;บริษัทของคุณยังไม่ได้เปิดบัญชี IATA EasyPay&lt;br/&gt;&lt;br/&gt;กรุณาติดต่อผู้มีอำนาจลงนามจากสำนักงานใหญ่ของคุณเพื่อเปิดบัญชี IATA EasyPay{0}&lt;br/&gt;&lt;br/&gt;กรุณา&lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt;ติดต่อแผนกบริการ&lt;/a&gt; หากคุณต้องการความช่วยเหลือ&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active --></label>
+        <label>การเปิดบัญชี IATA EasyPay คุณจะต้องเป็นทั้งเจ้าหน้าที่ดูแลพอร์ทัลและมีอำนาจลงนามของบริษัท</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator --></label>
+        <label>&quot;&lt;br/&gt;&lt;br/&gt;ในฐานะผู้ดูแลระบบสารสนเทศ คุณสามารถอัพเดท&lt;a href=&quot;&quot;/ISSP_PersonalInformation?mid=M5S1&quot;&quot;&gt;ข้อมูลส่วนตัว&lt;/a&gt; โดยแต่งตั้งตัวคุณเองให้เป็นผู้มีอำนาจลงนาม หรือแต่งตั้งผู้ที่เหมาะสมในหน้า&lt;a href=&quot;&quot;/ISSP_ContactList?MainNav=Admin&amp;subNav=contacts&amp;mid=M4S1&quot;&quot;&gt;การบริหารจัดการบริษัท -&gt; รายชื่อผู้ติดต่อ &lt;/a&gt; และแจ้งความประสงค์ไปยังผู้ที่ได้รับการแต่งตั้งให้เปิดบัญชี EasyPay ของคุณ&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_OpeningInProgress --></label>
+        <label><!-- ModelBanking India --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ModelBanking South Korea --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_SouthKorea_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ModelBanking Link Label --></label>
+        <name>ANG_ISSP_IEP_ModelBanking_link</name>
+    </customLabels>
+    <customLabels>
+        <label>ผู้มีอำนาจลงนามนิติบุคคลหลักของคุณได้เริ่มเปิดบัญชี IEP สำหรับบริษัทคุณแล้ว เมื่อกระบวนการเปิดบัญชี IEP เสร็จสมบูรณ์ คุณจะสามารถเข้าสู่บริการต่าง ๆ</label>
         <name>ANG_ISSP_IEP_OpeningInProgress</name>
     </customLabels>
     <customLabels>
@@ -845,15 +861,15 @@
         <name>ANG_ISSP_IEP_Portal_Access_Request_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_Portal_Request_Access_Msg --></label>
+        <label>ส่งคำร้องการเข้าใช้บัญชี IATA EasyPay ในนามผู้ใช้ที่คุณเลือกแล้ว เจ้าหน้าที่ดูแล IATA EasyPay และผู้จัดการกองทุนได้รับแจ้งยืนยันการอนุมัติใช้งานแล้ว&lt;br/&gt;ผู้ใช้ทุกคนจะได้รับจดหมายยืนยันเมื่อคำขอได้รับการอนุมัติแล้ว</label>
         <name>ANG_ISSP_IEP_Portal_Request_Access_Msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_add_users_to_account_not_open_error_msg --></label>
+        <label>สามารถเพิ่มเติมรายชื่อผู้ใช้ในกรณีเปิดใช้บัญชี IATA EasyPay (IEP) เท่านั้น กรุณาเปิดบัญชี IEP ก่อนดำเนินการต่อ</label>
         <name>ANG_ISSP_IEP_add_users_to_account_not_open_error_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
+        <label>เจ้าหน้าที่นี้เท่านั้นที่สามารถเข้าใช้บัญชี IATA EasyPay ของบริษัทตัวแทนแห่งนี้ในปัจจุบัน ซึ่งไม่สามารถยกเลิกได้ กรุณาติดต่อแผนกบริการลูกค้า IATA เพื่อขอความช่วยเหลือ</label>
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg</name>
     </customLabels>
     <customLabels>
@@ -861,11 +877,11 @@
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Notify_Admin_app_req_1 --></label>
+        <label>จัดการคำร้องขอ กรุณาคลิก</label>
         <name>ANG_ISSP_Notify_Admin_app_req_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Notify_Admin_app_req_2 --></label>
+        <label>เพื่อเข้าสู่หน้าบัญชี IATA EasyPay ของคุณ</label>
         <name>ANG_ISSP_Notify_Admin_app_req_2</name>
     </customLabels>
     <customLabels>
@@ -885,7 +901,7 @@
         <name>ANG_ISSP_Notify_Admin_app_req_here4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Open_IATA_EasyPay_Account --></label>
+        <label>เปิดบัญชี IATA EasyPay</label>
         <name>ANG_ISSP_Open_IATA_EasyPay_Account</name>
     </customLabels>
     <customLabels>
@@ -897,19 +913,19 @@
         <name>ANG_ISSP_OptOutEmptyDateErrorMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PORTAL_SERVICE_ROLE --></label>
+        <label>บทบาทบริการผ่านทางพอร์ทัล</label>
         <name>ANG_ISSP_PORTAL_SERVICE_ROLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PORTAL_SERVICE_ROLE_HINT --></label>
+        <label>กรุณาเลือกบทบาทหน้าที่ที่คุณประสงค์สำหรับหน้าพอร์ทัลนี้</label>
         <name>ANG_ISSP_PORTAL_SERVICE_ROLE_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Picklist None --></label>
+        <label>--ไม่มี--</label>
         <name>ANG_ISSP_Picklist_None</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PortalRoleErrorMessage --></label>
+        <label>กรุณาแจ้งบทบาทของพอร์ทัลนี้</label>
         <name>ANG_ISSP_PortalRoleErrorMessage</name>
     </customLabels>
     <customLabels>
@@ -921,15 +937,15 @@
         <name>ANG_ISSP_ProductCashFacility</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonApplyNow --></label>
+        <label>สมัครตอนนี้</label>
         <name>ANG_ISSP_ProductComparisonApplyNow</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonCost --></label>
+        <label>ต้นทุน</label>
         <name>ANG_ISSP_ProductComparisonCost</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonCountrySpecificRequirements --></label>
+        <label>ข้อกำหนดเฉพาะประเทศ</label>
         <name>ANG_ISSP_ProductComparisonCountrySpecificRequirements</name>
     </customLabels>
     <customLabels>
@@ -937,19 +953,19 @@
         <name>ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature1 --></label>
+        <label>บัตรเครดิต</label>
         <name>ANG_ISSP_ProductComparisonFeature1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature10 --></label>
+        <label>รูปแบบที่ 10</label>
         <name>ANG_ISSP_ProductComparisonFeature10</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature10Tooltip --></label>
+        <label>ตัวช่วยเหลือสำหรับรูปแบบที่ 10</label>
         <name>ANG_ISSP_ProductComparisonFeature10Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature1Tooltip --></label>
+        <label>ตัวช่วยเหลือสำหรับรูปแบบที่ 1</label>
         <name>ANG_ISSP_ProductComparisonFeature1Tooltip</name>
     </customLabels>
     <customLabels>
@@ -957,63 +973,63 @@
         <name>ANG_ISSP_ProductComparisonFeature2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature2Tooltip --></label>
+        <label>ตัวช่วยเหลือสำหรับรูปแบบที่ 2</label>
         <name>ANG_ISSP_ProductComparisonFeature2Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature3 --></label>
+        <label>เงินสด</label>
         <name>ANG_ISSP_ProductComparisonFeature3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature3Tooltip --></label>
+        <label>ตัวช่วยเหลือสำหรับรูปแบบที่ 3</label>
         <name>ANG_ISSP_ProductComparisonFeature3Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature4 --></label>
+        <label>การจำกัดมูลค่าเงินสำรองจ่าย</label>
         <name>ANG_ISSP_ProductComparisonFeature4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature4Tooltip --></label>
+        <label>ตัวช่วยเหลือสำหรับรูปแบบที่ 4</label>
         <name>ANG_ISSP_ProductComparisonFeature4Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature5 --></label>
+        <label>การประเมินผลทางด้านการเงินรายปี</label>
         <name>ANG_ISSP_ProductComparisonFeature5</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature5Tooltip --></label>
+        <label>ตัวช่วยเหลือสำหรับรูปแบบที่ 5</label>
         <name>ANG_ISSP_ProductComparisonFeature5Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature6 --></label>
+        <label>การประเมินผลบริษัทแม่รายไตรมาส</label>
         <name>ANG_ISSP_ProductComparisonFeature6</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature6Tooltip --></label>
+        <label>ตัวช่วยเหลือสำหรับรูปแบบที่ 6</label>
         <name>ANG_ISSP_ProductComparisonFeature6Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature7 --></label>
+        <label>ค่าประกันกรณีถูกปฏิเสธการชำระเงิน</label>
         <name>ANG_ISSP_ProductComparisonFeature7</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature7Tooltip --></label>
+        <label>ตัวช่วยเหลือสำหรับรูปแบบที่ 7</label>
         <name>ANG_ISSP_ProductComparisonFeature7Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature8 --></label>
+        <label>ความปลอดภัยของธุรกรรมการเงิน / ประกันหนี้สูญ</label>
         <name>ANG_ISSP_ProductComparisonFeature8</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature8Tooltip --></label>
+        <label>ตัวช่วยเหลือสำหรับรูปแบบที่ 8</label>
         <name>ANG_ISSP_ProductComparisonFeature8Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature9 --></label>
+        <label>การค้ำประกันบริษัทแม่รวมเข้าไว้ใน PSAA</label>
         <name>ANG_ISSP_ProductComparisonFeature9</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature9Tooltip --></label>
+        <label>ตัวช่วยเหลือสำหรับรูปแบบที่ 9</label>
         <name>ANG_ISSP_ProductComparisonFeature9Tooltip</name>
     </customLabels>
     <customLabels>
@@ -1021,15 +1037,15 @@
         <name>ANG_ISSP_ProductComparisonLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonTitle1 --></label>
+        <label>การรับรองบริษัทตัวแทนผ่านระบบออนไลน์ของ IATA</label>
         <name>ANG_ISSP_ProductComparisonTitle1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonTitle2 --></label>
+        <label>การเปรียบเทียบประเภทของการรับรองบริษัทท่องเที่ยว</label>
         <name>ANG_ISSP_ProductComparisonTitle2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonViewHere --></label>
+        <label>แสดงรายการที่นี่</label>
         <name>ANG_ISSP_ProductComparisonViewHere</name>
     </customLabels>
     <customLabels>
@@ -1041,7 +1057,7 @@
         <name>ANG_ISSP_ProductIATAEasyPayTransactions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductMulticountry --></label>
+        <label>นานาประเทศ</label>
         <name>ANG_ISSP_ProductMulticountry</name>
     </customLabels>
     <customLabels>
@@ -1077,7 +1093,7 @@
         <name>ANG_ISSP_ProgressBarNode6</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH AccessEasyPay --></label>
+        <label>เข้าสู่หน้าบัญชี IATA EasyPay ของคุณ</label>
         <name>ANG_ISSP_REH_AccessEasyPay</name>
     </customLabels>
     <customLabels>
@@ -1085,59 +1101,59 @@
         <name>ANG_ISSP_REH_DateAssigned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH DateIssued --></label>
+        <label>วันที่ออกเอกสาร</label>
         <name>ANG_ISSP_REH_DateIssued</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH RiskDescription --></label>
+        <label>ลักษณะความเสี่ยง</label>
         <name>ANG_ISSP_REH_RiskDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RHC Information --></label>
+        <label>รายละเอียดความสามารถในการสำรองจ่าย (RHC)</label>
         <name>ANG_ISSP_RHC_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC - Request Balance Update --></label>
+        <label>คำขออัพเดทยอดคงเหลือ</label>
         <name>ANG_ISSP_RHC_Request_Balance_Update</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RHC Request ICE --></label>
+        <label>&quot;ในกรณีที่ต้องการดูรายจ่ายต่าง ๆ ที่กำลังจะเกิดขึ้น และวันที่ที่ต้องทำการโอน&lt;br/&gt;&lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt; คำขอเพื่อเข้าสู่ ICE - IATA Customer E-Statement &lt;/a&gt;&quot;</label>
         <name>ANG_ISSP_RHC_Request_ICE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Cash Conditions --></label>
+        <label>เงื่อนไขการใช้เงินสด</label>
         <name>ANG_ISSP_RP_Cash_Conditions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Financial Review --></label>
+        <label>การตรวจสอบทางการเงิน</label>
         <name>ANG_ISSP_RP_Financial_Review</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Risk History --></label>
+        <label>ประวัติความเสี่ยง</label>
         <name>ANG_ISSP_RP_Risk_History</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Request_Access_IATA_EasyPay --></label>
+        <label>คำขอเข้าสู่ IATA EasyPay</label>
         <name>ANG_ISSP_Request_Access_IATA_EasyPay</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_SelectContacts --></label>
+        <label>เลือกหนึ่งรายชื่อหรือมากกว่า</label>
         <name>ANG_ISSP_SelectContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_TypeAccreditadionQuestion --></label>
+        <label>ข้าพเจ้าต้องการสมัครเพื่อขอการรับรองในตำแหน่ง:</label>
         <name>ANG_ISSP_TypeAccreditadionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_UserProvisioningError --></label>
+        <label>ขออภัย เกิดปัญหาในการตั้งค่าการเข้าสู่บัญชี IATA EasyPay ของคุณ กรุณาลองใหม่อีกครั้ง และหากพบว่าปัญหายังคงอยู่ กรุณาติดต่อแผนกบริการลูกค้า</label>
         <name>ANG_ISSP_UserProvisioningError</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_UserProvisioningWait --></label>
+        <label>กรุณารอสักครู่ คุณกำลังไปยังหน้าเว็บ EasyPay กรุณารอสักครู่</label>
         <name>ANG_ISSP_UserProvisioningWait</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_e_mail_address --></label>
+        <label>ที่อยู่อีเมล</label>
         <name>ANG_ISSP_e_mail_address</name>
     </customLabels>
     <customLabels>
@@ -1197,15 +1213,15 @@
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_VR_SELECTED_CODES --></label>
+        <label>คุณได้แจ้งความประสงค์ที่จะทำการยกเลิกรหัสต่าง ๆ ของ IATA ดังต่อไปนี้</label>
         <name>ANG_VR_SELECTED_CODES</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Voluntary_Relinquishment_to_NOC --></label>
+        <label>&quot;กรุณายื่น&lt;a href=&quot;&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt;การแจ้งเปลี่ยนแปลง&lt;/a&gt; หากคุณประสงค์ยกเลิกเฉพาะนิติบุคคลหลักของคุณเท่านั้น&quot;</label>
         <name>ANG_Voluntary_Relinquishment_to_NOC</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Voluntary_Relinquishment_to_NOC_Legacy --></label>
+        <label>&quot;กรุณายื่น&lt;a href=&quot;&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt;การแจ้งเปลี่ยนแปลง&lt;/a&gt; หากคุณประสงค์ยกเลิกเฉพาะสำนักงานใหญ่ของบริษัทคุณเท่านั้น&quot;</label>
         <name>ANG_Voluntary_Relinquishment_to_NOC_Legacy</name>
     </customLabels>
     <customLabels>
@@ -1491,6 +1507,10 @@
     <customLabels>
         <label><!-- Button View all --></label>
         <name>Button_View_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
     </customLabels>
     <customLabels>
         <label>บริการนี้อำนวยความสะดวกในการทำงานร่วมกัน และการแลกเปลี่ยนข้อมูลระหว่างคนกลาง/ตัวแทนคลังสินค้าและสายการบินที่เข้าร่วมในระบบการชำระเงินบัญชีคลังสินค้า IATA (Cargo Accounts Settlement System - CASS)</label>
@@ -2251,6 +2271,10 @@
     <customLabels>
         <label><!-- FW --></label>
         <name>FW</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Feed Item Invalid Topics --></label>
+        <name>Feed_Item_Invalid_Topics</name>
     </customLabels>
     <customLabels>
         <label><!-- File Description --></label>
@@ -5533,7 +5557,7 @@ and
         <name>ISSP_AMS_ACCR_Submit_Msg_CargoHO</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS AE NoC Change for --></label>
+        <label>เปลี่ยนแปลงรายละเอียดข้อมูลบัญชีธนาคารสำหรับ</label>
         <name>ISSP_AMS_AE_NoC_Change_for</name>
     </customLabels>
     <customLabels>
@@ -5541,7 +5565,7 @@ and
         <name>ISSP_AMS_Accept_TOS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Add Company --></label>
+        <label>เพิ่มบริษัท</label>
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
@@ -5557,7 +5581,7 @@ and
         <name>ISSP_AMS_Add_Manager</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS  Add Person --></label>
+        <label>เพิ่มบุคคล</label>
         <name>ISSP_AMS_Add_Person</name>
     </customLabels>
     <customLabels>
@@ -5565,7 +5589,7 @@ and
         <name>ISSP_AMS_Additional_Data</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Address --></label>
+        <label>ที่อยู่:</label>
         <name>ISSP_AMS_Address</name>
     </customLabels>
     <customLabels>
@@ -5585,6 +5609,10 @@ and
         <name>ISSP_AMS_Apply_New_Branch_Office</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Head_Entity --></label>
         <name>ISSP_AMS_Apply_New_Head_Entity</name>
     </customLabels>
@@ -5601,11 +5629,11 @@ and
         <name>ISSP_AMS_Apply_New_Travel_Head_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Associate Entity Cash --></label>
+        <label>บริษัทในเครือรายใหม่ - GoStandard</label>
         <name>ISSP_AMS_Associate_Entity_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Associate Entity Cashless --></label>
+        <label>บริษัทในเครือรายใหม่ - GoLite</label>
         <name>ISSP_AMS_Associate_Entity_Cashless</name>
     </customLabels>
     <customLabels>
@@ -5729,7 +5757,7 @@ and
         <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4 --></label>
+        <label>วันที่หมดอายุ</label>
         <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4</name>
     </customLabels>
     <customLabels>
@@ -5957,15 +5985,15 @@ and
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM CANCEL --></label>
+        <label>คุณแน่ใจหรือไม่ว่าต้องการยกเลิก?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM DELETE --></label>
+        <label>คุณแน่ใจหรือไม่ว่าต้องการลบบันทึกนี้?</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM DISCARD --></label>
+        <label>คุณแน่ใจหรือไม่ว่าต้องการละทิ้งการเปลี่ยนแปลง?</label>
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
@@ -6189,11 +6217,11 @@ and
         <name>ISSP_AMS_Case_PDF_Download</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Cases Notify IATA Changes Error --></label>
+        <label>เฉพาะผู้ใช้จากนิติบุคคลหลักของคุณเท่านั้นที่สามารถแจ้งการเปลี่ยนแปลงต่าง ๆ มายัง IATA</label>
         <name>ISSP_AMS_Cases_Notify_IATA_Changes_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS City --></label>
+        <label>เมือง:</label>
         <name>ISSP_AMS_City</name>
     </customLabels>
     <customLabels>
@@ -6205,11 +6233,11 @@ and
         <name>ISSP_AMS_Click_here</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Compare Accreditation Types --></label>
+        <label>เปรียบเทียบประเภทของการรับรอง</label>
         <name>ISSP_AMS_Compare_Accreditation_Types</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Compare Accreditation Types in RHC page --></label>
+        <label>คลิก ที่นี่ เพื่อเปรียบเทียบประเภทของการรับรอง</label>
         <name>ISSP_AMS_Compare_Accreditation_Types_RHC</name>
     </customLabels>
     <customLabels>
@@ -6237,11 +6265,11 @@ and
         <name>ISSP_AMS_Create_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Director --></label>
+        <label>กรรมการ/เจ้าหน้าที่</label>
         <name>ISSP_AMS_Director</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Director --></label>
+        <label>กรรมการบริษัท</label>
         <name>ISSP_AMS_Director_NG</name>
     </customLabels>
     <customLabels>
@@ -6525,7 +6553,7 @@ and
         <name>ISSP_AMS_Fin_Contact</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Financial Interest --></label>
+        <label>การเงิน&lt;br/&gt;ดอกเบี้ย (%)</label>
         <name>ISSP_AMS_Financial_Interest</name>
     </customLabels>
     <customLabels>
@@ -6533,7 +6561,7 @@ and
         <name>ISSP_AMS_First_8_Digits</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_First_Name_Chinese --></label>
+        <label>ชื่อ (ภาษาจีน)</label>
         <name>ISSP_AMS_First_Name_Chinese</name>
     </customLabels>
     <customLabels>
@@ -6569,11 +6597,11 @@ and
         <name>ISSP_AMS_Gross_Amnt_Second_year</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Head Entity Cash --></label>
+        <label>นิติบุคคลหลักรายใหม่ - GoStandard</label>
         <name>ISSP_AMS_Head_Entity_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Head Entity No Cash --></label>
+        <label>นิติบุคคลหลักรายใหม่ - GoLite</label>
         <name>ISSP_AMS_Head_Entity_No_Cash</name>
     </customLabels>
     <customLabels>
@@ -6613,7 +6641,7 @@ and
         <name>ISSP_AMS_IS_GSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS IS Separate Entity Null --></label>
+        <label>กรุณาเลือก หากบริษัทในเครือมีสถานะทางกฎหมายที่แยกต่างหาก</label>
         <name>ISSP_AMS_IS_Separate_Entity_Null</name>
     </customLabels>
     <customLabels>
@@ -6641,7 +6669,7 @@ and
         <name>ISSP_AMS_Invalid_IATAN_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Invalid IATA Code --></label>
+        <label>รหัส IATA ไม่ถูกต้อง: กรุณากรอกรหัสที่ถูกต้อง</label>
         <name>ISSP_AMS_Invalid_IATA_Code</name>
     </customLabels>
     <customLabels>
@@ -6709,7 +6737,7 @@ and
         <name>ISSP_AMS_LS_Trust_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Last_Name_Chinese --></label>
+        <label>นามสกุล (ภาษาจีน)</label>
         <name>ISSP_AMS_Last_Name_Chinese</name>
     </customLabels>
     <customLabels>
@@ -6837,7 +6865,7 @@ and
         <name>ISSP_AMS_Loading_Agency_details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Loading Contact --></label>
+        <label>กำลังโหลดรายละเอียดการติดต่อ...</label>
         <name>ISSP_AMS_Loading_Contact</name>
     </customLabels>
     <customLabels>
@@ -6845,11 +6873,11 @@ and
         <name>ISSP_AMS_Local_Details_Change_Please_Enter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Company Name ENG --></label>
+        <label>ชื่อบริษัท (ภาษาอังกฤษ)</label>
         <name>ISSP_AMS_Local_Details_Company_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Company Name Local --></label>
+        <label>ชื่อบริษัท (ภาษาท้องถิ่น)</label>
         <name>ISSP_AMS_Local_Details_Company_Name_Local</name>
     </customLabels>
     <customLabels>
@@ -6861,19 +6889,19 @@ and
         <name>ISSP_AMS_Local_Details_Correspondence_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details First Name ENG --></label>
+        <label>ชื่อ (ภาษาอังกฤษ)</label>
         <name>ISSP_AMS_Local_Details_First_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details First Name Local --></label>
+        <label>ชื่อ (ภาษาท้องถิ่น)</label>
         <name>ISSP_AMS_Local_Details_First_Name_Local</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Last Name ENG --></label>
+        <label>นามสกุล (ภาษาอังกฤษ)</label>
         <name>ISSP_AMS_Local_Details_Last_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Last Name Local --></label>
+        <label>นามสกุล (ภาษาท้องถิ่น)</label>
         <name>ISSP_AMS_Local_Details_Last_Name_Local</name>
     </customLabels>
     <customLabels>
@@ -6889,15 +6917,15 @@ and
         <name>ISSP_AMS_Local_Details_No_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local CompanyName --></label>
+        <label>ไม่มีชื่อบริษัทในภาษาท้องถิ่นใช่หรือไม่? ให้กรอกชื่อโดยใช้ตัวอักษรภาษาอังกฤษแทน</label>
         <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local FirstName --></label>
+        <label>ไม่มีชื่อในภาษาท้องถิ่นใช่หรือไม่? ให้กรอกชื่อโดยใช้ตัวอักษรภาษาอังกฤษอีกครั้ง</label>
         <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local LastName --></label>
+        <label>ไม่มีชื่อในภาษาท้องถิ่นใช่หรือไม่? ให้กรอกนามสกุลโดยใช้ตัวอักษรภาษาอังกฤษอีกครั้ง</label>
         <name>ISSP_AMS_Local_Details_No_Local_LastName</name>
     </customLabels>
     <customLabels>
@@ -7017,7 +7045,7 @@ and
         <name>ISSP_AMS_MSO_GSA_GSA_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_MSO_GSA_IATA_Code --></label>
+        <label>รหัส</label>
         <name>ISSP_AMS_MSO_GSA_IATA_Code</name>
     </customLabels>
     <customLabels>
@@ -7129,7 +7157,7 @@ and
         <name>ISSP_AMS_MSO_Update_Request_Successfull</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Manager --></label>
+        <label>ผู้จัดการ</label>
         <name>ISSP_AMS_Manager</name>
     </customLabels>
     <customLabels>
@@ -7217,15 +7245,15 @@ and
         <name>ISSP_AMS_NOC_StepD_ProgressBar_CNS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Companies --></label>
+        <label>อัพเดทข้อมูลเจ้าของ - บริษัท</label>
         <name>ISSP_AMS_NOC_Updated_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Legal Status --></label>
+        <label>อัพเดทข้อมูลสถานะทางกฎหมาย</label>
         <name>ISSP_AMS_NOC_Updated_Legal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Owners Managers --></label>
+        <label>อัพเดทข้อมูลเจ้าของ/เจ้าหน้าที่/กรรมการ - บุคคลธรรมดา</label>
         <name>ISSP_AMS_NOC_Updated_Owners_Managers</name>
     </customLabels>
     <customLabels>
@@ -7261,7 +7289,7 @@ and
         <name>ISSP_AMS_NoC_Agency_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Associate Entity --></label>
+        <label>บริษัทในเครือ ไม่รวมนิติบุคคลหลัก</label>
         <name>ISSP_AMS_NoC_Associate_Entity</name>
     </customLabels>
     <customLabels>
@@ -7345,7 +7373,7 @@ and
         <name>ISSP_AMS_NoC_Change_submitted_for</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Choose Associate Entities --></label>
+        <label>บริษัทในเครือที่ผ่านการรับรอง</label>
         <name>ISSP_AMS_NoC_Choose_Associate_Entities</name>
     </customLabels>
     <customLabels>
@@ -7353,7 +7381,7 @@ and
         <name>ISSP_AMS_NoC_Choose_Branch_Account</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Confirm_Ownership_details --></label>
+        <label>ยืนยันความถูกต้องของประเภทบริษัทและรายละเอียดความเป็นเจ้าของ</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
     </customLabels>
     <customLabels>
@@ -7369,7 +7397,7 @@ and
         <name>ISSP_AMS_NoC_Current_Accreditation_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Current_Companies --></label>
+        <label>เจ้าของปัจจุบัน - บริษัท</label>
         <name>ISSP_AMS_NoC_Current_Companies</name>
     </customLabels>
     <customLabels>
@@ -7381,7 +7409,7 @@ and
         <name>ISSP_AMS_NoC_Current_Owner</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Current_Owners_Managers --></label>
+        <label>เจ้าของปัจจุบัน - บุคคลธรรมดา</label>
         <name>ISSP_AMS_NoC_Current_Owners_Managers</name>
     </customLabels>
     <customLabels>
@@ -7393,11 +7421,11 @@ and
         <name>ISSP_AMS_NoC_Direct_Debit_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC HE All Branches --></label>
+        <label>นิติบุคคลหลักและบริษัทในเครือทุกแห่ง</label>
         <name>ISSP_AMS_NoC_HE_All_Branches</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC HE Some Branches --></label>
+        <label>นิติบุคคลหลักและบริษัทในเครือหนึ่งแห่งหรือมากกว่า</label>
         <name>ISSP_AMS_NoC_HE_Some_Branches</name>
     </customLabels>
     <customLabels>
@@ -7409,7 +7437,7 @@ and
         <name>ISSP_AMS_NoC_HO_Some_Branches</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Head Entity --></label>
+        <label>นิติบุคคลหลัก</label>
         <name>ISSP_AMS_NoC_Head_Entity</name>
     </customLabels>
     <customLabels>
@@ -7489,15 +7517,15 @@ and
         <name>ISSP_AMS_NoC_No_Company_Owners</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC No Company Owners New --></label>
+        <label>ไม่มีบริษัทที่จดทะเบียนเป็นเจ้าของปัจจุบันของบริษัทคุณ</label>
         <name>ISSP_AMS_NoC_No_Company_Owners_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Non_IATA_Owner_Estimates --></label>
+        <label>ระบุยอดขายรวมของการขนส่งทางอากาศระหว่างประเทศโดยประมาณของผู้ให้บริการ IATA:</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Non_IATA_Owner_Title --></label>
+        <label>หากเจ้าของรายใหม่เป็นบริษัทที่ไม่ได้รับการรับรองจาก IATA กรุณา:</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Title</name>
     </customLabels>
     <customLabels>
@@ -7509,7 +7537,7 @@ and
         <name>ISSP_AMS_NoC_Online_Agency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Other_Owner --></label>
+        <label>หากบริษัทตัวแทนการท่องเที่ยวมีเจ้าของเป็นองค์กรนอกเหนือจากสำนักงานใหญ่ กรุณาตอบคำถามต่อไปนี้เกี่ยวกับบริษัทแม่</label>
         <name>ISSP_AMS_NoC_Other_Owner</name>
     </customLabels>
     <customLabels>
@@ -7541,7 +7569,7 @@ and
         <name>ISSP_AMS_NoC_Previous_Owners_Managers</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NoC_Provide_Registeration_Or_License --></label>
+        <label>หากกฎหมายในประเทศของคุณกำหนดให้มีการจดทะเบียน และ/หรือใบอนุญาต ระบุข้อมูลด้านล่างหลังจากการเปลี่ยนแปลง/ภายใต้สิทธิความเป็นเจ้าของใหม่</label>
         <name>ISSP_AMS_NoC_Provide_Registeration_Or_License</name>
     </customLabels>
     <customLabels>
@@ -7565,7 +7593,7 @@ and
         <name>ISSP_AMS_NoC_Q3_Contact_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Q4 --></label>
+        <label>* เจ้าของคนใหม่ เจ้าหน้าที่ (กรรมการ) ผู้จัดการ หรือบุคคลที่มีอำนาจกระทำการหรือลงชื่อในนามของบริษัทดังกล่าวมีส่วนเกี่ยวข้องกับการล้มละลายหรือถูกตัดสินว่ามีความผิดในการละเมิดข้อผูกพันที่ได้รับมอบหมายอำนาจในการดำเนินธุรกิจหรือการดำเนินคดีที่ผิดนัดหรือไม่?</label>
         <name>ISSP_AMS_NoC_Q4</name>
     </customLabels>
     <customLabels>
@@ -7761,7 +7789,7 @@ and
         <name>ISSP_AMS_Noc_Type_of_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Not Listed Msg --></label>
+        <label>สำหรับองค์กรที่มีหุ้นซึ่งไม่ได้จดทะเบียนในตลาดหลักทรัพย์ ต้องกรอกรายละเอียดของผู้ถือหุ้นทั้งหมดในส่วนบุคลากรและบริษัทด้านล่าง</label>
         <name>ISSP_AMS_Not_Listed_Msg</name>
     </customLabels>
     <customLabels>
@@ -7845,7 +7873,7 @@ and
         <name>ISSP_AMS_Office_Full_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Owner --></label>
+        <label>เจ้าของ</label>
         <name>ISSP_AMS_Owner</name>
     </customLabels>
     <customLabels>
@@ -7877,7 +7905,7 @@ and
         <name>ISSP_AMS_PDF_Page</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Partner --></label>
+        <label>พันธมิตร</label>
         <name>ISSP_AMS_Partner</name>
     </customLabels>
     <customLabels>
@@ -7909,7 +7937,7 @@ and
         <name>ISSP_AMS_Position</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS PostCode --></label>
+        <label>รหัสไปรษณีย์</label>
         <name>ISSP_AMS_PostCode</name>
     </customLabels>
     <customLabels>
@@ -8009,7 +8037,7 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Selected Associate Entities --></label>
+        <label>* บริษัทในเครือที่เลือก</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
     <customLabels>
@@ -8017,7 +8045,7 @@ and
         <name>ISSP_AMS_Selected_Branch_Offices</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Shareholder --></label>
+        <label>ผู้ถือหุ้น</label>
         <name>ISSP_AMS_Shareholder</name>
     </customLabels>
     <customLabels>
@@ -8093,7 +8121,7 @@ and
         <name>ISSP_AMS_Step0_Intro_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <label>การเปลี่ยนแปลงเล็กน้อยในรายละเอียดหน่วยงานของคุณ เช่น หมายเลขโทรศัพท์ ที่อยู่อีเมล ฯลฯ สามารถทำได้โดยตรงจากหน้า &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;ข้อมูลบริษัท&lt;/a&gt;</label>
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
@@ -8157,7 +8185,7 @@ and
         <name>ISSP_AMS_Step1_Approval_Sought</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step1_Approval_Sought_Cash/Cashless --></label>
+        <label>คำขอประเภทของการรับรอง</label>
         <name>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</name>
     </customLabels>
     <customLabels>
@@ -8197,7 +8225,7 @@ and
         <name>ISSP_AMS_Step1_Operation_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step1_PCI --></label>
+        <label>A.  ตัวเลือกรหัส IATA</label>
         <name>ISSP_AMS_Step1_PCI</name>
     </customLabels>
     <customLabels>
@@ -8205,7 +8233,7 @@ and
         <name>ISSP_AMS_Step1_ProgressBar</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step1 ProgressBar New --></label>
+        <label>A.  เลือกประเภทการดำเนินงานและสถานที่ตั้ง</label>
         <name>ISSP_AMS_Step1_ProgressBar_New</name>
     </customLabels>
     <customLabels>
@@ -8229,7 +8257,7 @@ and
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step2 Check List --></label>
+        <label>รายการตรวจสอบสำหรับ</label>
         <name>ISSP_AMS_Step2_Check_List</name>
     </customLabels>
     <customLabels>
@@ -8237,7 +8265,7 @@ and
         <name>ISSP_AMS_Step2_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step2_PCI --></label>
+        <label>B.  อัพโหลดไฟล์</label>
         <name>ISSP_AMS_Step2_PCI</name>
     </customLabels>
     <customLabels>
@@ -8321,7 +8349,7 @@ and
         <name>ISSP_AMS_Step3_4_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 4 Companies New --></label>
+        <label>&quot;หากบริษัทของคุณเป็นแบบเจ้าของอย่างน้อยหนึ่ง หรือหลายบริษัทกรุณากรอกรายละเอียดที่นี่ (ยกเว้นกรณีที่องค์กรของคุณเป็นนิติบุคคลที่มีหุ้นจดทะเบียนในตลาดหลักทรัพย์ หรือซื้อขายเป็นประจำในตลาดที่มี &quot;&quot;การซื้อขายกันเองโดยตรง&quot;&quot;)&quot;</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
     </customLabels>
     <customLabels>
@@ -8481,7 +8509,7 @@ and
         <name>ISSP_AMS_Step3_4_Q9</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step3_5_Event_of_inspection --></label>
+        <label>ในกรณีที่มีการตรวจสอบ ผู้ยื่นคำร้องจะต้องแสดงหลักฐานว่ามีคุณสมบัติตรงตามข้อกำหนดด้านความปลอดภัยสำหรับการออกบัตรอิเล็กทรอนิกส์ ตามบทบัญญัติมาตราที่ 8 และโดยเฉพาะอย่างยิ่งมาตรฐานการรักษาความปลอดภัยข้อมูลของอุตสาหกรรมบัตรชำระเงิน (PCI) ตามที่ระบุในส่วน 2.1.6 ของข้อมติ 890</label>
         <name>ISSP_AMS_Step3_5_Event_of_inspection</name>
     </customLabels>
     <customLabels>
@@ -8653,7 +8681,7 @@ and
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 Office FullAddress --></label>
+        <label>ที่อยู่เต็มของสำนักงานที่ยื่นขออนุมัติ</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
     <customLabels>
@@ -8673,7 +8701,7 @@ and
         <name>ISSP_AMS_Step3_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 PersonModal CheckBoxes --></label>
+        <label>เลือกช่องทำเครื่องหมายเพื่อระบุบทบาทของบุคคลที่คุณกำลังเพิ่ม จากนั้นกรอกรายละเอียด หากบุคคลดังกล่าวไม่มีบทบาทใด ๆ เหล่านี้ ไม่ต้องทำเครื่องหมายในช่องและกรอกรายละเอียด</label>
         <name>ISSP_AMS_Step3_PersonModal_CheckBoxes</name>
     </customLabels>
     <customLabels>
@@ -8809,7 +8837,7 @@ and
         <name>ISSP_AMS_StepsAll_Travel_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Street --></label>
+        <label>ถนนและเลขที่</label>
         <name>ISSP_AMS_Street</name>
     </customLabels>
     <customLabels>
@@ -8817,7 +8845,7 @@ and
         <name>ISSP_AMS_Submit_CNS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Submit IATA --></label>
+        <label>ส่งไปที่ IATA</label>
         <name>ISSP_AMS_Submit_IATA</name>
     </customLabels>
     <customLabels>
@@ -9265,51 +9293,51 @@ and
         <name>ISSP_ANG_ANG_PCI_Process_Notification_Mail_Body</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Accreditation - Annual Revalidation --></label>
+        <label>การรับรองของ IATA - การตรวจสอบใหม่ประจำปี</label>
         <name>ISSP_ANG_ANNUAL_REVALIDATION</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION --></label>
+        <label>ข้อมูลเพิ่มเติม</label>
         <name>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation cancel update button --></label>
+        <label>ละทิ้งการอัพเดท</label>
         <name>ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation confirm button --></label>
+        <label>ยืนยันว่ารายละเอียดถูกต้อง</label>
         <name>ISSP_ANG_ANNUAL_REV_CONFIRM_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation confirm update button --></label>
+        <label>ยืนยันการอัพเดท</label>
         <name>ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding --></label>
+        <label>สิทธิความเป็นเจ้าของ/การถือหุ้น และสถานะทางกฎหมายของหน่วยงาน</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name --></label>
+        <label>รายละเอียดทางกฎหมายของหน่วยงาน</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_of_Location --></label>
+        <label>สถานที่ตั้งของหน่วยงาน</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_of_Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation discard button --></label>
+        <label>ละทิ้ง</label>
         <name>ISSP_ANG_ANNUAL_REV_DISCARD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS --></label>
+        <label>กรุณากรอกรายละเอียดใหม่เกี่ยวกับความเป็นเจ้าของด้านล่าง</label>
         <name>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ERROR_1 --></label>
+        <label>ต้องยืนยันรายละเอียดและแจ้งการเปลี่ยนแปลงอย่างน้อยหนึ่งรายการ</label>
         <name>ISSP_ANG_ANNUAL_REV_ERROR_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ERROR_2 --></label>
+        <label>ต้องแจ้งการเปลี่ยนแปลงอย่างน้อยหนึ่งรายการ</label>
         <name>ISSP_ANG_ANNUAL_REV_ERROR_2</name>
     </customLabels>
     <customLabels>
@@ -9317,51 +9345,59 @@ and
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE --></label>
+        <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL --></label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Q2 --></label>
+        <label>* บริษัทของคุณมีความสัมพันธ์โดยตรงหรือโดยอ้อมกับองค์กรที่ได้รับการมอบหมาย GSA จากสมาชิกหรือไม่?</label>
         <name>ISSP_ANG_ANNUAL_REV_Q2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Q3 --></label>
+        <label>* กรุณายืนยันว่าบริษัทของคุณใช้ GDS แบบใด</label>
         <name>ISSP_ANG_ANNUAL_REV_Q3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation save changes button --></label>
+        <label>บันทึกการเปลี่ยนแปลง</label>
         <name>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW --></label>
+        <label>กรุณาตรวจสอบว่ามีการยืนยันหรือปรับข้อมูลรายละเอียดของหน่วยงานสำหรับรหัส IATA แต่ละรายการในลำดับชั้นของคุณ</label>
         <name>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation update button --></label>
+        <label>อัพเดทรายละเอียด</label>
         <name>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation work area title --></label>
+        <label>กรุณายืนยันหรือปรับข้อมูลรายละเอียดสำหรับรหัส IATA แต่ละรายการในลำดับชั้นของคุณ</label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation confirmed status --></label>
+        <label><!-- ISSP_ANG_ANNUAL_SAME_OWNER_ERROR --></label>
+        <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
+    </customLabels>
+    <customLabels>
+        <label>ยืนยันรายละเอียดแล้ว</label>
         <name>ISSP_ANG_ANNUAL_STATUS_CONFIRMED</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation open status --></label>
+        <label>ยังไม่เริ่มต้น</label>
         <name>ISSP_ANG_ANNUAL_STATUS_OPEN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation update completed status --></label>
+        <label>การอัพเดทเสร็จสิ้น</label>
         <name>ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation update in progress status --></label>
+        <label>การอัพเดทกำลังอยู่ในช่วงการดำเนินการ</label>
         <name>ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Validation status label --></label>
+        <label>สถานะการตรวจสอบความถูกต้อง:</label>
         <name>ISSP_ANG_ANNUAL_VAL_STATUS</name>
     </customLabels>
     <customLabels>
@@ -9373,11 +9409,11 @@ and
         <name>ISSP_ANG_AccreditationsAndChangesDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Assoc_Entity --></label>
+        <label>บริษัทในเครือรายใหม่</label>
         <name>ISSP_ANG_Assoc_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Authorized_Signatory --></label>
+        <label>เฉพาะผู้มีอำนาจในการลงชื่อในนามนิติบุคคลเท่านั้นที่สามารถแจ้งการปิดบริษัทมายัง IATA คุณสามารถแต่งตั้งผู้มีอำนาจลงนามจาก “การบริหารจัดการบริษัท -&gt; รายชื่อผู้ติดต่อ</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
@@ -9401,47 +9437,47 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Click_Here_PCI --></label>
+        <label>คลิก ที่นี่ เพื่อดำเนินการต่อกับความสอดคล้อง PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Click_Here_VR --></label>
+        <label>คลิก ที่นี่ เพื่อการยกเลิกโดยสมัครใจ</label>
         <name>ISSP_ANG_Click_Here_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Country_Req --></label>
+        <label>แสดงข้อกำหนดของประเทศ</label>
         <name>ISSP_ANG_Country_Req</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ENTIRE_HIERARCHY --></label>
+        <label>ลำดับขั้นตอนทั้งหมด</label>
         <name>ISSP_ANG_ENTIRE_HIERARCHY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Effective_Date_Not_Past --></label>
+        <label>วันที่มีผลบังคับไม่สามารถเป็นวันที่ซึ่งผ่านไปแล้ว</label>
         <name>ISSP_ANG_Effective_Date_Not_Past</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Effective_Date_Of_Change --></label>
+        <label>กรุณาเลือกวันที่มีผลบังคับใช้ที่ไม่ใช่วันที่ซึ่งผ่านไปแล้ว</label>
         <name>ISSP_ANG_Effective_Date_Of_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email AE Subject --></label>
+        <label>ใบสมัครฉบับร่างสำหรับการรับรองบริษัทในเครือ</label>
         <name>ISSP_ANG_Email_AE_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email HE Cash Subject --></label>
+        <label>ใบสมัครฉบับร่างสำหรับการรับรองนิติบุคคลหลักแบบ GoStandard</label>
         <name>ISSP_ANG_Email_HE_Cash_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email HE Cashless Subject --></label>
+        <label>ใบสมัครฉบับร่างสำหรับการรับรองนิติบุคคลหลักแบบ GoLite</label>
         <name>ISSP_ANG_Email_HE_Cashless_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Enabel_Credit_Card_Codes --></label>
+        <label>อนุญาตให้ใช้ระบบรับชำระด้วยบัตรเครดิตสำหรับรหัส</label>
         <name>ISSP_ANG_Enabel_Credit_Card_Codes</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_FoP_Management --></label>
+        <label>การจัดการ FoP</label>
         <name>ISSP_ANG_FoP_Management</name>
     </customLabels>
     <customLabels>
@@ -9449,11 +9485,11 @@ and
         <name>ISSP_ANG_GenericError</name>
     </customLabels>
     <customLabels>
-        <label><!-- Link to the IATAs CheckACode page --></label>
+        <label>&quot;กรุณาดูที่บริการ &lt;a target=&quot;&quot;_blank&quot;&quot; href=&quot;&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&quot;&gt;CheckACode&lt;/a&gt; ซึ่งจะมีค่าใช้จ่าย หากอยากทราบรายละเอียดการติดต่อสำหรับหน่วยงานใด ๆ&quot;</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_CHECK_A_CODE_LINK</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION --></label>
+        <label>บริการนี้ช่วยให้สามารถค้นหาตัวแทนการท่องเที่ยวและคลังสินค้าใน BSP/CASS ที่สายการบินของคุณเข้าร่วม เพียงพิมพ์รหัส IATA ในแถบค้นหาเพื่อดูรายละเอียดสำคัญและข้อมูลเกี่ยวกับความเสี่ยง เช่น รูปแบบการชำระเงินที่ใช้งานอยู่</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</name>
     </customLabels>
     <customLabels>
@@ -9461,7 +9497,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</name>
     </customLabels>
     <customLabels>
-        <label><!-- Financial Security Exists --></label>
+        <label>หลักประกันทางการเงินที่มีอยู่</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
@@ -9469,23 +9505,23 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
-        <label><!-- He message --></label>
+        <label>รหัส IATA &lt;strong&gt;%IATA_CODE%&lt;/strong&gt; มีไว้สำหรับ %CHILD_LOCATION% รายละเอียดของ%PARENT_LOCATION% มีดังนี้</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Code (HO / HE) --></label>
+        <label>รหัส IATA (HO/HE)</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- An invalid iata code was inputed in the search --></label>
+        <label>คุณกรอกรหัส IATA ไม่ถูกต้อง รูปแบบที่ยอมรับคือตัวเลข 7 ถึง 8 หลักสำหรับตัวแทนการท่องเที่ยว และ 10 ถึง 11 หลักสำหรับตัวแทนคาร์โก</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_INVALID</name>
     </customLabels>
     <customLabels>
-        <label><!-- The entered IATA code does not exists --></label>
+        <label>ไม่มีหน่วยงาน%TYPE% สำหรับรหัส IATA นี้</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_RHC --></label>
+        <label>RHC เท่ากับหลักประกันทางการเงิน</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_RHC</name>
     </customLabels>
     <customLabels>
@@ -9497,24 +9533,28 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY --></label>
+        <label>หลักประกันทางการเงินที่ถูกต้อง</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_TO_PROVIDE --></label>
+        <label>เลือกรหัส IATA ที่ต้องแสดงหลักฐานความสอดคล้อง PCI</label>
         <name>ISSP_ANG_IATA_CODE_TO_PROVIDE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Iata_Codes_Relinquish --></label>
+        <label>รหัสต่าง ๆ ของ IATA ที่จะยกเลิก</label>
         <name>ISSP_ANG_Iata_Codes_Relinquish</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Least_One_Branch --></label>
+        <label>กรุณาเลือกอย่างน้อยหนึ่งสาขา</label>
         <name>ISSP_ANG_Least_One_Branch</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_LeftNav_Section1_AE_Details --></label>
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Branch to Shipping --></label>
+        <name>ISSP_ANG_Local_Details_Copy_Address2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
@@ -9529,95 +9569,95 @@ and
         <name>ISSP_ANG_MustAddUsersToService</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ONE_OR_MORE_AE --></label>
+        <label>บริษัทในเครือหนึ่งแห่งหรือมากกว่า</label>
         <name>ISSP_ANG_ONE_OR_MORE_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_AE --></label>
+        <label>เจ้าหน้าที่ติดต่อประสานงานลูกค้า IATA - บริษัทในเครือ</label>
         <name>ISSP_ANG_OPTION_PAX_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_HE_lite --></label>
+        <label>เจ้าหน้าที่ติดต่อประสานงานลูกค้า IATA</label>
         <name>ISSP_ANG_OPTION_PAX_HE_lite</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_HE_standard --></label>
+        <label>เจ้าหน้าที่ติดต่อประสานงานลูกค้า IATA</label>
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is both IFAP and admin --></label>
+        <label>ตามบันทึกของเรา คุณได้รับการระบุว่าเป็นผู้ติดต่อ IFAP ของหน่วยงานคุณ หากข้อมูลดังกล่าวถูกต้อง กรุณาดำเนินการเพื่อขอเข้าร่วมกระบวนการตรวจสอบทางการเงิน หรือมอบหมายบุคคลอื่นที่เหมาะสมให้เป็นผู้ติดต่อ IFAP ใน &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;หน้าข้อมูลบริษัท&lt;/a&gt; และขอให้ดำเนินการตามคำขอต่อไป</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is both IFAP and regular user --></label>
+        <label>ตามข้อมูลที่บันทึกของเรา คุณได้รับการระบุว่าเป็นผู้ติดต่อ IFAP ของหน่วยงานคุณ หากข้อมูลดังกล่าวถูกต้อง กรุณาดำเนินการเพื่อขอเข้าร่วมกระบวนการตรวจสอบทางการเงิน นอกจากนี้ กรุณาขอให้ผู้ดูแลระบบพอร์ทัลมอบหมายบุคคลที่เหมาะสมให้เป็นผู้ติดต่อ IFAP และขอให้ดำเนินการตามคำขอต่อไป</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is not IFAP nut is a portal admin --></label>
+        <label>เฉพาะผู้ติดต่อ IFAP ของหน่วยงานคุณสามารถขอเข้าร่วมกระบวนการตรวจสอบทางการเงิน คุณสามารถดูผู้ติดต่อ IFAP ปัจจุบันได้ที่ &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;หน้าข้อมูลบริษัท&lt;/a&gt; เพื่อกำหนดบุคคลที่เหมาะสมหากจำเป็น ก่อนขอให้ดำเนินการต่อตามคำขอนี้</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is neither IFAP or portal admin --></label>
+        <label>เฉพาะผู้ติดต่อ IFAP ของหน่วยงานคุณสามารถขอเข้าร่วมกระบวนการตรวจสอบทางการเงิน หากคุณทำหน้าที่นี้ภายในหน่วยงานของคุณ กรุณาติดต่อผู้ดูแลระบบพอร์ทัลเพื่อขอให้มอบหมายคุณเป็นผู้ติดต่อ IFAP และคุณจะดำเนินการตามคำขอนี้ได้</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-in of Financial Review button label --></label>
+        <label>คำขอเข้าร่วมการตรวจสอบทางการเงิน</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-in of Financial Review modal --></label>
+        <label>คำขอเข้าร่วมการตรวจสอบทางการเงิน</label>
         <name>ISSP_ANG_OPT_IN_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Success messagem on opt-in --></label>
+        <label>ขอบคุณสำหรับการขอเข้าร่วมกระบวนการตรวจสอบทางการเงิน IATA จะติดต่อคุณโดยเร็วเกี่ยวกับคำขอนี้</label>
         <name>ISSP_ANG_OPT_IN_SUCCESS_MESSAGE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-out of Financial Review button label --></label>
+        <label>คำขอไม่เข้าร่วมการตรวจสอบทางการเงิน</label>
         <name>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirmation text in the modal window to opt out the financial review --></label>
+        <label>เอเย่นต์ GoStandard ที่ IATA มีหลักประกันทางการเงินสามารถเลือกไม่เข้าร่วมการตรวจสอบทางการเงินประจำปีได้ ในกรณีเช่นนี้ RHC ของเอเย่นต์จะเท่ากับจำนวนหลักประกันทางการเงินที่ให้ไว้กับ IATA</label>
         <name>ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT</name>
     </customLabels>
     <customLabels>
-        <label><!-- Title in the modal window to opt out the financial review --></label>
+        <label>คำขอไม่เข้าร่วมการตรวจสอบทางการเงิน</label>
         <name>ISSP_ANG_OPT_OUT_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error message when the contact is not an IFAP contact --></label>
+        <label>เฉพาะผู้ติดต่อ IFAP ของหน่วยงานคุณสามารถขอไม่เข้าร่วมกระบวนการตรวจสอบทางการเงิน</label>
         <name>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</name>
     </customLabels>
     <customLabels>
-        <label><!-- Success messagem on opt-out --></label>
+        <label>ขอบคุณสำหรับการขอไม่เข้าร่วมกระบวนการตรวจสอบทางการเงิน IATA จะติดต่อคุณโดยเร็วเกี่ยวกับคำขอนี้</label>
         <name>ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_One_or_More --></label>
+        <label>หนึ่งสาขาหรือมากกว่า</label>
         <name>ISSP_ANG_One_or_More</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OptIn_OptOut_DateInfo --></label>
+        <label>วันที่ที่สายการบินสามารถเลือกไม่เข้าร่วม IATA EasyPay สำหรับประเทศนี้ในพอร์ทัล</label>
         <name>ISSP_ANG_OptIn_OptOut_DateInfo</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Choose_IATA_Code --></label>
+        <label>รหัสที่ได้รับการรับรองของ IATA</label>
         <name>ISSP_ANG_PCI_Choose_IATA_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Compliance --></label>
+        <label>ความสอดคล้อง PCI</label>
         <name>ISSP_ANG_PCI_Compliance</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_DSS_Compliant --></label>
+        <label>การปฏิบัติตามข้อกำหนด PCI DSS</label>
         <name>ISSP_ANG_PCI_DSS_Compliant</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Selected_IATA_Code --></label>
+        <label>* รหัส IATA ที่เลือก</label>
         <name>ISSP_ANG_PCI_Selected_IATA_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PROOF_OF_PCI --></label>
+        <label>หลักฐานความสอดคล้อง PCI สำหรับรหัส IATA ต่อไปนี้</label>
         <name>ISSP_ANG_PROOF_OF_PCI</name>
     </customLabels>
     <customLabels>
@@ -9625,7 +9665,7 @@ and
         <name>ISSP_ANG_Portal_Admin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <label>&quot;เฉพาะผู้มีอำนาจในการลงชื่อในนามนิติบุคคลเท่านั้นที่สามารถแจ้งการปิดบริษัทมายัง IATA คุณสามารถแต่งตั้งผู้มีอำนาจลงนามในหน้า&lt;a href=&quot;&quot;/ISSP_ContactList?MainNav=Admin&quot;&quot;subNav=contacts&quot;&quot;mid=M4S1&quot;&quot; target=&quot;&quot;_self&quot;&quot;&gt; การบริหารจัดการบริษัท -&gt; รายชื่อผู้ติดต่อ &lt;/a&gt;&quot;</label>
         <name>ISSP_ANG_Portal_Admin_Authorized_Signature</name>
     </customLabels>
     <customLabels>
@@ -9633,23 +9673,23 @@ and
         <name>ISSP_ANG_Portal_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Agency Read Only --></label>
+        <label>&lt;ul&gt;&lt;li&gt;กำหนดการเข้าถึงข้อมูลกองทุนหลัก และ/หรือกองทุนสำรองต่าง ๆ แบบอ่านได้อย่างเดียวไปยังผู้ใช้แล้ว&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_AgencyReadOnly</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role IEP Admin --></label>
+        <label>&lt;ul&gt; &lt;li&gt;การเข้าถึงข้อมูลกองทุนหลักและกองทุนสำรองต่าง ๆ อย่างเต็มรูปแบบ&lt;/li&gt; &lt;li&gt;สร้างกองทุนรวมโดยตรง&lt;/li&gt; &lt;li&gt;สร้างและบริหารวงเงินสำหรับค่าใช้จ่ายอื่น ๆ ในกองทุนสำรอง&lt;/li&gt; &lt;li&gt;การบริหารบัญชี IEP อย่างเต็มรูปแบบ รวมทั้งการปิดบัญชีด้วย&lt;/li&gt; &lt;li&gt;การบริหารระบบผู้ใช้งานอย่างเต็มรูปแบบ และมอบหมายงานด้านกองทุนหลักและกองทุนสำรอง รวมทั้งตอบรับคำขอเข้าใช้ด้วย&lt;/li&gt; &lt;li&gt;ฝาก ถอน และโอนเงินไปยังกองทุนหลักและกองทุนสำรองทั้งหมด&lt;/li&gt; &lt;li&gt;จัดการการลงทะเบียนบัญชีธนาคาร และการปิดบัญชี&lt;/li&gt; &lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Master Wallet Manager --></label>
+        <label>&lt;ul&gt;&lt;li&gt;จัดการการลงทะเบียนบัญชีธนาคาร และการปิดบัญชี&lt;/li&gt;&lt;li&gt;อนุญาตให้มีการเพิ่มทุนจากบัญชีธนาคารที่ลงทะเบียนไว้ไปยังกองทุนรวมโดยตรง&lt;/li&gt;&lt;li&gt;ถอนเงินจากกองทุนรวมโดยตรง&lt;/li&gt;&lt;li&gt;โอนเงินระหว่างกองทุนหลักและกองทุนสำรองทั้งหมด&lt;/li&gt;&lt;li&gt;จัดการการเข้าถึงของผู้ใช้เป็น “ผู้บริหารกองทุนสำรอง” หรือ “ผู้ออกตั๋ว”&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Sub-wallet Manager --></label>
+        <label>&lt;ul&gt; &lt;li&gt;จัดการบัญชีกองทุนสำรองที่กำหนดไว้&lt;/li&gt; &lt;li&gt;จัดการ “ผู้ออกตั๋ว” ผู้เข้าใช้ระบบ IATA EasyPay และกองทุนสำรอง&lt;/li&gt; &lt;li&gt;สร้างหมายเลข IATA EasyPay จากกองทุนที่กำหนดไว้ให้ใช้เพื่อการออกตั๋วผ่านระบบ GDS&lt;/li&gt; &lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Ticket Issuer --></label>
+        <label>&lt;ul&gt;&lt;li&gt;สร้างหมายเลข IATA EasyPay จากกองทุนใดก็ตามที่กำหนดไว้ให้ใช้เพื่อการออกตั๋วผ่านระบบ GDS&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_TicketIssuer</name>
     </customLabels>
     <customLabels>
@@ -9657,11 +9697,11 @@ and
         <name>ISSP_ANG_Portal_TicketIssuer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ProdCompAnnualFees --></label>
+        <label>ค่าธรรมเนียมรายปีประจำปี 2018</label>
         <name>ISSP_ANG_ProdCompAnnualFees</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ProdCompCostTooltip --></label>
+        <label>สามารถขอรับคืนค่าธรรมเนียมใบสมัครทุกประเภท ในกรณีที่บริษัทของคุณไม่ผ่านการรับรอง บริษัทขนาดเล็ก - ยอดขายเบื้องต้นต่อปีไม่เกิน USD 200,000, บริษัทขนาดกลาง - ยอดขายเบื้องต้นต่อปีอยู่ระหว่าง USD 200,001 - USD 2,000,000, บริษัทขนาดใหญ่ - ยอดขายเบื้องต้นต่อปีมากกว่า USD 2,000,000</label>
         <name>ISSP_ANG_ProdCompCostTooltip</name>
     </customLabels>
     <customLabels>
@@ -9669,11 +9709,11 @@ and
         <name>ISSP_ANG_ProdCompCostTooltipConvert</name>
     </customLabels>
     <customLabels>
-        <label><!-- RHC Information description --></label>
+        <label>บริการนี้ช่วยให้สามารถตรวจสอบยอดของ RHC ณ ปัจจุบันได้ทุกเมื่อ ซึ่งรวมถึงรูปแบบการชำระเงินที่ได้รับอนุญาตและพร้อมใช้งานของคุณ ตลอดจนข้อมูลความเสี่ยงและประวัติ โดยบริการนี้จะส่งการแจ้งเตือนให้ทราบเมื่อถึงอัตราเปอร์เซ็นต์ของ RHC ณ ปัจจุบัน เพื่อช่วยในการตรวจสอบและดำเนินการ</label>
         <name>ISSP_ANG_RHC_InformationDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- Risk Event Status --></label>
+        <label>สถานะความเสี่ยง</label>
         <name>ISSP_ANG_RHC_Risk_Event_Status</name>
     </customLabels>
     <customLabels>
@@ -9701,23 +9741,23 @@ and
         <name>ISSP_ANG_STEP_2_Identi_Appro_Req_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Search for Contacts String --></label>
+        <label>ค้นหารายชื่อผู้ติดต่อ</label>
         <name>ISSP_ANG_SearchContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents --></label>
+        <label>คำร้องขอการเปลี่ยนแปลงประเภทการรับรอง และ/หรือแจ้งให้ IATA ทราบถึงการเปลี่ยนแปลงสถานที่ตั้ง ชื่อบริษัท สถานะทางกฎหมาย เจ้าของ/ผู้ถือหุ้น</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
     </customLabels>
     <customLabels>
-        <label><!-- STEP 1 - Annual Revalidation --></label>
+        <label>ขั้นตอน A - ยืนยันรายละเอียดของเอเย่นต์</label>
         <name>ISSP_ANG_Step1_ANNUAL_REV</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Step1_HE --></label>
+        <label>&lt;strong&gt; บริษัทในเครือ&lt;/strong&gt;ของตัวแทนดังต่อไปนี้ที่ได้รับการรับรองจาก IATA:</label>
         <name>ISSP_ANG_Step1_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step1  Lang Display Help --></label>
+        <label>* บริษัทในเครือแห่งนี้มีสถานะทางกฎหมายแยกออกจากนิติบุคคลหลักหรือไม่?</label>
         <name>ISSP_ANG_Step1_Legal_Display_Help</name>
     </customLabels>
     <customLabels>
@@ -9729,7 +9769,7 @@ and
         <name>ISSP_ANG_Step1_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- STEP 2 - Annual Revalidation --></label>
+        <label>ขั้นตอน B - ยื่นเรื่องไปยัง IATA</label>
         <name>ISSP_ANG_Step2_ANNUAL_REV</name>
     </customLabels>
     <customLabels>
@@ -9741,27 +9781,27 @@ and
         <name>ISSP_ANG_StepFinal_AE_Thanks</name>
     </customLabels>
     <customLabels>
-        <label><!-- Voluntary Relinquishment Disclaimer --></label>
+        <label>&lt;p&gt;ข้าพเจ้ามีความประสงค์ขอยกเลิกการรับรองของ IATA โดยสมัครใจ ตามสถานที่อนุมัติข้างต้น&lt;/p&gt;</label>
         <name>ISSP_ANG_VR_Disclaimer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Voluntary_Relinquishment --></label>
+        <label>การยกเลิกโดยสมัครใจ</label>
         <name>ISSP_ANG_Voluntary_Relinquishment</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_WISH_TO_RELINQUISH --></label>
+        <label>ข้าพเจ้ามีความประสงค์ที่จะยกเลิก</label>
         <name>ISSP_ANG_WISH_TO_RELINQUISH</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_choose_what_to_relinquish --></label>
+        <label>กรุณาเลือกหัวข้อที่คุณต้องการยกเลิก</label>
         <name>ISSP_ANG_choose_what_to_relinquish</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step0_Other_Changes --></label>
+        <label>หลักฐานความสอดคล้อง PCI</label>
         <name>ISSP_ANG_proof_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step0_Other_Changes_Info --></label>
+        <label>ความสอดคล้อง PCI เป็นข้อกำหนดเบื้องต้นในการเปิดใช้ระบบรับชำระเงินด้วยบัตรเครดิตสำหรับรหัสของ IATA</label>
         <name>ISSP_ANG_proof_PCI_Info</name>
     </customLabels>
     <customLabels>
@@ -9833,7 +9873,7 @@ and
         <name>ISSP_Access_Service</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Access_Under_Provisioning --></label>
+        <label>กำลังตรวจสอบการเข้าระบบ</label>
         <name>ISSP_Access_Under_Provisioning</name>
     </customLabels>
     <customLabels>
@@ -9978,15 +10018,15 @@ and
         <name>ISSP_Apply_Filter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1 --></label>
+        <label>มีการเพิ่มผู้ใช้อย่างน้อยหนึ่งคนใน IATA EasyPay ผ่านทางหน้าพอร์ทัลบริการลูกค้า IATA</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2 --></label>
+        <label>ในฐานะเจ้าหน้าที่ดูแล IEP หรือผู้บริหารกองทุน คุณต้องอนุมัติผู้ใช้ใน IATA EasyPay และมอบหมายอย่างน้อยหนึ่งกองทุนหรือมากกว่า เพื่อที่พวกเขาจะสามารถเข้าใช้บริการได้&lt;br/&gt;&lt;br/&gt;ผู้ใช้จะได้รับอีเมลแจ้งเตือนเมื่อการขอเข้าใช้ได้รับอนุมัติ</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3 --></label>
+        <label>คุณสามารถเข้าใช้ IATA EasyPay ได้จากหน้าหลักของ</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3</name>
     </customLabels>
     <customLabels>
@@ -10913,11 +10953,11 @@ and
         <name>ISSP_Email_Draft_Change_Process</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Email_Draft_Change_Process_PCI --></label>
+        <label>ขอบคุณสำหรับเอกสารฉบับร่างว่าด้วยหลักฐานความสอดคล้อง PCI ผ่านระบบออนไลน์</label>
         <name>ISSP_Email_Draft_Change_Process_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Email_Draft_Change_Process_VR --></label>
+        <label>ขอบคุณสำหรับเอกสารฉบับร่างว่าด้วยการขอยกเลิกโดยสมัครใจผ่านระบบออนไลน์</label>
         <name>ISSP_Email_Draft_Change_Process_VR</name>
     </customLabels>
     <customLabels>
@@ -11111,6 +11151,18 @@ and
     <customLabels>
         <label><!-- EmailsFailure --></label>
         <name>ISSP_EmailsFailure</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Emergency Support --></label>
+        <name>ISSP_Emergency_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Emergency Support Subtitle --></label>
+        <name>ISSP_Emergency_Support_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>เปิดใช้บริการ</label>
+        <name>ISSP_Enable_Service</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Encolment page Office address --></label>
@@ -11709,6 +11761,10 @@ and
         <name>ISSP_InvalidPassword</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_InvalidPostalCode --></label>
+        <name>ISSP_InvalidPostalCode</name>
+    </customLabels>
+    <customLabels>
         <label>ยื่นเรื่องร้องเรียน</label>
         <name>ISSP_IwishToComplain</name>
     </customLabels>
@@ -11769,7 +11825,7 @@ and
         <name>ISSP_Loading_IATAN_Agency_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Loading Travel Agency Details --></label>
+        <label>กำลังโหลดข้อมูลบริษัทตัวแทนการท่องเที่ยว...</label>
         <name>ISSP_Loading_Travel_Agency_Details</name>
     </customLabels>
     <customLabels>
@@ -12309,19 +12365,19 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_PAX_Validating_VAT_Number_error</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance --></label>
+        <label>รหัสบริษัทตัวแทน - หลักฐานความสอดคล้อง PCI</label>
         <name>ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Agency_Codes_VR --></label>
+        <label>รหัสบริษัทตัวแทน - การยกเลิกโดยสมัครใจ</label>
         <name>ISSP_PCI_Agency_Codes_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Case_Submited --></label>
+        <label>ขอบคุณสำหรับคำร้องเพื่อขอชำระด้วยบัตรเครดิต</label>
         <name>ISSP_PCI_Case_Submited</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Least_One_IATA_CODE --></label>
+        <label>กรุณาเลือกรหัส IATA อย่างน้อยหนึ่งรหัส</label>
         <name>ISSP_PCI_Least_One_IATA_CODE</name>
     </customLabels>
     <customLabels>
@@ -12636,43 +12692,43 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_Quantity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB --></label>
+        <label>การจำกัดมูลค่าเงินสำรองจ่าย</label>
         <name>ISSP_RHC_HUB</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP --></label>
+        <label>รูปแบบการรับชำระที่สามารถใช้ได้</label>
         <name>ISSP_RHC_HUB_AFP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP Cash --></label>
+        <label>เงินสด</label>
         <name>ISSP_RHC_HUB_AFP_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP Credit Card --></label>
+        <label>บัตรเครดิต</label>
         <name>ISSP_RHC_HUB_AFP_Credit_Card</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Curr Financial Security --></label>
+        <label>ความปลอดภัยทางการเงินในปัจจุบัน</label>
         <name>ISSP_RHC_HUB_Curr_Financial_Security</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Current Usage --></label>
+        <label>การใช้งานในปัจจุบัน</label>
         <name>ISSP_RHC_HUB_Current_Usage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Last Updated --></label>
+        <label>ข้อมูลล่าสุด</label>
         <name>ISSP_RHC_HUB_Last_Updated</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Percentage Usage --></label>
+        <label>การใช้งานคิดเป็นอัตราร้อยละ</label>
         <name>ISSP_RHC_HUB_Percentage_Usage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Risk History --></label>
+        <label>เหตุการณ์ความเสี่ยงที่เกิดขึ้น</label>
         <name>ISSP_RHC_HUB_RH</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB RP --></label>
+        <label>ข้อมูลโดยรวมของความเสี่ยง</label>
         <name>ISSP_RHC_HUB_RP</name>
     </customLabels>
     <customLabels>
@@ -13155,6 +13211,10 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_Service</name>
     </customLabels>
     <customLabels>
+        <label>คุณแน่ใจหรือไม่ว่าต้องการเปิดใช้งานบริการนี้</label>
+        <name>ISSP_ServiceAccessConfirm</name>
+    </customLabels>
+    <customLabels>
         <label>ยืนยันว่าต้องการขอสิทธิ์เข้า</label>
         <name>ISSP_ServiceRequestConfirm</name>
     </customLabels>
@@ -13584,6 +13644,10 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
         <name>ISSP_Trade_name_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- Trained Staff Certification --></label>
+        <name>ISSP_Trained_Staff_Certification</name>
+    </customLabels>
+    <customLabels>
         <label>การท่องเที่ยว</label>
         <name>ISSP_Travel</name>
     </customLabels>
@@ -13640,7 +13704,7 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
         <name>ISSP_UserInactivation_ServiceMsg_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_VR_Case_Submited --></label>
+        <label>ขอบคุณที่ยื่นคำขอการยกเลิกโดยสมัครใจ</label>
         <name>ISSP_VR_Case_Submited</name>
     </customLabels>
     <customLabels>
@@ -13664,7 +13728,7 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
         <name>ISSP_View_PWC_Lithuania_DC</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Add FAP Contact --></label>
+        <label>แสดงผลผู้ใช้ทั้งหมดในหมวดนี้</label>
         <name>ISSP_View_Portal_Users</name>
     </customLabels>
     <customLabels>
@@ -13946,6 +14010,10 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
     <customLabels>
         <label><!-- Invalid Source Case --></label>
         <name>Invalid_Source_Case</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invalid Topic Assignment --></label>
+        <name>Invalid_Topic_Assignment</name>
     </customLabels>
     <customLabels>
         <label><!-- Invoice number --></label>
@@ -14279,6 +14347,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>ระยะเวลาเปิดบริการ:</label>
         <name>LVA_CallUsAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
+        <name>LVA_CallUsEmergencyAvailableHours</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_CallUsEmergencyPhoneNumber --></label>
+        <name>LVA_CallUsEmergencyPhoneNumber</name>
     </customLabels>
     <customLabels>
         <label>ไม่สามารถใช้โทรศัพท์สำหรับประเทศที่เลือก</label>
@@ -14661,6 +14737,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>No_Reply</name>
     </customLabels>
     <customLabels>
+        <label><!-- No_Subsidiaries --></label>
+        <name>No_Subsidiaries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- No account yet? Sign up! --></label>
         <name>No_account_yet_Sign_up</name>
     </customLabels>
@@ -14955,6 +15035,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Fred_App_Description --></label>
+        <name>OneId_Fred_App_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Fred_Select_Type_of_Company --></label>
@@ -16232,6 +16316,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>ReleaseDateMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- Remaining_Owners --></label>
+        <name>Remaining_Owners</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Renewal_Number --></label>
         <name>Renewal_Number</name>
     </customLabels>
@@ -16902,6 +16990,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label><!-- Annual Revalidation Campaign --></label>
         <name>ANG_Anual_Revalidation_Tool</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- RHC Mass Calculation --></label>
+        <name>ANG_RHC_Mass_Calculation</name>
     </customTabs>
     <customTabs>
         <label><!-- AWS Explorer --></label>

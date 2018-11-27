@@ -43,10 +43,8 @@ public class ISSP_ICCS_ProcessNoaControllerTest{
 
         Profile p = [Select ID, Name from Profile Where Name = 'ISS Portal (Partner)'];
 
-        Map<String,Schema.RecordtypeInfo> aRtMap = Account.sObjectType.getDescribe().getRecordtypeinfosbyname();
-
         Account a = New Account(
-            Recordtypeid = aRTMap.get('Airline Headquarters').getRecordtypeid(), 
+            Recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
             Name = 'TestPortalAccount',
 			Airline_designator__c = 'LX',
 			IATACode__c = '724',

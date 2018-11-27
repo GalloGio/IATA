@@ -13,13 +13,10 @@ private class ISSP_ANG_PCI_Test {
         insert country2;
 		
 		//Create Accounts
-		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency Delegated Admin User'];
 
-		Id rtIdBr = [ SELECT Id FROM RecordType 
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
-
+		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
 	        parent.BillingCity = 'test';
@@ -127,13 +124,10 @@ private class ISSP_ANG_PCI_Test {
         insert country2;
 		
 		//Create Accounts
-		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency Delegated Admin User'];
 
-		Id rtIdBr = [ SELECT Id FROM RecordType 
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
-
+		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
 	        parent.BillingCity = 'test';
@@ -241,13 +235,10 @@ private class ISSP_ANG_PCI_Test {
         insert country2;
 		
 		//Create Accounts
-		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency Delegated Admin User'];
 
-		Id rtIdBr = [ SELECT Id FROM RecordType 
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
-
+		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
 	        parent.BillingCity = 'test';
@@ -351,13 +342,10 @@ private class ISSP_ANG_PCI_Test {
         insert country2;
 		
 		//Create Accounts
-		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+		id AgencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency Delegated Admin User'];
 
-		Id rtIdBr = [ SELECT Id FROM RecordType 
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
-
+		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
 	        parent.BillingCity = 'test';

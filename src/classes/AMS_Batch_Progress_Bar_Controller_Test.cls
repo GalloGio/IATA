@@ -4,7 +4,7 @@ private class AMS_Batch_Progress_Bar_Controller_Test
 
 	@testSetup static void setup() {		
 
-		ID certRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId(); //FM AMSU-113
+		ID certRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION'); //FM AMSU-113
 		
 		DateTime dt = system.now()+90;
 		Date d = date.newinstance(dt.year(), dt.month(), dt.day());
@@ -19,24 +19,14 @@ private class AMS_Batch_Progress_Bar_Controller_Test
 		insert countrylist;
 		
 		List<Account> agencylist = new List<Account>();
-		Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account a1 = new Account(Name='Test1 Agency', RecordtypeId=agencyRT,
 			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
 			IATACode__c = '12345678', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED, 
 			Is_PCI_compliant__c = 'No', ANG_PCI_compliance_expiry_date__c = d);
-		/*
-		Account a2 = new Account(Name='Test1 Agency', RecordtypeId=agencyRT,
-			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
-			IATACode__c = '12345679', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED, 
-			Is_PCI_compliant__c = 'Yes', ANG_PCI_compliance_expiry_date__c = d);
-		Account a3 = new Account(Name='Test1 Agency', RecordtypeId=agencyRT,
-			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
-			IATACode__c = '12345679', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED, 
-			Is_PCI_compliant__c = 'Nil CC', ANG_PCI_compliance_expiry_date__c = d);
-		*/
+
 		agencylist.add(a1);
-		//agencylist.add(a2);
-		//agencylist.add(a3);
+
 		insert agencylist;
 
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
@@ -45,11 +35,6 @@ private class AMS_Batch_Progress_Bar_Controller_Test
 		
 		List<Contact> cos = new List<Contact>{co1,co2}; 
 		insert cos;
-
-		//AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc1.Id, recordTypeID == certRT);
-		//AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_CERT, Account__c = acc1.Id,
-		//                            Process__c = AMS_Utils.PCI_COMPLIANT, Status__c='Accepted_Future Date', ANG_PCI_compliance_expiry_date__c = acc1.ANG_PCI_compliance_expiry_date__c);
-
 	}
 
 	@isTest
@@ -57,7 +42,6 @@ private class AMS_Batch_Progress_Bar_Controller_Test
 	    Set<Id> filteredAccounts = new Map<Id, Account>([select id from Account where Name='Test1 Agency']).keySet();
 
 	    AMS_PCI_Complaint_Batch batchClass = new AMS_PCI_Complaint_Batch(1, filteredAccounts);
-	    //batchId = Database.executeBatch(batchClass, 1);
 
 	    id batchInstance=database.executeBatch(batchClass);
 

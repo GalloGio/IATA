@@ -5,7 +5,7 @@ public with sharing class IDCard_DetailsAdmPaymentsCtrl extends IDCardAbstractCo
 	public List<ID_Card_Application__c>   allSingleList {get;set;}
 	public Map<String, Contact> contacts  {get;set;}
 
-	String massAppRT = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
+	String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
 	Public String message = System.currentPagereference().getParameters().get('id');
 
 	public IDCard_DetailsAdmPaymentsCtrl(){
