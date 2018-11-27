@@ -114,7 +114,6 @@ public with sharing class Faq2Case2Test {
 		  vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
 		  controller.pageLoad();
 		  controller.topicLabel = 'ICH_Helpdesk__c';
-		  controller.setLiveAgentButtonsNames();
           controller.setButtonForTopic('ICH_Helpdesk__c');
 
             for(String str : controller.csButtonsList.keySet()){
