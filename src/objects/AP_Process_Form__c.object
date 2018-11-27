@@ -152,6 +152,16 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Accept_Requirements__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>User must accept country requirements before continue (only for CASS)</description>
+        <externalId>false</externalId>
+        <label>Accept Requirements</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Accept_payment_Cards_for_BSP_ticket__c</fullName>
         <description>Does your Airline accept Payment Cards for BSP ticket issuance by Travel Agents?</description>
         <externalId>false</externalId>
