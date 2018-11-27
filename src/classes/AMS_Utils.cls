@@ -232,7 +232,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWGENFOP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
     public static final String RECTYPE_NEWGENOPTINOUT  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
     public static final String RECTYPE_NEWGENANNUALREVAL = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
-    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
+    public static final String RECTYPE_BANK_ACCOUNT_SETUP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
     public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL A ONBOARDING');
     public static final String RECTYPE_IEPMODELB    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL B SCREENING');
 
