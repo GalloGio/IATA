@@ -544,6 +544,59 @@ global class ANG_OscarProcessHelper {
 
 	}
 
+	//ACAMBAS - NEWGEN-4445 - Start
+	public static void createGenericChangeCode(AMS_Oscar__c theOSCAR, String changeCodeId) {
+
+		if(changeCodeId == null) return;
+
+		Savepoint sp = Database.setSavepoint();
+
+        try {
+			Account accnt = [SELECT Name, Status__c, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+					BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
+					ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
+					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
+					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
+					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
+					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
+					FROM Account
+					WHERE Id = :theOSCAR.account__c FOR UPDATE];
+
+			AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+	        AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
+
+	        if(n == null) {
+	        	theOSCAR.addError('Change code not found: ' + changeCodeId);
+	        	return;
+	        }
+
+	        changeCode.name = n.Change_Code__c;
+	        changeCode.reasonCode = n.Reason_Code__c;
+
+	        if(theOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
+	        	changeCode.memoText = n.Bulletin_Memo_Text__c;
+	        }
+        	else {
+        		changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
+        	}
+	        
+	        changeCode.reasonDesc  = n.Reason_Code_Description__c;
+	        changeCode.status  = n.Account_status_change__c;
+	        changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
+			
+			List<Account> acctList = AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {accnt}, false);
+
+			theOSCAR.First_Step_Completed__c = true;
+
+        } catch (Exception ex) {
+            Database.rollback(sp); 
+            throw ex;
+        }
+	}
+	//ACAMBAS - NEWGEN-4445 - End
+
 	public static EntityUpdater execCreateAMLCase(AMS_OSCAR__c oscar, EntityUpdater updater) {
 
 		if(updater == null)
