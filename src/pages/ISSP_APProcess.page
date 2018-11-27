@@ -41,29 +41,27 @@
                 background-color:transparent !important;
                 border-right:2px solid white;
             } 
-                       </style>
+            .row {
+              display: flex;
+            }
+
+            .col {
+              flex: 1;
+            }
+            .doc-link {
+                color: #6BBBEA;
+                font-weight: bold;
+            }
+            .req {
+                border-left: 3px solid red;
+                padding: 0px 10px 0px 10px;
+            }
+            .center {
+              text-align: center;
+            }
+            </style>
                        
                        <script>
-                           function hideText(myValue){
-                           
-                           var inputs = document.getElementsByTagName("input");
-                           var theValue = document.getElementById(myValue).value;
-                           //  alert(theValue);
-                           if (theValue == 'Yes' ){
-                               document.getElementById('bankmandate_p').style.display='none';
-                               document.getElementById('bankmandatelink_p').style.display='none';
-                               document.getElementById('bankmandateupload_p').style.display='none';
-                               document.getElementById('bankmandatenotes_p').style.display='block';
-                               document.getElementById('bankmandateattachment_p').style.display='none';    
-                           } else {
-                               document.getElementById('bankmandate_p').style.display='block';
-                               document.getElementById('bankmandatelink_p').style.display='block';
-                               document.getElementById('bankmandateupload_p').style.display='block';   
-                               document.getElementById('bankmandateattachment_p').style.display='block';       
-                               document.getElementById('bankmandatenotes_p').style.display='none';
-                           }
-                       }
-                       
                        $(document).ready(function() {
                            $(".cass-airlines-select").select2({width : "resolve"});
                        
@@ -107,7 +105,7 @@
                                         D. Submit to IATA
                                     </div>
                                 </div>
-                                
+
                                 <apex:form styleClass="form-horizontal">
                                     <apex:actionFunction action="{!null}" name="refreshCountryList" reRender="countryList" oncomplete="$('.country-select').select2({width : 'resolve'});">
                                         <apex:param value="" assignTo="{!strOT}" name="strOT"/>
@@ -210,7 +208,7 @@
       
                     <!------------------------------------------->
                     <!--STEP 2 Display the country requirements-->
-                    <!------------------------------------------->
+                    <!----------------------------------------- -->
                     <apex:outputText rendered="{!isStep2&&countryRequirementFound}">
                         <div class="panel-primary">
                             <div class="panel-heading head_panel_green">
@@ -231,9 +229,28 @@
                                         D. Submit to IATA
                                     </div>
                                 </div>
-                                <c:ISSP_AP_Country_Reqs_Modal />
                                 
                                 <apex:form >
+                                    <!-- for CASS show an Accept conditions box -->
+                                    <apex:outputPanel layout="block" style="padding: 40px;" rendered="{!isCASS}">
+                                        <div class="alert alert-info" role="alert">Please note that as part of the joining process, a test file for CASSlink billing have to be submitted. The requirements dor this file are described in the CASSlink specifications handbook, and we have also prepared a guide with the most frequent issues encuntered during the testing process. Please make sure you read the documents below and made the necessary preparation.</div>
+                                        <div class="row">
+                                            <apex:outputPanel layout="block" styleclass="col center" rendered="{!DocumentCASSSpecification!=null}">
+                                                Download the&nbsp;<apex:outputLink value="{!URLFOR($Action.Document.Download, DocumentCASSSpecification.Id)}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!DocumentCASSSpecification.Name}</apex:outputLink>&nbsp;(pdf)
+                                            </apex:outputPanel>
+                                            <apex:outputPanel layout="block" styleclass="col center" rendered="{!DocumentAppendixA!=null}">
+                                                Download the&nbsp;<apex:outputLink value="{!URLFOR($Action.Document.Download, DocumentAppendixA.Id)}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!DocumentAppendixA.Name}</apex:outputLink>&nbsp;(pdf)
+                                            </apex:outputPanel>
+                                        </div>
+                                        <div class="center" style="margin-top: 20px;">
+                                            <apex:outputLabel styleclass="req" value="I understand these requirements"/>
+                                            <apex:inputField value="{!newForm.Accept_Requirements__c}" rendered="{!!newForm.Accept_Requirements__c}"/>
+                                            <apex:outputField value="{!newForm.Accept_Requirements__c}" rendered="{!newForm.Accept_Requirements__c}"/>
+                                        </div>
+                                    </apex:outputPanel>
+                                
+                                    <c:ISSP_AP_Country_Reqs_Modal />
+                                
                                     <center>
                                         <apex:pageBlock mode="edit">
                                             <apex:commandButton styleclass="btn btn-default" action="{!goToStep1}" value="Previous" id="Previous"/>&nbsp;
