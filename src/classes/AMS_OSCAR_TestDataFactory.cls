@@ -223,7 +223,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		
 		List<Account> accountList = new List<Account>();
 		
-		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Location_Type__c = 'HO', IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency', Status__c = AMS_Utils.ACC_S9_APPROVED);
+		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Location_Type__c = 'HO', IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency', Status__c = AMS_Utils.ACC_S9_APPROVED, Location_Class__c = 'R');
 		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Location_Type__c = 'BR', IATACode__c='9876543',Name='Test2 Agency',Short_Name__c='Test2 Agency', ParentId = a1.Id);
 
 		accountList.add(a1);
