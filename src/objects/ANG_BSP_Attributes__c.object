@@ -206,30 +206,32 @@ J-Joint Vent</inlineHelpText>
         <fullName>Remittances_Per_Year__c</fullName>
         <description>Number of remittances per year to compute the most frequence value.</description>
         <externalId>false</externalId>
-        <formula>IF(Operation__r.Country__r.ISO_Code__c  &lt;&gt; &apos;CN&apos;,
-				
-    CASE( UPPER(TEXT(Remittance_Frequency__c)) , 
-      
-          UPPER(&apos;M&apos;) , 12,
-          UPPER(&apos;F&apos;) , 24,
-          UPPER(&apos;R&apos;) , 48,
-          UPPER(&apos;V&apos;) , 52,
-          UPPER(&apos;S&apos;) , 73,
-          UPPER(&apos;B&apos;) , 122,
-				    	 UPPER(&apos;W&apos;) , 48,
-          UPPER(&apos;D&apos;) , 0,
-    0)
-				
-    , CASE( UPPER(TEXT(Remittance_Frequency__c)),
-						    UPPER(&apos;M&apos;) , 12,
-          UPPER(&apos;F&apos;) , 24,
-          UPPER(&apos;R&apos;) , 48,
-          UPPER(&apos;V&apos;) , 52,
-          UPPER(&apos;S&apos;) , 73,
-          UPPER(&apos;B&apos;) , 122,
-					     UPPER(&apos;W&apos;) , 48,
-          UPPER(&apos;D&apos;), 300,
-    0)
+        <formula>IF(Operation__r.Country__r.ISO_Code__c &lt;&gt; &apos;CN&apos;, 
+
+CASE( (TEXT(Remittance_Frequency__c)) , 
+
+&apos;M&apos; , 12, 
+&apos;F&apos; , 24, 
+&apos;R&apos; , 48, 
+&apos;V&apos; , 52, 
+&apos;S&apos; , 73, 
+&apos;B&apos; , 96, 
+&apos;T&apos;, 105,
+&apos;W&apos; , 48, 
+&apos;D&apos; , 0, 
+0) 
+
+, CASE( (TEXT(Remittance_Frequency__c)), 
+&apos;M&apos; , 12, 
+&apos;F&apos; , 24, 
+&apos;R&apos; , 48, 
+&apos;V&apos; , 52, 
+&apos;S&apos; , 73, 
+&apos;B&apos; , 96,
+&apos;T&apos;, 105, 
+&apos;W&apos; , 48, 
+&apos;D&apos;, 300, 
+0) 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Remittances Per Year</label>
