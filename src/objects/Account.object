@@ -3175,7 +3175,7 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_GDI_status__c</fullName>
+        <fullName>GDI_status__c</fullName>
         <description>Used for saving the current GDI status</description>
         <externalId>false</externalId>
         <label>GDI status</label>
@@ -41369,7 +41369,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_GDI_status__c</picklist>
+            <picklist>GDI_status__c</picklist>
             <values>
                 <fullName>In Progress</fullName>
                 <default>false</default>
