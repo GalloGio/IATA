@@ -525,15 +525,6 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <customButtons>Mass_Update_Contracts</customButtons>
-        <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CONTRACT.NAME</fields>
-        <fields>CONTRACT.START_DATE</fields>
-        <fields>CONTRACT.END_DATE</fields>
-        <fields>EF_Status__c</fields>
-        <relatedList>RelatedContractList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <customButtons>Edit_All_Airline_BA</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
