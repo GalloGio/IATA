@@ -272,6 +272,7 @@ global without sharing class ISSP_APProcess {
             if(stepNumber == '1'){
                 isStep1= true;
             }else if(stepNumber == '2'){
+                retrieveAPProcessForm();
                 isStep2= true;
             }else if(stepNumber == '3'){
                 isStep3= true;
