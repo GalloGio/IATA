@@ -68,14 +68,15 @@
 		                <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float: left;"/>
 		            </div>
 		            <div style="padding-top: 16px; padding-left: 44px;">
-		                <h3>Financial Institution Insurance Providers</h3>
-		                <apex:outputText value="The following Financial Institutions provide Financial Security Insurance in your country" escape="false"/>
+		                <h3>{!$Label.ISSP_Financial_Insititutions_Header}</h3>
+		                <apex:outputText value="{!$Label.ISSP_Financial_Insititutions_Subheader}" escape="false"/>
 		            </div>
 		            <apex:form>
 		            	<apex:actionFunction name="reRenderErrorMessagesTCModal" reRender="errorMessagesTCModal"/>
 		            	<apex:actionFunction name="submitTCModal" action="{!startGDIPortalAppRightCreation}" reRender="requestLoading" oncomplete="if ({!currentErrorMessage != ''}) { enableTCModalButtons(); reRenderErrorMessagesTCModal(); } else { createGDIAppRight(); } return false;"/>
 		            	<apex:actionFunction name="createGDIAppRight" action="{!createPortalAppRight}" reRender="requestLoading" oncomplete="if ({!currentErrorMessage != ''}) { enableTCModalButtons(); reRenderErrorMessagesTCModal(); } return false;"/>
 		            	<apex:actionFunction name="refreshPageSize" action="{!refreshPageSize}" reRender="financialInsitutionList"/>
+		            	<apex:actionFunction name="reRenderFinancialInstitutions" reRender="financialInsitutionList"/>
 		            	
 			            <apex:pageBlock id="financialInsitutionList" rendered="{!financialInstitutionList != null}">
 			            	<br/>
@@ -88,13 +89,13 @@
 				            			
 				            			<apex:outputText value="{!financialInstitution.Name}" rendered="{!financialInstitution.Website__c == ''}"/>
 				                        
-				                        <apex:commandButton styleClass="btn_iata_primary btn" value="Request Access" onclick="showTermsAndConditionsModal(); return false;" reRender="" rendered="{!AND(NOT(gdiAppRightDenied), NOT(gdiAppRightGranted), NOT(gdiAppRightRequested), financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
+				                        <apex:commandButton styleClass="btn_iata_primary btn" value="Request GDI Access" onclick="showTermsAndConditionsModal(); return false;" reRender="" rendered="{!AND(NOT(gdiAppRightDenied), NOT(gdiAppRightGranted), NOT(gdiAppRightRequested), financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
 
-				                        <apex:outputText value="Access Denied" rendered="{!AND(gdiAppRightDenied, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
+				                        <apex:outputText value="{!$Label.ISSP_Access_Denied}" rendered="{!AND(gdiAppRightDenied, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
 
-				                        <apex:outputText value="Access Request" rendered="{!AND(gdiAppRightRequested, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
+				                        <apex:outputText value="{!$Label.ISSP_Access_Requested}" rendered="{!AND(gdiAppRightRequested, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
 
-				                        <apex:commandButton styleClass="btn_iata_primary btn" value="Go to GDI Portal" onclick="navigateToGDIPortal();" reRender="" rendered="{!AND(gdiAppRightGranted, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
+				                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Navigate_Portal}" onclick="navigateToGDIPortal();" reRender="" rendered="{!AND(gdiAppRightGranted, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
 				                        
 				                        <apex:facet name="header">
 				                            <apex:outputText escape="false" value="{!$ObjectType.Financial_Institution__c.fields.Name.Label}"/>
@@ -104,18 +105,18 @@
 			            	</apex:pageBlockSection>
 
 			            	<apex:pageBlockButtons id="pageButtonBlock" location="bottom" rendered="{!financialInstitutionsFound}" style="padding-bottom: 10px; width: 100%;">
-				                Display records per page: &nbsp;
+				                {!$Label.ANG_ISSP_GDI_Page_Display_Records} &nbsp;
 				                <apex:selectList styleClass="form-control selector" style="width: 10%; display: initial; height: 30px;" value="{!listSize}" size="1" onchange="refreshPageSize();">
 				                    <apex:selectOptions value="{!paginationSizeOptions}"/>
 				                </apex:selectList>
 				                &nbsp;
-				                <apex:commandButton styleClass="btn btn-primary" value="First Page" action="{!first}" disabled="{!ssController == null || NOT(ssController.hasPrevious)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
+				                <apex:commandButton styleClass="btn btn-primary" value="{!$Label.ANG_ISSP_GDI_Page_First}" action="{!first}" disabled="{!ssController == null || NOT(ssController.hasPrevious)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
 
-				                <apex:commandButton styleClass="btn btn-primary" value="Previous Page" action="{!previous}" disabled="{!ssController == null || NOT(ssController.hasPrevious)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
+				                <apex:commandButton styleClass="btn btn-primary" value="{!$Label.ANG_ISSP_GDI_Page_Previous}" action="{!previous}" disabled="{!ssController == null || NOT(ssController.hasPrevious)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
 
-				                <apex:commandButton styleClass="btn btn-primary" value="Next Page" action="{!next}" disabled="{!ssController == null || NOT(ssController.hasNext)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
+				                <apex:commandButton styleClass="btn btn-primary" value="{!$Label.ANG_ISSP_GDI_Page_Next}" action="{!next}" disabled="{!ssController == null || NOT(ssController.hasNext)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
 
-				                <apex:commandButton styleClass="btn btn-primary" value="Last Page" action="{!last}" disabled="{!ssController == null || NOT(ssController.hasNext)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
+				                <apex:commandButton styleClass="btn btn-primary" value="{!$Label.ANG_ISSP_GDI_Page_Last}" action="{!last}" disabled="{!ssController == null || NOT(ssController.hasNext)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
 				            </apex:pageBlockButtons>
 			            </apex:pageBlock>
 
@@ -126,7 +127,7 @@
 						        	<div class="modal-content">
 						          		<div class="modal-header">
 						            		<button id="tcModalCloseButtonSecondary" type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="hideTermsAndConditionsModal();">&times;</button>
-						            		<h4 class="modal-title">Terms and Conditions</h4>
+						            		<h4 class="modal-title">{!$Label.OneId_TermsAndConditions}</h4>
 						          		</div>
 						          		<div class="modal-body">
 						          			<apex:outputPanel id="errorMessagesTCModal"> 
@@ -137,24 +138,24 @@
 								            </apex:outputPanel>
 						            		<p>
 						            			<b>
-						              				<apex:outputText value="By applying for your Accreditation Security to be provided to IATA by Euler Hermes, you consent to IATA sharing with Euler Hermes information it holds which is relevant to your financial standing, whether obtained directly from you when applying for IATA Accreditation or which IATA has maintained throughout your period of membership of IATA"/>
+						              				<apex:outputText value="{!$Label.ANG_ISSP_GDI_Terms_Conditions}"/>
 						            			</b>
 						            		</p>
 						            		<p>
 						            			<apex:inputCheckbox id="tcModalAgreeCheckbox" value="{!termsAndConditions}" onchange="changeContinueButtonState();" required="true" selected="{!termsAndConditions}"/>
-						            			<apex:outputText value="&nbsp;I agree" escape="false"/>
+						            			<apex:outputText value="&nbsp;{!$Label.ANG_ISSP_GDI_Agreement}" escape="false"/>
 						            		</p>
 						            		<apex:outputPanel id="requestLoading">
 						            			<div style="text-align: center; display:{!IF(gdiPolling,'','none')}">
-						            				<apex:actionPoller id="provisioningPoller" action="{!pollingStatus}" reRender="requestLoading, errorMessagesTCModal" interval="5" enabled="{!gdiPolling}" oncomplete="if(!{!gdiPolling}) { enableTCModalButtons(); }"/>
+						            				<apex:actionPoller id="provisioningPoller" action="{!pollingStatus}" reRender="requestLoading, errorMessagesTCModal" interval="5" enabled="{!gdiPolling}" oncomplete="if(!{!gdiPolling}) { enableTCModalButtons(); hideTermsAndConditionsModal(); reRenderFinancialInstitutions(); navigateToGDIPortal(); }"/>
 						         	 				<img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
-						         	 				<b>{!$Label.ANG_ISSP_UserProvisioningWait}</b>
+						         	 				<b>{!$Label.ANG_ISSP_GDI_UserProvisioningWait}</b>
 						         	 			</div>
 						            		</apex:outputPanel>
 						         	 	</div>
 						         	 	<div class="modal-footer">
-						         	 		<apex:commandButton id="tcModalConfirmButton" styleClass="btn_iata_success btn" value="Continue" onclick="disableTCModalButtons(); submitTCModal(); return false;" reRender=""/>
-						         	 		<apex:commandButton id="tcModalCloseButton" styleClass="btn btn-secondary" value="Close" onclick="hideTermsAndConditionsModal(); return false;" reRender=""/>
+						         	 		<apex:commandButton id="tcModalConfirmButton" styleClass="btn_iata_success btn" value="{!$Label.ISSP_PCI_Stay}" onclick="disableTCModalButtons(); submitTCModal(); return false;" reRender=""/>
+						         	 		<apex:commandButton id="tcModalCloseButton" styleClass="btn btn-secondary" value="{!$Label.IFAP_close}" onclick="hideTermsAndConditionsModal(); return false;" reRender=""/>
 									    </div>
 						        	</div>
 						      	</div>

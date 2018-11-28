@@ -30,6 +30,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Financial_Security_Regional_Coverage__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Financial_Security_Country_Coverage__c</field>
             </layoutItems>
             <layoutItems>
