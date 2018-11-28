@@ -597,7 +597,7 @@
         <name>AMS_XML_GEN_ERROR_RECEIVER</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_AE_separate_Legal_Entity --></label>
+        <label>* Pháp nhân phụ này có phải là một Pháp nhân độc lập với Pháp nhân chính không?</label>
         <name>ANG_AE_separate_Legal_Entity</name>
     </customLabels>
     <customLabels>
@@ -641,43 +641,43 @@
         <name>ANG_Conversion_Tool_Workaround</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Effective_Date --></label>
+        <label>Ngày hiệu lực:</label>
         <name>ANG_Effective_Date</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP CashlessMessage --></label>
+        <label>&quot;&lt;a href=&quot;&quot;/ISSP_AMSCases&quot;&quot;&gt; Nộp đơn &lt;/a&gt; để chuyển đổi loại chứng nhận GoStandard nhằm phát hành vé bằng Phương thức Thanh toán bằng tiền mặt&quot;</label>
         <name>ANG_ISSP_AFP_CashlessMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP CashlessMessage --></label>
+        <label>&quot;Yêu cầu quyền truy cập dịch vụ &lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt; Chứng nhận &amp;amp; Thay đổi IATA &lt;/a&gt; để chuyển đổi sang loại chứng nhận GoLite&quot;</label>
         <name>ANG_ISSP_AFP_CashlessMessageNoAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AFP_CreditCardNoAccess --></label>
+        <label>&quot;Yêu cầu quyền truy cập dịch vụ &lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt; Chứng nhận &amp;amp; Thay đổi IATA &lt;/a&gt; để gửi bằng chứng tuân thủ PCI.&quot;</label>
         <name>ANG_ISSP_AFP_CreditCardNoAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP NoCreditCardMessage --></label>
+        <label>&quot;&lt;a href=&quot;&quot;/ISSP_ANG_PCI?&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt; Yêu cầu Thẻ tín dụng FoP &lt;/a&gt;&quot;</label>
         <name>ANG_ISSP_AFP_NoCreditCardMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationType --></label>
+        <label>Loại Chứng nhận</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationTypeRequired --></label>
+        <label>Vui lòng chọn loại hình hoạt động.</label>
         <name>ANG_ISSP_AccreditationTypeRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationTypeTitle --></label>
+        <label>Loại Chứng nhận</label>
         <name>ANG_ISSP_AccreditationTypeTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AnnualFees --></label>
+        <label>Phí thường niên:</label>
         <name>ANG_ISSP_AnnualFees</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AssociateEntity --></label>
+        <label>(Các) Pháp nhân phụ:</label>
         <name>ANG_ISSP_AssociateEntity</name>
     </customLabels>
     <customLabels>
@@ -689,19 +689,19 @@
         <name>ANG_ISSP_ChangeContactHierarchyError</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1 --></label>
+        <label>Chúc mừng bạn đã mở tài khoản IATA EasyPay mới.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1 --></label>
+        <label>Vui lòng đọc</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2 --></label>
+        <label>Câu hỏi Thường gặp này</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3 --></label>
+        <label>để tìm hiểu thêm về cách quản lý tài khoản EasyPay của bạn và bắt đầu sử dụng.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</name>
     </customLabels>
     <customLabels>
@@ -709,31 +709,31 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3 --></label>
+        <label>&quot;Đồng nghiệp của bạn hiện có thể nộp đơn đăng ký để truy cập tài khoản mới mở của bạn từ Cổng thông tin Dịch vụ Khách hàng của IATA. &amp;lt;a href=&quot;&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot;&gt;Câu hỏi Thường gặp&amp;lt;/a&gt; ở trên mô tả cách bạn có thể quản lý truy cập của người dùng.&quot;</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail --></label>
+        <label>Chúc mừng bạn đã mở tài khoản IATA EasyPay mới. Vui lòng tham khảo bài viết này để biết thông tin về cách quản lý tài khoản EasyPay của bạn và các bước ban đầu khi chuyển tiền để bạn có thể bắt đầu phát hành vé EasyPay. Đồng nghiệp của bạn hiện có thể nộp đơn đăng ký để truy cập tài khoản mới mở của bạn từ Cổng thông tin Dịch vụ Khách hàng của IATA. Bài viết trên mô tả cách bạn quản lý truy cập của người dùng. Cảm ơn bạn, Bộ phận Dịch vụ Khách hàng IATA</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_1 --></label>
+        <label>Vui lòng chọn vai trò truy cập của bạn cho IATA EasyPay.</label>
         <name>ANG_ISSP_ConfirmRequestIEP_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_2 --></label>
+        <label>Sau khi bạn xác nhận, yêu cầu quyền truy cập của bạn sẽ được gửi cho quản trị viên IATA EasyPay và quản lý ví điện tử để xin phê duyệt.</label>
         <name>ANG_ISSP_ConfirmRequestIEP_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_3 --></label>
+        <label>Để biết thêm thông tin về các vai trò hiện có, vui lòng nhấp vào</label>
         <name>ANG_ISSP_ConfirmRequestIEP_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From --></label>
+        <label>Chuyển đổi từ</label>
         <name>ANG_ISSP_ConversionFrom</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From GoLite Tooltip --></label>
+        <label>Chuyển đổi từ Chú thích GoLite</label>
         <name>ANG_ISSP_ConversionFromGoLiteTooltip</name>
     </customLabels>
     <customLabels>
@@ -741,7 +741,7 @@
         <name>ANG_ISSP_ConversionFromGoStandardGoLiteTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From GoStandard Tooltip --></label>
+        <label>Chuyển đổi từ Chú thích GoStandard</label>
         <name>ANG_ISSP_ConversionFromGoStandardTooltip</name>
     </customLabels>
     <customLabels>
@@ -749,67 +749,67 @@
         <name>ANG_ISSP_ConversionFromTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryConcerned --></label>
+        <label>Quốc gia liên quan</label>
         <name>ANG_ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsGoBack --></label>
+        <label>Trở lại phần so sánh các Loại Chứng nhận</label>
         <name>ANG_ISSP_CountryRequirementsGoBack</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsGoBackToOnlineAcc --></label>
+        <label>&quot;Trở lại trang Chứng nhận &amp;amp; Thay đổi Trực tuyến&quot;</label>
         <name>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsTitle --></label>
+        <label>Chứng nhận Đại lý IATA Trực tuyến</label>
         <name>ANG_ISSP_CountryRequirementsTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_EasyPayLegalConfirmation --></label>
+        <label>Bây giờ, bạn sẽ được đưa tới Cổng thông tin EasyPay, tại đây bạn có thể hoàn thành nộp đơn đăng ký mở tài khoản IATA EasyPay dành cho Đại lý của mình.&lt;br/&gt;&lt;br/&gt;Bằng cách tiếp tục, bạn đồng ý với việc IATA sẽ gửi tên, họ và địa chỉ email cũng như Mã IATA và bất kỳ thông tin cá nhân có liên quan nào khác hiện có cho các Nhà cung cấp IATA EasyPay. Nhà cung cấp IATA EasyPay chỉ dùng các thông tin này cho mục đích mở và quản lý tài khoản EasyPay của bạn và điều hành các dịch vụ EasyPay nói chung hoặc các mục đích khác theo yêu cầu của luật pháp.&lt;br/&gt;&lt;br/&gt;Bạn có muốn tiếp tục?</label>
         <name>ANG_ISSP_EasyPayLegalConfirmation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_AccessRequest2_IEP --></label>
+        <label>Dịch vụ đã được chuyển tới Quản trị viên IEP / Quản lý Ví điện tử Chính của bạn.</label>
         <name>ANG_ISSP_Email_AccessRequest2_IEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP --></label>
+        <label>đã được cấp với vai trò dịch vụ cổng thông tin sau:</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2 --></label>
+        <label>Bạn có thể truy cập</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3 --></label>
+        <label>hoặc từ trang chủ cổng thông tin khách hàng IATA của bạn.</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_AppReq_BeInformed --></label>
+        <label>Xin thông báo để bạn biết rằng người dùng dưới đây đã yêu cầu quyền truy cập Dịch vụ IATA EasyPay.</label>
         <name>ANG_ISSP_Email_AppReq_BeInformed</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP --></label>
+        <label>Thân gửi Quản trị viên IEP / Quản lý Ví điện tử Chính,</label>
         <name>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_1 --></label>
+        <label>Xin thông báo để bạn biết rằng</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_2 --></label>
+        <label>vai trò dịch vụ cổng thông tin của bạn đã được đổi thành:</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_Subject --></label>
+        <label>Cổng thông tin Khách hàng IATA – Thay đổi</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_Subject2 --></label>
+        <label>Vai trò Dịch vụ Cổng thông tin</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_HeadEntity --></label>
+        <label>Pháp nhân chính:</label>
         <name>ANG_ISSP_HeadEntity</name>
     </customLabels>
     <customLabels>
@@ -817,27 +817,27 @@
         <name>ANG_ISSP_IATA_EasyPay</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_Abroad_Account_error_msg --></label>
+        <label>Chi nhánh của bạn ở một quốc gia khác với Trụ sở. Chúng tôi lấy làm tiếc phải thông báo rằng tại thời điểm hiện tại, dịch vụ IATA Easypay chưa được cung cấp tại nơi có văn phòng của bạn. Vui lòng liên hệ Bộ phận Hỗ trợ Khách hàng IATA nếu bạn cần thêm bất kỳ thông tin gì.</label>
         <name>ANG_ISSP_IEP_Abroad_Account_error_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg --></label>
+        <label>&quot;Đại lý của bạn hiện không có Tài khoản IATA EasyPay đang mở.&lt;br/&gt;&lt;br/&gt;Vui lòng liên hệ với Người có thẩm quyền ký ở Trụ sở của bạn để yêu cầu mở một Tài khoản IATA EasyPay. Để mở một Tài khoản IATA EasyPay, bạn cần phải vừa là một Quản trị viên Cổng thông tin vừa là Người có thẩm quyền ký cho Đại lý của mình.&lt;br/&gt;&lt;br/&gt;Vui lòng &lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt; liên hệ bộ phận hỗ trợ &lt;/a&gt; nếu bạn cần trợ giúp.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg --></label>
+        <label>&quot;Đại lý của bạn hiện không có Tài khoản IATA EasyPay đang mở.&lt;br/&gt;&lt;br/&gt;Vui lòng liên hệ với Người có thẩm quyền ký của Pháp nhân chính của bạn để yêu cầu mở một Tài khoản IATA EasyPay. {0}&lt;br/&gt;&lt;br/&gt;Vui lòng &lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt; liên hệ bộ phận hỗ trợ &lt;/a&gt; nếu bạn cần trợ giúp.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg --></label>
+        <label>&quot;Đại lý của bạn hiện không có Tài khoản IATA EasyPay đang mở.&lt;br/&gt;&lt;br/&gt;Vui lòng liên hệ với Người có thẩm quyền ký tại Trụ sở của bạn để yêu cầu mở một Tài khoản IATA EasyPay. {0}&lt;br/&gt;&lt;br/&gt;Vui lòng &lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt; liên hệ bộ phận hỗ trợ &lt;/a&gt; nếu bạn cần trợ giúp.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active --></label>
+        <label>Để mở một Tài khoản IATA EasyPay, bạn cần phải vừa là một Quản trị viên Cổng thông tin vừa là Người có thẩm quyền ký cho Đại lý của mình.</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator --></label>
+        <label>&quot;&lt;br/&gt;&lt;br/&gt;Là một Quản trị viên Cổng thông tin, bạn có thể cập nhật &lt;a href=&quot;&quot;/ISSP_PersonalInformation?mid=M5S1&quot;&quot;&gt; Thông tin Cá nhân &lt;/a&gt; của mình để bổ nhiệm chính bạn làm Người có thẩm quyền ký hợp pháp hoặc chỉ định đúng người từ trang  &lt;a href=&quot;&quot;/ISSP_ContactList?MainNav=Admin&amp;subNav=contacts&amp;mid=M4S1&quot;&quot;&gt; Quản trị Công ty -&gt; Liên hệ&lt;/a&gt; rồi yêu cầu họ mở tài khoản EasyPay của bạn.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
@@ -853,7 +853,7 @@
         <name>ANG_ISSP_IEP_ModelBanking_link</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_OpeningInProgress --></label>
+        <label>Một Người có thẩm quyền ký thuộc Pháp nhân chính của bạn đã kích hoạt mở Tài khoản IEP của Đại lý của bạn. Sau khi mở thành công Tài khoản IEP, bạn có thể truy cập dịch vụ này.</label>
         <name>ANG_ISSP_IEP_OpeningInProgress</name>
     </customLabels>
     <customLabels>
@@ -861,15 +861,15 @@
         <name>ANG_ISSP_IEP_Portal_Access_Request_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_Portal_Request_Access_Msg --></label>
+        <label>Đã yêu cầu Quyền truy cập Tài khoản IATA EasyPay của bạn cho (những) người dùng đã chọn. Đã thông báo cho (các) Quản trị viên IATA EasyPay và Quản lý Ví điện tử Chính để xin họ phê duyệt.&lt;br/&gt;Người dùng sẽ nhận được xác nhận sau khi quyền truy cập của họ được cấp.</label>
         <name>ANG_ISSP_IEP_Portal_Request_Access_Msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_add_users_to_account_not_open_error_msg --></label>
+        <label>Chỉ có thể thêm người dùng vào các Tài khoản IATA EasyPay (IEP) đang mở. Vui lòng mở Tài khoản IEP của bạn trước khi tiếp tục.</label>
         <name>ANG_ISSP_IEP_add_users_to_account_not_open_error_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
+        <label>Người liên hệ dưới đây là quản trị viên IATA EasyPay hoạt động duy nhất cho đại lý này và không thể hủy kích hoạt được. Vui lòng liên hệ Bộ phận Dịch vụ Khách hàng của IATA để được hỗ trợ.</label>
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg</name>
     </customLabels>
     <customLabels>
@@ -877,11 +877,11 @@
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Notify_Admin_app_req_1 --></label>
+        <label>Để quản lý yêu cầu, vui lòng nhấp vào</label>
         <name>ANG_ISSP_Notify_Admin_app_req_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Notify_Admin_app_req_2 --></label>
+        <label>để truy cập cổng thông tin IATA EasyPay của bạn.</label>
         <name>ANG_ISSP_Notify_Admin_app_req_2</name>
     </customLabels>
     <customLabels>
@@ -901,7 +901,7 @@
         <name>ANG_ISSP_Notify_Admin_app_req_here4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Open_IATA_EasyPay_Account --></label>
+        <label>Mở Tài khoản IATA EasyPay</label>
         <name>ANG_ISSP_Open_IATA_EasyPay_Account</name>
     </customLabels>
     <customLabels>
@@ -913,19 +913,19 @@
         <name>ANG_ISSP_OptOutEmptyDateErrorMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PORTAL_SERVICE_ROLE --></label>
+        <label>Vai trò Dịch vụ Cổng thông tin</label>
         <name>ANG_ISSP_PORTAL_SERVICE_ROLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PORTAL_SERVICE_ROLE_HINT --></label>
+        <label>Vui lòng chọn vai trò cổng thông tin mà bạn muốn có cho dịch vụ cổng thông tin này.</label>
         <name>ANG_ISSP_PORTAL_SERVICE_ROLE_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Picklist None --></label>
+        <label>--Không--</label>
         <name>ANG_ISSP_Picklist_None</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PortalRoleErrorMessage --></label>
+        <label>Phải có vai trò cổng thông tin</label>
         <name>ANG_ISSP_PortalRoleErrorMessage</name>
     </customLabels>
     <customLabels>
@@ -937,15 +937,15 @@
         <name>ANG_ISSP_ProductCashFacility</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonApplyNow --></label>
+        <label>Nộp đơn Ngay</label>
         <name>ANG_ISSP_ProductComparisonApplyNow</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonCost --></label>
+        <label>Chi phí</label>
         <name>ANG_ISSP_ProductComparisonCost</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonCountrySpecificRequirements --></label>
+        <label>Yêu cầu Cụ thể theo Quốc gia</label>
         <name>ANG_ISSP_ProductComparisonCountrySpecificRequirements</name>
     </customLabels>
     <customLabels>
@@ -953,19 +953,19 @@
         <name>ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature1 --></label>
+        <label>Thẻ tín dụng</label>
         <name>ANG_ISSP_ProductComparisonFeature1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature10 --></label>
+        <label>Tính năng 10</label>
         <name>ANG_ISSP_ProductComparisonFeature10</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature10Tooltip --></label>
+        <label>Chú thích Tính năng 10</label>
         <name>ANG_ISSP_ProductComparisonFeature10Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature1Tooltip --></label>
+        <label>Chú thích Tính năng 1</label>
         <name>ANG_ISSP_ProductComparisonFeature1Tooltip</name>
     </customLabels>
     <customLabels>
@@ -973,63 +973,63 @@
         <name>ANG_ISSP_ProductComparisonFeature2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature2Tooltip --></label>
+        <label>Chú thích Tính năng 2</label>
         <name>ANG_ISSP_ProductComparisonFeature2Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature3 --></label>
+        <label>Tiền mặt</label>
         <name>ANG_ISSP_ProductComparisonFeature3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature3Tooltip --></label>
+        <label>Chú thích Tính năng 3</label>
         <name>ANG_ISSP_ProductComparisonFeature3Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature4 --></label>
+        <label>Khả năng Giữ lại Thanh toán</label>
         <name>ANG_ISSP_ProductComparisonFeature4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature4Tooltip --></label>
+        <label>Chú thích Tính năng 4</label>
         <name>ANG_ISSP_ProductComparisonFeature4Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature5 --></label>
+        <label>Thẩm định Tài chính Thường niên</label>
         <name>ANG_ISSP_ProductComparisonFeature5</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature5Tooltip --></label>
+        <label>Chú thích Tính năng 5</label>
         <name>ANG_ISSP_ProductComparisonFeature5Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature6 --></label>
+        <label>Thẩm định Hàng quý của Công ty mẹ</label>
         <name>ANG_ISSP_ProductComparisonFeature6</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature6Tooltip --></label>
+        <label>Chú thích Tính năng 6</label>
         <name>ANG_ISSP_ProductComparisonFeature6Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature7 --></label>
+        <label>Bảo hiểm Hoàn tiền</label>
         <name>ANG_ISSP_ProductComparisonFeature7</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature7Tooltip --></label>
+        <label>Chú thích Tính năng 7</label>
         <name>ANG_ISSP_ProductComparisonFeature7Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature8 --></label>
+        <label>An ninh Tài chính / Bảo hiểm Rủi ro Vỡ nợ</label>
         <name>ANG_ISSP_ProductComparisonFeature8</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature8Tooltip --></label>
+        <label>Chú thích Tính năng 8</label>
         <name>ANG_ISSP_ProductComparisonFeature8Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature9 --></label>
+        <label>Bảo đảm của Công ty mẹ được Tích hợp vào PSAA</label>
         <name>ANG_ISSP_ProductComparisonFeature9</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature9Tooltip --></label>
+        <label>Chú thích Tính năng 9</label>
         <name>ANG_ISSP_ProductComparisonFeature9Tooltip</name>
     </customLabels>
     <customLabels>
@@ -1037,15 +1037,15 @@
         <name>ANG_ISSP_ProductComparisonLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonTitle1 --></label>
+        <label>Chứng nhận Đại lý IATA Trực tuyến</label>
         <name>ANG_ISSP_ProductComparisonTitle1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonTitle2 --></label>
+        <label>So sánh các Loại Chứng nhận dành cho Đại lý Lữ hành</label>
         <name>ANG_ISSP_ProductComparisonTitle2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonViewHere --></label>
+        <label>Xem tại đây</label>
         <name>ANG_ISSP_ProductComparisonViewHere</name>
     </customLabels>
     <customLabels>
@@ -1057,7 +1057,7 @@
         <name>ANG_ISSP_ProductIATAEasyPayTransactions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductMulticountry --></label>
+        <label>Đa quốc gia</label>
         <name>ANG_ISSP_ProductMulticountry</name>
     </customLabels>
     <customLabels>
@@ -1093,7 +1093,7 @@
         <name>ANG_ISSP_ProgressBarNode6</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH AccessEasyPay --></label>
+        <label>Truy cập Tài khoản IATA EasyPay của bạn</label>
         <name>ANG_ISSP_REH_AccessEasyPay</name>
     </customLabels>
     <customLabels>
@@ -1101,59 +1101,59 @@
         <name>ANG_ISSP_REH_DateAssigned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH DateIssued --></label>
+        <label>Ngày phát hành</label>
         <name>ANG_ISSP_REH_DateIssued</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH RiskDescription --></label>
+        <label>Mô tả Rủi ro</label>
         <name>ANG_ISSP_REH_RiskDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RHC Information --></label>
+        <label>Thông tin RHC</label>
         <name>ANG_ISSP_RHC_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC - Request Balance Update --></label>
+        <label>Yêu cầu Cập nhật Số dư</label>
         <name>ANG_ISSP_RHC_Request_Balance_Update</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RHC Request ICE --></label>
+        <label>&quot;Để xem các thanh toán sắp tới &amp;amp; ngày chuyển tiền của bạn&lt;br/&gt;&lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt; Yêu cầu quyền truy cập ICE - Bản sao kê điện tử Khách hàng của IATA &lt;/a&gt;&quot;</label>
         <name>ANG_ISSP_RHC_Request_ICE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Cash Conditions --></label>
+        <label>Điều kiện Tiền mặt</label>
         <name>ANG_ISSP_RP_Cash_Conditions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Financial Review --></label>
+        <label>Đánh giá Tài chính</label>
         <name>ANG_ISSP_RP_Financial_Review</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Risk History --></label>
+        <label>Lịch sử Rủi ro</label>
         <name>ANG_ISSP_RP_Risk_History</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Request_Access_IATA_EasyPay --></label>
+        <label>Yêu cầu quyền truy cập IATA EasyPay</label>
         <name>ANG_ISSP_Request_Access_IATA_EasyPay</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_SelectContacts --></label>
+        <label>Chọn một hay nhiều liên hệ</label>
         <name>ANG_ISSP_SelectContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_TypeAccreditadionQuestion --></label>
+        <label>Tôi muốn nộp đơn để được chứng nhận với tư cách:</label>
         <name>ANG_ISSP_TypeAccreditadionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_UserProvisioningError --></label>
+        <label>Rất tiếc, đã xảy ra sự cố khi thiết lập quyền truy cập IATA EasyPay của bạn. Hãy thử lại và nếu vấn đề vẫn không được khắc phục, vui lòng liên hệ Bộ phận Hỗ trợ Khách hàng</label>
         <name>ANG_ISSP_UserProvisioningError</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_UserProvisioningWait --></label>
+        <label>Vui lòng chờ. Bạn sẽ được chuyển hướng tới Cổng thông tin EasyPay trong giây lát.</label>
         <name>ANG_ISSP_UserProvisioningWait</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_e_mail_address --></label>
+        <label>Địa chỉ e-mail</label>
         <name>ANG_ISSP_e_mail_address</name>
     </customLabels>
     <customLabels>
@@ -1213,15 +1213,15 @@
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_VR_SELECTED_CODES --></label>
+        <label>Bạn đã yêu cầu tự nguyện xóa các Mã IATA sau:</label>
         <name>ANG_VR_SELECTED_CODES</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Voluntary_Relinquishment_to_NOC --></label>
+        <label>&quot;Vui lòng gửi một &lt;a href=&quot;&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt; Thông báo Thay đổi &lt;/a&gt; nếu bạn muốn xóa chỉ Pháp nhân chính của Đại lý của bạn&quot;</label>
         <name>ANG_Voluntary_Relinquishment_to_NOC</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Voluntary_Relinquishment_to_NOC_Legacy --></label>
+        <label>&quot;Vui lòng gửi một &lt;a href=&quot;&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt; Thông báo Thay đổi &lt;/a&gt; nếu bạn muốn xóa chỉ Trụ sở của Đại lý của bạn&quot;</label>
         <name>ANG_Voluntary_Relinquishment_to_NOC_Legacy</name>
     </customLabels>
     <customLabels>
@@ -1509,6 +1509,10 @@
     <customLabels>
         <label><!-- Button View all --></label>
         <name>Button_View_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
     </customLabels>
     <customLabels>
         <label>Dịch vụ này tạo điều kiện tương tác và trao đổi thông tin giữa các trung gian/ đại lý vận chuyển hàng hóa và các hãng hàng không tham gia Chương trình Lập hóa đơn và Thanh toán của IATA (Billing and Settlement Plan - BSP).</label>
@@ -5555,7 +5559,7 @@ and
         <name>ISSP_AMS_ACCR_Submit_Msg_CargoHO</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS AE NoC Change for --></label>
+        <label>Thay đổi thông tin ngân hàng cho</label>
         <name>ISSP_AMS_AE_NoC_Change_for</name>
     </customLabels>
     <customLabels>
@@ -5563,7 +5567,7 @@ and
         <name>ISSP_AMS_Accept_TOS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Add Company --></label>
+        <label>Thêm Công ty</label>
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
@@ -5579,7 +5583,7 @@ and
         <name>ISSP_AMS_Add_Manager</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS  Add Person --></label>
+        <label>Thêm Người</label>
         <name>ISSP_AMS_Add_Person</name>
     </customLabels>
     <customLabels>
@@ -5587,7 +5591,7 @@ and
         <name>ISSP_AMS_Additional_Data</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Address --></label>
+        <label>Địa chỉ:</label>
         <name>ISSP_AMS_Address</name>
     </customLabels>
     <customLabels>
@@ -5627,11 +5631,11 @@ and
         <name>ISSP_AMS_Apply_New_Travel_Head_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Associate Entity Cash --></label>
+        <label>Pháp nhân phụ mới - GoStandard</label>
         <name>ISSP_AMS_Associate_Entity_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Associate Entity Cashless --></label>
+        <label>Pháp nhân phụ mới - GoLite</label>
         <name>ISSP_AMS_Associate_Entity_Cashless</name>
     </customLabels>
     <customLabels>
@@ -5755,7 +5759,7 @@ and
         <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4 --></label>
+        <label>Ngày Hết hạn</label>
         <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4</name>
     </customLabels>
     <customLabels>
@@ -5983,15 +5987,15 @@ and
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM CANCEL --></label>
+        <label>Bạn có chắc bạn muốn hủy bỏ không?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM DELETE --></label>
+        <label>Bạn có chắc bạn muốn xóa hồ sơ này không?</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM DISCARD --></label>
+        <label>Bạn có chắc bạn muốn loại bỏ các thay đổi của bạn không?</label>
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
@@ -6215,11 +6219,11 @@ and
         <name>ISSP_AMS_Case_PDF_Download</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Cases Notify IATA Changes Error --></label>
+        <label>Chỉ người dùng thuộc Trụ sở của Đại lý của bạn mới có thể thông báo các thay đổi cho IATA.</label>
         <name>ISSP_AMS_Cases_Notify_IATA_Changes_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS City --></label>
+        <label>Thành phố:</label>
         <name>ISSP_AMS_City</name>
     </customLabels>
     <customLabels>
@@ -6231,11 +6235,11 @@ and
         <name>ISSP_AMS_Click_here</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Compare Accreditation Types --></label>
+        <label>So sánh các Loại Chứng nhận</label>
         <name>ISSP_AMS_Compare_Accreditation_Types</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Compare Accreditation Types in RHC page --></label>
+        <label>Nhấp vào đây để so sánh các Loại Chứng nhận</label>
         <name>ISSP_AMS_Compare_Accreditation_Types_RHC</name>
     </customLabels>
     <customLabels>
@@ -6263,11 +6267,11 @@ and
         <name>ISSP_AMS_Create_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Director --></label>
+        <label>Giám đốc / Nhân viên</label>
         <name>ISSP_AMS_Director</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Director --></label>
+        <label>Giám đốc Nhân viên</label>
         <name>ISSP_AMS_Director_NG</name>
     </customLabels>
     <customLabels>
@@ -6551,7 +6555,7 @@ and
         <name>ISSP_AMS_Fin_Contact</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Financial Interest --></label>
+        <label>Tải chính&lt;br/&gt;Tỷ lệ (%)</label>
         <name>ISSP_AMS_Financial_Interest</name>
     </customLabels>
     <customLabels>
@@ -6559,7 +6563,7 @@ and
         <name>ISSP_AMS_First_8_Digits</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_First_Name_Chinese --></label>
+        <label>Tên (Tiếng Trung)</label>
         <name>ISSP_AMS_First_Name_Chinese</name>
     </customLabels>
     <customLabels>
@@ -6595,11 +6599,11 @@ and
         <name>ISSP_AMS_Gross_Amnt_Second_year</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Head Entity Cash --></label>
+        <label>Pháp nhân chính mới - GoStandard</label>
         <name>ISSP_AMS_Head_Entity_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Head Entity No Cash --></label>
+        <label>Pháp nhân chính mới - GoLite</label>
         <name>ISSP_AMS_Head_Entity_No_Cash</name>
     </customLabels>
     <customLabels>
@@ -6639,7 +6643,7 @@ and
         <name>ISSP_AMS_IS_GSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS IS Separate Entity Null --></label>
+        <label>Vui lòng chọn nếu Pháp nhân phụ là một Pháp nhân độc lập.</label>
         <name>ISSP_AMS_IS_Separate_Entity_Null</name>
     </customLabels>
     <customLabels>
@@ -6667,7 +6671,7 @@ and
         <name>ISSP_AMS_Invalid_IATAN_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Invalid IATA Code --></label>
+        <label>Mã IATA không hợp lệ: Xin vui lòng nhập một mã hợp lệ.</label>
         <name>ISSP_AMS_Invalid_IATA_Code</name>
     </customLabels>
     <customLabels>
@@ -6735,7 +6739,7 @@ and
         <name>ISSP_AMS_LS_Trust_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Last_Name_Chinese --></label>
+        <label>Họ (Tiếng Trung)</label>
         <name>ISSP_AMS_Last_Name_Chinese</name>
     </customLabels>
     <customLabels>
@@ -6863,7 +6867,7 @@ and
         <name>ISSP_AMS_Loading_Agency_details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Loading Contact --></label>
+        <label>Đang tải thông tin Liên hệ…</label>
         <name>ISSP_AMS_Loading_Contact</name>
     </customLabels>
     <customLabels>
@@ -6871,11 +6875,11 @@ and
         <name>ISSP_AMS_Local_Details_Change_Please_Enter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Company Name ENG --></label>
+        <label>Tên Công ty (Tiếng Anh)</label>
         <name>ISSP_AMS_Local_Details_Company_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Company Name Local --></label>
+        <label>Tên Công ty (Tiếng bản địa)</label>
         <name>ISSP_AMS_Local_Details_Company_Name_Local</name>
     </customLabels>
     <customLabels>
@@ -6887,19 +6891,19 @@ and
         <name>ISSP_AMS_Local_Details_Correspondence_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details First Name ENG --></label>
+        <label>Tên (Tiếng Anh)</label>
         <name>ISSP_AMS_Local_Details_First_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details First Name Local --></label>
+        <label>Tên (Tiếng bản địa)</label>
         <name>ISSP_AMS_Local_Details_First_Name_Local</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Last Name ENG --></label>
+        <label>Họ (Tiếng Anh)</label>
         <name>ISSP_AMS_Local_Details_Last_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Last Name Local --></label>
+        <label>Họ (Tiếng bản địa)</label>
         <name>ISSP_AMS_Local_Details_Last_Name_Local</name>
     </customLabels>
     <customLabels>
@@ -6915,15 +6919,15 @@ and
         <name>ISSP_AMS_Local_Details_No_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local CompanyName --></label>
+        <label>Không có tên Công ty bằng tiếng bản địa? Xin vui lòng nhập tên bằng chữ La-tinh.</label>
         <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local FirstName --></label>
+        <label>Không có Tên Bản địa? Xin vui lòng nhập lại Tên bằng chữ La-tinh.</label>
         <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local LastName --></label>
+        <label>Không có Tên Bản địa? Xin vui lòng nhập lại Họ bằng chữ La-tinh.</label>
         <name>ISSP_AMS_Local_Details_No_Local_LastName</name>
     </customLabels>
     <customLabels>
@@ -7043,7 +7047,7 @@ and
         <name>ISSP_AMS_MSO_GSA_GSA_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_MSO_GSA_IATA_Code --></label>
+        <label>Mã</label>
         <name>ISSP_AMS_MSO_GSA_IATA_Code</name>
     </customLabels>
     <customLabels>
@@ -7155,7 +7159,7 @@ and
         <name>ISSP_AMS_MSO_Update_Request_Successfull</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Manager --></label>
+        <label>Quản lý</label>
         <name>ISSP_AMS_Manager</name>
     </customLabels>
     <customLabels>
@@ -7243,15 +7247,15 @@ and
         <name>ISSP_AMS_NOC_StepD_ProgressBar_CNS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Companies --></label>
+        <label>(Các) Chủ sở hữu đã cập nhật - Các công ty</label>
         <name>ISSP_AMS_NOC_Updated_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Legal Status --></label>
+        <label>Tư cách Pháp nhân đã cập nhật</label>
         <name>ISSP_AMS_NOC_Updated_Legal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Owners Managers --></label>
+        <label>(Các) Chủ sở hữu đã cập nhật / (Các) Nhân viên / (Các) Giám Đốc - Các cá nhân</label>
         <name>ISSP_AMS_NOC_Updated_Owners_Managers</name>
     </customLabels>
     <customLabels>
@@ -7287,7 +7291,7 @@ and
         <name>ISSP_AMS_NoC_Agency_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Associate Entity --></label>
+        <label>Pháp nhân phụ, không bao gồm Pháp nhân chính</label>
         <name>ISSP_AMS_NoC_Associate_Entity</name>
     </customLabels>
     <customLabels>
@@ -7371,7 +7375,7 @@ and
         <name>ISSP_AMS_NoC_Change_submitted_for</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Choose Associate Entities --></label>
+        <label>Pháp nhân phụ đã được chứng nhận</label>
         <name>ISSP_AMS_NoC_Choose_Associate_Entities</name>
     </customLabels>
     <customLabels>
@@ -7379,7 +7383,7 @@ and
         <name>ISSP_AMS_NoC_Choose_Branch_Account</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Confirm_Ownership_details --></label>
+        <label>Xác nhận Loại hình pháp nhân và thông tin về Quyền sở hữu là chính xác</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
     </customLabels>
     <customLabels>
@@ -7395,7 +7399,7 @@ and
         <name>ISSP_AMS_NoC_Current_Accreditation_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Current_Companies --></label>
+        <label>Các Chủ sở hữu Hiện tại - Công ty</label>
         <name>ISSP_AMS_NoC_Current_Companies</name>
     </customLabels>
     <customLabels>
@@ -7407,7 +7411,7 @@ and
         <name>ISSP_AMS_NoC_Current_Owner</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Current_Owners_Managers --></label>
+        <label>(Các) Chủ sở hữu Hiện tại - Cá nhân</label>
         <name>ISSP_AMS_NoC_Current_Owners_Managers</name>
     </customLabels>
     <customLabels>
@@ -7419,11 +7423,11 @@ and
         <name>ISSP_AMS_NoC_Direct_Debit_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC HE All Branches --></label>
+        <label>&quot;Pháp nhân chính &amp;amp; Tất cả các pháp nhân phụ&quot;</label>
         <name>ISSP_AMS_NoC_HE_All_Branches</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC HE Some Branches --></label>
+        <label>&quot;Pháp nhân chính &amp;amp; một hay nhiều Pháp nhân phụ&quot;</label>
         <name>ISSP_AMS_NoC_HE_Some_Branches</name>
     </customLabels>
     <customLabels>
@@ -7435,7 +7439,7 @@ and
         <name>ISSP_AMS_NoC_HO_Some_Branches</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Head Entity --></label>
+        <label>Pháp nhân chính</label>
         <name>ISSP_AMS_NoC_Head_Entity</name>
     </customLabels>
     <customLabels>
@@ -7515,15 +7519,15 @@ and
         <name>ISSP_AMS_NoC_No_Company_Owners</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC No Company Owners New --></label>
+        <label>Không có công ty nào được liệt kê là chủ sở hữu hiện tại của Công ty bạn.</label>
         <name>ISSP_AMS_NoC_No_Company_Owners_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Non_IATA_Owner_Estimates --></label>
+        <label>Ghi rõ tổng doanh thu vận chuyển hàng không quốc tế dự kiến đối với các hãng vận tải hàng không IATA:</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Non_IATA_Owner_Title --></label>
+        <label>Nếu chủ sở hữu mới là một công ty không có chứng nhận IATA, xin vui lòng:&quot;</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Title</name>
     </customLabels>
     <customLabels>
@@ -7535,7 +7539,7 @@ and
         <name>ISSP_AMS_NoC_Online_Agency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Other_Owner --></label>
+        <label>Nếu đại lý du lịch thuộc sở hữu của một tổ chức khác với văn phòng chính, hãy trả lời các thông tin sau đây có liên quan đến tổ chức đó</label>
         <name>ISSP_AMS_NoC_Other_Owner</name>
     </customLabels>
     <customLabels>
@@ -7567,7 +7571,7 @@ and
         <name>ISSP_AMS_NoC_Previous_Owners_Managers</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NoC_Provide_Registeration_Or_License --></label>
+        <label>Nếu việc đăng ký và/hoặc giấy phép được yêu cầu bởi luật pháp tại quốc gia của bạn, hãy cung cấp thông tin dưới đây sau khi thay đổi/theo quyền sở hữu mới</label>
         <name>ISSP_AMS_NoC_Provide_Registeration_Or_License</name>
     </customLabels>
     <customLabels>
@@ -7591,7 +7595,7 @@ and
         <name>ISSP_AMS_NoC_Q3_Contact_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Q4 --></label>
+        <label>* Có bất kỳ chủ sở hữu mới, nhân viên (giám đốc), quản lý nào hoặc bất kỳ cá nhân nào được ủy quyền hành động hoặc ký tên đại diện cho công ty đó có dính líu đến việc phá sản hoặc bị phát hiện các hành vi phạm tội có chủ ý về nghĩa vụ được ủy thác trong quá trình kinh doanh hoặc các vụ kiện vỡ nợ hay không ?</label>
         <name>ISSP_AMS_NoC_Q4</name>
     </customLabels>
     <customLabels>
@@ -7787,7 +7791,7 @@ and
         <name>ISSP_AMS_Noc_Type_of_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Not Listed Msg --></label>
+        <label>Với tư cách là một Tổ chức sở hữu cổ phần không được niêm yết, bạn bắt buộc phải nhập thông tin của tất cả cổ đông trong các mục Người và Công ty dưới đây.</label>
         <name>ISSP_AMS_Not_Listed_Msg</name>
     </customLabels>
     <customLabels>
@@ -7871,7 +7875,7 @@ and
         <name>ISSP_AMS_Office_Full_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Owner --></label>
+        <label>Chủ sở hữu</label>
         <name>ISSP_AMS_Owner</name>
     </customLabels>
     <customLabels>
@@ -7903,7 +7907,7 @@ and
         <name>ISSP_AMS_PDF_Page</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Partner --></label>
+        <label>Đối tác</label>
         <name>ISSP_AMS_Partner</name>
     </customLabels>
     <customLabels>
@@ -7935,7 +7939,7 @@ and
         <name>ISSP_AMS_Position</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS PostCode --></label>
+        <label>Mã Bưu chính / Mã Bưu điện</label>
         <name>ISSP_AMS_PostCode</name>
     </customLabels>
     <customLabels>
@@ -8035,7 +8039,7 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Selected Associate Entities --></label>
+        <label>* Pháp nhân phụ đã chọn</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
     <customLabels>
@@ -8043,7 +8047,7 @@ and
         <name>ISSP_AMS_Selected_Branch_Offices</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Shareholder --></label>
+        <label>Cổ đông</label>
         <name>ISSP_AMS_Shareholder</name>
     </customLabels>
     <customLabels>
@@ -8119,7 +8123,7 @@ and
         <name>ISSP_AMS_Step0_Intro_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <label>&quot;Các thay đổi nhỏ về thông tin Đại lý của bạn, ví dụ: số Điện thoại, địa chỉ Email, v.v. có thể thay đổi trực tiếp từ trang &lt;a href=&quot;&quot;/ISSP_CompanyInformation?mid=M5S2&quot;&quot; target=&quot;&quot;_self&quot;&quot;&gt;Thông tin Công ty&lt;/a&gt; của bạn.&quot;</label>
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
@@ -8183,7 +8187,7 @@ and
         <name>ISSP_AMS_Step1_Approval_Sought</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step1_Approval_Sought_Cash/Cashless --></label>
+        <label>Loại Chứng nhận được yêu cầu</label>
         <name>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</name>
     </customLabels>
     <customLabels>
@@ -8223,7 +8227,7 @@ and
         <name>ISSP_AMS_Step1_Operation_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step1_PCI --></label>
+        <label>A. Lựa chọn Mã IATA</label>
         <name>ISSP_AMS_Step1_PCI</name>
     </customLabels>
     <customLabels>
@@ -8231,7 +8235,7 @@ and
         <name>ISSP_AMS_Step1_ProgressBar</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step1 ProgressBar New --></label>
+        <label>&quot;A. Lựa chọn Loại hình Hoạt động &amp;amp; Địa điểm&quot;</label>
         <name>ISSP_AMS_Step1_ProgressBar_New</name>
     </customLabels>
     <customLabels>
@@ -8255,7 +8259,7 @@ and
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step2 Check List --></label>
+        <label>Danh sách Kiểm tra về</label>
         <name>ISSP_AMS_Step2_Check_List</name>
     </customLabels>
     <customLabels>
@@ -8263,7 +8267,7 @@ and
         <name>ISSP_AMS_Step2_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step2_PCI --></label>
+        <label>B. Tải lên Tập tin</label>
         <name>ISSP_AMS_Step2_PCI</name>
     </customLabels>
     <customLabels>
@@ -8347,7 +8351,7 @@ and
         <name>ISSP_AMS_Step3_4_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 4 Companies New --></label>
+        <label>Nếu công ty của bạn được sở hữu toàn bộ- hoặc một phần bởi một hoặc nhiều công ty, xin vui lòng nhập thông tin ở đây (ngoại trừ tổ chức của bạn là một đơn vị có tư cách pháp nhân sở hữu cổ phần được niêm yết trên sàn giao dịch chứng khoán hoặc được giao dịch thường xuyên trên một thị trường ‘phi tập trung’).</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
     </customLabels>
     <customLabels>
@@ -8507,7 +8511,7 @@ and
         <name>ISSP_AMS_Step3_4_Q9</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step3_5_Event_of_inspection --></label>
+        <label>&quot;Trong trường hợp kiểm tra, Đương đơn sẽ phải cung cấp bằng chứng thể hiện mình đã đáp ứng các yêu cầu bảo mật về việc phát hành Vé Điện tử, theo đúng các điều khoản của mục 8, và đặc biệt là các Tiêu chuẩn Bảo mật Dữ liệu Ngành Thẻ Thanh toán (PCI) được tham chiếu trong mục 2.1.6 của Nghị quyết 890.&quot;</label>
         <name>ISSP_AMS_Step3_5_Event_of_inspection</name>
     </customLabels>
     <customLabels>
@@ -8679,7 +8683,7 @@ and
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 Office FullAddress --></label>
+        <label>Địa chỉ đầy đủ của Văn phòng nơi thực hiện Đơn xin Phê duyệt</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
     <customLabels>
@@ -8699,7 +8703,7 @@ and
         <name>ISSP_AMS_Step3_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 PersonModal CheckBoxes --></label>
+        <label>Đánh dấu vào các ô nêu rõ vai trò của người mà bạn đang thêm vào, và sau đó nhập thông tin. Nếu người đó không có vai trò nào trong số này, không cần đánh dấu vào ô và nhập thông tin.</label>
         <name>ISSP_AMS_Step3_PersonModal_CheckBoxes</name>
     </customLabels>
     <customLabels>
@@ -8835,7 +8839,7 @@ and
         <name>ISSP_AMS_StepsAll_Travel_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Street --></label>
+        <label>Đường &amp; Số</label>
         <name>ISSP_AMS_Street</name>
     </customLabels>
     <customLabels>
@@ -8843,7 +8847,7 @@ and
         <name>ISSP_AMS_Submit_CNS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Submit IATA --></label>
+        <label>Gửi cho IATA</label>
         <name>ISSP_AMS_Submit_IATA</name>
     </customLabels>
     <customLabels>
@@ -9291,51 +9295,51 @@ and
         <name>ISSP_ANG_ANG_PCI_Process_Notification_Mail_Body</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Accreditation - Annual Revalidation --></label>
+        <label>Chứng nhận IATA - Tái đánh giá Hàng năm</label>
         <name>ISSP_ANG_ANNUAL_REVALIDATION</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION --></label>
+        <label>Thông tin Bổ sung</label>
         <name>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation cancel update button --></label>
+        <label>Loại bỏ Cập nhật</label>
         <name>ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation confirm button --></label>
+        <label>Xác nhận thông tin là đúng</label>
         <name>ISSP_ANG_ANNUAL_REV_CONFIRM_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation confirm update button --></label>
+        <label>Xác nhận Cập nhật</label>
         <name>ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding --></label>
+        <label>Quyền sở hữu / Cơ cấu Cổ đông  và Tư cách Pháp nhân của Đại lý</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name --></label>
+        <label>Thông tin Pháp lý của Đại lý</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_of_Location --></label>
+        <label>Địa điểm Đại lý</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_of_Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation discard button --></label>
+        <label>Loại bỏ</label>
         <name>ISSP_ANG_ANNUAL_REV_DISCARD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS --></label>
+        <label>Xin vui lòng nhập thông tin quyền sở hữu mới dưới đây</label>
         <name>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ERROR_1 --></label>
+        <label>Cần xác nhận thông tin và thông báo ít nhất một thay đổi</label>
         <name>ISSP_ANG_ANNUAL_REV_ERROR_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ERROR_2 --></label>
+        <label>Bắt buộc phải thông báo ít nhất một thay đổi</label>
         <name>ISSP_ANG_ANNUAL_REV_ERROR_2</name>
     </customLabels>
     <customLabels>
@@ -9351,27 +9355,27 @@ and
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Q2 --></label>
+        <label>* Công ty bạn có mối quan hệ trực tiếp hoặc gián tiếp với tổ chức được chỉ định GSA từ một thành viên không?</label>
         <name>ISSP_ANG_ANNUAL_REV_Q2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Q3 --></label>
+        <label>* Xin vui lòng xác nhận các GDS nào được dùng trong công ty bạn?</label>
         <name>ISSP_ANG_ANNUAL_REV_Q3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation save changes button --></label>
+        <label>Lưu các Thay đổi</label>
         <name>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW --></label>
+        <label>Xin vui lòng bảo đảm rằng thông tin Đại lý phải được xác nhận hoặc cập nhật cho từng Mã IATA trong hệ thống phân cấp của bạn.</label>
         <name>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation update button --></label>
+        <label>Cập nhật thông tin</label>
         <name>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation work area title --></label>
+        <label>Xin vui lòng xác nhận hoặc cập nhật thông tin từng Mã IATA trong hệ thống phân cấp của bạn</label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
@@ -9379,23 +9383,23 @@ and
         <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation confirmed status --></label>
+        <label>Thông tin Đã xác nhận</label>
         <name>ISSP_ANG_ANNUAL_STATUS_CONFIRMED</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation open status --></label>
+        <label>Chưa Bắt đầu</label>
         <name>ISSP_ANG_ANNUAL_STATUS_OPEN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation update completed status --></label>
+        <label>Cập nhật Đã hoàn tất</label>
         <name>ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation update in progress status --></label>
+        <label>Cập nhật Đang tiến hành</label>
         <name>ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Validation status label --></label>
+        <label>Trạng thái Hợp lệ :</label>
         <name>ISSP_ANG_ANNUAL_VAL_STATUS</name>
     </customLabels>
     <customLabels>
@@ -9407,11 +9411,11 @@ and
         <name>ISSP_ANG_AccreditationsAndChangesDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Assoc_Entity --></label>
+        <label>Pháp nhân phụ mới</label>
         <name>ISSP_ANG_Assoc_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Authorized_Signatory --></label>
+        <label>Chỉ Người có thẩm quyền ký hợp pháp mới có thể thông báo đóng cửa văn phòng cho IATA. Bạn có thể chỉ định Người có thẩm quyền ký của Đại lý của mình trong mục ‘Quản trị công ty -&gt; Phần Liên hệ&apos;.</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
@@ -9435,47 +9439,47 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Click_Here_PCI --></label>
+        <label>Nhấp vào đây để tiếp tục với Tuân thủ PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Click_Here_VR --></label>
+        <label>Nhấp vào đây để tiếp tục với Xóa Tự nguyện</label>
         <name>ISSP_ANG_Click_Here_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Country_Req --></label>
+        <label>Xem các Yêu cầu cụ thể theo Quốc gia</label>
         <name>ISSP_ANG_Country_Req</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ENTIRE_HIERARCHY --></label>
+        <label>Toàn bộ Cấp bậc</label>
         <name>ISSP_ANG_ENTIRE_HIERARCHY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Effective_Date_Not_Past --></label>
+        <label>Ngày hiệu lực không được là ngày đã qua.</label>
         <name>ISSP_ANG_Effective_Date_Not_Past</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Effective_Date_Of_Change --></label>
+        <label>Vui lòng chọn một Ngày hiệu lực không phải là ngày đã qua.</label>
         <name>ISSP_ANG_Effective_Date_Of_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email AE Subject --></label>
+        <label>Dự thảo Đơn xin của Pháp nhân phụ về Chứng nhận Đại lý</label>
         <name>ISSP_ANG_Email_AE_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email HE Cash Subject --></label>
+        <label>Dự thảo Đơn xin GoStandard của Pháp nhân chính về Chứng nhận Đại lý</label>
         <name>ISSP_ANG_Email_HE_Cash_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email HE Cashless Subject --></label>
+        <label>Dự thảo Đơn xin GoLite của Pháp nhân chính về Chứng nhận Đại lý</label>
         <name>ISSP_ANG_Email_HE_Cashless_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Enabel_Credit_Card_Codes --></label>
+        <label>Kích hoạt Phương thức Thanh toán bằng Thẻ tín dụng cho (các) Mã</label>
         <name>ISSP_ANG_Enabel_Credit_Card_Codes</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_FoP_Management --></label>
+        <label>Quản lý FoP</label>
         <name>ISSP_ANG_FoP_Management</name>
     </customLabels>
     <customLabels>
@@ -9483,11 +9487,11 @@ and
         <name>ISSP_ANG_GenericError</name>
     </customLabels>
     <customLabels>
-        <label><!-- Link to the IATAs CheckACode page --></label>
+        <label>&quot;Xin vui lòng tham khảo dịch vụ &lt;a target=&quot;&quot;_blank&quot;&quot; href=&quot;&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&quot;&gt;CheckACode&lt;/a&gt; có trả tiền của chúng tôi nếu bạn yêu cầu thông tin liên hệ cho bất kỳ đại lý nào.&quot;</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_CHECK_A_CODE_LINK</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION --></label>
+        <label>Dịch vụ này cho phép bạn tìm kiếm các Đại lý Du lịch và Hàng hóa trong BSP/CASS mà Hãng Hàng không đang tham gia. Chỉ cần nhập mã IATA vào thanh tìm kiếm để xem các chi tiết chính và thông tin liên quan đến rủi ro như các hình thức thanh toán hiện có.</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</name>
     </customLabels>
     <customLabels>
@@ -9495,7 +9499,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</name>
     </customLabels>
     <customLabels>
-        <label><!-- Financial Security Exists --></label>
+        <label>Bảo lãnh ngân hàng hiện tại</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
@@ -9503,23 +9507,23 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
-        <label><!-- He message --></label>
+        <label>Mã IATA &lt;strong&gt;%IATA_CODE%&lt;/strong&gt; là dành cho %CHILD_LOCATION%. Thông tin %PARENT_LOCATION% như sau</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Code (HO / HE) --></label>
+        <label>Mã IATA (HO / HE)</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- An invalid iata code was inputed in the search --></label>
+        <label>Bạn đã nhập không đúng Mã IATA. Các định dạng được chấp nhận là 7 hoặc 8 chữ số cho các Đại lý Du lịch và 10 đến 11 chữ số cho Hàng hóa.</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_INVALID</name>
     </customLabels>
     <customLabels>
-        <label><!-- The entered IATA code does not exists --></label>
+        <label>Không có Đại lý %TYPE% cho Mã IATA này</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_RHC --></label>
+        <label>Remittance Holding Capacity bằng với số tiền Bảo lãnh ngân hàng.</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_RHC</name>
     </customLabels>
     <customLabels>
@@ -9531,19 +9535,19 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY --></label>
+        <label>Bảo lãnh ngân hàng hợp lệ</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_TO_PROVIDE --></label>
+        <label>Chọn (các) Mã IATA cần cung cấp bằng chứng Tuân thủ PCI:</label>
         <name>ISSP_ANG_IATA_CODE_TO_PROVIDE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Iata_Codes_Relinquish --></label>
+        <label>Mã IATA cần xóa</label>
         <name>ISSP_ANG_Iata_Codes_Relinquish</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Least_One_Branch --></label>
+        <label>Vui lòng chọn tối thiểu một Văn phòng Chi nhánh</label>
         <name>ISSP_ANG_Least_One_Branch</name>
     </customLabels>
     <customLabels>
@@ -9567,95 +9571,95 @@ and
         <name>ISSP_ANG_MustAddUsersToService</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ONE_OR_MORE_AE --></label>
+        <label>Một hay nhiều Pháp nhân phụ</label>
         <name>ISSP_ANG_ONE_OR_MORE_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_AE --></label>
+        <label>Doanh số Bán vé IATA - Pháp nhân phụ</label>
         <name>ISSP_ANG_OPTION_PAX_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_HE_lite --></label>
+        <label>Doanh số Bán vé IATA</label>
         <name>ISSP_ANG_OPTION_PAX_HE_lite</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_HE_standard --></label>
+        <label>Doanh số Bán vé IATA</label>
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is both IFAP and admin --></label>
+        <label>&quot;Theo hồ sơ của chúng tôi, bạn được chỉ định là Người liên hệ IFAP cho đại lý của bạn. Nếu đúng, xin vui lòng đăng ký tham gia  quy trình Đánh giá Tài chính, nếu không phải, xin hãy chỉ định đúng Người liên hệ IFAP ở &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;trang Thông tin Công ty&lt;/a&gt; và đề nghị họ tiếp tục yêu cầu.&quot;</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is both IFAP and regular user --></label>
+        <label>&quot;Theo hồ sơ của chúng tôi, bạn được chỉ định là Người liên hệ IFAP cho đại lý của bạn. Nếu đúng, xin vui lòng tiếp tục yêu cầu tham gia quy trình Đánh giá Tài chính, nếu không xin vui lòng yêu cầu Quản trị viên Cổng thông tin của bạn chỉ định đúng Người liên hệ IFAP và đề nghị họ tiếp tục yêu cầu.&quot;</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is not IFAP nut is a portal admin --></label>
+        <label>&quot;Chỉ Người liên hệ IFAP của Đại lý mới có thể yêu cầu tham gia quy trình đánh giá Tài chính. Bạn có thể xem thông tin Người liên hệ IFAP hiện tại ở &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;trang Thông tin Công ty&lt;/a&gt;, nơi bạn có thể chỉ định đúng người nếu cần thiết, trước khi đề nghị họ tiếp tục yêu cầu này.&quot;</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is neither IFAP or portal admin --></label>
+        <label>&quot;Chỉ Người liên hệ IFAP của Đại lý bạn mới có thể yêu cầu Tham gia quy trình đánh giá Tài chính.. Nếu bạn giữ vai trò này trong Đại lý của bạn thì xin vui lòng liên hệ với Quản trị viên Cổng thông tin, yêu cầu họ chỉ định bạn là Người liên hệ IFAP để bạn có thể tiếp tục yêu cầu này.&quot;</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-in of Financial Review button label --></label>
+        <label>Yêu cầu Tham gia Đánh giá Tài chính</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-in of Financial Review modal --></label>
+        <label>Yêu cầu Tham gia Đánh giá Tài chính</label>
         <name>ISSP_ANG_OPT_IN_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Success messagem on opt-in --></label>
+        <label>Xin cảm ơn bạn đã yêu cầu Tham gia quy trình đánh giá Tài chính. IATA sẽ sớm liên hệ với bạn về yêu cầu này.</label>
         <name>ISSP_ANG_OPT_IN_SUCCESS_MESSAGE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-out of Financial Review button label --></label>
+        <label>Yêu cầu Tham gia Đánh giá Tài chính</label>
         <name>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirmation text in the modal window to opt out the financial review --></label>
+        <label>&quot; Các Đại lý GoStandard đã nộp Bảo lãnh ngân hàng với IATA có thể quyết định không tham gia Đánh giá Tài chính Hàng năm. Trong trường hợp này, Đại lý sẽ bị giới hạn hạn mức Remittance Holding Capacity bằng với số tiền bảo lãnh ngân hàng đã cung cấp.&quot;</label>
         <name>ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT</name>
     </customLabels>
     <customLabels>
-        <label><!-- Title in the modal window to opt out the financial review --></label>
+        <label>Yêu cầu Tham gia Đánh giá Tài chính</label>
         <name>ISSP_ANG_OPT_OUT_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error message when the contact is not an IFAP contact --></label>
+        <label>Chỉ Người liên hệ IFAP của Đại lý bạn mới có thể yêu cầu Tham gia Đánh giá Tài chính</label>
         <name>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</name>
     </customLabels>
     <customLabels>
-        <label><!-- Success messagem on opt-out --></label>
+        <label>Xin cảm ơn bạn đã yêu cầu Tham gia quy trình Đánh giá tài chính. IATA sẽ sớm liên hệ với bạn về yêu cầu này.</label>
         <name>ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_One_or_More --></label>
+        <label>Một hay nhiều Văn phòng Chi nhánh</label>
         <name>ISSP_ANG_One_or_More</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OptIn_OptOut_DateInfo --></label>
+        <label>Ngày mà Hãng hàng không có thể Quyết định Không tham gia IATA EasyPay dành cho quốc gia này trên cổng thông tin.</label>
         <name>ISSP_ANG_OptIn_OptOut_DateInfo</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Choose_IATA_Code --></label>
+        <label>Mã IATA đã được chứng nhận</label>
         <name>ISSP_ANG_PCI_Choose_IATA_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Compliance --></label>
+        <label>Tuân thủ PCI</label>
         <name>ISSP_ANG_PCI_Compliance</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_DSS_Compliant --></label>
+        <label>Tuân thủ PCI DSS</label>
         <name>ISSP_ANG_PCI_DSS_Compliant</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Selected_IATA_Code --></label>
+        <label>* (Các) Mã IATA đã chọn</label>
         <name>ISSP_ANG_PCI_Selected_IATA_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PROOF_OF_PCI --></label>
+        <label>Bằng chứng Tuân thủ PCI cho các Mã IATA sau:</label>
         <name>ISSP_ANG_PROOF_OF_PCI</name>
     </customLabels>
     <customLabels>
@@ -9663,7 +9667,7 @@ and
         <name>ISSP_ANG_Portal_Admin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <label>&quot;Chỉ Người có thẩm quyền ký hợp pháp mới có thể thông báo đóng cửa văn phòng cho IATA. Bạn có thể chỉ định Người có thẩm quyền ký của Đại lý của mình trong trang &lt;a href=&quot;&quot;/ISSP_ContactList?MainNav=Admin&quot;&quot;subNav=contacts&quot;&quot;mid=M4S1&quot;&quot; target=&quot;&quot;_self&quot;&quot;&gt; Quản trị công ty -&gt; Phần Liên hệ &lt;/a&gt;.&quot;</label>
         <name>ISSP_ANG_Portal_Admin_Authorized_Signature</name>
     </customLabels>
     <customLabels>
@@ -9671,23 +9675,23 @@ and
         <name>ISSP_ANG_Portal_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Agency Read Only --></label>
+        <label>&lt;ul&gt;&lt;li&gt;Quyền truy cập chỉ đọc đối với Ví điện tử Chính và/hoặc (các) Ví điện tử Phụ được gán cho người dùng&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_AgencyReadOnly</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role IEP Admin --></label>
+        <label>&lt;ul&gt; &lt;li&gt;Quyền truy cập đầy đủ đối với Ví điện tử Chính và bất kỳ Ví điện tử Phụ nào&lt;/li&gt; &lt;li&gt;Tạo (các) Ví điện tử được nạp tiền trực tiếp&lt;/li&gt; &lt;li&gt;Tạo và quản lý Ví điện tử Phụ được nạp tiền gián tiếp&lt;/li&gt; &lt;li&gt;Quyền quản lý Tài khoản IEP đầy đủ, bao gồm cả đóng tài khoản&lt;/li&gt; &lt;li&gt;Quyền quản lý người dùng đầy đủ và gán người dùng cho Ví điện tử Chính và (các) Ví điện tử Phụ, bao gồm cả các yêu cầu quyền truy cập người dùng&lt;/li&gt; &lt;li&gt;Thêm, rút và chuyển tiền cho Ví điện tử Chính và (các) Ví điện tử Phụ&lt;/li&gt; &lt;li&gt;Quản lý đăng ký và đóng Tài khoản Ngân hàng&lt;/li&gt; &lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Master Wallet Manager --></label>
+        <label>&lt;ul&gt;&lt;li&gt;Quản lý đăng ký và đóng Tài khoản Ngân hàng&lt;/li&gt;&lt;li&gt;Được phép Nạp tiền từ Tài khoản Ngân hàng đã đăng ký vào (các) ví điện tử được nạp tiền trực tiếp&lt;/li&gt;&lt;li&gt;Rút tiền từ (các) ví điện tử được nạp tiền trực tiếp&lt;/li&gt;&lt;li&gt;Chuyển tiền giữa Ví điện tử Chính và tất cả Ví điện tử Phụ&lt;/li&gt;&lt;li&gt;Quản lý quyền truy cập của người dùng với vai trò “Quản lý Ví điện tử Phụ” hoặc “Đơn vị Phát hành vé”&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Sub-wallet Manager --></label>
+        <label>&lt;ul&gt; &lt;li&gt;Quản lý tiền của (các) Ví điện tử Phụ đã được gán&lt;/li&gt; &lt;li&gt;Quản lý quyền truy cập của người dùng IATA EasyPay “Đơn vị Phát hành vé”’ và (các) Ví điện tử Phụ&lt;/li&gt; &lt;li&gt;Tạo Mã số IATA EasyPay từ (các) ví điện tử đã được gán nhằm được dùng để phát hành vé qua GDS&lt;/li&gt; &lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Ticket Issuer --></label>
+        <label>&lt;ul&gt;&lt;li&gt;Tạo Mã số IATA EasyPay từ bất kỳ ví điện tử đã được gán nào nhằm được dùng để phát hành vé qua GDS&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_TicketIssuer</name>
     </customLabels>
     <customLabels>
@@ -9695,11 +9699,11 @@ and
         <name>ISSP_ANG_Portal_TicketIssuer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ProdCompAnnualFees --></label>
+        <label>Phí thường niên cho năm 2018</label>
         <name>ISSP_ANG_ProdCompAnnualFees</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ProdCompCostTooltip --></label>
+        <label>Toàn bộ phí đăng ký có thể hoàn lại trong trường hợp không được chứng nhận: Nhỏ – tối đa 200.000 USD doanh số gộp hàng năm Trung bình – 200.001 USD –  2.000.000 USD doanh số gộp hàng năm Lớn – trên 2.000.000 USD doanh số gộp hàng năm</label>
         <name>ISSP_ANG_ProdCompCostTooltip</name>
     </customLabels>
     <customLabels>
@@ -9707,11 +9711,11 @@ and
         <name>ISSP_ANG_ProdCompCostTooltipConvert</name>
     </customLabels>
     <customLabels>
-        <label><!-- RHC Information description --></label>
+        <label>Dịch vụ này cho phép theo dõi số tiền đã xuất vé so với hạn mức RHC ở bất kỳ thời điểm nào. Mục này bao gồm các hình thức thanh toán được cho phép sử dụng cũng như Lịch sử và Hồ sơ rủi ro của công ty. Dịch vụ này sẽ gửi thông báo tới bạn khi công ty đạt đến tỷ lệ phần trăm RHC đã sử dụng để giúp bạn giám sát các hoạt động.</label>
         <name>ISSP_ANG_RHC_InformationDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- Risk Event Status --></label>
+        <label>Trạng thái Sự kiện Rủi ro</label>
         <name>ISSP_ANG_RHC_Risk_Event_Status</name>
     </customLabels>
     <customLabels>
@@ -9739,23 +9743,23 @@ and
         <name>ISSP_ANG_STEP_2_Identi_Appro_Req_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Search for Contacts String --></label>
+        <label>Tìm kiếm Liên hệ</label>
         <name>ISSP_ANG_SearchContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents --></label>
+        <label>&quot;Yêu cầu Thay đổi Mô hình Chứng nhận và/hoặc thông báo cho IATA về những thay đổi về Địa điểm, Tên Công ty, Tư cách Pháp nhân, Quyền sở hữu / Cơ cấu Cổ đông của bạn.&quot;</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
     </customLabels>
     <customLabels>
-        <label><!-- STEP 1 - Annual Revalidation --></label>
+        <label>BƯỚC A - Xác nhận Thông tin Đại lý</label>
         <name>ISSP_ANG_Step1_ANNUAL_REV</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Step1_HE --></label>
+        <label>&lt;strong&gt; Pháp nhân phụ &lt;/strong&gt; của đại lý đã được IATA duyệt sau:</label>
         <name>ISSP_ANG_Step1_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step1  Lang Display Help --></label>
+        <label>* Pháp nhân phụ này có phải là một Pháp nhân độc lập với Pháp nhân chính không?</label>
         <name>ISSP_ANG_Step1_Legal_Display_Help</name>
     </customLabels>
     <customLabels>
@@ -9767,7 +9771,7 @@ and
         <name>ISSP_ANG_Step1_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- STEP 2 - Annual Revalidation --></label>
+        <label>BƯỚC B - Gửi cho IATA</label>
         <name>ISSP_ANG_Step2_ANNUAL_REV</name>
     </customLabels>
     <customLabels>
@@ -9779,27 +9783,27 @@ and
         <name>ISSP_ANG_StepFinal_AE_Thanks</name>
     </customLabels>
     <customLabels>
-        <label><!-- Voluntary Relinquishment Disclaimer --></label>
+        <label>&lt;p&gt;Theo đây, tôi xin tự nguyện từ bỏ Chứng nhận IATA liên quan đến các Địa điểm đã Phê duyệt được liệt kê ở trên&lt;/p&gt;</label>
         <name>ISSP_ANG_VR_Disclaimer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Voluntary_Relinquishment --></label>
+        <label>Xóa Tự nguyện</label>
         <name>ISSP_ANG_Voluntary_Relinquishment</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_WISH_TO_RELINQUISH --></label>
+        <label>Tôi muốn xóa:</label>
         <name>ISSP_ANG_WISH_TO_RELINQUISH</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_choose_what_to_relinquish --></label>
+        <label>Vui lòng chọn những gì bạn muốn xóa.</label>
         <name>ISSP_ANG_choose_what_to_relinquish</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step0_Other_Changes --></label>
+        <label>Bằng chứng Tuân thủ PCI</label>
         <name>ISSP_ANG_proof_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step0_Other_Changes_Info --></label>
+        <label>Tuân thủ PCI là điều kiện tiên quyết để kích hoạt Phương thức Thanh toán bằng Thẻ tín dụng cho một Mã IATA.</label>
         <name>ISSP_ANG_proof_PCI_Info</name>
     </customLabels>
     <customLabels>
@@ -9871,7 +9875,7 @@ and
         <name>ISSP_Access_Service</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Access_Under_Provisioning --></label>
+        <label>Quyền truy cập trong mục Dự phòng</label>
         <name>ISSP_Access_Under_Provisioning</name>
     </customLabels>
     <customLabels>
@@ -10015,15 +10019,15 @@ and
         <name>ISSP_Apply_Filter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1 --></label>
+        <label>Một hay nhiều người dùng đã được thêm vào IATA EasyPay từ Cổng thông tin Dịch vụ Khách hàng IATA.</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2 --></label>
+        <label>Là Quản trị viên IEP hoặc Quản lý Ví điện tử Chính, giờ đây bạn phải phê duyệt những người dùng này trên IATA EasyPay và gán họ cho một hay nhiều ví điện tử trước khi họ có thể bắt đầu sử dụng dịch vụ.&lt;br/&gt;&lt;br/&gt;Người dùng sẽ nhận được email thông báo sau khi được cấp quyền truy cập.</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3 --></label>
+        <label>Có thể truy cập IATA EasyPay từ trang chủ của</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3</name>
     </customLabels>
     <customLabels>
@@ -10949,11 +10953,11 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Email_Draft_Change_Process</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Email_Draft_Change_Process_PCI --></label>
+        <label>Cảm ơn bạn đã tạo mẫu trực tuyến phác thảo bằng chứng tuân thủ PCI.</label>
         <name>ISSP_Email_Draft_Change_Process_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Email_Draft_Change_Process_VR --></label>
+        <label>Cảm ơn bạn đã tạo mẫu trực tuyến phác thảo Xóa Tự nguyện.</label>
         <name>ISSP_Email_Draft_Change_Process_VR</name>
     </customLabels>
     <customLabels>
@@ -11821,7 +11825,7 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Loading_IATAN_Agency_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Loading Travel Agency Details --></label>
+        <label>Đang tải thông tin Đại lý Du lịch…</label>
         <name>ISSP_Loading_Travel_Agency_Details</name>
     </customLabels>
     <customLabels>
@@ -12361,19 +12365,19 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_PAX_Validating_VAT_Number_error</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance --></label>
+        <label>Mã Đại lý - Bằng chứng Tuân thủ PCI</label>
         <name>ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Agency_Codes_VR --></label>
+        <label>Mã Đại lý - Xóa Tự nguyện</label>
         <name>ISSP_PCI_Agency_Codes_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Case_Submited --></label>
+        <label>Cảm ơn bạn đã gửi yêu cầu cho Phương thức Thanh toán bằng Thẻ tín dụng.</label>
         <name>ISSP_PCI_Case_Submited</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Least_One_IATA_CODE --></label>
+        <label>Vui lòng chọn tối thiểu một Mã IATA</label>
         <name>ISSP_PCI_Least_One_IATA_CODE</name>
     </customLabels>
     <customLabels>
@@ -12687,43 +12691,43 @@ Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều đư�
         <name>ISSP_Quantity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB --></label>
+        <label>Khả năng Giữ lại Thanh toán</label>
         <name>ISSP_RHC_HUB</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP --></label>
+        <label>Phương thức Thanh toán Khả dụng</label>
         <name>ISSP_RHC_HUB_AFP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP Cash --></label>
+        <label>Tiền mặt</label>
         <name>ISSP_RHC_HUB_AFP_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP Credit Card --></label>
+        <label>Thẻ tín dụng</label>
         <name>ISSP_RHC_HUB_AFP_Credit_Card</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Curr Financial Security --></label>
+        <label>Bảo đảm Tài chính Hiện tại</label>
         <name>ISSP_RHC_HUB_Curr_Financial_Security</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Current Usage --></label>
+        <label>Mức sử dụng hiện tại</label>
         <name>ISSP_RHC_HUB_Current_Usage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Last Updated --></label>
+        <label>Cập nhật lần cuối</label>
         <name>ISSP_RHC_HUB_Last_Updated</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Percentage Usage --></label>
+        <label>Phần trăm đã sử dụng</label>
         <name>ISSP_RHC_HUB_Percentage_Usage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Risk History --></label>
+        <label>Lịch sử Sự kiện Rủi ro</label>
         <name>ISSP_RHC_HUB_RH</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB RP --></label>
+        <label>Hồ sơ Rủi ro</label>
         <name>ISSP_RHC_HUB_RP</name>
     </customLabels>
     <customLabels>
@@ -13699,7 +13703,7 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
         <name>ISSP_UserInactivation_ServiceMsg_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_VR_Case_Submited --></label>
+        <label>Cảm ơn bạn đã gửi yêu cầu Xóa Tự nguyện</label>
         <name>ISSP_VR_Case_Submited</name>
     </customLabels>
     <customLabels>
@@ -13723,7 +13727,7 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
         <name>ISSP_View_PWC_Lithuania_DC</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Add FAP Contact --></label>
+        <label>Xem tất cả Người dùng cho dịch vụ này</label>
         <name>ISSP_View_Portal_Users</name>
     </customLabels>
     <customLabels>

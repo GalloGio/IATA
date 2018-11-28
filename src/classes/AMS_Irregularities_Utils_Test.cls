@@ -2,7 +2,7 @@
 private class AMS_Irregularities_Utils_Test {
 	
 	@testSetup static void setup(){
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
 
@@ -11,8 +11,9 @@ private class AMS_Irregularities_Utils_Test {
         insert HO1;
     }
 	
-    static testMethod void TestAccumulatedIrregularities() {
-    	ID rtIRR = Schema.SObjectType.Agency_Applied_Change_Code__c.getRecordTypeInfosByName().get('Irregularities').getRecordTypeId();
+    @isTest
+    static void TestAccumulatedIrregularities() {
+    	ID rtIRR = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         list<Account> lsAccnt = [select id, Accumulated_Irregularities__c from Account where name = 'My Travels'];
         
         system.assert(lsAccnt.size() == 1);
@@ -51,9 +52,9 @@ private class AMS_Irregularities_Utils_Test {
         test.stopTest();
     }
     
-    
-    static testMethod void TestAccumulatedIrregularities_fromAccount() {
-    	ID rtIRR = Schema.SObjectType.Agency_Applied_Change_Code__c.getRecordTypeInfosByName().get('Irregularities').getRecordTypeId();
+    @isTest
+    static void TestAccumulatedIrregularities_fromAccount() {
+    	ID rtIRR = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         list<Account> lsAccnt = [select id, Accumulated_Irregularities__c from Account where name = 'My Travels'];
         
         system.assert(lsAccnt.size() == 1);

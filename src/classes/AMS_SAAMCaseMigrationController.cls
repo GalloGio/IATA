@@ -7,7 +7,7 @@ public class AMS_SAAMCaseMigrationController {
 
     private final Integer PAGE_SIZE = 50; //max size: 1000
     private final Integer RECORD_LIMIT = 750; //prevent view state limit, if you increase page size, decrease limit
-    private final Id SAAMCaseRecType = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+    private final Id SAAMCaseRecType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
 
     public String caseNumbers   { get; set; }
     public String searchOption  { get; set; }

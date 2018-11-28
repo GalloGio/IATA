@@ -131,7 +131,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 	} 
 
 	private static Partner_products__c createProduct(String name, String code, Account_Role__c parent, Date startDate, Date endDate){
-		String prodRecordtype = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
+		String prodRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Partner_products__c','TIP_Product');
         Partner_products__c prod1 = new Partner_products__c();
         prod1.Name = name; 
         prod1.PP_Payment_Product_Code__c = code; 

@@ -5,7 +5,7 @@ public without sharing class AMS_Utils {
         get{
 
             if(mapCountries == null)
-                mapCountries = mapCountries = new map<String,IATA_ISO_Country__c>([SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c]);
+                mapCountries = mapCountries = new map<String,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountries());
 
             return mapCountries;
 
@@ -37,7 +37,7 @@ public without sharing class AMS_Utils {
         get{
             if(iataIsoStates == null){
                 iataIsoStates = new Map<String, IATA_ISO_State__c>();
-                for(IATA_ISO_State__c state : [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_State__c]){
+                for(IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStates()){
                     iataIsoStates.put(state.Name.toLowerCase(), state);
                 }
                 System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - iataIsoStates] iataIsoStates - ' + iataIsoStates);
@@ -52,7 +52,7 @@ public without sharing class AMS_Utils {
         get{
             if(iataIsoCountries == null){
                 iataIsoCountries = new Map<String, IATA_ISO_Country__c>();
-                for(IATA_ISO_Country__c country : [SELECT Id, Name FROM IATA_ISO_Country__c]){
+                for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountries()){
                     iataIsoCountries.put(country.Name.toLowerCase(), country);
                 }
                 System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - iataIsoCountries] iataIsoCountries - ' + iataIsoCountries);
@@ -96,8 +96,6 @@ public without sharing class AMS_Utils {
         }
         private set;
     }
-
-    private static Map<String, RecordType> currentCache = null;
 
     public static final String SANITYCHECK = 'Perform Sanity Check';
     public static final String APPROVAL = 'Manager Approval';
@@ -220,35 +218,32 @@ public without sharing class AMS_Utils {
     public static final String CERT_TSA         = 'TSA';
 
     //Record Types
-    public static final String RECTYPE_NEW          = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('NEW');
-    public static final String RECTYPE_CHANGE       = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('CHANGE');
-    public static final String RECTYPE_CERT         = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('CERTIFICATION');
-    public static final String RECTYPE_NEWHE        = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('ANG_New_HE');
-    public static final String RECTYPE_NEWAE        = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('ANG_New_AE');
-    public static final String RECTYPE_NGCHANGES    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('ANG_Agency_Changes');
-    public static final String RECTYPE_NGCORRECTION = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_OSCAR__c').get('NGCORRECTION');
-    public static final String RECTYPE_CORRECTION   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
-    public static final String RECTYPE_NEWGENFOP   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NGFormsOfPayment').getRecordTypeId();
-    public static final String RECTYPE_NEWGENOPTINOUT   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.FS.OPTINOUT').getRecordTypeId();
-    public static final String RECTYPE_NEWGENANNUALREVAL   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('ANG.ANNUAL.REVALIDATION').getRecordTypeId();
-    public static final String RECTYPE_IEPMODELA   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BANK ACCOUNT SETUP').getRecordTypeId();
+    public static final String RECTYPE_NEW          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
+    public static final String RECTYPE_CHANGE       = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
+    public static final String RECTYPE_CERT         = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
+    public static final String RECTYPE_NEWHE        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
+    public static final String RECTYPE_NEWAE        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
+    public static final String RECTYPE_NGCHANGES    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+    public static final String RECTYPE_NGCORRECTION = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
+    public static final String RECTYPE_CORRECTION   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
+    public static final String RECTYPE_NEWGENFOP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
+    public static final String RECTYPE_NEWGENOPTINOUT  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
+    public static final String RECTYPE_NEWGENANNUALREVAL = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
+    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
 
-    public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
-    public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
-    public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
-    public static final String RECTYPE_SIDRA        = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
-    public static final String RECTYPE_IFAP         = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
-    public static final String RECTYPE_IATAAGENCY   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+    public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+    public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+    public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+    public static final String RECTYPE_SIDRA        = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    public static final String RECTYPE_IFAP         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+    public static final String RECTYPE_IATAAGENCY   = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+    
+    public static final String RECTYPE_IATAEASYPAY  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c', 'IATA_EasyPay_Opt_in_Out');
+    public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c','IEP_Model_A');
 
-    public static final String RECTYPE_IATAEASYPAY  = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AP_Process_Form__c').get('IATA_EasyPay_Opt_in_Out');
-    public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Accreditation_Requirement__c').get('IEP_Model_A');
-
-    public static final String RECTYPE_BSP = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Settlement_System__c').get('BSP');
-
-    public static final Id OSCAR_COMUNICATION = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+    public static final String RECTYPE_BSP = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
-
 
     //public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
 
@@ -323,11 +318,11 @@ public without sharing class AMS_Utils {
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
     public static final String TYPECHANGE_LOCATION = 'Location';
-    public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection';
-    public static final Id AccreditationContactPersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
-    public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
-    public static final Id AccreditationContactTrainedStaffRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Trained Staff').getRecordTypeId();
-    public static final Id AccountRoleOwnershipRT = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+    public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection'; 
+    public static final Id AccreditationContactPersonRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
+    public static final Id AccreditationContactCompanyRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
+    public static final Id AccreditationContactTrainedStaffRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff');
+    public static final Id AccountRoleOwnershipRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
@@ -387,7 +382,7 @@ public without sharing class AMS_Utils {
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
     public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
 
-    public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+    public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
     //Mass created FOP case/OSCAR is assigned to one of theses queues when created:
     public static final Set<String> MASS_FOP_QUEUES = new Set<String>{'NewGen PCI - Africa & Middle East','NewGen PCI - Americas','NewGen PCI - Asia & Pacific','NewGen PCI - China & North Asia','NewGen PCI - Europe'};
@@ -400,11 +395,6 @@ public without sharing class AMS_Utils {
     /* AMSU-37 */
     public static final String APP_DISAPPROVED = '12-APPLICATION DISAPPROVED';
     public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
-
-
-    static {
-        refreshCache();
-    }
 
     public static String ENCRYPTION_KEY {
         get {
@@ -1570,12 +1560,14 @@ public without sharing class AMS_Utils {
         
         if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
             Map<String, Object> accountFieldNewValue = new Map<String,Object>();
+            Map<String, Object> accountFieldNewValueBKP = new Map<String,Object>(); //AMSU-184
 
             for (String key : fieldsMapping.keySet()) {
                 String value = fieldsMapping.get(key);
                 if (fieldsToMigrate.contains(value)) {
                 
                     accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
+                    accountFieldNewValueBKP.put(key, oscarOnlineAccreditation.get(value)); //AMSU-184
                     System.debug(key + ':' + oscarOnlineAccreditation.get(value));
                 }
             }
@@ -1602,6 +1594,23 @@ public without sharing class AMS_Utils {
 
                 Account newAcc = new Account(Id = acc.Id);
                 List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+
+                //AMSU-184 - need to bypass the name and short name for the Ownership changes to China and Taipei, but only for the remaining of the hierarchy, the selected account to change can change its name
+                if( (typesOfChange.contains(AMS_Utils.OWNERSHIP_NON_IATA) || typesOfChange.contains(AMS_Utils.OWNERSHIP_IATA) )
+                    && (oscarOnlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'CN' || oscarOnlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'TW') 
+                ){
+                    if(acc.Id != oscar.Account__c){
+                        fieldsToMigrate.remove('Account_Name__c');
+                        fieldsToMigrate.remove('Short_Name__c');
+                        accountFieldNewValue.remove('Name');
+                        accountFieldNewValue.remove('Short_Name__c');
+                    }else{
+                        fieldsToMigrate.add('Account_Name__c');
+                        fieldsToMigrate.add('Short_Name__c');
+                        accountFieldNewValue = accountFieldNewValueBKP;
+                    }
+                }
+                
 
                 for(String accFieldApiName: accountFieldNewValue.keySet())
                 {
@@ -1923,6 +1932,16 @@ public without sharing class AMS_Utils {
                     onlineAccreditationFieldNewValue.put('ISSP_AMS_GDS_with_signed_contract__c', account.GDS__c);
 
 
+                //AMSU-184 - need to bypass the name and short name for the Ownership changes to China and Taipei, but only for the remaining of the hierarchy, the selected account to change can change its name
+                if( typesOfChange.contains(AMS_Utils.OWNERSHIP_IATA) 
+                    && (onlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'CN' || onlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'TW') 
+                ){
+                    fieldsToMigrate.remove('Account_Name__c');
+                    fieldsToMigrate.remove('Short_Name__c');
+                    onlineAccreditationFieldNewValue.remove('Account_Name__c');
+                    onlineAccreditationFieldNewValue.remove('Short_Name__c');
+                }
+                
                 for(String accredFieldApiName: onlineAccreditationFieldNewValue.keySet())
                 {
 
@@ -2141,37 +2160,6 @@ public static String errorMessageBeautifyer(Exception ex) {
     return 'ERROR: ' + errorString.unescapeHtml4();
 }
 
-public static RecordType getRecordType(String sObjectType, String developerName) {
-    RecordType result = currentCache.get(developerName + '%%' + sObjectType);
-    if (result == null) {
-        throw new AMS_ApplicationException('Could not find RecordType for ' + sObjectType + ', ' + developerName);
-    }
-    return result;
-}
-
-public static RecordType getRecordType(Id recordTypeId) {
-    if (currentCache == null) {
-        refreshCache();
-    }
-
-    RecordType result = currentCache.get(recordTypeId);
-    if (result == null) {
-        refreshCache();
-        result = currentCache.get(recordTypeId);
-    }
-    return result;
-}
-
-/**
- * Get the recordTypeId for the given sObjectType and developerName
- */
-public static Id getId(String sObjectType, String developerName) {
-    RecordType rt = getRecordType(sObjectType, developerName);
-    if (rt != null) {
-        return rt.id;
-    }
-    return null;
-}
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Private methods
@@ -2198,16 +2186,6 @@ private static String DecryptString(String key, String str) {
     Blob encryptedData = Encodingutil.base64Decode(str);
     Blob decryptedData = Crypto.decryptWithManagedIV(ENCRYPTION_ALGORYTHM, EncodingUtil.base64Decode(key), encryptedData);
     return decryptedData.toString();
-}
-
-private static void refreshCache() {
-    Map<String, RecordType> newCache = new Map<String, RecordType>();
-
-    for (RecordType rt : [ select id, name, developerName, SObjectType from RecordType ]) {
-        newCache.put(rt.developerName + '%%' + rt.SObjectType, rt);
-        newCache.put(rt.Id, rt);
-    }
-    currentCache = newCache;
 }
 
 public static String findObjectNameFromRecordIdPrefix(String recordIdOrPrefix) {

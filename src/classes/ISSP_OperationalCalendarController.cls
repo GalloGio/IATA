@@ -124,7 +124,7 @@ global without sharing class ISSP_OperationalCalendarController {
         this.defaultCountry = this.account.IATA_ISO_Country__c;
         this.defaultOperationType = nvl(MAP_OPERATION_TYPES.get(this.account.Location_Class__c));
         this.defaultFrequency = this.account.Remittance_frequency__c;
-        this.maxDate = Date.newInstance(Date.Today().year()+1, 1, 1);
+        this.maxDate = Date.newInstance(Date.Today().year()+2, 1, 1);
         this.minDate = Date.newInstance(Date.Today().year()-1, 1, 1);
         initPicklistValues();
         if (IS_AIRLINE) {
@@ -192,13 +192,7 @@ global without sharing class ISSP_OperationalCalendarController {
         // countries
         String fieldName = getIsoCountryFieldName();
         map<String,IATA_ISO_Country__c> mapNameCountry = new map<String,IATA_ISO_Country__c>();
-        for (IATA_ISO_Country__c country: [SELECT Id, Name,
-                    IATA_COUNTRY_EN__c, IATA_Country_ZH__c, IATA_Country_SP__c,
-                    IATA_Country_PT__c, IATA_Country_JP__c, IATA_Country_IT__c,
-                    IATA_Country_FR__c, IATA_Contry_KR__c
-                FROM IATA_ISO_Country__c 
-                WHERE Id IN :setCountryId
-            ]) {
+        for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(setCountryId)) {
             String countryName = (String)country.get(fieldName);
             if (countryName==null) countryName = country.Name;
             mapNameCountry.put(countryName, country);
@@ -376,6 +370,10 @@ global without sharing class ISSP_OperationalCalendarController {
             }
             if (billingPeriod==Date.today().year()) {
                 query += ' AND First_Day__c = THIS_YEAR';
+            } else if (billingPeriod==Date.today().year()+1) {
+                query += ' AND First_Day__c = NEXT_YEAR';
+            } else if (billingPeriod==Date.today().year()-1) {
+                query += ' AND First_Day__c = LAST_YEAR';
             } else if ( billingPeriod >= 1 && billingPeriod <= 12 ) {
                 query += ' AND First_Day__c = THIS_YEAR';
                 query += ' AND CALENDAR_MONTH(First_Day__c) = ' + billingPeriod;

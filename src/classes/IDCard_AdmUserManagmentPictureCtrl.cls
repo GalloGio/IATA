@@ -573,7 +573,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
         
         Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(iataCode);
         
-        IATA_ISO_Country__c[] listCountries = [Select i.Name, i.AIMS_Area_Name__c, i.Id, i.ISO_Code__c, IATA_Regional_Office__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+        List<IATA_ISO_Country__c> listCountries = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
         if (listCountries == null || listCountries.size() == 0) {
                 throw new IDCardApplicationException(string.format(Label.ID_Card_Invalid_ISO_Country, new string[] { theAccount.BillingCountry }));
         }

@@ -16,10 +16,7 @@ public with sharing class AMP_GroupHierarchyExtensionTest  {
 		);
 
 		System.runAs(testUser) {
-			Id GroupRecordTypeId =
-				[SELECT Id FROM RecordType
-				WHERE SObjectType = 'LocalGovernance__c'
-				AND DeveloperName = 'Reg_Div_Groups'].Id;
+			Id GroupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Reg_Div_Groups');
 
 			LocalGovernance__c testGroup = new LocalGovernance__c();
 			testGroup.recordTypeId = GroupRecordTypeId;

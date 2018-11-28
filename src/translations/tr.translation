@@ -597,7 +597,7 @@
         <name>AMS_XML_GEN_ERROR_RECEIVER</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_AE_separate_Legal_Entity --></label>
+        <label>* Bu Ortak Kurulu?, Ana Kurulu?tan ayr? bir Tüzel ki?i m??</label>
         <name>ANG_AE_separate_Legal_Entity</name>
     </customLabels>
     <customLabels>
@@ -641,43 +641,43 @@
         <name>ANG_Conversion_Tool_Workaround</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Effective_Date --></label>
+        <label>Geçerlilik tarihi:</label>
         <name>ANG_Effective_Date</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP CashlessMessage --></label>
+        <label>&quot;Nakit Ödeme ?eklini kullanarak bir bilet olu?turmak üzere GoStandard akreditasyon türüne çevirmek için &lt;a href=&quot;&quot;/ISSP_AMSCases&quot;&quot;&gt;ba?vurun&lt;/a&gt;&quot;</label>
         <name>ANG_ISSP_AFP_CashlessMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP CashlessMessage --></label>
+        <label>&quot;GoLite akreditasyon türüne çevirmek için &lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt; IATA Akreditasyonu ve De?i?iklikleri &lt;/a&gt; servisine eri?im talebinde bulunun&quot;</label>
         <name>ANG_ISSP_AFP_CashlessMessageNoAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AFP_CreditCardNoAccess --></label>
+        <label>&quot;PCI uygunlu?u belgesi göndermek için &lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt; IATA Akreditasyonu ve De?i?iklikleri &lt;/a&gt; servisine eri?im talebinde bulunun.&quot;</label>
         <name>ANG_ISSP_AFP_CreditCardNoAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP NoCreditCardMessage --></label>
+        <label>&quot;&lt;a href=&quot;&quot;/ISSP_ANG_PCI?&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt; Kredi Kart? Ödeme ?ekli Talep Et &lt;/a&gt;&quot;</label>
         <name>ANG_ISSP_AFP_NoCreditCardMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationType --></label>
+        <label>Akreditasyon Türü</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationTypeRequired --></label>
+        <label>Lütfen i?lem türünü seçin.</label>
         <name>ANG_ISSP_AccreditationTypeRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationTypeTitle --></label>
+        <label>Akreditasyonun türü</label>
         <name>ANG_ISSP_AccreditationTypeTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AnnualFees --></label>
+        <label>Y?ll?k Ücretler :</label>
         <name>ANG_ISSP_AnnualFees</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AssociateEntity --></label>
+        <label>Ortak Kurulu?(lar) :</label>
         <name>ANG_ISSP_AssociateEntity</name>
     </customLabels>
     <customLabels>
@@ -689,19 +689,19 @@
         <name>ANG_ISSP_ChangeContactHierarchyError</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1 --></label>
+        <label>Yeni IATA EasyPay hesab?n?z?n aç?l???n? kutlar?z.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1 --></label>
+        <label>Lütfen bunu okuyun</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2 --></label>
+        <label>SSS</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3 --></label>
+        <label>EasyPay hesab?n?z?n nas?l yönetilece?i ve nas?l ba?layaca??n?z hakk?nda daha fazlas?n? ö?renmek için.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</name>
     </customLabels>
     <customLabels>
@@ -709,31 +709,31 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3 --></label>
+        <label>&quot;Meslekta?lar?n?z art?k yeni aç?lan hesab?n?za eri?mek için IATA Mü?teri Hizmetleri Portal?ndan ba?vuru yapabilirler. Yukar?daki &amp;lt;a href=&quot;&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot;&gt;SSS&amp;lt;/a&gt; kullan?c? eri?imini nas?l yönetebilece?inizi aç?klar.&quot;</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail --></label>
+        <label>Yeni IATA EasyPay hesab?n?z?n aç?l???n? kutlar?z. Lütfen EasyPay hesab?n?z? nas?l yönetece?inizi ve EasyPay biletleri olu?turma ba?layabilmeniz için para aktar?m? yapman?n ilk ad?mlar?n? aç?klayan bu makalede yaz?lanlar? takip edin. Meslekta?lar?n?z art?k yeni aç?lan hesab?n?za eri?mek için IATA Mü?teri Hizmetleri Portal?ndan ba?vuru yapabilirler. Yukar?daki makale kullan?c? eri?imini nas?l yönetebilece?inizi aç?klar. Te?ekkür ederiz, IATA Mü?teri Hizmetleri</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_1 --></label>
+        <label>Lütfen IATA EasyPay için eri?im rolünüzü seçin.</label>
         <name>ANG_ISSP_ConfirmRequestIEP_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_2 --></label>
+        <label>Teyit etti?inizde, eri?im talebiniz onay için IATA EasyPay yöneticinize ve cüzdan yöneticinize gönderilecek.</label>
         <name>ANG_ISSP_ConfirmRequestIEP_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_3 --></label>
+        <label>Kullan?labilir roller hakk?nda bilgi için, lütfen t?klay?n</label>
         <name>ANG_ISSP_ConfirmRequestIEP_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From --></label>
+        <label>?undan Çevirme:</label>
         <name>ANG_ISSP_ConversionFrom</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From GoLite Tooltip --></label>
+        <label>GoLite Araç ?pucundan Çevirme</label>
         <name>ANG_ISSP_ConversionFromGoLiteTooltip</name>
     </customLabels>
     <customLabels>
@@ -741,7 +741,7 @@
         <name>ANG_ISSP_ConversionFromGoStandardGoLiteTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From GoStandard Tooltip --></label>
+        <label>GoStandard Araç ?pucundan Çevirme</label>
         <name>ANG_ISSP_ConversionFromGoStandardTooltip</name>
     </customLabels>
     <customLabels>
@@ -749,67 +749,67 @@
         <name>ANG_ISSP_ConversionFromTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryConcerned --></label>
+        <label>?lgili Ülke</label>
         <name>ANG_ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsGoBack --></label>
+        <label>Akreditasyon Türlerinin kar??la?t?r?lmas?na geri dön</label>
         <name>ANG_ISSP_CountryRequirementsGoBack</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsGoBackToOnlineAcc --></label>
+        <label>Çevrimiçi Akreditasyon ve De?i?iklikler sayfas?na geri dön</label>
         <name>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsTitle --></label>
+        <label>IATA Online Acente Akreditasyonu</label>
         <name>ANG_ISSP_CountryRequirementsTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_EasyPayLegalConfirmation --></label>
+        <label>?imdi, Acentenizin IATA EasyPay hesab?n? açmak için ba?vurunuzu tamamlayabilece?iniz EasyPay portal?na yönlendirileceksiniz.&lt;br/&gt;&lt;br/&gt;Devam ederek IATA’n?n ad?n?z?, soyad?n?z?, e-posta adresinizi ve IATA Kodunuzu ilgili ba?ka herhangi bir IATA EasyPay Tedarikçilerine göndermesini kabul edersiniz. Bu bilgiler IATA EasyPay Tedarikçileri taraf?ndan yaln?zca EasyPay hesab?n?z?n aç?lmas? ve yönetilmesi ve genel olarak EasyPay servislerinin i?letilmesi amac?yla veya yasalar?n gerektirebilece?i ba?ka ?ekillerde kullan?lacakt?r.&lt;br/&gt;&lt;br/&gt;Devam etmek istiyor musunuz?</label>
         <name>ANG_ISSP_EasyPayLegalConfirmation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_AccessRequest2_IEP --></label>
+        <label>Servis, IEP Yöneticinize / Ana Cüzdan Yöneticinize aktar?ld?.</label>
         <name>ANG_ISSP_Email_AccessRequest2_IEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP --></label>
+        <label>?u potal servisi rolüne atand?:</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2 --></label>
+        <label>Eri?im sa?layabilirsiniz</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3 --></label>
+        <label>veya IATA mü?teri portal? giri? sayfas?ndan.</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_AppReq_BeInformed --></label>
+        <label>A?a??daki kullan?c?n?n IATA EasyPay Servisine eri?im talebinde bulundu?unu bilginize sunar?z.</label>
         <name>ANG_ISSP_Email_AppReq_BeInformed</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP --></label>
+        <label>Say?n IEP Yöneticisi / Ana Cüzdan Yöneticisi,</label>
         <name>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_1 --></label>
+        <label>Portal servisi rolünüz</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_2 --></label>
+        <label>?u ?ekilde de?i?tirildi:</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_Subject --></label>
+        <label>IATA Mü?teri Portal? – Portal Servisi</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Portal Servis Rolü</label>
+        <label>Rolü De?i?ikli?i</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_HeadEntity --></label>
+        <label>Ana Kurulu?:</label>
         <name>ANG_ISSP_HeadEntity</name>
     </customLabels>
     <customLabels>
@@ -817,27 +817,27 @@
         <name>ANG_ISSP_IATA_EasyPay</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_Abroad_Account_error_msg --></label>
+        <label>?ubeniz, Genel Merkezinizin bulundu?u ülkeden farkl? bir ülkede. Bu a?amada IATA EasyPay servisinin ofisiniz için kullan?lamayaca??n? üzülerek bildirmek isteriz. Daha fazla bilgiye ihtiyac?n?z olursa, lütfen IATA Mü?teri Deste?i ile irtibata geçin.</label>
         <name>ANG_ISSP_IEP_Abroad_Account_error_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg --></label>
+        <label>&quot;?u anda Acentenizin aç?k bir IATA EasyPay Hesab? yok.&lt;br/&gt;&lt;br/&gt;Bir IATA EasyPay Hesab? açmalar?n? talep etmek için, lütfen Genel Merkezinizin Yetkili ?mza Sahibi ile irtibata geçin. Bir IATA EasyPay Hesab? açabilmek için, Acenteniz için hem bir Portal Yöneticisi hem de Yetkili ?mza Sahibi olman?z gerekir.&lt;br/&gt;&lt;br/&gt;Yard?ma ihtiyac?n?z varsa, lütfen &lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt; destek ile irtibata geçin &lt;/a&gt;.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg --></label>
+        <label>&quot;?u anda Acentenizin aç?k bir IATA EasyPay Hesab? yok.&lt;br/&gt;&lt;br/&gt;Bir IATA EasyPay Hesab? açmalar?n? talep etmek için, lütfen Ana Kurulu?unuzun Yetkili ?mza Sahibi ile irtibata geçin. {0}&lt;br/&gt;&lt;br/&gt;Yard?ma ihtiyac?n?z varsa, lütfen &lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt; destek ile irtibata geçin &lt;/a&gt;.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg --></label>
+        <label>&quot;?u anda Acentenizin aç?k bir IATA EasyPay Hesab? yok.&lt;br/&gt;&lt;br/&gt;Bir IATA EasyPay Hesab? açmalar?n? talep etmek için, lütfen Genel Merkezinizin Yetkili ?mza Sahibi ile irtibata geçin. {0}&lt;br/&gt;&lt;br/&gt;Yard?ma ihtiyac?n?z varsa, lütfen &lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt; destek ile irtibata geçin &lt;/a&gt;.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active --></label>
+        <label>Bir IATA EasyPay Hesab? açabilmek için, Acenteniz için hem bir Portal Yöneticisi hem de Yetkili ?mza Sahibi olman?z gerekir.</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator --></label>
+        <label>&quot;&lt;br/&gt;&lt;br/&gt;Portal Yöneticisi olarak, kendinizi bir Yasal Yetkili ?mza Sahibi olarak tayin etmek üzere &lt;a href=&quot;&quot;/ISSP_PersonalInformation?mid=M5S1&quot;&quot;&gt; Ki?isel Bilgilerinizi &lt;/a&gt; güncelleyebilirsiniz veya &lt;a href=&quot;&quot;/ISSP_ContactList?MainNav=Admin&amp;subNav=contacts&amp;mid=M4S1&quot;&quot;&gt; ?irket Yönetimi -&gt; Ki?iler &lt;/a&gt; sayfas?ndan do?ru ki?iyi atayarak EasyPay hesab?n?z? açmas?n? isteyebilirsiniz.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
@@ -853,7 +853,7 @@
         <name>ANG_ISSP_IEP_ModelBanking_link</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_OpeningInProgress --></label>
+        <label>Ana Kurulu?unuzdan bir Yetkili ?mza Sahibi, Acentenizin IEP Hesab?n?n aç?l?? i?lemlerini zaten ba?latm??. IEP Hesab?n?z ba?ar?yla aç?ld???nda, bu servise eri?ebileceksiniz.</label>
         <name>ANG_ISSP_IEP_OpeningInProgress</name>
     </customLabels>
     <customLabels>
@@ -861,15 +861,15 @@
         <name>ANG_ISSP_IEP_Portal_Access_Request_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_Portal_Request_Access_Msg --></label>
+        <label>Seçilen kullan?c?(lar) için IATA EasyPay Hesab?n?za eri?im talebinde bulunuldu. IATA EasyPay Yöneticileri ve Ana Cüzdan Yöneticileri onay için bilgilendirildi.&lt;br/&gt;Eri?im izinleri sa?land???nda, kullan?c?lar bir onay alacaklard?r.</label>
         <name>ANG_ISSP_IEP_Portal_Request_Access_Msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_add_users_to_account_not_open_error_msg --></label>
+        <label>Kullan?c?lar, yaln?zca IATA EasyPay (IEP) Hesaplar? açmak için eklenebilir. Lütfen devam etmeden önce IEP Hesab?n?z? aç?n.</label>
         <name>ANG_ISSP_IEP_add_users_to_account_not_open_error_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
+        <label>A?a??daki ki?i, bu acente için ?u anda etkin olan tek IATA EasyPay yöneticisidir ve devre d??? b?rak?lamaz. Lütfen destek için IATA Mü?teri Hizmetleri ile irtibata geçin.</label>
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg</name>
     </customLabels>
     <customLabels>
@@ -877,11 +877,11 @@
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Notify_Admin_app_req_1 --></label>
+        <label>Talebi yönetmek için lütfen t?klay?n</label>
         <name>ANG_ISSP_Notify_Admin_app_req_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Notify_Admin_app_req_2 --></label>
+        <label>IATA EasyPay portal?n?za eri?mek için.</label>
         <name>ANG_ISSP_Notify_Admin_app_req_2</name>
     </customLabels>
     <customLabels>
@@ -901,7 +901,7 @@
         <name>ANG_ISSP_Notify_Admin_app_req_here4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Open_IATA_EasyPay_Account --></label>
+        <label>IATA EasyPay Hesab? Aç</label>
         <name>ANG_ISSP_Open_IATA_EasyPay_Account</name>
     </customLabels>
     <customLabels>
@@ -913,19 +913,19 @@
         <name>ANG_ISSP_OptOutEmptyDateErrorMessage</name>
     </customLabels>
     <customLabels>
-        <label>Portal Servis Rolü</label>
+        <label>Portal Servisi Rolü</label>
         <name>ANG_ISSP_PORTAL_SERVICE_ROLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PORTAL_SERVICE_ROLE_HINT --></label>
+        <label>Lütfen bu portal servisinde sahip olmak istedi?iniz portal rolünü seçin.</label>
         <name>ANG_ISSP_PORTAL_SERVICE_ROLE_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Picklist None --></label>
+        <label>--Hiçbiri--</label>
         <name>ANG_ISSP_Picklist_None</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PortalRoleErrorMessage --></label>
+        <label>Portal rolü gerekli</label>
         <name>ANG_ISSP_PortalRoleErrorMessage</name>
     </customLabels>
     <customLabels>
@@ -937,15 +937,15 @@
         <name>ANG_ISSP_ProductCashFacility</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonApplyNow --></label>
+        <label>?imdi Ba?vurun</label>
         <name>ANG_ISSP_ProductComparisonApplyNow</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonCost --></label>
+        <label>Maliyet</label>
         <name>ANG_ISSP_ProductComparisonCost</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonCountrySpecificRequirements --></label>
+        <label>Ülkeye Özel Gereksinimler</label>
         <name>ANG_ISSP_ProductComparisonCountrySpecificRequirements</name>
     </customLabels>
     <customLabels>
@@ -953,19 +953,19 @@
         <name>ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature1 --></label>
+        <label>Kredi Kart?</label>
         <name>ANG_ISSP_ProductComparisonFeature1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature10 --></label>
+        <label>Özellik 10</label>
         <name>ANG_ISSP_ProductComparisonFeature10</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature10Tooltip --></label>
+        <label>Özellik 10 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature10Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature1Tooltip --></label>
+        <label>Özellik 1 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature1Tooltip</name>
     </customLabels>
     <customLabels>
@@ -973,63 +973,63 @@
         <name>ANG_ISSP_ProductComparisonFeature2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature2Tooltip --></label>
+        <label>Özellik 2 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature2Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature3 --></label>
+        <label>Nakit</label>
         <name>ANG_ISSP_ProductComparisonFeature3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature3Tooltip --></label>
+        <label>Özellik 3 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature3Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature4 --></label>
+        <label>Ödeme Elde Tutma Kapasitesi</label>
         <name>ANG_ISSP_ProductComparisonFeature4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature4Tooltip --></label>
+        <label>Özellik 4 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature4Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature5 --></label>
+        <label>Y?ll?k Mali De?erlendirme</label>
         <name>ANG_ISSP_ProductComparisonFeature5</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature5Tooltip --></label>
+        <label>Özellik 5 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature5Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature6 --></label>
+        <label>Ana ?irketin Üç Ayl?k De?erlendirmesi</label>
         <name>ANG_ISSP_ProductComparisonFeature6</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature6Tooltip --></label>
+        <label>Özellik 6 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature6Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature7 --></label>
+        <label>Geri Ödeme Sigortas?</label>
         <name>ANG_ISSP_ProductComparisonFeature7</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature7Tooltip --></label>
+        <label>Özellik 7 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature7Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature8 --></label>
+        <label>Finansal Güvenlik / Varsay?lan Sigorta</label>
         <name>ANG_ISSP_ProductComparisonFeature8</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature8Tooltip --></label>
+        <label>Özellik 8 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature8Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature9 --></label>
+        <label>PSAA ?çerisine Yerle?tirilmi? Ana Garanti</label>
         <name>ANG_ISSP_ProductComparisonFeature9</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature9Tooltip --></label>
+        <label>Özellik 9 Araç ?pucu</label>
         <name>ANG_ISSP_ProductComparisonFeature9Tooltip</name>
     </customLabels>
     <customLabels>
@@ -1037,15 +1037,15 @@
         <name>ANG_ISSP_ProductComparisonLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonTitle1 --></label>
+        <label>IATA Online Acente Akreditasyonu</label>
         <name>ANG_ISSP_ProductComparisonTitle1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonTitle2 --></label>
+        <label>Seyahat Acentesi Akreditasyonu Türlerinin Kar??la?t?r?lmas?</label>
         <name>ANG_ISSP_ProductComparisonTitle2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonViewHere --></label>
+        <label>Buradan görüntüleyin</label>
         <name>ANG_ISSP_ProductComparisonViewHere</name>
     </customLabels>
     <customLabels>
@@ -1057,7 +1057,7 @@
         <name>ANG_ISSP_ProductIATAEasyPayTransactions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductMulticountry --></label>
+        <label>Çok Ülkeli</label>
         <name>ANG_ISSP_ProductMulticountry</name>
     </customLabels>
     <customLabels>
@@ -1093,7 +1093,7 @@
         <name>ANG_ISSP_ProgressBarNode6</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH AccessEasyPay --></label>
+        <label>IATA EasyPay Hesab?n?za eri?in</label>
         <name>ANG_ISSP_REH_AccessEasyPay</name>
     </customLabels>
     <customLabels>
@@ -1101,59 +1101,59 @@
         <name>ANG_ISSP_REH_DateAssigned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH DateIssued --></label>
+        <label>Yay?nlanma Tarihi</label>
         <name>ANG_ISSP_REH_DateIssued</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH RiskDescription --></label>
+        <label>Risk Aç?klamas?</label>
         <name>ANG_ISSP_REH_RiskDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RHC Information --></label>
+        <label>RHC Bilgileri</label>
         <name>ANG_ISSP_RHC_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC - Request Balance Update --></label>
+        <label>Bakiye Güncellemesi Talep Et</label>
         <name>ANG_ISSP_RHC_Request_Balance_Update</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RHC Request ICE --></label>
+        <label>&quot;Yakla?an ödemelerinizi ve ödeme tarihlerinizi görüntülemek için&lt;br/&gt;&lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt; ICE - IATA Mü?teri E-Bildirimine eri?im talebinde bulunun &lt;/a&gt;&quot;</label>
         <name>ANG_ISSP_RHC_Request_ICE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Cash Conditions --></label>
+        <label>Nakit Ko?ullar?</label>
         <name>ANG_ISSP_RP_Cash_Conditions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Financial Review --></label>
+        <label>Mali ?nceleme</label>
         <name>ANG_ISSP_RP_Financial_Review</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Risk History --></label>
+        <label>Risk Geçmi?i</label>
         <name>ANG_ISSP_RP_Risk_History</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Request_Access_IATA_EasyPay --></label>
+        <label>IATA EasyPay’e eri?im talebinde bulunun</label>
         <name>ANG_ISSP_Request_Access_IATA_EasyPay</name>
     </customLabels>
     <customLabels>
-        <label>Birden fazla kişi seç</label>
+        <label>Bir veya daha fazla ki?i seçin</label>
         <name>ANG_ISSP_SelectContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_TypeAccreditadionQuestion --></label>
+        <label>Akreditasyon ba?vurusunu ?u olarak yapmak istiyorum:</label>
         <name>ANG_ISSP_TypeAccreditadionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_UserProvisioningError --></label>
+        <label>Üzgünüz, IATA EasyPay eri?iminizin ayarlanmas? s?ras?nda bir sorun ç?kt?. Tekrar deneyin ve sorun devam ederse, lütfen Mü?teri Deste?i ile irtibat kurun</label>
         <name>ANG_ISSP_UserProvisioningError</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_UserProvisioningWait --></label>
+        <label>Lütfen bekleyin. Birazdan EasyPay Portal?na yönlendirileceksiniz.</label>
         <name>ANG_ISSP_UserProvisioningWait</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_e_mail_address --></label>
+        <label>E-posta adresi</label>
         <name>ANG_ISSP_e_mail_address</name>
     </customLabels>
     <customLabels>
@@ -1213,15 +1213,15 @@
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_VR_SELECTED_CODES --></label>
+        <label>?u IATA Kodlar?n için gönüllü b?rakma talep ettiniz:</label>
         <name>ANG_VR_SELECTED_CODES</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Voluntary_Relinquishment_to_NOC --></label>
+        <label>&quot;Yaln?zca Acentenizin Ana Kurulu?unu b?rakmak istiyorsan?z, lütfen bir &lt;a href=&quot;&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt; De?i?iklik Bildirimi &lt;/a&gt; gönderin&quot;</label>
         <name>ANG_Voluntary_Relinquishment_to_NOC</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Voluntary_Relinquishment_to_NOC_Legacy --></label>
+        <label>&quot;Yaln?zca Acentenizin Genel Merkezini b?rakmak istiyorsan?z, lütfen bir &lt;a href=&quot;&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt; De?i?iklik Bildirimi &lt;/a&gt; gönderin&quot;</label>
         <name>ANG_Voluntary_Relinquishment_to_NOC_Legacy</name>
     </customLabels>
     <customLabels>
@@ -1507,6 +1507,10 @@
     <customLabels>
         <label><!-- Button View all --></label>
         <name>Button_View_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
     </customLabels>
     <customLabels>
         <label>Bu servis, kargo aracı/acenteleri ile IATA Kargo CASS’a katılan hava yolları arasındaki etkileşim ve bilgi alışverişini kolaylaştırmaktadır.</label>
@@ -5550,7 +5554,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_ACCR_Submit_Msg_CargoHO</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS AE NoC Change for --></label>
+        <label>?unun için banka bilgisi de?i?ikli?i:</label>
         <name>ISSP_AMS_AE_NoC_Change_for</name>
     </customLabels>
     <customLabels>
@@ -5558,7 +5562,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Accept_TOS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Add Company --></label>
+        <label>Şirket Ekle</label>
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
@@ -5574,7 +5578,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Add_Manager</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS  Add Person --></label>
+        <label>Kişi Ekle</label>
         <name>ISSP_AMS_Add_Person</name>
     </customLabels>
     <customLabels>
@@ -5582,7 +5586,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Additional_Data</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Address --></label>
+        <label>Adres:</label>
         <name>ISSP_AMS_Address</name>
     </customLabels>
     <customLabels>
@@ -5622,11 +5626,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Apply_New_Travel_Head_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Associate Entity Cash --></label>
+        <label>Yeni Ortak Kurulu? - GoStandard</label>
         <name>ISSP_AMS_Associate_Entity_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Associate Entity Cashless --></label>
+        <label>Yeni Ortak Kurulu? - GoLite</label>
         <name>ISSP_AMS_Associate_Entity_Cashless</name>
     </customLabels>
     <customLabels>
@@ -5750,7 +5754,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4 --></label>
+        <label>Sona Erme Tarihi</label>
         <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4</name>
     </customLabels>
     <customLabels>
@@ -5978,15 +5982,15 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM CANCEL --></label>
+        <label>İptal etmek istediğinize emin misiniz?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM DELETE --></label>
+        <label>Bu kaydı silmek istediğinize emin misiniz?</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM DISCARD --></label>
+        <label>Değişikliklerinizi atmak istediğinize emin misiniz?</label>
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
@@ -6210,11 +6214,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Case_PDF_Download</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Cases Notify IATA Changes Error --></label>
+        <label>Yaln?zca Acentenizin Ana Kurulu?undan kullan?c?lar IATA’ya de?i?iklik bildiriminde bulunabilirler.</label>
         <name>ISSP_AMS_Cases_Notify_IATA_Changes_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS City --></label>
+        <label>Şehir:</label>
         <name>ISSP_AMS_City</name>
     </customLabels>
     <customLabels>
@@ -6226,11 +6230,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Click_here</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Compare Accreditation Types --></label>
+        <label>Akreditasyon Türlerini Kar??la?t?r</label>
         <name>ISSP_AMS_Compare_Accreditation_Types</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Compare Accreditation Types in RHC page --></label>
+        <label>Akreditasyon Türlerini kar??la?t?rmak için buraya t?klay?n</label>
         <name>ISSP_AMS_Compare_Accreditation_Types_RHC</name>
     </customLabels>
     <customLabels>
@@ -6258,11 +6262,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Create_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Director --></label>
+        <label>İdareci / Yetkili</label>
         <name>ISSP_AMS_Director</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Director --></label>
+        <label>?dare Yetkilisi</label>
         <name>ISSP_AMS_Director_NG</name>
     </customLabels>
     <customLabels>
@@ -6546,7 +6550,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Fin_Contact</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Financial Interest --></label>
+        <label>Finansal&lt;br/&gt;Faiz (%)</label>
         <name>ISSP_AMS_Financial_Interest</name>
     </customLabels>
     <customLabels>
@@ -6554,7 +6558,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_First_8_Digits</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_First_Name_Chinese --></label>
+        <label>Adı (Çince)</label>
         <name>ISSP_AMS_First_Name_Chinese</name>
     </customLabels>
     <customLabels>
@@ -6590,11 +6594,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Gross_Amnt_Second_year</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Head Entity Cash --></label>
+        <label>Yeni Ana Kurulu? - GoStandard</label>
         <name>ISSP_AMS_Head_Entity_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Head Entity No Cash --></label>
+        <label>Yeni Ana Kurulu? - GoLite</label>
         <name>ISSP_AMS_Head_Entity_No_Cash</name>
     </customLabels>
     <customLabels>
@@ -6634,7 +6638,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_IS_GSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS IS Separate Entity Null --></label>
+        <label>Lütfen Ortak Kurulu?un ayr? bir Tüzel Ki?i olup olmad???n? seçin.</label>
         <name>ISSP_AMS_IS_Separate_Entity_Null</name>
     </customLabels>
     <customLabels>
@@ -6662,7 +6666,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Invalid_IATAN_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Invalid IATA Code --></label>
+        <label>Geçersiz IATA Kodu: Lütfen geçerli bir kod girin.</label>
         <name>ISSP_AMS_Invalid_IATA_Code</name>
     </customLabels>
     <customLabels>
@@ -6730,7 +6734,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_LS_Trust_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Last_Name_Chinese --></label>
+        <label>Soyadı (Çince)</label>
         <name>ISSP_AMS_Last_Name_Chinese</name>
     </customLabels>
     <customLabels>
@@ -6858,7 +6862,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Loading_Agency_details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Loading Contact --></label>
+        <label>İrtibat bilgileri yükleniyor…</label>
         <name>ISSP_AMS_Loading_Contact</name>
     </customLabels>
     <customLabels>
@@ -6866,11 +6870,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Local_Details_Change_Please_Enter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Company Name ENG --></label>
+        <label>Şirket Adı (İngilizce)</label>
         <name>ISSP_AMS_Local_Details_Company_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Company Name Local --></label>
+        <label>Şirket Adı (Yerel dilde)</label>
         <name>ISSP_AMS_Local_Details_Company_Name_Local</name>
     </customLabels>
     <customLabels>
@@ -6882,19 +6886,19 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Local_Details_Correspondence_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details First Name ENG --></label>
+        <label>Ad (İngilizce)</label>
         <name>ISSP_AMS_Local_Details_First_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details First Name Local --></label>
+        <label>Adı (Yerel)</label>
         <name>ISSP_AMS_Local_Details_First_Name_Local</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Last Name ENG --></label>
+        <label>Soyadı (İngilizce)</label>
         <name>ISSP_AMS_Local_Details_Last_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Last Name Local --></label>
+        <label>Soyadı (Yerel)</label>
         <name>ISSP_AMS_Local_Details_Last_Name_Local</name>
     </customLabels>
     <customLabels>
@@ -6910,15 +6914,15 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Local_Details_No_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local CompanyName --></label>
+        <label>Yerel dilde Şirket adı bulunmuyor mu? Bu durumda adı Latin harfleriyle girin.</label>
         <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local FirstName --></label>
+        <label>Yerel Ad bulunmuyor mu? Bu durumda Adı Latin harfleriyle yeniden girin.</label>
         <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local LastName --></label>
+        <label>Yerel Ad bulunmuyor mu? Bu durumda Soyadını Latin harfleriyle yeniden girin.</label>
         <name>ISSP_AMS_Local_Details_No_Local_LastName</name>
     </customLabels>
     <customLabels>
@@ -7038,7 +7042,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_MSO_GSA_GSA_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_MSO_GSA_IATA_Code --></label>
+        <label>Kod</label>
         <name>ISSP_AMS_MSO_GSA_IATA_Code</name>
     </customLabels>
     <customLabels>
@@ -7150,7 +7154,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_MSO_Update_Request_Successfull</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Manager --></label>
+        <label>Yönetici</label>
         <name>ISSP_AMS_Manager</name>
     </customLabels>
     <customLabels>
@@ -7238,15 +7242,15 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NOC_StepD_ProgressBar_CNS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Companies --></label>
+        <label>Güncellenen Sahip(ler) - Şirketler</label>
         <name>ISSP_AMS_NOC_Updated_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Legal Status --></label>
+        <label>Güncellenen Yasal Durum</label>
         <name>ISSP_AMS_NOC_Updated_Legal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Owners Managers --></label>
+        <label>Güncellenen Sahip(ler) / Yetkili(ler) / İdareci(ler) - Kişiler</label>
         <name>ISSP_AMS_NOC_Updated_Owners_Managers</name>
     </customLabels>
     <customLabels>
@@ -7282,7 +7286,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_Agency_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Associate Entity --></label>
+        <label>Ana Kurulu? hariç Ortak Kurulu?lar</label>
         <name>ISSP_AMS_NoC_Associate_Entity</name>
     </customLabels>
     <customLabels>
@@ -7366,7 +7370,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_Change_submitted_for</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Choose Associate Entities --></label>
+        <label>Akreditasyonlu Ortak Kurulu?lar</label>
         <name>ISSP_AMS_NoC_Choose_Associate_Entities</name>
     </customLabels>
     <customLabels>
@@ -7374,7 +7378,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_Choose_Branch_Account</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Confirm_Ownership_details --></label>
+        <label>Kuruluş türünün ve Sahiplik bilgilerinin doğru olduğunu onaylayın</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
     </customLabels>
     <customLabels>
@@ -7390,7 +7394,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_Current_Accreditation_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Current_Companies --></label>
+        <label>Halihazırdaki Sahipler - Şirketler</label>
         <name>ISSP_AMS_NoC_Current_Companies</name>
     </customLabels>
     <customLabels>
@@ -7402,7 +7406,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_Current_Owner</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Current_Owners_Managers --></label>
+        <label>Halihazırdaki Sahip(ler) - Kişiler</label>
         <name>ISSP_AMS_NoC_Current_Owners_Managers</name>
     </customLabels>
     <customLabels>
@@ -7414,11 +7418,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_Direct_Debit_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC HE All Branches --></label>
+        <label>Ana Kurulu? ve Tüm Ortak Kurulu?lar</label>
         <name>ISSP_AMS_NoC_HE_All_Branches</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC HE Some Branches --></label>
+        <label>Ana Kurulu? ve bir veya daha fazla Ortak Kurulu?</label>
         <name>ISSP_AMS_NoC_HE_Some_Branches</name>
     </customLabels>
     <customLabels>
@@ -7430,7 +7434,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_HO_Some_Branches</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Head Entity --></label>
+        <label>Ana Kurulu?</label>
         <name>ISSP_AMS_NoC_Head_Entity</name>
     </customLabels>
     <customLabels>
@@ -7510,15 +7514,15 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_No_Company_Owners</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC No Company Owners New --></label>
+        <label>Şirketinizin halihazırdaki sahipleri olarak listelenmiş bir şirket bulunmuyor.</label>
         <name>ISSP_AMS_NoC_No_Company_Owners_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Non_IATA_Owner_Estimates --></label>
+        <label>IATA taşıyıcılarının uluslararası hava taşımacılığı satışının tahmini brüt tutarını belirtin:</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Non_IATA_Owner_Title --></label>
+        <label>&quot;Yeni sahibi IATA akreditasyonu bulunmayan bir şirketse, lütfen:&quot;</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Title</name>
     </customLabels>
     <customLabels>
@@ -7530,7 +7534,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_Online_Agency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Other_Owner --></label>
+        <label>&quot;Seyahat acentenizin sahibinin merkez ofisten başka bir kurum olması durumunda, ana kurumla ilgili olarak şunlara cevap verin:&quot;</label>
         <name>ISSP_AMS_NoC_Other_Owner</name>
     </customLabels>
     <customLabels>
@@ -7562,7 +7566,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_Previous_Owners_Managers</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NoC_Provide_Registeration_Or_License --></label>
+        <label>&quot;Ülkenizde kayıt olma ve/veya lisans yasalarca zorunluysa, değişikliğin ardından/yeni sahiplik durumunda aşağıdaki bilgileri sunun&quot;</label>
         <name>ISSP_AMS_NoC_Provide_Registeration_Or_License</name>
     </customLabels>
     <customLabels>
@@ -7586,7 +7590,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_NoC_Q3_Contact_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Q4 --></label>
+        <label>&quot;* Yeni sahiplerden, yetkililerden (idarecilerden), yöneticilerden veya bu şirket adına faaliyet veya imza yetkisi olan herhangi bir kişi, iş hayatı ya da tabii işlemler boyunca, bir iflas durumuna dahil olmuş veya vekalet yükümlülüklerinin kasten ihlalinden hüküm giymiş midir?&quot;</label>
         <name>ISSP_AMS_NoC_Q4</name>
     </customLabels>
     <customLabels>
@@ -7782,7 +7786,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Noc_Type_of_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Not Listed Msg --></label>
+        <label>&quot;Hisseleri belirtilmemiş bir Kuruluş olarak, tüm hissedarlara ait bilgileri, aşağıdaki Kişiler ve Şirket bölümlerine girmeniz gerekmektedir.&quot;</label>
         <name>ISSP_AMS_Not_Listed_Msg</name>
     </customLabels>
     <customLabels>
@@ -7866,7 +7870,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Office_Full_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Owner --></label>
+        <label>Sahibi</label>
         <name>ISSP_AMS_Owner</name>
     </customLabels>
     <customLabels>
@@ -7898,7 +7902,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_PDF_Page</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Partner --></label>
+        <label>Ortağı</label>
         <name>ISSP_AMS_Partner</name>
     </customLabels>
     <customLabels>
@@ -7930,7 +7934,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Position</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS PostCode --></label>
+        <label>Zip / Posta Kodu</label>
         <name>ISSP_AMS_PostCode</name>
     </customLabels>
     <customLabels>
@@ -8030,7 +8034,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Selected Associate Entities --></label>
+        <label>* Seçili Ortak Kurulu?lar</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
     <customLabels>
@@ -8038,7 +8042,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Selected_Branch_Offices</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Shareholder --></label>
+        <label>Hissedar</label>
         <name>ISSP_AMS_Shareholder</name>
     </customLabels>
     <customLabels>
@@ -8114,7 +8118,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step0_Intro_New</name>
     </customLabels>
     <customLabels>
-        <label>Marka ismi, Telefon vs. değişiklikleri doğrudan Şirket Yönetimi &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;menüsünden yapılabilmektedir&lt;/a&gt;.</label>
+        <label>Acente bilgilerinizle ilgili Telefon numarası, E-posta adresi gibi küçük değişiklikler, &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Company Information&lt;/a&gt; sayfasından yapılabilir.</label>
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
@@ -8178,7 +8182,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step1_Approval_Sought</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step1_Approval_Sought_Cash/Cashless --></label>
+        <label>Talep edilen akreditasyon türü</label>
         <name>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</name>
     </customLabels>
     <customLabels>
@@ -8218,7 +8222,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step1_Operation_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step1_PCI --></label>
+        <label>A. IATA Kodu Seçimi</label>
         <name>ISSP_AMS_Step1_PCI</name>
     </customLabels>
     <customLabels>
@@ -8226,7 +8230,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step1_ProgressBar</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step1 ProgressBar New --></label>
+        <label>A. ??lem Türünü ve Yerini Seçme</label>
         <name>ISSP_AMS_Step1_ProgressBar_New</name>
     </customLabels>
     <customLabels>
@@ -8250,7 +8254,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step2 Check List --></label>
+        <label>Şu öge için Doğrulama Listesi</label>
         <name>ISSP_AMS_Step2_Check_List</name>
     </customLabels>
     <customLabels>
@@ -8258,7 +8262,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step2_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step2_PCI --></label>
+        <label>B. Dosya Yükleme</label>
         <name>ISSP_AMS_Step2_PCI</name>
     </customLabels>
     <customLabels>
@@ -8342,7 +8346,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step3_4_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 4 Companies New --></label>
+        <label>Şirketiniz kısmen veya tamamen bir ya da daha fazla şirketin sahipliğindeyse lütfen buna ilişkin bilgileri buraya girin (kuruluşunuzun hisseleri menkul kıymetler borsasında listelenmiş veya ‘borsa dışı’ bir piyasada düzenli olarak işlem gören bir tüzel kişi olması durumu haricinde).</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
     </customLabels>
     <customLabels>
@@ -8502,7 +8506,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step3_4_Q9</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step3_5_Event_of_inspection --></label>
+        <label>Bir denetim durumunda, Başvuranın, 8. bölümdeki hükümlere ve özellikle de Karar 890’ın 2.1.6 bölümünde belirtildiği gibi Kartlı Ödeme Endüstrisi (PCI) Veri Güvenliği Standartlarına uyumluluk içinde, Elektronik Bilet düzenleme için güvenlik gerekliliklerini karşıladığını belgelemesi gerekmektedir.</label>
         <name>ISSP_AMS_Step3_5_Event_of_inspection</name>
     </customLabels>
     <customLabels>
@@ -8674,7 +8678,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 Office FullAddress --></label>
+        <label>Onay için Başvurusu yapılan Ofisin Tam Adresi</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
     <customLabels>
@@ -8694,7 +8698,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step3_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 PersonModal CheckBoxes --></label>
+        <label>&quot;Eklediğiniz kişinin görevlerini belirtmek için kutuları işaretleyin ve ardından bilgilerini girin. Kişi bu rollerin hiçbirine sahip değilse, kutuları işaretlemeden bırakın ve bilgilerini girin.&quot;</label>
         <name>ISSP_AMS_Step3_PersonModal_CheckBoxes</name>
     </customLabels>
     <customLabels>
@@ -8830,7 +8834,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_StepsAll_Travel_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Street --></label>
+        <label>Sokak ve Numara.</label>
         <name>ISSP_AMS_Street</name>
     </customLabels>
     <customLabels>
@@ -8838,7 +8842,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Submit_CNS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Submit IATA --></label>
+        <label>IATA’ya gönder</label>
         <name>ISSP_AMS_Submit_IATA</name>
     </customLabels>
     <customLabels>
@@ -9286,51 +9290,51 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_ANG_PCI_Process_Notification_Mail_Body</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Accreditation - Annual Revalidation --></label>
+        <label>IATA Akreditasyonu - Yıllık Yeniden Onaylama</label>
         <name>ISSP_ANG_ANNUAL_REVALIDATION</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION --></label>
+        <label>Ek bilgiler</label>
         <name>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation cancel update button --></label>
+        <label>Güncellemeyi At</label>
         <name>ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation confirm button --></label>
+        <label>Onay bilgileri doğrudur</label>
         <name>ISSP_ANG_ANNUAL_REV_CONFIRM_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation confirm update button --></label>
+        <label>Güncellemeyi Onayla</label>
         <name>ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding --></label>
+        <label>Şirket Sahipliği / Hissedarlığı ve Yasal Durumu</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name --></label>
+        <label>Acente Yasal Bilgileri</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_of_Location --></label>
+        <label>Acente Konumu</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_of_Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation discard button --></label>
+        <label>Çıkar</label>
         <name>ISSP_ANG_ANNUAL_REV_DISCARD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS --></label>
+        <label>Lütfen aşağıya yeni sahiplik bilgilerini girin</label>
         <name>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ERROR_1 --></label>
+        <label>Bilgiler onaylanmalı ve en az bir adet değişiklik bildirimi yapılmalıdır</label>
         <name>ISSP_ANG_ANNUAL_REV_ERROR_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ERROR_2 --></label>
+        <label>En az bir değişiklik bildirimi yapılması gereklidir</label>
         <name>ISSP_ANG_ANNUAL_REV_ERROR_2</name>
     </customLabels>
     <customLabels>
@@ -9346,27 +9350,27 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Q2 --></label>
+        <label>&quot;* Şirketinizin, bir üye üzerinden GSA görevine sahip bir kuruluşla doğrudan veya dolaylı bir ilişkisi bulunuyor mu?&quot;</label>
         <name>ISSP_ANG_ANNUAL_REV_Q2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Q3 --></label>
+        <label>* Lütfen şirketinizde hangi GDS’lerin kullanıldığını onaylayın?</label>
         <name>ISSP_ANG_ANNUAL_REV_Q3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation save changes button --></label>
+        <label>Değişiklikleri Kaydet</label>
         <name>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW --></label>
+        <label>&quot;Lütfen Acente bilgilerinizin, hiyerarşinizdeki her IATA Kodu için onaylanmış veya güncellenmiş olmasını sağlayın.&quot;</label>
         <name>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation update button --></label>
+        <label>Güncelleme bilgileri</label>
         <name>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation work area title --></label>
+        <label>Lütfen hiyerarşinizdeki her IATA Kodu için bilgileri onaylayın veya güncelleyin</label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
@@ -9374,23 +9378,23 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation confirmed status --></label>
+        <label>Bilgiler Onaylandı</label>
         <name>ISSP_ANG_ANNUAL_STATUS_CONFIRMED</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation open status --></label>
+        <label>Başlanmadı</label>
         <name>ISSP_ANG_ANNUAL_STATUS_OPEN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation update completed status --></label>
+        <label>Güncelleme Tamamlandı</label>
         <name>ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation update in progress status --></label>
+        <label>Güncelleme Devam Ediyor</label>
         <name>ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Validation status label --></label>
+        <label>Onaylanma Durumu:</label>
         <name>ISSP_ANG_ANNUAL_VAL_STATUS</name>
     </customLabels>
     <customLabels>
@@ -9402,11 +9406,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_AccreditationsAndChangesDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Assoc_Entity --></label>
+        <label>Yeni Ortak Kurulu?</label>
         <name>ISSP_ANG_Assoc_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Authorized_Signatory --></label>
+        <label>Yaln?zca Yasal Yetkili ?mza Sahipleri IATA’ya ofis kapatma bildiriminde bulunabilir. Acentenizin Yasal Yetkili ?mza Sahibini &apos;?irket Yönetimi -&gt; Ki?iler&apos; bölümünden tayin edebilirsiniz.</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
@@ -9430,47 +9434,47 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Click_Here_PCI --></label>
+        <label>PCI Uygunlu?u ile devam etmek için buraya t?klay?n</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Click_Here_VR --></label>
+        <label>Gönüllü B?rakma ile devam etmek için buraya t?klay?n</label>
         <name>ISSP_ANG_Click_Here_VR</name>
     </customLabels>
     <customLabels>
-        <label>Ülke Gereksinimlerine bak</label>
+        <label>Ülke Gereksinimlerini Görüntüle</label>
         <name>ISSP_ANG_Country_Req</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ENTIRE_HIERARCHY --></label>
+        <label>Tüm Hiyerar?i</label>
         <name>ISSP_ANG_ENTIRE_HIERARCHY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Effective_Date_Not_Past --></label>
+        <label>Geçerlilik Tarihi geçmi?te olamaz.</label>
         <name>ISSP_ANG_Effective_Date_Not_Past</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Effective_Date_Of_Change --></label>
+        <label>Lütfen geçmi?te kalmam?? bir Geçerlilik tarihi seçin.</label>
         <name>ISSP_ANG_Effective_Date_Of_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email AE Subject --></label>
+        <label>Acente Akreditasyon Ortak Kurulu? Ba?vurusu Tasla??</label>
         <name>ISSP_ANG_Email_AE_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email HE Cash Subject --></label>
+        <label>Acente Akreditasyon Ana Kurulu? GoStandard Ba?vuru Tasla??</label>
         <name>ISSP_ANG_Email_HE_Cash_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email HE Cashless Subject --></label>
+        <label>Acente Akreditasyon Ana Kurulu? GoLite Ba?vuru Tasla??</label>
         <name>ISSP_ANG_Email_HE_Cashless_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Enabel_Credit_Card_Codes --></label>
+        <label>Kod(lar) için Kredi Kart?yla Ödeme ?eklini Etkinle?tir</label>
         <name>ISSP_ANG_Enabel_Credit_Card_Codes</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_FoP_Management --></label>
+        <label>Ödeme Şekli Yönetimi</label>
         <name>ISSP_ANG_FoP_Management</name>
     </customLabels>
     <customLabels>
@@ -9478,11 +9482,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_GenericError</name>
     </customLabels>
     <customLabels>
-        <label><!-- Link to the IATAs CheckACode page --></label>
+        <label>&quot;Herhangi bir acente için iletişim bilgilerine ihtiyacınız varsa, lütfen ödemeli&lt;a target=&quot;&quot;_blank&quot;&quot; href=&quot;&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&quot;&gt;CheckACode&lt;/a&gt; hizmetimize başvurun.&quot;</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_CHECK_A_CODE_LINK</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION --></label>
+        <label>Bu hizmet, Havayolunuzun katıldığı BSP/CASS içindeki Seyahat ve Kargo Acentelerini aramanızı sağlar. Temel bilgileri ve etkin ödeme şekilleri gibi riske ilişkin bilgileri görüntülemek için arama çubuğuna IATA kodunu yazmanız yeterlidir</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</name>
     </customLabels>
     <customLabels>
@@ -9490,7 +9494,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</name>
     </customLabels>
     <customLabels>
-        <label><!-- Financial Security Exists --></label>
+        <label>Finansal Güvenlik Mevcuttur</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
@@ -9498,23 +9502,23 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
-        <label><!-- He message --></label>
+        <label>IATA Kodu &lt;strong&gt;%IATA_CODE%&lt;/strong&gt; şuna yöneliktir; %CHILD_LOCATION%. %PARENT_LOCATION% bilgileri aşağıdaki gibidir</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Code (HO / HE) --></label>
+        <label>IATA Kodu (HO / HE)</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- An invalid iata code was inputed in the search --></label>
+        <label>Hatalı bir IATA Kodu girdiniz. Kabul edilen formatlar Seyahat Acenteleri için 7 veya 8 hane ve Kargo için 10 ila 11 hane içermektedir.</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_INVALID</name>
     </customLabels>
     <customLabels>
-        <label><!-- The entered IATA code does not exists --></label>
+        <label>Bu IATA Kodu için %TYPE% Acente bulunmuyor</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_RHC --></label>
+        <label>Finansal Güvenliğe eşit Ödeme Elde Tutma Kapasitesi</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_RHC</name>
     </customLabels>
     <customLabels>
@@ -9526,19 +9530,19 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY --></label>
+        <label>Geçerli Finansal Güvenlik</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_TO_PROVIDE --></label>
+        <label>PCI Uygunlu?u belgesinin hangi IATA Kodlar? için sa?lanaca??n? seçin:</label>
         <name>ISSP_ANG_IATA_CODE_TO_PROVIDE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Iata_Codes_Relinquish --></label>
+        <label>B?rak?lacak IATA Kodlar?</label>
         <name>ISSP_ANG_Iata_Codes_Relinquish</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Least_One_Branch --></label>
+        <label>Lütfen en az bir ?ube seçin</label>
         <name>ISSP_ANG_Least_One_Branch</name>
     </customLabels>
     <customLabels>
@@ -9562,95 +9566,95 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_MustAddUsersToService</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ONE_OR_MORE_AE --></label>
+        <label>Bir veya daha fazla Ortak Kurulu?</label>
         <name>ISSP_ANG_ONE_OR_MORE_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_AE --></label>
+        <label>IATA Yolcu Sat?? Acentesi - Ortak Kurulu?</label>
         <name>ISSP_ANG_OPTION_PAX_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_HE_lite --></label>
+        <label>IATA Yolcu Sat?? Acentesi</label>
         <name>ISSP_ANG_OPTION_PAX_HE_lite</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_HE_standard --></label>
+        <label>IATA Yolcu Sat?? Acentesi</label>
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is both IFAP and admin --></label>
+        <label>Kayıtlarımıza göre, siz acenteniz için IFAP İrtibat Kişisi olarak listelenmiş bulunmaktasınız. Bu durum hala geçerliyse lütfen Finansal Değerlendirme sürecine dahil olma talebi için devam edin; geçerli değilse IFAP İrtibat Kişisi olarak doğru kişiyi &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Company Information Page&lt;/a&gt; ile atayın ve bu kişiden talep işlemine devam etmesini isteyin.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is both IFAP and regular user --></label>
+        <label>Kayıtlarımıza göre, siz acenteniz için IFAP İrtibat Kişisi olarak listelenmiş bulunmaktasınız. Bu durum hala geçerliyse lütfen Finansal Değerlendirme sürecine dahil olma talebi için devam edin; geçerli değilse lütfen Portal Yöneticinizden IFAP İrtibat Kişisi olarak doğru kişiyi atamasını ve bu kişinin talep işlemine devam etmesini sağlamasını isteyin.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is not IFAP nut is a portal admin --></label>
+        <label>Yalnızca Acentenizin IFAP İrtibat Kişisi, Finansal Değerlendirme sürecine Dahil Olmayı talep edebilir. Sizin için geçerli IFAP İrtibat Kişisini &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Company Information page&lt;/a&gt;’de görebilir ve bu talep işlemine devam etmelerini istemek üzere doğru kişiyi buradan atayabilirsiniz.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is neither IFAP or portal admin --></label>
+        <label>Yalnızca Acentenizin IFAP İrtibat Kişisi, Finansal Değerlendirme sürecine Dahil Olmayı talep edebilir.. Acenteniz içinde bu göreve sahipseniz, lütfen Portal Yöneticiniz ile iletişime geçerek bu talep işlemine devam etmeniz için sizi IFAP İrtibat Kişisi olarak atamasını isteyin.</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-in of Financial Review button label --></label>
+        <label>Finansal Değerlendirmeye Dahil Olmayı Talep Et</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-in of Financial Review modal --></label>
+        <label>Finansal Değerlendirmeye Dahil Olmayı Talep Et</label>
         <name>ISSP_ANG_OPT_IN_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Success messagem on opt-in --></label>
+        <label>Finansal değerlendirme sürecine Dahil Olmayı talep ettiğiniz için teşekkür ederiz. IATA kısa süre içinde sizinle bu talebinizle ilgili olarak iletişime geçecektir.</label>
         <name>ISSP_ANG_OPT_IN_SUCCESS_MESSAGE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-out of Financial Review button label --></label>
+        <label>Finansal değerlendirmenin Dışında Kalmayı Talep Et</label>
         <name>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirmation text in the modal window to opt out the financial review --></label>
+        <label>IATA’nın geçerli bir Finansal Güvenlik tespit ettiği GoStandard Acenteleri, Yıllık Finansal Değerlendirmenin dışında kalabilirler. Böyle bir durumda Acenteye, sağlanan Finansal Güvenlik ile eşit miktarda bir Ödeme Elde Tutma Kapasitesi verilir.</label>
         <name>ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT</name>
     </customLabels>
     <customLabels>
-        <label><!-- Title in the modal window to opt out the financial review --></label>
+        <label>Finansal değerlendirmenin Dışında Kalmayı Talep Et</label>
         <name>ISSP_ANG_OPT_OUT_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error message when the contact is not an IFAP contact --></label>
+        <label>&quot;Yalnızca Acentenizin IFAP İrtibat Kişisi, Finansal Değerlendirme sürecinin Dışında Kalmayı talep edebilir&quot;</label>
         <name>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</name>
     </customLabels>
     <customLabels>
-        <label><!-- Success messagem on opt-out --></label>
+        <label>Finansal değerlendirme sürecinin Dışında Kalmayı talep ettiğiniz için teşekkür ederiz. IATA kısa süre içinde sizinle bu talebinizle ilgili olarak iletişime geçecektir.</label>
         <name>ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_One_or_More --></label>
+        <label>Bir veya daha fazla ?ube</label>
         <name>ISSP_ANG_One_or_More</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OptIn_OptOut_DateInfo --></label>
+        <label>Havayollarının bu ülke için portalda IATA EasyPay Dışında Kalabileceği tarih başlangıcı.</label>
         <name>ISSP_ANG_OptIn_OptOut_DateInfo</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Choose_IATA_Code --></label>
+        <label>Akreditasyonlu IATA Kodlar?</label>
         <name>ISSP_ANG_PCI_Choose_IATA_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Compliance --></label>
+        <label>PCI Uygunlu?u</label>
         <name>ISSP_ANG_PCI_Compliance</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_DSS_Compliant --></label>
+        <label>PCI DSS Uyumluluğuna Sahip</label>
         <name>ISSP_ANG_PCI_DSS_Compliant</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Selected_IATA_Code --></label>
+        <label>* Seçili IATA Kodlar?</label>
         <name>ISSP_ANG_PCI_Selected_IATA_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PROOF_OF_PCI --></label>
+        <label>?u IATA Kodlar? içi PCI Uygunlu?u belgesi:</label>
         <name>ISSP_ANG_PROOF_OF_PCI</name>
     </customLabels>
     <customLabels>
@@ -9658,7 +9662,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_Portal_Admin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <label>&quot;Yaln?zca Yasal Yetkili ?mza Sahipleri IATA’ya ofis kapatma bildiriminde bulunabilir. Acente Yasal Yetkili ?mza Sahibinizi &lt;a href=&quot;&quot;/ISSP_ContactList?MainNav=Admin&quot;&quot;subNav=contacts&quot;&quot;mid=M4S1&quot;&quot; target=&quot;&quot;_self&quot;&quot;&gt; ?irket Yönetimi -&gt; Ki?iler &lt;/a&gt; sayfas?ndan tayin edebilirsiniz.&quot;</label>
         <name>ISSP_ANG_Portal_Admin_Authorized_Signature</name>
     </customLabels>
     <customLabels>
@@ -9666,23 +9670,23 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_Portal_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Agency Read Only --></label>
+        <label>&lt;ul&gt;&lt;li&gt;Kullan?c?ya atanm?? Ana ve/veya Alt Cüzdanlara salt okunur eri?im&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_AgencyReadOnly</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role IEP Admin --></label>
+        <label>&lt;ul&gt; &lt;li&gt;Ana Cüzdana ve/veya tüm Alt Cüzdanlara tam eri?im&lt;/li&gt; &lt;li&gt;Do?rudan finanse edilen Cüzdan(lar) olu?turur&lt;/li&gt; &lt;li&gt;Dolayl? finanse edilen Alt Cüzdanlar olu?turur ve yönetir&lt;/li&gt; &lt;li&gt;Hesap kapatma dahil tam IEP Hesab? yönetimi&lt;/li&gt; &lt;li&gt;Kullan?c?lar?n eri?im taleplerine yan?t verilmesi dahil, tam kullan?c? yönetimi ve kullan?c?lar?n Ana ve Alt Cüzdanlara atanmas?&lt;/li&gt; &lt;li&gt;Ana Cüzdan ve tüm Alt Cüzdanlar için para ekleme, çekme ve aktar?m i?lemleri yapar&lt;/li&gt; &lt;li&gt;Banka Hesab? kayd?n? ve kapan???n? yönetir&lt;/li&gt; &lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Master Wallet Manager --></label>
+        <label>&lt;ul&gt;&lt;li&gt;Banka Hesab? kayd?n? ve kapan???n? yönetir&lt;/li&gt;&lt;li&gt;Kay?tl? Banka Hesab?ndan do?rudan finanse edilen cüzdanlara para Ekleme izni vard?r&lt;/li&gt;&lt;li&gt;Do?rudan finanse edilen cüzdanlardan para çekme izni vard?r&lt;/li&gt;&lt;li&gt;Ana Cüzdan ve tüm Alt Cüzdanlar aras?nda para aktar?m? yapma izni vard?r&lt;/li&gt;&lt;li&gt;Kullan?c?lar?n eri?imini “Alt Cüzdan Yöneticisi” veya “Bilet Olu?turucu” rolleri ?eklinde yönetir&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Sub-wallet Manager --></label>
+        <label>&lt;ul&gt; &lt;li&gt;Atanan Alt Cüzdanlar?n finansmanlar?n? yönetir&lt;/li&gt; &lt;li&gt;“Bilet Olu?turucu” IATA EasyPay kullan?c?lar?n?n eri?imini ve Alt Cüzdanlar?n? yönetir&lt;/li&gt; &lt;li&gt;GDS arac?l???yla bilet olu?turmak için kullan?lacak olan atanm?? cüzdanlardan IATA EasyPay Numaralar? olu?turur&lt;/li&gt; &lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Ticket Issuer --></label>
+        <label>&lt;ul&gt;&lt;li&gt;GDS arac?l???yla bilet olu?turmak için kullan?lacak olan herhangi bir atanm?? cüzdandan IATA EasyPay Numaralar? olu?turur&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_TicketIssuer</name>
     </customLabels>
     <customLabels>
@@ -9690,11 +9694,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_Portal_TicketIssuer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ProdCompAnnualFees --></label>
+        <label>2018 için y?ll?k ücretler</label>
         <name>ISSP_ANG_ProdCompAnnualFees</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ProdCompCostTooltip --></label>
+        <label>Tüm ba?vuru ücretleri, akreditasyonun edinilememesi durumunda geri ödemelidir: Küçük – 200.000 Amerikan dolar?na kadar y?ll?k brüt sat?? Orta – 200.001 – 2.000.000 Amerikan dolar? aras? y?ll?k brüt sat?? Büyük – 2.000.000 Amerikan dolar?ndan daha fazla y?ll?k brüt sat??</label>
         <name>ISSP_ANG_ProdCompCostTooltip</name>
     </customLabels>
     <customLabels>
@@ -9702,11 +9706,11 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_ProdCompCostTooltipConvert</name>
     </customLabels>
     <customLabels>
-        <label><!-- RHC Information description --></label>
+        <label>Bu hizmet, tükettiğiniz Ödeme Elde Tutma Kapasitesini (RHC) istediğiniz zaman izlemenizi sağlar. Yetkiniz ve kullanımınız dahilindeki ödeme şekillerinin yanı sıra Risk profilinizi ve Geçmişinizi de içerir. Hizmet, takip işlemine ve eyleme geçmenize yardımcı olmak üzere, tüketilen RHC belirli yüzdelere ulaştığında size bildirimler gönderir.</label>
         <name>ISSP_ANG_RHC_InformationDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- Risk Event Status --></label>
+        <label>Risk Olay? Durumu</label>
         <name>ISSP_ANG_RHC_Risk_Event_Status</name>
     </customLabels>
     <customLabels>
@@ -9734,23 +9738,23 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_STEP_2_Identi_Appro_Req_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Search for Contacts String --></label>
+        <label>Ki?ileri Ara</label>
         <name>ISSP_ANG_SearchContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents --></label>
+        <label>Akreditasyon Türü Değişikliği talep edin ve/veya Konum, Şirket Adı, Yasal Durum, Sahiplik / Hissedarlık bilgilerinizdeki değişiklikleri IATA’ya bildirin.</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
     </customLabels>
     <customLabels>
-        <label><!-- STEP 1 - Annual Revalidation --></label>
+        <label>ADIM A - Acente Bilgilerini Onaylama</label>
         <name>ISSP_ANG_Step1_ANNUAL_REV</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Step1_HE --></label>
+        <label>?u IATA Onayl? acentenin &lt;strong&gt; Ortak Kurulu?u &lt;/strong&gt;:</label>
         <name>ISSP_ANG_Step1_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step1  Lang Display Help --></label>
+        <label>* Bu Ortak Kurulu?, Ana Kurulu?tan ayr? bir Tüzel ki?i m??</label>
         <name>ISSP_ANG_Step1_Legal_Display_Help</name>
     </customLabels>
     <customLabels>
@@ -9762,7 +9766,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_Step1_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- STEP 2 - Annual Revalidation --></label>
+        <label>ADIM B - IATA’ya Gönderme</label>
         <name>ISSP_ANG_Step2_ANNUAL_REV</name>
     </customLabels>
     <customLabels>
@@ -9774,27 +9778,27 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_StepFinal_AE_Thanks</name>
     </customLabels>
     <customLabels>
-        <label><!-- Voluntary Relinquishment Disclaimer --></label>
+        <label>&lt;p&gt;İşbu belge ile yukarıda belirtilen Onaylı Konumlara ilişkin IATA Akreditasyonumu gönüllü olarak bırakıyorum&lt;/p&gt;</label>
         <name>ISSP_ANG_VR_Disclaimer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Voluntary_Relinquishment --></label>
+        <label>Gönüllü B?rakma</label>
         <name>ISSP_ANG_Voluntary_Relinquishment</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_WISH_TO_RELINQUISH --></label>
+        <label>B?rakmak istediklerim:</label>
         <name>ISSP_ANG_WISH_TO_RELINQUISH</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_choose_what_to_relinquish --></label>
+        <label>Lütfen neyi b?rakmak istedi?inizi seçin.</label>
         <name>ISSP_ANG_choose_what_to_relinquish</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step0_Other_Changes --></label>
+        <label>PCI Uygunlu?u Belgesi</label>
         <name>ISSP_ANG_proof_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step0_Other_Changes_Info --></label>
+        <label>PCI Uygunlu?u, bir IATA Kodu için Kredi Kart?yla Ödeme ?eklinin etkinle?tirilmesi için bir ön gereksinimdir.</label>
         <name>ISSP_ANG_proof_PCI_Info</name>
     </customLabels>
     <customLabels>
@@ -9866,7 +9870,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_Access_Service</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Access_Under_Provisioning --></label>
+        <label>Ko?ul Alt?nda Eri?im</label>
         <name>ISSP_Access_Under_Provisioning</name>
     </customLabels>
     <customLabels>
@@ -10010,15 +10014,15 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_Apply_Filter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1 --></label>
+        <label>IATA Mü?teri Hizmetleri Portal?ndan IATA EasyPay’e bir veya daha fazla kullan?c? eklendi.</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2 --></label>
+        <label>IEP Yöneticisi veya Ana Cüzdan Yöneticisi olarak ?imdi bu kullan?c?lar? IATA EasyPay’de onaylamal? ve servisi kullanabilmeleri için öncelikle onlara bir veya daha fazla cüzdan atamal?s?n?z.&lt;br/&gt;&lt;br/&gt;Eri?im izni sa?land??? zaman kullan?c?lara e-posta ile bildirim yap?lacakt?r.</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3 --></label>
+        <label>IATA EasyPay’e ?unun giri? sayfas?ndan eri?ilebilir:</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3</name>
     </customLabels>
     <customLabels>
@@ -10944,11 +10948,11 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_Email_Draft_Change_Process</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Email_Draft_Change_Process_PCI --></label>
+        <label>Çevrimiçi PCI uygunlu?u formunuzun belge tasla??n? olu?turdu?unuz için te?ekkür ederiz.</label>
         <name>ISSP_Email_Draft_Change_Process_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Email_Draft_Change_Process_VR --></label>
+        <label>Çevrimiçi Gönüllü B?rakma formunuzun belge tasla??n? olu?turdu?unuz için te?ekkür ederiz.</label>
         <name>ISSP_Email_Draft_Change_Process_VR</name>
     </customLabels>
     <customLabels>
@@ -11817,7 +11821,7 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_Loading_IATAN_Agency_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Loading Travel Agency Details --></label>
+        <label>Seyahat Acentesi bilgileri yükleniyor…</label>
         <name>ISSP_Loading_Travel_Agency_Details</name>
     </customLabels>
     <customLabels>
@@ -12363,19 +12367,19 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>ISSP_PAX_Validating_VAT_Number_error</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance --></label>
+        <label>Acente Kodlar? - PCI Uygunlu?u Belgesi</label>
         <name>ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Agency_Codes_VR --></label>
+        <label>Acente Kodlar? - Gönüllü B?rakma</label>
         <name>ISSP_PCI_Agency_Codes_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Case_Submited --></label>
+        <label>Kredi Kart?yla Ödeme ?ekli talebinizi gönderdi?iniz için te?ekkür ederiz.</label>
         <name>ISSP_PCI_Case_Submited</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Least_One_IATA_CODE --></label>
+        <label>Lütfen en az bir IATA Kodu seçin</label>
         <name>ISSP_PCI_Least_One_IATA_CODE</name>
     </customLabels>
     <customLabels>
@@ -12690,43 +12694,43 @@ Akredite edilmiş acenteler için bir çok IATA faturası BPS/CASS yoluyla tahsi
         <name>ISSP_Quantity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB --></label>
+        <label>Ödeme Elde Tutma Kapasitesi</label>
         <name>ISSP_RHC_HUB</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP --></label>
+        <label>Kullan?labilir Ödeme ?ekilleri</label>
         <name>ISSP_RHC_HUB_AFP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP Cash --></label>
+        <label>Nakit</label>
         <name>ISSP_RHC_HUB_AFP_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP Credit Card --></label>
+        <label>Kredi Kart?</label>
         <name>ISSP_RHC_HUB_AFP_Credit_Card</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Curr Financial Security --></label>
+        <label>Geçerli Finansal Güvenlik</label>
         <name>ISSP_RHC_HUB_Curr_Financial_Security</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Current Usage --></label>
+        <label>Geçerli kullan?m</label>
         <name>ISSP_RHC_HUB_Current_Usage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Last Updated --></label>
+        <label>Son Güncelleme</label>
         <name>ISSP_RHC_HUB_Last_Updated</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Percentage Usage --></label>
+        <label>Yüzdelik kullan?m?</label>
         <name>ISSP_RHC_HUB_Percentage_Usage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Risk History --></label>
+        <label>Risk Olaylar? Geçmi?i</label>
         <name>ISSP_RHC_HUB_RH</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB RP --></label>
+        <label>Risk Profili</label>
         <name>ISSP_RHC_HUB_RP</name>
     </customLabels>
     <customLabels>
@@ -13705,7 +13709,7 @@ Gösterge Panosu, her bir hava yolu Maliye Ekibinin IATA’nın ana ödeme siste
         <name>ISSP_UserInactivation_ServiceMsg_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_VR_Case_Submited --></label>
+        <label>Gönüllü B?rakma talebi gönderdi?iniz için te?ekkür ederiz</label>
         <name>ISSP_VR_Case_Submited</name>
     </customLabels>
     <customLabels>
@@ -13729,7 +13733,7 @@ Gösterge Panosu, her bir hava yolu Maliye Ekibinin IATA’nın ana ödeme siste
         <name>ISSP_View_PWC_Lithuania_DC</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Add FAP Contact --></label>
+        <label>Bu servisin tüm Kullan?c?lar?n? görüntüle</label>
         <name>ISSP_View_Portal_Users</name>
     </customLabels>
     <customLabels>

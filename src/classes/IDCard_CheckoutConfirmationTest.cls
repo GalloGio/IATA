@@ -30,18 +30,18 @@ public class IDCard_CheckoutConfirmationTest{
     
     public static void InitIDCard_CheckoutConfirmationTest() {
      	
-        RecordType recordType =[SELECT Id,DeveloperName,SObjectType FROM RecordType WHERE SObjectType = 'ID_Card_Application__c' 
-            AND IsActive = true AND DeveloperName = 'Mass_Order_Application'];
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
+
         testData = new IDCardTestData();
         testData.IDCards_IDCardApplications[2].IDCard_Prefered_Language__c = 'fr';
         testData.IDCards_IDCardApplications[2].IDCard_Expedite_Delivery_Fee__c = 135;
-        testData.IDCards_IDCardApplications[2].RecordTypeId = recordType.Id;
+        testData.IDCards_IDCardApplications[2].RecordTypeId = recordTypeId;
 
-        testData.IDCards_IDCardApplications[3].RecordTypeId = recordType.Id;
+        testData.IDCards_IDCardApplications[3].RecordTypeId = recordTypeId;
 
-        testData.IDCards_IDCardApplications[5].RecordTypeId = recordType.Id;
+        testData.IDCards_IDCardApplications[5].RecordTypeId = recordTypeId;
 
-        testData.IDCards_IDCardApplications[6].RecordTypeId = recordType.Id;
+        testData.IDCards_IDCardApplications[6].RecordTypeId = recordTypeId;
 
         Test.startTest();
         insert testData.IDCards_IDCardApplications[2];
