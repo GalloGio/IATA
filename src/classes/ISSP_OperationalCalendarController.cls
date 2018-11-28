@@ -576,4 +576,31 @@ global without sharing class ISSP_OperationalCalendarController {
     public string getUserLanguage() {
         return UserInfo.getLanguage();
     }
+
+    /**
+        Find a disclaimer label based on the selected country and type using 
+        the custom setting ISSP_Operational_Calendar_Disclaimer__c
+    **/
+    public String selectedCountry {get; set;}
+    public String selectedType {get; set;}
+    public String disclaimerLabelName {get; set;}
+    public void findDisclaimerLabel() {
+        this.disclaimerLabelName = null;
+        if (String.isBlank(selectedCountry)) return;
+        if (String.isBlank(selectedType)) return;
+        try {
+            IATA_ISO_Country__c country = [
+                SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c
+                WHERE Id = :selectedCountry];
+            ISSP_Operational_Calendar_Disclaimer__c disclaimer = [
+                SELECT Id, Label__c
+                FROM ISSP_Operational_Calendar_Disclaimer__c
+                WHERE Country__c = :country.ISO_Code__c
+                AND Operation_Type__c = :selectedType
+            ];
+            this.disclaimerLabelName = disclaimer.Label__c;
+        } catch (Exception e) {
+            this.disclaimerLabelName = null;
+        }
+    }
 }
