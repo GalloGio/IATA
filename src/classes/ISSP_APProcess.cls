@@ -1588,4 +1588,23 @@ public without sharing class ISSP_APProcess {
         if (listFieldsToCheck==null) return new list<String>();
         return listFieldsToCheck;
     }
+    /**
+        Get the document CASS Specification
+    **/
+    public Document getDocumentCASSSpecification() {
+        return [
+            SELECT Id, Name
+            FROM Document
+            WHERE DeveloperName = 'CASS_Technical_Specifications_Handbook_pdf'];
+    }
+
+    /**
+        Get the document Appendix A
+    **/
+    public Document getDocumentAppendixA() {
+        return [
+            SELECT Id, Name
+            FROM Document
+            WHERE DeveloperName = 'Appendix_A_Processing_of_test_billing_fils_during_the_joining_process_pdf'];
+    }
 }
