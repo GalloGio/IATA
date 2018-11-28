@@ -87,32 +87,31 @@ global without sharing class ANG_ExposeAccountInfo {
             //Fetch the account
             /* run the query, different based on caller/request type */
             list<Account> lsAccnt;
-            switch on Caller {
-               when ANG_RestServiceHelper.Caller_GDI{
-                    switch on requestType{
-                        when ANG_RestServiceHelper.URIRequest_AccountFiles{
-                            lsAccnt = [select IATACode__c, Id ,GDI_Status__c from Account where recordtype.developername =:mapAccountTypeRT.get(AccountType) and IATACode__c =:IATACode];
-                        }
-                        when ANG_RestServiceHelper.URIRequest_AccountFinancialInfo{
-                            lsAccnt = [select Id, IATACode__c , GDI_Status__c, Financial_Review_Result__c, ANG_FA_Opt_out__c
-                                            ,(	 //Change Code
-                                                Select Id, Change_Code__c, Irregularity_Type__c, Created_Date_To_Show__c
-                                                From Agencies_Applied_Change_codes__r
-                                                where Created_Date_To_Show__c >= LAST_N_MONTHS:6
-                                                and (
-                                                    Change_Code__c in ('LSP', 'DFE', 'RCR', 'DFW', 'LSW')
-                                                    OR
-                                                    (Change_Code__c in ('IRR', 'IRW') AND Irregularity_Type__c='OV2')
-                                                )
-                                            )
-                                        from Account 
-                                        where recordtype.developername =:mapAccountTypeRT.get(AccountType) and IATACode__c =:IATACode];
-                        }
-                   }
-               }
+
+            //used to be a switch statement, but it doesn't support reference string yet...
+            if(Caller == ANG_RestServiceHelper.Caller_GDI){
+                if(requestType==ANG_RestServiceHelper.URIRequest_AccountFiles){
+                    lsAccnt = [select IATACode__c, Id ,GDI_Status__c from Account where recordtype.developername =:mapAccountTypeRT.get(AccountType) and IATACode__c =:IATACode];
+                }
+
+                if(requestType==ANG_RestServiceHelper.URIRequest_AccountFinancialInfo){
+                    lsAccnt = [select Id, IATACode__c , GDI_Status__c, Financial_Review_Result__c, ANG_FA_Opt_out__c
+                                    ,(	 //Change Code
+                                        Select Id, Change_Code__c, Irregularity_Type__c, Created_Date_To_Show__c
+                                        From Agencies_Applied_Change_codes__r
+                                        where Created_Date_To_Show__c >= LAST_N_MONTHS:6
+                                        and (
+                                            Change_Code__c in ('LSP', 'DFE', 'RCR', 'DFW', 'LSW')
+                                            OR
+                                            (Change_Code__c in ('IRR', 'IRW') AND Irregularity_Type__c='OV2')
+                                        )
+                                    )
+                                from Account 
+                                where recordtype.developername =:mapAccountTypeRT.get(AccountType) and IATACode__c =:IATACode];
+                }
             }
 
-			if(lsAccnt.isEmpty()){
+			if(lsAccnt== null || lsAccnt.isEmpty()){
                 ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', AccountType + ' ' + IATACode + ' not found')), 404);
                 return;
             }
@@ -131,7 +130,7 @@ global without sharing class ANG_ExposeAccountInfo {
             }
             
             //All is good. Proceeding in generating payload
-            
+            /* Removed switch because not supported on final string yet... 'when identifier' is only allowed for switch on enum
             switch on ANG_RestServiceHelper.URIRequests{
                 when ANG_RestServiceHelper.mapEnumURIRequest.get(ANG_RestServiceHelper.URIRequest_AccountFiles){
                     ANG_ExposeAccountInfo_Files.ANG_ExposeAccountInfo_Files(accnt, AttachmentType, AccountType, Caller);
@@ -139,13 +138,13 @@ global without sharing class ANG_ExposeAccountInfo {
                 when ANG_RestServiceHelper.mapEnumURIRequest.get(ANG_RestServiceHelper.URIRequest_AccountFinancialInfo){
                     ANG_ExposeAccountInfo_FinancialInfo.ANG_ExposeAccountInfo_FinancialInfo(accnt, Caller, AccountType);
                 }
-            }
-            /* Removed switch because not supported on final string yet... 'when identifier' is only allowed for switch on enum
+            }*/
+           
             if(requestType==ANG_RestServiceHelper.URIRequest_AccountFiles)
                 ANG_ExposeAccountInfo_Files.ANG_ExposeAccountInfo_Files(accnt, AttachmentType, AccountType, Caller);
             
             if(requestType==ANG_RestServiceHelper.URIRequest_AccountFinancialInfo)
-                ANG_ExposeAccountInfo_FinancialInfo.ANG_ExposeAccountInfo_FinancialInfo(accnt, Caller, AccountType);*/
+                ANG_ExposeAccountInfo_FinancialInfo.ANG_ExposeAccountInfo_FinancialInfo(accnt, Caller, AccountType);
         }
         catch(Exception e){
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', e.getMessage()) ), 500);

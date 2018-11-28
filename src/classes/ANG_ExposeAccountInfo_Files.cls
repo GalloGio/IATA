@@ -8,7 +8,7 @@
 public without sharing class ANG_ExposeAccountInfo_Files {
     public static void ANG_ExposeAccountInfo_Files(account accnt, string AttachmentType, string AccountType, string Caller) {
         try{
-            /* Removed switch because not supported on final string yet... 'when identifier' is only allowed for switch on enum
+            /* Removed switch because not supported on final string yet... 'when identifier' is only allowed for switch on enum 
             switch on Caller {
                 when ANG_RestServiceHelper.Caller_GDI{
                     ANG_RestServiceHelper.GenerateResponse(json.serialize(new INT078_GDI_SuccessPayload(accnt, AttachmentType, AccountType, Caller)), 200);

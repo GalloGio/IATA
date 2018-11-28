@@ -79,20 +79,12 @@ global without sharing class ANG_CreateAccountDetails {
             //Fetch the account
             /* run the query, different based on caller/request type */
             list<Account> lsAccnt;
-            switch on Caller {
-               when  'GDI'{
-                    switch on requestType{
-                        when 'account-files'{
-                            lsAccnt = [select IATACode__c, Id ,GDI_Status__c from Account where recordtype.developername =:mapAccountTypeRT.get(AccountType) and IATACode__c =:IATACode];
-                        }
-                   }
-               }
-               //when else {
-               //    sQuery = 'select id from account where IATACode__c = \'asdfghjklasdfghjklasdfghj\''; //nothing will be found
-               //}
+            if(Caller==ANG_RestServiceHelper.Caller_GDI){
+                if (requestType==ANG_RestServiceHelper.URIRequest_GDIOffer)
+                    lsAccnt = [select IATACode__c, Id ,GDI_Status__c from Account where recordtype.developername =:mapAccountTypeRT.get(AccountType) and IATACode__c =:IATACode];
             }
 
-			if(lsAccnt.isEmpty()){
+			if(lsAccnt==null || lsAccnt.isEmpty()){
                 ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', AccountType + ' ' + IATACode + ' not found')), 404);
                 return;
             }
@@ -104,23 +96,17 @@ global without sharing class ANG_CreateAccountDetails {
             
             Account accnt = lsAccnt.get(0);
             
-            //Security: allow GDI to fecth files only if the agency has a GDI Account (pending or open)
-            if(Caller=='GDI' && accnt.GDI_Status__c != 'Open' && accnt.GDI_Status__c != 'In Progress'){
+            //Security: allow GDI to create records only if the agency has a GDI Account (pending or open)
+            if(Caller==ANG_RestServiceHelper.Caller_GDI && accnt.GDI_Status__c != 'Open' && accnt.GDI_Status__c != 'In Progress'){
             	ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'Not allowed')), 403);
                 return;
             }
             
-            //All is good. Proceeding in generating payload
-            switch on ANG_RestServiceHelper.Callers {
-               when ANG_RestServiceHelper.mapEnumCaller.get(Caller) {
-                    //switch on requestType{
-                    //    when ANG_RestServiceHelper.URIRequest_GDIOffer{
-                    //        ANG_CreateAccountDetails_Oscar.ANG_Create_GDIOscar(accnt, ''); //PASS THE OFFER ID
-                    //    }
-                   }
-               }
+            //All is good. Proceeding in creating records
+            if(Caller==ANG_RestServiceHelper.Caller_GDI){
+                if (requestType==ANG_RestServiceHelper.URIRequest_GDIOffer)
+                    ANG_CreateAccountDetails_Oscar.ANG_Create_GDIOscar(accnt, ''); //PASS THE BODY of the request as second parameter
             }
-            
         }
         catch(Exception e){
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', e.getMessage()) ), 500);
