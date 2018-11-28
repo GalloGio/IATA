@@ -153,7 +153,9 @@ Mapped to &quot;ANG_CashCondition__c&quot; on AMS Account for Replication.</inli
     <fields>
         <fullName>Endorsed_Accredited_By_Formula__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( ISPICKVAL( Related_Account__r.Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;, IF( ISPICKVAL(Related_Account__r.Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;, IF( NOT(ISBLANK(Related_Account__r.WebStar_ID__c)) , &quot;IATAN&quot;, &quot;IATA&quot;) ) )</formula>
+        <formula>IF(Related_GDP_Products_Account_View__r.CNS_Agency__c,&quot;CNS&quot;,
+IF(ISPICKVAL( Related_Account__r.Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;, IF( ISPICKVAL(Related_Account__r.Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;, IF( NOT(ISBLANK(Related_Account__r.WebStar_ID__c)) , &quot;IATAN&quot;, &quot;IATA&quot;)))
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Endorsed/Accredited By</label>
         <required>false</required>
