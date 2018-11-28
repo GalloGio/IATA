@@ -98,14 +98,14 @@ public  class ISSP_TC_Accept {
             //AMSU-142 (AMSU-26)
             isCargoDGR = false;
             if (userList[0].AccountId != null){
-                Account acc = [Select Location_Class__c, Category__c, Sector__c, Is_Branch_Abroad__c, Status__c, Location_Type__c from Account where Id = :userList[0].AccountId];
+                Account acc = [Select Location_Class__c, Category__c, Sector__c, Is_Branch_Abroad__c, Status__c, Location_Type__c, RecordTypeId from Account where Id = :userList[0].AccountId];
                 if( AMS_Utils.LocationClassDGR.contains(acc.Location_Class__c) ) {
                     isCargoDGR = true;
                 }
 
                 Set<String> allowedLocTypes = new Set<String>{'HO', 'HE', 'AO'};
 
-                if ((acc.Sector__c == 'Travel Agent' && acc.Category__c == 'IATA Passenger Sales Agent') && 
+                if (((acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent') && acc.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agent')) && 
                     (allowedLocTypes.contains(acc.Location_Type__c) || acc.Is_Branch_Abroad__c == 'Yes') &&
                     (AMS_Utils.ACTIVEAGENCYSTATUS.contains(acc.Status__c) || acc.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) &&
                     (userList[0].Contact.Designated_IFAP_Contact__c || userList[0].Contact.User_Portal_Status__c == 'Approved Admin')) {
