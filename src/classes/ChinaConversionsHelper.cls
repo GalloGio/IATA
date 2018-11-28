@@ -2,24 +2,12 @@ global with sharing class ChinaConversionsHelper {
 
 	public static void convertAccountsHierarchy(AMS_Oscar__c oscar) {
 
-		//system.debug('---> ChinaConversionsHelper.convertAccountsHierarchy');
-
 		String accountId = oscar.account__c;
-
-		Case c = [SELECT Reason1__c from Case where Id = :oscar.Oscar_Communication_Case_Id__c];
-		String caseReason = c.Reason1__c;
-
+		String caseReason = oscar.ANG_Type_Of_Change__c;
 		List<AMS_Agencies_relationhip__c> allRelations = getAllAccountRelations(accountId);
-
-		//system.debug('---> allRelations: ' + allRelations);
-
 		Map<Id, Account> allAccounts = getAllHierarchyAccounts(allRelations);
 
-		//system.debug('---> allAccounts: ' + allAccounts);
-
 		for(Account acc : allAccounts.values()) {
-
-			//system.debug('---> current account: ' + acc.Name + ' - ' + acc.Location_Type__c);
 
             if(caseReason == AMS_Utils.CONVERTTONEWGENPILOT) {
         		if(acc.Location_Type__c == 'HO') {
@@ -60,7 +48,6 @@ global with sharing class ChinaConversionsHelper {
             }
 		}
 
-		//system.debug('---> accounts to update: ' + allAccounts.values());
 		update allAccounts.values();
 
 		updateAccountRelations(allRelations, caseReason);
@@ -93,17 +80,14 @@ global with sharing class ChinaConversionsHelper {
     	
 		for(AMS_Agencies_relationhip__c r : accntRelations) {
 			if(caseReason == AMS_Utils.CONVERTTONEWGENPILOT) {
-				//system.debug('---> update to newgen relation!!!');
 				r.Is_Newgen_Relation__c = true;
 			}
 			else {
-				//system.debug('---> update to NON-newgen relation!!!');
 				r.Is_Newgen_Relation__c = false;
 			}
 
 			//convert relations in the 3rd level (ex: SA) to 2nd level of the hierarchy (ex: AE)
-			if(r.Child_Account__r.ParentId != r.Child_Account__r.Top_Parent__c) {	
-				//system.debug('---> update parent account!!!');			
+			if(r.Child_Account__r.ParentId != r.Child_Account__r.Top_Parent__c) {			
 				r.Parent_Account__c = r.Child_Account__r.Top_Parent__c;
 			}
 		}
