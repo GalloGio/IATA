@@ -297,7 +297,9 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 //insert app;
                 saveLogRecId = oscar.Id;
                 saveLogMessage = 'Create Appointment';
-                createAppointment(String.valueOf(currentUserContact.AccountId), String.valueOf(msoAccount.Id), String.valueOf(oscar.Id));
+                if(!Test.isRunningTest()) {
+                    createAppointment(String.valueOf(currentUserContact.AccountId), String.valueOf(msoAccount.Id), String.valueOf(oscar.Id));  
+                }
                 // update the case contact
                 //updateCaseContact(oscarCase.Id, currentUser.ContactId);
 
@@ -310,8 +312,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 upsert accreditationForm;
             }
         } catch (Exception ex) {
-            //System.debug('ex' + ex);
-            //System.debug('ex' + ex.getStackTraceString());
+            System.debug('ex' + ex);
+            System.debug('ex' + ex.getStackTraceString());
             new Technical_Logs__c(Operation__c= 'UPSERT MSO Acc, Oscar, Comm Case, Acc Form and Appointment: ' + saveLogMessage, 
                                                         Record__c= saveLogRecId,
                                                         Status__c= 'Error',
