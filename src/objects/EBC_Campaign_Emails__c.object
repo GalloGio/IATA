@@ -54,18 +54,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Accreditation_Class__c</fullName>
-        <description>Accreditation Class</description>
-        <externalId>false</externalId>
-        <formula>GDP_Products_Account_View__r.Accreditation_Class__c</formula>
-        <inlineHelpText>Accreditation Class</inlineHelpText>
-        <label>Accreditation Class</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Add_recipient__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Will add the controller from ebc setup and the client&apos;s email in order to receive the email as a sample</description>
@@ -76,69 +64,8 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Agency_Email__c</fullName>
-        <description>Agency Email</description>
-        <externalId>false</externalId>
-        <formula>GDP_Products_Account_View__r.Email_Address__c</formula>
-        <inlineHelpText>Agency Email</inlineHelpText>
-        <label>Agency Email</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Agency_Name__c</fullName>
-        <description>Agency Name</description>
-        <externalId>false</externalId>
-        <formula>ID_Card__r.Agency_Name__c</formula>
-        <inlineHelpText>Agency Name</inlineHelpText>
-        <label>Agency Name</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Agent_Email__c</fullName>
-        <description>Agent Email</description>
-        <externalId>false</externalId>
-        <formula>ID_Card__r.Email__c</formula>
-        <inlineHelpText>Agent Email</inlineHelpText>
-        <label>Agent Email</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Country_Name__c</fullName>
-        <description>Country Name</description>
-        <externalId>false</externalId>
-        <formula>GDP_Products_Account_View__r.Country_Name__c</formula>
-        <inlineHelpText>Country Name</inlineHelpText>
-        <label>Country Name</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>EBC_Agency_Name__c</fullName>
-        <description>Agency Name</description>
-        <externalId>false</externalId>
-        <formula>GDP_Products_Account_View__r.EBC_Agency_Name__c</formula>
-        <inlineHelpText>Agency Name</inlineHelpText>
-        <label>EBC Agency Name</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>EBC_Campaign__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>Campaign</description>
         <externalId>false</externalId>
         <label>EBC Campaign</label>
         <referenceTo>EBC_Campaign__c</referenceTo>
@@ -149,36 +76,13 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Email_Sent__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Is Email Sent?</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Is Email Sent?</inlineHelpText>
-        <label>Email Sent</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Email__c</fullName>
         <description>Email used</description>
         <externalId>true</externalId>
-        <inlineHelpText>Email used</inlineHelpText>
         <label>Email</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Email</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>FirstName__c</fullName>
-        <description>Firstname</description>
-        <externalId>false</externalId>
-        <formula>ID_Card__r.FirstName__c</formula>
-        <inlineHelpText>Firstname</inlineHelpText>
-        <label>FirstName</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -194,19 +98,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Group_Email__c</fullName>
-        <description>Group Email used to count the number of batches</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Group Email used to count the number of batches</inlineHelpText>
-        <label>Group Email</label>
-        <precision>12</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>ID_Card__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>ID Card</description>
@@ -220,48 +111,12 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>LastName__c</fullName>
-        <description>Lastname</description>
-        <externalId>false</externalId>
-        <formula>ID_Card__r.LastName__c</formula>
-        <inlineHelpText>Lastname</inlineHelpText>
-        <label>LastName</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Location_Type_Name__c</fullName>
-        <description>Location Type Name</description>
-        <externalId>false</externalId>
-        <formula>GDP_Products_Account_View__r.Location_Type_Name__c</formula>
-        <inlineHelpText>Location Type Name</inlineHelpText>
-        <label>Location Type Name</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>SFDC_Id__c</fullName>
         <description>Text SFDC Id</description>
         <externalId>false</externalId>
         <inlineHelpText>Text SFDC Id</inlineHelpText>
-        <label>SFDC_Id</label>
+        <label>SFDC Id</label>
         <length>18</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>State_Province__c</fullName>
-        <description>State/Province</description>
-        <externalId>false</externalId>
-        <formula>GDP_Products_Account_View__r.State_Province__c</formula>
-        <inlineHelpText>State/Province</inlineHelpText>
-        <label>State Province</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -270,15 +125,8 @@
     <label>EBC Campaign Emails</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>EBC_Campaign__c</columns>
-        <columns>Email__c</columns>
-        <columns>GDP_Products_Account_View__c</columns>
-        <columns>ID_Card__c</columns>
-        <columns>SFDC_Id__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>E-{000000000}</displayFormat>
@@ -286,23 +134,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>EBC Campaign Emails</pluralLabel>
-    <searchLayouts>
-        <customTabListAdditionalFields>EBC_Campaign__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Email__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>GDP_Products_Account_View__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ID_Card__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>SFDC_Id__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>EBC_Campaign__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Email__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>GDP_Products_Account_View__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>ID_Card__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SFDC_Id__c</lookupDialogsAdditionalFields>
-        <searchResultsAdditionalFields>EBC_Campaign__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Email__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>GDP_Products_Account_View__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ID_Card__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>SFDC_Id__c</searchResultsAdditionalFields>
-    </searchLayouts>
+    <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

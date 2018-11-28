@@ -397,10 +397,8 @@ public class vfIECEBC_RecipientEdit extends vfIECEBC_Controller {
     public Map<Id, EBC_Application_Filter__c> allAvailableApplicationFilters {
         get {
             System.debug('x');
-            if (allAvailableApplicationFilters != null) return allAvailableApplicationFilters;
-            Boolean isElastic = IEC_Settings__c.getOrgDefaults().eBroadcast_Counter_Switch__c;
-            if (isElastic)  allAvailableApplicationFilters=new Map<Id, EBC_Application_Filter__c>([Select Id, Data_Type__c, Filter_Description__c, Data_Source_Value_Field__c, Data_Source_Label_Field__c, Data_Source_Object__c, Data_Source_Where_Clause__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c, Filter_Field__c From EBC_Application_Filter__c Where Audience__c =:newFilter.Audience__c  And Source__c in ('Elastic','Elastic/Salesforce')]);
-            if (!isElastic) allAvailableApplicationFilters=new Map<Id, EBC_Application_Filter__c>([Select Id, Data_Type__c, Filter_Description__c, Data_Source_Value_Field__c, Data_Source_Label_Field__c, Data_Source_Object__c, Data_Source_Where_Clause__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c, Filter_Field__c From EBC_Application_Filter__c Where Audience__c =:newFilter.Audience__c  And (Source__c =null or Source__c in ('Salesforce','Elastic/Salesforce'))]);
+            if (allAvailableApplicationFilters == null) allAvailableApplicationFilters = new Map<Id, EBC_Application_Filter__c>([Select Id, Data_Type__c, Filter_Description__c, Data_Source_Value_Field__c, Data_Source_Label_Field__c, Data_Source_Object__c, Data_Source_Where_Clause__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c, Filter_Field__c From EBC_Application_Filter__c Where Audience__c = :newFilter.Audience__c]);
+
             System.debug(allAvailableApplicationFilters);
             return allAvailableApplicationFilters;
         }
