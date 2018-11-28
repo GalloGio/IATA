@@ -25,6 +25,10 @@
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
+        <fullName>T</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
         <fullName>S</fullName>
         <default>false</default>
     </globalPicklistValues>
