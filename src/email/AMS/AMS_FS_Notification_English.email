@@ -1,166 +1,176 @@
 <table border="0" cellpadding="5" width="550" cellspacing="5" >
 <tr valign="top" >
 <td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
-<![CDATA[<div align="justify" style="margin: 0px;"><div align="justify" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background-color: rgb(255, 255, 255); margin: 0px;"><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><span style="font-size: 12px; color: rgb(31, 78, 121); font-family: Arial, sans-serif;">Dear Customer,</span></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;"><br></span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Account -&nbsp;{!Financial_Security__c.Account__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">iatacode -&nbsp;{!Financial_Security__c.IATA_code__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Amount -&nbsp;{!Financial_Security__c.Amount__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Financial Institution -&nbsp;{!Financial_Security__c.Financial_Institution__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Validity Start Date -&nbsp;{!Financial_Security__c.Validity_Start_Date__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Security Type -&nbsp;{!Financial_Security__c.Security_Type__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;">Expiry Date -&nbsp;{!Financial_Security__c.Expiry_Date__c}</span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span style="font-size: 12px;"><br></span></font></p><p class="MsoNormal" style="font-size: 12pt; line-height: 11.75pt;"><font color="#1f4e79" face="Arial, sans-serif"><span lang="PT" style="font-size: 12px;"></span></font></p><p class="MsoNormal" style="line-height:11.75pt"><span lang="PT" style="font-size:
-9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-ansi-language:PT"><font style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><span style="font-size: 12px;">Unlimited Validity -&nbsp;</span></font><font color="#1f4e79" face="Arial, sans-serif" style="font-size: medium;"><span style="font-size: 12px;">{!Financial_Security__c.Unlimited_Security__c}</span></font></span></p><p class="MsoNormal" style="line-height:11.75pt"><span lang="PT" style="font-size:
-9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79;mso-ansi-language:PT"><font color="#1f4e79" face="Arial, sans-serif" style="font-size: medium;"><span style="font-size: 12px;"><br></span></font></span></p>
+<![CDATA[<div align="justify" style="margin: 0px;"><p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><b style="mso-bidi-font-weight:normal"><span style="font-size:10.0pt;line-height:99%;font-family:&quot;Arial&quot;,sans-serif">{!Today()}<o:p></o:p></span></b></p>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span lang="ES" style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79;mso-ansi-language:ES">IATA Code:&nbsp;<b>{!Case.IATA_Code__c}</b></span><span lang="PT" style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ansi-language:
-PT"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right:252.0pt;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></b></p>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">In reference to advice given to IATA concerning the risks
-associated with payment card transactions and potential data breaches, there is
-a need to confirm the compliance of Accredited Agencies operating within the
-BSP to be Payment Card Industry (PCI) Data Security Standard (DSS) compliant</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif">.<o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><b style="mso-bidi-font-weight:normal"><span style="font-size:10.0pt;line-height:99%;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></b></p>
 
-<u1:p></u1:p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><b style="mso-bidi-font-weight:normal"><span style="font-size:10.0pt;line-height:99%;font-family:&quot;Arial&quot;,sans-serif">{!Financial_Security__c.Account__c}<o:p></o:p></span></b></p>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif">&nbsp;</span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><b style="mso-bidi-font-weight:normal"><span lang="PT" style="font-size:10.0pt;line-height:99%;font-family:&quot;Arial&quot;,sans-serif;
+mso-ansi-language:PT">IATA CODE: {!Financial_Security__c.IATA_code__c}<o:p></o:p></span></b></p>
 
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt; vertical-align: baseline;"><span style="font-size:
-9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">Under the Passenger Sales
-Agency Rules, all IATA Accredited Agencies must ensure its full compliance with
-the PCI DSS.</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><b style="mso-bidi-font-weight:normal"><span lang="PT" style="font-size:10.0pt;line-height:99%;font-family:&quot;Arial&quot;,sans-serif;
+mso-ansi-language:PT"><o:p>&nbsp;</o:p></span></b></p>
 
-<u1:p></u1:p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><b style="mso-bidi-font-weight:normal"><span lang="PT" style="font-size:10.0pt;line-height:99%;font-family:&quot;Arial&quot;,sans-serif;
+mso-ansi-language:PT"><o:p>&nbsp;</o:p></span></b></p>
 
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt; vertical-align: baseline;"><span style="font-size:
-9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">&nbsp;</span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span lang="PT" style="font-size:10.0pt;line-height:
+99%;font-family:&quot;Arial&quot;,sans-serif;mso-ansi-language:PT"><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b style="mso-bidi-font-weight:normal"><span style="font-size:10.0pt;line-height:
+99%;font-family:&quot;Arial&quot;,sans-serif">Subject: Receipt of Financial Security<span style="mso-spacerun:yes">&nbsp; </span><o:p></o:p></span></b></p>
 
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt; vertical-align: baseline;"><span style="font-size:
-9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">The PCI DSS, is a global
-standard aimed at helping merchants (Agency) understand and implement standards
-for security policies, technologies and ongoing processes that protect their
-payment systems from breaches and theft of cardholder data.</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span style="font-size:10.0pt;line-height:99%;
+font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<u1:p></u1:p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span style="font-size:10.0pt;line-height:99%;
+font-family:&quot;Arial&quot;,sans-serif">Dear Agent<o:p></o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">&nbsp;</span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span style="font-size:10.0pt;line-height:99%;
+font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">In light of the above, you are kindly requested to provide us
-with your Attestation of Compliance to indicate your company’s compliance.</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span style="font-size:10.0pt;line-height:99%;
+font-family:&quot;Arial&quot;,sans-serif">This letter is to acknowledge receipt of the
+following financial security in respect of your agency<o:p></o:p></span></p>
 
-<u1:p></u1:p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span style="font-size:10.0pt;line-height:99%;
+font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">&nbsp;</span></p>
+<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="600" style="width:449.75pt;border-collapse:collapse;mso-yfti-tbllook:1184;
+ mso-padding-alt:0cm 5.4pt 0cm 5.4pt">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:15.0pt">
+  <td width="120" nowrap="" style="width:89.75pt;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt">
+  <p class="MsoNormal" align="center" style="text-align:center"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Type<o:p></o:p></span></b></p>
+  </td>
+  <td width="150" nowrap="" style="width:112.5pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0cm 5.4pt 0cm 5.4pt;height:15.0pt">
+  <p class="MsoNormal" align="center" style="text-align:center"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Provider<o:p></o:p></span></b></p>
+  </td>
+  <td width="108" nowrap="" style="width:81.0pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0cm 5.4pt 0cm 5.4pt;height:15.0pt">
+  <p class="MsoNormal" align="center" style="text-align:center"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Amount<o:p></o:p></span></b></p>
+  </td>
+  <td width="108" style="width:81.0pt;border:solid windowtext 1.0pt;border-left:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:15.0pt">
+  <p class="MsoNormal" align="center" style="text-align:center"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Effective
+  date<o:p></o:p></span></b></p>
+  </td>
+  <td width="114" nowrap="" style="width:85.5pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt">
+  <p class="MsoNormal" align="center" style="text-align:center"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Expiry
+  date<o:p></o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;mso-yfti-lastrow:yes;height:15.0pt">
+  <td width="120" nowrap="" style="width:89.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0cm 5.4pt 0cm 5.4pt;height:15.0pt">
+  <p class="MsoNormal" align="center" style="text-align:center"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">{!Financial_Security__c.Security_Type__c}<o:p></o:p></span></p>
+  </td>
+  <td width="150" nowrap="" style="width:112.5pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt">
+  <p class="MsoNormal" align="center" style="text-align:center"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">{!Financial_Security__c.Financial_Institution__c}<o:p></o:p></span></p>
+  </td>
+  <td width="108" nowrap="" style="width:81.0pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt">
+  <p class="MsoNormal" align="center" style="text-align:center"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">{!Financial_Security__c.Amount__c}<o:p></o:p></span></p>
+  </td>
+  <td width="108" style="width:81.0pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt">
+  <p class="MsoNormal" align="center" style="text-align:center"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">{!Financial_Security__c.Validity_Start_Date__c}<o:p></o:p></span></p>
+  </td>
+  <td width="114" nowrap="" style="width:85.5pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt">
+  <p class="MsoNormal" align="center" style="text-align:center"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">{!Financial_Security__c.Expiry_Date__c}<o:p></o:p></span></p>
+  </td>
+ </tr>
+</tbody></table>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">We would like to inform you that as per the PCI DSS guidelines,
-compliance certificates are not recognized for PCI DSS validation. The only
-documentation recognized for PCI DSS validation are the official documents from
-the PCI SSC website. Any other form of certificate or documentation issued for
-the purposes of illustrating compliance to PCI DSS or any other PCI standard
-are not authorized or validated.</span><span style="font-size:9.0pt;font-family:
-&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span style="font-size:10.0pt;line-height:99%;
+font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">&nbsp;</span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span style="font-size:10.0pt;line-height:99%;
+font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">The Attestation of Compliance is the document used to indicate
-that the appropriate Report on Compliance or Self-assessment Questionnaire has
-been performed, and to attest to your organization’s compliance status with PCI
-DSS.</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span style="font-size:10.0pt;line-height:99%;
+font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<u1:p></u1:p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span style="font-size:10.0pt;line-height:99%;
+font-family:&quot;Arial&quot;,sans-serif">Yours sincerely<o:p></o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">&nbsp;</span></p>
+<p class="MsoNormal" style="line-height:8.1pt;mso-line-height-rule:exactly;
+mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-11.75pt"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">For further information about how to become PCI DSS compliance
-please visit our PCI DSS dedicated web page:&nbsp;</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx">http://www.iata.org/services/finance/Pages/pci-dss.aspx</a><o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:99%;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><span style="font-size:10.0pt;line-height:99%;
+font-family:&quot;Arial&quot;,sans-serif">IATA Global Delivery Centre<o:p></o:p></span></p>
 
-<u1:p></u1:p>
+<p class="MsoNormal" style="line-height:10.0pt;mso-line-height-rule:exactly;
+mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt; vertical-align: baseline;"><span style="font-size:
-9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">&nbsp;</span></p>
+<p class="MsoNormal" style="line-height:10.0pt;mso-line-height-rule:exactly;
+mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt; vertical-align: baseline;"><span style="font-size:
-9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">In case you are currently
-not processing any transactions through BSP utilizing Credit Card form of
-payment and not intending to do so, you can submit the&nbsp;Nil Credit Card
-Self-Declaration, attached to this communication.<u1:p></u1:p></span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:10.0pt;mso-line-height-rule:exactly;
+mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="default"><span style="font-size:9.0pt;
-font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">&nbsp;</span></p>
+<p class="MsoNormal" style="line-height:10.0pt;mso-line-height-rule:exactly;
+mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="default"><span style="font-size:9.0pt;
-font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">It should be noted that upon
-completion of such declaration no further proof of compliance will be requested
-from your Agency, however Credit Card form of payment will be disabled for your
-Agency upon migration of your country of operation under NewGen environment and
-resolution 812.</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:10.0pt;mso-line-height-rule:exactly;
+mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="default"><span style="font-size:9.0pt;
-font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">&nbsp;</span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:10.0pt;mso-line-height-rule:exactly;
+mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">The above requested documentation (Attestation of Compliance or
-Nil Credit Card Self-Declaration) should be sent to IATA&nbsp;through our Customer
-Service Portal web page:&nbsp;</span><span style="font-size:9.0pt;font-family:
-&quot;Arial&quot;,sans-serif"><a href="http://www.iata.org/cs" target="_blank"><span style="color:#1F4E79"><span style="text-decoration-line: none">http://www.iata.org/cs</span></span></a><span style="color:#1F4E79">&nbsp;to arrive no later than&nbsp;</span><b>{!Today()+30}&nbsp;</b>.&nbsp;<span style="color:#1F4E79">Please attach a scanned copy to case</span>&nbsp;<a href="https://portal.iata.org/apex/ISSP_Case?caseId={!Case.Id}">{!Case.CaseNumber}</a>&nbsp;<span style="color:#1F4E79">visible on your portal home page under ‘My recent cases’
-section.</span><o:p></o:p></span></p>
+<p class="MsoNormal" style="line-height:10.0pt;mso-line-height-rule:exactly;
+mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">&nbsp;</span></p>
+<p class="MsoNormal" style="line-height:10.0pt;mso-line-height-rule:exactly;
+mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
 
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">The instructions about how to submit your documentation can be
-found as an attachment to this communication.</span><span style="font-size:
-9.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:93.0pt;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><i><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></i></p>
 
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">&nbsp;</span></p>
-
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">The Agency Management Department will carry out a review, and
-make a decision based upon the evidence available.<o:p></o:p></span></p>
-
-<u1:p></u1:p>
-
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 11.75pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif">&nbsp;</span></p>
-
-<div style="mso-element:para-border-div;border:solid windowtext 1.0pt;
-mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt">
-
-<p class="MsoNormal" style="margin-bottom: 0.0001pt; border: none; padding: 0cm;"><b><span style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">Please note that failure to comply with this requirement per
-IATA’s request will result in a Notice of Non-Compliance / Administrative
-Non-Compliance being issued against the Agency.<o:p></o:p></span></b></p>
-
-</div>
-
-<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
-color:#1F4E79">&nbsp;</span></p>
-
-<span style="font-size:9.0pt;line-height:107%;font-family:&quot;Arial&quot;,sans-serif;
-mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;color:#1F4E79;
-mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">We
-would appreciate you will give this matter your immediate attention. Should you
-need any further information from IATA, please do not hesitate to login a new
-query via our Customer Portal:&nbsp;</span><span style="font-size:9.0pt;
-line-height:107%;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:Calibri;
-mso-fareast-theme-font:minor-latin;mso-ansi-language:EN-US;mso-fareast-language:
-EN-US;mso-bidi-language:AR-SA"><a href="http://www.iata.org/customer" title="http://www.iata.org/customer"><span style="color:#1F4E79"><span style="text-decoration-line: none">www.iata.org/cs</span></span></a><span style="color:#1F4E79">.</span></span><span style="font-size:10.0pt;line-height:
-107%;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:Calibri;mso-fareast-theme-font:
-minor-latin;color:#1F4E79;mso-ansi-language:EN-US;mso-fareast-language:EN-US;
-mso-bidi-language:AR-SA">&nbsp;</span><u1:p></u1:p></div></div>]]></td>
+<p class="MsoNormal" style="margin-left:93.0pt;mso-pagination:none;mso-layout-grid-align:
+none;text-autospace:none"><i><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif">This
+is a computer- generated message and required no signature.</span></i><a name="page2"></a><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></span></p><br></div>]]></td>
 </tr>
 </table>
