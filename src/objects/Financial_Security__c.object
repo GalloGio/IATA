@@ -2576,11 +2576,9 @@ OR( ISPICKVAL(Reasonforrequest__c, &quot;&quot;) ,  ISBLANK( Reception_Date__c )
         <fullName>SARA_validity_start_date_mandatory</fullName>
         <active>true</active>
         <description>validity start date mandatory for all securities from 19 July 2012</description>
-        <errorConditionFormula>or( 
-AND( isnull(Validity_Start_Date__c ), ISNEW(), DATEVALUE(CreatedDate ) &gt; DATE(2012,07,18), Unlimited_Security__c = FALSE),
-and ( not ISNULL(Validity_Start_Date__c ), Unlimited_Security__c = true) 
-)</errorConditionFormula>
-        <errorMessage>Please set the validity start date of the security OR select the checkbox field &quot;Unlimited Security&quot;, only one option can be choose!</errorMessage>
+        <errorConditionFormula>AND( isnull(Validity_Start_Date__c ), ISNEW(), DATEVALUE(CreatedDate ) &gt; DATE(2012,07,18))</errorConditionFormula>
+        <errorDisplayField>Validity_Start_Date__c</errorDisplayField>
+        <errorMessage>Please enter the validity start date for this security</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Security_Type_Verification</fullName>
