@@ -1,5 +1,6 @@
 public with sharing class ISSP_Financial_Institutions {
 	public static final String GDI_PORTAL_SERVICE = 'Global Default Insurance';
+	public static final String GDI_FINANCIAL_INSTITUTION = 'GDI - Euler Hermes';
 
 	public Boolean gdiPolling {get; set;}
 	public String gdiPermSetSSO {get; private set;}
@@ -180,7 +181,7 @@ public with sharing class ISSP_Financial_Institutions {
 
 	private List<Financial_Institution__c> removeGDIFinancialInstitution(Set<Financial_Institution__c> financialInstitutions) {
 		for (Financial_Institution__c fi: financialInstitutions) {
-			if (fi.Name == 'GDI - Euler Hermes') {
+			if (fi.Name == GDI_FINANCIAL_INSTITUTION) {
 				financialInstitutions.remove(fi);
 				break;
 			}			

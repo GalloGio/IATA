@@ -147,7 +147,7 @@
 						            		</p>
 						            		<apex:outputPanel id="requestLoading">
 						            			<div style="text-align: center; display:{!IF(gdiPolling,'','none')}">
-						            				<apex:actionPoller id="provisioningPoller" action="{!pollingStatus}" reRender="requestLoading, errorMessagesTCModal" interval="5" enabled="{!gdiPolling}" oncomplete="if(!{!gdiPolling}) { enableTCModalButtons(); hideTermsAndConditionsModal(); reRenderFinancialInstitutions(); navigateToGDIPortal(); }"/>
+						            				<apex:actionPoller id="provisioningPoller" action="{!pollingStatus}" reRender="requestLoading, errorMessagesTCModal" interval="5" enabled="{!gdiPolling}" oncomplete="if(!{!gdiPolling}) { enableTCModalButtons(); } if({!gdiAppRightGranted}) { hideTermsAndConditionsModal(); reRenderFinancialInstitutions(); navigateToGDIPortal(); }"/>
 						         	 				<img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
 						         	 				<b>{!$Label.ANG_ISSP_GDI_UserProvisioningWait}</b>
 						         	 			</div>
