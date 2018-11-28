@@ -85,6 +85,7 @@ public class ams2gdp_BusinessLogic {
 			           , Related_Main_Phone__c = phoneMap.get(account.Id)
 			           , Name = account.Name.left(80)
 			           , Airline_Code__c =  airlineCode
+			           , CNS_Agency__c = account.CNS_Agency__c
 			           , BSP_CASS_Code__c =  account.BSP_CASS_Code__c
 			           , CASS_Number__c =  account.CASS_Number__c
                        , Check_Digit__c =   account.Check_Digit__c
@@ -128,14 +129,16 @@ public class ams2gdp_BusinessLogic {
 		return result;
 	}
 
-	public static List<Account_Category__c> formatAccount2AccountCategory(List<Account> accounts) {
-		List<Account_Category__c> result = new List<Account_Category__c>();
+    public static Map<String,List<Account_Category__c>> formatAccount2AccountCategory(List<Account> accounts)
+	{
+		Map<String,List<Account_Category__c>> CRUD_map = new Map<String,List<Account_Category__c>>();
 
 		Set<String> category_codes = new Set<String>();
 		Set<String> accountIds = new Set<String>();
 
-		for (Account account : accounts) {
-			if (String.isNotBlank(account.Location_Category__c))
+		for(Account account : accounts)
+		{
+			if(String.isNotBlank(account.Location_Category__c))
 				category_codes.addAll(account.Location_Category__c.split(';'));
 
 			accountIds.add(account.Id);
@@ -143,32 +146,60 @@ public class ams2gdp_BusinessLogic {
 
 		Map<String, GDP_Reference_Table__c> tbl_category_codes 	= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(category_codes, 'LOCCAT');
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
+        String GDPId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Category__c', 'GDP');
+	
+        List<Account_Category__c> toDelete = new List<Account_Category__c>();
+        List<Account_Category__c> toUpdate = new List<Account_Category__c>();
 
-		for (Account account : accounts) {
-			if (String.isBlank(account.Location_Category__c)) continue;
+        List<Account_Category__c> categories = [Select Id
+										          ,Category_Code__c
+										          ,Related_Account__c
+										        From Account_Category__c
+										        Where Related_Account__c In :accountIds
+										          And RecordTypeId =:GDPId 
+										        Order By Related_Account__c, Category_Code__c];
 
-			String gdp_product = (gdpProductIdByAccountId.containsKey(account.Id)) ? gdpProductIdByAccountId.get(account.Id) : null;
-
-			Integer rank = 1;
-			for (String code : account.Location_Category__c.split(';')) {
-				if (tbl_category_codes.containsKey(code)) {
-					//-- Mapping Key
-					String mapping_key = account.Id + '-' + code;
-
-					result.add(new Account_Category__c(AMS_GDP_Key__c = mapping_key + 'GDP'
-                               , Category_ID__c = rank
-                               , Related_Account__c = account.Id
-                               , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(account.Id)
-                               , Category_Code__c = tbl_category_codes.get(code).Id
-                               , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Category__c', 'GDP')
-                          ));
-
-					rank++;
+		List<Boolean> recordexists = new List<Boolean>();
+		for (Account_Category__c cat:categories){recordexists.add(false);}
+        Integer i=-1;
+        for(Account account : accounts)
+		{
+			if(String.isBlank(account.Location_Category__c)) continue;
+			String gdp_product = (gdpProductIdByAccountId.containsKey(account.Id))? gdpProductIdByAccountId.get(account.Id):null;
+			Integer rank =1;
+		    for(String code:account.Location_Category__c.split(';'))
+			{
+				if(!tbl_category_codes.containsKey(code)) continue;
+				i=-1;
+				for (Account_Category__c cat:categories){
+					i++;
+					if (recordexists[i]) continue;
+                    if (cat.Category_Code__c==tbl_category_codes.get(code).Id && cat.Related_Account__c==account.Id){
+                    	recordexists[i]=true;
+                    	break;
+                    }
 				}
+
+				//upsert 
+				String mapping_key = account.Id +'-'+ code;
+
+				toUpdate.add(new Account_Category__c(AMS_GDP_Key__c = mapping_key+'GDP'
+					, Category_ID__c = rank
+					, Related_Account__c = account.Id
+					, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(account.Id)
+					, Category_Code__c = tbl_category_codes.get(code).Id
+					, RecordTypeId = GDPId 
+				));
+
+				rank++;
 			}
 		}
+		i=-1;
+		for (Account_Category__c cat:categories){i++; if (!recordexists[i]) toDelete.add(cat);}
+        if (toDelete.size()>0) CRUD_map.put('D',toDelete);
+        if (toUpdate.size()>0) CRUD_map.put('S',toUpdate);
 
-		return result;
+		return CRUD_map;
 	}
 
 	/**
@@ -196,23 +227,26 @@ public class ams2gdp_BusinessLogic {
 	 * @param  List<Account> accounts
 	 * @return List<GDS__c>
 	 */
-	public static List<GDS__c> formatAccount2GDS(List<Account> accounts) {
-		List<GDS__c> result = new List<GDS__c>();
+	public static Map<String,List<GDS__c>> formatAccount2GDS(List<Account> accounts)
+	{
+		Map<String,List<GDS__c>> CRUD_map = new Map<String,List<GDS__c>>();
 
 		Set<String> gds_codes = new Set<String>();
 		Set<String> gds_definitions = new Set<String>();
 		Set<String> accountIds = new Set<String>();
 
-		for (Account acc : accounts) {
+		for(Account acc : accounts)
+		{
 			accountIds.add(acc.Id);
-			if (String.isNotBlank(acc.GDS__c)) {
+			if(String.isNotBlank(acc.GDS__c))
+			{
 				gds_codes.addAll(acc.GDS__c.split(';'));
 			}
 		}
 
+	
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
-
-		Map<String, String> definitionByCode = new Map<String, String> {
+		Map<String, String> definitionByCode = new Map<String, String>{
 			'ABAC' =>  'Abacus',
 			'AGTD' =>  'Amadeus',
 			'UALA' =>  'Apollo',
@@ -232,43 +266,79 @@ public class ams2gdp_BusinessLogic {
 			'WSPN' =>  'Worldspan'
 		};
 
-
-		for (String c : gds_codes) {
-			if (definitionByCode.containsKey(c)) gds_definitions.add(definitionByCode.get(c));
+		for(String c : gds_codes)
+		{
+			if(definitionByCode.containsKey(c)) gds_definitions.add(definitionByCode.get(c));
 		}
 
 		Map<String, GDP_Reference_Table__c> tbl_gds_codes 	= ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(gds_definitions, 'AIRSYS');
+	    String GDPId = RecordTypeSingleton.getInstance().getRecordTypeId('GDS__c', 'GDP');
+			
 
-		for (Account account : accounts) {
-			if (String.isBlank(account.GDS__c)) continue;
+        List<GDS__c> toDelete = new List<GDS__c>();
+        List<GDS__c> toUpdate = new List<GDS__c>();
+        List<GDS__c> gdss = [Select Id
+						          	,Computer_Reservation_System__c
+						            ,Related_Account__c 
+						        From GDS__c
+						        Where Related_Account__c In :accountIds
+						          And RecordTypeId =:GDPId 
+						        Order By Related_Account__c, Computer_Reservation_System__c];
 
+		List<Boolean> recordexists = new List<Boolean>();
+		for (GDS__c cat:gdss){recordexists.add(false);}
+        Integer i=-1;
+        for(Account account : accounts)
+		{
+			if(String.isBlank(account.GDS__c)) continue;
+			for(String code : account.GDS__c.split(';'))
+			{
+				if(!definitionByCode.containsKey(code)) continue;
+				String definition = definitionByCode.get(code);
+				if(!tbl_gds_codes.containsKey(definition)) continue;
+				i=-1;
+				for (GDS__c cat:gdss){
+					i++;
+					if (recordexists[i]) continue;
+				    if (cat.Computer_Reservation_System__c==tbl_gds_codes.get(definition).Id &&  cat.Related_Account__c==account.Id){
+				    	recordexists[i]=true;
+				    	break;
+				    }
+		        }
+			}
 			Map<String, Integer> rankByAccount = new Map<String, Integer>();
 
-			for (String code : account.GDS__c.split(';')) {
-				if (!definitionByCode.containsKey(code))
-					continue;
+			for(String code : account.GDS__c.split(';'))
+			{
+				if(!definitionByCode.containsKey(code)) continue;
 
 				String definition = definitionByCode.get(code);
-				if (tbl_gds_codes.containsKey(definition)) {
-					//-- Mapping Key
-					String mapping_key = account.Id + '-' + code;
+				if(!tbl_gds_codes.containsKey(definition)) continue;
+				//-- Mapping Key
+				String mapping_key = account.Id +'-'+ code;
 
-					Integer rank = (rankByAccount.containsKey(account.Id)) ? rankByAccount.get(account.Id) + 1 : 1;
-					rankByAccount.put(account.Id, rank);
+				Integer rank = (rankByAccount.containsKey(account.Id)) ? rankByAccount.get(account.Id)+1 : 1;
+				rankByAccount.put(account.Id, rank);
 
-					result.add(new GDS__c(AMS_GDP_Key__c = mapping_key + 'GDP'
-	                                       , Computer_Reservation_System__c = tbl_gds_codes.get(definition).Id
-                                           , Related_Account__c = account.Id
-                                           , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(account.Id)
-                                           , GDS_ID__c = rank
-                                           , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDS__c', 'GDP')
-					                     )
-					);
-				}
+				toUpdate.add(new GDS__c(AMS_GDP_Key__c = mapping_key+'GDP'
+					, Computer_Reservation_System__c = tbl_gds_codes.get(definition).Id
+					, Related_Account__c = account.Id
+					, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(account.Id)
+					, GDS_ID__c = rank
+					, RecordTypeId = GDPId
+				));
 			}
 		}
+		i=-1;
+		for (GDS__c cat:gdss){
+			i++;
+			if (recordexists[i]) continue;
+		    toDelete.add(cat);
+        }
+        if (toDelete.size()>0) CRUD_map.put('D', toDelete);
+        if (toUpdate.size()>0) CRUD_map.put('S', toUpdate);
 
-		return result;
+		return CRUD_map;
 	}
 
 	/**
@@ -481,26 +551,141 @@ public class ams2gdp_BusinessLogic {
 	}
 
 	/**
-	 * This function format a List of Account Role (AMS) records to Agency Owner (GDP) records
-	 * to delete
-	 * Biggest percentage => Rank 1 ...
-	 * @param  List<AMS_Account_Role__c>
-	 * @return List<Agency_Owner__c>
-	 * @author Aku Luukka <luukkaa@iata.org>
-	 */
-	public static List<Agency_Owner__c>  getAgencyOwnersToDelete(List<AMS_Account_Role__c> roles) {
+ 	 * This function format the Clause part that stays the same depending on the custom setting
+ 	 * @param  batchname
+ 	 * @return List<String>
+ 	 * @author Abdellah Bellahssan <abdellah@akatia.com>
+ 	 */
+ 	public static List<String> queryClauseAccountAndRelated(String batchname){
+ 		String queryClause='';
+		if (batchname=='Job 1: GDP Products - Account View') queryClause = ''; //no Main_Accreditation_Organization__c
+		if (batchname=='Job 2: Accreditation') queryClause = '';
+		if (batchname=='Job 3: GSA Territory')  queryClause = 'Appointment__r.Account__r.';
+		//delete and insert for GDS
+        if (batchname=='Job 4: GDS & Account Category') queryClause = ''; //no Main_Accreditation_Organization__c
+        if (batchname=='Job 5: Address & Phone') queryClause = '';
+		if (batchname=='Job 6: Assoc Affiliation Membership')  queryClause = 'Account__r.';
+		//delete and insert for Agency Owner
+		if (batchname=='Job 7: Agency Owner')  queryClause = 'Account__r.';
+		if (batchname=='Job 8: Adjacent Airport')  queryClause = 'Account__r.';
+		if (batchname=='Job 9: Agency Profile and Specialization')  queryClause = 'Account__r.';
+    	if (batchname=='Job 10: Agency Authorization')  queryClause = 'Account__r.';
+
+ 		List<String> conditions = new List<String>{queryClause+'IATACode__c != null'
+ 		  ,queryClause+'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+          ,'('+queryClause+'CNS_Agency__c!=false or '+queryClause+'CNS_Account__c!=true)'
+ 		};
+
+        return conditions;
+ 	}
+ 	/**
+ 	 * This function format a List of Account Role (AMS) records to Agency Owner (GDP) records
+ 	 * to delete, insert and to update
+ 	 * Biggest percentage => Rank 1 ...
+ 	 * @param  List<AMS_Account_Role__c>
+ 	 * @return Map<String,List<Agency_Owner__c>> String = { I, U, D}
+ 	 * @author Aku Luukka <luukkaa@iata.org>
+ 	 */
+ 	public static Map<String,List<Agency_Owner__c>>  getAgencyOwnersToDelete(List<AMS_Account_Role__c> roles)
+ 	{
+		Map<String,List<Agency_Owner__c>> CRUD_map = new Map<String,List<Agency_Owner__c>>();
 		Set<String> accountIds = new Set<String>();
-
-		for (AMS_Account_Role__c arole : roles) {
-			if (arole.Account__c != null) {
-				accountIds.add(arole.Account__c);
-			}
+		List<Boolean> recordexists = new List<Boolean>();
+		for(AMS_Account_Role__c a: roles)
+		{
+		    if(a.Account__c == null) continue;
+		    accountIds.add(a.Account__c);
+		    //userNameList.add(arole.Owner_Name__c);
 		}
+		//Reload the same list
+		roles = [Select Id
+		         ,Owner_Name__c
+		         ,Percentage__c
+		         ,Account__c
+		         ,Contact__r.Name
+		         ,Unified_Owner_Name__c
+		         From AMS_Account_Role__c
+		         Where Account__c IN :accountIds
+		           And Active__c=true
+		           And RecordType.Name = 'Ownership'
+		         Order By Account__c ASC, Percentage__c DESC];
 
-		List<Agency_Owner__c> result = [SELECT Id FROM Agency_Owner__c WHERE Related_Account__c IN :accountIds];
 
-		return result;
-	}
+		Map<String, Integer> rankByAccount = new Map<String, Integer>();
+		Map<String, String> recordTypes = new Map<String, String>();
+
+		for(RecordType rt : [SELECT Id, Name FROM RecordType WHERE IsActive=true AND SobjectType ='Agency_Owner__c'])
+		    recordTypes.put(rt.Name, rt.Id);
+
+		System.debug('recordTypes >>'+recordTypes);
+				
+		//Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Agency_Owner__c');
+		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
+
+
+		List<Agency_Owner__c> result= [SELECT Id
+		                               ,Name
+		                               ,Percent__c
+		                               ,Owner_ID__c
+		                               ,Related_GDP_Products_Account_View__c
+		                               ,Related_Account__c
+		                               ,AMS_GDP_Key__c
+		                               FROM Agency_Owner__c 
+		                               WHERE Related_Account__c IN :accountIds];
+
+		List<Agency_Owner__c> toDelete = new List<Agency_Owner__c>();
+		List<Agency_Owner__c> toUpdate = new List<Agency_Owner__c>();
+		Integer i=-1;
+        for(AMS_Account_Role__c a: roles)recordexists.add(false);
+		
+
+		for(Agency_Owner__c r:result){
+		    i=-1;
+		    Boolean recordisin=false;
+		    for(AMS_Account_Role__c a:roles){
+		        i++;
+		        String key = a.Id;
+		        if (recordexists[i]) continue;
+		        if ((r.Name==a.Unified_Owner_Name__c && r.Related_Account__c==a.Account__c) || r.AMS_GDP_Key__c==key+'GDP'){
+		            //find if exist
+		            recordexists[i]=true;
+		            recordisin=true;
+		            
+		            break;
+		        }
+		    }
+		    if (!recordisin) toDelete.add(r);
+		}
+		//those are the records to update and to delete
+		if (toDelete.size()>0) CRUD_map.put('D',toDelete);
+		System.debug('toDelete>>'+toDelete);
+		i=-1;
+		for(AMS_Account_Role__c a:roles){
+		    i++;
+		    
+		    Integer rank = (rankByAccount.containsKey(a.Account__c)) ? rankByAccount.get(a.Account__c)+1 : 1;
+		    rankByAccount.put(a.Account__c, rank);
+		    
+		    //-- Mapping Key
+		    String key = a.Id;
+		    String name = a.Unified_Owner_Name__c;
+		    toUpdate.add(new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
+		                                     , Name =  name
+		                                     , Percent__c=a.Percentage__c
+		                                     , Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(a.Account__c)
+		                                     , Related_Account__c=a.Account__c
+		                                     , Owner_ID__c = rank
+		                                     , RecordTypeId = recordTypes.get('GDP')
+		                                    ));
+		        
+		    
+		}
+		//those are the records to upsert
+		System.debug('toUpdate>>'+toUpdate);
+		if (toUpdate.size()>0) CRUD_map.put('S',toUpdate);
+		
+    	return CRUD_map;
+ 	}
 
 	/**
 	 * This function format a List of Agency Airport (AMS) records to Adjacent Airport (GDP) records
@@ -900,5 +1085,4 @@ public class ams2gdp_BusinessLogic {
 
 		return result;
 	}
-
 }
