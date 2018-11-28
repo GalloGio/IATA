@@ -1,6 +1,6 @@
 public with sharing class SIDRARepaymentInstalmentsController {
-    public static final RecordType RT_REPAYMENT_INSTALMENT =
-        [SELECT Id FROM RecordType WHERE sObjectType='Case_Detail__c' AND DeveloperName='Repayment_Instalment'];
+	
+    public static final Id RT_REPAYMENT_INSTALMENT_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Repayment_Instalment');
     public static final Integer REPAYMENT_INSTALMENTS_QUANTITY = 6;
 
     public Case cs {get; set;}
@@ -51,7 +51,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
             SELECT Id, Currency__c, Amount_Expected__c, Payment_Status__c, Due_Date__c, Amount_Received__c, Date_received__c, CreatedDate 
             FROM Case_Detail__c 
             WHERE Case__c = :caseId
-            AND RecordTypeId = :RT_REPAYMENT_INSTALMENT.Id
+            AND RecordTypeId = :RT_REPAYMENT_INSTALMENT_ID
             ORDER BY CreatedDate ASC, Id ASC];
     }
     
@@ -123,7 +123,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
             for (Integer i = 1; i <= quantityToCreate; i++) {
                 Case_Detail__c rpi = new Case_Detail__c(
                     Case__c = cs.Id,
-                    RecordTypeId = RT_REPAYMENT_INSTALMENT.Id,
+                    RecordTypeId = RT_REPAYMENT_INSTALMENT_ID,
                     Amount_Expected__c = 0,
                     Due_Date__c = Date.today().addMonths(i+1)
                 );

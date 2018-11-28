@@ -7,7 +7,8 @@ public without sharing class ISSP_AMS_MSO_Controller {
     public String SortBy {get; set;}
     public Boolean isExcludingTerminated {get; set;}
 
-    private list<AMS_Inspection__c> lstAccountsInHierarchy;
+    public static list<AMS_Inspection__c> lstAccountsInHierarchy;
+    public Integer pageNumberStatic = 1;
     private Id currentAccountId;
     private Id hqAccountId;
     private String airlineCode;
@@ -31,15 +32,27 @@ public without sharing class ISSP_AMS_MSO_Controller {
     public list<AppointmentWrapper> lstDisplayAccounts {
         get {
             list<AppointmentWrapper> tmpList = new list<AppointmentWrapper>();
-            for (AMS_Inspection__c a : (list<AMS_Inspection__c>)ssc.getRecords()) {
-                String territories = '';
-                for (AMS_Territory__c t : a.AMS_Territories__r) {
-                    territories += (territories == '' ? '' : ', ') + t.ISO_Country__r.Name;
+            if (strRenderAs == 'PDF'){
+                for (AMS_Inspection__c a : lstAccountsInHierarchy) {
+                    String territories = '';
+                    for (AMS_Territory__c t : a.AMS_Territories__r) {
+                        territories += (territories == '' ? '' : ', ') + t.ISO_Country__r.Name;
+                    }
+    
+                    tmpList.add(new AppointmentWrapper(a, territories, a.Account__r.Accreditation_date__c, a.Account__r.Expiry_Date__c));
                 }
-
-                tmpList.add(new AppointmentWrapper(a, territories, a.Account__r.Accreditation_date__c, a.Account__r.Expiry_Date__c));
+            }else{
+	            for (AMS_Inspection__c a : (list<AMS_Inspection__c>)ssc.getRecords()) {
+	                String territories = '';
+	                for (AMS_Territory__c t : a.AMS_Territories__r) {
+	                    territories += (territories == '' ? '' : ', ') + t.ISO_Country__r.Name;
+	                }
+	
+	                tmpList.add(new AppointmentWrapper(a, territories, a.Account__r.Accreditation_date__c, a.Account__r.Expiry_Date__c));
+	            }
             }
             System.debug('lstDisplayAccounts:' + tmpList);
+            System.debug('lstDisplayAccounts - pageNumberStatic: ' + pageNumberStatic);
             return tmpList;
         } set;
     }
@@ -58,6 +71,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
 
     
     public List<Data> getData() {
+        if(lstAccountsInHierarchy == null) refreshMsoGsaList();
         return getChartData(lstAccountsInHierarchy);
     }
 
@@ -144,15 +158,22 @@ public without sharing class ISSP_AMS_MSO_Controller {
 
         system.debug('query: ' + strQuery);
 
+        Database.QueryLocator ql;
+
         if(airlineCode != null && airlineCode != ''){
             lstAccountsInHierarchy = Database.query(strQuery);
+            ql = Database.getQueryLocator(strQuery);
         }else{
             lstAccountsInHierarchy = new list<AMS_Inspection__c>();
         }   
         
-        ssc = new ApexPages.StandardSetController(lstAccountsInHierarchy);
+        //ssc = new ApexPages.StandardSetController(lstAccountsInHierarchy);
+        if (strRenderAs != 'PDF')
+            ssc = new ApexPages.StandardSetController(ql);
+        
         if (strRenderAs == 'PDF') 
-            ssc.setPageSize(lstAccountsInHierarchy.size()); // for PDF display all records
+            //ssc.setPageSize(lstAccountsInHierarchy.size()); // for PDF display all records
+            System.debug('setPageSize');
         else
             ssc.setPageSize(recordsPerPage);
     }
@@ -182,7 +203,12 @@ public without sharing class ISSP_AMS_MSO_Controller {
 
     public Boolean hasNext {
         get {
-            return ssc.getHasNext();
+            //return ssc.getHasNext();
+            if(pageNumberStatic == totalPages){
+                return false;
+            }else{
+                return true;    
+            }
         }
         set;
     }
@@ -190,7 +216,12 @@ public without sharing class ISSP_AMS_MSO_Controller {
     // indicates whether there are more records before the current page set.
     public Boolean hasPrevious {
         get {
-            return ssc.getHasPrevious();
+            //return ssc.getHasPrevious();
+            if(pageNumberStatic == 1){
+                return false;
+            }else{
+                return true;    
+            }
         }
         set;
     }
@@ -198,19 +229,25 @@ public without sharing class ISSP_AMS_MSO_Controller {
     // returns the page number of the current page set
     public Integer pageNumber {
         get {
-            return ssc.getPageNumber();
+            if (strRenderAs != 'PDF'){
+            	return ssc.getPageNumber();
+            }else{
+                return 1;
+            }
         }
         set;
     }
 
     public Integer totalPages{
         get {
-            integer total = (ssc.getResultSize() / ssc.getPageSize());
-            if(math.mod(ssc.getResultSize(),ssc.getPageSize()) != 0){ 
-                total++ ;
+            integer total = 0;
+            if (strRenderAs != 'PDF'){
+                total = (ssc.getResultSize() / ssc.getPageSize());
+	            if(math.mod(ssc.getResultSize(),ssc.getPageSize()) != 0){ 
+	                total++ ;
+	            }
+	            system.debug('total Pages :' + ssc.getResultSize() + ssc.getPageSize() + (ssc.getResultSize() / ssc.getPageSize()));
             }
-            system.debug('total Pages :' + ssc.getResultSize() + ssc.getPageSize() + (ssc.getResultSize() / ssc.getPageSize()));
-            
             return total;
         } 
         set;  
@@ -218,22 +255,28 @@ public without sharing class ISSP_AMS_MSO_Controller {
 
     // returns the first page of records
     public void first() {
+        pageNumberStatic = 1;
         ssc.first();
     }
 
     // returns the last page of records
     public void last() {
+        pageNumberStatic = totalPages;
         ssc.last();
     }
 
     // returns the previous page of records
     public void previous() {
-        ssc.previous();
+        //ssc.previous();
+        pageNumberStatic --;
+        ssc.setPageNumber(pageNumberStatic);
     }
 
     // returns the next page of records
     public void next() {
-        ssc.next();
+        //ssc.next();
+        pageNumberStatic ++;
+        ssc.setPageNumber(pageNumberStatic);
     }
 
     // the first characters in the CSV file, to ensure its correct display in Excel 

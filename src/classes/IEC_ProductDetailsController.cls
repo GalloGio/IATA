@@ -154,37 +154,11 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		    	lstRelatedProducts = Product_Sel.getEComProduct(new List<Id>(lstRelatedProductsIds), true, null, 'Id');
 		    }
 			
-
-		    /*if(lstRecommendedProducts != null && lstRecommendedProducts.size() > 0){
-		    	for(Recommended_Product__c recomProd : lstRecommendedProducts){
-		    		EComProduct_DTO ecomProd = new EComProduct_DTO();
-		    		ecomProd.ProductId = String.valueOf(recomProd.Related_Product__c).left(15);
-		    		ecomProd.ProductNumber = recomProd.Related_Product__r.SAP_Material_Number__c;
-		    		ecomProd.ProductName = recomProd.Related_Product__r.Name;
-		    		ecomProd.ProductShortDesc = recomProd.Related_Product__r.Short_Description__c;
-		    		ecomProd.Portfolio = recomProd.Related_Product__r.Product_Segment__c;
-		    		ecomProd.unitPrice = 0.00;
-		    		ecomProd.ProductCategory = recomProd.
-		    		ecomProd.Edition = recomProd.
-		    		ecomProd.Language = recomProd.
-		    		ecomProd.InventoryStatus = recomProd.
-		    		ecomProd.AvailabilityDate = recomProd.
-		    		ecomProd.Media = recomProd.
-		    		ecomProd.EffectiveTo = recomProd.
-
-
-		    		lstRelatedProducts.add(ecomProd);
-		    	}
-		    }*/
-
-
-
 		    Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c, Display_Ecom_Topic__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
-
 
             bIsInStock         =     (product.InventoryStatus == 'In stock' || product.InventoryStatus == 'Available Now');
             bIsOutOfStock     =     (product.InventoryStatus != 'In stock' && product.InventoryStatus != 'Available Now');
-            bIsPreOrder     =     ((product.InventoryStatus != 'In stock' && product.InventoryStatus != 'Available Now') && !product.Is_Electronic_Product);
+            bIsPreOrder     =     (product.InventoryStatus != 'In stock' && product.InventoryStatus != 'Available Now');
 			bIsDirectSales 	= 	((product.RegularPrice==null && product.CustomerPrice==null) || !sfProduct.Sell_through_eCommerce__c);
 
 			//Product discounts

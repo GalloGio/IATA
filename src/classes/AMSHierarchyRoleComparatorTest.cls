@@ -7,7 +7,7 @@ private class AMSHierarchyRoleComparatorTest
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234561',Name='Test Agency 1',Short_Name__c='Test Agency 1');
 		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Name='Test Agency 2',Short_Name__c='Test Agency 2');
@@ -29,8 +29,8 @@ private class AMSHierarchyRoleComparatorTest
 		insert contactList;
 		
 
-		Id ownerRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
-		Id employeeRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Employee').getRecordTypeId();
+		Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+		Id employeeRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
 		
 		AMS_Account_Role__c owner1Acct1 = new AMS_Account_Role__c(Account__c = a1.Id, Contact__c = co1.Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
 		AMS_Account_Role__c owner2Acct1 = new AMS_Account_Role__c(Account__c = a1.Id, Owner_Account__c = ownerAccount.Id, Owner_Sequence__c = 2, Percentage__c = 1, recordTypeId = ownerRecTypeId);
@@ -89,7 +89,7 @@ private class AMSHierarchyRoleComparatorTest
 	@isTest
 	static void testIncorrectHierarchy1()
 	{
-		Id ownerRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+		Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		
 		Test.startTest();
 

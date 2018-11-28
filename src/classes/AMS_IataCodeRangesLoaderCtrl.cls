@@ -49,7 +49,6 @@ public class AMS_IataCodeRangesLoaderCtrl {
 	public list<SelectOption> AIMSAreas							{get; set;}	//All available areas
 	public string FileName										{get; set;}	//filename
 		
-	private string rangesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Code_Range__c'}).get('Code_Range__c').get('IATA_Code'); //Record type id of range
 	private map<String, id> countryMap; //Map with all countries stored in sfdc
 	private map<String, id> statesMap; //Map with all states stored in sfdc
 	private string csvAsString = '';	//Content of the file as string
@@ -82,10 +81,10 @@ public class AMS_IataCodeRangesLoaderCtrl {
 		mapCSVSuccess = new map<string, LineWrapper>();
 		mapCSVContent = new map<integer, LineWrapper>();
 		
-		for(IATA_ISO_Country__c c:[select Name,AIMS_Area_Name__c, Id,ISO_Code__c from IATA_ISO_Country__c])
+		for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries())
 			countryMap.put(c.ISO_Code__c.toLowerCase().trim(), c.id);
 
-		for(IATA_ISO_State__c c:[select Name, Id,ISO_Code__c, IATA_ISO_Country__c from IATA_ISO_State__c]){
+		for(IATA_ISO_State__c c: IATAIsoStateDAO.getIsoStates()){
 			statesMap.put(c.ISO_Code__c.toLowerCase().trim(), c.id);
 			//Fix as per bug AMS-1329
 			//Seconday search: if not found using state code, use state description
@@ -199,7 +198,7 @@ public class AMS_IataCodeRangesLoaderCtrl {
 													   , Min_Range__c = lw.MinLastFour
 													   , Max_Range__c = lw.MaxLastFour
 													   , ProgramCode__c = lw.ClassCode
-													   , RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Code_Range__c'}).get('Code_Range__c').get('IATA_Code')));
+													   , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Code_Range__c', 'IATA_Code')));
 				}
 			}
 		}

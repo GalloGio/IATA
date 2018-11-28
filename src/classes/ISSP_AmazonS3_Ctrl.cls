@@ -511,7 +511,7 @@ global class ISSP_AmazonS3_Ctrl {
                 File_Identifier__c = uploadedFileIdentifier,
                 File_Identifier_picklist__c = uploadedFileIdentifier,
                 Review_Status__c = 'Pending',
-                RecordTypeId = Schema.SObjectType.AmazonFile__c.RecordTypeInfosByName.get('AMS File').RecordTypeId,
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'AMS_File'),
                 Size_MB__c = uploadedFileSize* 0.000001, //convert to MB
                 isPublic__c = true,
                 Case__c = Id

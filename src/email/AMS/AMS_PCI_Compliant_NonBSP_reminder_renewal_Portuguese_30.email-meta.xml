@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_PCI Compliant NonBSP reminder renewal PT 30</name>
+    <style>freeForm</style>
+    <subject>LEMBRETE PCI DSS</subject>
+    <textOnly>Caro(a)  {!Case.Contact},
+
+Código IATA: {!Case.IATA_Code__c} - No BSP,
+
+
+
+Isto é um lembrete cordial de que ainda não recebemos o Atestado de Conformidade PCI DSS ou Declaração de Não Utilização do Cartão de Crédito. Gostaríamos de sublinhar que o prazo de entrega é {!Case.CreatedDate+30}. Se você já apresentou o Certificado, por favor ignore esta mensagem.
+
+
+Se quiser saber mais sobre como obter a conformidade PCI DSS, visite a nossa página Web:
+
+http://www.iata.org/services/finance/Pages/pci-dss.aspx
+
+
+
+Caso necessite de mais informações da IATA, não hesite em inserir uma nova questão, iniciando sessão no Portal do Cliente: www.iata.org/cs.
+
+
+Com os melhores cumprimentos,
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+
+
+
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

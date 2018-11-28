@@ -18,7 +18,7 @@ trigger trgEnsureUniqueProductCountry on ICCS_Product_Country__c (before insert,
     Map<Id, Product2> mapProductsPerId = new Map<Id, Product2>([SELECT Id, Name FROM Product2 WHERE Family = 'ICCS']);
     
     // Create a map of all IATA ISO Countries
-    Map<Id,IATA_ISO_Country__c> mapISOCountriesPerId = new Map<Id,IATA_ISO_Country__c>([SELECT Id, Name FROM IATA_ISO_Country__c]); 
+    Map<Id,IATA_ISO_Country__c> mapISOCountriesPerId = new Map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountries()); 
     
     // Check for the new/updated records that the combination doesn't already exist
     for (ICCS_Product_Country__c pc : Trigger.new) {

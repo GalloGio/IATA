@@ -13248,12 +13248,12 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <filters>
             <field>Status__c</field>
             <operation>contains</operation>
-            <value>Input,Approval,recommendation</value>
+            <value>Input,Approval,Recommendation</value>
         </filters>
         <filters>
             <field>Deadline_for_Approval__c</field>
             <operation>equals</operation>
-            <value>TODAY,TOMORROW</value>
+            <value>TODAY,TOMORROW,LAST_N_DAYS:10</value>
         </filters>
         <label>EXE2014 - Action needed soon</label>
         <language>en_US</language>

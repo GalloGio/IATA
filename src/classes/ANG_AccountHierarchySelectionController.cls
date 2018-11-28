@@ -534,7 +534,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 	@TestVisible private Boolean updateRelatedRecords() {
 		//DTULLO: Added Record Type
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 		List<AMS_Process_Detail__c> newProcessHierarchy = new List<AMS_Process_Detail__c>();
 		for(HierarchyItem hi : hierarchyValues){
 			if(hi.selected && !hi.main){

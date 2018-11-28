@@ -32,13 +32,13 @@ public class BatchCreateCasesFromPWCTest {
         String country = 'WW';
         String aimsid = '12345678';
 
-        Recordtype recordtypeFSM = [Select Id, DeveloperName From RecordType where developerName like 'FSM' and sObjectType = 'EmailTemplate__c'];
+        Id recordtypeFSMId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'FSM');
 
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c( ISO_Code__c = country);
         insert isoCountry;
         System.assert( isoCountry!= null );
 
-        EmailTemplate__c template = new EmailTemplate__c( RecordtypeId = recordtypeFSM.Id, Template_Language__c = language, IATA_ISO_Country__c = isoCountry.Id, Agent_Type__c='All');
+        EmailTemplate__c template = new EmailTemplate__c( RecordtypeId = recordtypeFSMId, Template_Language__c = language, IATA_ISO_Country__c = isoCountry.Id, Agent_Type__c='All');
         insert template;
 
     	EmailTemplateCustomHandler templateHandler = new EmailTemplateCustomHandler();
@@ -127,7 +127,7 @@ public class BatchCreateCasesFromPWCTest {
         String country = 'FR';
         String aimsid = '123456';
 
-        Recordtype recordtypeFSM = [Select Id, DeveloperName From RecordType where developerName like 'FSM' and sObjectType = 'EmailTemplate__c'];
+       	RecordType recordtypeFSM = RecordTypeSingleton.getInstance().getRecordType('EmailTemplate__c', 'FSM');
 
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c( ISO_Code__c = country);
         insert isoCountry;
@@ -139,13 +139,13 @@ public class BatchCreateCasesFromPWCTest {
         template = [Select UniqueId__c from EmailTemplate__c where id = :template.Id];
         System.assert( template.UniqueId__c == recordtypeFSM.DeveloperName + '_' + country + '_' + language, template.UniqueId__c );
 
-
         Account account = new Account( Name = 'Test Account', AIMS_ID__c = aimsid, IATA_ISO_Country__c  = isoCountry.Id, Type = 'IATA Cargo Agent', Location_Type__c = 'HO');
         insert account;
 
-        Recordtype recordtypeStandardContact = [Select Id, DeveloperName From RecordType where Name like 'Standard' and sObjectType = 'Contact'];
+        Id recordtypeStandardContactId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        
         Contact contact = new Contact(
-            RecordtypeId = recordtypeStandardContact.Id,
+            RecordtypeId = recordtypeStandardContactId,
             Preferred_Language__c = language,
             Financial_Assessment_Contact__c = true,
             AccountId = account.Id,

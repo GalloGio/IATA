@@ -5,11 +5,10 @@ public class TIP_Utils{
 	//Portal Service Name
 	public static String PORTAL_SERVICE_NAME_TIP= 'Transparency in Payments (TIP)';
 	//Account RT's
-    public static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');  
-    //public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-    
-    //Account Role RT
-    public static String ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account_Role__c').get('TIP_Payment_Provider');
+    public static String STANDARD_ACCOUNT_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');  
+    //public static String PAYMENT_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'TIP_Payment_Provider');
+ //Account Role RT
+    public static String ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'TIP_Payment_Provider');
  
 	//Account Category
 	public static String ACCOUNT_CATEGORY_PAYMENT_PROVIDER = 'Payment Provider';
@@ -25,7 +24,7 @@ public class TIP_Utils{
 	public static string ACCOUNT_CONTACT_ROLE_PRIMARY = 'Primary Contact';
 
 	//Case RT's
-	public static String CASE_PROCESS_IDFS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
+	public static String CASE_PROCESS_IDFS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
 
 	//Case Reason
 	public static String CASE_REASON_PAYMENT_PROVIDER_MANAGMENT= 'Payment Provider Management';
@@ -75,11 +74,11 @@ public class TIP_Utils{
 	public static String PARTNER_PRODUCT_CONFIG_STATUS_DRAFT='DRAFT';
 
 	//Partner product RT
-	public static String PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID= RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Partner_products__c').get('TIP_Product');
+	public static String PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID= RecordTypeSingleton.getInstance().getRecordTypeId('Partner_products__c', 'TIP_Product');
 
 	//BIN Range RT's
-	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Unenrolled_Known');
-	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('TIP_BIN_Range__c').get('Enrolled');
+	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('TIP_BIN_Range__c', 'Unenrolled_Known');
+	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('TIP_BIN_Range__c', 'Enrolled');
 
 	//TIP-49 - validate IATA code is unique for payment providers
   	/*public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
