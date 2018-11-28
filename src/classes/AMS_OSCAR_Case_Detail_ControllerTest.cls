@@ -265,7 +265,28 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
         controller.getRfPicklistValuesAMS();
 
 
-        Test.stopTest();
-    }
-    
+		Test.stopTest();
+	}
+
+	@isTest static void chinaConversionHideStagingAreaTest(){
+
+		Case c = [SELECT Id, OSCAR__c FROM Case WHERE Oscar__c IN (SELECT Id FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '') LIMIT 1];
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+		
+		oscar.id = c.OSCAR__c;
+		oscar.Process__c = AMS_Utils.NGCHINACONVERSION;
+		
+		update oscar;
+		
+		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+		pg.getParameters().put('id', c.Id);
+		Test.setCurrentPage(pg);
+		
+		AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
+		
+		system.assert(!controller.showStagingArea, 'The staging area for China Conversions should be hidden');
+
+	}
+
 }
