@@ -2,7 +2,7 @@
 private class AMS_InspectionHelperTest {
 
     @isTest static void test_setStatusCodeOnAccountForDOM(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -105,7 +105,7 @@ private class AMS_InspectionHelperTest {
     }
 
     @isTest static void test_setStatusCodeOnAccount() {
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -268,7 +268,7 @@ private class AMS_InspectionHelperTest {
 
 
     @isTest static void test_SetStatusCodeToZeroUpdatesRecertExpiryDate(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -300,12 +300,12 @@ private class AMS_InspectionHelperTest {
     }
 
     @isTest static void test_1To1RelationshipAppointmentMSO(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        Id airlineRT = AMS_Utils.getId('Account', 'IATA_Airline');
+        Id airlineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account airline = new Account();
         airline.Name = 'TestAirline';
         airline.Sector__c = 'Airline';
@@ -338,7 +338,7 @@ private class AMS_InspectionHelperTest {
 
 
     @isTest static void test_checkActiveAppointments(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -346,7 +346,20 @@ private class AMS_InspectionHelperTest {
         List<Account> agencylist = new List<Account>();
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c = '1234567',Name = 'Test1 Agency',Short_Name__c = 'Test1 Agency', Location_Class__c = 'G');
         agencylist.add(a1);
+        //AMSU-161
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c = '1234568',Name = 'Test2 Agency',Short_Name__c = 'Test2 Agency', Location_Class__c = 'G');
+        agencylist.add(a2);
         insert agencylist;
+
+        //AMSU-161 start - Create the AMS hierarchies for the first group of agencies
+        AMS_Agencies_Hierarchy__c H1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+        List<AMS_Agencies_Hierarchy__c> hs = new List<AMS_Agencies_Hierarchy__c>{H1};
+        insert hs;
+        
+        List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id, HO_Flag__c = 'true'));
+        insert rels;
+        //AMSU-161 end
 
         AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
         insert ao;
@@ -357,6 +370,10 @@ private class AMS_InspectionHelperTest {
         agencyInspectionList.add(ins1);
         AMS_Inspection__c ins2 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2', Date_Organisation_Status_attained__c=System.today());
         agencyInspectionList.add(ins2);
+        //AMSU-161
+        AMS_Inspection__c ins3 = new AMS_Inspection__c(Account__c=a2.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2', Date_Organisation_Status_attained__c=System.today());
+        agencyInspectionList.add(ins3);
+
         insert agencyInspectionList;
 
         /*
@@ -387,6 +404,20 @@ private class AMS_InspectionHelperTest {
         stdController = new ApexPages.StandardController(ins2);
         ctrl = new AMS_InspectionNotificationController(stdController);
         ctrl.setNotificationMessage();
+        
+        //AMSU-161 - on the current scenario the account get's terminated and the value becomes false
+        //system.assertEquals(true, ctrl.hasNoActiveInspections);
         system.assertEquals(true, ctrl.hasNoActiveInspections);
+
+        //AMSU-161 start
+        ins3.Accreditation_Endorsement_Status_code__c='0';
+        update ins3;
+
+        stdController = new ApexPages.StandardController(ins3);
+        ctrl = new AMS_InspectionNotificationController(stdController);
+        ctrl.setNotificationMessage();
+        
+        system.assertEquals(false, ctrl.hasNoActiveInspections);
+        //AMSU-161 end
     }
 }

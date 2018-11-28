@@ -4,7 +4,7 @@ private class ISSP_CurrencyCenterRegOutlookCtrlTest {
 	@isTest static void testCtrl() {
 		Test.startTest();
 
-		Id rt = [SELECT Id FROM RecordType WHERE DeveloperName = 'X4_Regional_Outlook_News' LIMIT 1].Id;
+		Id rt = RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c','X4_Regional_Outlook_News');
 
 		// insert 1 comment record for americas + 1 for europe
 		Comment__c americasEntry = new Comment__c(Region__c='Americas', RecordTypeId=rt);

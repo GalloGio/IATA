@@ -53,10 +53,8 @@ public class ISSP_ICCS_ReportsControllerTest {
 
         Profile p = [Select ID, Name from Profile Where Name = 'ISS Portal (Partner)'];
 
-        Map<String,Schema.RecordtypeInfo> aRtMap = Account.sObjectType.getDescribe().getRecordtypeinfosbyname();
-
         Account a = New Account(
-            Recordtypeid = aRTMap.get('Airline Headquarters').getRecordtypeid(), 
+            Recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
             Name = 'TestPortalAccount',
             ICCS_Membership_Status__c = serviceStatus,
             IATACode__c = '724',

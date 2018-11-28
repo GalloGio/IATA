@@ -39,6 +39,8 @@ public class ISSP_Ctrl_BuyCertificate {
     }
 
     public boolean iataCertificatesVisible {get; set;}
+
+    public static final Set<String> EXCLUDEACCOUNTSTATUS = new Set<String>{'Terminated','New application pending','Not accreditated'};
     
     public String getSortDirection() {
         //if not column is selected 
@@ -231,19 +233,19 @@ public class ISSP_Ctrl_BuyCertificate {
         List <Account> accountList3 = new List<Account>();
         List <Account> accountList4 = new List<Account>();
         List <Account> accountList5 = new List<Account>();
-        List <Account> accountList1 = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
+        List <Account> accountList1 = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c, Status__c
                                         FROM Account
                                         WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
-                                        AND IATACode__c != null
+                                        AND IATACode__c != null AND Status__c NOT IN :EXCLUDEACCOUNTSTATUS
                                       ORDER BY IATACode__c limit 1000
                                       ];
              auxAccounts.add(accountList1);                       
          if(accountList1.size() == 1000){
             accountList2=
-            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
+            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c, Status__c
              FROM Account
              WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
-             AND IATACode__c != null
+             AND IATACode__c != null AND Status__c NOT IN :EXCLUDEACCOUNTSTATUS
              ORDER BY IATACode__c
              Limit 1000
              OFFSET 1000
@@ -252,10 +254,10 @@ public class ISSP_Ctrl_BuyCertificate {
         }
          if(accountList2.size() == 1000){
             accountList3=
-            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
+            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c, Status__c
              FROM Account
              WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
-             AND IATACode__c != null
+             AND IATACode__c != null AND Status__c NOT IN :EXCLUDEACCOUNTSTATUS
              ORDER BY IATACode__c
              Limit 1000
              OFFSET 2000
@@ -264,10 +266,10 @@ public class ISSP_Ctrl_BuyCertificate {
         }   
         if(accountList3.size() == 1000){
             accountList4=
-            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
+            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c, Status__c
              FROM Account
              WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
-             AND IATACode__c != null
+             AND IATACode__c != null AND Status__c NOT IN :EXCLUDEACCOUNTSTATUS
              ORDER BY IATACode__c
              Limit 1000
              OFFSET 3000
@@ -276,10 +278,10 @@ public class ISSP_Ctrl_BuyCertificate {
         } 
         if(accountList4.size() == 1000){
             accountList5=
-            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
+            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c, Status__c
              FROM Account
              WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
-             AND IATACode__c != null
+             AND IATACode__c != null AND Status__c NOT IN :EXCLUDEACCOUNTSTATUS
              ORDER BY IATACode__c
              Limit 1000
              OFFSET 4000
@@ -379,8 +381,8 @@ public class ISSP_Ctrl_BuyCertificate {
         try 
         {      
             //Assign RecordType
-            Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
-            Id CaseOSCARid = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+            Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
+            Id CaseOSCARid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
             
             //Assign Account_Concerned__c
             List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name,IATA_ISO_Country__r.OSCAR_enabled__c, Site, Sector__c, IATACode__c, Field_Head_Office__c ,Region_formula__c

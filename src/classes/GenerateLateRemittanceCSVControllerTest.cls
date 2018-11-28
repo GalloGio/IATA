@@ -24,9 +24,9 @@ private class GenerateLateRemittanceCSVControllerTest {
 
     static testMethod void myUnitTest() {
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-        ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
-        ID SIDRAcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+        ID hqrt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+        ID SIDRAcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c( Name = 'France',ISO_Code__c = 'FR', AIMS_Area_Name__c = 'France', AIMS_Area_ID__c = '1', SAP_Sales_Org__c = 'SIN1', 
                                                                     Region__c = 'Europe');

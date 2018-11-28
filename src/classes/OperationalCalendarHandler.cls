@@ -229,7 +229,7 @@ public with sharing class OperationalCalendarHandler {
         inserted by MuleSoft 
     **/
     private static void populateMissingFields(list<Operational_Calendar__c> listOperations) {
-        list<String> listCountryCodes = new list<String>();
+        Set<String> listCountryCodes = new Set<String>();
         list<CalendarFields> listCalendarFields = new list<CalendarFields>();
         for (Operational_Calendar__c operation: listOperations) {
             CalendarFields calendarFields = new CalendarFields(operation);
@@ -237,10 +237,7 @@ public with sharing class OperationalCalendarHandler {
             listCountryCodes.add(calendarFields.country);
         }
         map<String,IATA_ISO_Country__c> mapISSoperations = new map<String,IATA_ISO_Country__c>();
-        for (IATA_ISO_Country__c country:
-                [SELECT Id, ISO_Code__c, AMS_Settlement_System__c, AMS_Settlement_System_CASS__c
-                FROM IATA_ISO_Country__c
-                WHERE ISO_Code__c IN :listCountryCodes]) {
+        for (IATA_ISO_Country__c country: IATAIsoCountryDAO.getIsoCountryByIsoCodes(listCountryCodes)) {
             mapISSoperations.put( country.ISO_Code__c, country);
         }
         

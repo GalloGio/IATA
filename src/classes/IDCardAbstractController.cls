@@ -73,8 +73,8 @@ public abstract class IDCardAbstractController {
         pagesurl.put('host' ,  ApexPages.currentPage().getHeaders().get('Host'));
         pagesurl.put('url' ,  apexpages.currentpage().getURL() );
         pagesurl.put('url2' ,  URL.getSalesforceBaseUrl().toExternalForm());  
-        if (Site.getPrefix() != null)
-            pagesurl.put('prefix' , Site.getPrefix());  
+        if (Site.getPathPrefix() != null)
+            pagesurl.put('prefix' , Site.getPathPrefix());  
         else  pagesurl.put('prefix' ,'');  
         availableIataCodeSize = 0;
         // check to see if the language was stored in a cookie

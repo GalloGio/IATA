@@ -66,16 +66,6 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ISSP Change Email Address</fullName>
-        <actions>
-            <name>ISSP_Change_email_address</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <formula>AND( ISCHANGED(Email), CONTAINS( Profile.Name , &apos;ISS&apos; ),Community__c &lt;&gt;&apos;IEC&apos;,Community__c &lt;&gt;&apos;E-commerce&apos;)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
         <fullName>Notify if new admins</fullName>
         <actions>
             <name>Notify_if_new_admins_are_granted</name>

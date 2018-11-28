@@ -52,6 +52,7 @@
     </style>
 
     <script>
+        var countryMap = JSON.parse(JSON.stringify({!countryInfoByCountryNameMapString}));
     </script>
 
     <div styleClass="workArea" id="work">
@@ -133,7 +134,7 @@
 
             <!--Line 5 VAT Number -->
 
-            <apex:outputPanel rendered="{!NOT(ca.isocountry.Hide_Tax_Number_VAT__c)}">
+            <apex:outputPanel>
 
                 <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
                     <apex:param name="vatno" value="" assignto="{!vatNumber}" />
@@ -147,7 +148,7 @@
                     </apex:pageBlockSectionItem>
 
                     <apex:pageBlockSectionItem labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
-                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
+                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_VAT_field_mandatory__c, '* ','')}{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
 
                         <apex:outputPanel id="VATNumberInput">
 
@@ -242,6 +243,32 @@
 
             <apex:pageBlockSection columns="1" id="addressSection">
                 <script type="text/javascript">
+                    function populateShippingAsterisks() {
+                        $('[id$="shipping_postal_code__c"]').parent().prev().children().text(function () {
+                            return $(this).text().replace("*", "");
+                        });
+
+                        $('[id$="shipping_state__c"]').parent().prev().children().text(function () {
+                            return $(this).text().replace("*", "");
+                        });
+
+                        if ($('[id$="ShippingCountryList"]').val() != undefined) {
+                            if (countryMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
+                                if (countryMap[$('[id$="ShippingCountryList"]').val()]['IEC_Zip_Postal_Code_required__c']) {
+                                    $('[id$="shipping_postal_code__c"]').parent().prev().children().text(function () {
+                                        return "* " + $(this).text();
+                                    });
+                                }
+                                
+                                if (countryMap[$('[id$="ShippingCountryList"]').val()]['State_Province_Mandatory__c']) {
+                                    $('[id$="shipping_state__c"]').parent().prev().children().text(function () {
+                                        return "* " + $(this).text();
+                                    });
+                                }
+                            }
+                        }
+                    }
+
                     if('{!ca.isReadonly}' == 'true') {
                         $(".branch_office_street_name_number__c").attr('disabled','disabled');
                         $(".branch_office_city__c").attr('disabled','disabled');
@@ -253,8 +280,33 @@
                         $(".shipping_postal_code__c").attr('disabled','disabled');
                         $(".shipping_state__c").attr('disabled','disabled');
                     }
+
+                    $('[id$="branch_office_postal_code__c"]').parent().prev().children().text(function () {
+                        return $(this).text().replace("*", "");
+                    });
+
+                    if ('{!ca.isocountry.IEC_Zip_Postal_Code_required__c}' == 'true') {
+                        $('[id$="branch_office_postal_code__c"]').parent().prev().children().text(function () {
+                            return "* " + $(this).text();
+                        });
+                    }
+
+                    $('[id$="state_province__c"]').parent().prev().children().text(function () {
+                        return $(this).text().replace("*", "");
+                    });
                     
+                    if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'true') {
+                        $('[id$="state_province__c"]').parent().prev().children().text(function () {
+                            return "* " + $(this).text();
+                        });
+                    }
+
+                    populateShippingAsterisks();
                     
+                    if ('{!ca.isocountry.Postal_Code_Hint_Format__c}' != '' && '{!ca.isocountry.Postal_Code_Format_regEx__c}' != '') {
+                        $(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
+                        $(".shipping_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
+                    }
                 </script>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
@@ -294,6 +346,9 @@
                         FormControlStyle="apcontainer">
                     </DSE:DS_DataQuality>
 
+                    <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();">
+                        <apex:selectOptions value="{!countryList}"/>
+                    </apex:selectList>
                 </apex:outputPanel>
 
 
@@ -321,7 +376,7 @@
 
                     <apex:outputLabel style="margin-right:4%" value="* {!$Label.ISSP_Registration_BusinessPhone}"/>
                     <apex:inputField value="{!ca.fw.newform.Branch_Office_Phone_National__c}"
-                                        onblur="setInternationalAccountPhoneInfo('phone');$('.branch_office_phone__c').change();updatePhoneInfo();" id="locationphoneinput"
+                                        onblur="setInternationalAccountPhoneInfo('phone'); $('.branch_office_phone__c').change(); updatePhoneInfo();" id="locationphoneinput"
                                         style="width:80%"/>
                 </apex:pageBlockSectionItem>
 
@@ -359,6 +414,17 @@
             </apex:pageBlockSection>
 
             <apex:pageBlockSection columns="1" collapsible="false">
+                <script type="text/javascript">
+                    if ('{!ca.isocountry.State_Province_Mandatory__c}' == 'false') {
+                        $('[id$="PhysicalProvince"]').parent().prev().children().text(function () {
+                            return $(this).text().replace("*", ""); 
+                        });
+                        
+                        $('[id$="PostalProvince"]').parent().prev().children().text(function () {
+                            return $(this).text().replace("*", ""); 
+                        });
+                    }
+                </script>
 
                 <apex:outputPanel id="checkBoxAndInfo">
                     <apex:pageBlockSection columns="2">
@@ -425,13 +491,13 @@
                     <apex:pageBlockSection columns="2" collapsible="false">
 
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode" id="PhysicalPostalCode"/>
+                            <apex:outputLabel value="{!IF(ca.isocountry.IEC_Zip_Postal_Code_required__c, '* ','')}{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode" id="PhysicalPostalCode" html-placeholder="{!IF(AND(ca.isocountry.Postal_Code_Hint_Format__c != null, ca.isocountry.Postal_Code_Hint_Format__c != ''), ca.isocountry.Postal_Code_Hint_Format__c, '')}"/>
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
-                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode" id="PostalPostalCode"/>
+                            <apex:outputLabel value="{!IF(ca.isocountry.IEC_Zip_Postal_Code_required__c, '* ','')}{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
+                            <apex:inputField value="{!ca.fw.newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode" id="PostalPostalCode" html-placeholder="{!IF(AND(ca.isocountry.Postal_Code_Hint_Format__c != null, ca.isocountry.Postal_Code_Hint_Format__c != ''), ca.isocountry.Postal_Code_Hint_Format__c, '')}"/>
                         </apex:pageBlockSectionItem>
 
                     </apex:pageBlockSection>
@@ -498,6 +564,12 @@
             </div>
         </apex:pageBlockSection>
 
+        <apex:outputPanel id="noUpdateMessage" >
+            <apex:outputPanel >
+                <apex:pageMessage  summary="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE}" severity="error" strength="3" rendered="{!AND(ca.fw.newForm.ISSP_AMS_Total_Previous_Ownership__c != 100, ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Company__c + ca.fw.newform.ISSP_AMS_Total_Current_Ownership_Individ__c != 100)}"/>
+            </apex:outputPanel >
+        </apex:outputPanel>
+
         <apex:pageBlockSection columns="2" collapsible="false" id="Section3CheckBoxes">
 
             <!--apex:facet name="header">
@@ -505,13 +577,13 @@
                     <apex:outputpanel>{! $Label.ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding}</apex:outputpanel>
                 </apex:outputpanel>
             </apex:facet-->
-
+            
             <!-- CHECKBOXES -->
             <apex:outputPanel >
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(ca.errorFoundCheckBoxes, ca.fw.newForm.Confirm_Ownership_details_are_correct__c==false, ca.fw.newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px;', 'margin-right:5px')}">
                         <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" style="color:black;font-size:110%"/>
-                        <apex:inputCheckbox disabled="{!ca.isReadonly}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="$('[id$=currcorporatedetails]').hide();"/>
+                        <apex:inputCheckbox disabled="{!ca.isReadonly || ca.fw.newForm.ISSP_AMS_Total_Previous_Ownership__c != 100}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="$('[id$=currcorporatedetails]').hide();"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -538,7 +610,7 @@
                 <apex:pageBlockSection columns="1">
                     <apex:pageblockSectionItem labelStyle="width:80%" dataStyle="width:10%;">
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Map_Company_Type_to_Legal_Status__c.Label}"/>
-                        <apex:outputField value="{!ca.fw.newForm.ISSP_AMS_Legal_Status__c}" />
+                        <apex:outputField value="{!ca.fw.newForm.Map_Company_Type_to_Legal_Status__c}" />
                     </apex:pageblockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -676,7 +748,7 @@
                 </div>
                 <br/><br/>
 
-                <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonAdd" action="{!newAgencyContact}" style="margin-left:20px" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact, ownershipMessage">
+                <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonAdd" action="{!newAgencyContact}" style="margin-left:20px" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact, ownershipMessage, noUpdateMessage">
                     <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_Add_Person}
                 </apex:commandLink>
 
@@ -714,7 +786,7 @@
                             </apex:facet>
                         </apex:actionStatus>
 
-                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonEdit" action="{!editAgencyContact}" status="actEditCurrOwner" styleClass="glyphicon glyphicon-pencil" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact, ownershipMessage">
+                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentPersonEdit" action="{!editAgencyContact}" status="actEditCurrOwner" styleClass="glyphicon glyphicon-pencil" oncomplete="updateOwnerRT('Current Owner');showNewContactDialog();" rerender="currContactList, newContact, ownershipMessage, noUpdateMessage">
                             <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                         </apex:commandLink>
 
@@ -750,7 +822,7 @@
 
                 <apex:commandLink rendered="{!NOT(ca.isReadonly)}" action="{!newAgencyContact}" id="c" style="margin-left:20px;display:{!IF(ca.fw.newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship','none','')}"
                         oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();"
-                        rerender="currCompanyList, newCompany, newOwnerQuestions, ownershipMessage">
+                        rerender="currCompanyList, newCompany, newOwnerQuestions, ownershipMessage, noUpdateMessage">
                     <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}
                 </apex:commandLink>
 
@@ -772,7 +844,7 @@
                     </apex:column>
                     <apex:column >
 
-                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentCompaniesEdit" action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" rerender="currCompanyList, newCompany, newOwnerQuestions, ownershipMessage">
+                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="currentCompaniesEdit" action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" rerender="currCompanyList, newCompany, newOwnerQuestions, ownershipMessage, noUpdateMessage">
                             <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                         </apex:commandLink>
 
@@ -930,6 +1002,7 @@
 
     <script>
 
+        
         $(".branch_office_street_name_number__c").change(function () {
             copyBranchAddress();
         });
@@ -962,17 +1035,14 @@
                 $(".shipping_city__c").val($(".branch_office_city__c").val());
                 $(".shipping_postal_code__c").val($(".branch_office_postal_code__c").val());
                 $(".shipping_state__c").val($(".state_province__c").val());
+                $('[id$="ShippingCountryList"]').val($(".country__c").val().toUpperCase());
+                $('#shipping_country__c > input').val($(".country__c").val().toUpperCase());
             }
         }
 
         //console.log('***************** COMPONENT ******************');
         
         $(document).ready(function() {
-            if(!window.location.hash) {
-                window.location = window.location + '#loaded';
-                window.location.reload();
-            }
-            
             showCurrCorporateDetails();
             // binds on change to make checkbox function as radio buttons
             $('[data-group]').on('change', function() {
@@ -983,6 +1053,7 @@
                     }
                 });
 
+                if($(this).attr("data-group")=='agencyLocation') populateShippingCountry();
                 showForms();
             });
 
@@ -993,6 +1064,10 @@
                 setReadonly();
             }
         });
+
+        function toggleCurrencyCode(c) {
+            $('[id$=y2CurrencyCode]').html(' ' + c);
+        }
 
 
         function showCurrCorporateDetails() {
@@ -1008,15 +1083,47 @@
             }
         }
 
+        function populateShippingCountry() {
+            if($('[id$="notifyChangeLocationCheckbox"]').prop("checked")) {
+                if ('{!ca.fw.newform.shipping_country__c}' !='') $('[id$="ShippingCountryList"]').val('{!ca.fw.newform.shipping_country__c}');
+                else $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
+            } else {
+                $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
+            }
+            copyToADShippingCntr();
+        } 
+
+
+        function copyToADShippingCntr(){
+            var dropdownValue = $('[id$="ShippingCountryList"]').val();
+            $('#shipping_country__c > input').val(dropdownValue == null ? "{!ca.account.ShippingCountry}" : dropdownValue);
+            $('#shipping_country__c > input').change();
+            populateShippingAsterisks();
+            resetPCHint();
+        }
+
         function initFieldsSettings() {
             $(".country__c").val("{!ca.isocountry.Name}");
             $(".country__c").attr('readonly', true);
             $(".country__c").attr('disabled','disabled');
 
-            $(".shipping_country__c").val("{!ca.isocountry.Name}");
-            $(".shipping_country__c").attr('readonly', true);
-            $(".shipping_country__c").attr('disabled','disabled');
+            if('{!ca.isReadonly}'=='false'){
+               $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
+               var oldElemt=$('#shipping_country__c > input');
+               oldElemt.attr('Style','display:none;');
+               $('#shipping_country__c').css("padding-right",0);
+               if($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length>0){
+                   $('[id$="ShippingCountryList"]').addClass('error');
+               }
+            }else{
+                 $('[id$="ShippingCountryList"]').css('display','none');
+                 $('#shipping_country__c > input').attr('disabled','disabled');
+             }
             
+            $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
+                return "* " + $(this).text();
+            });
+     
             $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
             });
@@ -1024,6 +1131,20 @@
             $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
             });
+
+            if ($('[id$="ShippingCountryList"]').val() != undefined && countryMap[$('[id$="ShippingCountryList"]').val()] != undefined) 
+                $(".shipping_postal_code__c").attr('placeholder', countryMap[$('[id$="ShippingCountryList"]').val()]['Postal_Code_Hint_Format__c']);
+            else 
+                $(".shipping_postal_code__c").attr('placeholder', '');
+        }
+
+        function resetPCHint() {
+            if ($('[id$="ShippingCountryList"]').val() != undefined && countryMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
+                if (countryMap[$('[id$="ShippingCountryList"]').val()]['Postal_Code_Hint_Format__c'] != undefined) 
+                    $(".shipping_postal_code__c").attr('placeholder', countryMap[$('[id$="ShippingCountryList"]').val()]['Postal_Code_Hint_Format__c']);
+                else $(".shipping_postal_code__c").attr('placeholder', '');
+            } else 
+                $(".shipping_postal_code__c").attr('placeholder', '');
         }
 
         function showForms() {
@@ -1093,13 +1214,12 @@
             $('[id$="newEmail"]' + " :input").attr("disabled", true);
 
             $('[id$="multiSelectId"]' + " :input").attr("disabled", true);
+            $('#shipping_country__c > input').css('display','block');
 
         }
 
         var natmobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemMobile.locationmobileinput}']");
         var mobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationmobile}']");
-
-        //console.log(natmobileacct1);
 
         natmobileacct1.intlTelInput({
             nationalMode: true,
@@ -1130,9 +1250,9 @@
             utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
 
-        var phoneacct1NotUndefined = phoneacct1.val() == undefined ? '' : phoneacct1.val();
+        natfaxacct1.intlTelInput("setNumber", faxacct1.val());
 
-        natphoneacct1.intlTelInput("setNumber", phoneacct1NotUndefined);
+        natphoneacct1.intlTelInput("setNumber", phoneacct1.val());
 
         function setInternationalAccountPhoneInfo(p) {
             if(p=='phone') {
@@ -1141,6 +1261,7 @@
             } else if(p=='mobile') {
                 mobileacct1.val(natmobileacct1.intlTelInput("getNumber"));
             } else {
+                $('[id$="locationfax"]').val(natfaxacct1.intlTelInput("getNumber"));
                 faxacct1.val(natfaxacct1.intlTelInput("getNumber"));
             }
         }

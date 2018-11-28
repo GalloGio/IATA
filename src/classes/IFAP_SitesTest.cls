@@ -66,7 +66,7 @@ private class IFAP_SitesTest {
     
     public static testMethod void testRegistrationController() {
         
-        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard' and r.SobjectType = 'Contact' limit 1];
+        Id StandardContactRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         
         // Instantiate a new controller with all parameters in the page
         IFAP_SiteRegistrationController controller = new IFAP_SiteRegistrationController();
@@ -97,7 +97,7 @@ private class IFAP_SitesTest {
         contact1.AccountId = account1.Id;
         contact1.Email = 'some@email.org';
         contact1.Financial_Assessment_Contact__c = false;
-        contact1.RecordTypeId = StandardContactRecordType.Id;
+        contact1.RecordTypeId = StandardContactRecordTypeId;
         insert contact1;
         controller.email = contact1.Email;      
         controller.registerUser();
