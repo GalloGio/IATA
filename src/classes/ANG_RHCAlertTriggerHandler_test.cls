@@ -127,6 +127,11 @@ private class ANG_RHCAlertTriggerHandler_test {
 		};
 
 		insert changeCodeList;
+
+		List<ISSP_CS__c> isspcs = new List<ISSP_CS__c>();
+		isspcs.add(new ISSP_CS__c(Name= 'ISS OperationalCalendar Airline Profile', Value__c = '00ew0000001QRzE'));
+		isspcs.add(new ISSP_CS__c(Name= 'ISS OperationalCalendar Agency Profile', Value__c = '00ew0000001QRzC,00ew0000001QoBp'));
+		insert isspcs;
 	}
 
 	private static testmethod void test_sucess_legacy(){
@@ -167,7 +172,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	private static testmethod voId test_sucess_newgen(){
 
-		Test.startTest();
 
 		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'FR'];
 		country.ANG_Enable_NewGen__c = true;
@@ -192,6 +196,9 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+		
+		Test.startTest();
+
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
@@ -970,6 +977,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		    IATAcode__c = '0000',
 		    Remittance_frequency__c='Monthly',
 		    ANG_Accreditation_Model__c ='Cash',
+		    ANG_IsNewGenAgency__c = true,
 		    IATA_ISO_Country__c = country2.id,
 		    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
 	    );
