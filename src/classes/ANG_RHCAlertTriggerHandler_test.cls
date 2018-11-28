@@ -22,9 +22,12 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Expire_in_days__c = 0,
 			Identifier__c = 'notification'
 			);
+
+		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-FR');
+	    insert iss;
 		
 		// Create a new ISO Country
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, ANG_Enable_NewGen__c = true);
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = iss.id);
 		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE, ANG_Enable_NewGen__c = true);
 		insert new List<IATA_ISO_Country__c>{country, defCountry};
 
@@ -917,10 +920,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
       	insert csa;
 
-	    AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-FR');
-	    insert iss;
-
-	    Operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
+	    Operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = [SELECT Id FROM AMS_Settlement_System__c WHERE Name = 'BSP-FR'][0].Id, 
 	    	First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
 
 	    insert op;
@@ -952,9 +952,13 @@ private class ANG_RHCAlertTriggerHandler_test {
 
   	private static testmethod void testRedAlertCreationNoConfigurationMatched(){
 	    // no configuration for the account country found, so it will use the default one
+	    AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
+	    insert iss;
+
 	    IATA_ISO_Country__c  country2= new IATA_ISO_Country__c(
 		    Name = 'Portugal', 
 		    ISO_Code__c = 'PT',
+		    AMS_Settlement_System__c = iss.id,
 		    ANG_Enable_NewGen__c = true
 	    );
 
@@ -976,15 +980,12 @@ private class ANG_RHCAlertTriggerHandler_test {
 		    Location_Type__c='HE',
 		    Location_Class__c='P',
 		    IATAcode__c = '0000',
-		    Remittance_frequency__c='Monthly',
+		    Remittance_frequency__c='M',
 		    ANG_Accreditation_Model__c ='Cash',
 		    IATA_ISO_Country__c = country2.id,
 		    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
 	    );
-	   	insert a;     
-	    
-	    AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
-	    insert iss;
+	   	insert a;     	   
 
 	    operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
 	    	First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
