@@ -24,8 +24,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 			);
 		
 		// Create a new ISO Country
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true);
-		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE);
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, ANG_Enable_NewGen__c = true);
+		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE, ANG_Enable_NewGen__c = true);
 		insert new List<IATA_ISO_Country__c>{country, defCountry};
 
 		// Create an Airline HQ account
@@ -954,7 +954,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 	    // no configuration for the account country found, so it will use the default one
 	    IATA_ISO_Country__c  country2= new IATA_ISO_Country__c(
 		    Name = 'Portugal', 
-		    ISO_Code__c = 'PT'
+		    ISO_Code__c = 'PT',
+		    ANG_Enable_NewGen__c = true
 	    );
 
 	    insert country2 ;
@@ -977,7 +978,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 		    IATAcode__c = '0000',
 		    Remittance_frequency__c='Monthly',
 		    ANG_Accreditation_Model__c ='Cash',
-		    ANG_IsNewGenAgency__c = true,
 		    IATA_ISO_Country__c = country2.id,
 		    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
 	    );
