@@ -165,7 +165,10 @@
             </apex:outputpanel>
         </apex:facet>
 
-        <tr><td colspan="4"><div class="strong-label">{!$Label.ISSP_SIS_Membership_ISUA_Section3_Subtitle1}</div></td></tr>
+        <tr><td colspan="4">
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISUA_Section3_Subtitle1}</div>
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISUA_Section3_Subtitle2}</div>
+        </td></tr>
         <apex:outputText ></apex:outputText>
 
         <apex:pageBlockSectionItem >
@@ -230,10 +233,9 @@
         <apex:variable value="{!newForm.Do_you_have_an_iiNET_account__c=='Yes'}" var="iiNET_Yes"/>
         <apex:variable value="{!newForm.Do_you_have_an_iiNET_account__c=='No'}" var="iiNET_No"/>
 
-        <tr><td colspan="4">
-            <apex:outputPanel styleclass="strong-label" rendered="{!iiNET_No}">
-                {!$Label.ISSP_SIS_Membership_ISUA_Section4_Subtitle2}
-            </apex:outputPanel>
+        <tr><td colspan="4" style="{!IF(iiNET_No,'','display:none;')}">
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISUA_Section4_Subtitle2}</div>
+            <a class="copy-info" href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1&topic=iiNet&subtopic=New Account Request" target="_blank">Contact iiNet Team</a>
         </td></tr>
 
         <apex:pageBlockSectionItem rendered="{!iiNET_Yes}">

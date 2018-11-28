@@ -58,6 +58,22 @@ public class AmazonRestTest {
     Test.stopTest();
   }
 
+  static testMethod void uploadFile2() {
+    createCredentials('GenericAttach');
+    createCredentials('RecycleBin');
+
+    Blob pdfArchive = Blob.valueOf('Test');
+    String fileName = 'Certificate.pdf';
+    String contentType = 'application/pdf';
+    AmazonCredentials credential = AmazonCredentials.getCredentials(WrapperAttach.CREDENTIAL_NAME);
+
+    Test.startTest();
+    Boolean result = AmazonRest.uploadFile(credential, 'TestFolder', contentType, pdfArchive);
+    Test.stopTest();
+
+    System.assert(true, result);
+  }
+ 
   public static void createCredentials(String credentialName){
     Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = credentialName, Prod_Configuration__c = credentialName+'aprodconf' , Dev_Configuration__c = credentialName+'adevconf');
     insert Amazon_Cred;

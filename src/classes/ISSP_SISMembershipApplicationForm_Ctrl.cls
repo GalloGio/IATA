@@ -1,5 +1,6 @@
 public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
 
+    public static String AMAZON_CREDENTIALS_NAME = 'GenericAttach';
     public static final Map<String,Schema.RecordTypeInfo> MAP_AP_RT = Schema.SObjectType.AP_Process_Form__c.getRecordTypeInfosByDeveloperName();
     public static final Id AP_RT_ISPA = MAP_AP_RT.get('SIS_Application_ISPA').getRecordTypeId();
     public static final Id AP_RT_ISUA = MAP_AP_RT.get('SIS_Application_ISUA').getRecordTypeId();
@@ -127,7 +128,8 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         Account account = [
             SELECT Id,Name,Sector__c,Category__c,Legal_name__c,Airline_designator__c,
                 BillingStreet,BillingCity,BillingState,BillingPostalCode,BillingCountry,
-                IATA_ISO_Country__c, Date_of_last_clearance__c, Clearance_level__c
+                IATA_ISO_Country__c, Date_of_last_clearance__c, Clearance_level__c,
+                IATA_ISO_Country__r.Name
             FROM Account 
             WHERE Id=:accountId 
         ];
@@ -229,6 +231,9 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
     public PageReference submitForm() {
         this.newCase.Status = 'Open';
         if(validateFields() && saveDraft()) {
+            // upload agreement
+            uploadForm(this.newCase.Id);
+
             PageReference pageref = Page.ISSP_Case;
             pageref.getParameters().put('caseId',this.newForm.Case__c);
             pageref.getParameters().put('mid','M1S2');
@@ -236,6 +241,49 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
             return pageref;
         }
         return null;
+    }
+
+    /**
+        Generates the agreement form as a PDF and uploads it to Amazon
+    **/
+    @future(callout=true)
+    private static void uploadForm(Id caseId) {
+        PageReference formPage = new PageReference('/apex/ISSP_SISMembershipApplicationFormPDF?id=' + caseId);
+        String fileName = 'SISMembershipForm.pdf';
+        String fileIdentifier = 'SIS_Membership_Form';
+        Blob content = Test.isRunningTest()? Blob.ValueOf(''): formPage.getContent();
+        String contentType = 'application/pdf';
+        uploadToAmazon(caseId, fileName, fileIdentifier, content, contentType);
+    }
+
+    /**
+        Upload input file to amazon, including the amazonfile__c record
+    **/
+    private static void uploadToAmazon(Id caseId, String fileName, String fileIdentifier, Blob content, String contentType) {
+        //uplaod file
+        AmazonCredentials credential = AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME);
+        String fullFileName = '500/' + String.valueOf(caseId) + '/' + fileName;
+        if (!amazonRest.uploadFile(credential, fullFileName, contentType, content)) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Internal error in submit'));
+            return;
+        }
+        //create amazonFile__c record
+        AmazonFile__c amazonFile = new AmazonFile__c(
+            Name = fileName,
+            Full_Name_Unique__c = '500/' + String.valueOf(caseId) + '/' + fileName,
+            File_Identifier__c = fileIdentifier,
+            File_Identifier_picklist__c = fileIdentifier,
+            Review_Status__c = 'Pending',
+            RecordTypeId = Schema.SObjectType.AmazonFile__c.RecordTypeInfosByName.get('AMS File').RecordTypeId,
+            Size_MB__c = content.size()* 0.000001, //convert to MB
+            isPublic__c = true,
+            Case__c = caseId
+        );
+        try {
+            insert amazonFile;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        }
     }
 
     /**
@@ -272,8 +320,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
             return true;
         }
         if (this.currentStep==3) {
-            list<String> listMandatoryFileId = new list<String>{'SISMembershipForm'};
-            return checkMandatoryFiles(listMandatoryFileId);
+            return true;
         }
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Wrong step number'));
         return false;

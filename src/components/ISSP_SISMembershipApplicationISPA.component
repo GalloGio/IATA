@@ -208,14 +208,14 @@
 
         <apex:pageBlockSectionItem >
             <apex:outputLabel value="{!$Label.First_name}"/>
-            <apex:inputField styleclass="required" value="{!newForm.Contact_First_name__c}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Contact_First_Name__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
             <apex:outputLabel value="{!$Label.Last_name}"/>
-            <apex:inputField styleclass="required" value="{!newForm.Contact_Last_name__c}"/>
+            <apex:inputField styleclass="required" value="{!newForm.Contact_Last_Name__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
@@ -229,7 +229,7 @@
 
         <apex:pageBlockSectionItem >
             <apex:outputLabel value="{!$Label.Email_address}"/>
-            <apex:inputField styleclass="required email" value="{!newForm.Contact_email__c}" html-placeholder="{!$Label.ISSP_SIS_Membership_Put_a_valid_email}"/>
+            <apex:inputField styleclass="required email" value="{!newForm.Contact_Email__c}" html-placeholder="{!$Label.ISSP_SIS_Membership_Put_a_valid_email}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
         </apex:pageBlockSectionItem>
@@ -265,7 +265,7 @@
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="{!$Label.First_Name}"/>
+            <apex:outputLabel value="{!$Label.First_name}"/>
             <apex:inputField styleclass="required" value="{!newForm.Super_User_First_Name__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
@@ -274,7 +274,7 @@
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="{!$Label.Last_Name}"/>
+            <apex:outputLabel value="{!$Label.Last_name}"/>
             <apex:inputField styleclass="required" value="{!newForm.Super_User_Last_Name__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
@@ -302,6 +302,9 @@
 
         <tr><td colspan="4">
             <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section4_Subtitle1}</div>
+            <p style="margin: 2em;">
+                <a class="copy-info" href="" target="_blank">Click here</a>
+            </p>
         </td></tr>
 
         <apex:pageBlockSectionItem >
@@ -317,7 +320,7 @@
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
 
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c!=null}">
             <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_application__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Digital_Signature_application__c}" styleclass="radio-short required">
@@ -341,8 +344,9 @@
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}"/>
 
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c!=null}">
             <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_verification__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Digital_Signature_verification__c}" styleclass="radio-short required">
@@ -366,8 +370,9 @@
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}"/>
 
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='Yes'}">
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c!=null}">
             <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Legal_Archiving__c.label}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Legal_Archiving__c}" styleclass="radio-short required">
@@ -391,48 +396,7 @@
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_application__c.label}"/>
-            <apex:actionRegion >
-                <apex:selectRadio value="{!newForm.Digital_Signature_application__c}" styleclass="radio-short required">
-                    <apex:selectOption itemValue="Yes" itemLabel="On"/>
-                    <apex:selectOption itemValue="No" itemLabel="Off"/>
-                </apex:selectRadio>
-                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Digital_Signature_Application_Helptext}"
-                    styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-            </apex:actionRegion >
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_verification__c.label}"/>
-            <apex:actionRegion >
-                <apex:selectRadio value="{!newForm.Digital_Signature_verification__c}" styleclass="radio-short required">
-                    <apex:selectOption itemValue="Yes" itemLabel="On"/>
-                    <apex:selectOption itemValue="No" itemLabel="Off"/>
-                </apex:selectRadio>
-                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Digital_Signature_Verification_Helptext}"
-                    styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-            </apex:actionRegion >
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-        </apex:pageBlockSectionItem>
-
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Legal_Archiving__c.label}"/>
-            <apex:actionRegion >
-                <apex:selectRadio value="{!newForm.Legal_Archiving__c}" styleclass="radio-short required">
-                    <apex:selectOption itemValue="Yes" itemLabel="On"/>
-                    <apex:selectOption itemValue="No" itemLabel="Off"/>
-                </apex:selectRadio>
-                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_Legal_Archiving_Helptext}"
-                    styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-            </apex:actionRegion >
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}">
-        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}"/>
         <script>setRequired();</script>
 
     </apex:pageBlockSection>
@@ -464,10 +428,9 @@
         <apex:variable value="{!newForm.Do_you_have_an_iiNET_account__c=='Yes'}" var="iiNET_Yes"/>
         <apex:variable value="{!newForm.Do_you_have_an_iiNET_account__c=='No'}" var="iiNET_No"/>
 
-        <tr><td colspan="4">
-            <apex:outputPanel styleclass="strong-label" rendered="{!iiNET_No}">
-                {!$Label.ISSP_SIS_Membership_ISPA_Section5_Subtitle2}
-            </apex:outputPanel>
+        <tr><td colspan="4" style="{!IF(iiNET_No,'','display:none;')}">
+            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section5_Subtitle2}</div>
+            <a class="copy-info" href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1&topic=iiNet&subtopic=New Account Request" target="_blank">Contact iiNet Team</a>
         </td></tr>
 
         <apex:pageBlockSectionItem rendered="{!iiNET_Yes}">
@@ -487,7 +450,7 @@
             </apex:outputpanel>
         </apex:facet>
 
-        <apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
             <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Join_ICH}"/>
             <apex:actionRegion >
                 <apex:selectRadio value="{!newForm.Is_your_company_joining_the_Clearing_Hou__c}" styleclass="radio-short required">
@@ -495,7 +458,7 @@
                     <apex:selectOption itemValue="No" itemLabel="No"/>
                     <apex:actionSupport event="onchange" rerender="section6"/>
                 </apex:selectRadio>
-            </apex:actionRegion >
+            </apex:actionRegion>
         </apex:pageBlockSectionItem>
 
         <tr><td colspan="4"><div class="strong-label {!IF(newForm.Is_your_company_joining_the_Clearing_Hou__c=='Yes','','hidden')}">
@@ -633,7 +596,7 @@
         <apex:pageBlockSectionItem rendered="{!showSection9}"></apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem rendered="{!showSection9}">
-            <apex:actionRegion>
+            <apex:actionRegion >
                 <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Data_Exporter_Name__c.label}"/>&nbsp;
                 <apex:image value="/img/msg_icons/info16.png" title="{!$ObjectType.AP_Process_Form__c.fields.Data_Exporter_Name__c.InlineHelpText}"
                 styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
@@ -658,11 +621,17 @@
 
             <tr><td colspan="4" class="required"><div class="strong-label">{!$Label.ISSP_SIS_Membership_Choose_an_Option}</div></td></tr>
             <apex:outputText ></apex:outputText>
-            
+            <apex:variable var="helptext" value="{!SUBSTITUTE($Label.ISSP_SIS_Membership_EU_Data_Privacy_Laws_Helptext,'{0}',account.IATA_ISO_Country__r.Name)}" />
             <apex:actionRegion >
                 <apex:selectRadio styleClass="radio-data-privacy-laws required" layout="pageDirection" value="{!newForm.EU_Data_Privacy_Laws__c}">
-                    <apex:selectOption itemValue="A" itemLabel="{!$Label.ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA}"/>
-                    <apex:selectOption itemValue="B" itemLabel="{!$Label.ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionB}"/>
+                    <apex:selectOption itemValue="A" itemEscaped="false"
+                        itemLabel='{!$Label.ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA}
+                            <img src="/img/msg_icons/info16.png" title="{!helptext}" class="help" data-toggle="tooltip" data-placement="right" data-html="true"/>'
+                    />
+                    <apex:selectOption itemValue="B" itemEscaped="false"
+                        itemLabel='{!$Label.ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionB}
+                        <img src="/img/msg_icons/info16.png" title="{!helptext}" class="help" data-toggle="tooltip" data-placement="right" data-html="true"/>'
+                    />
                     <apex:actionSupport event="onchange" rerender="section9"/>
                 </apex:selectRadio>
             </apex:actionRegion>

@@ -27,16 +27,13 @@
             </a>
         </apex:outputPanel>
 
-        <apex:iframe scrolling="false" height="180px"
-            src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newForm.Case__c}&reqCnt=5&reqRequired=Mandatory&reqName=SIS Membership Form&reqDescription={!$Label.ISSP_SIS_Membership_FormDescription}&reqIdentifier=SISMembershipForm&onlyOne=true"/>
-
         <apex:outputpanel rendered="{!showParticipation}">
             {!$Label.ISSP_SIS_Membership_Originals_To_IATA}
 
             <p style="font-weight: bold; margin-left: 3em; margin-top: 1em;">
                 IATA Global Delivery Center (GDC)
             </p>
-            <p style="margin-left: 5.5em; text-indent: -2.5em;">
+            <p style="margin-left: 3em;">
                 Attn: Participation Department<br/>
                 Torre Europa<br/>
                 Paseo de la Castellana, 95<br/>
@@ -55,24 +52,12 @@
             </apex:outputpanel>
         </apex:facet>
 
-        <tr><td colspan="4" class="aplabel">{!$Label.ISSP_SIS_Membership_Disclaimer_BSP_CASS}</td></tr>
-        <apex:outputText ></apex:outputText>
-
-        <p style="text-align: justify;">
+        <p style="text-align: justify; margin: 1em;">
             {!$Label.ISSP_SIS_Membership_Disclaimer_Line1}
-        </p>
-        <p style="text-align: justify;">
-            {!$Label.ISSP_SIS_Membership_Disclaimer_Line2}
-        </p>
-        <p style="text-align: justify;">
-            {!$Label.ISSP_SIS_Membership_Disclaimer_Line3}
-        </p>
-        <p style="text-align: justify;">
-            {!$Label.ISSP_SIS_Membership_Disclaimer_Line4}
         </p>
 
         <apex:pageBlockSectionItem >
-            <apex:outputLabel value="Accept terms and Conditions"/>
+            <apex:outputLabel value="Accept Disclaimer"/>
             <apex:inputCheckbox value="{!newForm.Accept_terms_and_conditions__c}" required="true" styleclass="required"/>
         </apex:pageBlockSectionItem>
 

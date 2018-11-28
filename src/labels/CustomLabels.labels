@@ -22489,44 +22489,12 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <value>SIS provides an option whereby the billed entity can request verification of the digital signature applied on Payable Invoices, via the Member Profile. A verification log file is created by this process which contains the status of the applied digital signature in the countries covered by the service.</value>
     </labels>
     <labels>
-        <fullName>ISSP_SIS_Membership_Disclaimer_BSP_CASS</fullName>
-        <categories>ISSP SIS Membership</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_SIS_Membership_Disclaimer_BSP_CASS</shortDescription>
-        <value>Disclaimer BSP &amp; CASS Application</value>
-    </labels>
-    <labels>
         <fullName>ISSP_SIS_Membership_Disclaimer_Line1</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_Disclaimer_Line1</shortDescription>
-        <value>By submitting the present application form to IATA, I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in Aruba and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_SIS_Membership_Disclaimer_Line2</fullName>
-        <categories>ISSP SIS Membership</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_SIS_Membership_Disclaimer_Line2</shortDescription>
-        <value>I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the ISS Participant, and that I am fully authorized to bind the ISS Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_SIS_Membership_Disclaimer_Line3</fullName>
-        <categories>ISSP SIS Membership</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_SIS_Membership_Disclaimer_Line3</shortDescription>
-        <value>I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_SIS_Membership_Disclaimer_Line4</fullName>
-        <categories>ISSP SIS Membership</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_SIS_Membership_Disclaimer_Line4</shortDescription>
-        <value>By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline.</value>
+        <value>By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this agreement on behalf of my company.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Download_PDF</fullName>
@@ -22535,6 +22503,16 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_Download_PDF</shortDescription>
         <value>download a PDF version of the Membership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_EU_Data_Privacy_Laws_Helptext</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_EU_Data_Privacy_Laws_Helptext</shortDescription>
+        <value>Attachment G should be signed only by companies that are subject to European data protection laws. The attachment offers 2 options: A) between IATA and the participant and B) between IATA, the participant and sub-processor Accelya Kale (for use only where a tripartite agreement is required).
+ACCELYA/Kale is IATA’s sub-processor who processes the incoming data from the airlines. If you choose option B then you need to send us another copy of the signed agreement, as one copy will remain with Accelya.You need to determine if your Airline being in {0}, is subject to the EU law on data protection as these are law requirements in countries that are subjects to the EU data protection law.
+If you are not sure if you should be signing the attachment G, It would be better to verify with your airline’s legal department.”</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA</fullName>
@@ -22670,7 +22648,7 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section3_Subtitle1</shortDescription>
-        <value>The super user will be granted administrator access rights associated to their company’s SIS access for all billing category MISC. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web.</value>
+        <value>The super user will be granted administrator access rights associated to their company’s SIS access for all billing category. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section3_Subtitle2</fullName>
@@ -22702,7 +22680,7 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section4_Subtitle1</shortDescription>
-        <value>A&amp;A stands for ATPCO and ARC. A&amp;A is the organization formed by ATPCO and ARC to support the First &amp; Final™ process.Please note that the optional services have a cost associated to each one of them, to consult the price please click here.</value>
+        <value>A&amp;A stands for ATPCO and ARC. A&amp;A is the organization formed by ATPCO and ARC to support the First &amp; Final™ process.Please note that the optional services have a cost associated to each one of them, to consult the price please click below link.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section4_Title</fullName>
@@ -22726,7 +22704,7 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</shortDescription>
-        <value>If you want to setup a new iiNET connection, please contact our iiNET team through our IATA Customer Portal</value>
+        <value>If you want to setup a new iiNET connection, please contact our iiNET team through below link</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section5_Title</fullName>
@@ -22863,7 +22841,15 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section3_Subtitle1</shortDescription>
-        <value>The super user will be granted administrator access rights associated to their company’s SIS access for all billing category MISC. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web.&lt;br/&gt;After your company is activated in SIS if you want to change the Super User please log a query in our IATA Customer Portal.</value>
+        <value>The super user will be granted administrator access rights associated to their company’s SIS access for all billing category MISC. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISUA_Section3_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISUA_Section3_Subtitle2</shortDescription>
+        <value>After your company is activated in SIS if you want to change the Super User please log a query in our IATA Customer Portal.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section3_Title</fullName>
@@ -23151,7 +23137,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_Terms_Disclaimer</shortDescription>
-        <value>Terms &amp; Disclaimer</value>
+        <value>Disclaimer</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Title</fullName>
