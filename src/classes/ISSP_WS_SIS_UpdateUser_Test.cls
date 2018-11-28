@@ -2,7 +2,7 @@
 private class ISSP_WS_SIS_UpdateUser_Test {
     
     private static final Profile AIRLINE_PORTAL_PROFILE = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'];
-    private static final RecordType IATA_AIRLINE_RT = [SELECT Id, DeveloperName FROM RecordType WHERE DeveloperName = 'IATA_Airline'];
+    private static final RecordType IATA_AIRLINE_RT = RecordTypeSingleton.getInstance().getRecordType('Account', 'IATA_Airline');
 
     @TestSetup
     private static void setup() {

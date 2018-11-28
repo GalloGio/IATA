@@ -52,8 +52,8 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     
     global Database.QueryLocator start(Database.BatchableContext BC) {
         Set<String> locations = new Set<String> {AMS_Utils.LC_PASSENGER, 'D'};
-        Id AGENCY_RECORDTYPE = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordtypeId();
-        Id OSCARCOMMRTID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        Id AGENCY_RECORDTYPE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id OSCARCOMMRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         String reason = 'PCI DSS Compliant';
         Set<String> availableStatus = new Set<String> {AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, 
                                                        AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED,
@@ -717,7 +717,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
         if(multilangTemplates.isEmpty()){
             multilangTemplates.put('English', auxCountryTemplates.get('AMS_' + type + '_Compliant_EN').Id);
-            multilangTemplates.put('English', auxCountryTemplates.get('AMS_' + type + '_Compliant_NonBSP_EN').Id); //AMSU-177
+            multilangTemplates.put('English_NonBSP', auxCountryTemplates.get('AMS_' + type + '_Compliant_NonBSP_EN').Id); //AMSU-177
         } 
 
         system.debug(type + ' templates mapping ' + multilangTemplates);
@@ -731,8 +731,9 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
     //return templateId based on lang selected, default English if none is found
     private static Id getSpecificLangTemplate(String lang, Map<String, Id> availableTemplates){
+        String defaultLang = Lang.contains('NonBSP')?'English_NonBSP':'English';
         if(availableTemplates.get(lang) != null) return availableTemplates.get(lang);
-        else return availableTemplates.get('English');
+        else return availableTemplates.get(defaultLang);
     }
 
     public class ErrorWrapper {

@@ -25,24 +25,13 @@ global class ams2gdp_Batch_Agency_Affiliation implements Database.Batchable<sObj
 		processNextBatch = runNext;
 		extraIds = ids;
 
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
-
 		String fields = ' Id, Name, Legacy_External_ID__c, Account__c, Legacy_System__c '
 			+ ', Affiliation__r.Name, Affiliation__r.Affiliation_Code__c ';
 
-		//-- Query conditions
-		// String accreditation_condition = 'SELECT Related_Account__c '
-		// 	+	'FROM Accreditation__c '
-		// 	+	'WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\')'
-		// 	+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
 
-		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
-			, 'Account__r.IATACode__c != null'
-			, 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-			, 'Account__r.CNS_Agency__c = false'
-			, 'Account__r.CNS_Account__c = false'
-			// , 'Account__c IN ('+accreditation_condition+')'
-		};
+	    List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''};
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
+
 
 		if(extraIds!=null && extraIds.size() > 0) {
 			 if(extraIds[0]=='none'){
@@ -178,7 +167,7 @@ global class ams2gdp_Batch_Agency_Affiliation implements Database.Batchable<sObj
 
 	global void finish(Database.BatchableContext BC)
 	{
-		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_AMS_Account_Role(true, isManual));
+		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_AMS_Account_Role(true, isManual),170);
 		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
 		//--Send completion notification
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);

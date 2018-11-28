@@ -69,7 +69,7 @@ public class ANG_AccountTriggerHandler {
 
 		//AND ( RecordType.DeveloperName = 'IATA_Agency', OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )
 		for(Account a : triggerNew){
-			if(a.RecordTypeID != RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency'))
+			if(a.RecordTypeID != RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'))
 				continue;
 
 			if(Trigger.isInsert || ( oldMap.get(a.Id).TradeName__c <> a.TradeName__c || oldMap.get(a.Id).Name <> a.Name || oldMap.get(a.Id).Short_Name__c <> a.Short_Name__c || oldMap.get(a.Id).IATACode__c <> a.IATACode__c)){
@@ -572,7 +572,8 @@ public class ANG_AccountTriggerHandler {
 			accsIds.add(a.Id);
 
 		Map<Id,AMS_Agency_Operations__c> agOpMap = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accsIds);
-		List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, agOpMap.keySet());
+		List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c','BSP'),
+		 agOpMap.keySet());
 
 		Integer aux = 0;
 		for(AMS_Operation__c op: opCodes){

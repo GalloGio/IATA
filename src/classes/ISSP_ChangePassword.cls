@@ -64,7 +64,7 @@ public without sharing class ISSP_ChangePassword {
         try {                    
             // validate fields
             errorMessage = new list<string>();
- 
+              
             if (errorMessage.size() > 0) {
                 return null;
             }

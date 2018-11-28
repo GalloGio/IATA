@@ -1,9 +1,6 @@
 trigger trgIFAPQualityIssue on IFAP_Quality_Issue__c (before insert, after insert, before update, after update, after delete) {
     // get the IFAP case recordtype
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-    
-    
-    
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
     
     if(Trigger.isAfter && Trigger.isUpdate){
     

@@ -6,9 +6,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
-
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         Account acc1 = new Account(RecordTypeId = accountRT, Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
         Account HO1, HO2, BR1, BR2, BR3, BR4, BR5, BR6;
         boolean isPax = true;
@@ -131,7 +129,11 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         
         List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Company__c = acc1.id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, 
+                                                    Company__c = acc1.id, First_name__c = 'NameToUse', 
+                                                    Last_name__c = 'Last', Job_title__c = 'ABC', Mobile__c = '+4112345678', 
+                                                    Phone__c = '3424322343', Email__c = 'unique@email.com', 
+                                                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')));
         insert acList;
         
         Contact c1 = new Contact(AccountId = acc1.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
@@ -174,7 +176,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
         delete roleList;
         
-        Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2');
         
         Account brAccount  = new Account(RecordtypeId=accountRT, Name='OwnerAccount', Location_Type__c = 'BR', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141231', AIMS_ID__c = '98765432', Source_System__c = 'AIMS2', Top_Parent__c = ownerAccount.Id);
@@ -189,7 +191,11 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         // Create an Accreditation Contact record of type Account Ownership and expect a relevant account role to be created
         // Later expect updated values on AC record to match the role record
-        AMS_Accreditation_Contact__c companyOwnershipAC = new AMS_Accreditation_Contact__c(First_Name__c = 'Name', AMS_Pax_Accreditation_Form__c = acList.get(0).AMS_Pax_Accreditation_Form__c, Agency_Owner__c = true, Financial_interest__c = 20, Company__c = ownerAccount.id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company'), Last_name__c = 'test', Phone__c = '23432434');
+        AMS_Accreditation_Contact__c companyOwnershipAC = new AMS_Accreditation_Contact__c(First_Name__c = 'Name', 
+                                                            AMS_Pax_Accreditation_Form__c = acList.get(0).AMS_Pax_Accreditation_Form__c, 
+                                                            Agency_Owner__c = true, Financial_interest__c = 20, Company__c = ownerAccount.id,
+                                                             RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company'), 
+                                                             Last_name__c = 'test', Phone__c = '23432434');
         acList.add(companyOwnershipAC);
         upsert acList;
         
@@ -215,7 +221,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(20, roleList.get(0).Percentage__c);
         
         companyOwnershipAC.Financial_Interest__c = 100;
-        companyOwnershipAC.RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        companyOwnershipAC.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
         update companyOwnershipAC;
         
         
@@ -304,7 +310,6 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_AccreditationContactController.AccreditationContactWrapper> wrapperList = new List<AMS_AccreditationContactController.AccreditationContactWrapper>();
         List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
         delete roleList;
-        //Id employeeRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
         
         Contact c = [select id, AccountId from Contact where email = 'unique@email.com' limit 1];
         List<AMS_Accreditation_Contact__c> acListToUpdate = [select email__c, Agency_owner__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, Agency_role__c, First_Name__c, Last_Name__c, contact__c from AMS_Accreditation_Contact__c];
@@ -390,7 +395,11 @@ public with sharing class AMS_AccountRoleCreatorTest {
         //System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
     
     
-        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email2.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
+        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, 
+                                                                            Company__c = accId, First_name__c ='NameToUse', Last_name__c ='Last', 
+                                                                            Job_title__c ='ABC', Mobile__c ='+4112345678', Phone__c ='3424322343', 
+                                                                            Email__c ='unique@email2.com', 
+                                                                            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
         insert newAc;
         
         accountsInvolved = new Set<Id>();
@@ -463,7 +472,11 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
     
     
-        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique2@email.com', Person_AMS__c = newPerson.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
+        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, 
+                                                                                Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', 
+                                                                                Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', 
+                                                                                Email__c='unique2@email.com', Person_AMS__c = newPerson.Id, 
+                                                                                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
         insert newAc;
         
         accountsInvolved = new Set<Id>();
@@ -557,7 +570,11 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(1, roleList.size());
         System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
     
-        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, AMS_Ownership_Role__c = roleList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', Contact__c = newCon.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
+        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, 
+                                                                                AMS_Ownership_Role__c = roleList.get(0).Id, Company__c = accId, 
+                                                                                First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', 
+                                                                                Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', 
+                                                                                Contact__c = newCon.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
         insert newAc;
         
         AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
@@ -637,8 +654,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
         delete roleList;
         //DT: Employee are no more created in the Role Object. Using Owner instead
-        //Id employeeRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
-        Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+        Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         
         Contact c = [select id, AccountId from Contact where email = 'unique@email.com' limit 1];
         //AMS_Account_Role__c e1 = new AMS_Account_Role__c(recordTypeId = employeeRtId, Account__c = c.AccountId, Person__c = null, Contact__c = c.Id);
@@ -684,7 +700,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
         delete roleList;
         //DT: Employee are no more created in the Role Object. Using Owner instead
-        Id employeeRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+        Id employeeRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         
         Contact c = [select id, AccountId from Contact where email = 'unique@email.com' limit 1];
         AMS_Account_Role__c e1 = new AMS_Account_Role__c(recordTypeId = employeeRtId, Account__c = c.AccountId, Person__c = null, Contact__c = c.Id);
@@ -732,7 +748,6 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
         delete roleList;
         //DT: Employee are no more created in the Role Object
-        //Id employeeRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
         
         Contact c = [select id, AccountId from Contact where email = 'unique@email.com' limit 1];
         system.debug('Contact: ' + c);
@@ -837,7 +852,10 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         insert onlineAccreditation;
         
-        AMS_Accreditation_Contact__c accContact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='ewrstdfgyhujntest@test.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
+        AMS_Accreditation_Contact__c accContact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, 
+                                                                                    First_name__c = 'NameToUse', Last_name__c = 'Last', Job_title__c = 'ABC', 
+                                                                                    Mobile__c = '+4112345678', Phone__c = '3424322343', Email__c = 'ewrstdfgyhujntest@test.com', 
+                                                                                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
         
         insert accContact;
 
@@ -845,10 +863,10 @@ public with sharing class AMS_AccountRoleCreatorTest {
         list<Contact> lsContacts = AMS_AccountRoleCreator.transformACsWithPersonLinking_createContactList(lsAccCont, null); 
     }
 
-     @isTest static void test_RoleCreationForCorrectionProcess(){
+    @isTest static void test_RoleCreationForCorrectionProcess(){
     Test.startTest();
-        Id ownerRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
-        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+        Id correctionOSCARRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
         AMS_OSCAR__c oscar = [select AMS_Online_Accreditation__c from AMS_OSCAR__c limit 1];
 
@@ -864,8 +882,14 @@ public with sharing class AMS_AccountRoleCreatorTest {
         insert ownersList;
 
         List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner1.Id, AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, Contact__c = conList.get(0).id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Agency_owner__c = true, Email__c='unique2@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner2.Id,AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, First_name__c='2', Last_name__c='Comapny2', Job_title__c='', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='company2@email.com', Agency_owner__c = true, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner1.Id, AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, 
+                                                        Contact__c = conList.get(0).id, First_name__c='NameToUse', Last_name__c ='Last', Job_title__c ='ABC',
+                                                         Mobile__c ='+4112345678', Phone__c='3424322343', Agency_owner__c = true, Email__c ='unique@email.com', 
+                                                         RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner2.Id,AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, 
+                                                        First_name__c ='', Last_name__c ='Comapny', Job_title__c ='', Mobile__c ='+4112345678', Phone__c ='3424322343', 
+                                                        Email__c ='company@email.com', Agency_owner__c = true, 
+                                                        RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company')));
         insert acList;
 
         oscar.RecordTypeId = correctionOSCARRecTypeId;
@@ -884,13 +908,9 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
     @isTest static void test_CORCCCorrectionProcess(){
         
-        //AMS_OSCAR_TestDataFactory.createOSCARtestDataAccHier();
-        //AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
-        //Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
-
         Test.startTest();
         
-        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        Id correctionOSCARRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
         AMS_OSCAR__c oscar = [select Id, Account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
         System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
@@ -920,7 +940,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
@@ -941,8 +961,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
     @isTest static void test_CADCCCorrectionProcess(){
         
         Test.startTest();
-        
-        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        Id correctionOSCARRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
         AMS_OSCAR__c oscar = [select Id, Account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c limit 1];
 
@@ -963,13 +982,9 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
     @isTest static void test_CADCCCorrectionProcess2(){
         
-        //AMS_OSCAR_TestDataFactory.createOSCARtestDataAccHier();
-        //AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
-        //Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
-
         Test.startTest();
         
-        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        Id correctionOSCARRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
         AMS_OSCAR__c oscar = [select Id, Account__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Account__r.Name = 'My Travels' limit 1];
         System.debug('test_CADCCCorrectionProcess oscar: ' + oscar);
@@ -999,7 +1014,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
             Phone__c= '123456789',
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= accre.Id,
-            RecordTypeId= Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId()
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
 
@@ -1018,7 +1033,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
     @isTest static void test_LETCCCorrectionProcess(){
         Test.startTest();
-        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        Id correctionOSCARRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
         AMS_OSCAR__c oscar = [select AMS_Online_Accreditation__c from AMS_OSCAR__c limit 1];
 
