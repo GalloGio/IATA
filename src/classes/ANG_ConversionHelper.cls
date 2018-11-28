@@ -1283,7 +1283,7 @@ global with sharing class ANG_ConversionHelper {
         
         ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
         
-        List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c, Is_PCI_compliant__c from Account where Id in:accts];
+        List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c from Account where Id in:accts];
         
         String statusAA, statusCC = null;
 
