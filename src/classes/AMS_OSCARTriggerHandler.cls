@@ -4264,7 +4264,7 @@ public class AMS_OSCARTriggerHandler {
         if(Trigger.isUpdate){
 
             for(ID oscarId:oldMap.keySet()){
-                if(newMap.get(oscarId).ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessSet.contains(newMap.get(oscarId).Process__c) && oldMap.get(oscarId).ANG_Type_Of_Change__c != newMap.get(oscarId).ANG_Type_Of_Change__c &&  newMap.get(oscarId).ANG_Type_of_change__c !='Conversion to International'){
+                if(newMap.get(oscarId).ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessSet.contains(newMap.get(oscarId).Process__c) && oldMap.get(oscarId).ANG_Type_Of_Change__c != newMap.get(oscarId).ANG_Type_Of_Change__c &&  newMap.get(oscarId).ANG_Type_of_change__c != AMS_Utils.CONVERTTOINTERNATIONAL){
                     oscarsToProcess.add(oscarId);
                     newMap.get(oscarId).Backup_In_Progress__c = true;
                 }
@@ -4272,12 +4272,9 @@ public class AMS_OSCARTriggerHandler {
             }
         }
        
-
         for(Id oscarId: oscarsToProcess){
             ID jobID = System.enqueueJob(new ANG_BackupEngineHelper(oscarId,true));
-            
         }
-
         
     }
 
@@ -4296,13 +4293,9 @@ public class AMS_OSCARTriggerHandler {
         }
 
         for(Id oscarId: oscarsToProcess){
-
             ID jobID = System.enqueueJob(new ANG_RollbackEngineHelper(oscarId));
-            
         }
-
         
     }           
-
 
 }
