@@ -204,11 +204,11 @@ public with sharing class IECZuoraHelper {
     }
     
     public static String getCurrentDate() {
-        return DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss', 'UTC');
+        return DateTime.now().format('yyyy-MM-dd', 'UTC');
     }
     
     public static String getFutureDate(DateTime dtFuture) {
-        return dtFuture.format('yyyy-MM-dd\'T\'HH:mm:ss', 'UTC');
+        return dtFuture.format('yyyy-MM-dd', 'UTC');
     }
     
     public Static DateTime GetDateInAmericasNewYorkTZ(DateTime dtCurrent) {
