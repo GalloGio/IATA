@@ -864,6 +864,9 @@ global without sharing class ISSP_APProcess {
             //check ICCS_Join_market
             listMandatoryFiles.add('ICCS_Join_market');
         }
+        if(newForm.Airline_wish_to_join_ICCS__c==null){
+            newForm.Airline_wish_to_join_ICCS__c = 'No';
+        }
         if(newForm.Airline_wish_to_join_ICCS__c == 'No') {
             //check Bank_Mandate
             listMandatoryFiles.add('Bank_Mandate');
