@@ -15,7 +15,8 @@ public with sharing class clsInternalCaseDML {
         'Cases - China & North Asia', //Oct-27-2011 AP
         'FDS Ad-hoc Calendar Change (R&S) Locked', // Jul-27-2015 SA INC193042
         'Complaint (IDFS ISS)',
-        'ID Card Application' // Jan-25-2016
+        'ID Card Application',
+        'Cases - Global'// Jan-25-2016
         };
 
 
@@ -62,7 +63,8 @@ public with sharing class clsInternalCaseDML {
                                 (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[5]))||
                                 (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[6]))|| // Jul-27-2015 SA INC193042
                                 (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[7]))||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[8]))){ // Jan-25-2016
+                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[8]))||
+                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[9]))){ // Jan-25-2016
                                     //ObjCase.Status = 'Escalated';
                                     ObjCase.Status = 'Escalated Internally'; //Oct-27-2011 AP
 
@@ -106,7 +108,8 @@ public with sharing class clsInternalCaseDML {
                                 (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[5]))||
                                 (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[6]))|| // Jul-27-2015 SA INC193042
                                 (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[7]))||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[8]))){
+                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[8]))||
+                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[9]))){
 
                                     ObjCase.Status = 'Action Needed'; //Oct-27-2011 AP
                                     //ObjCase.Status = 'In progress';
