@@ -390,7 +390,10 @@ IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Major shareholding&quot;), &quot;Major
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Minor shareholding&quot;), &quot;Minor shareholding&quot;+BR(), NULL)+
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Accreditation type&quot;), &quot;Accreditation type&quot;+BR(), NULL)+
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Location type to different legal entity&quot;), &quot;Location type to different legal entity&quot;+BR(), NULL)+ 
-IF(INCLUDES( ANG_Type_Of_Change__c, &quot;VMFR&quot;), &quot;VMFR&quot;, NULL)</formula>
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;VMFR&quot;), &quot;VMFR&quot;, NULL) + 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Conversion to GoLite&quot;), &quot;Conversion to GoLite&quot;, NULL) +
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Conversion to Domestic with Cash&quot;), &quot;Conversion to Domestic with Cash&quot;, NULL) + 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Conversion to International&quot;), &quot;Conversion to International&quot;, NULL)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Type of change</label>
         <required>false</required>
@@ -44232,10 +44235,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <picklistValues>
             <picklist>ANG_Type_Of_Change__c</picklist>
             <values>
-                <fullName>Accreditation type</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Conversion to Domestic with Cash</fullName>
                 <default>false</default>
             </values>
@@ -44245,50 +44244,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Conversion to International</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hierarchy</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Legal name</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Legal status</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Location</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Location type</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Location type to different legal entity</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Major shareholding</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Minor shareholding</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ownership</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Trade name</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>VMFR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
