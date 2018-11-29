@@ -9,20 +9,22 @@ global class AMS_HierarchyHelper {
 
 		system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> accountsIds ' + accountsIds);
 
-		for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c
-		                                      FROM AMS_Agencies_relationhip__c 
-		                                      WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
+		if(!accountsIds.isEmpty()) {
+			for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c
+			                                      FROM AMS_Agencies_relationhip__c 
+			                                      WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
 
-			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> trovo hierarchy ' + h.ID);
-			if (hierarchyToAccounts.get(h.Hierarchy__c) == null)
-				hierarchyToAccounts.put(h.Hierarchy__c, new Set<Id>());
+				system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> trovo hierarchy ' + h.ID);
+				if (hierarchyToAccounts.get(h.Hierarchy__c) == null)
+					hierarchyToAccounts.put(h.Hierarchy__c, new Set<Id>());
 
 
-			if (accountsIds.contains(h.Parent_Account__c)) {
-				hierarchyToAccounts.get(h.Hierarchy__c).add(h.Parent_Account__c);
+				if (accountsIds.contains(h.Parent_Account__c)) {
+					hierarchyToAccounts.get(h.Hierarchy__c).add(h.Parent_Account__c);
 
-			}/*else */if (accountsIds.contains(h.Child_Account__c)) {
-				hierarchyToAccounts.get(h.Hierarchy__c).add(h.Child_Account__c);
+				}/*else */if (accountsIds.contains(h.Child_Account__c)) {
+					hierarchyToAccounts.get(h.Hierarchy__c).add(h.Child_Account__c);
+				}
 			}
 		}
 
@@ -34,6 +36,8 @@ global class AMS_HierarchyHelper {
 		for (Id accountId : accountsIds)
 			result.put(accountId, new List<AMS_Agencies_relationhip__c>());
 		//AMSU-134 added HO_Flag__c,Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
+		if(hierarchyToAccounts.keyset().isEmpty()) return result;
+
 		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  
 												Child_Account__r.Status__c, Parent_Account__r.Status__c, Child_Account__r.Reason__c, Parent_Account__r.Reason__c,
 												HO_Flag__c, Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
@@ -546,7 +550,7 @@ global class AMS_HierarchyHelper {
 
 		AMS_OSCAR__c oscar = [SELECT Process__c FROM AMS_OSCAR__c WHERE Id = :theOscarId LIMIT 1];
 
-		if(oscar.Process__c == AMS_Utils.VOLRELINQUISH || oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA){
+		if((oscar.Process__c == AMS_Utils.VOLRELINQUISH || oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA && !accountIdToBeAdded.isEmpty())){
 
 			// remove the accounts terminated and not accreditated from the list of process detail to be created
 			for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND (Status__c = :AMS_Utils.ACC_S0_TERMINATED OR Status__c =: AMS_Utils.ACC_S1_NOTACCREDITED OR Status__c = '')]){
@@ -554,7 +558,7 @@ global class AMS_HierarchyHelper {
 				accountIdToBeAdded.remove(a.Id);
 			}
 
-		} else {
+		} else if(!accountIdToBeAdded.isEmpty()) {
 
 			// remove the accounts terminated from the list of process detail to be created
 			for (Account a : [SELECT Id, Name, Status__c FROM Account WHERE Id IN :accountIdToBeAdded AND (Status__c = :AMS_Utils.ACC_S0_TERMINATED OR Status__c = '')]){
@@ -568,8 +572,12 @@ global class AMS_HierarchyHelper {
 		Set<Id> alreadyThere = new Set<Id>();
 		//DTULLO: Added check on the record type
 		//for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId ]) {
-		for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId and recordtype.developername='Agency_Involved']) {
-			alreadyThere.add(det.Account__c);
+
+		if(theOscarId != null){
+			for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId and recordtype.developername='Agency_Involved']) {
+				alreadyThere.add(det.Account__c);
+			}
+
 		}
 
 		List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();

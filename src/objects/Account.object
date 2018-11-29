@@ -15089,6 +15089,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <value>
                     <fullName>B</fullName>
                     <default>false</default>
+                    <label>Twice a week</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
                     <label>Every 3 days</label>
                 </value>
                 <value>
@@ -15103,7 +15108,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=ZACCMGT_KF%26X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://bw.iata.org/redirect?url=/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=TDS_LO_SD_SABYACC&amp;X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -32479,6 +32484,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -82219,6 +82228,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>V</fullName>
                 <default>false</default>
             </values>
@@ -93667,6 +93680,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
 
@@ -93682,6 +93696,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
 
