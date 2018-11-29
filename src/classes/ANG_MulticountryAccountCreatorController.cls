@@ -92,14 +92,13 @@ public with sharing class ANG_MulticountryAccountCreatorController {
             else
                 listAccount.add(acct);
         isHierarchyMulticountry = false;
-        hasErrors = (listAccount.size() < 2)? true : false;
+        hasErrors = (listAccount.isEmpty())? true : false;
 	}
 
     public void addAccount(){
         
         Account acc = new Account();
         listAccount.add(acc);
-        hasErrors = (listAccount.size() < 2)? true : false;
     }
 
     public PageReference saveAccount() {
@@ -142,7 +141,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
     }
 	
     public void submitHierarchy(){
-    	
+    	hasErrors = false;
     	try{
 	    	if(checkMulticountry()){
 	    		oscar.ANG_Hierarchy_Created__c = true;
@@ -168,13 +167,12 @@ public with sharing class ANG_MulticountryAccountCreatorController {
     private boolean checkMulticountry(){
     	
     	isHierarchyMulticountry = false;
-    	if(listAccount.size() < 2){
+    	if(listAccount.isEmpty()){
     		return isHierarchyMulticountry;
     	}
     	
-    	Account firstAcc = listAccount.get(0);
     	for(Account ac: listAccount){
-    		if(firstAcc.IATA_ISO_Country__c != ac.IATA_ISO_Country__c)
+    		if(mainAccount.IATA_ISO_Country__c != ac.IATA_ISO_Country__c)
     			isHierarchyMulticountry = true;
     	}
     	
