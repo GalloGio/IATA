@@ -105,7 +105,7 @@ public  class ISSP_TC_Accept {
 
                 Set<String> allowedLocTypes = new Set<String>{'HO', 'HE', 'AO'};
 
-                if (((acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent') && acc.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agent')) && 
+                if (((acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent') && acc.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) && 
                     (allowedLocTypes.contains(acc.Location_Type__c) || acc.Is_Branch_Abroad__c == 'Yes') &&
                     (AMS_Utils.ACTIVEAGENCYSTATUS.contains(acc.Status__c) || acc.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) &&
                     (userList[0].Contact.Designated_IFAP_Contact__c || userList[0].Contact.User_Portal_Status__c == 'Approved Admin')) {
