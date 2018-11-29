@@ -172,9 +172,8 @@ public with sharing class ANG_MulticountryAccountCreatorController {
     		return isHierarchyMulticountry;
     	}
     	
-    	Account firstAcc = listAccount.get(0);
     	for(Account ac: listAccount){
-    		if(firstAcc.IATA_ISO_Country__c != ac.IATA_ISO_Country__c)
+    		if(mainAccount.IATA_ISO_Country__c != ac.IATA_ISO_Country__c)
     			isHierarchyMulticountry = true;
     	}
     	
