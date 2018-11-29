@@ -68,7 +68,7 @@
         h.copyBillingToShipping(c);
     },
 
-    validateAddress : function (c, e) {
+    validateAddress : function (c, e, h) {
         var mode = e.currentTarget.dataset.mode;
         c.set("v.valid"+mode, 2); //set spinner
 
@@ -98,6 +98,7 @@
                     cmpEvent.fire();  
 
                     c.set("v.valid"+mode, 1);
+                    h.copyBillingToShipping(c);
                 }else{
                     c.set("v.suggestions", addresses);
                     c.set("v.suggestionsMode", mode);
@@ -106,6 +107,7 @@
                 
                 c.set("v.suggestionsMode", "hidden");
                 c.set("v.valid"+mode, -1);
+                h.copyBillingToShipping(c);
             }
         });
         $A.enqueueAction(action);
