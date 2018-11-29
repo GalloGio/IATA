@@ -57,5 +57,22 @@
                      <td><apex:outputField value="{!countryRequirement.Comments__c}"/></td></tr>
             </tbody>
     	</table>
-           
+
+        <!-- for CASS show an Accept conditions box -->
+        <apex:outputPanel layout="block" style="padding: 40px;" rendered="{!isCASS}">
+        <div class="alert alert-danger" role="alert">Please note that as part of the joining process, a test file for CASSlink billing have to be submitted. The requirements dor this file are described in the CASSlink specifications handbook, and we have also prepared a guide with the most frequent issues encuntered during the testing process. Please make sure you read the documents below and made the necessary preparation.</div>
+        <div class="row">
+            <apex:outputPanel layout="block" styleclass="col center" rendered="{!DocumentCASSSpecification!=null}">
+                Download the&nbsp;<apex:outputLink value="{!URLFOR($Action.Document.Download, DocumentCASSSpecification.Id)}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!DocumentCASSSpecification.Name}</apex:outputLink>&nbsp;(pdf)
+                <br/>
+                <apex:image styleclass="doc-border" value="{!URLFOR($Resource.ISSP_APProcess,'/img/CASS_Technical_Specifications_Handbook_screenshot.png')}"/>
+            </apex:outputPanel>
+            <apex:outputPanel layout="block" styleclass="col center" rendered="{!DocumentAppendixA!=null}">
+                Download the&nbsp;<apex:outputLink value="{!URLFOR($Action.Document.Download, DocumentAppendixA.Id)}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!DocumentAppendixA.Name}</apex:outputLink>&nbsp;(pdf)
+                <br/>
+                <apex:image styleclass="doc-border" value="{!URLFOR($Resource.ISSP_APProcess,'/img/AppendixA_screenshot.png')}"/>
+            </apex:outputPanel>
+        </div>
+        </apex:outputPanel>
+
 </apex:component>
