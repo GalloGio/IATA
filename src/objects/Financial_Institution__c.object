@@ -132,7 +132,7 @@
             <restricted>true</restricted>
             <valueSetName>Financial_Security_Country_Coverage</valueSetName>
         </valueSet>
-        <visibleLines>20</visibleLines>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>Financial_Security_Regional_Coverage__c</fullName>
