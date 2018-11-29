@@ -194,7 +194,6 @@ public class AMS_GDP_Integration_Handler {
             updateField(aSF, 'WebStar_ID__c', a.EXTERNALID, fMap);
             updateField(aSF, 'Last_re_inspection_date__c', a.VERIFICATIONDATE, fMap);
             updateField(aSF, 'Original_approval_date__c', a.RC, fMap);
-            updateField(aSF, 'Endorsed_Accredited_By__c', getSfId('GDP_Reference_Table__c', 'Code__c', a.ORGABBR), fMap);
             updateField(aSF, 'Status__c', getSfId('GDP_Reference_Table__c', 'Code__c', a.STATUS), fMap);
             updateField(aSF, 'Date__c', a.EFFECTIVEDATE, fMap);
             updateField(aSF, 'Class__c', getSfId('GDP_Reference_Table__c', 'Code__c', a.ORGCLASS), fMap);
