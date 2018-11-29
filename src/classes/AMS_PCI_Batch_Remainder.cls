@@ -25,6 +25,9 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
         Map<String, EmailTemplate> mapTemplates = new Map<String, EmailTemplate>();
         Map<Id,List<Attachment>> mapAttachements = new Map<Id,List<Attachment>>();
         List<EmailTemplate> templates = getEmailTemplates('AMS_PCI_Compliant_reminder_%');
+        //AMSU-177
+        templates.addAll(getEmailTemplates('AMS_PCI_Compliant_NonBSP_reminder_%'));
+
         for(EmailTemplate template : templates) {
             mapTemplates.put(template.DeveloperName, template);
             mapAttachements.put(template.Id, new List<Attachment>());
@@ -61,7 +64,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
     }
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         String accountStatus = AMS_Utils.ACC_S0_TERMINATED;
         String reason = 'PCI DSS Compliant';        
 
@@ -83,6 +86,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
         String query = 'SELECT Id, Subject, CaseNumber, Oscar__c, Account.ANG_PCI_compliance_expiry_date__c, Reason1__c, CreatedDate, IATA_Code__c, ContactId, ';
         query += 'Contact.Name, AccountId, Account.Is_PCI_compliant__c, Account.IATACode__c, Contact.Preferred_Language__c, Account.IATA_ISO_Country__c, ';
         query += 'Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c, ';
+        query += 'Contact.Account.IATA_ISO_Country__r.BSP__c, '; //AMSU-177
         query += '(SELECT Subject, CreatedDate FROM EmailMessages WHERE Subject IN :subjects) ';
         query += 'FROM Case ';
         query += 'WHERE RecordTypeId = :recordTypeId AND Account.Status__c != :accountStatus AND IsClosed = false AND Reason1__c = :reason AND Account.ANG_IsNewGenAgency__c = false ';
@@ -208,7 +212,8 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
 
             system.debug('has user');
 
-            String emailTemplateName = 'AMS_PCI_Compliant_reminder_' + (isRenewal ? 'renewal_' : '');
+            //AMSU-177 - add bsp info
+            String emailTemplateName = 'AMS_PCI_Compliant'+ (cse.Contact.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'') +'_reminder_' + (isRenewal ? 'renewal_' : '');
             if(String.isBlank(cse.Contact.Preferred_Language__c) || cse.Contact.Preferred_Language__c == 'English') {
                 emailTemplateName += 'EN';
             } else {
@@ -231,13 +236,15 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
                 }
                 continue;
             } else if(template == null) {
-                emailTemplateName = 'AMS_PCI_Compliant_reminder_' + (isRenewal ? 'renewal_' : '');
+                //AMSU-177 - add bsp info
+                emailTemplateName = 'AMS_PCI_Compliant'+ (cse.Contact.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'') +'_reminder_' + (isRenewal ? 'renewal_' : '');
                 emailTemplateName += 'EN';
                 if(isRenewal) {
                     Integer daysCounter = Date.today().daysBetween(cse.Account.ANG_PCI_compliance_expiry_date__c);
                     emailTemplateName += daysCounter < 16 ? '_15' : '_30';
                 }
-                emailTemplateName = 'AMS_PCI_Compliant_reminder_EN';
+                //AMSU-177 - add bsp info
+                emailTemplateName = 'AMS_PCI_Compliant'+ (cse.Contact.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'') +'_reminder_EN';
                 template = mapTemplates.get(emailTemplateName);
             }
 

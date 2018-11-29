@@ -2483,6 +2483,29 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Postal_Code_Format_regEx__c</fullName>
+        <description>regEx to validate correct Postal Code format on online forms</description>
+        <externalId>false</externalId>
+        <inlineHelpText>regEx to validate correct Postal Code format on online forms</inlineHelpText>
+        <label>Postal Code Format regEx</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Postal_Code_Hint_Format__c</fullName>
+        <externalId>false</externalId>
+        <label>Postal Code Hint / Format</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Prevent_Portal_Trade_Name_Change__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2609,6 +2632,15 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>State_Province_Mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>State/Province Mandatory</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sub_Region__c</fullName>
         <externalId>false</externalId>
         <label>Sub Region</label>
@@ -2686,6 +2718,17 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Tax ID Mandatory?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Number_VAT_field_mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</description>
+        <externalId>false</externalId>
+        <inlineHelpText>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</inlineHelpText>
+        <label>Tax Number / VAT field mandatory</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -2840,6 +2883,20 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
             <group>Account_management_team</group>
             <group>IDFSAllusersexcludingIWandACCA</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_The_Countries</fullName>
+        <columns>NAME</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>Region__c</columns>
+        <columns>Sub_Region__c</columns>
+        <columns>AMS_Settlement_System__c</columns>
+        <columns>BSP_Country_free_text__c</columns>
+        <columns>BSP__c</columns>
+        <columns>AMS_Settlement_System_CASS__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Countries</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Americas_Countries</fullName>

@@ -1,9 +1,8 @@
 public class ISSP_RelocateContact {
 
-    private static final map<string,id> MAP_ACCOUNT_RT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account');
-    public static final Id RECORDTYPE_AGENCY = MAP_ACCOUNT_RT.get('IATA_Agency');
-    public static final Id RECORDTYPE_AIRLINE_BR = MAP_ACCOUNT_RT.get('IATA_Airline_BR');
-    public static final Id RECORDTYPE_AIRLINE_HQ = MAP_ACCOUNT_RT.get('IATA_Airline');
+    public static final Id RECORDTYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+    public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+    public static final Id RECORDTYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
     public static final list<Id> VALID_ACCOUNT_RT = new list<String>{RECORDTYPE_AGENCY, RECORDTYPE_AIRLINE_BR, RECORDTYPE_AIRLINE_HQ};
 
     public list<String> errorMessage {get;set;}

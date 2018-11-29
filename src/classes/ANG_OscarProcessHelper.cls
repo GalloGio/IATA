@@ -125,6 +125,16 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1','A New MSO cannot have more than one Appointment. Please review the appointments section and try again.','-1'};
 			}
 
+			/*** AMSU-161 Start ***/
+			if(oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_GSA 
+			    || oscar.Process__c == AMS_Utils.new_AHA){
+			    String sError = AMS_InspectionHelper.validateGSAforAppointments(oscar, updater.onlineAMap);
+			    if(!sError.equalsIgnoreCase('')){
+			    	return new String[]{'-1',sError+'\n\r','-1'};
+			    }
+			}
+			/*** AMSU-161 End ***/ 
+			
 			System.debug('[ANG_OscarProcessHelper] Execution time so far:' + (datetime.now().getTime() - processStartTime.getTime()) /1000);
 
 			/*** AMSU-37 ***/
@@ -544,13 +554,66 @@ global class ANG_OscarProcessHelper {
 
 	}
 
+	//ACAMBAS - NEWGEN-4445 - Start
+	public static void createGenericChangeCode(AMS_Oscar__c theOSCAR, String changeCodeId) {
+
+		if(changeCodeId == null) return;
+
+		Savepoint sp = Database.setSavepoint();
+
+        try {
+			Account accnt = [SELECT Name, Status__c, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+					BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
+					ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
+					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
+					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
+					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
+					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
+					FROM Account
+					WHERE Id = :theOSCAR.account__c FOR UPDATE];
+
+			AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+	        AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
+
+	        if(n == null) {
+	        	theOSCAR.addError('Change code not found: ' + changeCodeId);
+	        	return;
+	        }
+
+	        changeCode.name = n.Change_Code__c;
+	        changeCode.reasonCode = n.Reason_Code__c;
+
+	        if(theOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
+	        	changeCode.memoText = n.Bulletin_Memo_Text__c;
+	        }
+        	else {
+        		changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
+        	}
+	        
+	        changeCode.reasonDesc  = n.Reason_Code_Description__c;
+	        changeCode.status  = n.Account_status_change__c;
+	        changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
+			
+			List<Account> acctList = AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {accnt}, false);
+
+			theOSCAR.First_Step_Completed__c = true;
+
+        } catch (Exception ex) {
+            Database.rollback(sp); 
+            throw ex;
+        }
+	}
+	//ACAMBAS - NEWGEN-4445 - End
+
 	public static EntityUpdater execCreateAMLCase(AMS_OSCAR__c oscar, EntityUpdater updater) {
 
 		if(updater == null)
 			updater = new EntityUpdater();
 
 
-            ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
+            ID InternalCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 
             List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c from Case where OSCAR__c = : oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
@@ -928,7 +991,7 @@ global class ANG_OscarProcessHelper {
 
 			insert oscar;
 
-	        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+	        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	        fieldsOfObject = new Map<String,Object>();
 	        fieldsOfObject.put('Oscar__c',oscar.Id);
@@ -1093,13 +1156,28 @@ global class ANG_OscarProcessHelper {
 		for (Account acc: accs){
 
 			if(accsToSendEmail.contains(acc.Id))
-	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
+	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(filterContacts(keyContactMap.get(acc.Id)), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
 
 		}
 
         return casesToUpdate;
     }
 
+	public static List<Contact> filterContacts(List<Contact> contacts){
+
+		List<Contact> contactsToReturn = new List<Contact>();
+
+		for(Contact con : contacts){
+
+			if(con.User_Portal_Status__c == 'Approved Admin')
+				contactsToReturn.add(con);
+			else if (con.Financial_Assessment_Contact__c)
+				contactsToReturn.add(con);
+		}
+
+		return contactsToReturn;
+
+	}
 /*
 	private static Contact fetchKeyContact(Account acc, List<Contact> contacts){
 
@@ -1145,7 +1223,7 @@ global class ANG_OscarProcessHelper {
 
 			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c,SIDRA_Lite_Reason__c from Case where Id = :newAccr.SAAM_Case__c LIMIT 1 ];
 
-	        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+	        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 			Map<String,Object> fieldsOfObject = new Map<String,Object>();
 

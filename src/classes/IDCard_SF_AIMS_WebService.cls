@@ -50,7 +50,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
 
         List<AIMSFileInfo> infos = new List<AIMSFileInfo>();
 
-        ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
+        ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
 
         // Get the list of cards that must be synchronized with AIMS
         List<ID_Card__c> cardsToSync = new List<ID_Card__c>();
@@ -71,7 +71,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
             }
 
             ISOCountry_AIMSArea = new map<String, String>();
-            for (IATA_ISO_Country__c country : [Select i.AIMS_Area_Name__c, i.AIMS_Area_ID__c From IATA_ISO_Country__c i ]) {
+            for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountries()) {
                 ISOCountry_AIMSArea.put(country.AIMS_Area_Name__c, country.AIMS_Area_ID__c);
             }
 
@@ -826,7 +826,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
         List<IDCardLine> IdCards = new List<IDCardLine>();
         List<IDCardLine> IncompleteIdCards = new List<IDCardLine>();
 
-        ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
+        ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
 
         // Get the list of cards that must be sent for printing
         // Non 'US' only - requested by Inigo on Nov 4th, 2016 as extra precaution
