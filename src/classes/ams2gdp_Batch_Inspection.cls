@@ -24,14 +24,11 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		                + ', ANG_IsNewGenAgency__c, ANG_Accreditation_Model__c, ANG_RiskStatus__c, ANG_CashCondition__c, Due_Diligence_Status__c'
 		                + ', IATA_ISO_Billing_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AIMS_Area_ID__c,CNS_Agency__c' ;
 
+		
 		//-- Query conditions
-		List<String> conditions = new List<String> {'RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''
-		        ,	'IATACode__c != null'
-		        // ,	'Status__c NOT IN (\'Not accreditated\',\'New application pending\',\'Not in operation\',\'On hold\',\'applicant\',\'Unregisterable STP\')'
-		        ,	'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-		        ,	'CNS_Agency__c = false'
-		        ,	'CNS_Account__c = false'
-		                                           };
+		List<String> conditions = new List<String> {'RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''};
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
+
 
 		if (!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
 			statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
