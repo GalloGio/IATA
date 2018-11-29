@@ -93973,12 +93973,17 @@ myuser={!User.Id}</url>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
 {!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
 
+var countryIsoCode = '{!Account.Country_ISO_Code__c}'; 
 
-if((&apos;{!Account.Location_Type__c}&apos; == &apos;HE&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;HO&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;AO&apos;) &amp;&amp; &apos;{!Account.Location_Class__c}&apos; == &apos;D&apos; &amp;&amp; &apos;{!Account.IATACode__c}&apos; != &apos;&apos;) {
+// China Only
+if(countryIsoCode != 'CN'){
+    alert(&apos;This functionality is only available for accounts in China&apos;);
+} 
+else if((&apos;{!Account.Location_Type__c}&apos; == &apos;HE&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;HO&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;AO&apos;) &amp;&amp; &apos;{!Account.Location_Class__c}&apos; == &apos;D&apos; &amp;&amp; &apos;{!Account.IATACode__c}&apos; != &apos;&apos;) {
    javascript:srcUp(&quot;/apex/AMS_AccountOSCARWizardPage?accountId={!Account.Id}&amp;NewGenPilot=true&quot;);
 }
 else {
-   alert(&apos;This functionality is only available for accounts in China&apos;);
+   alert(&apos;Conditions are not verified to trigger a conversion process on this agent&apos;);
 }</url>
     </webLinks>
     <webLinks>
