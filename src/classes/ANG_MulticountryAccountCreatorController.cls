@@ -168,7 +168,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
     private boolean checkMulticountry(){
     	
     	isHierarchyMulticountry = false;
-    	if(listAccount.size() < 2){
+    	if(listAccount.size() < 1){
     		return isHierarchyMulticountry;
     	}
     	
