@@ -44236,6 +44236,18 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Conversion to Domestic with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversion to GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversion to International</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Hierarchy</fullName>
                 <default>false</default>
             </values>
