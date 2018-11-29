@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial">Dear colleague,</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style=""><font face="arial" style=""><span style="font-size: 12pt;">This is to inform you that the agency </span><a href="{!Account.Link}" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">{!Case.Account}</a><span style="font-size: 12pt;">&nbsp;has been defaulted for an amount of </span>{!Case.Short_Payment_Amount_USD__c}<span style="font-size: 12pt;">&nbsp;USD through SIDRA case </span><a href="{!Case.Link}">{!Case.CaseNumber}</a><span style="font-size: 12pt;">.</span></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial">Consequently, an email notification has been sent to our members that participate in&nbsp;</font><span style="font-size: medium; background-color: rgb(255, 255, 255);">{!Case.BSPCountry__c}</span><font face="arial">&nbsp;market. Please see attached file for reference.</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

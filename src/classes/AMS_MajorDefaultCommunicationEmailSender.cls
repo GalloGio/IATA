@@ -5,6 +5,8 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 	global Map<Id,EmailTemplate> mapContactToTemplate {get;set;}
 	global List<String> errors {get;set;}
 	global ResultReport results {get;set;}
+	global Id orgEmailAddressId {get;set;}
+	global Blob emailExampleContent {get;set;}
 	
 	global AMS_MajorDefaultCommunicationEmailSender(Set<Id> contactIds, Map<Id,List<Id>> mapContactToCase, Map<Id,EmailTemplate> mapContactToTemplate) {
 		this.contactIds = contactIds;
@@ -12,14 +14,14 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 		this.mapContactToTemplate = mapContactToTemplate;
 		this.errors = new List<String>();
 		this.results = new ResultReport();
+		this.orgEmailAddressId = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE Address = 'agencymanagement@iata.org'].Id;
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
-		return Database.getQueryLocator('SELECT Id, Name, Account.Name, (SELECT Id FROM Users LIMIT 1) FROM Contact WHERE Id IN :contactIds');
+		return Database.getQueryLocator('SELECT Id, Name, Email, Account.Name, (SELECT Id FROM Users LIMIT 1) FROM Contact WHERE Id IN :contactIds');
 	}
 
    	global void execute(Database.BatchableContext BC, List<Contact> scope) {
-		Id orgEmailAddressId = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE Address = 'agencymanagement@iata.org'].Id;
 		List<Messaging.SingleEmailMessage> notifications = new List<Messaging.SingleEmailMessage>();
 		List<Task> activities = new List<Task>();
 		List<EmailMessageWrapper> emailWrapperLst = new List<EmailMessageWrapper>();
@@ -35,11 +37,11 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 		Map<Id,Case> mapCases = new Map<Id,Case>([SELECT Id, CaseNumber, Account.Name, BSPCountry__c, Account.IATACode__c FROM Case WHERE Id IN :caseIds]);
 
 		//merge template
+		EmailMessageWrapper wrapper;
 		for(Contact c : scope) {
 			for(Id caseId : mapContactToCase.get(c.Id)) {
 				Case cse = mapCases.get(caseId);
-				EmailTemplate template = mapContactToTemplate.get(c.Id);
-				EmailMessageWrapper wrapper;
+				EmailTemplate template = mapContactToTemplate.get(c.Id);			
 
 				if(c.Users.isEmpty()) {
 					Messaging.SingleEmailMessage mail = mailToContact(c, cse, template);
@@ -65,6 +67,8 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 			for(EmailMessageWrapper w : emailWrapperLst) {
 				results.rows.add(setExecutionStatus(w.reportRow, ''));
 			}
+
+			this.emailExampleContent = Blob.valueOf(wrapper.mail.getHTMLBody());
 		} catch(Exception e) {
 			for(EmailMessageWrapper w : emailWrapperLst) {
 				results.rows.add(setExecutionStatus(w.reportRow, e.getMessage().escapeCSV()));
@@ -76,6 +80,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 		String res = '';
 		res += c.Account.Name.escapeCSV() + ','; //Airline Name
 		res += c.Name.escapeCSV() + ','; //Airline Contact Name
+		res += c.Email + ',';
 		res += cse.CaseNumber + ',';
 		res += cse.Account.Name.escapeCSV() + ','; //Agency Name
 		res += cse.Account.IATACode__c + ',';
@@ -109,37 +114,37 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-		notifyGroup(this.results);
+		notifyGroup(this.results, this.mapContactToCase, this.emailExampleContent);
 	}
 
-	public static void notifyGroup(ResultReport results) {
+	public static void notifyGroup(ResultReport results, Map<Id,List<Id>> mapContactToCase, Blob emailExampleContent) {
 		List<User> users = [SELECT Id FROM User WHERE Id IN (SELECT UserOrGroupId FROM GroupMember WHERE Group.DeveloperName  = 'AMS_Agency_Default_Notification')];
+		EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Internal_Major_default_notification'];
 		List<Messaging.SingleEmailMessage> notifications = new List<Messaging.SingleEmailMessage>();
+
+		Id tmpContactId = new List<Id> (mapContactToCase.keySet())[0];
+		Id caseId = mapContactToCase.get(tmpContactId)[0];
+
 		if(!users.isEmpty()) {
 			for(User u : users) {
 				Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
 				Blob csvReport = results.buildReport();
 				csvAttc.setFileName('Airlines notifications report.csv');
 	        	csvAttc.setBody(csvReport);
-				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+
+	        	Messaging.EmailFileAttachment exampleAttc = new Messaging.EmailFileAttachment();
+				exampleAttc.setFileName('Notification Example.html');
+	        	exampleAttc.setBody(emailExampleContent);
+
+	        	Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(template.Id, tmpContactId, caseId);
 				mail.setTargetObjectId(u.Id);
-				mail.subject = 'Airlines notifications - ' + Datetime.now();
 				mail.setSaveAsActivity(false);
-				mail.setPlainTextBody('Please find attached the report of airlines notifications for agencies default.');
-				mail.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
+				mail.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc, exampleAttc});
 				notifications.add(mail);
 			}
 		}
 
 		Messaging.sendEmail(notifications);
-	}
-
-	public static void sendErrorMessage(List<String> receivers, List<String> errors) {
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		mail.setSubject('Default Agency Batch Errors');
-		mail.setPlainTextBody(String.join(errors, '\n'));
-		mail.setToAddresses(receivers);
-		Messaging.sendEmail(new List<Messaging.SingleEmailMessage> {mail}); 
 	}
 
 	public class ResultReport {
@@ -150,7 +155,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 		}
 
 		public Blob buildReport() {
-			String header = 'Airline,Contact,Case Number,Agency,Agency IATA Code,Country,Sent,Message\n';
+			String header = 'Airline,Contact,Email,Case Number,Agency,Agency IATA Code,Country,Sent,Message\n';
 			String body = String.join(rows, '\n');
 			Blob attach = Blob.valueOf(header + body);
 			return attach;
