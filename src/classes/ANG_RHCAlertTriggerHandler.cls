@@ -437,7 +437,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         set<id> accIdSet= new set<id>();
         for(ANG_Risk_Alert__c ra :triggerNew ){
-            if(ra.recordtypeId==RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS'))accIdSet.add(ra.ANG_Account__c);
+            if(ra.recordtypeId==RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'))accIdSet.add(ra.ANG_Account__c);
         }
 
         if(accIdSet.isEmpty())return;
@@ -446,7 +446,7 @@ public class ANG_RHCAlertTriggerHandler{
         for(AMS_Country_Specific_Attribute__c csa: [
             SELECT IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c 
             FROM AMS_Country_Specific_Attribute__c 
-            WHERE recordtypeId=: RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification') ]){
+            WHERE recordtypeId=: RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification') ]){
             rtsConfigMap.put(csa.IATA_ISO_Country__r.ISO_Code__c,csa);
         }
 
@@ -464,7 +464,7 @@ public class ANG_RHCAlertTriggerHandler{
         FROM Risk_Alerts__r 
         WHERE ID IN :triggerNew
         AND ANG_Severity__c = 'Red'
-        AND recordTypeId = :RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS') 
+        AND recordTypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS') 
         AND ANG_Account__c IN :accIdSet
         ),
         (SELECT Id, User_Portal_Status__c, AccountId, Account.Top_Parent__c, Financial_Assessment_Contact__c
@@ -514,7 +514,7 @@ public class ANG_RHCAlertTriggerHandler{
                         Origin = 'Risk Monitoring Engine',
                         BSPCountry__c = raAccMap.get(ra.id).IATA_ISO_Country__r.Name,
                         Decision__c = 'Prejudiced Collection of Funds',
-                        RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process'),
+                        RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case','sMAP_sales_Monitoring_Alert_Process'),
                         Suspension_Date__c = Date.today()
                     );
                     // smap date fields population
@@ -773,7 +773,7 @@ public class ANG_RHCAlertTriggerHandler{
         for(AMS_Country_Specific_Attribute__c csa:  [
             SELECT IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c 
             FROM AMS_Country_Specific_Attribute__c 
-            WHERE recordtypeId=: RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification') ]){
+            WHERE recordtypeId=: RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification') ]){
             rtsConfigMap.put(csa.IATA_ISO_Country__c,csa);
         }
         
