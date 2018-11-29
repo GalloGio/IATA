@@ -557,15 +557,8 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
                 // INC183592
                 if (agencyStatus == 'Terminated') {
-                    Pagereference prSkipDetails = Page.IDCard_Portal;
-                    prSkipDetails.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('1'));
-                    prSkipDetails.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(IATACodeLocation2.trim()));
-                    prSkipDetails.getParameters().put(IDCardUtil.PARAM_DOB, IDCardUtil.EncryptEncodeParameter(parsedDtDOB.format('yyyy-MM-dd')));
-                    prSkipDetails.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(IATACodeLocation2.trim()));
-                    prSkipDetails.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter('New'));
-                    prSkipDetails.getParameters().put(IDCardUtil.ACCOUNT_STATUS_TERMINATED, IDCardUtil.EncryptEncodeParameter('Terminated'));
-                    prSkipDetails.setRedirect(true);
-                    return prSkipDetails;
+                    AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + IATACodeLocation2.trim() + '</i>'}));
+            		return null; 
                 }
 
                 Pagereference prAgencyDetails = Page.IDCard_Agency_Details;
