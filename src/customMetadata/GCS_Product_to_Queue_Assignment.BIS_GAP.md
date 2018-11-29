@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>Queue_API_Name__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">GCS_GAP</value>
     </values>
 </CustomMetadata>

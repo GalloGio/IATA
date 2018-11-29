@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>BIS - MarketIS</label>
+    <label>E&amp;F Queue No Case Area 2</label>
     <protected>false</protected>
     <values>
         <field>GCS_Product_Topic__c</field>
-        <value xsi:type="xsd:string">MarketIS</value>
+        <value xsi:type="xsd:string">E&amp;F Operations</value>
     </values>
     <values>
         <field>Product_Topic__c</field>
@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>Queue_API_Name__c</field>
-        <value xsi:type="xsd:string">GCS_MarketIS</value>
+        <value xsi:type="xsd:string">GCS_E_F</value>
     </values>
 </CustomMetadata>

@@ -36,6 +36,11 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
                                   AND Log_Off_Time_After_Timeout__c < :DateTime.now()];
             System.debug('logged off agents: '+agents);
             Id[] agentsToUsers = new List<Id>();
+            Id[] recordTypes = new List<Id>();
+            recordTypes.add(Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName()
+                             .get('Cases_Global').getRecordTypeId());
+            recordTypes.add(Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName()
+                             .get('ComplaintIDFS').getRecordTypeId());
             for(Agents__c agent: agents)
                 agentsToUsers.add(agent.User__c);
             System.debug('+++ Agent users: '+agentsToUsers);
@@ -43,9 +48,7 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
             // limited by case status, record type and case area
             casesToReturn = [SELECT Id FROM Case 
                              WHERE status in ('Open', 'Action Needed', 'Reopen', 'In progress')
-                             AND RecordTypeId=
-                             :Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName()
-                             .get('Cases_Global').getRecordTypeId()
+                             AND RecordTypeId IN :recordTypes
                              AND OwnerId in :agentsToUsers
                             ];
         } catch (Exception ex)   {

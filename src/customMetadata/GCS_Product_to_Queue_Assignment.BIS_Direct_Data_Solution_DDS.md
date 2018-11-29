@@ -8,10 +8,10 @@
     </values>
     <values>
         <field>Product_Topic__c</field>
-        <value xsi:type="xsd:string">Direct Data Solution (DDS)</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Queue_API_Name__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">GCS_DDS</value>
     </values>
 </CustomMetadata>

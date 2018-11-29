@@ -36,6 +36,18 @@
         <unique>false</unique>
     </fields>
     <label>GCS Product to Queue Assignment</label>
+    <listViews>
+        <fullName>All_Custom</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>NamespacePrefix</columns>
+        <columns>GCS_Product_Topic__c</columns>
+        <columns>Product_Topic__c</columns>
+        <columns>Queue_API_Name__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All - Custom</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>GCS Product to Queue Assignments</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>

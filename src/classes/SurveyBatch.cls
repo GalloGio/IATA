@@ -52,6 +52,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
   // List of the DeveloperNames of the Case record types that are in the scope of this customer recorvery process
   global list<String> lstRecordTypesInScope = new list<String> { 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global'};
+  global List<String> excludedRecordTypesFromScope = new List<String> {'IATA_Financial_Review', 'ComplaintIDFS'};
 
 
 
@@ -124,7 +125,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                AND ContactId <> NULL AND Contact.Email <> NULL
                                AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
                                AND Instant_Survey_Feedback_requested__c = false
-                               AND RecordType.DeveloperName <> 'IATA_Financial_Review' /*exclude IFAP cases*/
+                               AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
                                AND CaseArea__c != 'E&F Operations' AND Reason1__c != 'Debt Recovery' AND Reason1__c != 'Dispute' //ICSC-36 exclude Cases with Reason =  Debt Recovery or Dispute
                                    ORDER BY ClosedDate DESC]);
 
@@ -194,10 +195,14 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     List<Case> scopepart2 = new List<Case>();
 
     for (Case c : scope) {
-      if (CasesPart1.contains(c.ID))
+      if (CasesPart1.contains(c.ID)){
         scopepart1.add(c);
-      else
+      }
+
+      else {
         scopepart2.add(c);
+      }
+
     }
 
     processSurveyEmail(scopepart1);
@@ -1084,52 +1089,4 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     }
   }
 
-  // to be removed
-  public void fakeMethod(){
-    Integer i = 0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
-    i=0;
   }
-
-}
