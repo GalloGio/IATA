@@ -6,9 +6,9 @@
       <label>Afghanistan</label>
    </customValue>
    <customValue>
-      <fullName>Africa & Middle East</fullName>
+      <fullName>Africa &amp; Middle East</fullName>
       <default>false</default>
-      <label>Africa & Middle East</label>
+      <label>Africa &amp; Middle East</label>
    </customValue>
    <customValue>
       <fullName>Americas</fullName>
@@ -16,14 +16,14 @@
       <label>Americas</label>
    </customValue>
    <customValue>
-      <fullName>Asia & Pacific</fullName>
+      <fullName>Asia &amp; Pacific</fullName>
       <default>false</default>
-      <label>Asia & Pacific</label>
+      <label>Asia &amp; Pacific</label>
    </customValue>
    <customValue>
-      <fullName>China & North Asia</fullName>
+      <fullName>China &amp; North Asia</fullName>
       <default>false</default>
-      <label>China & North Asia</label>
+      <label>China &amp; North Asia</label>
    </customValue>
    <customValue>
       <fullName>Europe</fullName>
