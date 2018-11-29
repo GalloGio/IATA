@@ -321,7 +321,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	
 	private Boolean existsLocClassDomesticError = false;
 
-	private Set<String> statusNotRequireLocationClsDom = new Set<String>{'Terminated', 'Operation' ,'Accredited'};
+	private Set<String> statusNotRequireLocationClsDom = new Set<String>{'Terminated', 'Not in operation' ,'Not accreditated'};
 	
 	public Map<Id, HierarchyItem> hierarchy{
 		get{
