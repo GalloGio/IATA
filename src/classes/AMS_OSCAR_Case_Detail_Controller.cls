@@ -325,7 +325,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get( oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c)));                 
                   
                 // for changes and corrections populate only with BSP attributes of operation codes related with the current account
-                }else if((oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION) && isEditable('Remittance_frequency__c')) {
+                }else if((oscarObj.Process__c == AMS_Utils.COR || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION) && isEditable('Remittance_frequency__c')) {
 
                     if(!agencyOperations.isEmpty()){                     
                         for(AMS_Operation__c opCode: operationCodes) {

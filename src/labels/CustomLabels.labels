@@ -27254,7 +27254,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsEmergencyAvailableHours</shortDescription>
-        <value>Phone is not available at this time.</value>
+        <value>Available soon</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsEmergencyPhoneNumber</fullName>
@@ -27262,7 +27262,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsEmergencyPhoneNumber</shortDescription>
-        <value>Phone is not available at this time.</value>
+        <value>24x7 phone channel is not yet available. We currently offer chat and queries via the customer portal.</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>

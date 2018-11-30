@@ -310,14 +310,6 @@
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>SOLUTION.ISSUE</fields>
-        <fields>SOLUTION.SOLUTION_NUMBER</fields>
-        <fields>Language__c</fields>
-        <fields>SOLUTION.STATUS</fields>
-        <fields>CORE.USERS.ALIAS</fields>
-        <relatedList>RelatedSolutionList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>Complaint_Opened_Date__c</fields>
         <fields>Complaint_Priority__c</fields>
