@@ -351,22 +351,25 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
 					hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected, a.Location_Type__c == AMS_Utils.HE));
 					
-					// Requires that every account have location class "D" if the account status 
-					// is not one of the following: "Terminated", "Operation", "Accredited" (statusNotRequireLocationClsDom)
-					if(a.Location_Class__c != 'D' && !statusNotRequireLocationClsDom.contains(a.Status__c)){
-						existsLocClassDomesticError = true;
+					if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
+						// Requires that every account have location class "D" if the account status 
+						// is not one of the following: "Terminated", "Operation", "Accredited" (statusNotRequireLocationClsDom)
+						if(a.Location_Class__c != 'D' && !statusNotRequireLocationClsDom.contains(a.Status__c)){
+							existsLocClassDomesticError = true;
+						}
+
+						List<Case> caseLst = a.getSobjects('Cases');
+						if(caseLst != null) { 
+							nbrOfPendingCases += caseLst.size(); 
+						}
 					}
-					
-					List<Case> caseLst = a.getSobjects('Cases');
-					
-					if(caseLst != null) { nbrOfPendingCases += caseLst.size(); }
 
 				}
 
 				// Require that at least 2 cases aren't finished
 				// since the case associated with the account in context 
 				// will not be finished at this point	
-				if(nbrOfPendingCases > 1){
+				if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION && nbrOfPendingCases > 1){
 					showOnGoingOscarWarning = true;
 				}
 				selectMain();
