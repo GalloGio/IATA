@@ -1359,6 +1359,100 @@
         <label>90 - GSS | ATOM 0 | ALL</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>XX_GEO_COVERAGE</fullName>
+        <columns>NAME</columns>
+        <columns>Reference__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Class__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Class__c</field>
+            <operation>equals</operation>
+            <value>&quot;C,R&quot;</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member NewGen</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>notEqual</operation>
+            <value>Master</value>
+        </filters>
+        <label>XX - GEO COVERAGE</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>YY_REFERENCE_CLAUSES</fullName>
+        <columns>NAME</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Reference_Clause__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Class__c</field>
+            <operation>notEqual</operation>
+            <value>&quot;C,R&quot;</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>notEqual</operation>
+            <value>Master</value>
+        </filters>
+        <label>YY - REFERENCE CLAUSES - NOT CGO</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>YY_REFERENCE_CLAUSES_ARE_CGO</fullName>
+        <columns>NAME</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Reference_Clause__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Class__c</field>
+            <operation>equals</operation>
+            <value>&quot;C,R&quot;</value>
+        </filters>
+        <filters>
+            <field>Reference__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <filters>
+            <field>Magnitude__c</field>
+            <operation>notEqual</operation>
+            <value>Master</value>
+        </filters>
+        <label>YY - REFERENCE CLAUSES - ARE CGO</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>GDP File Description Name</label>
         <trackHistory>false</trackHistory>
