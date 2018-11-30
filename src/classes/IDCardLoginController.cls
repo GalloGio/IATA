@@ -346,12 +346,12 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                              + ' IDCardUtil.ACCOUNT_TYPE_TIDS ' + IDCardUtil.ACCOUNT_TYPE_TIDS);
                 // INC183592
                 Account[] accounts = [Select a.Id, a.type, a.Short_Name__c, a.Is_AIMS_Account__c,
-                                      a.Status__c, a.IATACode__c
+                                      a.Status__c, a.IATACode__c, a.Location_Class__c
                                       From Account a
                                       where a.IATACode__c = : IATACodeLocation2.trim()
                                               and a.RecordType.Name = 'Agency'
                                                       and (a.Status__c in :IDCardUtil.ALLOWED_ACCOUNT_STATUS OR Account.Status__c = 'Terminated') // INC183592
-                                                              and (a.type  in :IDCardUtil.ALLOWED_ACCOUNT_LOCATION_CLASS)];  
+                                                              and (a.Location_Class__c in :IDCardUtil.ALLOWED_ACCOUNT_LOCATION_CLASS)];  
                                                               
 
                 if (accounts == null || accounts.size() == 0) {
