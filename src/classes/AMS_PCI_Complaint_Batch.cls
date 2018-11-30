@@ -282,7 +282,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
             system.debug('creating renewal for PCI');
 
-            AMS_OSCAR__c oscar = createStagingArea(agReg, comCasecontact, isRenewal);
+            AMS_OSCAR__c oscar = createStagingArea(agReg, comCasecontact, isRenewal, isOneShot);
             ResultWrapper resProcess = new ResultWrapper(agReg);
             if(comCaseContact != null) {
                 resProcess.con = comCaseContact;
@@ -306,8 +306,13 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
     }
 
-    
+    //AMSU-200
     public static AMS_OSCAR__c createStagingArea(Account accountData, Contact communicationCaseContact, Boolean isRenewal){
+        return createStagingArea(accountData, communicationCaseContact, isRenewal, false);
+    }
+    
+	//AMSU-200 - added param "isOneShot"
+    public static AMS_OSCAR__c createStagingArea(Account accountData, Contact communicationCaseContact, Boolean isRenewal, Boolean isOneShot){
 
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_CERT, Account__c = accountData.Id,
                                     Process__c = AMS_Utils.PCI_COMPLIANT, Status__c='Accepted_Future Date', ANG_PCI_compliance_expiry_date__c = accountData.ANG_PCI_compliance_expiry_date__c);
@@ -334,6 +339,10 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         theCommunicationCase.Visible_on_ISS_Portal__c = true;
         theCommunicationCase.Status = 'Accepted_Future Date';
         theCommunicationCase.IATACodeProduct__c = accountData.IATACode__c;
+        
+        //AMSU-200
+        if(isOneShot) theCommunicationCase.Do_Not_Send_Notification__c = true;
+
         
         if(communicationCaseContact != null)
             theCommunicationCase.ContactId = communicationCaseContact.Id;
