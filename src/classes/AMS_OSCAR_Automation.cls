@@ -1418,7 +1418,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
 
-                oscar.Financial_Security_Received__c = Date.today();
+                oscar.Financial_security_information_confirmed__c = Date.today();
                 res = true;
                 case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
                 c.status = 'Closed';
@@ -1436,7 +1436,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
 
-                oscar.Financial_Security_Received__c = Date.today();
+                oscar.Financial_security_information_confirmed__c = Date.today();
                 res = true;
                 case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
                 c.status = 'Closed';
