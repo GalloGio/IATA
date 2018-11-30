@@ -45,10 +45,12 @@ private class ANG_OscarProcessHelperTest {
 		insert co1;
 
 		ID oscarNewHeRt = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
-
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.NEWHESTANDARD, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = oscarNewHeRt);
-
 		insert oscar;
+
+		ID chinaRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('ANG Agency Changes China').getRecordTypeId();
+		AMS_OSCAR__c oscar_china = new AMS_OSCAR__c(Process__c = AMS_Utils.NGCHINACONVERSION, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = chinaRT);
+		insert oscar_china;
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
         oscarCase.AccountId = a1.Id;
@@ -125,6 +127,9 @@ private class ANG_OscarProcessHelperTest {
             ),
             new AMS_ChangeCodes__c(
                 Name = 'NEW-AMS', Change_Code__c = 'NEW', Integration_RecId__c = 'A'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = 'DOM', Change_Code__c = 'DOM', Integration_RecId__c = 'C', Reason_Code__c = '43', Reason_Code_Description__c = 'Voluntary relinquishment', Bulletin_Memo_Text__c = 'Agent is upgrading from Domestic to International', Published_in_bulletin__c = true
             )
         };
 
@@ -702,4 +707,33 @@ private class ANG_OscarProcessHelperTest {
 			Test.stopTest();
 
 		}
+
+
+	@isTest static void createGenericChangeCodeTest() {
+
+		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c where Name = 'France'];
+		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+
+		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'D', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent', Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing', Company_Type__c = 'A', IATACode__c = '1234567', Status__c = 'Approved');
+		insert a1;
+
+		ID chinaRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('ANG Agency Changes China').getRecordTypeId();
+		AMS_OSCAR__c oscar_china = new AMS_OSCAR__c(Process__c = AMS_Utils.NGCHINACONVERSION, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = chinaRT);
+		insert oscar_china;
+
+		List<AMS_Oscar__c> oscars = [select id, Account__c, Process__c, Is_NewGen__c, RecordTypeId from AMS_Oscar__c where Process__c = :AMS_Utils.NGCHINACONVERSION limit 1];
+
+		Test.startTest();
+
+		ANG_OscarProcessHelper.createGenericChangeCode(oscars[0], 'DOM');
+
+		List<Agency_Applied_Change_code__c> changeCodes = [select Reason_Code__c, Reason_Description__c, Bulletin_Information__c, To_Publish_in_e_Bulletin__c from Agency_Applied_Change_code__c where Change_Code__c = 'DOM' and OSCAR__c = :oscars[0].id and Account__c = :oscars[0].Account__c];
+
+		System.assertEquals('43', changeCodes[0].Reason_Code__c);
+		System.assertEquals('VOLUNTARY RELINQUISHMENT', changeCodes[0].Reason_Description__c);
+		System.assertEquals('AGENT IS UPGRADING FROM DOMESTIC TO INTERNATIONAL', changeCodes[0].Bulletin_Information__c);
+		System.assertEquals(true, changeCodes[0].To_Publish_in_e_Bulletin__c);	
+	
+		Test.stopTest();
+	}
 }
