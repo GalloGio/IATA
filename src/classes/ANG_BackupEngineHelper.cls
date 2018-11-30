@@ -76,6 +76,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds '
 	};
 
+	private Set<String> headLocationTypesSet = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
+
 	private Map<String,Set<String>> fieldsInEntity;
 
 	private Map<Id,Technical_Logs__c> technicalLogsMap;
@@ -291,17 +293,19 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		Account acct = [Select Id, Location_Type__c, ParentId from Account where Id =:accountOscar];
 		Id accountId = acct.Id;
 		
-		if(acct.Location_Type__c <> AMS_Utils.HE)
+        if(!this.headLocationTypesSet.contains(acct.Location_Type__c)){
 			accountId = acct.ParentId;
-
-		for(Account acctToSearch: [Select Id from Account where ParentId =:accountId])
+    	}
+		
+        for(Account acctToSearch: [Select Id from Account where ParentId =:accountId]){
 			accountIds.add(acctToSearch.Id);
+        }
 	
 		accountIds.add(accountId);
 
 		return accountIds;
-	}
 
+	}
 
 	public List<sObject> getObject(String selectedObject, Set<Id> objectIds, Set<String> objectFields, String adhocConditions){
 

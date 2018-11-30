@@ -195,7 +195,10 @@ public without sharing class AMS_Utils {
     public static final String CONVERTTOLEGACY = 'Conversion to Domestic with Cash'; //ACAMBAS - NEWGEN-4445
     public static final String CONVERTTOINTERNATIONAL = 'Conversion to International'; //ACAMBAS - NEWGEN-4445
     
-    public static final Set<String> OSCARBackupProcessSet = new Set<String> {NGCHANGES, NGCHINACONVERSION};
+    public static final Map<String, List<String>> OSCARBackupProcessMap = new Map<String, List<String>>{
+        NGCHANGES => new List<String>{'Step4__c'},
+        NGCHINACONVERSION => new List<String>{'Step4__c', 'Step3__c'}
+    };
 
     //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
