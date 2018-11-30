@@ -3175,6 +3175,37 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>GDI_status__c</fullName>
+        <description>Used for saving the current GDI status</description>
+        <externalId>false</externalId>
+        <label>GDI status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Open</fullName>
+                    <default>false</default>
+                    <label>Open</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>ANG_HE_CashCondition__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -5635,6 +5666,31 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </valueSet>
     </fields>
     <fields>
+        <fullName>BSP_non_air__c</fullName>
+        <externalId>false</externalId>
+        <label>BSP non air</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>BSPlink_code__c</fullName>
         <externalId>false</externalId>
         <label>BSPlink code</label>
@@ -5933,7 +5989,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Apartment &amp; Villa Rental</fullName>
                     <default>false</default>
-                    <label>Apartment &amp; Villa Rental</label>
+                    <label>Apartment and Villa Rental</label>
                 </value>
                 <value>
                     <fullName>Banking Service</fullName>
@@ -6153,7 +6209,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Non Governmental Organization</fullName>
                     <default>false</default>
-                    <label>Non Governmental Organization</label>
+                    <label>Non-Governmental Organization</label>
                 </value>
                 <value>
                     <fullName>Non-IATA Cargo Agent</fullName>
@@ -6570,10 +6626,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Financial Institution</controllingFieldValue>
                 <valueName>Payment Provider</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>DPC</controllingFieldValue>
-                <valueName>DPC</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
@@ -9529,7 +9581,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <label>SIS 3-Digit Code</label>
         <length>15</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -9541,7 +9593,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <label>SIS 2-Letter Code</label>
         <length>2</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -15068,6 +15120,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <value>
                     <fullName>B</fullName>
                     <default>false</default>
+                    <label>Twice a week</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
                     <label>Every 3 days</label>
                 </value>
                 <value>
@@ -15082,7 +15139,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=ZACCMGT_KF%26X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://bw.iata.org/redirect?url=/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=TDS_LO_SD_SABYACC&amp;X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -15414,11 +15471,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Cargo Agent</fullName>
                     <default>false</default>
                     <label>Cargo Agent</label>
-                </value>
-                <value>
-                    <fullName>DPC</fullName>
-                    <default>false</default>
-                    <label>DPC</label>
                 </value>
                 <value>
                     <fullName>Education</fullName>
@@ -29763,6 +29815,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -32452,6 +32515,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35434,6 +35501,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -41291,6 +41369,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDI_status__c</picklist>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Area_of_Operation__c</picklist>
             <values>
                 <fullName>Domestic</fullName>
@@ -42443,6 +42536,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48465,6 +48569,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -54441,6 +54556,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -59761,10 +59887,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>DPC</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Education</fullName>
                 <default>false</default>
             </values>
@@ -63833,6 +63955,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -73028,6 +73161,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -75890,10 +76034,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DPC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -78907,6 +79047,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -82123,6 +82274,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>V</fullName>
                 <default>false</default>
             </values>
@@ -85333,6 +85488,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -90657,10 +90823,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>DPC</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Education</fullName>
                 <default>false</default>
             </values>
@@ -93564,6 +93726,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
 
@@ -93579,6 +93742,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
 

@@ -404,7 +404,8 @@
         <label>Advanced Accreditation Details</label>
         <layoutColumns>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Edit</behavior>
+                <field>CNS_Agency__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

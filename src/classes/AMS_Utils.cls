@@ -152,6 +152,8 @@ public without sharing class AMS_Utils {
     public static final String AE = 'AE';
 
     public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
+    public static final String PORTAL_APP_ACCESS_REQUESTED = 'Access Requested';
+    public static final String PORTAL_APP_ACCESS_DENIED = 'Access Denied';
 
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
@@ -230,9 +232,11 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWGENFOP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
     public static final String RECTYPE_NEWGENOPTINOUT  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
     public static final String RECTYPE_NEWGENANNUALREVAL = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
-    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
+    public static final String RECTYPE_BANK_ACCOUNT_SETUP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
     public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL A ONBOARDING');
     public static final String RECTYPE_IEPMODELB    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL B SCREENING');
+
+    public static final String RECTYPE_GDI    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_GDI_SETUP');
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');

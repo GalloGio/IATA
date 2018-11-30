@@ -74,6 +74,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSP_non_air__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -745,7 +749,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-	<fields>RECORDTYPE</fields>
+	    <fields>RECORDTYPE</fields>
         <fields>ANG_Severity__c</fields>
         <fields>ANG_Agent_Sales__c</fields>
         <fields>ANG_RHC_Information__c</fields>

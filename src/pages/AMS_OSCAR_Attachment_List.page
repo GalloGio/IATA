@@ -246,6 +246,7 @@
                 <input type="button" class="btn" value="Download Selected Files" onclick="downloadSelectedZIP(); return false;"/>
                 <apex:commandButton value="Accept" action="{!acceptFiles}"/> <!-- AMSU-168 -->
                 <apex:commandButton value="Reject" action="{!rejectFiles}"/> <!-- AMSU-168 -->
+                <apex:commandButton value="Delete" action="{!deleteFiles}" oncomplete="refreshPage()"/> <!-- AMSU-186 -->
             </apex:pageblockButtons>
 
             <apex:pageMessages />

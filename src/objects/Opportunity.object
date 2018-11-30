@@ -52,6 +52,10 @@
             <fullName>Pending</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>z%2E Lost</fullName>
+            <default>false</default>
+        </values>
     </businessProcesses>
     <businessProcesses>
         <fullName>GDP Sales</fullName>

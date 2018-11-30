@@ -447,8 +447,11 @@ public with sharing class IFAP_BusinessRules {
 
     public static Boolean isSAAMCase(String caseId) {
         ID ProcessISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+        List<Case> theCase = new List<Case>();
 
-        List<Case> theCase = [select c.Id, c.Subject, c.RecordTypeId from Case c where c.Id = :caseId and c.RecordTypeId = :ProcessISSPcaseRecordTypeID];
+        if(caseId != null) {
+            theCase = [select c.Id, c.Subject, c.RecordTypeId from Case c where c.Id = :caseId and c.RecordTypeId = :ProcessISSPcaseRecordTypeID];
+        }
         return (theCase != null && theCase.size() > 0);
     }
 

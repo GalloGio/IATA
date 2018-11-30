@@ -1308,6 +1308,86 @@ IATA Customer Service</value>
         <value>Portal Service Role</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_GDI_Agreement</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Agreement</shortDescription>
+        <value>I agree</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Navigate_Portal</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Navigate_Portal</shortDescription>
+        <value>Go to GDI Portal</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Display_Records</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Display_Records</shortDescription>
+        <value>Display records per page:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_First</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_First</shortDescription>
+        <value>First Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Last</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Last</shortDescription>
+        <value>Last Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Next</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Next</shortDescription>
+        <value>Next Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Previous</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Previous</shortDescription>
+        <value>Previous Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Terms_Conditions</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Terms_Conditions</shortDescription>
+        <value>By applying for your Accreditation Security to be provided to IATA by Euler Hermes, you consent to IATA sharing with Euler Hermes information it holds which is relevant to your financial standing, whether obtained directly from you when applying for IATA Accreditation or which IATA has maintained throughout your period of membership of IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_UserProvisioningError</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_UserProvisioningError</shortDescription>
+        <value>Sorry, there was an issue setting up your GDI access. Try again and if the issue persists please contact Customer Support</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_UserProvisioningWait</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_UserProvisioningWait</shortDescription>
+        <value>Please wait. You&apos;ll be redirected to the GDI Portal in a few moments.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_HeadEntity</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -22073,6 +22153,30 @@ this is the tiess topic help</value>
         <value>Financial Assessment 3rd Deadline</value>
     </labels>
     <labels>
+        <fullName>ISSP_Financial_Insititutions</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions</shortDescription>
+        <value>Financial Insititutions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Header</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Header</shortDescription>
+        <value>Financial Institution Insurance Providers</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Subheader</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Subheader</shortDescription>
+        <value>The following Financial Institutions provide Financial Security Insurance in your country</value>
+    </labels>
+    <labels>
         <fullName>ISSP_IFAP_FSEC_Deadline</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -23677,7 +23781,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
+        <value>Your password has now been changed. Please sign in again.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>

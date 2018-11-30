@@ -711,7 +711,7 @@ private class ANG_OscarProcessHelperTest {
 
         insert new Agency_Applied_Change_code__c(Account__c = a.Id, Change_Code__c = 'NEW',  Sent_to_external_system__c = false);
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
@@ -727,7 +727,7 @@ private class ANG_OscarProcessHelperTest {
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, a.Id, fieldsOfObject);
 		insert oscar;
 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('Oscar__c',oscar.Id);
@@ -767,7 +767,7 @@ private class ANG_OscarProcessHelperTest {
 
         insert new Agency_Applied_Change_code__c(Account__c = a.Id, Change_Code__c = 'NEW',  Sent_to_external_system__c = false);
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
@@ -783,7 +783,7 @@ private class ANG_OscarProcessHelperTest {
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, a.Id, fieldsOfObject);
 		insert oscar;
 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('Oscar__c',oscar.Id);
@@ -830,7 +830,7 @@ private class ANG_OscarProcessHelperTest {
 
         insert new Agency_Applied_Change_code__c(Account__c = a.Id, Change_Code__c = 'NEW',  Sent_to_external_system__c = false);
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
@@ -846,7 +846,7 @@ private class ANG_OscarProcessHelperTest {
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, a.Id, fieldsOfObject);
 		insert oscar;
 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('Oscar__c',oscar.Id);
@@ -893,7 +893,7 @@ private class ANG_OscarProcessHelperTest {
 
         insert new Agency_Applied_Change_code__c(Account__c = a.Id, Change_Code__c = 'NEW',  Sent_to_external_system__c = false);
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
@@ -909,7 +909,7 @@ private class ANG_OscarProcessHelperTest {
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, a.Id, fieldsOfObject);
 		insert oscar;
 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('Oscar__c',oscar.Id);

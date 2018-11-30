@@ -79,6 +79,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Financial_Security__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Financial Security</label>
+        <referenceTo>Financial_Security__c</referenceTo>
+        <relationshipLabel>Financial Security</relationshipLabel>
+        <relationshipName>Staging_Financial_Security</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>LineItemID__c</fullName>
         <externalId>false</externalId>
         <formula>Id</formula>
@@ -186,6 +197,14 @@
         <relationshipName>FinancialSecurityStaging</relationshipName>
         <required>false</required>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Reception_Date__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <label>Reception Date</label>
+        <required>false</required>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Region__c</fullName>
@@ -297,10 +316,10 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Security_Type_c__c</fullName>
+        <fullName>Security_Type__c</fullName>
         <description>Type of Financial Security Requested</description>
         <externalId>false</externalId>
-        <label>Security_Type__c</label>
+        <label>Security Type</label>
         <required>false</required>
         <type>Picklist</type>
         <valueSet>

@@ -831,8 +831,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		Set<Id> toReturn = new Set<Id>();
 
-		For(AMS_Process_Detail__c pd : [Select Id, Account__c from AMS_Process_Detail__c where OSCAR__c = :oscarId]){
-			toReturn.add(pd.Account__c);
+		if(oscarId != null){
+			For(AMS_Process_Detail__c pd : [Select Id, Account__c from AMS_Process_Detail__c where OSCAR__c = :oscarId]){
+				toReturn.add(pd.Account__c);
+			}
 		}
 
 		return toReturn;
