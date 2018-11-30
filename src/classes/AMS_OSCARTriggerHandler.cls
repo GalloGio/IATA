@@ -263,6 +263,9 @@ public class AMS_OSCARTriggerHandler {
             List<AMS_Pax_Accreditation_Form__c> paxToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
             for(AMS_Oscar__c oscar : oscarsToValidate) {
                 Map<String, Set<String>> mapClassAttributes = mapCountryClassAttributes.get(oscar.Country_ISO_Code__c);
+                if(mapClassAttributes == null) {
+                    continue;
+                }
                 Set<String> classAttributes = mapClassAttributes.get(oscar.Location_Class__c);
                 if(classAttributes != null && classAttributes.size() == 1 ) {
                     AMS_Pax_Accreditation_Form__c auxPAX = new AMS_Pax_Accreditation_Form__c (Id = oscar.AMS_Online_Accreditation__c, Remittance_Frequency__c = (new list<string>(classAttributes) )[0] );
