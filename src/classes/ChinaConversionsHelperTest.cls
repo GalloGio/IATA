@@ -19,7 +19,7 @@ public class ChinaConversionsHelperTest {
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name='CN20', ISO_Code__c='CN20', IATA_ISO_Country__c=ctry.Id);
         insert stt;
 
-		Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		
 		accountHO = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Name='ChinaAgencyHO', Short_Name__c='ChinaAgencyHO', Location_Class__c = 'D', Location_Type__c = 'HO', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent', Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing', Company_Type__c = 'A');
 		insert accountHO;	
@@ -42,11 +42,11 @@ public class ChinaConversionsHelperTest {
         Contact co1 = new Contact(AccountId = accountHO.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		ID chinaRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('ANG Agency Changes China').getRecordTypeId();
+		ID chinaRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China');
 		oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.NGCHINACONVERSION, Account__c = accountHO.id, Is_using_credit_card__c = true, RecordTypeId = chinaRT);
 		insert oscar;
 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
         oscarCase.AccountId = accountHO.Id;
         oscarCase.ContactId = co1.Id;
@@ -269,7 +269,7 @@ public class ChinaConversionsHelperTest {
 		oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
 		update oscar;
 
-		Id formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 		Agency_Authorization__c aa = new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = formOfPaymentRT);
 		insert aa;
 
@@ -393,7 +393,7 @@ public class ChinaConversionsHelperTest {
 		convertToNewGen(accountHO);
 		convertToNewGen(accountBR);
 
-		/*Id formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		/*Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 		Agency_Authorization__c aa = new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = formOfPaymentRT);
 		insert aa;*/
 
