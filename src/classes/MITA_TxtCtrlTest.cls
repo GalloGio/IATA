@@ -11,7 +11,7 @@ private class MITA_TxtCtrlTest {
 	}
 
 	@testSetup static void initData() {
-		Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
+		Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 		//ge
 		List<Account> accounts = new List<Account>();
 		for (Integer i = 0; i < 4; i++ ) {

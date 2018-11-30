@@ -1,8 +1,8 @@
 trigger trgProcessISSCase on Case (before insert, before update) {
     
     // get the IFAP and ProcessISS case recordtype
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-    ID ProcessISSPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+    ID ProcessISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     
     //TF
     Set <Id> caseIds = new Set <Id>();

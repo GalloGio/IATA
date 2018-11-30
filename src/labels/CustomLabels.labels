@@ -857,7 +857,7 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_XML_GEN_ERROR_RECEIVER</shortDescription>
-        <value>howj@iata.org.prod</value>
+        <value>howj@iata.org</value>
     </labels>
     <labels>
         <fullName>ANG_AE_separate_Legal_Entity</fullName>
@@ -23634,7 +23634,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
+        <value>Your password has now been changed. Please sign in again.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>
@@ -27204,7 +27204,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsEmergencyAvailableHours</shortDescription>
-        <value>Phone is not available at this time.</value>
+        <value>Available soon</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsEmergencyPhoneNumber</fullName>
@@ -27212,7 +27212,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsEmergencyPhoneNumber</shortDescription>
-        <value>Phone is not available at this time.</value>
+        <value>24x7 phone channel is not yet available. We currently offer chat and queries via the customer portal.</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>
@@ -28871,7 +28871,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Max_Account_Reached</shortDescription>
-        <value>Maximum number of accounts reached. Please click on troubleshooting link in the page footer</value>
+        <value>This account has one or more active users. Any additional users(s) must be invited by the Primary User of this account. Please contact the IATA FRED+ Team ( https://fred.iata.org/contact ) for more details.</value>
     </labels>
     <labels>
         <fullName>OneId_Max_Account_Reached2</fullName>

@@ -2485,6 +2485,17 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <visibleLines>2</visibleLines>
     </fields>
     <fields>
+        <fullName>Postal_Code_Hint_Format__c</fullName>
+        <externalId>false</externalId>
+        <label>Postal Code Hint / Format</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Prevent_Portal_Trade_Name_Change__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2607,6 +2618,15 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <externalId>false</externalId>
         <label>Sanctioned Country</label>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>State_Province_Mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>State/Province Mandatory</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -2853,6 +2873,20 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
             <group>Account_management_team</group>
             <group>IDFSAllusersexcludingIWandACCA</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_The_Countries</fullName>
+        <columns>NAME</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>Region__c</columns>
+        <columns>Sub_Region__c</columns>
+        <columns>AMS_Settlement_System__c</columns>
+        <columns>BSP_Country_free_text__c</columns>
+        <columns>BSP__c</columns>
+        <columns>AMS_Settlement_System_CASS__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Countries</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Americas_Countries</fullName>

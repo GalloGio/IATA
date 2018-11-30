@@ -27,24 +27,15 @@ public class AMS_DemoCaseList {
         List<ID> aux = new List<ID>();
         List<ID> auxRemaining = new List<ID>();
         
-        saamRT = [select id from RecordType where RecordType.DeveloperName='ProcessEuropeSCE'].id;
-        financialReviewRT = [select id from RecordType where RecordType.DeveloperName='IATA_Financial_Review'].id;
-        sidraRT = [select id from RecordType where RecordType.DeveloperName='SIDRA'].id;
-        oscarCommunication = [select id from RecordType where RecordType.DeveloperName='OSCAR_Communication'].id;
+        saamRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+        financialReviewRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+        sidraRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+        oscarCommunication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
-        for(RecordType rt:[select id from RecordType where RecordType.DeveloperName='CasesMENA' or RecordType.DeveloperName='Cases_China_North_Asia' or RecordType.DeveloperName='CasesAmericas' or
-                    RecordType.DeveloperName='ExternalCasesIDFSglobal' or RecordType.DeveloperName='CasesEurope']){
-            aux.add(rt.id);
-        }
-        casesRT = aux;
+        casesRT = RecordTypeSingleton.getInstance().getRecordTypeObjIdListForSpecfifiedNames('Case', new List<String>{'CasesMENA', 'Cases_China_North_Asia', 'CasesAmericas', 'ExternalCasesIDFSglobal', 'CasesEurope'});
         
-        for(RecordType rmt:[select id from RecordType where RecordType.DeveloperName != 'SIDRA' and RecordType.DeveloperName != 'IATA_Financial_Review' and 
-            RecordType.DeveloperName != 'ProcessEuropeSCE' and RecordType.DeveloperName !='CasesMENA' and RecordType.DeveloperName !='Cases_China_North_Asia' and RecordType.DeveloperName !='CasesAmericas' and 
-                    RecordType.DeveloperName != 'ExternalCasesIDFSglobal' and RecordType.DeveloperName != 'CasesEurope' and RecordType.DeveloperName != 'OSCAR_Communication']){
-            auxRemaining.add(rmt.id);
-        }
-
-        remainingRT = auxRemaining;
+        remainingRT = RecordTypeSingleton.getInstance().getRecordTypeObjIdListExceptPassedNames('Case', new List<String>{'SIDRA', 'IATA_Financial_Review', 'ProcessEuropeSCE', 'CasesMENA', 'Cases_China_North_Asia', 
+                                                                                                                         'CasesAmericas', 'ExternalCasesIDFSglobal', 'CasesEurope', 'OSCAR_Communication'});
 
         filterCustomerService = 'Open';
         filterAccreditation = 'Open';
@@ -52,24 +43,6 @@ public class AMS_DemoCaseList {
         filterSidra = 'Open';
         filterRemaining = 'Open';
     }
-
-    /*public List<Case> getLifeCycleCases(){
-        if(filterLifeCycle == 'Closed')
-            return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.Account__c and Priority = 'Normal' and isClosed = true];
-        else if(filterLifeCycle == 'Open')
-            return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.Account__c and Priority = 'Normal' and isClosed = false];
-
-        return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.Account__c and Priority = 'Normal'];
-    }
-
-    public List<Case> getBehaviourCases(){
-        if(filterBehaviour == 'Closed')
-            return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.Account__c and Priority != 'Normal' and isClosed = true];
-        else if(filterBehaviour == 'Open')
-            return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.Account__c and Priority != 'Normal' and isClosed = false];
-
-        return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.Account__c and Priority != 'Normal'];
-    }*/
 
     public List<Case> getCustomerServiceCases(){//#AMSFTS Account__c is now id
         if(filterCustomerService == 'Closed')

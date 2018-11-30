@@ -58,6 +58,8 @@ private class vfIECUpdateAddress_tst {
             oCountry.Tax_ID_Mandatory__c = true;
             //insert oBillingAddress;  //*** commented by Thai (2016-02-29) because address was inserted in the calling method
             insert oCountry;
+
+            IATAIsoCountryDAO.resetMapIataIsoCountry();
             
 //            oBillingAddress.ISO_Country__c = oCountry.Id;
 //            oBillingAddress.ISO_State__c = null;
@@ -108,11 +110,6 @@ Test.startTest();
             pgCont.updateShippingContact();
 
             IECAddress__c oShippingAddress = IECTestUtil.CreateSampleIECAddress(baseCont.loggedCustomer.RelatedContact, IECConstants.IECAddress_AddressType_Shipping);
-            
-            //IATA_ISO_Country__c shippingcountry = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE id =:oShippingAddress.ISO_Country__c];
-      
-
-            
 
             IECVATUtil.VATConfiguration varConf = IECVATUtil.GetVATConfiguration(oCountry.Name);
             
@@ -152,7 +149,9 @@ Test.startTest();
             pgCont.shippingVATNumber = '123';
             pgCont.vatConfigShipping = varConf;
             pgCont.updateShippingContact();
-Test.stopTest();
+
+            Test.stopTest();
+
             System.assertEquals(varConf.VATValidationRequired, true);
             System.assertEquals(pgCont.oShippingAddress.ZipCode__c,'A9A9A9');
 

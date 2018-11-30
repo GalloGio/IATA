@@ -1,7 +1,7 @@
 @isTest
 public class ISSP_LocalGroupsTest {
     
-    public static final Id RT_LOCALGROUP = [SELECT Id FROM Recordtype WHERE sObjectType = 'LocalGovernance__c' AND DeveloperName = 'Local_Groups'].Id;
+    public static final Id RT_LOCALGROUP = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups');
 
     public static User createTestUser(){
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
@@ -32,7 +32,7 @@ public class ISSP_LocalGroupsTest {
             country.ISO_Code__c = 'XX';
             insert country;
             Account account = ISSP_ObjectFactory.createNewAccount();
-            account.RecordtypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+            account.RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
             account.Name = 'Account1';
             account.IATA_ISO_Country__c = country.Id;
             insert account;
@@ -51,7 +51,6 @@ public class ISSP_LocalGroupsTest {
             insert contact;
             update contact;
 
-            String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Email_to_Case'].Id;
             list<LocalGovernance__c> listLocalGroups = new list<LocalGovernance__c>();
             list<Contact> listContacts = new list<Contact>();
             Integer counter = 0;

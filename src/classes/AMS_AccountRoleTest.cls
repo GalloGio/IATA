@@ -19,7 +19,7 @@ public class AMS_AccountRoleTest {
     // This method will create a 3 level hierarchy. NOTE: this is working correctly if howMany3rdLevelAgencies <= howManyBranches
     public static void initHOandBRs(Integer howManyBranches, Integer howManyOwners){
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
         
@@ -51,7 +51,7 @@ public class AMS_AccountRoleTest {
             }
             insert contacts;
 
-            Id rtOwnership = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+            Id rtOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
             firstOwners = new List<AMS_Account_Role__c>();
             Double percentage = 100/howManyOwners;
             for(Contact c : contacts){
@@ -63,11 +63,11 @@ public class AMS_AccountRoleTest {
             insert firstOwners;
         }
 
-        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
         theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = HO.Id);
         insert theOscar;
 
-        ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         theCommunicationCase = new Case(RecordTypeId = rtCommCase, Subject = 'Change of shareholding - ' + HO.Name, OSCAR__c = theOscar.Id,
                                             AccountId = HO.Id );
         insert theCommunicationCase;
@@ -92,7 +92,7 @@ public class AMS_AccountRoleTest {
         insert powner;
 
         // Create the Staging area for the Contact
-        ID rtPerson = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+        ID rtPerson = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
         
         List<AMS_Accreditation_Contact__c> theStagingConts= new List<AMS_Accreditation_Contact__c>();
         theStagingConts.add(new AMS_Accreditation_Contact__c(
@@ -265,7 +265,7 @@ public class AMS_AccountRoleTest {
         insert aowners;
         
         // Create the Staging area for the Contact
-        ID rtCompany = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
+        ID rtCompany = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
         
         List<AMS_Accreditation_Contact__c> theStagingConts= new List<AMS_Accreditation_Contact__c>();
         theStagingConts.add(new AMS_Accreditation_Contact__c(Last_Name__c='dummy1', Agency_owner__c = true,
@@ -335,7 +335,7 @@ public class AMS_AccountRoleTest {
         system.assertEquals(2,theStagingConts.size(), 'testOwnersRTCompany(S1) -> the method should have inserted 3 owners for the second branch');
 
 
-        ID PersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+        ID PersonRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
         // I WILL CHANGE THE PERCENTAGES IN THE OWNERSHIPS
         theStagingConts[0].Financial_interest__c = 50;
         theStagingConts[1].Financial_interest__c = 50;
@@ -366,7 +366,7 @@ public class AMS_AccountRoleTest {
                     ORDER BY Owner_Account__r.Name];
         system.assertEquals(0, owners.size(), 'testOwnersRTCompany(S2) -> the method should not have deactivated any owner');
 
-        ID CompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
+        ID CompanyRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
         // I WILL RESET THE LOOKUP AMS_OWNERSHIP_ROLE__c TO SIMULATE A NEW OSCAR, AND CHANGE THE PERCENTAGES IN THE OWNERSHIPS
         theStagingConts = [SELECT Id FROM AMS_Accreditation_Contact__c ORDER BY Email__c];
         theStagingConts[0].AMS_Ownership_Role__c = NULL;
@@ -382,12 +382,8 @@ public class AMS_AccountRoleTest {
         theStagingConts[1].RecordTypeId = CompanyRT;
 
         update theStagingConts;
-        system.debug('#### Start...... ');
-        system.debug('#### su theStagingConts : ' + theStagingConts);
-        system.debug('#### su parameter: ' + parameter);
         AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter);
 
-        system.debug('#### End...... ');
         owners = [SELECT Owner_Account__r.Name, Percentage__c, Termination_Date__c
                     FROM AMS_Account_Role__c 
                     WHERE Owner_Account__c <> NULL AND RecordType.Name = 'Ownership' /*AND Termination_Date__c = NULL */

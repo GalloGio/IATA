@@ -36,23 +36,9 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
     }
 
-/*
-    public static void handleAfterDelete(List<AMS_Agencies_relationhip__c> rels) {
-
-        Set<Id> accountsInTheOldHierarchy = new Set<Id>();
-        for (AMS_Agencies_relationhip__c rel : rels) {
-            accountsInTheOldHierarchy.add(rel.Parent_Account__c);
-            accountsInTheOldHierarchy.add(rel.Child_Account__c);
-        }
-
-        //setAccountsWithoutHierarchyToHO(accountsInTheOldHierarchy);
-
-    }
-*/
-
     public static Map<Id, AMS_Agencies_Hierarchy__c> getRelationshipHierarchies(List<AMS_Agencies_relationhip__c> rels) {
         List<String> hierarchiesIds = new List<String>();
-        Id rtMain = Schema.SObjectType.AMS_Agencies_Hierarchy__c.getRecordTypeInfosByName().get('MAIN').getRecordTypeId();
+        Id rtMain = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agencies_Hierarchy__c', 'MAIN');
         for (AMS_Agencies_relationhip__c r : rels) {
             hierarchiesIds.add(r.Hierarchy__c);
 

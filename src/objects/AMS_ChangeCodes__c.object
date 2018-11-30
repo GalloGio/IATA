@@ -524,9 +524,14 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>SETUP_OWNER_NAME</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Change_Code__c</field>
+            <field>Reason_Code_Description__c</field>
             <operation>equals</operation>
-            <value>NEW,NWD</value>
+            <value>CHANGE IN PROCESS</value>
+        </filters>
+        <filters>
+            <field>Reason_Code__c</field>
+            <operation>equals</operation>
+            <value>81</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
