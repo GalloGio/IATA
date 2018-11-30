@@ -522,7 +522,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 			currentAccount.fw.newform.status__c = FORM_STATUS_INPROGRESS;
-			copyShippingCountry();
+			//copyShippingCountry();
 
 			upsert currentAccount.fw.newform;
 
@@ -551,8 +551,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Savepoint sp = Database.setSavepoint();
 
 		try {
-			
-			copyShippingCountry();
+			keepConfirmedData();
+			//copyShippingCountry();
 			upsert currentAccount.fw.newform;
 
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
@@ -560,11 +560,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		return null;
 	}
 	
-	private void copyShippingCountry() {
+	/*private void copyShippingCountry() {
 		// Workaround to assign the previous value if not changed
 		if (!currentAccount.fw.newform.Notify_Change_Location__c)
 			currentAccount.fw.newform.Shipping_Country__c = currentAccount.account.ShippingCountry;
-	}
+	}*/
 
 	public PageReference confirmUpdate() {
 
@@ -579,6 +579,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			if(!errorFound) {
 				currentAccount.fw.newform.status__c = FORM_STATUS_COMPLETED;
 				migrateExtraFields();
+				keepConfirmedData();
 			}
 
 			//
@@ -610,6 +611,43 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				currentAccount.fw.newform.Shipping_ISO_Country__c = ctr.Id;
 				break;
 			}
+		}
+	}
+
+	private void keepConfirmedData() {
+		if (!currentAccount.fw.newform.Notify_Change_Legal_Details__c) {
+			currentAccount.fw.newform.Account_Name__c = currentAccount.account.Name;
+			currentAccount.fw.newform.Trade_Name__c = currentAccount.account.TradeName__c;
+		}
+
+		if (!currentAccount.fw.newform.Notify_Change_Location__c) {
+			currentAccount.fw.newform.Branch_Office_Street_name_number__c = currentAccount.account.BillingStreet;
+			currentAccount.fw.newform.Branch_Office_City__c = currentAccount.account.BillingCity;
+			currentAccount.fw.newform.Branch_Office_Postal_code__c = currentAccount.account.BillingPostalCode;
+			currentAccount.fw.newform.State_Province__c = currentAccount.account.BillingState;
+
+			currentAccount.fw.newform.Shipping_Street__c = currentAccount.account.ShippingStreet;
+			currentAccount.fw.newform.Shipping_City__c = currentAccount.account.ShippingCity;
+			currentAccount.fw.newform.Shipping_Postal_Code__c = currentAccount.account.ShippingPostalCode;
+			currentAccount.fw.newform.Shipping_State__c = currentAccount.account.ShippingState;
+			currentAccount.fw.newform.Shipping_Country__c = currentAccount.account.ShippingCountry;
+
+			currentAccount.fw.newForm.Branch_Office_Email__c = currentAccount.account.Email__c;
+			currentAccount.fw.newform.Website__c = currentAccount.account.Website;
+			currentAccount.fw.newform.Branch_Office_Phone__c = currentAccount.account.Phone;
+			currentAccount.fw.newform.Mobile__c = currentAccount.account.Mobile__c;
+			currentAccount.fw.newform.Branch_Office_FAX__c = currentAccount.account.FAX;
+		}
+
+		if (!currentAccount.fw.newForm.Notify_Change_Ownership__c) {
+			currentAccount.fw.newForm.ISSP_AMS_Legal_Status__c = currentAccount.fw.newForm.Map_Company_Type_to_Legal_Status__c;
+
+			currentAccount.fw.deleteOwners();
+
+			this.currentAccount.fw.previousOwners = getFormPreviousOwners_2(currentAccount.account.Id, lstAccreditationContact);
+			this.currentAccount.fw.previousCompanies = getFormPreviousCompanies_2(currentAccount.account.Id, lstAccreditationContact);
+			this.currentAccount.fw.currentOwners = getFormCurrentOwners_2(currentAccount.account.Id, lstAccreditationContact);
+			this.currentAccount.fw.currentCompanies = getFormCurrentCompanies_2(currentAccount.account.Id, lstAccreditationContact);
 		}
 	}
 
