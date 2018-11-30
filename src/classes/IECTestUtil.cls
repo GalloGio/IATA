@@ -248,7 +248,6 @@ public without sharing class IECTestUtil {
         Contact newContact = new Contact();
         newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
         newContact.AccountId = newAccount.Id;
-        newContact.OwnerId = IECUserManager.getIECContactOwnerId();
         newContact.FirstName = 'Test';
         newContact.LastName = 'User';
         newContact.Title = 'TestTitle';
