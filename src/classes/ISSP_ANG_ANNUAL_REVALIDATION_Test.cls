@@ -336,7 +336,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = 'none';
 
+		ctrl.createAgencyContact();
 
+		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = '';
 		ctrl.createAgencyContact();
 
 		ctrl.currentAccount.newContact.First_name__c = '╗';
@@ -356,6 +358,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.validateCharactersInPersonWindow();
 
 		ctrl.createAgencyContact();
+		ctrl.validateCharactersInCompanyWindow();
+
+		ctrl.currentAccount.newContact.Registration_number__c = '╗';
 		ctrl.validateCharactersInCompanyWindow();
 
 		ctrl.contactType = 'Company';
@@ -403,6 +408,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.deleteAgencyContact();
 		ctrl.fetchAgentDetails();
 		ctrl.iatacode = '87654321';
+		ctrl.fetchAgentDetails();
+		ctrl.isAddCompanyModal = true;
+		ctrl.iatacode = '22335408';
 		ctrl.fetchAgentDetails();
 		ctrl.iatacode = '12345678';
 		ctrl.fetchAgentDetails();
