@@ -213,9 +213,13 @@ public class AMS_OSCARTriggerHandler {
         Set<String> processToCheck = AMS_Utils.oscarNewProcesses.clone();
         processToCheck.add(AMS_Utils.AGENCYCHANGES);
 
-        allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr; 
+        Map<Id,AMS_Pax_Accreditation_Form__c> stgAreas = allOnlineAccr;
+        if(stgAreas == null || stgAreas.isEmpty()) {
+            stgAreas = getAllAccreditations(oscars);
+        }
+
         for(AMS_OSCAR__c oscar : oscars) {
-            AMS_Pax_Accreditation_Form__c stgArea = allOnlineAccr.get(oscar.AMS_Online_Accreditation__c);
+            AMS_Pax_Accreditation_Form__c stgArea = stgAreas.get(oscar.AMS_Online_Accreditation__c);
             Boolean stgAreaToCheck = stgArea <> null && locationsToCheck.contains(stgArea.Location_Class__c) && String.isBlank(stgArea.Remittance_frequency__c); 
             Boolean passedSanityCheck = oscar.STEP6__c == AMS_Utils.PASSED && oscar.STEP6__c <> oldMap.get(oscar.Id).STEP6__c;
 
