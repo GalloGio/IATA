@@ -577,8 +577,10 @@ global class AMS_OSCAR_Webservice {
             return 'Agent Change of Ownership';
         else if (process == AMS_Utils.IEPBANKACCOUNTSETUP || process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP)
             return 'IEP Due Diligence';
+        else if (process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP)
+            return 'IATA Easy Pay';
         else
-           return 'New Accredited Agent';
+            return 'New Accredited Agent';
     }
 
 }
