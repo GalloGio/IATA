@@ -6647,7 +6647,6 @@
                 ],
                 "DisplayFields": [
                   "Financial_Security_Received__c",
-                  "Financial_Security_Information_confirmed__c",
                   "STEP50__c"                  
                 ],
                 "IsDependent": false
