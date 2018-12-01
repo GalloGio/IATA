@@ -147,26 +147,20 @@ public class trgHndlrIECInvoice_tst {
     static void Init(IECCustomer loggedCustomer) {
 
         //-- Generate Zuora related items 
-        try{
-            //-- ZProduct 1 for Tax & 1 for Shipping
-            List<Product2> zProducts = TestDataGenerator.generateProducts(2, true);
-    
-            //-- Generate one Rate plan for each
-            zqu__ProductRatePlan__c taxPlan  = TestDataGenerator.generateZRatePlans2(zProducts[0].Id,1,false)[0];
-                taxPlan.zqu__ZuoraId__c = Utility.getTextSetting('Zuora tax Plan id');
-            zqu__ProductRatePlan__c shipPlan = TestDataGenerator.generateZRatePlans2(zProducts[1].Id,1,false)[0];
-                shipPlan.zqu__ZuoraId__c = Utility.getTextSetting('Zuora shipping Plan id');
-            upsert new List<zqu__ProductRatePlan__c>{taxPlan, shipPlan} zqu__ZuoraId__c;
-    
-            //-- Generate Rate Plan Charges 
-            zqu__ProductRatePlanCharge__c taxCharge = TestDataGenerator.generateZCharges(taxPlan.Id, 1, false)[0];
-                taxCharge.zqu__ZuoraId__c = Utility.getTextSetting('Zuora tax Charge id');
-            zqu__ProductRatePlanCharge__c shipCharge = TestDataGenerator.generateZCharges(shipPlan.Id, 1, false)[0];
-                shipCharge.zqu__ZuoraId__c = Utility.getTextSetting('Zuora shipping Charge id');
-            upsert new List<zqu__ProductRatePlanCharge__c>{taxCharge, shipCharge} zqu__ZuoraId__c;
-        }
-        catch(Exception ex){}
-            
+        
+        //-- ZProduct 1 for Tax & 1 for Shipping
+        List<Product2> zProducts = TestDataGenerator.generateProducts(2, true);
+
+        //-- Generate one Rate plan for each
+        zqu__ProductRatePlan__c taxPlan  = IECTestUtil.CreateSampleProductRatePlan2('Tax Plan', false, zProducts[0]);
+        zqu__ProductRatePlan__c shipPlan = IECTestUtil.CreateSampleProductRatePlan2('Ship Plan', false, zProducts[1]);
+        insert new List<zqu__ProductRatePlan__c>{taxPlan, shipPlan};
+
+        //-- Generate Rate Plan Charges 
+        zqu__ProductRatePlanCharge__c taxCharge = TestDataGenerator.generateZCharges(taxPlan.Id, 1, false)[0];
+        zqu__ProductRatePlanCharge__c shipCharge = TestDataGenerator.generateZCharges(shipPlan.Id, 1, false)[0];
+        insert new List<zqu__ProductRatePlanCharge__c>{taxCharge, shipCharge};
+        
         List<Product2> lstProduct = TestDataGenerator.generateProducts(3, true);
         Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
         List<PricebookEntry> lstPBE = new List<PricebookEntry>();
@@ -185,9 +179,9 @@ public class trgHndlrIECInvoice_tst {
         oProduct3.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
         oProduct3.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
         insert new List<SObject>{oProduct, oProduct2, oProduct3};
-        oProductRatePlanShip = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__Product__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :Utility.getTextSetting('Zuora shipping Plan id')][0];
+        oProductRatePlanShip = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__Product__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :shipPlan.zqu__ZuoraId__c][0];
         oProductShip = [SELECT zqu__ZuoraId__c, Name, zqu__SKU2__c, zqu__EffectiveEndDate__c FROM Product2 WHERE Id =:oProductRatePlanShip.zqu__Product__c][0];
-        oProductRatePlanTax = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__Product__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :Utility.getTextSetting('Zuora tax Plan id')][0];
+        oProductRatePlanTax = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__Product__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :taxPlan.zqu__ZuoraId__c][0];
         oProductTax = [SELECT zqu__ZuoraId__c, Name, zqu__SKU2__c, zqu__EffectiveEndDate__c FROM Product2 WHERE Id =:oProductRatePlanTax.zqu__Product__c][0];
         
         // create/get dummy Zuora rate plan
@@ -222,10 +216,10 @@ public class trgHndlrIECInvoice_tst {
         oSubscriptionChargeError = IECTestUtil.createSampleSubscriptionCharge2(oSubscription2.Id, Date.today().addMonths(-6), oProduct3, oProductRatePlan3);
         // create dummy tax charge
         oSubscriptionChargeTax = IECTestUtil.createSampleSubscriptionCharge2(oSubscription.Id, Date.today().addMonths(-6), oProductTax, oProductRatePlanTax);
-        oSubscriptionChargeTax.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = Utility.getTextSetting('Zuora tax Charge id'));
+        oSubscriptionChargeTax.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = taxCharge.zqu__ZuoraId__c);
         // create dummy shipping charge
         oSubscriptionChargeShip = IECTestUtil.createSampleSubscriptionCharge2(oSubscription.Id, Date.today().addMonths(-6), oProductShip, oProductRatePlanShip);
-        oSubscriptionChargeShip.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = Utility.getTextSetting('Zuora shipping Charge id'));
+        oSubscriptionChargeShip.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = shipCharge.zqu__ZuoraId__c);
         insert new List<SObject>{oSubscriptionCharge, oSubscriptionChargeUnit, oSubscriptionChargeError, oSubscriptionChargeTax, oSubscriptionChargeShip};
         
         // create dummy product category
