@@ -277,6 +277,10 @@ public without sharing class IECTestUtil {
             , ReceivesInfoEmails = false
         );
         insert u;
+
+        newContact.OwnerId = u.Id;
+        update newContact;
+        
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
          
