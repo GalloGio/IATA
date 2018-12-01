@@ -152,14 +152,14 @@ public class trgHndlrIECInvoice_tst {
         List<Product2> zProducts = TestDataGenerator.generateProducts(2, true);
 
         //-- Generate one Rate plan for each
-        zqu__ProductRatePlan__c taxPlan  = IECTestUtil.CreateSampleProductRatePlan2('Tax Plan', false, zProducts[0]);
-        zqu__ProductRatePlan__c shipPlan = IECTestUtil.CreateSampleProductRatePlan2('Ship Plan', false, zProducts[1]);
-        insert new List<zqu__ProductRatePlan__c>{taxPlan, shipPlan};
+        zqu__ProductRatePlan__c taxPlan  = TestDataGenerator.generateZRatePlans2(zProducts[0].Id,1,false)[0];
+        zqu__ProductRatePlan__c shipPlan = TestDataGenerator.generateZRatePlans2(zProducts[1].Id,1,false)[0];
+        upsert new List<zqu__ProductRatePlan__c>{taxPlan, shipPlan}  zqu__ZuoraId__c;
 
         //-- Generate Rate Plan Charges 
         zqu__ProductRatePlanCharge__c taxCharge = TestDataGenerator.generateZCharges(taxPlan.Id, 1, false)[0];
         zqu__ProductRatePlanCharge__c shipCharge = TestDataGenerator.generateZCharges(shipPlan.Id, 1, false)[0];
-        insert new List<zqu__ProductRatePlanCharge__c>{taxCharge, shipCharge};
+        upsert new List<zqu__ProductRatePlanCharge__c>{taxCharge, shipCharge}  zqu__ZuoraId__c;
         
         List<Product2> lstProduct = TestDataGenerator.generateProducts(3, true);
         Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
