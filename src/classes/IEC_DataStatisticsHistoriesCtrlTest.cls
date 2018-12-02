@@ -74,7 +74,7 @@ private class IEC_DataStatisticsHistoriesCtrlTest
 
         Zuora__ZInvoice__c oInvoice = new Zuora__ZInvoice__c();
         oInvoice.Name = 'INV' + IECUtil.NewGuid();
-        oInvoice.Zuora__InvoiceDate__c = IECZuoraHelper.getCurrentDate();
+        oInvoice.Zuora__InvoiceDate__c = Date.today();
         oInvoice.Zuora__TotalAmount__c = 1000;
         oInvoice.Zuora__External_Id__c =
             oInvoice.Zuora__Zuora_Id__c = IECUtil.NewGuid().substring(0, 32);
