@@ -3713,6 +3713,20 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Related_Oscar__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Oscar linked to the opportunity (GDI Process)</description>
+        <externalId>false</externalId>
+        <label>Related Oscar</label>
+        <referenceTo>AMS_OSCAR__c</referenceTo>
+        <relationshipLabel>Opportunities</relationshipLabel>
+        <relationshipName>Opportunities</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Reminder_date__c</fullName>
         <description>For RCRM Opportunities with a stage name of &quot;Future renewal&quot;, represents the date when a renewal reminder email is sent.</description>
         <externalId>false</externalId>

@@ -1,8 +1,12 @@
 public with sharing class ANG_DGIStagingAreaCtrl {
 
+    public Boolean hasErrorMessages { get { return ApexPages.hasMessages(); } }
+
+    private Opportunity opp{get;set;}
+
     public Id newFSId{get;set;}
 
-    public Financial_Security__c currentFS {get{
+    public Financial_Security__c currentFS {get{ 
 
         List<Financial_Security__c> toReturn = new List<Financial_Security__c>();
 
@@ -29,6 +33,14 @@ public with sharing class ANG_DGIStagingAreaCtrl {
 
 	private final AMS_OSCAR__c oscarObj;
 
+    private final Case oscarCase {get{
+        
+        if(this.oscarCase == null && oscarObj != null)
+           return [Select Id, Origin from Case where Id = :oscarObj.Oscar_Communication_Case_Id__c].get(0);
+
+        return oscarCase;
+    }set;}
+
     public boolean oscarProcessed {get{
         
         boolean toReturn = oscarObj.step50__c == 'Passed' || oscarObj.step50__c == 'Failed'; 
@@ -44,9 +56,33 @@ public with sharing class ANG_DGIStagingAreaCtrl {
 
     public List<String> stagingAreaFields {
             get{ 
-                return new List<String>{'Amount__c','Expiry_Date__c','Financial_Institution__c','Reason__c','Reception_Case__c','Reception_Date__c','Region__c','Security_Type__c','Security_Status__c','Validity_Start_Date__c'};
+                return new List<String>{'Amount__c','Expiry_Date__c','Financial_Institution__c','Reception_Case__c','Reception_Date__c','Region__c','Security_Type__c','Security_Status__c','Validity_Start_Date__c'};
             }set;
     }
+
+    public boolean waitingForEndorsement {get{
+        
+        Boolean toReturn = (stagingFs == null || stagingFs.Id == null) &&  oscarCase.Origin == 'GDI Portal';
+
+        if(toReturn){
+            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING, 'The certificate of endorsement has not been received from GDI yet'));            
+        }
+
+        return toReturn;
+
+    }set;} 
+
+    public boolean addCertificate{get;set;}
+
+    private Financial_Institution__c dfltFI {get{
+        if(dfltFI == null)
+            dfltFI = [Select id from Financial_Institution__c where name = 'GDI - Euler Hermes'];    
+
+        return dfltFI;
+    }set;}            
+
+
+    // return stagingFs != null && stagingFs.Id == null;
 
     // The extension constructor initializes the private member
     // variable mysObject by using the getRecord method from the standard
@@ -62,10 +98,45 @@ public with sharing class ANG_DGIStagingAreaCtrl {
         	currentFS=currentFSLst.get(0);
 			this.stagingFs.Financial_Security__c = currentFS.Id;
         }
-                
-        this.oscarObj = [Select Id, step50__c  from AMS_OSCAR__c where Id=:stagingFs.OSCAR_GDI__c];
+
+        this.oscarObj = [Select Id, step50__c, Account__c, Oscar_Communication_Case_Id__c  from AMS_OSCAR__c where Id=:stagingFs.OSCAR_GDI__c];
+
+
     }
 
+    // The extension constructor initializes the private member
+    // variable mysObject by using the getRecord method from the standard
+    // controller.
+    public ANG_DGIStagingAreaCtrl() {
+        
+        Id oscarId = ApexPages.currentPage().getParameters().get('id');
+
+        if(oscarId == null)
+            return;
+
+        this.oscarObj = [Select Id, step50__c, Account__c, Oscar_Communication_Case_Id__c  from AMS_OSCAR__c where Id=:oscarId];
+
+        List<Opportunitylineitem> lineItemsLst = [Select id from Opportunitylineitem where OSCAR_GDI__c = :oscarId];
+
+        if(lineItemsLst.isEmpty()){
+
+            // new page
+
+        }else {
+
+            stagingFs = lineItemsLst.get(0); 
+            fetchStagingFs();
+        }
+
+        List<Financial_Security__c> currentFSLst = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :oscarObj.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
+
+        if(!currentFSLst.isEmpty()){ 
+            currentFS=currentFSLst.get(0);
+            if(stagingFs != null)
+                this.stagingFs.Financial_Security__c = currentFS.Id;
+        }
+
+    }
 
     private void fetchStagingFs(){
         
@@ -84,10 +155,13 @@ public with sharing class ANG_DGIStagingAreaCtrl {
 
     }
 
-    public void accept(){
+    public void accept(){ 
 
         try{
             Case oscarCase = [Select id, ParentId from Case where OSCAR__c = :stagingFs.OSCAR_GDI__c];
+
+            stagingFs.Reception_Date__c = System.today();
+            update stagingFs;
 
             if(hasAdendum)
                 performAcceptancewithAdendum(oscarCase);
@@ -100,11 +174,10 @@ public with sharing class ANG_DGIStagingAreaCtrl {
             oscar.step50__c = 'Passed';
             update oscar;
 
-            Opportunity opp = new Opportunity(Id=stagingFs.OpportunityId);
+            opp = new Opportunity(Id=stagingFs.OpportunityId);
             opp.StageName='Closed Won';
             update opp;
-
-
+  
         }
         catch(Exception e){
             ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getStackTraceString()));
@@ -118,10 +191,57 @@ public with sharing class ANG_DGIStagingAreaCtrl {
         oscar.step50__c = 'Failed';
         update oscar;
 
-        Opportunity opp = new Opportunity(Id=stagingFs.OpportunityId);
+        opp = new Opportunity(Id=stagingFs.OpportunityId);
         opp.StageName='Closed Lost';
         update opp;
 
+    }
+
+    public void createStagingArea(){
+        
+        try{
+            opp.CurrencyIsoCode = stagingFs.currencyIsoCode;
+            update opp;
+
+            upsert stagingFs;
+        }
+         catch(Exception e){
+            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getStackTraceString()));
+            System.debug(e.getStackTraceString());
+        }
+
+    }
+
+    public void createStagingAreaDefault(){
+        
+        try{
+        
+            opp = [Select Id, currencyIsoCode, Account.Region_formula__c from Opportunity where Related_Oscar__c = :oscarObj.Id];
+            
+            pricebook2 pb = [select id from pricebook2 where name = 'NewGen Generic'];
+            PricebookEntry pbe = [select id,unitprice,product2id,product2.name from pricebookentry where pricebook2id = :pb.id limit 1];
+
+            if(stagingFs == null)
+                stagingFs = new Opportunitylineitem();
+    
+            stagingFs.OpportunityId = opp.Id;
+            stagingFs.OSCAR_GDI__c = oscarObj.Id;
+            stagingFs.Security_Type__c = 'GDI';
+            stagingFs.Security_Status__c = 'Draft';
+            stagingFs.Reception_Case__c = oscarObj.Oscar_Communication_Case_Id__c;
+            if(currentFS != null)
+                stagingFs.Financial_Security__c = currentFS.Id; 
+            stagingFs.Quantity = 1;
+            stagingFs.Region__c = opp.Account.Region_formula__c;
+            stagingFs.Financial_Institution__c = dfltFI.Id;
+            stagingFs.TotalPrice = 1;
+            stagingFs.pricebookentryid = pbe.id;
+
+        
+        }catch(Exception e){
+            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getStackTraceString()));
+            System.debug(e.getStackTraceString());
+        }
     }
 
     public void performAcceptancewithAdendum(Case oscarCase){
@@ -146,6 +266,8 @@ public with sharing class ANG_DGIStagingAreaCtrl {
 
     public void createNewFinancialSecurity(Case oscarCase){
 
+        System.debug('stagingFs:'+stagingFs);
+
         Financial_Security__c fs = new Financial_Security__c();
 
         fs.Amount__c = stagingFs.Amount__c;
@@ -157,8 +279,8 @@ public with sharing class ANG_DGIStagingAreaCtrl {
         fs.Security_Status__c = stagingFs.Security_Status__c;
         fs.Security_Type__c = stagingFs.Security_Type__c;
         fs.Validity_Start_Date__c = stagingFs.Validity_Start_Date__c;
-        fs.Account__c = stagingFs.OSCAR_GDI__r.Account__c;
-        fs.CurrencyIsoCode = stagingFs.CurrencyIsoCode;
+        fs.Account__c = oscarObj.Account__c;
+        fs.CurrencyIsoCode = stagingFs.FS_Currency__c;
         fs.Reception_Date__c = stagingFs.Reception_Date__c;
 
         insert fs;

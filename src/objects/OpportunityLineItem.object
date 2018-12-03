@@ -68,6 +68,17 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>FS_Currency__c</fullName>
+        <externalId>false</externalId>
+        <label>FS Currency</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Financial_Institution__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
@@ -311,6 +322,11 @@
                     <fullName>Pending Validation</fullName>
                     <default>false</default>
                     <label>Pending Validation</label>
+                </value>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
