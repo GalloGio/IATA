@@ -40,7 +40,7 @@ private class AMS_ValidateAccSpecialChars_Batch_Test
 	
 	static testMethod void runStartTest() {		
 		Test.startTest();
-		AMS_ValidateAccSpecialChars_Batch a = new AMS_ValidateAccSpecialChars_Batch();
+		AMS_ValidateAccSpecialChars_Batch a = new AMS_ValidateAccSpecialChars_Batch(false);
 		Database.executeBatch(a, 2000);		
 		Test.stopTest();	
 	}
