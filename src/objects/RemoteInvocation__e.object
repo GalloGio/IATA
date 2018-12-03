@@ -37,6 +37,6 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <label>Remove Invocation</label>
-    <pluralLabel>Remove Invocations</pluralLabel>
+    <label>Remote Invocation</label>
+    <pluralLabel>Remote Invocations</pluralLabel>
 </CustomObject>

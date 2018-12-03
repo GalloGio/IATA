@@ -62,7 +62,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 
 			//if oldmap doesn't contain id, trigger is insert. Note: this method only runs on after, id is allways populated 
 			if((oldMap.containsKey(re.id) || oldMap.get(re.id).Status__c == re.Status__c) && (re.Status__c == 'Completed' || re.Status__c == 'Failed'))
-				PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Remote_Invocation_e', 'Remote_Invocation_c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+				PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'RemoteInvocation__e', 'Remote_Invocation__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 		}
 	}
 
