@@ -1,107 +1,149 @@
-<apex:page showHeader="false" sidebar="false" standardController="Opportunitylineitem" extensions="ANG_DGIStagingAreaCtrl" tabStyle="Opportunitylineitem">
-	
-    <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
-	<apex:includeScript value="/support/console/34.0/integration.js"/>
+<apex:page showHeader="false" sidebar="false" controller="ANG_DGIStagingAreaCtrl" tabStyle="Opportunitylineitem">
+
+    <apex:includeScript value="{!$Resource.jquery2_1_4}" />
+    <apex:includeScript value="/support/console/34.0/integration.js" />
 
     <script type="text/javascript">
-        
-        
-        var pageLoad = window.onload; 
+        var pageLoad = window.onload;
 
-        function openPrimaryTab(tabId,tabName) {
-            var changeTab = function(result){
-                if(result.success == false){
+        function openPrimaryTab(tabId, tabName) {
+            var changeTab = function(result) {
+                if (result.success == false) {
                     sforce.console.focusPrimaryTabByName(tabId);
                 }
             };
-            sforce.console.openPrimaryTab(null, tabId, true,tabName, changeTab, tabId);
+            sforce.console.openPrimaryTab(null, tabId, true, tabName, changeTab, tabId);
         };
 
-		window.onload = function() {
-			if (pageLoad) {
-				pageLoad();
+        window.onload = function() {
+            if (pageLoad) {
+                pageLoad();
             }
-			testSetTabTitle();
-		};
+        };
 
-		function closeTab(){
-			sforce.console.getEnclosingTabId(closeSubtab);
-		};
-		
-		var closeSubtab = function closeSubtab(result){
-		    var tabId = result.id;
-		    sforce.console.closeTab(tabId);
-		};
+        function closeTab() {
+            sforce.console.getEnclosingTabId(closeSubtab);
+        };
 
-        function openSubtab(subtabUrl, subTabTitle)
-        {
-           // Use the results primary tab id and open a new subtab
-           var openSubtab = function(result)
-           {            
-                sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);    
-           };
-           sforce.console.getEnclosingPrimaryTabId(openSubtab);
+        var closeSubtab = function closeSubtab(result) {
+            var tabId = result.id;
+            sforce.console.closeTab(tabId);
+        };
+
+        function openSubtab(subtabUrl, subTabTitle) {
+            // Use the results primary tab id and open a new subtab
+            var openSubtab = function(result) {
+                sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);
+            };
+            sforce.console.getEnclosingPrimaryTabId(openSubtab);
         }
     </script>
 
-    	<apex:sectionHeader title="Newgen ISS Financial Staging Area"/>
-        
-        <apex:form id="mainForm">
+    <apex:sectionHeader title="Newgen ISS Financial Staging Area" />
 
-            <apex:pageBlock mode="maindetail" tabStyle="Account" id="myPageBlock"> 
-                <apex:pageBlockSection columns="2" rendered="{!NOT(OR(ISNULL(newFSId),ISBLANK(newFSId)))}" collapsible="false">
-                        <script type="text/javascript">
-                        openSubtab('/{!newFSId}','New Financial Security');closeTab();
-                        </script>
+
+    <apex:form id="stagingAreaForm">
+
+        <apex:messages />
+
+        <apex:pageMessages id="pageMessages" />
+
+        <apex:outputpanel id="stagingAreaPanel">
+
+            <apex:pageBlock mode="detail" tabStyle="Account" id="stagingWarning" rendered="{!!waitingForEndorsement && (stagingFs = null || stagingFs.Id = null)}">
+ 
+                <apex:pageMessage severity="warning" strength="1" summary="The certificate of endorsement has not been received from GDI yet." />
+
+                <apex:pageBlockSection>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Add Certificate of Endorsment" />
+                        <apex:inputCheckbox value="{!addCertificate}" id="addCertificateId">
+                            <apex:actionsupport event="onchange" rerender="stagingAreaForm,createStagingForm" action="{!createStagingAreaDefault}" />
+                        </apex:inputCheckbox>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+
+            </apex:pageBlock>
+
+            <apex:pageBlock mode="edit" tabStyle="Account" id="createStagingForm" rendered="{!addCertificate && (stagingFs = null || stagingFs.Id = null)}">
+
+                <apex:pageBlockSection>
+
+                    <apex:inputField value="{!stagingFs.Amount__c}" />
+                    <apex:inputField value="{!stagingFs.Expiry_Date__c}" />
+                    <apex:inputField value="{!stagingFs.FS_Currency__c}" />
+                    <apex:inputField value="{!stagingFs.Validity_Start_Date__c}" />
+
+                </apex:pageBlockSection>  
+
+                <apex:pageBlockButtons location="both">
+                    <apex:commandButton value="Create Certificate of Endorsement" action="{!createStagingArea}" id="createStagingArea" rerender="stagingAreaForm,mainFormRegular"/>
+                </apex:pageBlockButtons>
+
+            </apex:pageBlock>
+
+        </apex:outputpanel>
+
+    <apex:outputpanel id="mainFormRegular" rendered="{!stagingFs != null && stagingFs.Id != null}">
+
+        <apex:pageBlock mode="maindetail" tabStyle="Account" id="myPageBlock">
+            <apex:pageBlockSection columns="2" rendered="{!NOT(OR(ISNULL(newFSId),ISBLANK(newFSId)))}" collapsible="false">
+                <script type="text/javascript">
+                    openSubtab('/{!newFSId}', 'New Financial Security');
+                    closeTab();
+                </script>
             </apex:pageBlockSection>
 
         </apex:pageBlock>
-
-            <apex:pageBlock mode="read">
-                <apex:pageMessages id="pageMessages"/>
-
-                <apex:pageBlockButtons location="both">
-                    <apex:commandButton value="Accept" action="{!accept}" id="acceptButton" rerender="mainForm" disabled="{!oscarProcessed}"/>
-                    <apex:commandButton value="Reject" action="{!reject}" onComplete="closeTab()" id="rejectButton" rerender="mainForm" disabled="{!oscarProcessed}"/>
-                </apex:pageBlockButtons>
-
-                <apex:pageBlockSection id="stagingAreaContents" columns="2" title="Staging Area Details" collapsible="true">
-
-
-                    <apex:repeat value="{!stagingAreaFields}" var="field">
-                    <apex:pageBlockSectionItem>
-                            <apex:outputLabel value="{!$ObjectType.Opportunitylineitem.fields[field].Label}" />
-                            <apex:outputField value="{!stagingFs[field]}" />
-                        </apex:pageBlockSectionItem>
-                    </apex:repeat>
-                </apex:pageBlockSection> 
  
-                 <apex:outputpanel id="AddendumDetails"> 
+        <apex:pageBlock mode="read">
+            <apex:pageBlockButtons location="both">
+                <apex:commandButton value="Accept" action="{!accept}" onComplete="if({!!hasErrorMessages}){closeTab()}" id="acceptButton" rerender="stagingAreaForm" disabled="{!oscarProcessed}" />
+                <apex:commandButton value="Reject" action="{!reject}" onComplete="closeTab()" id="rejectButton" rerender="stagingAreaForm" disabled="{!oscarProcessed}" />
+            </apex:pageBlockButtons>
 
-                    <apex:pageBlockSection id="AddendumCheck"  title="Addendum Details" collapsible="true">
+            <apex:pageBlockSection id="stagingAreaContents" columns="2" title="Staging Area Details" collapsible="true">
 
-     
+                <apex:repeat value="{!stagingAreaFields}" var="field">
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="{!$ObjectType.Opportunitylineitem.fields[field].Label}" />
+                        <apex:outputField value="{!stagingFs[field]}" />
+                    </apex:pageBlockSectionItem>
+                </apex:repeat>
+                <apex:pageBlockSectionItem>
+                    <apex:outputLabel value="Reason" />
+                    <apex:inputField value="{!stagingFs.reason__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <apex:outputpanel id="AddendumDetails">
+
+                <apex:pageBlockSection id="AddendumCheck" title="Addendum Details" collapsible="true">
+
                     <apex:pageBlockSectionItem>
                         <apex:outputLabel value="Add Adendum" />
                         <apex:inputCheckbox value="{!hasAdendum}" id="AdendumCheckbox">
                             <apex:actionsupport event="onchange" rerender="AddendumDetails" />
-                        </apex:inputCheckbox>                    
-                        </apex:pageBlockSectionItem>
+                        </apex:inputCheckbox>
+                    </apex:pageBlockSectionItem>
 
-                    </apex:pageBlockSection>
-                
+                </apex:pageBlockSection>
 
                 <apex:pageBlockSection rendered="{!hasAdendum}">
                     <apex:inputField value="{!stagingFs.Financial_Security__c}">
-                                <apex:actionsupport event="onchange" rerender="AddendumDetails" />
-                            </apex:inputField>
-                            <apex:outputField value="{!currentFS.Amount__c}" />
-                            <apex:outputField value="{!currentFS.Reception_Case__c}" /> 
-                            <apex:outputField value="{!currentFS.Security_Type__c}" />
+                        <apex:actionsupport event="onchange" rerender="AddendumDetails" />
+                    </apex:inputField>
+                    <apex:outputField value="{!currentFS.Amount__c}" />
+                    <apex:outputField value="{!currentFS.Reception_Case__c}" />
+                    <apex:outputField value="{!currentFS.Security_Type__c}" />
 
                 </apex:pageBlockSection>
-                </apex:outputpanel>
-            </apex:pageBlock>
-        </apex:form>
+            </apex:outputpanel>
+        </apex:pageBlock>
+    </apex:outputpanel>
+
+    </apex:form>
 
 </apex:page>
