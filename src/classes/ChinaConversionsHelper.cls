@@ -2,10 +2,17 @@ global with sharing class ChinaConversionsHelper {
 
 	public static void convertAccountsHierarchy(AMS_Oscar__c oscar) {
 
+		//system.debug('### convertAccountsHierarchy!!!');
+
 		String accountId = oscar.account__c;
 		String caseReason = oscar.ANG_Type_Of_Change__c;
 		List<AMS_Agencies_relationhip__c> allRelations = getAllAccountRelations(accountId);
-		Map<Id, Account> allAccounts = getAllHierarchyAccounts(allRelations);
+		Map<Id, Account> allAccounts = getAllHierarchyAccounts(accountId);
+
+		//system.debug('### accountId: ' + accountId);
+		//system.debug('### caseReason: ' + caseReason);
+		//system.debug('### allRelations: ' + allRelations);
+		//system.debug('### allAccounts: ' + allAccounts);
 
 		for(Account acc : allAccounts.values()) {
 
@@ -13,14 +20,14 @@ global with sharing class ChinaConversionsHelper {
         		if(acc.Location_Type__c == 'HO') {
 					acc.Location_Type__c = 'HE';
 				}
-				else if(acc.Location_Type__c == 'BR' || acc.Location_Type__c == 'SA') {
+				else {//if(acc.Location_Type__c == 'BR' || acc.Location_Type__c == 'SA') {
 					acc.Location_Type__c = 'AE';
 					acc.ParentId = acc.Top_Parent__c;	
 				}
-				else if(acc.Location_Type__c != 'HO' && acc.Location_Type__c != 'BR' && acc.Location_Type__c != 'SA' && acc.Status__c == AMS_Utils.ACC_S0_TERMINATED) {
+				/*else if(acc.Location_Type__c != 'HO' && acc.Location_Type__c != 'BR' && acc.Location_Type__c != 'SA' && acc.Status__c == AMS_Utils.ACC_S0_TERMINATED) {
 					acc.Location_Type__c = 'AE';
 					acc.ParentId = acc.Top_Parent__c;
-				}
+				}*/
 				acc.ANG_Accreditation_Model__c = 'Cashless';
 			}
 			else if(caseReason == AMS_Utils.CONVERTTOLEGACY) {
@@ -63,16 +70,14 @@ global with sharing class ChinaConversionsHelper {
 
     public static void deleteAccountsFoPs(String accountId) {
 
-    	List<AMS_Agencies_relationhip__c> allRelations = getAllAccountRelations(accountId);
-
-		Map<Id, Account> allAccounts = getAllHierarchyAccounts(allRelations);
+    	Map<Id, Account> allAccounts = getAllHierarchyAccounts(accountId);
 
     	Id formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
 
 		List<Agency_Authorization__c> accountsWithFoPs = [SELECT Id 
 														  FROM Agency_Authorization__c 
 														  WHERE Account__c IN :allAccounts.keyset() AND RecordTypeId = :formOfPaymentRT];
-        
+
         delete accountsWithFoPs;
     }
 
@@ -104,24 +109,10 @@ global with sharing class ChinaConversionsHelper {
 		return allRelations;
     }
 
-    public static Map<Id, Account> getAllHierarchyAccounts(List<AMS_Agencies_relationhip__c> accntRelations) {
-    	Set<Id> hierarchyAccounts = new Set<Id>();
-
-		for(AMS_Agencies_relationhip__c r : accntRelations) {
-			if(!hierarchyAccounts.contains(r.Parent_Account__c)) {
-				hierarchyAccounts.add(r.Parent_Account__c);	
-			}
-			if(!hierarchyAccounts.contains(r.Child_Account__c)) {
-				hierarchyAccounts.add(r.Child_Account__c);	
-			}
-			if(!hierarchyAccounts.contains(r.Child_Account__r.Top_Parent__c)) {
-				hierarchyAccounts.add(r.Child_Account__r.Top_Parent__c);	
-			}
-		}
-
+    public static Map<Id, Account> getAllHierarchyAccounts(Id accountId) {
 		return new Map<Id, Account>([SELECT Id, Name, Location_Type__c, ANG_Accreditation_Model__c, Status__c, ParentId, Top_Parent__c
 									 FROM Account
-									 WHERE Id in :hierarchyAccounts]);
+									 WHERE Id = :accountId OR ParentId = :accountId OR Top_Parent__c = :accountId]);
     }
 
 }
