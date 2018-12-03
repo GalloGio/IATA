@@ -26,6 +26,22 @@ public with sharing class RemoteInvocationTriggerHandler {
 	public RemoteInvocationTriggerHandler(){
 	}
 
+	public void handleAfterInsert(){
+		handlePlatformEvent();
+	}
+
+	public void handleAfterUpdate(){
+		handlePlatformEvent();
+	}
+
+	public void handleAfterDelete(){
+		handlePlatformEvent();
+	}
+
+	public void handleAfterUndelete(){
+		handlePlatformEvent();
+	}
+
 	public void handleBeforeInsert(){
 		assignRecordtypeToRequest();
 	}
@@ -38,6 +54,15 @@ public with sharing class RemoteInvocationTriggerHandler {
 	public void assignRecordtypeToRequest(){
 		for(Remote_Invocation__c er : triggerNew){
 			er.recordtypeid = (er.Request_Type__c == NEWGEN_EASY_PAY ? RECTYPE_NEWGEN : RECTYPE_TIP);
+		}
+	}
+
+	public void handlePlatformEvent(){
+		for(Remote_Invocation__c re : triggerNew){
+
+			//if oldmap doesn't contain id, trigger is insert. Note: this method only runs on after, id is allways populated 
+			if((oldMap.containsKey(re.id) || oldMap.get(re.id).Status__c == re.Status__c) && (re.Status__c == 'Completed' || re.Status__c == 'Failed'))
+				PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'RemoteInvocation__e', 'Remote_Invocation__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 		}
 	}
 
