@@ -27,7 +27,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 	    insert iss;
 		
 		// Create a new ISO Country
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = iss.id);
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, AMS_Settlement_System__c = iss.id);
 		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE, ANG_Enable_NewGen__c = true);
 		insert new List<IATA_ISO_Country__c>{country, defCountry};
 
@@ -175,7 +175,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	private static testmethod voId test_sucess_newgen(){
 
-
+		Test.startTest();
+		
 		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'FR'];
 		country.ANG_Enable_NewGen__c = true;
 		update country;
@@ -200,7 +201,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 		
-		Test.startTest();
 
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
