@@ -1,5 +1,5 @@
 public with sharing class ISSP_Financial_Institutions {
-	public static final String GDI_PORTAL_SERVICE = 'Global Default Insurance';
+	public static final String GDI_PORTAL_SERVICE = 'Global Default Insurance (GDI)';
 	public static final String GDI_FINANCIAL_INSTITUTION = 'GDI - Euler Hermes';
 
 	public Boolean gdiPolling {get; set;}
