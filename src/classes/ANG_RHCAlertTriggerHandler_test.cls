@@ -175,7 +175,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	private static testmethod voId test_sucess_newgen(){
 
-
+		Test.startTest();
+		
 		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'FR'];
 		country.ANG_Enable_NewGen__c = true;
 		update country;
@@ -200,7 +201,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 		
-		Test.startTest();
 
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
