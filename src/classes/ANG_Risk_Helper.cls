@@ -123,6 +123,9 @@ public with sharing class ANG_Risk_Helper{
 	//set with the status of the FS to be moved
 	public static final Set<String> FS_STATUS_FOR_MOVE_SET = new Set<String>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE,SECURITY_STATUS_NOT_ACTIVE_YET};
 
+	//SIDRA CASE - Sidra Lite Case Reason
+	public static final String SIDRA_LITE_REASON_LATE_ABSENCE_NOTIFICATION = 'Late/Absence of notification of change';
+
 	//Currency Conversion Rates
 	public static Map<String,CurrencyType> convertionsRateMap{
 		get{
