@@ -176,15 +176,15 @@ public class ISSP_ANG_CodeSearch {
 				String serviceRenderendType;
 
 				if (sector == Ams_Utils.SECTOR_CARGO) 
-					serviceRenderendType = 'CASS Participation';
+					serviceRenderendType = '%CASS%';
 				else if (sector == Ams_Utils.SECTOR_PASSENGER) 
-					serviceRenderendType = 'BSP Participation';
+					serviceRenderendType = '%BSP%';
 
 				Boolean countryFound = false;
 
 				for (Services_Rendered__c service :[SELECT Id, ISO_Country_formula__c
 													   FROM Services_Rendered__c
-													   WHERE Services_Rendered_Type__c = :serviceRenderendType
+													   WHERE Services_Rendered_Type__c LIKE :serviceRenderendType
 														AND Services_Rendered_Status__c = 'Active'
 													 	AND Services_Rendered_By__c = :airline.Id]) {
 					if (service.ISO_Country_formula__c == this.agency.IATA_ISO_Country__r.Name) {
