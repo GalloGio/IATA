@@ -1,0 +1,131 @@
+<apex:page controller="ISSP_FinancialSecInformationController" standardStylesheets="false" showHeader="false" sidebar="false" 
+	applyBodyTag="false" applyHtmlTag="false" action="{!redirect}">
+	<html>
+		<style type="text/css">
+			
+		</style>
+		<head>
+			<meta charset="utf-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+			<c:ISSP_Header ></c:ISSP_Header>
+			<c:iss_ap_css />
+		</head>
+
+		<body>
+			<style type="text/css">
+				.section-header {
+					background-color: rgb(43, 120, 228);
+					color: white;
+					line-height: 1.42857143;
+					padding: 8px;
+					vertical-align: top;
+					border-top: 1px solid #ddd;
+				}
+				.tableFormat {
+					padding-left : 5px !important;
+					padding-right : 15px !important;
+					padding-bottom: 2px !important;
+					padding-top :  2px !important;
+					vertical-align: middle !important;
+				}
+
+				.expiredRow {
+					background-color: #f7c7c7 !important;
+				}
+
+				.closeExpireRow {
+					background-color: #fbfb84 !important;
+				}
+
+				.activeRow {
+					background-color: #6bcb6b !important;
+				}
+
+				div.customTable {
+					width: 100%;
+				}
+			</style>
+			<main class="container">
+				<c:ISSP_CustomNavigation />
+				<apex:form >
+					<div class="row">
+						<section name="left-side" class="col-md-3 col-sm-12">
+							<table class="table" style="width: 100%">
+								<tr>
+									<th class="section-header">
+										{!$Label.ISSP_Financial_Securities_Summary}
+									</th>
+								</tr>
+								<tr>
+									<td>
+										<div class="customTable">
+											<strong>
+												{!IF(showConvertedAmount,$Label.ISSP_Financial_Securities_Converted_Total_Amount, $Label.ISSP_Financial_Securities_Total_Amount)}
+											</strong>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="border-top: none">
+										<apex:outputText value="{!totalConvertedAmount} {!localCurrency}" rendered="{!showConvertedAmount}"/>
+										<apex:outputText value="{!totalSecuredAmount} {!currencyCode}" rendered="{!NOT(showConvertedAmount)}"/>
+									</td>
+								</tr>
+							</table>							
+						</section>												
+						<section name="right-side" class="col-md-9 col-sm-12">
+							<section class="row">
+								<header class="col-xs-12">
+									<div class="section-header">
+										<strong>{!$Label.ISSP_Financial_Securities_Details}</strong>
+									</div>
+								</header>
+							</section>
+							<section class="col-md-12 col-sm-12">
+								<table class="table table-striped" cellspacing="0" width="100%">	
+									<thead>
+										<tr>
+											<th>{!$ObjectType.Financial_Security__c.fields.Financial_Institution__c.Label}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Security_Type__c.Label}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Security_Status__c.Label}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Amount__c.Label}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Validity_Start_Date__c.Label}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Expiry_Date__c.Label}</th>
+											<th>{!$Label.Warning_Expired}</th>
+										</tr>										
+									</thead>
+									<tbody>
+										<apex:repeat value="{!listFinSec}" var="item">
+											<tr class="{!item.cssRow}">
+												<td>{!item.financialInstitution}</td>
+												<td>{!item.securityType}</td>
+												<td>{!item.securityStatus}</td>
+												<td>{!item.amount} {!item.currencyIsoCode}</td>
+												<td>
+													<apex:outputText value="{0,date,dd/MM/yyyy}"> 
+														<apex:param value="{!item.validityStartDate}" /> 
+													</apex:outputText>
+												</td>
+												<td>
+													<apex:outputText value="{0,date,dd/MM/yyyy}"> 
+														<apex:param value="{!item.expiryDate}" /> 
+													</apex:outputText>
+												</td>
+												<td>
+													<apex:image value="/img/checkbox_checked.gif" rendered="{!item.cssRow == 'expiredRow'}"/>
+													<apex:image value="/img/checkbox_unchecked.gif" rendered="{!NOT(item.cssRow == 'expiredRow')}"/>
+												</td>
+											</tr>
+										</apex:repeat>
+									</tbody>
+								</table>
+							</section>
+						</section>
+					</div>
+				</apex:form>
+				<c:ISSP_CustomFooter />
+			</main>			
+		</body>
+	</html>
+</apex:page>

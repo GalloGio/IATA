@@ -40,7 +40,7 @@ public class ISSP_FinancialSecInformationController {
 		for(Financial_Security__c fs : records) {
 			FinSecWrapper fsw = new FinSecWrapper(fs);
 			this.listFinSec.add(fsw);
-			if(!fsw.isExpired) {
+			if(fs.Security_Status__c <> 'Expired') {
 				this.totalConvertedAmount += (Decimal) fs.get('convertedAmount');
 				this.totalSecuredAmount += fs.Amount__c;
 				currencyCodes.add(fsw.CurrencyIsoCode);
@@ -59,8 +59,7 @@ public class ISSP_FinancialSecInformationController {
 		public String currencyIsoCode {get;set;}
 		public Date validityStartDate {get;set;}
 		public Date expiryDate {get;set;}
-		public Boolean isExpired {get;set;}
-		public Boolean closeToExpire {get;set;}
+		public String cssRow {get;set;}
 
 		public FinSecWrapper(Financial_Security__c fs) {
 			this.financialInstitution = fs.Financial_Institution__r.Name;
@@ -70,8 +69,17 @@ public class ISSP_FinancialSecInformationController {
 			this.currencyIsoCode = fs.CurrencyIsoCode;
 			this.validityStartDate = fs.Validity_Start_Date__c;
 			this.expiryDate = fs.Expiry_Date__c;
-			this.isExpired = fs.Expiry_Date__c < Date.today();
-			this.closeToExpire = fs.Expiry_Date__c < Date.today().addDays(30);
+			this.cssRow = setCSSRow(fs.Security_Status__c);
+		}
+
+		private String setCSSRow(String status) {
+			if(status == 'Expired') {
+				return 'expiredRow';
+			} else if(status == 'Close to Expiry Date' || status == 'Pending Validation') {
+				return 'closeExpireRow';
+			} else {
+				return 'activeRow';
+			}
 		}
 	}
 }
