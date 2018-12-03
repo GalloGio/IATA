@@ -35,7 +35,7 @@ public class IATAIsoCountryDAO {
                                                         Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c,
                                                         IEC_Zip_Postal_Code_required__c,
                                                         Acli_Country__c,
-
+                                                        Multicountry_Enabled__c,
                                                         AMS_Pilot_Country__c,
                                                         Travel_Branch_Country__c, 
                                                         Travel_HO_Country__c, 
