@@ -67,7 +67,9 @@
             <apex:inputField styleclass="required" value="{!newForm.Legal_Name_of_company__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
-        </apex:pageBlockSectionItem>
+            <apex:outputLabel value="{!$Label.ISSP_SIS_Membership_Trade_Name}" />
+            <apex:inputField styleclass="required" value="{!newForm.Airline_trade_name__c}"/>
+        </apex:pageBlockSectionItem >
 
         <apex:pageBlockSectionItem >
             <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Company_Registration_ID__c.label}"/>
@@ -113,6 +115,12 @@
                 {!$Label.ISSP_SIS_Membership_TOU_Section2_Title}
             </apex:outputpanel>
         </apex:facet>
+
+        <tr><td colspan="4"><div class="strong-label">
+            {!$Label.ISSP_SIS_Membership_TOU_Section2_Subtitle1}<br/>
+            {!$Label.ISSP_SIS_Membership_TOU_Section2_Subtitle2}<br/>
+        </div></td></tr>
+        <apex:outputText ></apex:outputText>
 
         <apex:pageBlockSectionItem >
             <apex:outputLabel value="{!$Label.First_name}"/>

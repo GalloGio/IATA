@@ -173,6 +173,9 @@
           font-weight: bold;
           font-family: sans-serif;
         }
+        footer {
+            text-align: left;
+        }
 </style>
 </head>
 

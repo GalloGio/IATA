@@ -232,7 +232,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         this.newCase.Status = 'Open';
         if(validateFields() && saveDraft()) {
             // upload agreement
-            uploadForm(this.newCase.Id);
+            uploadForm(this.newCase.Id, getFormFileName());
 
             PageReference pageref = Page.ISSP_Case;
             pageref.getParameters().put('caseId',this.newForm.Case__c);
@@ -244,13 +244,28 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
     }
 
     /**
+        Get the file name for the output form, it depends on the sis type
+    **/
+    private String getFormFileName() {
+        if (getisISPA()) {
+             return 'Standard Agreement for SIS Participation - ' + this.account.Name;
+        }
+        if (getisISUA()) {
+             return 'Standard Participation Agreement For SIS e-Invoicing Services - Non Transportation - ' + this.account.Name;
+        }
+        if (getisTOU()) {
+             return 'Standard Participation Agreement for SIS e-Invoicing services – Invoice Receiver - ' + this.account.Name;
+        }
+        return '';
+    }
+
+    /**
         Generates the agreement form as a PDF and uploads it to Amazon
     **/
     @future(callout=true)
-    private static void uploadForm(Id caseId) {
+    private static void uploadForm(Id caseId, String fileName) {
         PageReference formPage = new PageReference('/apex/ISSP_SISMembershipApplicationFormPDF?id=' + caseId);
-        String fileName = 'SISMembershipForm.pdf';
-        String fileIdentifier = 'SIS_Membership_Form';
+        String fileIdentifier = 'SIS_Partnership_Form';
         Blob content = Test.isRunningTest()? Blob.ValueOf(''): formPage.getContent();
         String contentType = 'application/pdf';
         uploadToAmazon(caseId, fileName, fileIdentifier, content, contentType);
@@ -307,7 +322,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         if (this.currentStep==2) {
             if (getisISPA()||getisISUA()) {
                 list<String> listMandatoryFileId = new list<String>();
-                if (getIsValidDueDiligence()) {
+                if (!getIsValidDueDiligence()) {
                     listMandatoryFileId.add('COI');
                     listMandatoryFileId.add('Shareholders_List');
                 }

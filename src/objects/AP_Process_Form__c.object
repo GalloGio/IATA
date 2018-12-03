@@ -2963,7 +2963,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <description>Used for SIS recordtypes</description>
         <externalId>false</externalId>
         <inlineHelpText>Change this help text</inlineHelpText>
-        <label>Is your company an AA Member?</label>
+        <label>Is your company an A&amp;A Member?</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

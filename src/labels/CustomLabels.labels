@@ -22404,7 +22404,7 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_BankMandateDescription</shortDescription>
         <value>Download this document and upload a signed version:
- &lt;a href=&quot;/servlet/servlet.FileDownload?file=0159E000000K6J9&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
+ &lt;a target=&quot;#&quot; href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Bank-Details-Form.pdf&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext</fullName>
@@ -22412,7 +22412,7 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Billing Value Confirmation Helptext</shortDescription>
-        <value>IS generates a Billing Value Confirmation file for passenger prime billing coupons where both the billing entity and billed entity are subscribers to this service. This file is forwarded to ATPCO for further processing. ATPCO validates the billing values with the prorate values stored within its database. Any exchange rate conversions of the prorate values as per the billing month will be done by ATPCO before comparing the values. The results of the comparison are updated by ATPCO and provided to IS. IS updates the comparison results within its Billing Record Database.</value>
+        <value>SIS generates a Billing Value Confirmation file for passenger prime billing coupons where both the billing entity and billed entity are subscribers to this service. This file is forwarded to ATPCO for further processing. ATPCO validates the billing values with the prorate values stored within its database. Any exchange rate conversions of the prorate values as per the billing month will be done by ATPCO before comparing the values. The results of the comparison are updated by ATPCO and provided to SIS. SIS updates the comparison results within its Billing Record Database and generate a Billing Value Confirmation report at the end of each billing period for both the billing and billed entities.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Billing_Value_Determination_Helptext</fullName>
@@ -22420,7 +22420,7 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Billing Value Determination Helptext</shortDescription>
-        <value>As part of this service, IS accepts Usage Files (modified Record 50 file format as defined in the IS Participation guide) from billing entities requesting prorate values for coupons utilized by them. IS validates the file format and forwards the Usage File to ATPCO for further processing. The processed information is provided by ATPCO back to IS. IS forwards the output files provided by ATPCO to the billing entities.</value>
+        <value>As part of this service, SIS accepts Usage Files from billing entities requesting prorate values for coupons utilized by them. SIS validates the file format and forwards the Usage File to ATPCO for further processing, after which it will distribute to the processed information provided back by ATPCO to the billing entities.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Choose_an_Option</fullName>
@@ -22447,6 +22447,14 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <value>Continue Draft</value>
     </labels>
     <labels>
+        <fullName>ISSP_SIS_Membership_Description</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership Description</shortDescription>
+        <value>This service allows you to apply to join SIS e-invoicing online.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SIS_Membership_Description_ISPA</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
@@ -22460,7 +22468,7 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description ISUA</shortDescription>
-        <value>By facilitating the exchange of billing data information and digital invoices, SIS enables airlines and aviation business partners such as ground handlers, maintenance companies, manufacturers, airports and others, to engage in business through a single channel, contributing to a simpler and more efficient environment.​​ Introduction to SIS e-Invoicing ​(pdf)</value>
+        <value>By facilitating the exchange of billing data information and digital invoices, SIS enables airlines and aviation business partners such as ground handlers, maintenance companies, manufacturers, airports and others, to engage in business through a single channel, contributing to a simpler and more efficient environment.​​ Introduction to SIS e-Invoicing ​(&lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Introduction_to_SIS.pdf&quot; target=&quot;_blank&quot;&gt;pdf&lt;/a&gt;)</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Description_TOU</fullName>
@@ -22468,7 +22476,7 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description TOU</shortDescription>
-        <value>Receiving only (PDF) Limited access to SIS to receive Non Transportation invoices only, free of charge</value>
+        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;http://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xls&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Digital_Signature_Application_Helptext</fullName>
@@ -22502,7 +22510,7 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_Download_PDF</shortDescription>
-        <value>download a PDF version of the Membership</value>
+        <value>download a PDF version of the Participation Agreement</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_EU_Data_Privacy_Laws_Helptext</fullName>
@@ -22510,9 +22518,10 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_EU_Data_Privacy_Laws_Helptext</shortDescription>
-        <value>Attachment G should be signed only by companies that are subject to European data protection laws. The attachment offers 2 options: A) between IATA and the participant and B) between IATA, the participant and sub-processor Accelya Kale (for use only where a tripartite agreement is required).
-ACCELYA/Kale is IATA’s sub-processor who processes the incoming data from the airlines. If you choose option B then you need to send us another copy of the signed agreement, as one copy will remain with Accelya.You need to determine if your Airline being in {0}, is subject to the EU law on data protection as these are law requirements in countries that are subjects to the EU data protection law.
-If you are not sure if you should be signing the attachment G, It would be better to verify with your airline’s legal department.”</value>
+        <value>Attachment G should be signed only by companies that are subject to European data protection laws. The contract offers 2 options:
+  Option A): a two party agreement between IATA and the participant
+  Option B) a tripartite agreement between IATA, the participant and sub-processor Accelya Kale for use only where a tripartite agreement is required).
+If you are not sure if your company based in {0} is subject to the EU laws on data protection, please verify with your legal department.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA</fullName>
@@ -22648,7 +22657,7 @@ If you are not sure if you should be signing the attachment G, It would be bette
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section3_Subtitle1</shortDescription>
-        <value>The super user will be granted administrator access rights associated to their company’s SIS access for all billing category. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web.</value>
+        <value>The super user will be granted administrator access rights associated to their company’s SIS account and will have the ability to create any additional users and grant appropriate permissions.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section3_Subtitle2</fullName>
@@ -22656,15 +22665,7 @@ If you are not sure if you should be signing the attachment G, It would be bette
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section3_Subtitle2</shortDescription>
-        <value>After your company is activated in SIS if you want to change the Super User please log a query in our IATA Customer Portal.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_SIS_Membership_ISPA_Section3_Subtitle3</fullName>
-        <categories>ISSP SIS Membership</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_SIS_Membership_ISPA_Section3_Subtitle3</shortDescription>
-        <value>SIS Participant must provide the following details with regards to the Member Super User for their company. Once this form is provided and the membership process completed, the super user will receive their access to SIS.</value>
+        <value>After your company is activated in SIS if you want to change the Super User please log a query via our IATA Customer Portal.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section3_Title</fullName>
@@ -22680,7 +22681,15 @@ If you are not sure if you should be signing the attachment G, It would be bette
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section4_Subtitle1</shortDescription>
-        <value>A&amp;A stands for ATPCO and ARC. A&amp;A is the organization formed by ATPCO and ARC to support the First &amp; Final™ process.Please note that the optional services have a cost associated to each one of them, to consult the price please click below link.</value>
+        <value>This section allows the selection of Additional Services to be used, in addition to the provision of the Service under the main agreement. These services are provided at an extra cost, as published in:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section4_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section4_Subtitle2</shortDescription>
+        <value>The Value Determination and Auto Billing are optional services provided by SIS in conjunction with A&amp;A, and can be utilized by Passenger billing entities that store prorated coupon values within ARC COMPASS®.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section4_Title</fullName>
@@ -22696,7 +22705,7 @@ If you are not sure if you should be signing the attachment G, It would be bette
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the SIS Certification Guide for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</fullName>
@@ -22704,7 +22713,7 @@ If you are not sure if you should be signing the attachment G, It would be bette
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</shortDescription>
-        <value>If you want to setup a new iiNET connection, please contact our iiNET team through below link</value>
+        <value>If you want to setup a new iiNET connection, please contact our iiNET team through &lt;a class=&quot;copy-info&quot; href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&amp;topic=iiNet&amp;subtopic=New Account Request&quot; target=&quot;_blank&quot;&gt;IATA Customer Portal&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section5_Title</fullName>
@@ -22720,7 +22729,7 @@ If you are not sure if you should be signing the attachment G, It would be bette
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</shortDescription>
-        <value>After this application is review, we will provide the set of documents needed to complete you ICH membership</value>
+        <value>After this application is reviewed, we will provide the set of documents needed to complete you ICH membership</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section6_Title</fullName>
@@ -22736,8 +22745,7 @@ If you are not sure if you should be signing the attachment G, It would be bette
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section7_Subtitle1</shortDescription>
-        <value>The bank details, if provided, will be stored in the member profile and will be populated on invoices issued for bilateral settlement.
-You may also use the same account you currently have for the ICH – in this case simply tick the box below.</value>
+        <value>The bank details, if provided, will be stored in the member profile and will be populated on invoices issued for bilateral settlement.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section7_Title</fullName>
@@ -22777,7 +22785,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section9_Subtitle1</shortDescription>
-        <value>EU data privacy laws (EU Standard Contractual Clauses for processing between an EU controller and non-EU processor). Only applicable to SIS participants who are subject to European data protection laws.</value>
+        <value>The Standard Agreement for SIS Participation includes a section on EU Standard Contractual Clauses for processing between an EU controller and non-EU processor (and sub-processor) which is only applicable to SIS participants who are subject to European data protection laws.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section9_Subtitle2</fullName>
@@ -22802,6 +22810,14 @@ You may also use the same account you currently have for the ICH – in this cas
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section9_Title</shortDescription>
         <value>Section 9 - Additional Questions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section9_Question</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section9_Question</shortDescription>
+        <value>Is your company subject to EU data protection laws?</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section1_Subtitle1</fullName>
@@ -22841,7 +22857,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section3_Subtitle1</shortDescription>
-        <value>The super user will be granted administrator access rights associated to their company’s SIS access for all billing category MISC. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web.</value>
+        <value>The super user will be granted administrator access rights associated to their company’s SIS account and will have the ability to create any additional users and grant appropriate permissions.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section3_Subtitle2</fullName>
@@ -22849,7 +22865,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section3_Subtitle2</shortDescription>
-        <value>After your company is activated in SIS if you want to change the Super User please log a query in our IATA Customer Portal.</value>
+        <value>After your company is activated in SIS if you want to change the Super User please log a query via our IATA Customer Portal.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section3_Title</fullName>
@@ -22865,7 +22881,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the SIS Certification Guide for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</fullName>
@@ -22873,7 +22889,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</shortDescription>
-        <value>If you want to setup a new iiNET connection, please contact our iiNET team through our IATA Customer Portal</value>
+        <value>If you want to setup a new iiNET connection, please contact our iiNET team through &lt;a class=&quot;copy-info&quot; href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&amp;topic=iiNet&amp;subtopic=New Account Request&quot; target=&quot;_blank&quot;&gt;IATA Customer Portal&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section4_Title</fullName>
@@ -22889,7 +22905,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section5_Subtitle1</shortDescription>
-        <value>Please note that the optional services have a cost associated to each one of them, to consult the price please click here</value>
+        <value>This section allows the selection of Additional Services to be used, in addition to the provision of the Service under the main agreement. These services are provided at an extra cost, as published in &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Attachment-D-Pricing-Schedule_ISUA.pdf&quot; target=&quot;#&quot;&gt;Attachment D-Pricing Schedule&lt;/a&gt;.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section5_Title</fullName>
@@ -22905,7 +22921,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section6_Subtitle1</shortDescription>
-        <value>After this application is review, we will provide the set of documents needed to complete you ICH membership</value>
+        <value>After this application is reviewed, we will provide the set of documents needed to complete you ICH membership</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section6_Title</fullName>
@@ -23065,7 +23081,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_Review_Country_Req</shortDescription>
-        <value>Review Country Requirements</value>
+        <value>Review Joining Requirements</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Save_Draft_And_Leave</fullName>
@@ -23097,7 +23113,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Subtitle</shortDescription>
-        <value>ISSP SIS Membership  Subtitle</value>
+        <value>SIS is the industry platform that facilitates the electronic invoicing and settlement process by streamlining key processes, unifying invoicing standards, and reducing paper wastes, ultimately fostering a simpler and more efficient environment for airlines and aviation business partners –such as ground handlers, maintenance companies, and manufacturers – to engage in business.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_TOU_Section1_Subtitle1</fullName>
@@ -23122,6 +23138,22 @@ You may also use the same account you currently have for the ICH – in this cas
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_TOU_Section1_Title</shortDescription>
         <value>Section 1 - Company Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_TOU_Section2_Subtitle1</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_TOU_Section2_Subtitle1</shortDescription>
+        <value>The contact person will be granted access to SIS to administer the company profile and to view/download invoices received.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_TOU_Section2_Subtitle2</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_TOU_Section2_Subtitle2</shortDescription>
+        <value>After your company is activated in SIS if you want to change the Super User please log a query via our IATA Customer Portal.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_TOU_Section2_Title</fullName>
@@ -23153,7 +23185,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Title ISPA</shortDescription>
-        <value>ISPA -  Integrated Settlement Participation Agreement</value>
+        <value>SIS for Airlines &amp; Intermodal</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Title_ISUA</fullName>
@@ -23161,7 +23193,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Title ISUA</shortDescription>
-        <value>ISUA - Integrated Settlement User Agreement</value>
+        <value>SIS for Suppliers &amp; Air Operators</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Title_TOU</fullName>
@@ -23169,7 +23201,7 @@ You may also use the same account you currently have for the ICH – in this cas
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Title TOU</shortDescription>
-        <value>TOU  - Terms Of Use</value>
+        <value>SIS for Invoice Receivers (Free)</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Trade_Name</fullName>

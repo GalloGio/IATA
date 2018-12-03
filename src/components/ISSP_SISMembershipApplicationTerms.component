@@ -17,9 +17,6 @@
             </apex:outputpanel>
         </apex:facet>
 
-        <tr><td colspan="4" class="aplabel">{!$Label.ISSP_SIS_Membership_Agreement}</td></tr>
-        <apex:outputText ></apex:outputText>
-
         <apex:outputPanel>
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
             <a href="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}" target="_new" class="link-highlighted">

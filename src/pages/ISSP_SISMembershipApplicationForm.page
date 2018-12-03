@@ -22,6 +22,7 @@
     #main-form-panel .pbSubheader {
         font-weight:bold;
         font-size:15px;
+        margin-top: 10px;
     }
 
     #main-form-panel .pbTitle h2 {
@@ -144,6 +145,10 @@
         margin-top: 5px;
         margin-bottom: 5px;
         border: 0px solid #fff !important;
+    }
+    #form-container .strong-label a {
+        text-decoration: underline;
+        color: rgb(32, 107, 164) !important;
     }
 
     #form-container .blue-label {

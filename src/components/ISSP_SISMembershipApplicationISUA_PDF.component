@@ -120,7 +120,7 @@
     </p>
 
     <p class="margin-6 indent-3">
-        3.1.9 It is the sole responsibility of User to ensure User Data or any other information transmitted via the Service and/or Additional Services is in compliance with applicable laws, including applicable privacy laws. To the extent applicable, any payment card data supplied under the Service by User or any third party acting on its behalf shall be masked in accordance with Payment Card Industry Digital Security Standard (PCI-DSS) specifications using the format 123456margin-3 indent-1_5margin-3 indent-1_57890.
+        3.1.9 It is the sole responsibility of User to ensure User Data or any other information transmitted via the Service and/or Additional Services is in compliance with applicable laws, including applicable privacy laws. To the extent applicable, any payment card data supplied under the Service by User or any third party acting on its behalf shall be masked in accordance with Payment Card Industry Digital Security Standard (PCI-DSS) specifications using the format 1234567890.
     </p>
 
     <p class="margin-3 indent-1_5">
@@ -641,7 +641,7 @@
     </p>
 
     <p class="margin-3 bold">
-        1.1 OVERVIEW OF SIS)
+        1.1 OVERVIEW OF SIS
     </p>
 
     <p class="margin-3">

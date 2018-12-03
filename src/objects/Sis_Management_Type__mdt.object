@@ -266,6 +266,16 @@
                     <default>false</default>
                     <label>Yes + Annual Fee</label>
                 </value>
+                <value>
+                    <fullName>Enabled</fullName>
+                    <default>false</default>
+                    <label>Enabled</label>
+                </value>
+                <value>
+                    <fullName>-</fullName>
+                    <default>false</default>
+                    <label>-</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

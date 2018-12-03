@@ -207,17 +207,14 @@
 
     </apex:pageBlockSection>
 
-    <apex:pageBlockSection columns="2" id="section4" collapsible="false">
+    <apex:pageBlockSection columns="1" id="section4" collapsible="false">
         <apex:facet name="header">
             <apex:outputpanel >
                 {!$Label.ISSP_SIS_Membership_ISUA_Section4_Title}
             </apex:outputpanel>
         </apex:facet>
 
-        <tr><td colspan="4"><div class="strong-label">
-            {!$Label.ISSP_SIS_Membership_ISUA_Section4_Subtitle1}
-        </div></td></tr>
-        <apex:outputText ></apex:outputText>
+        <apex:outputText styleclass="strong-label" value="{!$Label.ISSP_SIS_Membership_ISUA_Section4_Subtitle1}" escape="false"/>
 
         <apex:pageBlockSectionItem >
             <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Do_you_have_an_iiNET_account__c.label}"/>
@@ -230,20 +227,10 @@
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
 
-        <apex:variable value="{!newForm.Do_you_have_an_iiNET_account__c=='Yes'}" var="iiNET_Yes"/>
-        <apex:variable value="{!newForm.Do_you_have_an_iiNET_account__c=='No'}" var="iiNET_No"/>
+        <apex:inputField value="{!newForm.IINET_account_number__c}" styleclass="required" html-pattern="[A-Z]{2}[0-9]{2}" html-placeholder="Example: AA11" style="width: auto" rendered="{!newForm.Do_you_have_an_iiNET_account__c=='Yes'}"/>
 
-        <tr><td colspan="4" style="{!IF(iiNET_No,'','display:none;')}">
-            <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISUA_Section4_Subtitle2}</div>
-            <a class="copy-info" href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1&topic=iiNet&subtopic=New Account Request" target="_blank">Contact iiNet Team</a>
-        </td></tr>
+        <apex:outputText styleclass="strong-label" value="{!$Label.ISSP_SIS_Membership_ISUA_Section4_Subtitle2}" escape="false" rendered="{!newForm.Do_you_have_an_iiNET_account__c=='No'}"/>
 
-        <apex:pageBlockSectionItem rendered="{!iiNET_Yes}">
-            <apex:outputLabel value="iiNET Account Number"/>
-            <apex:inputField value="{!newForm.IINET_account_number__c}" styleclass="required" html-pattern="[A-Z]{2}[0-9]{2}" html-placeholder="Example: AA11"/>
-        </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!iiNET_Yes}">
-        </apex:pageBlockSectionItem>
         <script>setRequired();</script>
 
     </apex:pageBlockSection>
@@ -255,10 +242,7 @@
             </apex:outputpanel>
         </apex:facet>
 
-        <tr><td colspan="4"><div class="strong-label">
-            {!$Label.ISSP_SIS_Membership_ISUA_Section5_Subtitle1}
-        </div></td></tr>
-        <apex:outputText ></apex:outputText>
+        <apex:outputText styleclass="strong-label" value="{!$Label.ISSP_SIS_Membership_ISUA_Section5_Subtitle1}" escape="false"/>
 
         <apex:pageBlockSectionItem>
             <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Digital_Signature_application__c.label}"/>
@@ -358,7 +342,7 @@
             <apex:outputText ></apex:outputText>
             <tr><td colspan="4" class="required">
                 <apex:iframe scrolling="false" height="180px"
-                src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=3&reqRequired=Mandatory&reqName=Bank Mandate Form&reqDescription=&reqIdentifier=BankMandate&onlyOne=true"/>
+                src='/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=3&reqRequired=Mandatory&reqName=Bank Mandate Form&reqDescription={!URLENCODE($Label.ISSP_SIS_Membership_BankMandateDescription)}&reqIdentifier=BankMandate&onlyOne=true'/>
             </td></tr>
         </apex:outputPanel>
 
@@ -376,7 +360,7 @@
         </td></tr>
         <apex:outputText ></apex:outputText>
 
-        <apex:variable value="{!IF(IsValidDueDiligence,'Mandatory','Optional')}" var="mandatoryDoc"/>
+        <apex:variable value="{!IF(IsValidDueDiligence,'Optional','Mandatory')}" var="mandatoryDoc"/>
 
         <apex:iframe scrolling="false" height="180px"
             src="/ISSP_SISMembershipApplicationFileUpload?caseId={!newform.Case__c}&reqCnt=0&reqRequired={!mandatoryDoc}&reqName=Corporate Registration&reqDescription=&reqIdentifier=COI&onlyOne=true"/>

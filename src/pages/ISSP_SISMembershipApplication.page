@@ -50,6 +50,7 @@
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3>{!$Label.ISSP_SIS_Membership_Title}</h3>
+          {!$Label.ISSP_SIS_Membership_Subtitle}
         </div>
 
         <apex:outputPanel styleclass="panel-body" rendered="{!listWrapperType.size=0}">

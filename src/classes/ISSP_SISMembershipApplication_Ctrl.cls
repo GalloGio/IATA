@@ -1,6 +1,6 @@
 global class ISSP_SISMembershipApplication_Ctrl {
-    
-    public static final String APP_NAME = 'SIS Membership Application';
+
+    public static final String APP_NAME = 'Join SIS e-Invoicing';
     public static final Id CASE_RT_AIRLINE_PARTICIPATION = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('IDFS_Airline_Participation_Process').getRecordTypeId();
     public static final Map<String,Schema.RecordTypeInfo> MAP_AP_RT = Schema.SObjectType.AP_Process_Form__c.getRecordTypeInfosByDeveloperName();
     public static final Id AP_RT_ISPA = MAP_AP_RT.get('SIS_Application_ISPA').getRecordTypeId();
@@ -186,7 +186,7 @@ global class ISSP_SISMembershipApplication_Ctrl {
                 Classification_SIS__c = 'SIS Membership',
                 Type = selectedType,
                 Defect_Issue__c = MAP_DEFECT_ISSUE.get(selectedType),
-                Subject = 'SIS Membership - ' + account.name + ' - ' + selectedType,
+                Subject = 'SIS Participation - ' + account.name + ' - ' + selectedType,
                 Status = 'Draft',
                 Origin = 'Portal',
                 ContactId = currentUser.ContactId

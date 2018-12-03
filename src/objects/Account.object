@@ -9974,7 +9974,7 @@ WSPN-Worldspan</inlineHelpText>
     </fields>
     <fields>
         <fullName>Give_SIS_Membership__c</fullName>
-        <description>Allow ISS portal users under this account to access to SIS Membership application</description>
+        <description>Allow ISS portal users under this account to access to Join SIS e-Invoicing application</description>
         <externalId>false</externalId>
         <label>Give SIS Membership</label>
         <required>false</required>
