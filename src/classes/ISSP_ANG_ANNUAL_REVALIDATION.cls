@@ -552,19 +552,12 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 			keepConfirmedData();
-			//copyShippingCountry();
 			upsert currentAccount.fw.newform;
 
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
 		return null;
 	}
-	
-	/*private void copyShippingCountry() {
-		// Workaround to assign the previous value if not changed
-		if (!currentAccount.fw.newform.Notify_Change_Location__c)
-			currentAccount.fw.newform.Shipping_Country__c = currentAccount.account.ShippingCountry;
-	}*/
 
 	public PageReference confirmUpdate() {
 
@@ -618,6 +611,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		if (!currentAccount.fw.newform.Notify_Change_Legal_Details__c) {
 			currentAccount.fw.newform.Account_Name__c = currentAccount.account.Name;
 			currentAccount.fw.newform.Trade_Name__c = currentAccount.account.TradeName__c;
+			currentAccount.fw.newform.ISSP_AMS_VAT_number__c = currentAccount.account.VAT_Number__c;
+		} else {
+			currentAccount.fw.newform.ISSP_AMS_VAT_number__c = currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c;
 		}
 
 		if (!currentAccount.fw.newform.Notify_Change_Location__c) {
