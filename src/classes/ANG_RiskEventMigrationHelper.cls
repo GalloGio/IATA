@@ -251,7 +251,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NOT  
 			&& aacc.Reason_Code__c == '60' 
 			&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCAC
-			&& aacc.SIDRA_Case__r.SIDRA_Lite_Reason__c == ANG_Risk_Helper.SIDRA_LITE_REASON_LATE_ABSENCE_NOTIFICATION
+			&& (aacc.SIDRA_Case__c==null || aacc.SIDRA_Case__r.SIDRA_Lite_Reason__c == ANG_Risk_Helper.SIDRA_LITE_REASON_LATE_ABSENCE_NOTIFICATION)
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& !risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_NTW  + getKey(aacc))
 			){
