@@ -640,7 +640,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           /****** For Cases - Global Record Type******/
       } else if(c.RecordType.DeveloperName == 'Cases_Global' && !c.Contact.Email.contains('@iata.org') && !c.Contact.Email.contains('@salesforce.com') && c.Status == 'Closed'){
 
-          template = templates.get('Clicktools_Contact_Email_EN');
+          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
 
 
 

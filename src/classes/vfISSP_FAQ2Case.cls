@@ -74,6 +74,7 @@ global class vfISSP_FAQ2Case
     public list<SelectOption> lst_selectsubTopics {get;set;}
     public list<SelectOption> lst_selectTopics_Emergencies {get;set;}
     public list<SelectOption> lst_selectAreasOfConcern {get;set;}
+    public Boolean excludeCountryPicklist {get; set;}
 
     public String topic { get; set; }
     public String topicLabel { get; set; }
@@ -737,8 +738,64 @@ global class vfISSP_FAQ2Case
         butInfoAux.Order=3;
 
         this.csButtonsList.put(BUT_CAT_ENGLISH,butInfoAux);
+
+        this.currentButtonsToShow = 'CancelAndCreateACase';
     }
 
+    /*******************************************************************************************************
+    * @description Check, selected Topic is on the list to exclude Country Picklist from Portal.
+    *               List of the Topics APIs located in: Label.ISSP_Topics_To_Exclude_Country_PL
+    *
+    *
+    * @return {Boolean}
+    * @param topicName - API name of the topic
+    *
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2018-11-28   lukasz.waszkiewicz@b-i.com        Creation
+    ********************************************************************************************************/
+    public Boolean isExcludedCountryPicklist(String topicName){
+        List<String> toExclude = new List<String>();
+        toExclude = Label.ISSP_Topics_To_Exclude_Country_PL.split(',');
+
+        if(toExclude.contains(topicName)){
+            excludeCountryPicklist = true;
+        } else {
+            excludeCountryPicklist = false;
+        }
+
+        return excludeCountryPicklist;
+    }
+
+    /*******************************************************************************************************
+    * @description If Country Picklist is excluded from Portal, then populate IFAP_Country_ISO__c field for new case
+    *               with Account.Country_ISO_Code__c, and if global button is created for this topic, then add
+    *               it to the buttons list.
+    *
+    *
+    *
+    * @return {Void} Updates newCase with ISO_Country
+    * @param topicName - API name of the topic
+    *
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2018-11-11   lukasz.waszkiewicz@b-i.com        Creation
+    ********************************************************************************************************/
+    public void updateCaseForExcludedCountryPicklist(String topicName){
+        ID uContactId = [SELECT ContactId FROM User WHERE id =: Userinfo.getUserid()].contactId;
+        ID uAccId = [SELECT AccountId FROM Contact WHERE id =: uContactId].AccountId;
+        newCase.IFAP_Country_ISO__c = [SELECT Country_ISO_Code__c FROM Account WHERE Id =: uAccId LIMIT 1].Country_ISO_Code__c;
+
+        if(TopicToLiveAgentButtonSettingMap.containsKey(topicName)){
+            this.setButtonForTopic(topicName);
+        } else {
+            this.currentButtonsToShow = 'CancelAndCreateACase';
+            }
+    }
 
     /*******************************************************************************************************
     * @description Sets chat buttons names according with:
@@ -1861,6 +1918,12 @@ for (string topicver:listofAllowedTopics){
         }
         else
         {
+
+            clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(topic)];
+            String CategoryNameItem='';
+            CategoryNameItem=cdc.CategoryName;
+
+            isExcludedCountryPicklist(CategoryNameItem);
             this.currentButtonsToShow = CancelAndSubmit;
             createArticleStatisticsRecords(SelectedArticleModalView.SelectedArticle, ENV.ArticleStatType.UnSatisfied);
             return null;
@@ -1914,7 +1977,7 @@ for (string topicver:listofAllowedTopics){
         System.debug('basto1p - FAQ2Case.save isIFG='+isIFG);
         if( ((subtopic == null ||subtopic == '' ||subtopic == '-- Select --' || subTopic == topic))||//added &&iscompliment to bypass error message
             ((areaOfConcern == null || areaOfConcern == '') && isIFG==true && this.lst_selectareasOfConcern.size()>1) ||
-            (newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')||
+            ((newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '') && excludeCountryPicklist == false)||
             (newCase.Subject == null ||newCase.Subject == '')||
             (newCase.Description == null ||newCase.Description == '')){
 
@@ -1925,7 +1988,7 @@ for (string topicver:listofAllowedTopics){
             if((areaOfConcern == null || areaOfConcern == '') && isIFG==true && this.lst_selectareasOfConcern.size()>1){
                 ErrFields += System.Label.ISSP_Area_of_Concern;
             }
-            if((newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')){
+            if(((newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')) && excludeCountryPicklist == false){
                 ErrFields += System.Label.Country_concerned_by_the_query +', ';
             }
             if(newCase.Subject == null ||newCase.Subject == ''){
@@ -1946,6 +2009,12 @@ for (string topicver:listofAllowedTopics){
         }
 
         newCase.Area_of_Concern__c=areaOfConcern;
+
+        if(excludeCountryPicklist == true) {
+            ID uContactId = [SELECT ContactId FROM User WHERE id =: Userinfo.getUserid()].contactId;
+            ID uAccId = [SELECT AccountId FROM Contact WHERE id =: uContactId].AccountId;
+            newCase.IFAP_Country_ISO__c = [SELECT Country_ISO_Code__c FROM Account WHERE Id =: uAccId LIMIT 1].Country_ISO_Code__c;
+        }
 
         addDecsription();
         setRecordType(); //TF - SP11
@@ -2171,6 +2240,7 @@ for (string topicver:listofAllowedTopics){
     public   PageReference IwishtoComplain()
     {system.debug('JK22 isComplain IwishtoComplain START: ' + isComplain);
         resetCase();
+        excludeCountryPicklist = false;
         Clicked_SISHelpDesk = false;
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;
@@ -2213,6 +2283,7 @@ for (string topicver:listofAllowedTopics){
 
     public PageReference GeneralQueueMethod(){
         resetCase();
+        excludeCountryPicklist = false;
         Clicked_SISHelpDesk = false;
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;
@@ -2233,6 +2304,7 @@ for (string topicver:listofAllowedTopics){
 // Compliment additions ED sept 2015
     public PageReference ComplimentGeneralQueueMethod(){
         resetCase();
+        excludeCountryPicklist = false;
         Clicked_SISHelpDesk = false;
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;
@@ -2341,6 +2413,10 @@ for (string topicver:listofAllowedTopics){
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
         system.debug('JK subtopic: ' + subtopic);
 
+        //if Country Picklist is excluded, then updateCaseForExcludedCountryPicklist() else old logic
+        if(isExcludedCountryPicklist(selectDataCategory.CategoryName)){
+            updateCaseForExcludedCountryPicklist(selectDataCategory.CategoryName);
+        } else {
         // if strings are equals (subtopic empty)
         if (subtopic.compareTo(Env.SelectOptionDefaultValue) == 0)
         {
@@ -2409,6 +2485,7 @@ for (string topicver:listofAllowedTopics){
             this.lst_selectareasOfConcern = new list<SelectOption>();
             this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
         }
+    }
     }
 
     public void refreshAreasOfConcernPickList(){
