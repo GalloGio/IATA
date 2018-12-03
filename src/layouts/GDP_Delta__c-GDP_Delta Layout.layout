@@ -15,6 +15,10 @@
                 <behavior>Edit</behavior>
                 <field>Related_GDP_Product_Account_View__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CNS_Agency__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
