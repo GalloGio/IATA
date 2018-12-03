@@ -187,7 +187,7 @@ public class ISSP_ANG_CodeSearch {
 													   WHERE Services_Rendered_Type__c LIKE :serviceRenderendType
 														AND Services_Rendered_Status__c = 'Active'
 													 	AND Services_Rendered_By__c = :airline.Id]) {
-					if (service.ISO_Country_formula__c == this.agency.IATA_ISO_Country__r.Name) {
+					if (service.ISO_Country_Code__c == this.agency.IATA_ISO_Country__r.BSP_Country_free_text__c) {
 						countryFound = true;
 						break;
 					}
