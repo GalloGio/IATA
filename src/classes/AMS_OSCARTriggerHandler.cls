@@ -2946,6 +2946,20 @@ public class AMS_OSCARTriggerHandler {
                     }
                 }
                 /*** AMSU-161 End ***/ 
+
+                //ACAMBAS - NEWGEN-4784 - Start
+                if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
+                    Set<String> statusNotRequireLocationClsDom = new Set<String>{'Terminated', 'Not in operation' ,'Not accreditated'};
+                    Map<Id, Account> accountsMap = ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
+                    // Requires that every account have location class "D" if the account status
+                    // is not one of the following: "Terminated", "Operation", "Accredited" (statusNotRequireLocationClsDom)
+                    for(Account a : accountsMap.values()) {
+                        if(a.Location_Class__c != 'D' && !statusNotRequireLocationClsDom.contains(a.Status__c)) {
+                            oscar.addError('The conversion must be applied to a hierarchy of Domestic agents. Please proceed with a change of location type before processing the conversion.');
+                        }    
+                    }
+                }
+                //ACAMBAS - NEWGEN-4784 - End
             }
         }
     }
