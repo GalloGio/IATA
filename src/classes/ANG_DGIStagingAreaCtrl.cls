@@ -82,28 +82,6 @@ public with sharing class ANG_DGIStagingAreaCtrl {
     }set;}            
 
 
-    // return stagingFs != null && stagingFs.Id == null;
-
-    // The extension constructor initializes the private member
-    // variable mysObject by using the getRecord method from the standard
-    // controller.
-    public ANG_DGIStagingAreaCtrl(ApexPages.StandardController stdController) {
-        
-        this.stagingFs = (Opportunitylineitem)stdController.getRecord();
-        fetchStagingFs();
-
-        List<Financial_Security__c> currentFSLst = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
-		
-        if(!currentFSLst.isEmpty()){ 
-        	currentFS=currentFSLst.get(0);
-			this.stagingFs.Financial_Security__c = currentFS.Id;
-        }
-
-        this.oscarObj = [Select Id, step50__c, Account__c, Oscar_Communication_Case_Id__c  from AMS_OSCAR__c where Id=:stagingFs.OSCAR_GDI__c];
-
-
-    }
-
     // The extension constructor initializes the private member
     // variable mysObject by using the getRecord method from the standard
     // controller.
@@ -118,12 +96,7 @@ public with sharing class ANG_DGIStagingAreaCtrl {
 
         List<Opportunitylineitem> lineItemsLst = [Select id from Opportunitylineitem where OSCAR_GDI__c = :oscarId];
 
-        if(lineItemsLst.isEmpty()){
-
-            // new page
-
-        }else {
-
+        if(!lineItemsLst.isEmpty()){
             stagingFs = lineItemsLst.get(0); 
             fetchStagingFs();
         }
