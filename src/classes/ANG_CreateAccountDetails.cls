@@ -81,10 +81,7 @@ global without sharing class ANG_CreateAccountDetails {
             list<Account> lsAccnt;
             if(Caller==ANG_RestServiceHelper.Caller_GDI){
                 if (requestType==ANG_RestServiceHelper.URIRequest_GDIOffer)
-                    lsAccnt = [SELECT IATACode__c, Id, Name, GDI_Status__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c,
-                                    (SELECT Id, Email, User_Portal_Status__c, Financial_Assessment_Contact__c, BSP_CASS_Payment_contact__c 
-                                        FROM Contacts WHERE Status__c = 'Active')
-                                FROM Account WHERE recordtype.developername =:mapAccountTypeRT.get(AccountType) AND IATACode__c =:IATACode];
+                    lsAccnt = [select IATACode__c, Id ,GDI_Status__c from Account where recordtype.developername =:mapAccountTypeRT.get(AccountType) and IATACode__c =:IATACode];
             }
 
 			if(lsAccnt==null || lsAccnt.isEmpty()){
