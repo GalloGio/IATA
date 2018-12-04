@@ -223,19 +223,22 @@ public class ChinaConversionsHelperTest {
 
 	@isTest static void convertChinaToLegacyTest() {
 
+		Test.startTest();
+
 		setupData(AMS_Utils.CONVERTTOLEGACY);
+
 		convertToNewGen(accountHO);
 		convertToNewGen(accountBR);
 
-		oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
-		update oscar;
+		Test.stopTest();
 
+	
 		//Risk event types
 		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(Name = 'Risk Event Type 1', ANG_Risk_ID__c = '111', ANG_Expiration__c = 2);
 		insert ret;
 
 		//Risk events
-		ANG_Agency_Risk_Event__c re = new ANG_Agency_Risk_Event__c(ANG_AccountId__c = oscar.Account__c, ANG_Risk_Type__c = ret.Id);
+		ANG_Agency_Risk_Event__c re = new ANG_Agency_Risk_Event__c(ANG_AccountId__c = accountHO.Id, ANG_Risk_Type__c = ret.Id);
 		insert re;
 
 		//Form of payments
@@ -243,29 +246,10 @@ public class ChinaConversionsHelperTest {
 		Agency_Authorization__c aa = new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = formOfPaymentRT);
 		insert aa;
 
-		Test.startTest();
-
+		oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
+		update oscar;
+		
 		convertChinaToLegacyStep6Test();
-
-		oscar.STEP15__c = AMS_Utils.PASSED;
-		oscar.STEP12__c = AMS_Utils.PASSED;
-		oscar.RPM_Approval__c = 'Authorize Approval';
-		oscar.STEP2__c = AMS_Utils.PASSED; //Approval
-		update oscar;
-
-		convertChinaToLegacyStep2Test();
-
-		oscar.STEP3__c = AMS_Utils.PASSED; //Disapproval
-		update oscar;
-
-		convertChinaToLegacyStep3Test();
-
-		oscar.STEP4__c = AMS_Utils.PASSED; //Withdrawal
-		update oscar;
-
-		convertChinaToLegacyStep4Test();
-
-		Test.stopTest();
 	}
 
 
@@ -309,11 +293,13 @@ public class ChinaConversionsHelperTest {
 		System.assertEquals(null, accountBR.ANG_RiskStatus__c);
 		System.assertEquals(null, accountBR.ANG_RiskHistoryAssessment__c);
 
-		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id 
-													 FROM ANG_Agency_Risk_Event__c 
-													 WHERE ANG_AccountId__c = :accountHO.Id OR ANG_AccountId__c = :accountBR.Id];
+		Map<Id, Account> accountsMap = ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
 
-		System.assertEquals(0, [SELECT count() FROM ANG_Agency_Risk_Event__c WHERE ANG_AccountId__c = :oscar.Account__c OR ANG_AccountId__c = :accountBR.Id]);
+		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_AccountId__c
+													 FROM ANG_Agency_Risk_Event__c 
+													 WHERE ANG_AccountId__c in :accountsMap.keyset()];
+
+		System.assertEquals(0, [SELECT count() FROM ANG_Agency_Risk_Event__c WHERE ANG_AccountId__c in :accountsMap.keyset()]);	
 														   	
 		checkAccountRelations();
 	}
@@ -364,23 +350,22 @@ public class ChinaConversionsHelperTest {
 
 	@isTest static void convertChinaToInternationalTest() {
 
+		Test.startTest();
+
 		setupData(AMS_Utils.CONVERTTOINTERNATIONAL);
 		convertToNewGen(accountHO);
 		convertToNewGen(accountBR);
 
-		/*Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-		Agency_Authorization__c aa = new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = formOfPaymentRT);
-		insert aa;*/
+		Test.stopTest();
 
-		//oscar.ANG_Type_Of_Change__c = AMS_Utils.CONVERTTOINTERNATIONAL;
+		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+		Agency_Authorization__c aa = new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = formOfPaymentRT);
+		insert aa;
+
 		oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
 		update oscar;
 
-		Test.startTest();
-
 		convertChinaToInternationalStep6Test();
-
-		Test.stopTest();
 	}
 
 	private static void convertChinaToInternationalStep6Test() {
@@ -425,13 +410,13 @@ public class ChinaConversionsHelperTest {
 
 		checkAccountRelations();
 
-		/*Map<Id, Account> accountsMap = ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
+		Map<Id, Account> accountsMap = ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
 
 		List<Agency_Authorization__c> FoPs_list = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c 
 											  	   FROM Agency_Authorization__c 
 											  	   WHERE Account__c in :accountsMap.keyset()];
 
-		System.assertEquals(0, FoPs_list.size());*/
+		System.assertEquals(0, FoPs_list.size());
 	}
 
 
