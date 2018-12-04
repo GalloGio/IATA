@@ -173,13 +173,13 @@ public with sharing class ANG_DGIStagingAreaCtrl {
     public void createStagingArea(){
         
         try{
-            opp.CurrencyIsoCode = stagingFs.currencyIsoCode;
+            opp.CurrencyIsoCode = stagingFs.FS_Currency__c;
             update opp;
 
             upsert stagingFs;
         }
          catch(Exception e){
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getStackTraceString()));
+            //ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getStackTraceString()));
             System.debug(e.getStackTraceString());
         }
 
@@ -212,7 +212,7 @@ public with sharing class ANG_DGIStagingAreaCtrl {
 
         
         }catch(Exception e){
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getStackTraceString()));
+            //ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getStackTraceString()));
             System.debug(e.getStackTraceString());
         }
     }
