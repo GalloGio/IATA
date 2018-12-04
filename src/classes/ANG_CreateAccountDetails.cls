@@ -108,10 +108,9 @@ global without sharing class ANG_CreateAccountDetails {
             //All is good. Proceeding in creating records
             if(Caller==ANG_RestServiceHelper.Caller_GDI){
                 if (requestType==ANG_RestServiceHelper.URIRequest_GDIOffer)
-                    ANG_CreateAccountDetails_Oscar.ANG_Create_GDIOscar(accnt, ''); //PASS THE BODY of the request as second parameter
+                    ANG_CreateAccountDetails_Oscar.ANG_Create_GDIOscar(accnt, req.requestBody);
             }
-        }
-        catch(Exception e){
+        }catch(Exception e){
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', e.getMessage()) ), 500);
         }
     }

@@ -1466,23 +1466,17 @@ global class ANG_OscarProcessHelper {
 		Map<Id,Account> accountMap = new Map<Id,Account>();
 
 		//Case:
-		Map<Id,List<Contact>> keyContactMap = new Map<Id,List<Contact>>();
-
-
 		for(Account acc : accs){
 
 			accountMap.put(acc.Id,acc);
 
 			System.debug('[ANG_OscarProcessHelper.createGDIOscars] - Inserting GDI Oscar for Account: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
 
-
-			List<Contact> keyContactLst = fetchKeyContactForGDI(contactsAcc.get(acc.Id));
-			
-			keyContactMap.put(acc.Id, keyContactLst);
+			Contact keyContact = fetchKeyContactForGDI(contactsAcc.get(acc.Id));
 
 			fieldsOfObject = new Map<String,Object>();
 	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
-	      	fieldsOfObject.put('ContactId',keyContactLst.get(0).Id);
+	      	fieldsOfObject.put('ContactId',keyContact.Id);
 	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
 	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
@@ -1500,7 +1494,7 @@ global class ANG_OscarProcessHelper {
 
 	        oscarObjs = new OscarObjectsWrapper();
 	        oscarObjs.cse = cse;
-	        oscarObjs.con = keyContactLst.get(0);
+	        oscarObjs.con = keyContact;
 
 	        accOscarObjsMap.put(acc.id,oscarObjs);
 	        casesToInsert.add(cse);
@@ -1524,7 +1518,7 @@ global class ANG_OscarProcessHelper {
         for (Account acc : accs){
         
 			fieldsOfObject = new Map<String,Object>();
-	        fieldsOfObject.put('Process__c',AMS_Utils.NG_GDI);
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGGDI);
 			fieldsOfObject.put('Status__c','Open');
 			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
 			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);

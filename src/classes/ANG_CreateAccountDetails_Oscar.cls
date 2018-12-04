@@ -6,14 +6,14 @@
 ***********************************************************/
 
 global without sharing class ANG_CreateAccountDetails_Oscar {
-    global static void ANG_Create_GDIOscar(Account accnt, string OfferId) {
+    global static void ANG_Create_GDIOscar(Account accnt, Blob offerId) {
 
         //Take a database snapshot to rollback in case of exception or something not being created succesfully
         System.Savepoint sp = Database.setSavePoint();
 
         try{
             // CREATE OSCAR Comm Case and GDI AMS_OSCAR__c
-           List<AMS_OSCAR__c> oscar = ANG_OscarProcessHelper.createGDIOscars(new List<Account>{accnt}, new Map<Id,Contact> {accnt.Id => accnt.contacts});
+           List<AMS_OSCAR__c> oscar = ANG_OscarProcessHelper.createGDIOscars(new List<Account>{accnt}, new Map<Id,List<Contact>> {accnt.Id => accnt.contacts});
 
             //TODO: Create Opportunity
 
@@ -21,7 +21,7 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new INT077_SuccessPayload(oscar[0].Id)), 200);
         }
         catch(exception e){
-            Dabase.rollback(sp);
+            Database.rollback(sp);
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', e.getMessage()) ), 500);
         }
     }
