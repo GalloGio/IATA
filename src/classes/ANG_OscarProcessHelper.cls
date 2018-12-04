@@ -1454,6 +1454,99 @@ global class ANG_OscarProcessHelper {
         return casesToUpdate;
     }
 
+    public static List<AMS_OSCAR__c> createGDIOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc){
+
+    	Map<id,OscarObjectsWrapper> accOscarObjsMap = new Map<id,OscarObjectsWrapper>();
+		OscarObjectsWrapper oscarObjs;
+		
+		Map<String,Object> fieldsOfObject;
+
+		List<Case> casesToInsert = new List<Case>();
+
+		Map<Id,Account> accountMap = new Map<Id,Account>();
+
+		//Case:
+		for(Account acc : accs){
+
+			accountMap.put(acc.Id,acc);
+
+			System.debug('[ANG_OscarProcessHelper.createGDIOscars] - Inserting GDI Oscar for Account: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
+
+			Contact keyContact = fetchKeyContactForGDI(contactsAcc.get(acc.Id));
+
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
+	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
+	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('Origin', 'GDI Portal');
+	        fieldsOfObject.put('Reason1__c','GDI setup');
+	        fieldsOfObject.put('Subject','GDI setup - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        
+	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+	        //assign to queue
+	       	Database.DMLOptions dmo = new Database.DMLOptions();
+	        dmo.assignmentRuleHeader.useDefaultRule = true;
+	        cse.setOptions(dmo);
+
+	        oscarObjs = new OscarObjectsWrapper();
+	        oscarObjs.cse = cse;
+	        oscarObjs.con = keyContact;
+
+	        accOscarObjsMap.put(acc.id,oscarObjs);
+	        casesToInsert.add(cse);
+		}
+
+		if (!casesToInsert.isEmpty())
+       		insert casesToInsert;
+
+       	Set<Id> casesIds = new Set<Id>();
+	    for (Case cse : casesToInsert){
+	    	casesIds.add(cse.Id);
+	    }
+
+       	for(Case insertedCase : [Select ownerId, Account_Concerned__c, CaseNumber from Case where Id in :casesIds]){
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).CaseNumber = insertedCase.CaseNumber;
+       	}
+
+		//AMS_OSCAR__c:
+		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>(); 
+
+        for (Account acc : accs){
+        
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGGDI);
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
+			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
+			fieldsOfObject.put('Name',accOscarObjsMap.get(acc.Id).CaseNumber);
+			
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_GDI, acc.Id, fieldsOfObject);		
+	        oscarsToInsert.add(oscar);
+	        accOscarObjsMap.get(acc.Id).oscar = oscar;
+    	}
+
+    	if(!oscarsToInsert.isEmpty())
+    		insert oscarsToInsert;
+
+		List<Case> casesToUpdate = new List<Case>();
+
+		for (Account acc: accs){
+			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
+			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
+		}
+
+		if(!casesToUpdate.isEmpty())
+			update casesToUpdate;
+
+        return oscarsToInsert;
+
+    }
+
       private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate,Map<Id,List<Contact>> keyContactMap){
 		
 		List<Contact> contactsToSend = new List<Contact>();
@@ -1594,6 +1687,27 @@ global class ANG_OscarProcessHelper {
 
  		return toReturn;
 	}
+
+	private static Contact fetchKeyContactForGDI(List<Contact> contacts){
+
+		if(contacts == null || contacts.isEmpty())
+			return null;
+
+		List<Contact> admins = new List<Contact>();
+
+		for (Contact con :contacts){
+
+			if(con.Financial_Assessment_Contact__c)
+				return con;
+			if(con.User_Portal_Status__c == 'Approved Admin')
+				admins.add(con);
+		} 
+
+		if (!admins.isEmpty())
+ 			return admins[0];
+
+ 		return contacts[0];
+	}
     
 
 	public static void sendFOPPortalNotificationAndEmail(Map<String,Map<Id,Case>> notifTempNameCaseMap, Map<String,Set<Id>> templateContIdMap, Map<String,String> mapNotificationsTemplates){
@@ -1692,6 +1806,7 @@ global class ANG_OscarProcessHelper {
     	public AMS_Oscar__c oscar;
     	public Id ownerId;
     	public Contact con;
+    	public String caseNumber;
 
     	public OscarObjectsWrapper(){
 

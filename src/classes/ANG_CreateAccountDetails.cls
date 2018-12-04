@@ -5,7 +5,7 @@
         - 
 	
 	JIRA Issue Reference: 
-		- https://iatasfdc.atlassian.net/browse/NEWGEN-4336  - 
+		- https://iatasfdc.atlassian.net/browse/NEWGEN-4366  - 
         - 
 	Interface Catalogue:
 		INT_077
@@ -81,7 +81,10 @@ global without sharing class ANG_CreateAccountDetails {
             list<Account> lsAccnt;
             if(Caller==ANG_RestServiceHelper.Caller_GDI){
                 if (requestType==ANG_RestServiceHelper.URIRequest_GDIOffer)
-                    lsAccnt = [select IATACode__c, Id ,GDI_Status__c from Account where recordtype.developername =:mapAccountTypeRT.get(AccountType) and IATACode__c =:IATACode];
+                    lsAccnt = [SELECT IATACode__c, Id, Name, GDI_Status__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c,
+                                    (SELECT Id, Email, User_Portal_Status__c, Financial_Assessment_Contact__c, BSP_CASS_Payment_contact__c 
+                                        FROM Contacts WHERE Status__c = 'Active')
+                                FROM Account WHERE recordtype.developername =:mapAccountTypeRT.get(AccountType) AND IATACode__c =:IATACode];
             }
 
 			if(lsAccnt==null || lsAccnt.isEmpty()){
@@ -105,10 +108,9 @@ global without sharing class ANG_CreateAccountDetails {
             //All is good. Proceeding in creating records
             if(Caller==ANG_RestServiceHelper.Caller_GDI){
                 if (requestType==ANG_RestServiceHelper.URIRequest_GDIOffer)
-                    ANG_CreateAccountDetails_Oscar.ANG_Create_GDIOscar(accnt, ''); //PASS THE BODY of the request as second parameter
+                    ANG_CreateAccountDetails_Oscar.ANG_Create_GDIOscar(accnt, req.requestBody);
             }
-        }
-        catch(Exception e){
+        }catch(Exception e){
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', e.getMessage()) ), 500);
         }
     }
