@@ -2,7 +2,7 @@
 	2018-11-26. Author: Daniele Tullo
 	Class to create OSCAR, from External Sources.
     Currently supported:
-        - GDI Offer [INT_077] Jira issue: https://iatasfdc.atlassian.net/browse/NEWGEN-4336
+        - GDI Offer [INT_077] Jira issue: https://iatasfdc.atlassian.net/browse/NEWGEN-4366
 ***********************************************************/
 
 global without sharing class ANG_CreateAccountDetails_Oscar {

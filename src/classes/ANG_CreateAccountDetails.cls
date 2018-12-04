@@ -5,7 +5,7 @@
         - 
 	
 	JIRA Issue Reference: 
-		- https://iatasfdc.atlassian.net/browse/NEWGEN-4336  - 
+		- https://iatasfdc.atlassian.net/browse/NEWGEN-4366  - 
         - 
 	Interface Catalogue:
 		INT_077
