@@ -46,7 +46,7 @@
 
         <apex:messages />
 
-        <apex:pageMessages id="pageMessages" />
+       <!-- <apex:pageMessages id="pageMessages" />-->
 
         <apex:outputpanel id="stagingAreaPanel">
 
