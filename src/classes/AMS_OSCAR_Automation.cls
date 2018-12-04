@@ -30,10 +30,6 @@ public with sharing class AMS_OSCAR_Automation {
 
                 oscar.Sanity_check_results__c = AMS_Utils.PASSED;
 
-                if(oscar.ANG_Share_documentation_with_vendor__c){
-                    oscar.ANG_Shared_documentation_with_vendor__c = Date.today();
-                }
-
                 res = True;
             }
 
@@ -1314,6 +1310,137 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.Finalization_result__c = 'Failed';
 
                 res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step46_passed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step46_passed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Invoice_Requested__c = Date.today();
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step47_passed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step47_passed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Payment_requested__c = Date.today();
+                oscar.Invoice_deadline__c = Date.today() + 7;
+
+                oscar.STEP48__c = 'In Progress';
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step48_passed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step48_passed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Proof_of_payment_received__c = Date.today();
+                oscar.Invoice_status__c = 'Paid';
+
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step48_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step48_failed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Proof_of_payment_received__c = Date.today();
+                oscar.Invoice_status__c = 'Outstanding';
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step48_notApplicable implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step48_notApplicable.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Invoice_status__c = 'N/A';
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step49_passed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step49_passed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                if(oscar.Endorsement_Requested__c)  oscar.Endorsement_requested_date__c = Date.today();
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step50_passed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step50_passed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.Financial_security_information_confirmed__c = Date.today();
+                res = true;
+                case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
+                c.status = 'Closed';
+                update c;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step50_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step50_failed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.Financial_security_information_confirmed__c = Date.today();
+                res = true;
+                case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
+                c.status = 'Closed';
+                update c;
             }
 
             return res;

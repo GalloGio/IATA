@@ -5,13 +5,13 @@ public with sharing class SidraLiteManager {
 
     public static Boolean BLOCK_EXECUTION = false;
 
-    public static final Id RECORDTYPE_SIDRA_LITE = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
-    public static final Id RECORDTYPE_SIDRA = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
-    public static final Id RECORDTYPE_IFAP = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
-    public static final Id RECORDTYPE_SMAP = Schema.SObjectType.Case.getRecordTypeInfosByName().get('sMAP(sales Monitoring Alert Process)').getRecordTypeId();
-    public static final Id RECORDTYPE_SAAM = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
-    public static final Id RECORDTYPE_OSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-    public static final Id RECORDTYPE_INVOICING = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Invoicing Collection Cases').getRecordTypeId();
+    public static final Id RECORDTYPE_SIDRA_LITE = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+    public static final Id RECORDTYPE_SIDRA = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    public static final Id RECORDTYPE_IFAP = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+    public static final Id RECORDTYPE_SMAP = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'sMAP_sales_Monitoring_Alert_Process');
+    public static final Id RECORDTYPE_SAAM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
+    public static final Id RECORDTYPE_OSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+    public static final Id RECORDTYPE_INVOICING = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases');
 
     public class SidraLiteException extends Exception {}
 
@@ -229,6 +229,8 @@ public with sharing class SidraLiteManager {
             SidraLiteHelperForSMAP.checkBussinessRules(parentCase);
         } else if (parentCase.RecordtypeId == RECORDTYPE_OSCAR) {
             SidraLiteHelperForOSCAR.checkBussinessRules(parentCase);
+        } else if (parentCase.RecordtypeId == RECORDTYPE_SIDRA) {
+            SidraLiteHelperForSIDRA.checkBussinessRules(parentCase);
         } else {
             throw new SidraLiteException('This case recordtype is not allowed');
         }
@@ -549,6 +551,9 @@ public with sharing class SidraLiteManager {
         }
         if (parentCase.RecordtypeId == RECORDTYPE_OSCAR) {
             return SidraLiteHelperForOSCAR.getRelatedCase(parentCase);
+        }
+        if (parentCase.RecordtypeId == RECORDTYPE_SIDRA) {
+            return getRelatedCaseDefault(parentCase);
         }
         return null;
     }

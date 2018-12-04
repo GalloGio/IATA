@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+      <fullName>AF</fullName>
+      <default>false</default>
+      <label>Afghanistan</label>
+   </customValue>
+   <customValue>
+      <fullName>Africa &amp; Middle East</fullName>
+      <default>false</default>
+      <label>Africa &amp; Middle East</label>
+   </customValue>
+   <customValue>
+      <fullName>Americas</fullName>
+      <default>false</default>
+      <label>Americas</label>
+   </customValue>
+   <customValue>
+      <fullName>Asia &amp; Pacific</fullName>
+      <default>false</default>
+      <label>Asia &amp; Pacific</label>
+   </customValue>
+   <customValue>
+      <fullName>China &amp; North Asia</fullName>
+      <default>false</default>
+      <label>China &amp; North Asia</label>
+   </customValue>
+   <customValue>
+      <fullName>Europe</fullName>
+      <default>false</default>
+      <label>Europe</label>
+   </customValue>
+    <masterLabel>Financial Security Regional Coverage</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

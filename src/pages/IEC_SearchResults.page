@@ -241,15 +241,17 @@
 						                                	<apex:variable var="picklistFilters" value="1" rendered="{!OR(filter.type_x =='PICKLIST', filter.type_x =='BOOLEAN')}">
 							                                	<apex:repeat value="{!filter.values}" var="item">
 								                                    <li>
-								                                        <div class="field-group checkbox inline">
-								                                            <div class="checkbox-box">
-								                                                <div class="custom-user-input checkbox">
-								                                                    <input class="user-input checkbox" type="checkbox" id="refine-checkbox{!index1}-{!index2}" value="{!filter.field}|{!item.value}" />
-								                                                    <label class="custom-checkbox" for="refine-checkbox{!index1}-{!index2}"><i class="icon"></i></label>
-								                                                </div>
-								                                                <label class="input-label" for="refine-checkbox{!index1}-{!index2}">{!item.label}</label>
-								                                            </div>
-								                                        </div>
+								                                    	<apex:outputPanel layout="none" rendered="{!AND(item.label != 'In stock', item.label != 'Out of stock')}">
+									                                        <div class="field-group checkbox inline">
+									                                            <div class="checkbox-box">
+									                                                <div class="custom-user-input checkbox">
+									                                                    <input class="user-input checkbox" type="checkbox" id="refine-checkbox{!index1}-{!index2}" value="{!filter.field}|{!item.value}" />
+									                                                    <label class="custom-checkbox" for="refine-checkbox{!index1}-{!index2}"><i class="icon"></i></label>
+									                                                </div>
+									                                                <label class="input-label" for="refine-checkbox{!index1}-{!index2}">{!item.label}</label>
+									                                            </div>
+									                                        </div>
+								                                    	</apex:outputPanel>
 								                                    </li>
 																	<apex:variable value="{!index2 +1}" var="index2" />
 							                                    </apex:repeat>
@@ -340,9 +342,14 @@
 													<h2 class="item-name">
 														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">{!prod.ProductName}</a>
 													</h2>
-													<h3 class="item-description-title">{!prod.Media}</h3>
-													<p class="item-description" style="{! IF(prod.ProductInfoId == null, '', 'display:none')}">
-														Edition: {!prod.Edition} <br />
+													<h3 class="item-description-title" style="{! IF(isBlank(prod.Media), 'display:none', 'display:inline')}">
+														{!prod.Media}
+													</h3>
+													<br/>
+													<p class="item-edition" style="{! IF(isBlank(prod.Edition), 'display:none', 'display:inline')}">
+														Edition: {!prod.Edition}<br />
+													</p>
+													<p class="item-language" style="{! IF(isBlank(prod.Language), 'display:none', 'display:inline')}">												
 														Language: {!prod.Language}
 													</p>
 													<p class="item-description">{!prod.ProductShortDesc}</p>

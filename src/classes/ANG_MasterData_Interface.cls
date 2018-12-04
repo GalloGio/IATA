@@ -20,7 +20,7 @@ global class ANG_MasterData_Interface{
             
             if(sMode == null || sMode=='') sMode = 's';
             
-            list<Account> lsAccnt = [select Due_Diligence_Status__c, ANG_IsNewGenAgency__c, Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,
+            list<Account> lsAccnt = [select Guaranteed_amount__c, CurrencyIsoCode, Due_Diligence_Status__c, ANG_IsNewGenAgency__c, Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,
                                             billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, 
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
@@ -123,11 +123,11 @@ global class ANG_MasterData_Interface{
 
     /* Due Diligence */
     private class DueDiligence{
-        public string Type;
+        public string type;
         public string status;
         
-        public DueDiligence(string Type, string status){
-            this.Type = Type;
+        public DueDiligence(string type, string status){
+            this.type = type;
             this.status = status;
         }
     }
@@ -217,7 +217,8 @@ global class ANG_MasterData_Interface{
                 this.phone = acc.phone;
                 this.portalServiceName = acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name;
                 this.Region = acc.IATA_ISO_Country__r.Region__c;
-
+                //this.guaranteedAmount = string.valueOf(acc.Guaranteed_amount__c); //Silenced for now
+                //this.guaranteedAmountCurrency = acc.CurrencyIsoCode; //Silenced for now
                 this.RelinquishmentCode =acc.Reason__c!=null?acc.Reason__c.split('-').get(0).leftPad(2,'0'):acc.Reason__c;
                 this.RemittanceFrequency = acc.Remittance_frequency__c;
                 this.Segmentation = acc.Segmentation__c;
@@ -241,7 +242,13 @@ global class ANG_MasterData_Interface{
                     this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, rhc.ANG_Financial_Security__c);
                 
 
-                if(this.RHCInfo ==null)this.RHCInfo = new RHCInfoClass(null, null, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,null);
+                string sBSPCurrency = acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode;
+                if(this.RHCInfo ==null)
+                this.RHCInfo = new RHCInfoClass(null,
+                    null,
+                    String.IsBlank(sBSPCurrency)?acc.CurrencyIsoCode:sBSPCurrency,
+                    String.IsBlank(sBSPCurrency)?acc.Guaranteed_amount__c:ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c,acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode)
+                );
                 //List  of children IATACode
                 //Returned only if specifically requested
                 if(getChildren){

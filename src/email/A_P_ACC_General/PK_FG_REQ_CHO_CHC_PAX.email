@@ -1,0 +1,111 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt;" class="MsoNormal"><strong style="font-family: Arial; font-size: 12pt;"><font size="2">{!Account.Name}</font></strong></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt;" class="MsoNormal"><b style="mso-bidi-font-weight: normal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"><o:p><font size="2"></font></o:p></span></b></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt;" class="MsoNormal"><!--?xml:namespace prefix = st1 ns = "urn:schemas-microsoft-com:office:smarttags" /--><!--?XML:NAMESPACE PREFIX = ST1 /--><!--?xml:namespace prefix = st1 /--><!--?xml:namespace prefix = st1 /--><st1:address w:st="on"><st1:street w:st="on"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"><font size="2">{!Account.BillingAddress}</font></span></st1:street></st1:address></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt;" class="MsoNormal"><font size="2"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes" lang="EN-GB"></span><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p></o:p></span></font></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt;" class="MsoNormal"><u><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p><span style="TEXT-DECORATION: none"><font size="2"></font></span></o:p></span></u></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt;" class="MsoNormal"></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"><br></font></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-left: 125.1pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">Subject:
+Financial Guarantee Review.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">Dear Sir / Madam,<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">Your agency’s BSP
+sales for the last 12 months has been reviewed pursuant
+to a change in its ownership.&nbsp; Consequent
+upon the review it has been determined by the Agency Administrator that the
+average 35 days’ cash sales during the aforementioned 12 months must be covered
+by an approved financial security.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">&nbsp;<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">As a pre-requisite
+for approval of your change in ownership, the value of Financial Security
+required to be provided by you in accordance with the Local Financial Criteria
+– Pakistan. Is PKR XXXXXXXX, <o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">You are required to
+submit a financial security in the form of either one of the following<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-left: 26.1pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">1.
+Bank Guarantee<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-left: 26.1pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">2.
+Insurance Bond, approved Insurance Bond providers are:<o:p></o:p></span></p><p class="MsoListParagraphCxSpFirst" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-left: 62.1pt; text-align: justify; text-indent: -0.25in;"><!--[if !supportLists]--><span lang="EN-GB" style="font-size:11.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol;mso-fareast-language:ZH-CN">·<span style="font-stretch: normal; font-size: 7pt; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><!--[endif]--><span lang="EN-GB" style="font-size:11.0pt;
+font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:SimSun;mso-fareast-language:
+ZH-CN">The United Insurance Company of Pakistan Limited&nbsp;<o:p></o:p></span></p><p class="MsoListParagraphCxSpLast" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-left: 62.1pt; text-align: justify; text-indent: -0.25in;"><br></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">&nbsp;</span></p><p class="MsoNormal" style="text-align: justify;"><font face="Arial, sans-serif"><span style="font-size: 14.6667px;">The expiry date of the Insurance Bond or Bank Guarantee must be <b><u>30</u></b>&nbsp;<b><u>August 2019</u></b> or same date in subsequent years.&nbsp; No other expiry date will be accepted.&nbsp;</span></font></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">Please attach a
+covering letter from the issuing Bank / Insurance company confirming issuance
+of the financial guarantee. The postal address of the Head office / Branch office of the
+bank from where the authenticity of this guarantee can be verified must be
+stated at the covering letter.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">Please submit the &nbsp;<b>original</b> Financial Guarantee on or before <b><u>DD MM 2018</u></b>&nbsp;to :&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><b style="font-family: Arial; font-size: 13.3333px;"><span style="font-size: 13.3333px;"><br></span></b></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><b style="font-family: Arial;">Standard Chartered Bank Pakistan Limited</b></p><div style="color: rgb(0, 0, 0); font-family: Arial; font-size: 12pt;"><b>Trade Desk, Operations Building</b></div><div style="color: rgb(0, 0, 0); font-family: Arial; font-size: 12pt;"><b>I. I. Chundrigar Road,&nbsp;Karachi, Pakistan</b></div><div style="color: rgb(0, 0, 0); font-family: Arial; font-size: 12pt;"><br></div><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial;"></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial, sans-serif;"></span></p><div style="color: rgb(0, 0, 0); font-family: Arial; font-size: 12pt;"><div><b>Standard Chartered Bank Pakistan Limited</b></div><div><b>Trade Operations</b></div><div><b>Tufail Road Cantt</b></div><div><b>Lahore, Pakistan</b></div><div><b><br></b></div><div><b>Operating Hours: 9am-5 pm (Mon-Fri)</b></div></div><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN"><br></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-family: Arial, sans-serif; font-size: 11pt;">In order to avoid any last minute issues due
+to incorrect format or late submissions, please ensure that your Financial
+Guarantee is submitted well in advance of the deadline.</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="font-family: Arial, sans-serif; font-size: 11pt;"><br></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="background-color: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 11pt;">We noted that your Agency has existing Insurance Bond issued by&nbsp;</span><a shape="rect" href="https://iata.my.salesforce.com/a0ow0000009bVq2" target="_blank" style="color: rgb(1, 91, 167); font-family: Arial, Helvetica, sans-serif; font-size: 12px; background-color: rgb(227, 243, 255);"><b style="color: rgb(1, 91, 167); font-family: Arial, Helvetica, sans-serif; font-size: 12px; background-color: rgb(227, 243, 255);">THE</b><font color="#015ba7" face="Arial, Helvetica, sans-serif"><span style="font-size: 12px; background-color: rgb(227, 243, 255);">&nbsp;</span></font><b style="color: rgb(1, 91, 167); font-family: Arial, Helvetica, sans-serif; font-size: 12px; background-color: rgb(227, 243, 255);">UNITED INSURANCE COMPANY</b></a>&nbsp; OR&nbsp;<a style="color: rgb(1, 91, 167); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px;"><b style=""><u>CONTINENTAL INSURANCE</u> <u>CO</u></b></a><span style="background-color: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 11pt;"><b><u>.&nbsp;</u></b>&nbsp;Please confirm this insurance bond still valid under the new ownership.&nbsp; If yes please request&nbsp;</span><b style="color: rgb(1, 91, 167); font-family: Arial, Helvetica, sans-serif; font-size: 12px; background-color: rgb(227, 243, 255);"><a shape="rect" id="lookupa0ow0000009bVq200N20000003JfWE" href="https://iata.my.salesforce.com/a0ow0000009bVq2" target="_blank" style="color: rgb(1, 91, 167); font-family: Arial, Helvetica, sans-serif; font-size: 12px; background-color: rgb(227, 243, 255);">THE UNITED INSURANCE COMPANY</a>&nbsp;OR&nbsp;</b><a style="color: rgb(1, 91, 167); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px;"><b><u>CONTINENTA</u></b><u>L </u><b style=""><u>INSURANCE CO</u></b></a><span style="background-color: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 11pt;"><b><u>&nbsp;</u></b> &nbsp;to issue the letter confirmation to IATA stated that have updated your Agency ownership record and continue to keep your Agency under the insurance bond coverage.</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">Please note that in accordance with IATA Resolutions, Agents which fail to provide the required Financial Security in the correct format by the deadline above, will constitute grounds for IATA to suspend the Agent from BSP ticketing. Please use ONLY the attached Bank Guarantee/Insurance Bond format without any changes.&nbsp;<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">&nbsp;</span></p><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:SimSun;mso-fareast-language:ZH-CN">For any
+clarifications, please reply to the email that this letter was attached.</span></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="font-family: Arial; color: rgb(0, 0, 0);" lang="EN-GB"><font size="2"><br></font></span></p><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><br></p><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"><br></font></span><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p><font size="2"></font></o:p></span></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><o:p><font size="2"></font></o:p></span></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2">Yours sincerely,</font></span> </p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"></font></span></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"><br><strong></strong></font></span></p><font size="2" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><strong>
+<p>{!Case.OwnerFullName}</p>
+</strong></font><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="font-family: Arial, Helvetica, sans-serif; font-size: medium; text-align: start; background-color: rgb(255, 255, 255);">IATA Global Delivery Centre</span></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"></font></span>&nbsp;</p>
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial;"><font size="2">International Air Transport Associaition</font></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial;"><font size="2">80 Pasir Panjang Road</font></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial;"><font size="2">#20-81 Mapletree Business City</font></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial;"><font size="2">Singapore 117372</font></span></p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"></font></span>&nbsp;</p>
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"><span style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial" lang="EN-GB"><font size="2"><a href="http://www.iata.org">www.iata.org</a></font></span></p>]]></td>
+</tr>
+</table>

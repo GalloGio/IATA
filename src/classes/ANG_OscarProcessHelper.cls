@@ -125,6 +125,16 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1','A New MSO cannot have more than one Appointment. Please review the appointments section and try again.','-1'};
 			}
 
+			/*** AMSU-161 Start ***/
+			if(oscar.Process__c == AMS_Utils.new_GSSA || oscar.Process__c == AMS_Utils.new_GSA 
+			    || oscar.Process__c == AMS_Utils.new_AHA){
+			    String sError = AMS_InspectionHelper.validateGSAforAppointments(oscar, updater.onlineAMap);
+			    if(!sError.equalsIgnoreCase('')){
+			    	return new String[]{'-1',sError+'\n\r','-1'};
+			    }
+			}
+			/*** AMSU-161 End ***/ 
+			
 			System.debug('[ANG_OscarProcessHelper] Execution time so far:' + (datetime.now().getTime() - processStartTime.getTime()) /1000);
 
 			/*** AMSU-37 ***/
@@ -550,7 +560,7 @@ global class ANG_OscarProcessHelper {
 			updater = new EntityUpdater();
 
 
-            ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
+            ID InternalCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 
             List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c from Case where OSCAR__c = : oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
@@ -933,7 +943,7 @@ global class ANG_OscarProcessHelper {
 
 			insert oscar;
 
-	        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+	        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	        fieldsOfObject = new Map<String,Object>();
 	        fieldsOfObject.put('Oscar__c',oscar.Id);
@@ -1098,13 +1108,28 @@ global class ANG_OscarProcessHelper {
 		for (Account acc: accs){
 
 			if(accsToSendEmail.contains(acc.Id))
-	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
+	            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(filterContacts(keyContactMap.get(acc.Id)), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
 
 		}
 
         return casesToUpdate;
     }
 
+	public static List<Contact> filterContacts(List<Contact> contacts){
+
+		List<Contact> contactsToReturn = new List<Contact>();
+
+		for(Contact con : contacts){
+
+			if(con.User_Portal_Status__c == 'Approved Admin')
+				contactsToReturn.add(con);
+			else if (con.Financial_Assessment_Contact__c)
+				contactsToReturn.add(con);
+		}
+
+		return contactsToReturn;
+
+	}
 /*
 	private static Contact fetchKeyContact(Account acc, List<Contact> contacts){
 
@@ -1150,7 +1175,7 @@ global class ANG_OscarProcessHelper {
 
 			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c,SIDRA_Lite_Reason__c from Case where Id = :newAccr.SAAM_Case__c LIMIT 1 ];
 
-	        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+	        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 			Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
@@ -1429,6 +1454,99 @@ global class ANG_OscarProcessHelper {
         return casesToUpdate;
     }
 
+    public static List<AMS_OSCAR__c> createGDIOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc){
+
+    	Map<id,OscarObjectsWrapper> accOscarObjsMap = new Map<id,OscarObjectsWrapper>();
+		OscarObjectsWrapper oscarObjs;
+		
+		Map<String,Object> fieldsOfObject;
+
+		List<Case> casesToInsert = new List<Case>();
+
+		Map<Id,Account> accountMap = new Map<Id,Account>();
+
+		//Case:
+		for(Account acc : accs){
+
+			accountMap.put(acc.Id,acc);
+
+			System.debug('[ANG_OscarProcessHelper.createGDIOscars] - Inserting GDI Oscar for Account: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
+
+			Contact keyContact = fetchKeyContactForGDI(contactsAcc.get(acc.Id));
+
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
+	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
+	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('Origin', 'GDI Portal');
+	        fieldsOfObject.put('Reason1__c','GDI setup');
+	        fieldsOfObject.put('Subject','GDI setup - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        
+	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+	        //assign to queue
+	       	Database.DMLOptions dmo = new Database.DMLOptions();
+	        dmo.assignmentRuleHeader.useDefaultRule = true;
+	        cse.setOptions(dmo);
+
+	        oscarObjs = new OscarObjectsWrapper();
+	        oscarObjs.cse = cse;
+	        oscarObjs.con = keyContact;
+
+	        accOscarObjsMap.put(acc.id,oscarObjs);
+	        casesToInsert.add(cse);
+		}
+
+		if (!casesToInsert.isEmpty())
+       		insert casesToInsert;
+
+       	Set<Id> casesIds = new Set<Id>();
+	    for (Case cse : casesToInsert){
+	    	casesIds.add(cse.Id);
+	    }
+
+       	for(Case insertedCase : [Select ownerId, Account_Concerned__c, CaseNumber from Case where Id in :casesIds]){
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).CaseNumber = insertedCase.CaseNumber;
+       	}
+
+		//AMS_OSCAR__c:
+		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>(); 
+
+        for (Account acc : accs){
+        
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGGDI);
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
+			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
+			fieldsOfObject.put('Name',accOscarObjsMap.get(acc.Id).CaseNumber);
+			
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_GDI, acc.Id, fieldsOfObject);		
+	        oscarsToInsert.add(oscar);
+	        accOscarObjsMap.get(acc.Id).oscar = oscar;
+    	}
+
+    	if(!oscarsToInsert.isEmpty())
+    		insert oscarsToInsert;
+
+		List<Case> casesToUpdate = new List<Case>();
+
+		for (Account acc: accs){
+			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
+			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
+		}
+
+		if(!casesToUpdate.isEmpty())
+			update casesToUpdate;
+
+        return oscarsToInsert;
+
+    }
+
       private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate,Map<Id,List<Contact>> keyContactMap){
 		
 		List<Contact> contactsToSend = new List<Contact>();
@@ -1569,6 +1687,27 @@ global class ANG_OscarProcessHelper {
 
  		return toReturn;
 	}
+
+	private static Contact fetchKeyContactForGDI(List<Contact> contacts){
+
+		if(contacts == null || contacts.isEmpty())
+			return null;
+
+		List<Contact> admins = new List<Contact>();
+
+		for (Contact con :contacts){
+
+			if(con.Financial_Assessment_Contact__c)
+				return con;
+			if(con.User_Portal_Status__c == 'Approved Admin')
+				admins.add(con);
+		} 
+
+		if (!admins.isEmpty())
+ 			return admins[0];
+
+ 		return contacts[0];
+	}
     
 
 	public static void sendFOPPortalNotificationAndEmail(Map<String,Map<Id,Case>> notifTempNameCaseMap, Map<String,Set<Id>> templateContIdMap, Map<String,String> mapNotificationsTemplates){
@@ -1667,6 +1806,7 @@ global class ANG_OscarProcessHelper {
     	public AMS_Oscar__c oscar;
     	public Id ownerId;
     	public Contact con;
+    	public String caseNumber;
 
     	public OscarObjectsWrapper(){
 

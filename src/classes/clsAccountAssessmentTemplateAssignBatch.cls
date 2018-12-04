@@ -1,15 +1,8 @@
 global class clsAccountAssessmentTemplateAssignBatch implements Database.Batchable<SObject> {
     
-    /*
-    global List<Account> start(Database.BatchableContext BC){
-        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'IATA Standard Account'];
-        List<Account> listAccountToAssign = [Select a.Id, a.Name, a.Type, a.BillingCountry, a.Assessment_Template__c From Account a where a.Assessment_Template__c = null and a.RecordTypeId = :accountRecordTypes.get(0).Id and a.IATACode__c <> null and a.BillingCountry <> null];
-        return listAccountToAssign;
-    }
-    */
     global Database.QueryLocator start(Database.BatchableContext BC){
-        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'Standard Account'];
-        String query = 'Select a.Id, a.Name, a.Type, a.BillingCountry, a.Assessment_Template__c From Account a where a.Assessment_Template__c = null and a.RecordTypeId = \'' + accountRecordTypes.get(0).Id + '\' and a.IATACode__c <> \'\' and a.BillingCountry <> \'\' and (a.Type = \'IATA Passenger Sales Agent\' or a.Type = \'IATA Cargo Agent\')';
+        Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+        String query = 'Select a.Id, a.Name, a.Type, a.BillingCountry, a.Assessment_Template__c From Account a where a.Assessment_Template__c = null and a.RecordTypeId = \'' + accountRecordTypeId + '\' and a.IATACode__c <> \'\' and a.BillingCountry <> \'\' and (a.Type = \'IATA Passenger Sales Agent\' or a.Type = \'IATA Cargo Agent\')';
         return Database.getQueryLocator(query);
    }
     

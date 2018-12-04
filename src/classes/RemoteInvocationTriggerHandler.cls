@@ -15,8 +15,8 @@ public with sharing class RemoteInvocationTriggerHandler {
 	public static final String REMOTE_INVOCATION_STATUS_PROGRESS     = 'In Progress';
 
 	//Remote Invocation Recordtypes
-	public static final ID RECTYPE_NEWGEN = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Remote_Invocation__c').get(NEWGEN_EASY_PAY);
-	public static final ID RECTYPE_TIP    = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Remote_Invocation__c').get(TIP_IFG_REPORT);
+	public static final ID RECTYPE_NEWGEN = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_EASY_PAY);
+	public static final ID RECTYPE_TIP    = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', TIP_IFG_REPORT);
 
 	//to store the remote invocations with errors
 	public Set<ID> remoteInvocationWithErrors;
@@ -24,6 +24,22 @@ public with sharing class RemoteInvocationTriggerHandler {
 	private Map<String,Account> mapIATACodeAccs;
 
 	public RemoteInvocationTriggerHandler(){
+	}
+
+	public void handleAfterInsert(){
+		handlePlatformEvent();
+	}
+
+	public void handleAfterUpdate(){
+		handlePlatformEvent();
+	}
+
+	public void handleAfterDelete(){
+		handlePlatformEvent();
+	}
+
+	public void handleAfterUndelete(){
+		handlePlatformEvent();
 	}
 
 	public void handleBeforeInsert(){
@@ -38,6 +54,15 @@ public with sharing class RemoteInvocationTriggerHandler {
 	public void assignRecordtypeToRequest(){
 		for(Remote_Invocation__c er : triggerNew){
 			er.recordtypeid = (er.Request_Type__c == NEWGEN_EASY_PAY ? RECTYPE_NEWGEN : RECTYPE_TIP);
+		}
+	}
+
+	public void handlePlatformEvent(){
+		for(Remote_Invocation__c re : triggerNew){
+
+			//if oldmap doesn't contain id, trigger is insert. Note: this method only runs on after, id is allways populated 
+			if((oldMap.containsKey(re.id) || oldMap.get(re.id).Status__c == re.Status__c) && (re.Status__c == 'Completed' || re.Status__c == 'Failed'))
+				PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'RemoteInvocation__e', 'Remote_Invocation__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 		}
 	}
 

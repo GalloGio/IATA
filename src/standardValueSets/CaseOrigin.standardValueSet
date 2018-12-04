@@ -437,6 +437,11 @@
         <label>E-mail to Case - Finland</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - FoP notification</fullName>
+        <default>false</default>
+        <label>E-mail to Case - FoP notification</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - France</fullName>
         <default>false</default>
         <label>E-mail to Case - France</label>
@@ -1240,5 +1245,10 @@
         <fullName>Web SAF</fullName>
         <default>false</default>
         <label>Web SAF</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risk Monitoring Engine</fullName>
+        <default>false</default>
+        <label>Risk Monitoring Engine</label>
     </standardValue>
 </StandardValueSet>

@@ -1116,9 +1116,15 @@ $Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
         <active>true</active>
         <description>Services with the field ANG_Restrict_internal_selection__c = true can&apos;t be added or modified.</description>
         <errorConditionFormula>AND(
-Portal_Application__r.ANG_Restrict_internal_selection__c = true,
-Text(Right__c) = &apos;Access Granted&apos;,
-NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
+	Portal_Application__r.ANG_Restrict_internal_selection__c = true,
+	Text(Right__c) = &apos;Access Granted&apos;, 
+	AND(
+		NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
+		AND(
+			BEGINS($Profile.Name, &apos;ISS&apos;), 
+			NOT(BEGINS(Portal_Application__r.Name, &apos;Global Default Insurance&apos;))
+		)
+	)
 )</errorConditionFormula>
         <errorMessage>Access to this portal service cannot be assigned internally. Please ask the portal user to request access, or their Portal Admin to add the user to this service.</errorMessage>
     </validationRules>
@@ -1159,9 +1165,10 @@ NOT(CONTAINS($Profile.Name,&quot;System administrator&quot;))
         <fullName>TD_cannot_be_approved_by_admin</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
- OR (ISCHANGED(Right__c) , ISNEW() ),
+ OR (ISCHANGED(Right__c) , ISNEW()
+ ),
  Application_Name__c = &apos;Treasury Dashboard&apos;,
- OR(AND(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)),NOT(ISPICKVAL(PRIORVALUE(Right__c),&apos;Access Requested&apos;))), 
+ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)), 
   $User.TD_Team__c = false
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by IATA ‘Treasury Dashboard’ team.</errorMessage>

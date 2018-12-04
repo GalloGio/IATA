@@ -31,7 +31,7 @@ private class SISHelpDesk_CaseSLATracking_Test {
     static testMethod void updateSLA_Test() 
     {
         // Get Record Type Cases - SIS Help Desk ID
-        ID sisHelpDeskCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
+        ID sisHelpDeskCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
         
         List<BusinessHours> busiHours = [SELECT Id, Name FROM BusinessHours WHERE Name IN (:Kale_BusinessHours_Name, :SIS_BusinessHours_Name)];
         BusinessHours sisBusinessHours, kaleBusinessHours;

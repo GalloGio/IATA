@@ -1,0 +1,53 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; font-family: arial; font-size: 12pt; "><span style="font-family: Arial; font-size: small;">{!Account.Site}</span></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; font-family: arial; font-size: 12pt; "><font size="2"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><span style="mso-no-proof: yes"></span></span><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><!--?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /--><o:p></o:p></span></font>&nbsp;</p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; font-family: arial; font-size: 12pt; "><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><strong><font size="2">{!Account.Name}</font></strong></o:p></span></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; font-family: arial; font-size: 12pt; "><b style="mso-bidi-font-weight: normal"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes"><o:p><font size="2"></font></o:p></span></b></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; font-family: arial; font-size: 12pt; "><!--?xml:namespace prefix = st1 ns = "urn:schemas-microsoft-com:office:smarttags" /--><st1:address w:st="on"><st1:street w:st="on"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes"><font size="2">{!Account.BillingAddress}</font></span></st1:street></st1:address></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; font-family: arial; font-size: 12pt; "><font size="2"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes"></span><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p></o:p></span></font></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; font-family: arial; font-size: 12pt; "><u><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><span style="TEXT-DECORATION: none"><font size="2"></font></span></o:p></span></u></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; font-family: arial; font-size: 12pt; "><u><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2"></font></span></u>&nbsp;</p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; font-family: arial; font-size: 12pt; "><u><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2">Attn: The Managing Director<o:p></o:p></font></span></u></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; font-family: arial; font-size: 12pt; "><b style="mso-bidi-font-weight: normal"><u><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><span style="TEXT-DECORATION: none"><font size="2"></font></span></o:p></span></u></b></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; text-align: justify; font-family: arial; font-size: 12pt; "><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2"></font></span>&nbsp;</p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; text-align: justify; font-family: arial; font-size: 12pt; "><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2">Dear Sir/Madam,<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; text-align: justify; font-family: arial; font-size: 12pt; "><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><font size="2">&nbsp;</font></o:p></span></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; text-align: justify; "><font class="Apple-style-span" face="Arial" size="2"><b>DGR CERTIFICATE RENEWAL - FINAL REMINDER</b></font></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; text-align: justify; font-family: arial; font-size: 12pt; "><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><font size="2">&nbsp;</font></o:p></span></p>
+<p class="MsoNormal"><span style="font-size:10.0pt;font-family:Arial;color:black">Attached
+letter was sent to you in October, informing you that one or more of your DGR
+Certificates are up for renewal.&nbsp;</span><span style="font-size:13.5pt;
+font-family:Arial;color:black"><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Arial;color:black"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:10.0pt;font-family:Arial;color:black">We
+have up to this date not received any renewed Certificate/s for your employee/s
+and this lead us to believe that your Agency no longer fulfils the requirements
+as per Resolution 801, Section 1, paragraph 1.1.3.2(b).</span><span style="font-size:13.5pt;font-family:Arial;color:black"><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Arial;color:black"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:10.0pt;font-family:Arial;color:black">If
+we don't hear from you or receive the renewed Certificate by COB Monday 14
+February, you give us no other choice but to terminate your Agency's Cargo Agency
+Agreement as per paragraph 1.1.3.2(d) in Resolution 801.</span><span style="font-size:13.5pt;font-family:Arial;color:black"><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Arial;color:black"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:10.0pt;font-family:Arial;color:black">In
+order for us to not loose any important information, kindly reply to this email
+when contacting us on this issue.&nbsp;</span><span style="font-size:13.5pt;
+font-family:Arial;color:black"><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Arial;color:black"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; text-align: justify; font-family: arial; font-size: 12pt; "><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2"><span class="Apple-style-span" style="font-size: 13px; ">Thank
+you.</span>&nbsp;<br></font></span><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><font size="2">&nbsp;</font></o:p></span></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; text-align: justify; font-family: arial; font-size: 12pt; "><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><font size="2"></font></o:p></span></p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; text-align: justify; font-family: arial; font-size: 12pt; "><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2">Yours sincerely,</font></span>&nbsp;</p>
+<p class="MsoNormal" style="margin-top: 0in; margin-right: 0in; margin-bottom: 0pt; margin-left: 0in; text-align: justify; font-family: arial; font-size: 12pt; "><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2">Lina Pettersson</font></span></p>]]></td>
+</tr>
+</table>

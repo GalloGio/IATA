@@ -19,9 +19,9 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
   			// stdController.addFields(new List<String>{'Sector__c','Category__c'});
   			this.acc = (Account)stdController.getRecord();
   			this.acc = [SELECT Id, Name, Sector__c, Category__c FROM Account WHERE Id=:this.acc.Id];
-  			AccountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
-  			DivisionRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
-  			CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
+  			AccountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account');
+  			DivisionRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division');
+  			CommentRecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c', 'Objective_Related');
   			lstBMAs = getBMAs();
   			lstDivisionBMAs = getDivisionBMAs();
 			canEdit = getCanEdit();
@@ -41,8 +41,8 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 		@AuraEnabled
 		public static list<Objective__c> getBMAs(Id accountId) {
 			Account acc = [SELECT Id, Sector__c, Category__c FROM Account WHERE Id = :accountId LIMIT 1];
-			Id AccountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
-			Id DivisionRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
+			Id AccountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account');
+			Id DivisionRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division');
 			List<Objective__c> lstBMAs = new List<Objective__c>();
 			lstBMAs =
 			// [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c
@@ -59,20 +59,10 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 			return bma;
 		}
 
-		// @AuraEnabled
-		// public static Comment__c upsertComment(Comment__c comment) {
-		// 	if(comment.RecordTypeId == null ) {
-		// 		Id CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
-		// 		comment.RecordTypeId = CommentRecordTypeId;
-		// 	}
-		// 	upsert comment;
-		// 	return comment;
-		// }
-		//
 		@AuraEnabled
 		public static Objective__c upsertComment(Comment__c comment) {
 			if(comment.RecordTypeId == null ) {
-				Id CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
+				Id CommentRecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c', 'Objective_Related');
 				comment.RecordTypeId = CommentRecordTypeId;
 			}
 			System.debug('------ ' + comment);
@@ -106,8 +96,8 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 		@AuraEnabled
 		public static list<Objective__c> getDivisionBMAs(Id accountId) {
 			Account acc = [SELECT Id, Sector__c, Category__c FROM Account WHERE Id = :accountId LIMIT 1];
-			Id AccountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
-			Id DivisionRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
+			Id AccountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account');
+			Id DivisionRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division');
 			List<Objective__c> lstBMAs = new List<Objective__c>();
 			lstBMAs =
 			[SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,

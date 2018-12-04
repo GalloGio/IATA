@@ -1,13 +1,11 @@
 public without sharing class AMS_MigrationToolHelper {
 	// this class is responsible for migrating Portal SAAM cases and SAAM cases that need to be converted into Comunication Cases (w/ AMS_OSCAR__c objects)
 	
-	final static ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-
-	private Static Map<string, Id> oscarRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c');
+	final static ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	private static final Set<String> newgenProcesses = new Set<String>{'ANG.MAJOR.CHANGES.1.0','VR.1.0','CER.1.0','CORRECTION.1.0','BANK.ACCOUNT.CHANGES','NGFormsOfPayment','ANG_FS_OPTINOUT','ANG.NEW.HE.LITE.1.0','ANG.NEW.AE.1.0','ANG.NEW.HE.STANDARD.1.0'};
 
-	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES, AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP};
+	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES, AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP, AMS_Utils.NGGDI};
 	
 		public static Map<String,String> newgenCaseReason{
 		get{
@@ -24,7 +22,8 @@ public without sharing class AMS_MigrationToolHelper {
 			AMS_Utils.NGOPTINOUT => 'Financial review opt-in / opt-out',
 			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => 'IEP Bank account setup',
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP => 'Onboarding IEP Model A',
-			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP => 'Screening IEP Model B'
+			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP => 'Screening IEP Model B',
+			AMS_Utils.NGGDI => 'GDI setup'
 		};
 		}
 		set;
@@ -43,7 +42,8 @@ public without sharing class AMS_MigrationToolHelper {
 			'ANG.NEW.HE.STANDARD.1.0' => AMS_Utils.RECTYPE_NEWHE,
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELA,
 			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELB,
-			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP 
+			AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP => AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,
+			AMS_Utils.NGGDI => AMS_Utils.RECTYPE_GDI
 		};
 		}
 		set;
@@ -339,9 +339,9 @@ public without sharing class AMS_MigrationToolHelper {
 			Id oscarRTId = null;
 
 			if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
-				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
+				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
 			if(processType == 'CER.1.0')
-				oscarRTId = oscarRT.get('CERTIFICATE');
+				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
 
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = caseToProcess.AccountId, Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
 
@@ -399,35 +399,35 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static Id fetchAccreditationRT(String locationClass, String processType){
 
-		String devName = 'General Online Accreditation';
+		String devName = 'GeneralOnlineAccreditation';
 
 		if(locationClass == 'T'){
 			if(processType == 'NEW.TIDS.1.0')
-				devName = 'General Online Accreditation';
+				devName = 'GeneralOnlineAccreditation';
 		}
 
 		if(locationClass == 'P'){
 			if(processType == 'NEW.HO.1.0')
-				devName = 'Travel Agent - HO';
+				devName = 'Travel_Agent_HO';
 			if(processType == 'NEW.BR')
-				devName = 'Travel Agent - Branch';
+				devName = 'Travel_Agent_Branch';
 			if(processType == 'NEW.BR.ABROAD')
-				devName = 'Travel Agent - Branch Abroad';
+				devName = 'Travel_Agent_Branch_Abroad';
 		}
 
 		if(locationClass == 'C'){
 			if(processType == 'NEW.HO.1.0')
-				devName = 'Cargo Agent - HO';
+				devName = 'Cargo_Agent_HO';
 			if(processType == 'NEW.BR')
-				devName = 'Cargo Agent - Branch';
+				devName = 'Cargo_Agent_Branch';
 			if(processType == 'NEW.BR.ABROAD')
-				devName = 'Cargo Agent - Branch';
+				devName = 'Cargo_Agent_Branch';
 		}
 
 		if(processType == 'MAJOR.CHANGES')
-			devName = 'Other Changes';
+			devName = 'Other_Changes';
 
-		return Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get(devName).getRecordTypeId();
+		return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', devName);
 
 	}
 
@@ -605,8 +605,8 @@ public without sharing class AMS_MigrationToolHelper {
 		contact.Person_AMS__c = role.Person__c;
 		contact.Phone__c = role.Contact_Phone__c;
 
-		ID ownerRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
-		ID companyOwnerRt = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
+		ID ownerRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
+		ID companyOwnerRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
 
 		contact.RecordTypeId = role.Owner_Account__c != null ? companyOwnerRt : ownerRT;
 
@@ -712,7 +712,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 			oscar = updateDatesFromSAAM(oscar,oscarCase.Id);
 
-			if (AMS_Utils.IEP_PROCESSES.contains(oscar.Process__c))
+			if (AMS_Utils.IEP_PROCESSES.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGGDI)
 				oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 
 			if(oscar == null)
@@ -755,10 +755,10 @@ public without sharing class AMS_MigrationToolHelper {
 
 		caseToProcess.RecordTypeId = rtCommCase;
 
-		if(isNewgenAccount){
+		if(isNewgenAccount || AMS_Utils.IEP_PROCESSES.contains(processType) || processType == AMS_Utils.NGGDI){
 			caseToProcess.CaseArea__c = 'Accreditation Process';
 			caseToProcess.Reason1__c = newgenCaseReason.get(processTypeInput);
-			caseToProcess.Subject = caseToProcess.Reason1__c + ' - ' + caseToProcess.Account.Name;
+			caseToProcess.Subject = caseToProcess.Reason1__c +(isNewgenAccount ? ' - ' + caseToProcess.Account.ANG_Accreditation_Model__c : '')+ ' - ' + caseToProcess.Account.Name;
 		}
 
         update caseToProcess;
@@ -804,17 +804,14 @@ public without sharing class AMS_MigrationToolHelper {
 
 			if(isNewgenAccount || (AMS_Utils.IEP_PROCESSES.contains(processType) && oscarNewgenRTMap.containsKey(processType)))
 				oscarRTId = oscarNewgenRTMap.get(processType);
-			
-			if(oscarRTId == null){
 
-				if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
-					oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
-				if(processType == 'CER.1.0')
-					oscarRTId = oscarRT.get('CERTIFICATE');
-				if(processType == 'BANK.ACCOUNT.CHANGES')
-					oscarRTId = oscarRT.get('BANK_ACCOUNT_SETUP');
-			}
-				
+            if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
+                oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
+            if(processType == 'CER.1.0')
+                oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
+            if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP ||  processType == AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
+                oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'BANK_ACCOUNT_SETUP');
+
 
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
 			if(AMS_Utils.IEP_PROCESSES.contains(processType)){
@@ -823,6 +820,8 @@ public without sharing class AMS_MigrationToolHelper {
 		         Database.DMLOptions dmo = new Database.DMLOptions();
 		         dmo.assignmentRuleHeader.useDefaultRule = true;
 		         caseToProcess.setOptions(dmo);
+			}else if (processType == AMS_Utils.NGGDI){
+				caseToProcess.Visible_on_ISS_Portal__c = false;
 			}
 
 			
