@@ -1,9 +1,6 @@
 <apex:page controller="ISSP_FinancialSecInformationController" standardStylesheets="false" showHeader="false" sidebar="false" 
 	applyBodyTag="false" applyHtmlTag="false" action="{!redirect}">
 	<html>
-		<style type="text/css">
-			
-		</style>
 		<head>
 			<meta charset="utf-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -45,10 +42,14 @@
 				div.customTable {
 					width: 100%;
 				}
+
+				.formArea {
+					background: white;
+				}
 			</style>
 			<main class="container">
 				<c:ISSP_CustomNavigation />
-				<apex:form >
+				<apex:form styleClass="formArea">
 					<div class="row">
 						<section name="left-side" class="col-md-3 col-sm-12">
 							<table class="table" style="width: 100%">
