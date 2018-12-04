@@ -382,7 +382,7 @@ global class SIDRARnSIntegrationWS {
         SIDRA_eDefault__c oReturn;// = new SIDRA_eDefault__c();
         Id sRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('SIDRA_eDefault__c', sType);
 
-        if (sRecordTypeId != '') {
+        if (sRecordTypeId != null) {
             if (sType != '') {
                 if (sAmount != 0) {
                     oReturn = new SIDRA_eDefault__c(Account__c = theCase.AccountId, Currency__c = theCase.Currency__c, Currency_Exchange_Rate__c = theCase.CurrencyExchangeRateUSD__c
