@@ -182,7 +182,7 @@ public class ISSP_ANG_CodeSearch {
 
 				Boolean countryFound = false;
 
-				for (Services_Rendered__c service :[SELECT Id, ISO_Country_formula__c
+				for (Services_Rendered__c service :[SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c
 													   FROM Services_Rendered__c
 													   WHERE Services_Rendered_Type__c LIKE :serviceRenderendType
 														AND Services_Rendered_Status__c = 'Active'
