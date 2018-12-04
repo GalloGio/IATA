@@ -268,7 +268,7 @@ global with sharing class GenericAttachmentListController {
     public Boolean getParentIsOscar() {
     	if(sObjectType!='Case') return false;
     	
-        if((relatedCase.parent.RecordTypeId == Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId())) {
+        if(relatedCase.parent.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')) {
             return true;
         } else {
             return false;

@@ -78,7 +78,7 @@ public class SidraLiteManagerTest {
         System.assert((associatedCountry != null && associatedCountry.size() > 0));
 
         Contact contact = new Contact(
-            RecordtypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId(),
+            RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact'),
             FirstName = 'Dummy',
             LastName = 'Contact',
             Type_of_Contact__c = 'IFAP Contact',

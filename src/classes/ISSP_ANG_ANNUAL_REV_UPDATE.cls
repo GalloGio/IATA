@@ -12,6 +12,69 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     public string txtHelpCurrency {get; set;}
     public string txtHelpTaxNumber {get; set;}
     public String vatNumber {get; set;}
+    public list<selectOption> countryList{get{
+                if(countryList==null){
+                    countryList= new list<selectOption>();
+                    countryList.add(new selectOption('',''));
+                    map<string,IATA_ISO_Country__c> countryInfoByCountryNameMap = new map<string, IATA_ISO_Country__c>();//stores temporarely the values to be assing to a string
+                    //Map<String, Boolean> mandatoryPostalCodeByCountryMap = new Map<String, Boolean>();
+                    //Map<String, Boolean> mandatoryStateByCountryMap = new Map<String, Boolean>();
+                    for(IATA_ISO_Country__c cnt:[select name,Postal_Code_Hint_Format__c, State_Province_Mandatory__c, IEC_Zip_Postal_Code_required__c
+                        from IATA_ISO_Country__c 
+                        where region__c!='' and Iso_code__c not in ('IO','TF','GS','UM','UP','VI') order by name asc]){
+                        countryList.add(new selectOption(cnt.name.toUpperCase(),cnt.name));
+                        countryInfoByCountryNameMap.put(cnt.Name.toUpperCase(), cnt);
+                        //mandatoryPostalCodeByCountryMap.put(cnt.Name.toUpperCase(), cnt.IEC_Zip_Postal_Code_required__c);
+                        //mandatoryStateByCountryMap.put(cnt.Name.toUpperCase(), cnt.State_Province_Mandatory__c);
+                    }
+                    countryInfoByCountryNameMapString = JSON.serialize(countryInfoByCountryNameMap);
+                    //mandatoryPostalCodeByCountryMapString = JSON.serialize(mandatoryPostalCodeByCountryMap);
+                    //mandatoryStateByCountryMapString = JSON.serialize(mandatoryStateByCountryMap);
+                }
+                return countryList;
+        }   
+        set;}
+
+    public static map<string,IATA_ISO_Country__c> postalCodeRegexByCountryMap{
+        get{
+            if(postalCodeRegexByCountryMap==null){
+                postalCodeRegexByCountryMap= new map<string,IATA_ISO_Country__c>();
+                
+                for(IATA_ISO_Country__c cnt:[select id,name,Postal_Code_Format_regEx__c, State_Province_Mandatory__c, IEC_Zip_Postal_Code_required__c
+                    from IATA_ISO_Country__c 
+                    where region__c!='' and Iso_code__c not in ('IO','TF','GS','UM','UP','VI') order by name asc]){
+                    postalCodeRegexByCountryMap.put(cnt.Name.toUpperCase(), cnt);
+                }
+
+            } 
+            return postalCodeRegexByCountryMap;
+        }
+        set;
+    }
+    
+    public string countryInfoByCountryNameMapString {
+        get{
+            if(countryInfoByCountryNameMapString==null) countryInfoByCountryNameMapString='\'\'';//characters to avoid crashing stringfy method on vf page
+            return countryInfoByCountryNameMapString;
+        }
+        set;
+    }
+
+    /*public string mandatoryPostalCodeByCountryMapString {
+        get{
+            if(mandatoryPostalCodeByCountryMapString==null) mandatoryPostalCodeByCountryMapString='\'\'';//characters to avoid crashing stringfy method on vf page
+            return mandatoryPostalCodeByCountryMapString;
+        }
+        set;
+    }
+
+    public string mandatoryStateByCountryMapString {
+        get{
+            if(mandatoryStateByCountryMapString==null) mandatoryStateByCountryMapString='\'\'';//characters to avoid crashing stringfy method on vf page
+            return mandatoryStateByCountryMapString;
+        }
+        set;
+    }*/
 
 	public ISSP_ANG_ANNUAL_REV_UPDATE() {
         applyLanguage = UserInfo.getLanguage();

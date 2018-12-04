@@ -186,9 +186,9 @@ public without sharing class DPCCasesUtil {
      * Changes the Escalated Status DPC and Status one in function of the other, only for DPC cases and only when the values of the fields change
      */
     public static void HandleStatusUpdate (map<Id,Case> TriggerNew, map<Id,Case> TriggerOld, Boolean isInsert, Boolean isUpdate) {
-        Id RT_ACR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Application_Change_Request');
-        Id RT_ACR_locked_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Application_Change_Request_DPC_Systems_locked');
-        Id RT_ACR_ACCA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Application_Change_Request_DPC_Systems_ACCA');
+        Id RT_ACR_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
+        Id RT_ACR_locked_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_locked');
+        Id RT_ACR_ACCA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_ACCA');
                 
         for (Case c : TriggerNew.values()) {
             if (c.RecordTypeId == RT_ACR_Id || c.RecordTypeId == RT_ACR_locked_Id || c.RecordTypeId == RT_ACR_ACCA_Id) {
@@ -308,9 +308,9 @@ public without sharing class DPCCasesUtil {
      * creates the Case Milestone records for the cases passed in the first parameter 
      */
     public static void CreateMilestones(map<Id,Case> TriggerNew, map<Id,Case> TriggerOld, Boolean isInsert, Boolean isUpdate) {
-        Id RT_ACR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Application_Change_Request');
-        Id RT_ACR_locked_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Application_Change_Request_DPC_Systems_locked');
-        Id RT_ACR_ACCA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Application_Change_Request_DPC_Systems_ACCA');
+        Id RT_ACR_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
+        Id RT_ACR_locked_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_locked');
+        Id RT_ACR_ACCA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_ACCA');
         
         // Continue only if the milestones have not already been generated
         if (isMilestoneAlreadyGenerated) {

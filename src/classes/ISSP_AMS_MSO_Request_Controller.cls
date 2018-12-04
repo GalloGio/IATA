@@ -113,11 +113,11 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             list<IATA_ISO_Country__c> isoList;
 
             if (applyLanguage == 'es') {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, (SELECT Id, Name FROM IATA_ISO_States__r) FROM IATA_ISO_Country__c WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' ORDER BY IATA_Country_SP__c];
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_SP__c');
             } else if (applyLanguage == 'fr') {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, (SELECT Id, Name FROM IATA_ISO_States__r) FROM IATA_ISO_Country__c WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' ORDER BY IATA_Country_FR__c];
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_FR__c');
             } else {
-                isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, (SELECT Id, Name FROM IATA_ISO_States__r) FROM IATA_ISO_Country__c WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' ORDER BY Name];
+                isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
             }
             
             for (IATA_ISO_Country__c c : isoList) {
@@ -179,6 +179,9 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         System.debug('accreditationForm: ' + accreditationForm);
         System.debug('countrySelected: ' + countrySelected);
 
+        Id saveLogRecId;
+        String saveLogMessage;
+
 
         if (countrySelected == null) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Country_ErrMsg));
@@ -220,10 +223,10 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         }
 
         try {
-            IATA_ISO_Country__c selectedCountryInfo = [SELECT Name, Id, Region__c FROM IATA_ISO_Country__c WHERE Id = :countrySelected];
+            IATA_ISO_Country__c selectedCountryInfo = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{countrySelected})[0];
           	
             if (oscarCase.Id == null) {
-                msoAccount.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('Standard_Account');//acctRT.Id;
+                msoAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');//acctRT.Id;
                 msoAccount.Name = currentUserContact.Account.Name;
                 msoAccount.Sector__c = 'Travel Agent';
                 msoAccount.Category__c = 'MSO Member Sales Office';
@@ -231,13 +234,17 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 msoAccount.Location_Type__c = 'HO';
                 msoAccount.Reason_for_creation__c = 'New Agent';
                 msoAccount.Location_Category__c = currentUserContact.Account.IATA_Member__c == true ? 'IC' : 'NI';
+                saveLogRecId = msoAccount.Id;
+                saveLogMessage = 'Insert MSO Account';
                 insert msoAccount;
 
                 // create new OSCAR
-                oscar.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c').get('NEW');//oscarRT.Id;
+                oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');//oscarRT.Id;
                 oscar.Name = 'tempName'; //oscarCase.CaseNumber;                
                 oscar.Process__c = 'NEW.MSO.1.0';
                 oscar.Account__c = msoAccount.Id;
+                saveLogRecId = oscar.Id;
+                saveLogMessage = 'Insert Oscar';
                 insert oscar;
 
                 // avoid sending notification email
@@ -248,7 +255,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 // create new OSCAR Communication case
                 oscarCase.AccountId = currentUserContact.AccountId;
                 oscarCase.ContactId = noEmailContactId; //currentUser.ContactId;
-                oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
+                oscarCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');//caseRT.Id;
                 //oscarCase.Subject = 'New MSO Code - ' + currentUserContact.Account.Name + ' - Self-service (IATA Portal)';
                 oscarCase.Subject = 'New MSO Code - ' + currentUserContact.Account.Name;
                 oscarCase.CaseArea__c = 'Accreditation Process';
@@ -259,46 +266,72 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 oscarCase.Status = 'Draft';
                 oscarCase.Region__c = selectedCountryInfo.Region__c;
                 oscarCase.Country_concerned_by_the_query__c = selectedCountryInfo.Name;
+                saveLogRecId = oscarCase.Id;
+                saveLogMessage = 'Insert Oscar Case';
                 insert oscarCase;
 
                 oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id =:oscarCase.Id];
 
                 // create new accreditation form
-                accreditationForm.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Pax_Accreditation_Form__c'}).get('AMS_Pax_Accreditation_Form__c').get('GeneralOnlineAccreditation');//accreditationRT.Id;
+                accreditationForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'GeneralOnlineAccreditation');//accreditationRT.Id;
                 accreditationForm.SAAM_Case__c = oscarCase.Id;
                 accreditationForm.Account_Name__c = currentUserContact.Account.Name;
                 accreditationForm.Location_Class__c = 'M';
                 accreditationForm.Location_Type__c = 'HO';
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
+                saveLogRecId = accreditationForm.Id;
+                saveLogMessage = 'Insert Accreditation Form';
                 insert accreditationForm;
 
                 oscar.AMS_Online_Accreditation__c = accreditationForm.Id;
                 oscar.Name = oscarCase.CaseNumber;
+                saveLogRecId = oscar.Id;
+                saveLogMessage = 'Update Oscar';
                 update oscar;
 
-                AMS_Inspection__c app = new AMS_Inspection__c();
-                app.Airline__c = currentUserContact.AccountId;
-                app.Account__c = msoAccount.Id;
-                app.OSCAR__c = oscar.Id;
-                insert app;
-
+                //AMS_Inspection__c app = new AMS_Inspection__c();
+                //app.Airline__c = currentUserContact.AccountId;
+                //app.Account__c = msoAccount.Id;
+                //app.OSCAR__c = oscar.Id;
+                //insert app;
+                saveLogRecId = oscar.Id;
+                saveLogMessage = 'Create Appointment';
+                if(!Test.isRunningTest()) {
+                    createAppointment(String.valueOf(currentUserContact.AccountId), String.valueOf(msoAccount.Id), String.valueOf(oscar.Id));  
+                }
                 // update the case contact
                 //updateCaseContact(oscarCase.Id, currentUser.ContactId);
 
             } else {
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
+                saveLogRecId = accreditationForm.Id;
+                saveLogMessage = 'Upsert AccreditationForm';
+
                 upsert accreditationForm;
             }
         } catch (Exception ex) {
             System.debug('ex' + ex);
             System.debug('ex' + ex.getStackTraceString());
+            new Technical_Logs__c(Operation__c= 'UPSERT MSO Acc, Oscar, Comm Case, Acc Form and Appointment: ' + saveLogMessage, 
+                                                        Record__c= saveLogRecId,
+                                                        Status__c= 'Error',
+                                                        Log__c= 'Cause: ' + ex.getCause() + '|Line: ' + ex.getLineNumber() + '|Message: ' + ex.getMessage() + '|StackTrace: ' + ex.getStackTraceString());
             ApexPages.addMessages(ex);
             return null;
         }
 
         return new PageReference('/ISSP_AMS_MSO_Request?step=review&caseId=' + oscarCase.Id);
+    }
+
+    @future
+    public static void createAppointment(String accId, String msoAccId, String oscarId){
+        AMS_Inspection__c app = new AMS_Inspection__c();
+        app.Airline__c = accId;
+        app.Account__c = msoAccId;
+        app.OSCAR__c = oscarId;
+        insert app;
     }
 
     public PageReference submitAndApproveCase() {

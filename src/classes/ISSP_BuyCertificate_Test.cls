@@ -4,7 +4,7 @@ public class ISSP_BuyCertificate_Test {
     public static testMethod void testISSP_BuyCertificate_Test() {
 		Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Test.startTest();
         insert acc;
         Test.stopTest();

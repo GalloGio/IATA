@@ -30,13 +30,13 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 		country.Case_BSP_Country__c  = 'United Kingdom';
 		insert country;
 
-		Id AirlineId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+		Id AirlineId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account acc = new Account();
-		acc.name ='testAcc';
+		acc.name = 'testAcc';
 		acc.IATACode__c = '123';
-		acc.Airline_designator__c='AA';
-		acc.IATA_ISO_Country__c=country.id;
+		acc.Airline_designator__c = 'AA';
+		acc.IATA_ISO_Country__c = country.id;
 		acc.recordtypeID = AirlineId;
 		acc.sector__c = 'Airline';
 		insert acc;
@@ -70,42 +70,42 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 	@isTest static void testChatButtonController() {
 
 		User testUser = [SELECT FirstName, LastName, ContactId, Email FROM User Where Email = 'user@test.com'][0];
-		System.runAs(testUser){
+		System.runAs(testUser) {
 
 			PageReference pg = Page.LiveAgentButtonFAQ2Case;
-			pg.getParameters().put('selTopics','testselTopics');
-			pg.getParameters().put('topiclbl','testtopiclbl');
-			pg.getParameters().put('subtopiclbl','testsubtopiclbl');
-			pg.getParameters().put('csButton','AirlineEnglishEurope');
-			pg.getParameters().put('concernedCountry','GB');
+			pg.getParameters().put('selTopics', 'testselTopics');
+			pg.getParameters().put('topiclbl', 'testtopiclbl');
+			pg.getParameters().put('subtopiclbl', 'testsubtopiclbl');
+			pg.getParameters().put('csButton', 'AirlineEnglishEurope');
+			pg.getParameters().put('concernedCountry', 'GB');
 
-			Map<String,vfISSP_FAQ2Case.buttonsInfoType> csButtonsList=new Map<String, vfISSP_FAQ2Case.buttonsInfoType>();
+			Map<String, vfISSP_FAQ2Case.buttonsInfoType> csButtonsList = new Map<String, vfISSP_FAQ2Case.buttonsInfoType>();
 
-			vfISSP_FAQ2Case.buttonsInfoType buttonAux1=new vfISSP_FAQ2Case.buttonsInfoType();
-			buttonAux1.Name='AirlineEnglishEurope';
-			buttonAux1.ButtonId='AirlineEnglishEurope_BId';
-			buttonAux1.Category=vfISSP_FAQ2Case.BUT_CAT_COUNTRY;
-			buttonAux1.Language='en';
-			buttonAux1.DeploymentId='AirlineEnglishEurope_DId';
-			buttonAux1.Order=1;
-			csButtonsList.put(vfISSP_FAQ2Case.BUT_CAT_COUNTRY,buttonAux1);
+			vfISSP_FAQ2Case.buttonsInfoType buttonAux1 = new vfISSP_FAQ2Case.buttonsInfoType();
+			buttonAux1.Name = 'AirlineEnglishEurope';
+			buttonAux1.ButtonId = 'AirlineEnglishEurope_BId';
+			buttonAux1.Category = vfISSP_FAQ2Case.BUT_CAT_COUNTRY;
+			buttonAux1.Language = 'en';
+			buttonAux1.DeploymentId = 'AirlineEnglishEurope_DId';
+			buttonAux1.Order = 1;
+			csButtonsList.put(vfISSP_FAQ2Case.BUT_CAT_COUNTRY, buttonAux1);
 
-			vfISSP_FAQ2Case.buttonsInfoType buttonAux2=new vfISSP_FAQ2Case.buttonsInfoType();
-			buttonAux2.Name='AirlinePortugeseEurope';
-			buttonAux2.ButtonId='AirlinePortugeseEurope_BId';
-			buttonAux2.Category=vfISSP_FAQ2Case.BUT_CAT_PORTAL;
-			buttonAux2.Language='pt';
-			buttonAux2.DeploymentId='AirlinePortugeseEurope_DId';
-			buttonAux2.Order=2;
-			csButtonsList.put(vfISSP_FAQ2Case.BUT_CAT_PORTAL,buttonAux2);
+			vfISSP_FAQ2Case.buttonsInfoType buttonAux2 = new vfISSP_FAQ2Case.buttonsInfoType();
+			buttonAux2.Name = 'AirlinePortugeseEurope';
+			buttonAux2.ButtonId = 'AirlinePortugeseEurope_BId';
+			buttonAux2.Category = vfISSP_FAQ2Case.BUT_CAT_PORTAL;
+			buttonAux2.Language = 'pt';
+			buttonAux2.DeploymentId = 'AirlinePortugeseEurope_DId';
+			buttonAux2.Order = 2;
+			csButtonsList.put(vfISSP_FAQ2Case.BUT_CAT_PORTAL, buttonAux2);
 
-                        pg.getParameters().put('csButtonsListJson',JSON.serialize(csButtonsList));
-			pg.getParameters().put('csButtonCategory',vfISSP_FAQ2Case.BUT_CAT_COUNTRY);
+			pg.getParameters().put('csButtonsListJson', JSON.serialize(csButtonsList));
+			pg.getParameters().put('csButtonCategory', vfISSP_FAQ2Case.BUT_CAT_COUNTRY);
 			Test.setCurrentPage(pg);
 
-		system.debug('basto1p - JSON.serialize(csButtonsList)='+JSON.serialize(csButtonsList));
+			system.debug('basto1p - JSON.serialize(csButtonsList)=' + JSON.serialize(csButtonsList));
 			LiveAgentButtonFAQ2CaseController ctrl = new LiveAgentButtonFAQ2CaseController();
-		system.debug('basto1p - AFTER CREATE OBJ LiveAgentButtonFAQ2CaseController');
+			system.debug('basto1p - AFTER CREATE OBJ LiveAgentButtonFAQ2CaseController');
 
 			System.assert(ctrl.getCaseRecordTypeId() != null);
 			System.assert(ctrl.getContactFirstName() != null);
@@ -118,29 +118,29 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			System.assertEquals(ctrl.subTopicLabel, 'testsubtopiclbl');
 
 			//basto1p - Live Agent v2
-		system.debug('basto1p - Live Agent V2 Checks START...');
-            System.assertEquals(ctrl.buttonLanguage, 'en');
+			system.debug('basto1p - Live Agent V2 Checks START...');
+			System.assertEquals(ctrl.buttonLanguage, 'en');
 			System.assertEquals(ctrl.isEmergency, false);
 			System.assertEquals(ctrl.NumberOfButtons, 2);
 			System.assertEquals(ctrl.liveAgentBtnEng.Name, null);
 			System.assertEquals(ctrl.liveAgentBtnCountry.Name, 'AirlineEnglishEurope');
 			System.assertEquals(ctrl.liveAgentBtnPortal.Name, 'AirlinePortugeseEurope');
-			System.assertEquals(ctrl.csButtonAbreviation,'EN');
+			System.assertEquals(ctrl.csButtonAbreviation, 'EN');
 
 			//System.assertEquals(ctrl.getContactFirstName(), 'Guest');
 
 			ctrl.getContactId();
 			ctrl.getAccountId();
-			ctrl.country.region__c='Americas';
+			ctrl.country.region__c = 'Americas';
 			System.assert(ctrl.getCaseRecordTypeId() != null);
-			ctrl.country.region__c='Africa & Middle East';
+			ctrl.country.region__c = 'Africa & Middle East';
 			System.assert(ctrl.getCaseRecordTypeId() != null);
-			ctrl.country.region__c='Asia & Pacific';
+			ctrl.country.region__c = 'Asia & Pacific';
 			System.assert(ctrl.getCaseRecordTypeId() != null);
-			ctrl.country.region__c='China & North Asia';
+			ctrl.country.region__c = 'China & North Asia';
 			System.assert(ctrl.getCaseRecordTypeId() != null);
-			ctrl.country.region__c='testnull';
-			System.assert(ctrl.getCaseRecordTypeId() == null);
+			ctrl.country.region__c = 'testnull';
+			System.assert(ctrl.getCaseRecordTypeId() == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE'));
 		}
 	}
 }

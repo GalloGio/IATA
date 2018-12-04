@@ -29,7 +29,9 @@ public class ANG_AccountTriggerHandler {
 		adjustShortName();
 		updateRiskStatus();
 	}
-	public void onAfterInsert() {}
+	public void onAfterInsert() {
+
+	}
 
 	public void onBeforeUpdate(){
 		adjustShortName();
@@ -42,6 +44,7 @@ public class ANG_AccountTriggerHandler {
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'Account','id').run();
 		manageDowngrades();
 		manageUpgrades();
+		createIEPModelAOscars();
 	}
 
 	public void onBeforeDelete(){}
@@ -66,7 +69,7 @@ public class ANG_AccountTriggerHandler {
 
 		//AND ( RecordType.DeveloperName = 'IATA_Agency', OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )
 		for(Account a : triggerNew){
-			if(a.RecordTypeID != RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency'))
+			if(a.RecordTypeID != RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'))
 				continue;
 
 			if(Trigger.isInsert || ( oldMap.get(a.Id).TradeName__c <> a.TradeName__c || oldMap.get(a.Id).Name <> a.Name || oldMap.get(a.Id).Short_Name__c <> a.Short_Name__c || oldMap.get(a.Id).IATACode__c <> a.IATACode__c)){
@@ -179,7 +182,8 @@ public class ANG_AccountTriggerHandler {
 		try{
 			if(!newCases.isEmpty()) insert newCases;
 		}catch(Exception e){
-            ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'manageDowngrades', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+            //ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'manageDowngrades', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW10',e);
 		}
 
 		//downgrade from B to C
@@ -298,7 +302,10 @@ public class ANG_AccountTriggerHandler {
 		set<id> accIdSet = new set<id>(activeAccsIdSet);
 		accIdSet.addAll(inactiveAccsIdSet);
 
-		//get all related risk Events 
+		//get all related risk Events
+		if(accIdSet.isEmpty()) 
+			return;
+			
 		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
 		
 		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
@@ -492,7 +499,8 @@ public class ANG_AccountTriggerHandler {
 			
 			update oscars;
 		}catch(Exception e){
-            ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createVMFROscars', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+            //ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createVMFROscars', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+        	ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW11',e);
         }
 	}
 
@@ -547,7 +555,8 @@ public class ANG_AccountTriggerHandler {
 			//insert cases
 			insert cases;
 		}catch(Exception e){
-        	ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createFOPOscar', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+        	//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createFOPOscar', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW12',e);
 		}
 	}
 
@@ -563,7 +572,8 @@ public class ANG_AccountTriggerHandler {
 			accsIds.add(a.Id);
 
 		Map<Id,AMS_Agency_Operations__c> agOpMap = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accsIds);
-		List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, agOpMap.keySet());
+		List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c','BSP'),
+		 agOpMap.keySet());
 
 		Integer aux = 0;
 		for(AMS_Operation__c op: opCodes){
@@ -579,4 +589,38 @@ public class ANG_AccountTriggerHandler {
 		return remitFreq;
 	}
 
+	private void createIEPModelAOscars(){
+
+		Set<Id> iepAccounts = new Set<Id>();
+		Map<Id,Account> iepModelAAccounts = new Map<Id,Account>();
+		Map<Id,Account> iepModelBAccounts = new Map<Id,Account>();
+
+		for(Account a :triggerNew){
+
+			if(a.ANG_IEP_Status__c == 'In Progress' && oldMap.get(a.Id).ANG_IEP_Status__c != 'In Progress') 
+				iepAccounts.add(a.Id);
+
+		}
+
+		if(iepAccounts.isEmpty()) return;
+
+		Map<Id,Account> iepCountriesAccs = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__r.ANG_IEP_Model__c FROM Account WHERE Id IN :iepAccounts AND (IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model A' OR IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model B')]);
+		
+		for(Id iepAcc: iepAccounts){
+
+			if(iepCountriesAccs.keySet().contains(iepAcc)){
+
+				if(iepCountriesAccs.get(iepAcc).IATA_ISO_Country__r.ANG_IEP_Model__c == 'Model A')
+					iepModelAAccounts.put(iepAcc, newMap.get(iepAcc));
+				else if(iepCountriesAccs.get(iepAcc).IATA_ISO_Country__r.ANG_IEP_Model__c == 'Model B')
+					iepModelBAccounts.put(iepAcc, newMap.get(iepAcc));
+			}
+
+		}
+
+		if(!iepModelAAccounts.isEmpty())
+			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelAAccounts, 'A');
+		if(!iepModelBAccounts.isEmpty())
+			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBAccounts, 'B');
+	}
 }

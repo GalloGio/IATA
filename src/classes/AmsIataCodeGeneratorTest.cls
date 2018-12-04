@@ -38,10 +38,8 @@ public class  AmsIataCodeGeneratorTest
     private static IATA_ISO_State__c stateCOdefault ;
     private static IATA_ISO_State__c stateFRdefault ;
 
-    //private static  Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-    private static  Map<string, Id>  accountsRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account');
-    private static Id  programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c').get('IATA_Code_Programs');
-    private static Id  codeRangeRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Code_Range__c'}).get('Code_Range__c').get('IATA_Code');
+    private static Id  programRT  =  RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs');
+    private static Id  codeRangeRT  =  RecordTypeSingleton.getInstance().getRecordTypeId('Code_Range__c', 'IATA_Code');
     
     private static AMS_Segment__c p1 = new AMS_Segment__c (label__c='A',RecordTypeId=programRT );
     private static AMS_Segment__c p2 = new AMS_Segment__c (label__c='S',RecordTypeId=programRT );
@@ -167,7 +165,7 @@ public class  AmsIataCodeGeneratorTest
         }*/
         a = new Account(IATA_ISO_Country__c = c.id, Sector__c = sector);
         a.Location_Class__c = 'C';
-        a.RecordTypeId = accountsRT.get('Standard_Account'); 
+        a.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'); 
         a.Name = generateRandomString(10);
         //a.Legal_Name_1__c =a.Name;
         a.IATACode__c = icode;
@@ -189,7 +187,8 @@ public class  AmsIataCodeGeneratorTest
         return a;
     }
     
-    static testMethod void testNoISOStateInAccreditation_CountryDefaultStateUsed(){
+    @isTest
+    static void testNoISOStateInAccreditation_CountryDefaultStateUsed(){
          createData(false);
          List<Account> ags = new List<Account>();
          List<AMS_Address__c> adds = new List<AMS_Address__c>();
@@ -218,7 +217,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', IATA_ISO_State__c = null, Branch_Office_Country__c = ctries[6].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -239,7 +251,8 @@ public class  AmsIataCodeGeneratorTest
          System.assertEquals('99120101231', agf.IATACode__c);
     }
     
-    static testMethod void testISOStateInAccreditation_ErrorGivenIfNoStateRangesFound(){
+    @isTest
+    static void testISOStateInAccreditation_ErrorGivenIfNoStateRangesFound(){
          createData(false);
          List<Account> ags = new List<Account>();
          List<AMS_Address__c> adds = new List<AMS_Address__c>();
@@ -268,7 +281,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', IATA_ISO_State__c = stateCA.Id, Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -289,7 +315,8 @@ public class  AmsIataCodeGeneratorTest
          
     }
     
-    static testMethod void testHole(){
+    @isTest
+    static void testHole(){
          //add agencies 
          createData(false);
          List<Account> ags = new List<Account>();
@@ -332,7 +359,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFRdefault.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -351,6 +391,19 @@ public class  AmsIataCodeGeneratorTest
          insert cse2;
          AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, CASS_Number__c = '124', IATA_ISO_State__c = stateFRdefault.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre2;
+        
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner2 = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre2.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner2;
         
          AMS_OSCAR__c theOscar2 = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag2.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre2.Id );
          insert theOscar2;
@@ -382,7 +435,8 @@ public class  AmsIataCodeGeneratorTest
          system.assertEquals(0, AmsIataCodeGenerator.compare2Codes('1a234d f', ' 1234'));
     }
 
-    static testMethod void testIterative(){
+    @isTest
+    static void testIterative(){
          //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
          //add agencies
          createData(false);
@@ -418,7 +472,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -441,7 +508,8 @@ public class  AmsIataCodeGeneratorTest
          System.assertEquals('57390151232', agf.IATACode__c);
     }
     
-    static testMethod void testIterativeForPassenger(){
+    @isTest
+    static void testIterativeForPassenger(){
          //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
          //add agencies
          createData(false);
@@ -477,7 +545,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -513,6 +594,19 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre2;
         
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner2 = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre2.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner2;
+        
          AMS_OSCAR__c theOscar2 = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag2.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre2.Id );
          insert theOscar2;
 
@@ -535,8 +629,8 @@ public class  AmsIataCodeGeneratorTest
     }
     
     
-    
-    static testMethod void testLongIATACode_shouldSubstring(){
+    @isTest
+    static void testLongIATACode_shouldSubstring(){
          //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
          //add agencies
          createData(false);
@@ -572,7 +666,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -597,7 +704,8 @@ public class  AmsIataCodeGeneratorTest
          System.assertEquals(agf.Site, '5739015123');
     }
     
-    static testMethod void testWithDuplicateEntriesAndTooShortIATACode(){
+    @isTest
+    static void testWithDuplicateEntriesAndTooShortIATACode(){
          //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
          //add agencies
          createData(false);
@@ -637,7 +745,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -660,7 +781,8 @@ public class  AmsIataCodeGeneratorTest
          System.assertEquals('57390031230', agf.IATACode__c);
     }
     
-    static testMethod void testWithDuplicateEntriesAndTooManyIataCodes(){
+    @isTest
+    static void testWithDuplicateEntriesAndTooManyIataCodes(){
          //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
          //add agencies
         createData(false);
@@ -705,7 +827,20 @@ public class  AmsIataCodeGeneratorTest
         AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id, IATA_ISO_State__c = stateFR.Id);
         insert accre;
 
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -728,7 +863,8 @@ public class  AmsIataCodeGeneratorTest
         System.assertEquals('57316501233', agf.IATACode__c);
     }
     
-    static testMethod void testGroupingOfDuplicateRecords_ExpectNoEffect(){
+    @isTest
+    static void testGroupingOfDuplicateRecords_ExpectNoEffect(){
          //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
          //add agencies
         createData(false);
@@ -773,7 +909,20 @@ public class  AmsIataCodeGeneratorTest
         AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id, IATA_ISO_State__c = stateFR.Id);
         insert accre;
 
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -796,7 +945,8 @@ public class  AmsIataCodeGeneratorTest
         System.assertEquals('57300021236', agf.IATACode__c);
     }
     
-    static testMethod void testGroupingOfDuplicateRecordsWithAHole(){
+    @isTest
+    static void testGroupingOfDuplicateRecordsWithAHole(){
          //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
          //add agencies
         createData(false);
@@ -841,7 +991,20 @@ public class  AmsIataCodeGeneratorTest
         AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id, IATA_ISO_State__c = stateFR.Id);
         insert accre;
 
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -863,7 +1026,8 @@ public class  AmsIataCodeGeneratorTest
         System.assertEquals('57300011230', agf.IATACode__c);
     }
     
-    static testMethod void testNoSlot(){
+    @isTest
+    static void testNoSlot(){
          //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
          //add agencies
          createData(false);
@@ -894,7 +1058,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -913,106 +1090,8 @@ public class  AmsIataCodeGeneratorTest
          system.assertEquals(resultUpdated.isFaulty,true);
     }
     
-    /*
-    static testMethod void testStates(){
-         //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
-         //add agencies
-         createData(false);
-         List<Account> ags = new List<Account>();
-         List<AMS_Address__c> adds = new List<AMS_Address__c>();
-         List< AMS_Agency_Segment__c > agsgts = new List< AMS_Agency_Segment__c >();
-         for(Integer i=0;i<15;i++){
-            String iCode = '113'+ AmsIataCodeGenerator.resizeNumericString(''+i,4);
-            Account ag = createAgency(iCode,c3,'Travel Agent');
-            ags.add(ag);
-         }
-     
-         insert ags;
-         for(Account a:ags){
-             System.debug('[UNITTEST] SAve AGT with IATA Code:'+a.IATACode__c);
-             agsgts.add(new AMS_Agency_Segment__c(account__c=a.id, Segment__c = p1.Id));
-         }
-         insert agsgts;
-
-         System.debug('[UNITTEST][State]California 1');     
-         Account ag = createAgency(null,c3, 'Travel Agent');
-         insert ag;
-         AMS_Agency_Segment__c aas = new AMS_Agency_Segment__c(agency__c=ag.Id, Account__c=ag.Id, Segment__c = p1.Id);
-         insert aas;
-         Test.startTest();
-         //AMS_Address__c add = createAgencyPrimaryAddress( ag, c3,stateCA);
-         //insert add;
-         String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id);
-         Account agf  = [select id, IATACode__c from Account where Id = :ag.Id ];
-         System.debug('[UNITTEST][State]generated  IATA Code:'+agf.IATACode__c);
-         System.debug('[UNITTEST][State]generator Result :'+s[0]+' /  '+s[1]);
-         system.assert(s[1].equals('1130015'));
-         
-         System.debug('[UNITTEST][State]Texas');
-         ag = createAgency(null,c3, 'Travel Agent');
-         insert ag;
-         aas = new AMS_Agency_Segment__c(agency__c=ag.Id, Account__c = ag.Id, Segment__c = p1.Id);
-         insert aas;
-         //add = createAgencyPrimaryAddress( ag, c3,stateTX);
-         //insert add;
-         s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id);
-         agf  = [select id, IATACode__c from AMS_Agency__c where Id = :ag.Id ];
-         System.debug('[UNITTEST][State]generated  IATA Code:'+agf.IATACode__c);
-         System.debug('[UNITTEST][State]generator Result :'+s[0]+' /  '+s[1]);
-         system.assert(s[0].equals('2'));
-         
-         System.debug('[UNITTEST][State]California 2');
-         ag = createAgency(null,c3,agenciesRT.get('PASSENGER'));
-         insert ag;
-         aas = new AMS_Agency_Segment__c(agency__c=ag.Id, Account__c=ag.Id, Segment__c = p1.Id);
-         insert aas;
-         //add = createAgencyPrimaryAddress( ag, c3,stateCA);
-         //insert add;
-         s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id);
-         System.debug('[UNITTEST][State]generator Result :'+s[0]+' /  '+s[1]);
-         system.assert(s[1].equals('1130016'));
-
-    }
-    */
-    
-    /*
-    static testMethod void testState2s(){
-         //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
-         //add agencies
-         createData(false);
-         List<AMS_Agency__c> ags = new List<AMS_Agency__c>();
-         List<AMS_Address__c> adds = new List<AMS_Address__c>();
-         List< AMS_Agency_Segment__c > agsgts = new List< AMS_Agency_Segment__c >();
-         for(Integer i=0;i<15;i++){
-            String iCode = '113'+ AmsIataCodeGenerator.resizeNumericString(''+i,4);
-            AMS_Agency__c ag = createAgency(iCode,c3,agenciesRT.get('PASSENGER'));
-            ags.add(ag);
-         }
-     
-         insert ags;
-         for(AMS_Agency__c a:ags){
-             System.debug('[UNITTEST] SAve AGT with IATA Code:'+a.IATACode__c);
-             agsgts.add(new AMS_Agency_Segment__c(agency__c=a.Id, Segment__c = p1.Id));
-         }
-         insert agsgts;
-
-         
-         System.debug('[UNITTEST][State]ALABAMA');
-         AMS_Agency__c ag = createAgency(null,c3,agenciesRT.get('PASSENGER'));
-         insert ag;
-         AMS_Agency_Segment__c aas = new AMS_Agency_Segment__c(agency__c=ag.Id, Segment__c = p1.Id);
-         insert aas;
-         Test.startTest();
-         AMS_Address__c add = createAgencyPrimaryAddress( ag, c3,stateAL);
-         insert add;
-         String[] s = AmsIataCodeGenerator.generatedAgencyIATACode(ag.Id);
-         Test.stopTest();
-         System.debug('[UNITTEST][State]generator Result for AL :'+s[0]+' /  '+s[1]);
-         system.assert(s[1].equals('1140000'));
-    }
-    */
-    
-    static testMethod void testChildCodeEqualsToParentForCargo_CassNumberDifferent(){
+    @isTest    
+    static void testChildCodeEqualsToParentForCargo_CassNumberDifferent(){
          //add agencies
          createData(false);
          List<Account> ags = new List<Account>();
@@ -1037,11 +1116,19 @@ public class  AmsIataCodeGeneratorTest
          }
          insert agsgts;
          
+         /*** AMSU-180 ***/
+        Contact c = new Contact(FirstName= 'test', LastName= 'contact', Email= 'test.owner@contact.com');
+        insert c;
+                 
          Account ag = createAgency(null, ctries[1],'Travel Agent');
          ag.Sector__c = 'Cargo Agent';
          ag.Cass_Number__c = '121';
          ag.Category__c = '';
          insert ag;
+
+         AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c= ag.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
+         insert owner1;
+
          AMS_Agency_Segment__c aas = new AMS_Agency_Segment__c(account__c=ag.Id, Segment__c = p1.Id);
          insert aas;
          Test.startTest();
@@ -1051,7 +1138,7 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id );
          insert theOscar;
@@ -1084,6 +1171,9 @@ public class  AmsIataCodeGeneratorTest
          ag2.Sector__c = 'Cargo Agent';
          insert ag2;
          
+         AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= ag2.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
+         insert owner2;
+
          AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = ag2.Id);
          insert oscar;
          oscar.STEP6__c = 'Passed';
@@ -1109,7 +1199,8 @@ public class  AmsIataCodeGeneratorTest
          Test.stopTest();
     }
     
-    static testMethod void testChildCodeDoesNotEqualToParentForPassenger(){ // PARA ALTERAR
+    @isTest
+    static void testChildCodeDoesNotEqualToParentForPassenger(){ // PARA ALTERAR
          //add agencies
 
          createData(false);
@@ -1153,7 +1244,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id , CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
          insert theOscar;
          theOscar.STEP6__c = 'Passed';
@@ -1208,6 +1312,20 @@ public class  AmsIataCodeGeneratorTest
          insert cse2;
          AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, IATA_ISO_State__c=stateFR.Id, Location_Class__c = 'P', Branch_Office_Country__c = ctries[1].id);
          insert accre2;
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner2 = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre2.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner2;
+
          Account agf2  = [select id, IATACode__c, Top_Parent__c, Check_Digit__c, Site from Account where Id = :ag2.Id ];
 
          AMS_OSCAR__c theOscar2 = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = agf2.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre2.Id);
@@ -1229,7 +1347,8 @@ public class  AmsIataCodeGeneratorTest
          Test.stopTest();
     }
     
-    static testMethod void testDigitCreation(){
+    @isTest
+    static void testDigitCreation(){
         createData(false);
         List<Account> ags = new List<Account>();
         Account ag = createAgency('GB20000',ctries[1],'Travel Agent');
@@ -1245,7 +1364,8 @@ public class  AmsIataCodeGeneratorTest
         Test.stopTest();
     }
 
-    static testMethod void testUnexistingRange(){
+    @isTest
+    static void testUnexistingRange(){
          createData(false);
          Account ag = createAgency(null,ctries[0],'Travel Agent');
          insert ag;
@@ -1254,7 +1374,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'C', Branch_Office_Country__c = ctries[0].id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
          insert theOscar;
 
@@ -1276,8 +1409,8 @@ public class  AmsIataCodeGeneratorTest
          system.assertEquals(resultUpdated.isFaulty,true);
     }
     
-    
-    static testMethod void testLogsToUser(){
+    @isTest
+    static void testLogsToUser(){
          //id, Area__c, Area_Code__c,CARGO__c,Prefix__c,IATA_ISO_Country__c,IATA_ISO_State__c,Max_Range__c,Min_Range__c,PAX__c 
          //add agencies
          createData(false);
@@ -1310,7 +1443,20 @@ public class  AmsIataCodeGeneratorTest
          AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id);
          insert accre;
 
-         ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+         /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
+         ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
          AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = ag.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = accre.Id);
          insert theOscar;
 
@@ -1326,17 +1472,10 @@ public class  AmsIataCodeGeneratorTest
          Test.stopTest();
     }
 
-    @testSetup static void setup(){
-
+    @isTest
+    static void validateCassUniquenessTest(){
         
-
-
-
-    }
-
-     static testMethod void validateCassUniquenessTest(){
-        
-        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+        ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
         
         //HO
         Account account1 = new Account(RecordTypeId = standardRT, Name = 'My Travels HO',  IATA_ISO_Country__c = c2.Id, 
@@ -1391,12 +1530,16 @@ public class  AmsIataCodeGeneratorTest
 
         AMS_OSCAR__c oscar1 = createCaseAndOSCAR(account1,contact1,null);
         AMS_OSCAR__c oscar2 = createCaseAndOSCAR(account1Br,contact1,null);
-        AMS_Accreditation_Contact__c ac = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar2.AMS_Online_Accreditation__c, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        AMS_Accreditation_Contact__c ac = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar2.AMS_Online_Accreditation__c, First_name__c='Joan', 
+            Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91), 
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
         insert ac;
         oscar2.STEP6__c = 'Passed';
         update oscar2;
         AMS_OSCAR__c oscar3 = createCaseAndOSCAR(account2Br,contact1,account1Br.Cass_Number__c);
-        AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar3.AMS_Online_Accreditation__c, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar3.AMS_Online_Accreditation__c, First_name__c='Joan', 
+            Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91), 
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
         insert ac2;
         oscar3.STEP6__c = 'Passed';
         update oscar3;
@@ -1435,9 +1578,10 @@ public class  AmsIataCodeGeneratorTest
 
     }
 
-     static testMethod void validateCASSNumberandIATACodeErrors(){
+    @isTest
+    static void validateCASSNumberandIATACodeErrors(){
         
-        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+        ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
         
         //HO
         Account account1 = new Account(RecordTypeId = standardRT, Name = 'My Travels HO',  IATA_ISO_Country__c = c2.Id, 
@@ -1522,15 +1666,12 @@ public class  AmsIataCodeGeneratorTest
 
         AMS_OSCAR__c oscar3 = createCaseAndOSCAR(account2Br,contact1,'002');
 
-        /*AMS_OSCAR__c oscar4 = createCaseAndOSCAR(account3Br,contact1,'003');
-
-        AMS_OSCAR__c oscar5 = createCaseAndOSCAR(account4Br,contact1,'004');
-
-        AMS_OSCAR__c oscar6 = createCaseAndOSCAR(account5Br,contact1,'005');*/
 
         AMS_Pax_Accreditation_Form__c accreditationObj = [SELECT ID , CASS_Number__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar2.Id)];
 
-        AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', 
+            Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91), 
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
         insert ac2;
 
         oscar2.STEP6__c = 'Passed';
@@ -1549,7 +1690,9 @@ public class  AmsIataCodeGeneratorTest
         accreditationObj.IATACode__c = '123456789';
         update accreditationObj;
 
-        AMS_Accreditation_Contact__c ac3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91), RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
+        AMS_Accreditation_Contact__c ac3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan', 
+            Last_name__c ='Wylde', Phone__c ='323562762', Email__c ='jw@email.com', Valid_Until__c = (Date.today()+91), 
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
         insert ac3;
 
         oscar3.STEP6__c = 'Passed';
@@ -1600,9 +1743,10 @@ public class  AmsIataCodeGeneratorTest
 
     }
 
-    static testMethod void validateNonNumericIATACodeDigitCreation(){
+    @isTest
+    static void validateNonNumericIATACodeDigitCreation(){
         
-        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+        ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
         
         //HO
         Account account1 = new Account(RecordTypeId = standardRT, Name = 'My Travels HO',  IATA_ISO_Country__c = c2.Id, 
@@ -1669,9 +1813,10 @@ public class  AmsIataCodeGeneratorTest
 
     }
 
-     static testMethod void generatedAgencyIATACodeWithNullAccreditation(){
+    @isTest
+    static void generatedAgencyIATACodeWithNullAccreditation(){
 
-        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+        ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
         Account account1 = new Account(RecordTypeId = standardRT, Name = 'My Travels HO',  IATA_ISO_Country__c = c2.Id, 
                          Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
                          Location_Class__c = 'C', Location_Type__c = 'HO', Status__c = 'New application pending',
@@ -1688,13 +1833,12 @@ public class  AmsIataCodeGeneratorTest
     static AMS_OSCAR__c createCaseAndOSCAR(Account theAccount, Contact theContact, String cassNumber){
 
         // Create the Staging area for the Account
-        //ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
         Case cse = new Case();
         cse.QuantityProduct__c = '1';
         insert cse;
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         if(cassNumber == null)
             cassNumber = theAccount.Cass_Number__c;
@@ -1706,7 +1850,7 @@ public class  AmsIataCodeGeneratorTest
         System.debug('Staging location class is ' + theStagingAcc.Location_Class__c);
 
         // Create OSCAR and Communication Case
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = theAccount.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = theStagingAcc.Id );
         insert theOscar;
@@ -1723,13 +1867,11 @@ public class  AmsIataCodeGeneratorTest
     static AMS_OSCAR__c createCaseAndOSCARNoCass(Account theAccount, Contact theContact, String cassNumber){
 
         // Create the Staging area for the Account
-        //ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-
         Case cse = new Case();
         cse.QuantityProduct__c = '1';
         insert cse;
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         AMS_Pax_Accreditation_Form__c theStagingAcc = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = theAccount.Name, IATAcode__c = theAccount.IATAcode__c, Branch_Office_Country__c = c2.Id, 
                                                             Location_Class__c = theAccount.Location_Class__c, Location_Type__c = theAccount.Location_Type__c, SAAM_Case__c = cse.id);
@@ -1738,7 +1880,7 @@ public class  AmsIataCodeGeneratorTest
         System.debug('Staging location class is ' + theStagingAcc.Location_Class__c);
 
         // Create OSCAR and Communication Case
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = theAccount.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = theStagingAcc.Id );
         insert theOscar;

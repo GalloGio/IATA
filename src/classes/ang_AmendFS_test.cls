@@ -13,7 +13,7 @@ private class ang_AmendFS_test {
 			Remittance_frequency__c='M',
 			ANG_Accreditation_Model__c ='Cash',
 			IATA_ISO_Country__c = country.Id,
-        	RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+        	RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
         );
         insert a;        
         
@@ -31,7 +31,7 @@ private class ang_AmendFS_test {
         		Subject = 'first case', 
         		AccountId = a.Id, 
         		Status = 'Open', 
-                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
                 Financial_Security_Amount__c=10000,
                 Financial_Security_Currency__c='EUR'
         );
@@ -85,7 +85,7 @@ private class ang_AmendFS_test {
         		Subject = 'second case', 
         		AccountId = [select id from account limit 1].get(0).id,
         		Status = 'Open', 
-                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
                 Financial_Security_Amount__c=20000,
                 Financial_Security_Currency__c='EUR'
         );

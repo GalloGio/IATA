@@ -23,8 +23,8 @@
 private class CaseChildHelperTest {
 
     static testMethod void myUnitTest() {
-        ID hqrt =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'); 
+        ID hqrt =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'); 
         
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
         insert isoCountry;
@@ -113,8 +113,8 @@ private class CaseChildHelperTest {
     
     
         static testMethod void myUnitTest2() {
-        ID hqrt =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'); 
+        ID hqrt =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'); 
         
         insert new UtilityCS__c(Name='IFAP Bypass Rules', Value__c='Test');
         
@@ -194,50 +194,4 @@ private class CaseChildHelperTest {
         
     }
     
-    
-    static testMethod void myUnitTest_ValidateCSRCases() {
-    /*  TEMPORARILY DEACTIVATED - 22.04.2015
-        ID RT_Std_Acc_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');
-        Id RT_DPC_CSR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DPC_Service_Request');
-        
-        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
-        insert isoCountry;
-        
-        Account a = new Account( name = 'Standard ACCT',
-                                 industry = 'pluto',
-                                 IATA_ISO_Country__c = isoCountry.id,
-                                 recordtypeID = RT_Std_Acc_Id,
-                                 IATACode__c ='1234567',
-                                 Type = 'IATA Cargo Agent',
-                                 billingCountry = 'ss',
-                                 Location_Type__c = 'AO');
-        insert a;
-        
-        Contact con =new contact(lastname = 'pluto' ,
-                                 phone = '123',
-                                 accountid = a.id,
-                                 Financial_Assessment_Contact__c = true);
-        insert con;
-        
-        test.startTest();
-        
-            Case cas = new Case(recordtypeID = RT_DPC_CSR_Id,
-                              Status = 'Assessment Performed',
-                              Origin = 'asd',
-                              contactid = con.id,
-                              AccountId = a.id);
-                              
-            // validations should raise an error (no std acct allowed for DPC CSR cases)
-            Boolean exceptionRaised = false;
-            try {
-                insert cas;
-            } catch(Exception e) { 
-                exceptionRaised = true;
-            }
-            
-            system.assertEquals(true, exceptionRaised);
-            
-        test.stopTest();
-        */
-    }
 }

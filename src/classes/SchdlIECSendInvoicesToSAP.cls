@@ -39,41 +39,6 @@ global class SchdlIECSendInvoicesToSAP implements Schedulable {
                            +   (Test.isRunningTest() ? ' and Text_Print__c = \'' + IECSAPManager_tst.TEST_FLAG_SUCCESS + '\'' : '')
                            + ' order by CreatedDate';
             Database.executeBatch(btchProc, 1);
-            //btchProc.query = Test.isRunningTest() 
-            //    ? 'SELECT Billing_City__c, Billing_Country__c, Billing_Name__c, Billing_State__c, Billing_Street__c, Bill_To__c' +
-            //        ', Billing_Zip__c, Contract_Start__c, Contract_End__c, Contract_Number__c, CurrencyIsoCode, Customer_PO__c, Dist_Chan__c' +
-            //        ', Division__c, Doc_Currency__c, Doc_Type__c, Employee_Responsible__c, Error_Message__c, Order_Reason__c' +
-            //        ', PO_Date__c, Pay_Method__c, Pay_Terms__c, Payment_Date__c, Id, SAP_Bill_To_Number__c, Ready_for_SAP__c' +
-            //        ', SAP_Contract_Number__c, SAP_Invoice_Clearance_Date__c, SAP_Invoice_Number__c, Sales_Office__c, Payment_Method_Code__c' +
-            //        ', Sales_Org__c, Shipping_City__c, Shipping_Contact__c, Shipping_Country__c, Shipping_State__c, Total_Positive_Quantity__c' +
-            //        ', Shipping_Street__c, Shipping_Zip__c, Status__c, Status_Date__c, Text_Print__c, VAT_number__c, Total_Quantity__c' +
-            //        ', Name, Zuora_Invoice_Number__c, Billing_Country_ISO_Code__c, Warning_Message__c, Zuora_Billing_Account_ID__c' +
-            //        ', Account__r.Sales_Office__c, Account__r.Payment_Term__c' +
-            //        ', (SELECT Date_From__c,Date_To__c,Error_Message__c,IEC_SAP_Invoice__c,Material__c,Material_Description__c, Charge_Amount__c' +
-            //            ',Profit_Center__c,Quantity__c,Status__c,Status_Date__c,Unit_Price__c,Unit_Price_Currency__c, Name, Adjusted_Charge_Amount__c ' +
-            //         'FROM IEC_SAP_Invoice_Items__r) ' +
-            //        'FROM IEC_SAP_Invoice__c ' +
-            //        'WHERE Status__c = \'' + IECConstants.IECSAPInvoice_Status_New + '\' ' +
-            //            'AND Ready_for_SAP__c = true ' +
-            //            'AND (Text_Print__c = \'' + IECSAPManager_tst.TEST_FLAG_SUCCESS + '\' or Text_Print__c = \'' + IECSAPManager_tst.TEST_FLAG_ERROR + '\') ' +
-            //        'ORDER by CreatedDate'
-            //    : 'SELECT Billing_City__c, Billing_Country__c, Billing_Name__c, Billing_State__c, Billing_Street__c, Bill_To__c' +
-            //        ', Billing_Zip__c, Contract_Start__c, Contract_End__c, Contract_Number__c, CurrencyIsoCode, Customer_PO__c, Dist_Chan__c' +
-            //        ', Division__c, Doc_Currency__c, Doc_Type__c, Employee_Responsible__c, Error_Message__c, Order_Reason__c' +
-            //        ', PO_Date__c, Pay_Method__c, Pay_Terms__c, Payment_Date__c, Id, SAP_Bill_To_Number__c, Ready_for_SAP__c' +
-            //        ', SAP_Contract_Number__c, SAP_Invoice_Clearance_Date__c, SAP_Invoice_Number__c, Sales_Office__c, Payment_Method_Code__c' +
-            //        ', Sales_Org__c, Shipping_City__c, Shipping_Contact__c, Shipping_Country__c, Shipping_State__c, Total_Positive_Quantity__c' +
-            //        ', Shipping_Street__c, Shipping_Zip__c, Status__c, Status_Date__c, Text_Print__c, VAT_number__c, Total_Quantity__c' +
-            //        ', Name, Zuora_Invoice_Number__c, Billing_Country_ISO_Code__c, Warning_Message__c, Zuora_Billing_Account_ID__c' +
-            //        ', Account__r.Sales_Office__c, Account__r.Payment_Term__c' +
-            //        ', (SELECT Date_From__c,Date_To__c,Error_Message__c,IEC_SAP_Invoice__c,Material__c,Material_Description__c, Charge_Amount__c' +
-            //            ',Profit_Center__c,Quantity__c,Status__c,Status_Date__c,Unit_Price__c,Unit_Price_Currency__c, Name, Adjusted_Charge_Amount__c ' +
-            //         'FROM IEC_SAP_Invoice_Items__r) ' +
-            //        'FROM IEC_SAP_Invoice__c ' +
-            //        'WHERE Status__c = \'' + IECConstants.IECSAPInvoice_Status_New + '\' ' +
-            //            'AND Ready_for_SAP__c = true ' +
-            //        'ORDER by CreatedDate';
-            //Database.executeBatch(btchProc, 5);
         }
         
         // This section of code will schedule the next execution X minutes from now depending on the configured setting

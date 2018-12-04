@@ -16,7 +16,7 @@
 <i>{!$Label.ISSP_Email_do_not_reply}</i><p />
 {!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact.Salutation} {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
 <BR/>
-Thank you for having recently initiated the {!IF(OR(relatedTo.RecordType.DeveloperName == 'ProcessEuropeSCE',relatedTo.RecordType.DeveloperName == 'OSCAR_Communication'), 'online application for the accreditation of your Travel Agency', relatedTo.Subject)}.
+Thank you for having recently initiated the {!IF(OR(relatedTo.RecordType.DeveloperName == 'ProcessEuropeSCE',relatedTo.RecordType.DeveloperName == 'OSCAR_Communication'), 'online application for the accreditation of your Agency', relatedTo.Subject)}.
 <BR/>
 <BR/>
 This is to remind you that draft online {!relatedTo.CaseArea__c} applications must be submitted to {!if(relatedTo.CNSCase__c, 'CNS', 'IATA')} within 2 weeks of their creation.

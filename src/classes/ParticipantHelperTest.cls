@@ -46,9 +46,9 @@ public class ParticipantHelperTest {
         //users.add(new User(FirstName='babbo', LastName='natale', Alias='bnatale', Email='bnatale@gmail.com'));
         //insert users;
         
-        Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
-        Id rtBr =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId();
-        Id rtAG =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Id rtBr =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+        Id rtAG =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         
         system.runAs(users[0]){
@@ -74,7 +74,7 @@ public class ParticipantHelperTest {
             
             Test.startTest();
             
-            Id rtLocalGroup =  Schema.SObjectType.LocalGovernance__c.getRecordTypeInfosByName().get('Local Groups').getRecordTypeId();
+            Id rtLocalGroup =  RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups');
             
             List<LocalGovernance__c> localGovernanceList = new List<LocalGovernance__c>();
 
