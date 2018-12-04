@@ -1322,7 +1322,7 @@ public with sharing class AMS_OSCAR_Automation {
             Boolean res = False;
 
             if (oscar != null) {
-                oscar.Process_Start_Date__c = Date.today();
+                oscar.Invoice_Requested__c = Date.today();
                 res = true;
             }
 
@@ -1357,7 +1357,6 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.Proof_of_payment_received__c = Date.today();
                 oscar.Invoice_status__c = 'Paid';
 
-                oscar.STEP48__c = 'In Progress';
 
                 res = true;
             }
@@ -1419,8 +1418,11 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
 
-                oscar.Financial_Security_Received__c = Date.today();
+                oscar.Financial_security_information_confirmed__c = Date.today();
                 res = true;
+                case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
+                c.status = 'Closed';
+                update c;
             }
 
             return res;
@@ -1434,8 +1436,11 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
 
-                oscar.Financial_Security_Received__c = Date.today();
+                oscar.Financial_security_information_confirmed__c = Date.today();
                 res = true;
+                case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
+                c.status = 'Closed';
+                update c;
             }
 
             return res;
