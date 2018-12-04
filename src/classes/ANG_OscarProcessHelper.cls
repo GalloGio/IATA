@@ -1508,8 +1508,9 @@ global class ANG_OscarProcessHelper {
 	    	casesIds.add(cse.Id);
 	    }
 
-       	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
+       	for(Case insertedCase : [Select ownerId, Account_Concerned__c, CaseNumber from Case where Id in :casesIds]){
        		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).CaseNumber = insertedCase.CaseNumber;
        	}
 
 		//AMS_OSCAR__c:
@@ -1522,7 +1523,8 @@ global class ANG_OscarProcessHelper {
 			fieldsOfObject.put('Status__c','Open');
 			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
 			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
-
+			fieldsOfObject.put('Name',accOscarObjsMap.get(acc.Id).CaseNumber);
+			
 			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_GDI, acc.Id, fieldsOfObject);		
 	        oscarsToInsert.add(oscar);
 	        accOscarObjsMap.get(acc.Id).oscar = oscar;
@@ -1804,6 +1806,7 @@ global class ANG_OscarProcessHelper {
     	public AMS_Oscar__c oscar;
     	public Id ownerId;
     	public Contact con;
+    	public String caseNumber;
 
     	public OscarObjectsWrapper(){
 
