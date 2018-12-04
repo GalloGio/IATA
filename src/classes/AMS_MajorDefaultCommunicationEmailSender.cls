@@ -55,6 +55,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 					notifications.add(wrapper.mail);
 				}
 
+				wrapper.mail.setOrgWideEmailAddressId(this.orgEmailAddressId);
 				emailWrapperLst.add(wrapper);
 			}
 		}
