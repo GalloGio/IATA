@@ -18,19 +18,11 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
                     countryList.add(new selectOption('',''));
                     map<string,IATA_ISO_Country__c> countryInfoByCountryNameMap = new map<string, IATA_ISO_Country__c>();//stores temporarely the values to be assing to a string
 
-                    for(IATA_ISO_Country__c cnt:[select name,Postal_Code_Hint_Format__c, State_Province_Mandatory__c, IEC_Zip_Postal_Code_required__c
+                    for(IATA_ISO_Country__c cnt:[select name,Postal_Code_Hint_Format__c, State_Province_Mandatory__c, IEC_Zip_Postal_Code_required__c, Informatica_Value__c
                         from IATA_ISO_Country__c 
                         where region__c!='' and Iso_code__c not in ('IO','TF','GS','UM','UP','VI') order by name asc]){
 
-                        String countryName = cnt.name;
-                        if (cnt.Name.contains(',')) {
-                            List<String> countryNameParts = cnt.Name.split(', ');
-                            countryName = countryNameParts.get(1) + ' ' + countryNameParts.get(0);
-                        } else if (cnt.Name.contains(')')) {
-                            countryName = cnt.Name.replaceAll('\\(.+?\\)', '').replaceAll('  ', ' ').trim();
-                        }
-
-                        countryList.add(new selectOption(countryName.toUpperCase(), cnt.name));
+                        countryList.add(new selectOption(cnt.Informatica_Value__c.toUpperCase(), cnt.name));
 
                         countryInfoByCountryNameMap.put(cnt.Name.toUpperCase(), cnt);
                     }
