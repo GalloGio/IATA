@@ -12251,7 +12251,7 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_Ongoing_TIP_Requests</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar --></label>
+        <label>カレンダー</label>
         <name>ISSP_OperationalCalendar</name>
     </customLabels>
     <customLabels>
@@ -12259,23 +12259,23 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_OperationalCalendar_BSPCASSFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_BSPCASS_Filter_Required --></label>
+        <label>BSP/CASSのどちらかを選択してください</label>
         <name>ISSP_OperationalCalendar_BSPCASS_Filter_Required</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Billing_Period --></label>
+        <label>ピリングピリオド</label>
         <name>ISSP_OperationalCalendar_Billing_Period</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_CountryFilter --></label>
+        <label>国/領土</label>
         <name>ISSP_OperationalCalendar_CountryFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Country_Filter_Required --></label>
+        <label>正しく国/領土 を選択してください</label>
         <name>ISSP_OperationalCalendar_Country_Filter_Required</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_CurrencyFilter --></label>
+        <label>通貨</label>
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>

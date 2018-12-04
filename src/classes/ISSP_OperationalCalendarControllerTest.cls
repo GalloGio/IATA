@@ -329,4 +329,33 @@ public class ISSP_OperationalCalendarControllerTest {
         }
         Test.StopTest();
     }
+
+    @isTest
+    public static void testController_Disclaimerlabel() {
+        User user = createAgentUserBSP();
+        
+        IATA_ISO_Country__c country = [SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c LIMIT 1];
+        
+        insert new ISSP_Operational_Calendar_Disclaimer__c(
+            Name = '1',
+            Country__c = country.ISO_Code__c,
+            Operation_Type__c = 'BSP International',
+            Label__c = 'label'
+        );
+
+        Test.StartTest();
+        System.runAs(user) {
+            ISSP_OperationalCalendarController controller = new ISSP_OperationalCalendarController();
+            controller.selectedCountry = country.Id;
+            controller.selectedType = 'CASS';
+            controller.findDisclaimerLabel();
+            System.assertEquals(null,controller.disclaimerLabelName);
+
+            controller.selectedCountry = country.Id;
+            controller.selectedType = 'BSP International';
+            controller.findDisclaimerLabel();
+            System.assertEquals('label', controller.disclaimerLabelName);
+        }
+        Test.StopTest();
+    }
 }
