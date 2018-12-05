@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>41.0</apiVersion>
+    <available>true</available>
+    <description>Email sent every month to the senior managers</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>RTS Monthly Digest</name>
+    <style>none</style>
+    <type>visualforce</type>
+</EmailTemplate>
