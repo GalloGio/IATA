@@ -30,7 +30,7 @@ public class ISSP_FinancialSecInformationController {
 													convertCurrency(Amount__c) convertedAmount
 									   		   FROM Financial_Security__c 
 						   			   		   WHERE Security_Type__c NOT IN :typesToExclude AND Expiry_Date__c > :minRangeDate AND 
-						   			   		   		Account__c = :accountId
+						   			   		   		Account__c = :accountId AND Account__r.RecordType.DeveloperName = 'IATA_Agency'
 						   			   		   	ORDER BY Expiry_Date__c DESC];
 		
 		this.totalSecuredAmount = 0.0;
