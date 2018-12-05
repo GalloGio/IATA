@@ -920,7 +920,7 @@
     <listViews>
         <fullName>GSS</fullName>
         <columns>NAME</columns>
-        <columns>zqu__Zroduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
