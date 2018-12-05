@@ -1,26 +1,26 @@
 <apex:page controller="vfISSP_FAQ2Case" action="{!pageLoad}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
-<html>
- <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
- <body>
+    <html>
+    <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
+    <body>
 
- <!--<script type="text/javascript" src="{!urlfor($Resource.IIS_Portal,'/js/jquery1-7-2.min.js')}" ></script>
-<link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/bootstrap.css')}" type="text/css" />
-<link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/style.css')}" type="text/css" />
-<link rel="stylesheet" href="{!urlfor($Resource.SFDCStyle,'elements.css')}" type="text/css" />
-<link rel="stylesheet" href="{!urlfor($Resource.SFDCStyle,'knowledge2.css')}" type="text/css" />
+    <!--<script type="text/javascript" src="{!urlfor($Resource.IIS_Portal,'/js/jquery1-7-2.min.js')}" ></script>
+   <link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/bootstrap.css')}" type="text/css" />
+   <link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/style.css')}" type="text/css" />
+   <link rel="stylesheet" href="{!urlfor($Resource.SFDCStyle,'elements.css')}" type="text/css" />
+   <link rel="stylesheet" href="{!urlfor($Resource.SFDCStyle,'knowledge2.css')}" type="text/css" />
 
-<script src="{!urlfor($Resource.IIS_Portal,'/js/bootstrap.js')}" type="text/javascript" > </script> 
-     <script type="text/javascript" src="{!urlfor($Resource.IIS_Portal,'/js/jquery1-7-2.min.js')}"></script>
-     <script src="{!urlfor($Resource.IIS_Portal,'/js/bootstrap.js')}" type="text/javascript"> </script> --> 
+   <script src="{!urlfor($Resource.IIS_Portal,'/js/bootstrap.js')}" type="text/javascript" > </script>
+        <script type="text/javascript" src="{!urlfor($Resource.IIS_Portal,'/js/jquery1-7-2.min.js')}"></script>
+        <script src="{!urlfor($Resource.IIS_Portal,'/js/bootstrap.js')}" type="text/javascript"> </script> -->
 
-<link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.min.css')}" type="text/css" />
-<script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.min.js')}" type="text/javascript" > </script>
+    <link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.min.css')}" type="text/css" />
+    <script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.min.js')}" type="text/javascript" > </script>
 
-  <div class="container">
-   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+    <div class="container">
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
-       
-<style type="text/css">
+
+        <style type="text/css">
      
     textarea.form-control {
         height: 300px;
@@ -222,7 +222,7 @@
 
 </style>
 
-<script type="text/javascript">
+        <script type="text/javascript">
     //j$ = jQuery.noConflict();
 
     /*
@@ -340,33 +340,33 @@
 
 </script>
 
-      <!-- basto1p - live agent v2 - Intro Video Modal -->
+        <!-- basto1p - live agent v2 - Intro Video Modal -->
 
 
-          <div id="IntroVideoModal" class="modal fade" role="dialog">
-              <div class="modal-dialog">
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                      <div class="modal-header iataBlue">
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          <h4 class="modal-title modalTitle">{!$Label.LVA_IntroductionVideo}</h4>
-                      </div>
-                      <div class="modal-body">
-                          <p>
-                              <iframe src="" id="introVideoIFrame"
-                                           width="100%" height="350px" scrolling="false" frameBorder="false" allowfullscreen="true"/>
-                          </p>
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-primary"
-                                  data-dismiss="modal"
-                                  onclick="ctrlLivAgIntroVidCloseDontRemenber();">{!$Label.LVA_IntroVidCloseDontShowNext}</button>
-                          <button type="button" class="btn btn-primary" data-dismiss="modal">{!$Label.LVA_IntroVidCloseShowNext}</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <script>
+        <div id="IntroVideoModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header iataBlue">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title modalTitle">{!$Label.LVA_IntroductionVideo}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <iframe src="" id="introVideoIFrame"
+                                    width="100%" height="350px" scrolling="false" frameBorder="false" allowfullscreen="true"/>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                                data-dismiss="modal"
+                                onclick="ctrlLivAgIntroVidCloseDontRemenber();">{!$Label.LVA_IntroVidCloseDontShowNext}</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">{!$Label.LVA_IntroVidCloseShowNext}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
               var introVideoSrc='{!livAgentIntroVidUrl}';
               var livAgentIntroVidMode='{!livAgentIntroVidMode}';
               var newwindow;
@@ -411,377 +411,377 @@
                 }
               }
           </script>
-      <apex:outputPanel id="introVideo"
-                        rendered="{! AND(IF(isIntroVideoAlreadyShowed==true ,false ,true),livAgentIntroVidIsAllowed)}">
-          <script>
+        <apex:outputPanel id="introVideo"
+                          rendered="{! AND(IF(isIntroVideoAlreadyShowed==true ,false ,true),livAgentIntroVidIsAllowed)}">
+            <script>
             openIntroVideo();
           </script>
-      </apex:outputpanel>
+        </apex:outputpanel>
 
 
-<!---------------------------------------------------------------------------->
-<!---------------------------SIDE MENU SECTION-------------------------------->
-<!---------------------------------------------------------------------------->
-<div class="row">
-    <div class="col-md-12">
-     <h4>{!$Label.LAQ_ContactUs} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
-             {!$Label.ISSP_Create_query} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
-             <small>{!if(communityName=='CNS', $Label.ISSP_PageDescription_ISSP_FAQ2Case_CNS, $Label.ISSP_PageDescription_ISSP_FAQ2Case)}</small></h4>
-    </div>
-</div>
-
-<!-- basto1p - live agent - BANNER -->
-<div class="row">
-    <div class="col-xs-12 bannerLoveGradientContainer">
-        <div class="bannerLoveGradient">
-            {!weLoveToHelpLabel}
-            <!--
-            <apex:outputText value="{!$Label.LVA_ReachOutUs}" >
-                <apex:param value="{!loggUserName}" />
-            </apex:outputText>
-            -->
+        <!---------------------------------------------------------------------------->
+        <!---------------------------SIDE MENU SECTION-------------------------------->
+        <!---------------------------------------------------------------------------->
+        <div class="row">
+            <div class="col-md-12">
+                <h4>{!$Label.LAQ_ContactUs} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+                    {!$Label.ISSP_Create_query} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+                    <small>{!if(communityName=='CNS', $Label.ISSP_PageDescription_ISSP_FAQ2Case_CNS, $Label.ISSP_PageDescription_ISSP_FAQ2Case)}</small></h4>
+            </div>
         </div>
-    </div>
-</div>
 
-
-      <!-- basto1p - BEGIN - live agent v2 SPECIFIC STYLING -->
-      <apex:outputPanel id="newLinksWay"
-                        rendered="{! AND(isIATAServiceRequest==false ,isPWCServiceRequest==false ,isDPCServiceRequest==false, isSISHelpDesk==false) }">
-          <!---------------------------------------------------------------------------->
-          <!-------- Type of Query / reach out to us - SECTION (basto1p) --------------->
-          <!---------------------------------------------------------------------------->
-          <div class="row">
-              <div class="col-sm-2"></div>
-              <div class="col-sm-8 ">
-                  <div id="butGeneral" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton lvaActive"
-                       title="{!$Label.ISSP_General_enquiries}"
-                       onclick="GeneralQueueMethod();selectGeneralBut();return false;">
-                      <div class = "thumbButt1">
-                          <apex:image url="{!$Resource.LVA_IconsQuestion}"/>
-                      </div>
-                      <div class="pageSectionHeader">{!$Label.LVA_AskQuestion}</div>
-                  </div>
-                  <div id="butCompliment" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton"
-                       title="{!$Label.ISSP_Compliments}"
-                       onclick="ComplimentGeneralQueueMethod();selectComplimentBut();return false;">
-                      <div class = "thumbButt1">
-                          <apex:image url="{!$Resource.LVA_IconsSmile}"/>
-                      </div>
-                      <div class="pageSectionHeader">{!$Label.LVA_ShareACompliment}</div>
-                  </div>
-                  <div id="butComplaint" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton"
-                       title="{!$Label.ISSP_Complaints}"
-                       onclick="ComplaintMethod();selectComplaintBut();return false;">
-                          <div class = "thumbButt1">
-                              <apex:image url="{!$Resource.LVA_IconsExclamation}"/>
-                          </div>
-                          <div class="pageSectionHeader">{!$Label.LVA_VoiceAConcern}</div>
-                  </div>
-                  <div id="butEmergency" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton"
-                       title="{!$Label.ISSP_Emergency_Support}"
-                       onclick="EmergencyMethod();selectEmergencyBut();return false;">
-                          <div class = "thumbButt1">
-                              <apex:image url="{!$Resource.LVA_IconsEmergency}"/>
-                          </div>
-                          <div class="pageSectionHeader">{!$Label.ISSP_Emergency_Support}</div>
-                  </div>
-              </div>
-              <div class="col-sm-2"></div>
-          </div>
-      </apex:outputPanel>
-      <!-- basto1p - END - live agent v2 SPECIFIC STYLING-->
-
-
-
-    <div class="row">
-
-        <!-- basto1p - BEGIN - keep this section here only for profiles that not use live agent v2 -->
-        <apex:outputPanel id="oldLinksWay" rendered="{! OR(isIATAServiceRequest==true ,isPWCServiceRequest==true ,isDPCServiceRequest==true, isSISHelpDesk==true) }">
-            <div class="col-xs-12 col-sm-12 col-md-2 "  id="Enquiries" >
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{!$Label.ISSP_Type_of_query}</h3>
-                    </div>
-                    <div class="panel-body" id="body-enquiries">
-                        <ul class="nav nav-pills ">
-                         <li role="presentation" class="sidenav active" id="liGen"><a href="#" onclick="GeneralQueueMethod();selectGeneral();return false;" id="general" >{!$Label.ISSP_General_enquiries}</a></li>
-
-                         <li role="presentation" class="sidenav" style=" display:{!IF(isSISHelpDesk,'block','none')}"><a href="/apex/ISSP_Case?recordTypeId=01220000000Q3F2&origin=Portal&ent=Case&cas11=portal%20for%20example{!if(communityName=='CNS','&CommunityName='+communityName,'')}" onclick="CheckNewCaseRecordType('Cases_SIS_Help_Desk');">{!$Label.ISSP_SIS_Help_Desk}</a>
-                         </li>
-
-                         <li role="presentation" class="sidenav" style=" display:{!IF(isIATAServiceRequest,'block','none')}"><a href="#" onclick="CheckNewCaseRecordType('IATA_Service_Request');">{!$Label.Iata_service_request}</a>
-                         </li>
-
-                         <li role="presentation" class="sidenav" style=" display:{!IF(isPWCServiceRequest,'block','none')}"><a href="#" onclick="CheckNewCaseRecordType('ISS_Portal_PwC');">{!$Label.PWC_service_request}</a>
-                         </li>
-
-                         <li role="presentation" class="sidenav" style=" display:{!IF(isDPCServiceRequest,'block','none')}"><a href="#" onclick="CheckNewCaseRecordType('DPC_Service_Request');">{!$Label.DPCservice_request}</a>
-                         </li>
-                            <!-- compliments ED sept 2015 -->
-                        <li role="presentation" class="sidenav" id="liCompliment"><a href="#" onclick="ComplimentGeneralQueueMethod();selectCompliment();return false;" >{!$Label.ISSP_Compliments}</a></li>
-                         <!-- end compliments ED sept 2015 -->
-                         <li role="presentation" class="sidenav" id="liComp"><a href="#" onclick="ComplaintMethod();selectComplaint();return false;" >{!$Label.ISSP_Complaints}</a></li>
-
-                        </ul>
-                    </div>
+        <!-- basto1p - live agent - BANNER -->
+        <div class="row">
+            <div class="col-xs-12 bannerLoveGradientContainer">
+                <div class="bannerLoveGradient">
+                    {!weLoveToHelpLabel}
+                    <!--
+                    <apex:outputText value="{!$Label.LVA_ReachOutUs}" >
+                        <apex:param value="{!loggUserName}" />
+                    </apex:outputText>
+                    -->
                 </div>
             </div>
-        </apex:outputPanel>
-        <!-- basto1p - END - keep this section here only for profiles that not use live agent v2-->
+        </div>
 
-        <!---------------------------------------------------------------------------->
-        <!-------------------------FIELDS SECTION ------------------------------------>
-        <!---------------------------------------------------------------------------->
-        <!-- basto1p - Keep this section with 5 parts in width only for profiles that not use live agent v2 ohterwise use 6 -->
-        <apex:outputPanel rendered="{! AND(isIATAServiceRequest!=true ,isPWCServiceRequest!=true ,isDPCServiceRequest!=true, isSISHelpDesk!=true) }">
-            <div class="col-xs-2"></div>
+
+        <!-- basto1p - BEGIN - live agent v2 SPECIFIC STYLING -->
+        <apex:outputPanel id="newLinksWay"
+                          rendered="{! AND(isIATAServiceRequest==false ,isPWCServiceRequest==false ,isDPCServiceRequest==false, isSISHelpDesk==false) }">
+            <!---------------------------------------------------------------------------->
+            <!-------- Type of Query / reach out to us - SECTION (basto1p) --------------->
+            <!---------------------------------------------------------------------------->
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8 ">
+                    <div id="butGeneral" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton lvaActive"
+                         title="{!$Label.ISSP_General_enquiries}"
+                         onclick="GeneralQueueMethod();selectGeneralBut();return false;">
+                        <div class = "thumbButt1">
+                            <apex:image url="{!$Resource.LVA_IconsQuestion}"/>
+                        </div>
+                        <div class="pageSectionHeader">{!$Label.LVA_AskQuestion}</div>
+                    </div>
+                    <div id="butCompliment" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton"
+                         title="{!$Label.ISSP_Compliments}"
+                         onclick="ComplimentGeneralQueueMethod();selectComplimentBut();return false;">
+                        <div class = "thumbButt1">
+                            <apex:image url="{!$Resource.LVA_IconsSmile}"/>
+                        </div>
+                        <div class="pageSectionHeader">{!$Label.LVA_ShareACompliment}</div>
+                    </div>
+                    <div id="butComplaint" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton"
+                         title="{!$Label.ISSP_Complaints}"
+                         onclick="ComplaintMethod();selectComplaintBut();return false;">
+                        <div class = "thumbButt1">
+                            <apex:image url="{!$Resource.LVA_IconsExclamation}"/>
+                        </div>
+                        <div class="pageSectionHeader">{!$Label.LVA_VoiceAConcern}</div>
+                    </div>
+                    <div id="butEmergency" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton"
+                         title="{!$Label.ISSP_Emergency_Support}"
+                         onclick="EmergencyMethod();selectEmergencyBut();return false;">
+                        <div class = "thumbButt1">
+                            <apex:image url="{!$Resource.LVA_IconsEmergency}"/>
+                        </div>
+                        <div class="pageSectionHeader">{!$Label.ISSP_Emergency_Support}</div>
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
         </apex:outputPanel>
+        <!-- basto1p - END - live agent v2 SPECIFIC STYLING-->
+
+
+
+        <div class="row">
+
+            <!-- basto1p - BEGIN - keep this section here only for profiles that not use live agent v2 -->
+            <apex:outputPanel id="oldLinksWay" rendered="{! OR(isIATAServiceRequest==true ,isPWCServiceRequest==true ,isDPCServiceRequest==true, isSISHelpDesk==true) }">
+                <div class="col-xs-12 col-sm-12 col-md-2 "  id="Enquiries" >
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{!$Label.ISSP_Type_of_query}</h3>
+                        </div>
+                        <div class="panel-body" id="body-enquiries">
+                            <ul class="nav nav-pills ">
+                                <li role="presentation" class="sidenav active" id="liGen"><a href="#" onclick="GeneralQueueMethod();selectGeneral();return false;" id="general" >{!$Label.ISSP_General_enquiries}</a></li>
+
+                                <li role="presentation" class="sidenav" style=" display:{!IF(isSISHelpDesk,'block','none')}"><a href="/apex/ISSP_Case?recordTypeId=01220000000Q3F2&origin=Portal&ent=Case&cas11=portal%20for%20example{!if(communityName=='CNS','&CommunityName='+communityName,'')}" onclick="CheckNewCaseRecordType('Cases_SIS_Help_Desk');">{!$Label.ISSP_SIS_Help_Desk}</a>
+                                </li>
+
+                                <li role="presentation" class="sidenav" style=" display:{!IF(isIATAServiceRequest,'block','none')}"><a href="#" onclick="CheckNewCaseRecordType('IATA_Service_Request');">{!$Label.Iata_service_request}</a>
+                                </li>
+
+                                <li role="presentation" class="sidenav" style=" display:{!IF(isPWCServiceRequest,'block','none')}"><a href="#" onclick="CheckNewCaseRecordType('ISS_Portal_PwC');">{!$Label.PWC_service_request}</a>
+                                </li>
+
+                                <li role="presentation" class="sidenav" style=" display:{!IF(isDPCServiceRequest,'block','none')}"><a href="#" onclick="CheckNewCaseRecordType('DPC_Service_Request');">{!$Label.DPCservice_request}</a>
+                                </li>
+                                <!-- compliments ED sept 2015 -->
+                                <li role="presentation" class="sidenav" id="liCompliment"><a href="#" onclick="ComplimentGeneralQueueMethod();selectCompliment();return false;" >{!$Label.ISSP_Compliments}</a></li>
+                                <!-- end compliments ED sept 2015 -->
+                                <li role="presentation" class="sidenav" id="liComp"><a href="#" onclick="ComplaintMethod();selectComplaint();return false;" >{!$Label.ISSP_Complaints}</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+            <!-- basto1p - END - keep this section here only for profiles that not use live agent v2-->
+
+            <!---------------------------------------------------------------------------->
+            <!-------------------------FIELDS SECTION ------------------------------------>
+            <!---------------------------------------------------------------------------->
+            <!-- basto1p - Keep this section with 5 parts in width only for profiles that not use live agent v2 ohterwise use 6 -->
+            <apex:outputPanel rendered="{! AND(isIATAServiceRequest!=true ,isPWCServiceRequest!=true ,isDPCServiceRequest!=true, isSISHelpDesk!=true) }">
+                <div class="col-xs-2"></div>
+            </apex:outputPanel>
             <div class="col-xs-8 widefields" id="Main" >
                 <div class="row">
                     <div class="col-xs-2"></div>
                     <div class="col-xs-8">
-                    <!-- panel heading
-                         <div class="panel-heading">
-                             <apex:outputPanel id="MainTitle">
-                                     <h3 class="panel-title" style=" display:{!IF(isComplain,'block','none')}">{!$Label.ISSP_Complaints}, {!$Label.ISSP_We_sorry_you_are_unsatisfied}</h3>
-                                    <h3 class="panel-title" style=" display:{!IF(NOT(isComplain)&&NOT(isCompliment),'block','none')}">{!$Label.ISSP_F2CTitle}</h3>
-                                    <h3 class="panel-title" style=" display:{!IF(isCompliment,'block','none')}">{!$Label.ISSP_Fishing_Compliments}</h3>
-                             </apex:outputPanel>
-                        </div>
-                    -->
-
-                    <div class="panel-body" id="body-Main" >
-                        <div id="my_Faq2case" class=" " >
-                         <apex:form id="Mainform">
-                         <apex:outputPanel id="MainPnl">
-                            <!-- <apex:pageMessages id="err" /> -->
-                            <apex:outputPanel id="err" >
-                            <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
-                                <strong>{!$Label.ISSP_Error}</strong>
-                                <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
-                                    <p><apex:outputText value="{!er}" escape="false" /></p>
-                                </apex:repeat>
-                            </div>
-                            </apex:outputPanel>
-                            <ul class="nav1" >
-                                <li style=" display:{!IF(isCompliment,'none','block')}">
-                                    <!-- Topic PICKLIST -->
-                                    <apex:outputPanel rendered="{!Clicked_EmergencyRequest}">
-                                        <p style="color: #3174AF;padding: 10px 0px 20px 0px;font-weight: bold;text-align: justify;">
-                                            {!$Label.ISSP_Emergency_Support_Subtitle}
-                                        </p>
-                                    </apex:outputPanel>
-                                    <apex:outputpanel id="topPnl">
-                                        <div class="row form-group">
-                                            <label class=" lbl col-lg-5 control-label" for="exampleInputEmail1"><span class="required"></span>{!$Label.ISSP_F2CTopic}</label>
-                                            <div class="col-lg-7">
-                                                <apex:selectlist styleclass="form-control rec mandatory"
-                                                                 value="{!topic}" required="true" multiselect="false" size="1"
-                                                                 onchange="refreshTopicPickList();">
-                                                    <apex:selectoptions value="{!lst_selectTopics}" rendered="{!NOT(Clicked_EmergencyRequest)}"/>
-                                                    <apex:selectoptions value="{!lst_selectTopics_Emergencies}" rendered="{!Clicked_EmergencyRequest}"/>
-                                                </apex:selectlist>
-                                                <div class="hiddenerror" style="display: none;">
-                                                    <p class="errormsg" style="line-height: 26px;">ERROR</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </apex:outputpanel>
-                                </li>
-                                <li style=" display:{!IF(isCompliment,'none','block')}"><!-- SubTopic PICKLIST -->
-                                    <!-- NEW SECTION when create a case button is clicked -->
-                                    <apex:outputpanel id="subtopPnl">
-                                        <div class="row form-group">
-                                            <apex:outputpanel rendered="{! If(isComplain == false ,true,false) }">
-                                                <label class="lbl col-lg-5 control-label" for="exampleInputEmail1"> {!$Label.ISSP_F2CSubTopic}</label>
-                                            </apex:outputpanel>
-                                            <apex:outputpanel rendered="{! If(isComplain == true ,true,false) }">
-                                                <label class="lbl col-lg-5 control-label" for="exampleInputEmail1"> {!$Label.ISSP_I_wish_to_complain_about}</label>
-                                            </apex:outputpanel>
-                                            <apex:outputpanel id="subtopPnl_Val">
-                                                <div class="col-lg-7">
-                                                    <apex:selectlist styleclass="form-control rec mandatory"
-                                                                     value="{!subtopic}" required="false" multiselect="false" size="1"
-                                                                     onchange="refreshSubTopicPickList();">
-                                                        <apex:selectoptions value="{!lst_selectsubTopics}" />
-                                                    </apex:selectlist>
-                                                    <div class="hiddenerror" style="display: none;">
-                                                        <p class="errormsg" style="line-height: 26px;">ERROR</p>
-                                                    </div>
-                                                </div>
-                                            </apex:outputpanel>
-                                        </div>
-
-                                    </apex:outputpanel>
-                                </li>
-                                <li style=" display:{!IF(isCompliment,'none','block')}"><!-- areaOfConcern PICKLIST -->
-                                    <apex:outputpanel id="areaOfConcernPnl" >
-                                        <apex:outputpanel rendered="{!isIFG}">
-                                        <div class="row form-group">
-                                            <apex:outputpanel >
-                                                <label class="lbl col-lg-5 control-label"> {!$Label.ISSP_Area_of_Concern}</label>
-                                            </apex:outputpanel>
-                                            <apex:outputpanel id="areaOfConcernPnl_Val">
-                                                <div class="col-lg-7">
-                                                    <apex:selectlist styleclass="form-control rec mandatory" value="{!areaOfConcern}" required="false" multiselect="false" size="1"
-                                                                     >
-                                                        <apex:selectoptions value="{!lst_selectAreasOfConcern}" />
-                                                    </apex:selectlist>
-                                                    <div class="hiddenerror" style="display: none;">
-                                                        <p class="errormsg" style="line-height: 26px;">ERROR</p>
-                                                    </div>
-                                                </div>
-                                            </apex:outputpanel>
-                                        </div>
-                                        </apex:outputpanel>
-                                    </apex:outputpanel>
-                                </li>
-                                 <apex:outputPanel rendered="{!isCompliment}"><!-- compliment message -->
-                                   <apex:outputText escape="false" value="{!if(communityName=='CNS', $Label.ISSP_CaseComplimentMessage_CNS, $Label.ISSP_CaseComplimentMessage)}"  style="color:#3174AF;font-style: italic;"/><br /><br />
-
+                        <!-- panel heading
+                             <div class="panel-heading">
+                                 <apex:outputPanel id="MainTitle">
+                                         <h3 class="panel-title" style=" display:{!IF(isComplain,'block','none')}">{!$Label.ISSP_Complaints}, {!$Label.ISSP_We_sorry_you_are_unsatisfied}</h3>
+                                        <h3 class="panel-title" style=" display:{!IF(NOT(isComplain)&&NOT(isCompliment),'block','none')}">{!$Label.ISSP_F2CTitle}</h3>
+                                        <h3 class="panel-title" style=" display:{!IF(isCompliment,'block','none')}">{!$Label.ISSP_Fishing_Compliments}</h3>
                                  </apex:outputPanel>
+                            </div>
+                        -->
 
-
-                                    <apex:outputpanel id="countryPnl">
-                                    <!--     <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','none','block')}">--> <!-- will show always as it is requested for chat -->
-                                           <li style=" display:{!IF(excludeCountryPicklist == false,'block','none')}">
-                                            <!-- Country -->
-                                            <div class="row form-group">
-                                                <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!$ObjectType.Case.Fields.Country_concerned_by_the_query__c.Label}</label>
-                                                <div class="col-lg-7">
-
-                                                    <div style="display:{!IF((isGSAUser == false || isCompliment == true) && excludeCountryPicklist == false,'block','none')}">
-                                                        <apex:selectlist styleclass="form-control rec mandatory" value="{!newCase1.IFAP_Country_ISO__c}" size="1" onchange="refreshAirlineList1();" id="SLNoN">
-                                                            <apex:selectoptions value="{!countryList}" />
-                                                        </apex:selectlist>
-                                                    </div>
-
-                                                    <div style="display:{!if((isGSAUser == true && isCompliment == false) && excludeCountryPicklist == false,'block','none')}">
-                                                        <apex:selectlist styleclass="form-control rec mandatory" value="{!newCase.IFAP_Country_ISO__c}" size="1" onchange="refreshAirlineList();" id="SLonchange">
-                                                            <apex:selectoptions value="{!countryList}" />
-                                                        </apex:selectlist>
-                                                    </div>
-
-
-                                                    <div class="hiddenerror" style="display: none;">
-                                                        <p class="errormsg" style="line-height: 26px;">ERROR</p>
-                                                    </div>
-                                                </div>
+                        <div class="panel-body" id="body-Main" >
+                            <div id="my_Faq2case" class=" " >
+                                <apex:form id="Mainform">
+                                    <apex:outputPanel id="MainPnl">
+                                        <!-- <apex:pageMessages id="err" /> -->
+                                        <apex:outputPanel id="err" >
+                                            <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
+                                                <strong>{!$Label.ISSP_Error}</strong>
+                                                <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                                                    <p><apex:outputText value="{!er}" escape="false" /></p>
+                                                </apex:repeat>
                                             </div>
-                                        </li>
-                                    </apex:outputpanel>
-
-                                    <apex:outputpanel id="AirlinesPnl" rendered="{!AND(isAgencyUser, currentButtonsToShow == 'CancelAndSubmit')}">
-                                        <li style=" display:{!IF(isCompliment,'none','block')}">
-                                            <!-- Airlines -->
-                                            <div class="row form-group">
-                                                <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!$ObjectType.Case.Fields.Airline__c.Label}</label>
-                                                <div class="col-lg-7">
-                                                    <apex:selectlist styleclass="form-control " value="{!newCase.IATAcode__c}" required="false" multiselect="false" size="1">
-                                                        <apex:selectoption itemvalue=" " itemlabel="--None--" />
-                                                        <apex:selectoptions value="{!airlines}" />
-                                                    </apex:selectlist>
-                                                    <div class="hiddenerror" style="display: none;">
-                                                        <p class="errormsg" style="line-height: 26px;">ERROR</p>
+                                        </apex:outputPanel>
+                                        <ul class="nav1" >
+                                            <li style=" display:{!IF(isCompliment,'none','block')}">
+                                                <!-- Topic PICKLIST -->
+                                                <apex:outputPanel rendered="{!Clicked_EmergencyRequest}">
+                                                    <p style="color: #3174AF;padding: 10px 0px 20px 0px;font-weight: bold;text-align: justify;">
+                                                        {!$Label.ISSP_Emergency_Support_Subtitle}
+                                                    </p>
+                                                </apex:outputPanel>
+                                                <apex:outputpanel id="topPnl">
+                                                    <div class="row form-group">
+                                                        <label class=" lbl col-lg-5 control-label" for="exampleInputEmail1"><span class="required"></span>{!$Label.ISSP_F2CTopic}</label>
+                                                        <div class="col-lg-7">
+                                                            <apex:selectlist styleclass="form-control rec mandatory"
+                                                                             value="{!topic}" required="true" multiselect="false" size="1"
+                                                                             onchange="refreshTopicPickList();">
+                                                                <apex:selectoptions value="{!lst_selectTopics}" rendered="{!NOT(Clicked_EmergencyRequest)}"/>
+                                                                <apex:selectoptions value="{!lst_selectTopics_Emergencies}" rendered="{!Clicked_EmergencyRequest}"/>
+                                                            </apex:selectlist>
+                                                            <div class="hiddenerror" style="display: none;">
+                                                                <p class="errormsg" style="line-height: 26px;">ERROR</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </apex:outputpanel>
-                                    <apex:outputpanel id="test">
-                                        <!--     currentButtonsToShow = {!currentButtonsToShow}
-                          isComplain = {!isComplain} -->
-                                    </apex:outputpanel>
-                                 <apex:outputPanel rendered="{!isCompliment}">
-                                     <apex:outputText escape="false" value="{!$Label.ISSP_CaseComplimentMessage2}" style="color:#3174AF;font-style: italic;"/>
-
-                                </apex:outputPanel>
-                                    <apex:outputpanel id="FieldsRep">
-                                        <apex:repeat value="{!fullList}" var="section">
-                                            <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
-                                                <div class="alert" role="alert">{!section.section}</div>
+                                                </apex:outputpanel>
                                             </li>
-                                            <apex:repeat value="{!section.fieldList}" var="field">
-                                                <apex:outputpanel >
-                                                    <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
-                                                        <div class="row form-group">
-                                                            <!-- <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!field.fieldName}</label> -->
-                                                            <apex:outputpanel rendered="{!IF(isCompliment == true && (field.fieldName != 'ISSP_Subject' && field.fieldName != 'IDCard_Description' ) , false , true )}">
-                                                                <apex:outputpanel rendered="{!!field.required}">
-                                                                    <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!IF(field.fieldType == 'Section', field.fieldName, $Label[field.fieldName])}</label>
-                                                                </apex:outputpanel>
-                                                                <apex:outputpanel rendered="{!field.required}">
-                                                                    <label class="col-lg-5 control-label" for="exampleInputEmail1"> * {!IF(field.fieldType == 'Section', field.fieldName, $Label[field.fieldName])}</label>
-                                                                </apex:outputpanel>
-                                                            </apex:outputpanel>
+                                            <li style=" display:{!IF(isCompliment,'none','block')}"><!-- SubTopic PICKLIST -->
+                                                <!-- NEW SECTION when create a case button is clicked -->
+                                                <apex:outputpanel id="subtopPnl">
+                                                    <div class="row form-group">
+                                                        <apex:outputpanel rendered="{! If(isComplain == false ,true,false) }">
+                                                            <label class="lbl col-lg-5 control-label" for="exampleInputEmail1"> {!$Label.ISSP_F2CSubTopic}</label>
+                                                        </apex:outputpanel>
+                                                        <apex:outputpanel rendered="{! If(isComplain == true ,true,false) }">
+                                                            <label class="lbl col-lg-5 control-label" for="exampleInputEmail1"> {!$Label.ISSP_I_wish_to_complain_about}</label>
+                                                        </apex:outputpanel>
+                                                        <apex:outputpanel id="subtopPnl_Val">
                                                             <div class="col-lg-7">
-                                                                <apex:outputpanel rendered="{!field.fieldType == 'Field'}">
-                                                                    <apex:outputpanel rendered="{!IF(isCompliment == true && (field.fieldName != 'ISSP_Subject' && field.fieldName != 'IDCard_Description' ) , false , true )}">
-                                                                        <apex:outputpanel rendered="{!!field.required}">
-                                                                            <apex:inputfield styleclass="form-control " value="{!newCase[field.fieldValue]}"/>
-                                                                        </apex:outputpanel>
-                                                                        <apex:outputpanel rendered="{!AND(field.required,field.fieldValue != 'Description')}">
-                                                                            <apex:inputfield styleclass="form-control rec mandatory" value="{!newCase[field.fieldValue]}" />
-                                                                        </apex:outputpanel>
-                                                                    </apex:outputpanel>
-                                                                </apex:outputpanel>
-
-                                                                <apex:outputpanel rendered="{!field.fieldType == 'Checkbox' && isCompliment == false}">
-                                                                    <apex:inputcheckbox value="{!newCase[field.fieldValue]}" label="{!field.fieldName}" rendered="{! currentButtonsToShow == 'CancelAndSubmit'}" />
-                                                                </apex:outputpanel>
-                                                                <apex:outputpanel rendered="{!field.fieldType == 'GSA_Only_Checkbox' && isCompliment == false}">
-                                                                    <apex:inputcheckbox value="{!isGSAOnly}" label="{!field.fieldName}" rendered="{! currentButtonsToShow == 'CancelAndSubmit'}" />
-                                                                </apex:outputpanel>
-                                                                <apex:outputpanel rendered="{!field.fieldType == 'AirlineList' && isCompliment == false}">
-                                                                    <apex:selectlist styleclass="form-control " value="{!newCase.IATAcode__c}" required="false" size="1">
-                                                                        <apex:selectoptions value="{!airlines}" />
-                                                                    </apex:selectlist>
-                                                                </apex:outputpanel>
-                                                                <apex:outputpanel rendered="{!field.fieldType == 'ccothers' && isCompliment == false}">
-                                                                    <apex:inputText styleclass="form-control" value="{!field.fieldValueEntered}" />
-                                                                    <small class="text-muted">{!$Label.ISSP_CCOther_Help_Text}</small>
-                                                                </apex:outputpanel>
-                                                                <apex:outputpanel styleclass="selectpicker" rendered="{!field.fieldType == 'bootstrap-select' && isCompliment == false}">
-                                                                    <apex:selectlist styleclass="selectpicker form-control" html-data-live-search="true" value="{!iatacode}" required="false" size="1" rendered="{!field.listOptions!=null}">
-                                                                        <apex:selectOptions value="{!if(field.listOptions.size == 1, field.listOptions[0], field.listOptions[1])}" />
-                                                                        <apex:selectOptions value="{!if(field.listOptions.size == 3, field.listOptions[2], "")}" rendered="{!if(field.listOptions.size == 3, true, false)}"/>
-                                                                        <apex:selectOptions value="{!if(field.listOptions.size == 4, field.listOptions[3], "")}" rendered="{!if(field.listOptions.size == 4, true, false)}"/>
-                                                                        <apex:selectOptions value="{!if(field.listOptions.size == 5, field.listOptions[4], "")}" rendered="{!if(field.listOptions.size == 5, true, false)}"/>
-                                                                        <apex:selectOptions value="{!if(field.listOptions.size == 6, field.listOptions[5], "")}" rendered="{!if(field.listOptions.size == 6, true, false)}"/>
-                                                                        <apex:selectOptions value="{!if(field.listOptions.size == 7, field.listOptions[6], "")}" rendered="{!if(field.listOptions.size == 7, true, false)}"/>
-                                                                        <apex:selectoptions value="{!field.listOptionsExtended}" />
-                                                                    </apex:selectlist>
-                                                                    <script>
-                                                                        $('.selectpicker').selectpicker();
-                                                                        $('.bootstrap-select').find('button').removeClass('btn-default').removeClass('btn').addClass('form-control').addClass('mandatory');
-                                                                    </script>
-                                                                </apex:outputpanel>
+                                                                <apex:selectlist styleclass="form-control rec mandatory"
+                                                                                 value="{!subtopic}" required="false" multiselect="false" size="1"
+                                                                                 onchange="refreshSubTopicPickList();">
+                                                                    <apex:selectoptions value="{!lst_selectsubTopics}" />
+                                                                </apex:selectlist>
                                                                 <div class="hiddenerror" style="display: none;">
                                                                     <p class="errormsg" style="line-height: 26px;">ERROR</p>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <apex:outputpanel rendered="{!AND(field.required,field.fieldValue == 'Description')}"> <!--Description text area-->
-                                                            <apex:inputfield styleclass="form-control descriptiontextarea rec mandatory" value="{!newCase[field.fieldValue]}" />
                                                         </apex:outputpanel>
-                                                    </li>
-                                                </apex:outputpanel>
-                                            </apex:repeat>
-                                        </apex:repeat>
-                                    </apex:outputpanel>
+                                                    </div>
 
-                                    <li>
-                                        <div class="hp_identifier" style="display:none;"> </div>
-                                        <!-- Modal Article Preview-->
-                                        <div class="modal fade bootbox-confirm" id="ModalShowArticle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
-                                                        <h5 class="modal-title">
-                                                            <img src="/img/knowledge/knowledge32.png" title="Article" alt="Article" />
-                                                            <span class="modal-question">
+                                                </apex:outputpanel>
+                                            </li>
+                                            <li style=" display:{!IF(isCompliment,'none','block')}"><!-- areaOfConcern PICKLIST -->
+                                                <apex:outputpanel id="areaOfConcernPnl" >
+                                                    <apex:outputpanel rendered="{!isIFG}">
+                                                        <div class="row form-group">
+                                                            <apex:outputpanel >
+                                                                <label class="lbl col-lg-5 control-label"> {!$Label.ISSP_Area_of_Concern}</label>
+                                                            </apex:outputpanel>
+                                                            <apex:outputpanel id="areaOfConcernPnl_Val">
+                                                                <div class="col-lg-7">
+                                                                    <apex:selectlist styleclass="form-control rec mandatory" value="{!areaOfConcern}" required="false" multiselect="false" size="1"
+                                                                    >
+                                                                        <apex:selectoptions value="{!lst_selectAreasOfConcern}" />
+                                                                    </apex:selectlist>
+                                                                    <div class="hiddenerror" style="display: none;">
+                                                                        <p class="errormsg" style="line-height: 26px;">ERROR</p>
+                                                                    </div>
+                                                                </div>
+                                                            </apex:outputpanel>
+                                                        </div>
+                                                    </apex:outputpanel>
+                                                </apex:outputpanel>
+                                            </li>
+                                            <apex:outputPanel rendered="{!isCompliment}"><!-- compliment message -->
+                                                <apex:outputText escape="false" value="{!if(communityName=='CNS', $Label.ISSP_CaseComplimentMessage_CNS, $Label.ISSP_CaseComplimentMessage)}"  style="color:#3174AF;font-style: italic;"/><br /><br />
+
+                                            </apex:outputPanel>
+
+
+                                            <apex:outputpanel id="countryPnl">
+                                                <!--     <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','none','block')}">--> <!-- will show always as it is requested for chat -->
+                                                <li style=" display:{!IF(excludeCountryPicklist == false,'block','none')}">
+                                                    <!-- Country -->
+                                                    <div class="row form-group">
+                                                        <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!$ObjectType.Case.Fields.Country_concerned_by_the_query__c.Label}</label>
+                                                        <div class="col-lg-7">
+
+                                                            <div style="display:{!IF((isGSAUser == false || isCompliment == true) && excludeCountryPicklist == false,'block','none')}">
+                                                                <apex:selectlist styleclass="form-control rec mandatory" value="{!newCase1.IFAP_Country_ISO__c}" size="1" onchange="refreshAirlineList1();" id="SLNoN">
+                                                                    <apex:selectoptions value="{!countryList}" />
+                                                                </apex:selectlist>
+                                                            </div>
+
+                                                            <div style="display:{!if((isGSAUser == true && isCompliment == false) && excludeCountryPicklist == false,'block','none')}">
+                                                                <apex:selectlist styleclass="form-control rec mandatory" value="{!newCase.IFAP_Country_ISO__c}" size="1" onchange="refreshAirlineList();" id="SLonchange">
+                                                                    <apex:selectoptions value="{!countryList}" />
+                                                                </apex:selectlist>
+                                                            </div>
+
+
+                                                            <div class="hiddenerror" style="display: none;">
+                                                                <p class="errormsg" style="line-height: 26px;">ERROR</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </apex:outputpanel>
+
+                                            <apex:outputpanel id="AirlinesPnl" rendered="{!AND(isAgencyUser, currentButtonsToShow == 'CancelAndSubmit')}">
+                                                <li style=" display:{!IF(isCompliment,'none','block')}">
+                                                    <!-- Airlines -->
+                                                    <div class="row form-group">
+                                                        <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!$ObjectType.Case.Fields.Airline__c.Label}</label>
+                                                        <div class="col-lg-7">
+                                                            <apex:selectlist styleclass="form-control " value="{!newCase.IATAcode__c}" required="false" multiselect="false" size="1">
+                                                                <apex:selectoption itemvalue=" " itemlabel="--None--" />
+                                                                <apex:selectoptions value="{!airlines}" />
+                                                            </apex:selectlist>
+                                                            <div class="hiddenerror" style="display: none;">
+                                                                <p class="errormsg" style="line-height: 26px;">ERROR</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel id="test">
+                                                <!--     currentButtonsToShow = {!currentButtonsToShow}
+                                  isComplain = {!isComplain} -->
+                                            </apex:outputpanel>
+                                            <apex:outputPanel rendered="{!isCompliment}">
+                                                <apex:outputText escape="false" value="{!$Label.ISSP_CaseComplimentMessage2}" style="color:#3174AF;font-style: italic;"/>
+
+                                            </apex:outputPanel>
+                                            <apex:outputpanel id="FieldsRep">
+                                                <apex:repeat value="{!fullList}" var="section">
+                                                    <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
+                                                        <div class="alert" role="alert">{!section.section}</div>
+                                                    </li>
+                                                    <apex:repeat value="{!section.fieldList}" var="field">
+                                                        <apex:outputpanel >
+                                                            <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
+                                                                <div class="row form-group">
+                                                                    <!-- <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!field.fieldName}</label> -->
+                                                                    <apex:outputpanel rendered="{!IF(isCompliment == true && (field.fieldName != 'ISSP_Subject' && field.fieldName != 'IDCard_Description' ) , false , true )}">
+                                                                        <apex:outputpanel rendered="{!!field.required}">
+                                                                            <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!IF(field.fieldType == 'Section', field.fieldName, $Label[field.fieldName])}</label>
+                                                                        </apex:outputpanel>
+                                                                        <apex:outputpanel rendered="{!field.required}">
+                                                                            <label class="col-lg-5 control-label" for="exampleInputEmail1"> * {!IF(field.fieldType == 'Section', field.fieldName, $Label[field.fieldName])}</label>
+                                                                        </apex:outputpanel>
+                                                                    </apex:outputpanel>
+                                                                    <div class="col-lg-7">
+                                                                        <apex:outputpanel rendered="{!field.fieldType == 'Field'}">
+                                                                            <apex:outputpanel rendered="{!IF(isCompliment == true && (field.fieldName != 'ISSP_Subject' && field.fieldName != 'IDCard_Description' ) , false , true )}">
+                                                                                <apex:outputpanel rendered="{!!field.required}">
+                                                                                    <apex:inputfield styleclass="form-control " value="{!newCase[field.fieldValue]}"/>
+                                                                                </apex:outputpanel>
+                                                                                <apex:outputpanel rendered="{!AND(field.required,field.fieldValue != 'Description')}">
+                                                                                    <apex:inputfield styleclass="form-control rec mandatory" value="{!newCase[field.fieldValue]}" />
+                                                                                </apex:outputpanel>
+                                                                            </apex:outputpanel>
+                                                                        </apex:outputpanel>
+
+                                                                        <apex:outputpanel rendered="{!field.fieldType == 'Checkbox' && isCompliment == false}">
+                                                                            <apex:inputcheckbox value="{!newCase[field.fieldValue]}" label="{!field.fieldName}" rendered="{! currentButtonsToShow == 'CancelAndSubmit'}" />
+                                                                        </apex:outputpanel>
+                                                                        <apex:outputpanel rendered="{!field.fieldType == 'GSA_Only_Checkbox' && isCompliment == false}">
+                                                                            <apex:inputcheckbox value="{!isGSAOnly}" label="{!field.fieldName}" rendered="{! currentButtonsToShow == 'CancelAndSubmit'}" />
+                                                                        </apex:outputpanel>
+                                                                        <apex:outputpanel rendered="{!field.fieldType == 'AirlineList' && isCompliment == false}">
+                                                                            <apex:selectlist styleclass="form-control " value="{!newCase.IATAcode__c}" required="false" size="1">
+                                                                                <apex:selectoptions value="{!airlines}" />
+                                                                            </apex:selectlist>
+                                                                        </apex:outputpanel>
+                                                                        <apex:outputpanel rendered="{!field.fieldType == 'ccothers' && isCompliment == false}">
+                                                                            <apex:inputText styleclass="form-control" value="{!field.fieldValueEntered}" />
+                                                                            <small class="text-muted">{!$Label.ISSP_CCOther_Help_Text}</small>
+                                                                        </apex:outputpanel>
+                                                                        <apex:outputpanel styleclass="selectpicker" rendered="{!field.fieldType == 'bootstrap-select' && isCompliment == false}">
+                                                                            <apex:selectlist styleclass="selectpicker form-control" html-data-live-search="true" value="{!iatacode}" required="false" size="1" rendered="{!field.listOptions!=null}">
+                                                                                <apex:selectOptions value="{!if(field.listOptions.size == 1, field.listOptions[0], field.listOptions[1])}" />
+                                                                                <apex:selectOptions value="{!if(field.listOptions.size == 3, field.listOptions[2], "")}" rendered="{!if(field.listOptions.size == 3, true, false)}"/>
+                                                                                <apex:selectOptions value="{!if(field.listOptions.size == 4, field.listOptions[3], "")}" rendered="{!if(field.listOptions.size == 4, true, false)}"/>
+                                                                                <apex:selectOptions value="{!if(field.listOptions.size == 5, field.listOptions[4], "")}" rendered="{!if(field.listOptions.size == 5, true, false)}"/>
+                                                                                <apex:selectOptions value="{!if(field.listOptions.size == 6, field.listOptions[5], "")}" rendered="{!if(field.listOptions.size == 6, true, false)}"/>
+                                                                                <apex:selectOptions value="{!if(field.listOptions.size == 7, field.listOptions[6], "")}" rendered="{!if(field.listOptions.size == 7, true, false)}"/>
+                                                                                <apex:selectoptions value="{!field.listOptionsExtended}" />
+                                                                            </apex:selectlist>
+                                                                            <script>
+                                                                        $('.selectpicker').selectpicker();
+                                                                        $('.bootstrap-select').find('button').removeClass('btn-default').removeClass('btn').addClass('form-control').addClass('mandatory');
+                                                                    </script>
+                                                                        </apex:outputpanel>
+                                                                        <div class="hiddenerror" style="display: none;">
+                                                                            <p class="errormsg" style="line-height: 26px;">ERROR</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <apex:outputpanel rendered="{!AND(field.required,field.fieldValue == 'Description')}"> <!--Description text area-->
+                                                                    <apex:inputfield styleclass="form-control descriptiontextarea rec mandatory" value="{!newCase[field.fieldValue]}" />
+                                                                </apex:outputpanel>
+                                                            </li>
+                                                        </apex:outputpanel>
+                                                    </apex:repeat>
+                                                </apex:repeat>
+                                            </apex:outputpanel>
+
+                                            <li>
+                                                <div class="hp_identifier" style="display:none;"> </div>
+                                                <!-- Modal Article Preview-->
+                                                <div class="modal fade bootbox-confirm" id="ModalShowArticle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
+                                                                <h5 class="modal-title">
+                                                                    <img src="/img/knowledge/knowledge32.png" title="Article" alt="Article" />
+                                                                    <span class="modal-question">
                                                                 <apex:outputpanel id="theSelectedAtricalTitle">
                                                                     <!-- The Article's Title -->
                                                                     <apex:outputfield value="{!SelectedArticleModalView.SelectedArticle.Title}" /> <br /><br />
@@ -797,345 +797,345 @@
                                                                     </apex:outputpanel>
                                                                 </apex:outputpanel>
                                                             </span>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>
-                                                            <!--  '/articles/' + theArticle.Language + '/FAQ/' + theArticle.UrlName; -->
-                                                            <!-- <iframe src="" id="simpleArticleFrame" class="custom-popup-iframe"></iframe> -->
-                                                            <span class="faq-answer">
+                                                                </h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>
+                                                                    <!--  '/articles/' + theArticle.Language + '/FAQ/' + theArticle.UrlName; -->
+                                                                    <!-- <iframe src="" id="simpleArticleFrame" class="custom-popup-iframe"></iframe> -->
+                                                                    <span class="faq-answer">
                                                                 <apex:outputpanel id="theSelectedAtricalAnswer">
                                                                     <apex:outputfield value="{!SelectedArticleModalView.SelectedArticle.Answer__c}" />
                                                                 </apex:outputpanel>
                                                             </span>
-                                                        </p>
+                                                                </p>
 
 
-                                                        <!--  Buttons: -->
-                                                        <apex:outputpanel id="modalWindowId">
-                                                            <div class="row">
-                                                                <div class="col-md-4">
-                                                                    <!--  Botton: 'Not Satisfied Create a Case' -->
-                                                                    <apex:outputpanel rendered="{!IF(currentButtonsToShow == 'CancelAndCreateACase', true, false)}">
-                                                                        <button onclick="closeArticle();refreshMainPbAndCreateCase();return false;" class=" btn btn-sm btn_iata_primary">{!$Label.ISSP_F2C_NotSatisfied}</button>
-                                                                    </apex:outputpanel>
-                                                                </div>
-                                                                <div class="col-md-4">
+                                                                <!--  Buttons: -->
+                                                                <apex:outputpanel id="modalWindowId">
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <!--  Botton: 'Not Satisfied Create a Case' -->
+                                                                            <apex:outputpanel rendered="{!IF(currentButtonsToShow == 'CancelAndCreateACase', true, false)}">
+                                                                                <button onclick="closeArticle();refreshMainPbAndCreateCase();return false;" class=" btn btn-sm btn_iata_primary">{!$Label.ISSP_F2C_NotSatisfied}</button>
+                                                                            </apex:outputpanel>
+                                                                        </div>
+                                                                        <div class="col-md-4">
 
-                                                                    <!-- Botton: 'Thanks!'
-                                                Execute 'createStatRecord' function when 'Thanks!' button is clicked -->
-                                                                    <apex:outputpanel >
-                                                                        <button onclick="createStatRecordFunc();" class="btn btn-sm btn_iata_primary" data-dismiss="modal">{!$Label.ISSP_F2C_AnsweredMyQuestion}</button>
-                                                                    </apex:outputpanel>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <!--  Botton: 'Search again' -->
-                                                                    <apex:outputpanel >
-                                                                        <button onclick="void();" class=" btn btn-sm btn_iata_primary btn-block" data-dismiss="modal" aria-hidden="false">{!$Label.ISSP_F2C_Return2FAQ}</button>
-                                                                    </apex:outputpanel>
+                                                                            <!-- Botton: 'Thanks!'
+                                                        Execute 'createStatRecord' function when 'Thanks!' button is clicked -->
+                                                                            <apex:outputpanel >
+                                                                                <button onclick="createStatRecordFunc();" class="btn btn-sm btn_iata_primary" data-dismiss="modal">{!$Label.ISSP_F2C_AnsweredMyQuestion}</button>
+                                                                            </apex:outputpanel>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <!--  Botton: 'Search again' -->
+                                                                            <apex:outputpanel >
+                                                                                <button onclick="void();" class=" btn btn-sm btn_iata_primary btn-block" data-dismiss="modal" aria-hidden="false">{!$Label.ISSP_F2C_Return2FAQ}</button>
+                                                                            </apex:outputpanel>
 
-                                                                </div>
-                                                            </div><!-- end row -->
-                                                        </apex:outputpanel>
-                                                    </div><!-- end modal body -->
+                                                                        </div>
+                                                                    </div><!-- end row -->
+                                                                </apex:outputpanel>
+                                                            </div><!-- end modal body -->
 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+
+                                        <!--------------------------------- BUTTONS  SECTION -------------------------------------------->
+                                        <!-- basto1p Live Agent V2 -->
+                                        <apex:actionFunction name="controllerCancel" action="{! cancel }" />
+                                        <apex:actionFunction name="controllerBack" action="{! back }" />
+                                        <apex:actionFunction name="controllerCreate" action="{! create }" rerender="FieldsRep,RightPanel,TopicsAndArticlesForm,AirlinesPnl,OPpbButton,op_subtopic_helptext,op_topic_helptext"/>
+                                        <apex:actionFunction name="controllerSave" action="{! save }" rerender="RightPanel,TopicsAndArticlesForm,OPpbButton,err,loadStatusSpinner" status="loadStatusSpinner"/>
+                                        <apex:actionFunction name="controllerSaveAttach" action="{! saveAttach }" rerender="RightPanel,TopicsAndArticlesForm,OPpbButton,err,loadStatusSpinner" status="loadStatusSpinner"/>
+                                        <apex:actionFunction name="ctrlLivAgIntroVidCloseDontRemenber" action="{! livAgentIntroVidCloseAndDontRemenber }" />
+
+                                        <apex:outputPanel id="OPpbButton">
+
+                                            <!-- basto1p - live agent v2 - Modal -->
+                                            <div id="modalCallUs" class="modal fade" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header iataBlue">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title modalTitle">{!$Label.LVA_CallUs}</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>
+                                                                <apex:outputText value="{!CallUsFinalString}" escape="false" rendered="{!NOT(Clicked_EmergencyRequest)}"/>
+                                                                <apex:outputText value="{!CallUsEmergencyFinalString}" escape="false" rendered="{!Clicked_EmergencyRequest}"/>
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </li>
 
-                            </ul>
-
-                            <!--------------------------------- BUTTONS  SECTION -------------------------------------------->
-                             <!-- basto1p Live Agent V2 -->
-                             <apex:actionFunction name="controllerCancel" action="{! cancel }" />
-                             <apex:actionFunction name="controllerBack" action="{! back }" />
-                             <apex:actionFunction name="controllerCreate" action="{! create }" rerender="FieldsRep,RightPanel,TopicsAndArticlesForm,AirlinesPnl,OPpbButton,op_subtopic_helptext,op_topic_helptext"/>
-                             <apex:actionFunction name="controllerSave" action="{! save }" rerender="RightPanel,TopicsAndArticlesForm,OPpbButton,err,loadStatusSpinner" status="loadStatusSpinner"/>
-                             <apex:actionFunction name="controllerSaveAttach" action="{! saveAttach }" rerender="RightPanel,TopicsAndArticlesForm,OPpbButton,err,loadStatusSpinner" status="loadStatusSpinner"/>
-                             <apex:actionFunction name="ctrlLivAgIntroVidCloseDontRemenber" action="{! livAgentIntroVidCloseAndDontRemenber }" />
-
-                             <apex:outputPanel id="OPpbButton">
-
-                                <!-- basto1p - live agent v2 - Modal -->
-                                <div id="modalCallUs" class="modal fade" role="dialog">
-                                    <div class="modal-dialog">
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header iataBlue">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title modalTitle">{!$Label.LVA_CallUs}</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>
-                                                    <apex:outputText value="{!CallUsFinalString}" escape="false" rendered="{!NOT(Clicked_EmergencyRequest)}"/>
-                                                    <apex:outputText value="{!CallUsEmergencyFinalString}" escape="false" rendered="{!Clicked_EmergencyRequest}"/>
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!--*****************************************************-->
-                                <!-- CREATE CASE OR SUBMIT CASE WHEN IS COMPLAIN         -->
-                                <!--*****************************************************-->
-                                 <!-- If not show chat buttons and call us button fill the columns space with empty sapce -->
-                                 <apex:outputPanel layout="none" rendered="{! AND(isComplainLayout==true,
+                                            <!--*****************************************************-->
+                                            <!-- CREATE CASE OR SUBMIT CASE WHEN IS COMPLAIN         -->
+                                            <!--*****************************************************-->
+                                            <!-- If not show chat buttons and call us button fill the columns space with empty sapce -->
+                                            <apex:outputPanel layout="none" rendered="{! AND(isComplainLayout==true,
                                                                                 newCase.IFAP_Country_ISO__c != null,
                                                                                 currentButtonsToShow == 'CancelAndCreateACase') }">
-                                     <div class="col-md-4"></div>
-                                     <div class="col-md-4">
-                                         <div class = "col-md-12 removeMargin text-center lvaButton"
-                                              onclick="controllerCreate();"
-                                              title="{!$Label.ISSP_F2CCreate}">
-                                             <div class = "thumbButt" >
-                                                 <apex:image url="{!$Resource.LVA_IconsMail}"/>
-                                             </div>
-                                             <div class = "caption text-center">
-                                                 <h4>{!$Label.ISSP_F2CCreate}</h4>
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div class="col-md-4"></div>
-                                 </apex:outputPanel>
-
-                                 <!-- **************************************************** -->
-                                 <!-- CREATE CASE OR SUBMIT CASE WHEN IS NOT COMPLAIN      -->
-                                 <!--***************************************************** -->
-                                <apex:outputPanel layout="none" rendered="{! OR(isComplainLayout!=true,
-                                                                                 currentButtonsToShow != 'CancelAndCreateACase') }">
-
-                                    <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
-                                                                                newCase.IFAP_Country_ISO__c != null)}">
-                                        <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
-                                            {!$Label.LVA_SelectPreferredChannel}
-                                        </div>
-                                    </apex:outputPanel>
-
-                                    <row>
-                                        <div class="col-md-1"></div>
-
-
-                                        <!-- If not show chat buttons fill the columns space with empty sapce -->
-                                        <apex:outputPanel layout="none" rendered="{! AND(IF(showChatButtons==false, true, false), currentButtonsToShow == 'CancelAndCreateACase')}">
-                                            <div class="col-md-2"></div>
-                                        </apex:outputPanel>
-
-                                        <div class="col-sm-12 col-md-3">
-                                            <!-- CancelAndCreateACase - CREATE CASE BUTT -->
-                                            <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
-                                                                                            newCase.IFAP_Country_ISO__c != null)}">
-                                                <div class = "col-md-12 removeMargin text-center lvaButton" id="butContactUs"
-                                                     onclick="controllerCreate();"
-                                                     title="{!$Label.ISSP_F2CCreate}">
-                                                    <div class = "thumbButt" id="butThuContactUs">
-                                                        <apex:image url="{!$Resource.LVA_IconsMail}"/>
-                                                    </div>
-                                                    <div class = "caption text-center">
-                                                        <h4>{!$Label.ISSP_F2CCreate}</h4>
-                                                    </div>
-                                                </div>
-                                            </apex:outputPanel>
-
-                                            <!-- Submit&Attach - SUBMIT BUTT -->
-                                            <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
-                                                <div class = "col-md-12 removeMargin text-center lvaButton" id="butSubmit"
-                                                     onclick="controllerSave();"
-                                                     title="{!$Label.ISSP_Submit}" >
-                                                    <div class = "thumbButt" id="butThuSubmit">
-                                                        <apex:image url="{!$Resource.LVA_IconsOk}"/>
-                                                    </div>
-                                                    <div class = "caption text-center">
-                                                        <h4>{!$Label.ISSP_Submit}</h4>
-                                                    </div>
-                                                </div>
-                                            </apex:outputPanel>
-                                        </div>
-
-
-                                        <!-- ************************** -->
-                                        <!-- CHAT OR ATTACH BUTTONS     -->
-                                        <!-- ************************** -->
-                                        <apex:outputPanel layout="none" rendered="{! OR(IF(showChatButtons==true, true, false), currentButtonsToShow != 'CancelAndCreateACase')}">
-                                            <div class="col-sm-12 col-md-4">
-                                                <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
-                                                                                            newCase.IFAP_Country_ISO__c != null)}">
-                                                    <!-- Chat Buttons -->
-                                                    <div class = "col-md-12 removeMargin text-center lvaButton" id="butChat" >
-                                                        <div class = "thumbButt" id="butThuChat">
-                                                            <apex:image url="{!$Resource.LVA_IconsChat}"
-                                                                        title="{!$Label.LVA_ChatWithUs}" />
+                                                <div class="col-md-4"></div>
+                                                <div class="col-md-4">
+                                                    <div class = "col-md-12 removeMargin text-center lvaButton"
+                                                         onclick="controllerCreate();"
+                                                         title="{!$Label.ISSP_F2CCreate}">
+                                                        <div class = "thumbButt" >
+                                                            <apex:image url="{!$Resource.LVA_IconsMail}"/>
                                                         </div>
                                                         <div class = "caption text-center">
-                                                            <apex:outputPanel rendered="{!AND(showButton,isCNS==false)}">
-                                                                <h4>{!$Label.LVA_ChatWithUs}</h4>
-                                                            </apex:outputPanel>
-                                                            <apex:outputPanel rendered="{!AND(IF(showButton==false,true,false),isCNS==false)}">
-                                                                <h4>{!$Label.LVA_NoAvailableButtons}</h4>
-                                                            </apex:outputPanel>
-                                                            <apex:outputPanel rendered="{!isCNS}">
-                                                                <h4>{!$Label.LVA_NoAvailableButtonsForCNS}</h4>
+                                                            <h4>{!$Label.ISSP_F2CCreate}</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4"></div>
+                                            </apex:outputPanel>
+
+                                            <!-- **************************************************** -->
+                                            <!-- CREATE CASE OR SUBMIT CASE WHEN IS NOT COMPLAIN      -->
+                                            <!--***************************************************** -->
+                                            <apex:outputPanel layout="none" rendered="{! OR(isComplainLayout!=true,
+                                                                                 currentButtonsToShow != 'CancelAndCreateACase') }">
+
+                                                <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                                                newCase.IFAP_Country_ISO__c != null)}">
+                                                    <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
+                                                        {!$Label.LVA_SelectPreferredChannel}
+                                                    </div>
+                                                </apex:outputPanel>
+
+                                                <row>
+                                                    <div class="col-md-1" style=" display:{!IF(currentButtonsToShow != 'CancelAndSubmit','block','none')}"></div>
+
+
+                                                    <!-- If not show chat buttons fill the columns space with empty sapce -->
+                                                    <apex:outputPanel layout="none" rendered="{! AND(IF(showChatButtons==false, true, false), currentButtonsToShow == 'CancelAndCreateACase')}">
+                                                        <div class="col-md-2"></div>
+                                                    </apex:outputPanel>
+
+                                                    <div class="{!IF(showCallUsButton==true, 'col-sm-12 col-md-3', 'col-sm-12 col-md-4')}">
+                                                        <!-- CancelAndCreateACase - CREATE CASE BUTT -->
+                                                        <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                                                            newCase.IFAP_Country_ISO__c != null)}">
+                                                            <div class = "col-md-12 removeMargin text-center lvaButton" id="butContactUs"
+                                                                 onclick="controllerCreate();"
+                                                                 title="{!$Label.ISSP_F2CCreate}">
+                                                                <div class = "thumbButt" id="butThuContactUs">
+                                                                    <apex:image url="{!$Resource.LVA_IconsMail}"/>
+                                                                </div>
+                                                                <div class = "caption text-center">
+                                                                    <h4>{!$Label.ISSP_F2CCreate}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+
+                                                        <!-- Submit&Attach - SUBMIT BUTT -->
+                                                        <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
+                                                            <div class = "col-md-12 removeMargin text-center lvaButton" id="butSubmit"
+                                                                 onclick="controllerSave();"
+                                                                 title="{!$Label.ISSP_Submit}" >
+                                                                <div class = "thumbButt" id="butThuSubmit">
+                                                                    <apex:image url="{!$Resource.LVA_IconsOk}"/>
+                                                                </div>
+                                                                <div class = "caption text-center">
+                                                                    <h4>{!$Label.ISSP_Submit}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </div>
+
+
+                                                    <!-- ************************** -->
+                                                    <!-- CHAT OR ATTACH BUTTONS     -->
+                                                    <!-- ************************** -->
+                                                    <apex:outputPanel layout="none" rendered="{! OR(IF(showChatButtons==true, true, false), currentButtonsToShow != 'CancelAndCreateACase')}">
+                                                        <div class="col-sm-12 col-md-4">
+                                                            <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                                                            newCase.IFAP_Country_ISO__c != null)}">
+                                                                <!-- Chat Buttons -->
+                                                                <div class = "col-md-12 removeMargin text-center lvaButton" id="butChat" >
+                                                                    <div class = "thumbButt" id="butThuChat">
+                                                                        <apex:image url="{!$Resource.LVA_IconsChat}"
+                                                                                    title="{!$Label.LVA_ChatWithUs}" />
+                                                                    </div>
+                                                                    <div class = "caption text-center">
+                                                                        <apex:outputPanel rendered="{!AND(showButton,isCNS==false)}">
+                                                                            <h4>{!$Label.LVA_ChatWithUs}</h4>
+                                                                        </apex:outputPanel>
+                                                                        <apex:outputPanel rendered="{!AND(IF(showButton==false,true,false),isCNS==false)}">
+                                                                            <h4>{!$Label.LVA_NoAvailableButtons}</h4>
+                                                                        </apex:outputPanel>
+                                                                        <apex:outputPanel rendered="{!isCNS}">
+                                                                            <h4>{!$Label.LVA_NoAvailableButtonsForCNS}</h4>
+                                                                        </apex:outputPanel>
+
+                                                                        <!-- Chat Buttons -->
+                                                                        <apex:outputPanel id="chatButtonsPnl" rendered="{!IF(isCNS==false,true,false)}">
+                                                                            <div id="liveAgentIframes" class="row text-center">
+                                                                                <apex:outputPanel rendered="{!showButton}">
+                                                                                    <!-- basto1p passing live agent new buttons -->
+                                                                                    <apex:repeat value="{!csButtonsList}" var="butCat">
+                                                                                        <apex:iframe src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&topicId={!topicLabel}&subTopicId={!subtopic}&concernedCountry={!encIsoCountry}&csButton={!csButtonsList[butCat].Name}&csButtonCategory={!butCat}&csButtonsListJson={!csButtonsListJson}"
+                                                                                                     width="26px" height="35px" scrolling="false" frameBorder="false"/>
+                                                                                    </apex:repeat>
+                                                                                </apex:outputPanel>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
                                                             </apex:outputPanel>
 
-                                                            <!-- Chat Buttons -->
-                                                            <apex:outputPanel id="chatButtonsPnl" rendered="{!IF(isCNS==false,true,false)}">
-                                                                <div id="liveAgentIframes" class="row text-center">
-                                                                    <apex:outputPanel rendered="{!showButton}">
-                                                                        <!-- basto1p passing live agent new buttons -->
-                                                                        <apex:repeat value="{!csButtonsList}" var="butCat">
-                                                                            <apex:iframe src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&topicId={!topicLabel}&subTopicId={!subtopic}&concernedCountry={!encIsoCountry}&csButton={!csButtonsList[butCat].Name}&csButtonCategory={!butCat}&csButtonsListJson={!csButtonsListJson}"
-                                                                                         width="26px" height="35px" scrolling="false" frameBorder="false"/>
-                                                                        </apex:repeat>
-                                                                    </apex:outputPanel>
+                                                            <!-- Submit&Attach - ATTACH FILE BUTTON -->
+                                                            <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
+                                                                <div class = "col-md-12 removeMargin text-center lvaButton" id="butSaveAttach"
+                                                                     onclick="controllerSaveAttach();"
+                                                                     title="{!$Label.ISSP_SubmitAttach}" >
+                                                                    <div class = "thumbButt" id="butThuSaveAtach">
+                                                                        <apex:image url="{!$Resource.LVA_IconsAttach}"/>
+                                                                    </div>
+                                                                    <div class = "caption text-center">
+                                                                        <h4>{!$Label.ISSP_SubmitAttach}</h4>
+                                                                    </div>
                                                                 </div>
                                                             </apex:outputPanel>
                                                         </div>
-                                                    </div>
-                                                </apex:outputPanel>
+                                                    </apex:outputPanel>
 
-                                                <!-- Submit&Attach - ATTACH FILE BUTTON -->
-                                                <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
-                                                    <div class = "col-md-12 removeMargin text-center lvaButton" id="butSaveAttach"
-                                                         onclick="controllerSaveAttach();"
-                                                         title="{!$Label.ISSP_SubmitAttach}" >
-                                                        <div class = "thumbButt" id="butThuSaveAtach">
-                                                            <apex:image url="{!$Resource.LVA_IconsAttach}"/>
-                                                        </div>
-                                                        <div class = "caption text-center">
-                                                            <h4>{!$Label.ISSP_SubmitAttach}</h4>
-                                                        </div>
-                                                    </div>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </apex:outputPanel>
-
-                                        <!-- ************************** -->
-                                        <!-- CALL US OR CANCEL BUTTON   -->
-                                        <!-- ************************** -->
-                                        <div class = "col-sm-12 col-md-3 ">
-                                            <!-- CancelAndCreateACase - CALL US BUTTON -->
-                                            <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                    <!-- ************************** -->
+                                                    <!-- CALL US OR CANCEL BUTTON   -->
+                                                    <!-- ************************** -->
+                                                    <div class = "col-sm-12 col-md-3 ">
+                                                        <!-- CancelAndCreateACase - CALL US BUTTON -->
+                                                        <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
                                                                                         newCase.IFAP_Country_ISO__c != null)}">
-                                                <div class = "col-md-12 removeMargin text-center lvaButton" id="butCallUs"
-                                                     onclick="popupCallUs(); return false;"
-                                                     title="{!$Label.LVA_CallUs}" >
-                                                    <div class = "thumbButt" id="butThuCallUs">
-                                                        <apex:image url="{!$Resource.LVA_IconsPhone}"/>
+                                                            <div class = "col-md-12 removeMargin text-center lvaButton" id="butCallUs"
+                                                                 onclick="popupCallUs(); return false;"
+                                                                 title="{!$Label.LVA_CallUs}" >
+                                                                <div class = "thumbButt" id="butThuCallUs">
+                                                                    <apex:image url="{!$Resource.LVA_IconsPhone}"/>
+                                                                </div>
+                                                                <div class = "caption text-center">
+                                                                    <h4>{!$Label.LVA_CallUs}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+
+                                                        <!--  Cancel buttom -->
+                                                        <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
+                                                            <div class = "col-md-12 removeMargin text-center lvaButton" id="butCancel"
+                                                                 onclick="controllerCancel();"
+                                                                 title="{!$Label.ISSP_Cancel}" >
+                                                                <div class = "thumbButt" id="butThuCancel">
+                                                                    <apex:image url="{!$Resource.LVA_IconsCancel}"/>
+                                                                </div>
+                                                                <div class = "caption text-center">
+                                                                    <h4>{!$Label.ISSP_Cancel}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+
                                                     </div>
-                                                    <div class = "caption text-center">
-                                                        <h4>{!$Label.LVA_CallUs}</h4>
-                                                    </div>
-                                                </div>
+
+                                                    <!-- If not show chat buttons fill the columns space with empty sapce -->
+                                                    <apex:outputPanel layout="none" rendered="{! AND(IF(showChatButtons==false, true, false), currentButtonsToShow == 'CancelAndCreateACase')}}">
+                                                        <div class="col-md-2"></div>
+                                                    </apex:outputPanel>
+
+                                                    <div class="col-md-1" style=" display:{!IF(currentButtonsToShow != 'CancelAndSubmit','block','none')}"></div>
+
+                                                </row>
                                             </apex:outputPanel>
-
-                                            <!--  Cancel buttom -->
-                                            <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
-                                                <div class = "col-md-12 removeMargin text-center lvaButton" id="butCancel"
-                                                     onclick="controllerCancel();"
-                                                     title="{!$Label.ISSP_Cancel}" >
-                                                    <div class = "thumbButt" id="butThuCancel">
-                                                        <apex:image url="{!$Resource.LVA_IconsCancel}"/>
-                                                    </div>
-                                                    <div class = "caption text-center">
-                                                        <h4>{!$Label.ISSP_Cancel}</h4>
-                                                    </div>
-                                                </div>
-                                            </apex:outputPanel>
-
-                                        </div>
-
-                                        <!-- If not show chat buttons fill the columns space with empty sapce -->
-                                        <apex:outputPanel layout="none" rendered="{! AND(IF(showChatButtons==false, true, false), currentButtonsToShow == 'CancelAndCreateACase')}}">
-                                            <div class="col-md-2"></div>
                                         </apex:outputPanel>
 
-                                        <div class="col-md-1"></div>
 
-                                    </row>
-                                </apex:outputPanel>
-                            </apex:outputPanel>
+                                        <!-- provisional zone for topic and subtopic help text - sprint 6 -->
+                                        <div class="row" >
+                                            <apex:outputPanel id="op_topic_helptext"   ><!-- rendered="{!ISSP_TopicHelptext != null}" -->
+                                                <div id="topic_help_text" class="col-md-12 help-text" style=" display:{!IF(currentButtonsToShow != 'CancelAndSubmit','block','none')}">
+                                                    <i>{!$Label[ISSP_TopicHelptext.HelpText_Label_API__c]}</i>
+                                                </div>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel id="op_subtopic_helptext">
+                                                <div id="subtopic_help_text" class="col-md-12 help-text" style=" display:{!IF(currentButtonsToShow != 'CancelAndSubmit','block','none')}">
+                                                    <i>{!$Label[ISSP_SubTopicHelptext.HelpText_Label_API__c]}</i>
+                                                </div>
+                                            </apex:outputPanel>
+                                        </div><!-- end row -->
+                                        <!-- provisional zone for topic and subtopic help text - sprint 6 -->
+                                        <!--------------------------------- ACTIONFUNCTION SECTION -------------------------------------------->
+                                        <apex:actionFunction name="CheckNewCaseRecordType" action="{!CheckNewCaseRecordType}" rerender="MainPnl,MainTitle" >
+                                            <apex:param name="myRecordType" value=""/>
+                                        </apex:actionFunction>
+                                        <apex:actionfunction name="ComplaintMethod" action="{!IwishtoComplain}"
+                                                             rerender="MainPnl,MainTitle,err,FAQsPanel, countryPnl" />
+                                        <apex:actionfunction name="GeneralQueueMethod" action="{!GeneralQueueMethod}"
+                                                             rerender="MainPnl,MainTitle,FieldsRep,FAQsPanel,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" />
+                                        <apex:actionfunction name="EmergencyMethod" action="{!createAnEmergency}"
+                                                             rerender="MainPnl,MainTitle,err,FAQsPanel" />
+                                        <!-- compliment ed-->
+                                        <apex:actionfunction name="ComplimentGeneralQueueMethod" action="{!ComplimentGeneralQueueMethod}"
+                                                             rerender="MainPnl,MainTitle,FieldsRep,FAQsPanel,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" />
+                                        <!-- end compliment ed-->
+                                        <apex:actionFunction name="getSelectArtical" action="{!getSelectArtical}"
+                                                             reRender="theSelectedAtricalAnswer, theSelectedAtricalTitle"
+                                                             oncomplete="showArticle()">
+                                            <apex:param name="artid" value=""/>
+                                        </apex:actionFunction>
 
-
-                            <!-- provisional zone for topic and subtopic help text - sprint 6 -->
-                          <div class="row" >
-                            <apex:outputPanel id="op_topic_helptext"   ><!-- rendered="{!ISSP_TopicHelptext != null}" -->
-                             <div id="topic_help_text" class="col-md-12 help-text" style=" display:{!IF(currentButtonsToShow != 'CancelAndSubmit','block','none')}">
-                                 <i>{!$Label[ISSP_TopicHelptext.HelpText_Label_API__c]}</i>
-                             </div>
-                            </apex:outputPanel>
-                             <apex:outputPanel id="op_subtopic_helptext">
-                             <div id="subtopic_help_text" class="col-md-12 help-text" style=" display:{!IF(currentButtonsToShow != 'CancelAndSubmit','block','none')}">
-                                 <i>{!$Label[ISSP_SubTopicHelptext.HelpText_Label_API__c]}</i>
-                             </div>
-                            </apex:outputPanel>
-                          </div><!-- end row -->
-                          <!-- provisional zone for topic and subtopic help text - sprint 6 -->
-                            <!--------------------------------- ACTIONFUNCTION SECTION -------------------------------------------->
-                                    <apex:actionFunction name="CheckNewCaseRecordType" action="{!CheckNewCaseRecordType}" rerender="MainPnl,MainTitle" >
-                                        <apex:param name="myRecordType" value=""/>
-                                    </apex:actionFunction>
-                             <apex:actionfunction name="ComplaintMethod" action="{!IwishtoComplain}"
-                                                  rerender="MainPnl,MainTitle,err,FAQsPanel, countryPnl" />
-                             <apex:actionfunction name="GeneralQueueMethod" action="{!GeneralQueueMethod}"
-                                                  rerender="MainPnl,MainTitle,FieldsRep,FAQsPanel,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" />
-                            <apex:actionfunction name="EmergencyMethod" action="{!createAnEmergency}"
-                                                 rerender="MainPnl,MainTitle,err,FAQsPanel" />
-                        <!-- compliment ed-->
-                             <apex:actionfunction name="ComplimentGeneralQueueMethod" action="{!ComplimentGeneralQueueMethod}"
-                                                  rerender="MainPnl,MainTitle,FieldsRep,FAQsPanel,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" />
-                         <!-- end compliment ed-->
-                                    <apex:actionFunction name="getSelectArtical" action="{!getSelectArtical}"
-                                                         reRender="theSelectedAtricalAnswer, theSelectedAtricalTitle"
-                                                         oncomplete="showArticle()">
-                                        <apex:param name="artid" value=""/>
-                                    </apex:actionFunction>
-
-                                    <apex:actionFunction name="refreshTopicPickList" action="{!refreshTopicPickList}"
-                                                         oncomplete="GenerateTopicHelpText();"
-                                                         reRender="AirlinesPnl,subtopPnl_Val,
+                                        <apex:actionFunction name="refreshTopicPickList" action="{!refreshTopicPickList}"
+                                                             oncomplete="GenerateTopicHelpText();"
+                                                             reRender="AirlinesPnl,subtopPnl_Val,
                                                          areaOfConcernPnl_Val,areaOfConcernPnl,
                                                          FAQsPanel, RightPanel, OPpbButton, modalWindowId"
-                                                         status="actStatusId"/>
+                                                             status="actStatusId"/>
 
-                                    <apex:actionFunction name="refreshSubTopicPickList"
-                                                         action="{!refreshSubTopicPickList}"
-                                                         oncomplete="GenerateSubTopicHelpText();"
-                                                         reRender="countryPnl,chatButtonsPnl,actStatusId,subtopPnl_Val, areaOfConcernPnl_Val,areaOfConcernPnl, RightPanel,OPpbButton, modalWindowId, MainPnl,MainTitle,err,FAQsPanel, countryPnl"
-                                                         immediate="{!CASE(currentButtonsToShow, 'OnlyCancel', 'false',
+                                        <apex:actionFunction name="refreshSubTopicPickList"
+                                                             action="{!refreshSubTopicPickList}"
+                                                             oncomplete="GenerateSubTopicHelpText();"
+                                                             reRender="countryPnl,chatButtonsPnl,actStatusId,subtopPnl_Val, areaOfConcernPnl_Val,areaOfConcernPnl, RightPanel,OPpbButton, modalWindowId, MainPnl,MainTitle,err,FAQsPanel, countryPnl"
+                                                             immediate="{!CASE(currentButtonsToShow, 'OnlyCancel', 'false',
                                                                               'CancelAndCreateACase', 'false',
                                                                               'CancelAndSubmit','true', 'false')}"
-                                                         status="actStatusId" />
+                                                             status="actStatusId" />
 
-                                    <apex:actionFunction name="refreshAreasOfConcernPickList"
-                                                         action="{!refreshAreasOfConcernPickList}"
-                                                         status="actStatusId" />
+                                        <apex:actionFunction name="refreshAreasOfConcernPickList"
+                                                             action="{!refreshAreasOfConcernPickList}"
+                                                             status="actStatusId" />
 
-                             <apex:actionfunction name="refreshMainPbAndCreateCase" action="{!create1}"
-                                                  rerender="FieldsRep,countryPnl,AirlinesPnl,actStatusId,subtopPnl_Val,
+                                        <apex:actionfunction name="refreshMainPbAndCreateCase" action="{!create1}"
+                                                             rerender="FieldsRep,countryPnl,AirlinesPnl,actStatusId,subtopPnl_Val,
                                                   RightPanel,OPpbButton, modalWindowId" />
 
-                                    <!-- Calls the createSatisfiedRecord function that create an Satisfied Article Statistics record  -->
-                                    <apex:actionFunction name="createStatRecord" action="{!createSatisfiedRecord}" reRender="mainHolder,OPpbButton" immediate="true"/>
+                                        <!-- Calls the createSatisfiedRecord function that create an Satisfied Article Statistics record  -->
+                                        <apex:actionFunction name="createStatRecord" action="{!createSatisfiedRecord}" reRender="mainHolder,OPpbButton" immediate="true"/>
 
-                                     <apex:actionFunction name="GenerateFieldsBySettings" action="{!GenerateFieldsBySettings}" reRender="mainHolder,OPpbButton" immediate="true"/>
-                             <apex:actionfunction name="refreshAirlineList" action="{!refreshAirlineList}" rerender="chatButtonsPnl,FieldsRep,countryPnl,AirlinesPnl,OPpbButton" status="actStatusId2" />
-                             <apex:actionfunction name="refreshAirlineList1" action="{!copyCountryISO}" rerender="chatButtonsPnl,SLonchange,OPpbButton" />
+                                        <apex:actionFunction name="GenerateFieldsBySettings" action="{!GenerateFieldsBySettings}" reRender="mainHolder,OPpbButton" immediate="true"/>
+                                        <apex:actionfunction name="refreshAirlineList" action="{!refreshAirlineList}" rerender="chatButtonsPnl,FieldsRep,countryPnl,AirlinesPnl,OPpbButton" status="actStatusId2" />
+                                        <apex:actionfunction name="refreshAirlineList1" action="{!copyCountryISO}" rerender="chatButtonsPnl,SLonchange,OPpbButton" />
 
 
-                                    <!-- ACtion Functions About HelpText  -->
-                                    <apex:actionFunction name="GenerateTopicHelpText" action="{!GenerateTopicHelpText}" oncomplete="GenerateSubTopicHelpText();" reRender="op_topic_helptext , op_subtopic_helptext"
-                                        status="actStatusId"/>
+                                        <!-- ACtion Functions About HelpText  -->
+                                        <apex:actionFunction name="GenerateTopicHelpText" action="{!GenerateTopicHelpText}" oncomplete="GenerateSubTopicHelpText();" reRender="op_topic_helptext , op_subtopic_helptext"
+                                                             status="actStatusId"/>
 
-                                    <apex:actionFunction name="GenerateSubTopicHelpText" action="{!GenerateSubTopicHelpText}" reRender="op_subtopic_helptext"
-                                        status="actStatusId"/>
+                                        <apex:actionFunction name="GenerateSubTopicHelpText" action="{!GenerateSubTopicHelpText}" reRender="op_subtopic_helptext"
+                                                             status="actStatusId"/>
                                     </apex:outputPanel>
                                 </apex:form>
 
 
-                             <!---------------------------------------------------------------------------->
+                                <!---------------------------------------------------------------------------->
                             </div>
                         </div>
                     </div>
@@ -1143,104 +1143,104 @@
                 </div>
             </div>
 
-        <div class="col-md-2 col-xs-12"></div>
-    </div>
+            <div class="col-md-2 col-xs-12"></div>
+        </div>
 
 
-      <apex:outputPanel id="FAQsPanel">
-      <apex:outputpanel rendered="{! IF(isToShowFAQs==true, true, false)}">
-        <div class="row">
-        <div class="col-xs-2"></div>
-<!---------------------------------------------------------------------------->
-<!--------------------------FAQ ANSWERS SECTION------------------------------>
-<!---------------------------------------------------------------------------->
-        <div class="col-xs-8"  id="Answers" >
-            <div class="row">
-                <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
-                    {!$Label.LVA_FAQsHeader}
-                </div>
-            </div>
+        <apex:outputPanel id="FAQsPanel">
+            <apex:outputpanel rendered="{! IF(isToShowFAQs==true, true, false)}">
+                <div class="row">
+                    <div class="col-xs-2"></div>
+                    <!---------------------------------------------------------------------------->
+                    <!--------------------------FAQ ANSWERS SECTION------------------------------>
+                    <!---------------------------------------------------------------------------->
+                    <div class="col-xs-8"  id="Answers" >
+                        <div class="row">
+                            <div class="col-xs-12 pageSectionHeader pageSectionHeaderPadding">
+                                {!$Label.LVA_FAQsHeader}
+                            </div>
+                        </div>
 
-            <div class="row">
-                <div class="col-xs-12">
-                    <!--
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{!$Label.ISSP_F2CfaqTitle}</h3>
-                    </div>
-                    -->
-                    <div class="panel-body faqsBackground" id="body-answer">
-                        <!------------- FAQ ANSWERS SECTION ------------------>
-                        <apex:outputPanel id="RightPanel">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!--
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{!$Label.ISSP_F2CfaqTitle}</h3>
+                                </div>
+                                -->
+                                <div class="panel-body faqsBackground" id="body-answer">
+                                    <!------------- FAQ ANSWERS SECTION ------------------>
+                                    <apex:outputPanel id="RightPanel">
 
-                        <!-- ========================Progress Bar ================= -->
-                        <apex:actionStatus id="actStatusId" >
-                            <apex:facet name="start" >
-                                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                                    Loading...
-                            </apex:facet>
-                        </apex:actionStatus>
-                        <ul>
-                            <apex:repeat value="{!articleViewLines}" var="articleViewLine" >
-                                <!-- <li class="artical-holder-il"> -->
-                                <li class="articleListItem white">
-                                    <div id="{!articleViewLine.theArticle.Id}" class="articleEntry">
-                                        <div class="articleText">
-                                            <p class="title">
-                                                <a href="#" onclick="getSelectArtical('{!articleViewLine.theArticle.Id}');return false;">
-                                                    {!articleViewLine.theArticle.Title}
-                                                </a>
-                                            </p>
-                                            <span class="stats">
+                                        <!-- ========================Progress Bar ================= -->
+                                        <apex:actionStatus id="actStatusId" >
+                                            <apex:facet name="start" >
+                                                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                                Loading...
+                                            </apex:facet>
+                                        </apex:actionStatus>
+                                        <ul>
+                                            <apex:repeat value="{!articleViewLines}" var="articleViewLine" >
+                                                <!-- <li class="artical-holder-il"> -->
+                                                <li class="articleListItem white">
+                                                    <div id="{!articleViewLine.theArticle.Id}" class="articleEntry">
+                                                        <div class="articleText">
+                                                            <p class="title">
+                                                                <a href="#" onclick="getSelectArtical('{!articleViewLine.theArticle.Id}');return false;">
+                                                                    {!articleViewLine.theArticle.Title}
+                                                                </a>
+                                                            </p>
+                                                            <span class="stats">
                                                 <c:ArticleVotePreview voteVal="{!articleViewLine.voteStat.NormalizedScore}" />
                                             </span>
-                                            <ul class="artical-info">
-                                                <li class="artical-info-li" id="{!articleViewLine.theArticle.KnowledgeArticleId}:ArticleNumber" title="{!articleViewLine.theArticle.ArticleNumber}">
-                                                    {!articleViewLine.theArticle.ArticleNumber}
+                                                            <ul class="artical-info">
+                                                                <li class="artical-info-li" id="{!articleViewLine.theArticle.KnowledgeArticleId}:ArticleNumber" title="{!articleViewLine.theArticle.ArticleNumber}">
+                                                                    {!articleViewLine.theArticle.ArticleNumber}
+                                                                </li>
+                                                                <li class="artical-info-li" title="FAQ">FAQ</li>
+                                                                <li class="artical-info-li" >
+                                                                    <apex:outputText value="Last Published  {0, date, short}">
+                                                                        <apex:param value="{!articleViewLine.theArticle.LastPublishedDate}" />
+                                                                    </apex:outputText>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </li>
-                                                <li class="artical-info-li" title="FAQ">FAQ</li>
-                                                <li class="artical-info-li" >
-                                                    <apex:outputText value="Last Published  {0, date, short}">
-                                                        <apex:param value="{!articleViewLine.theArticle.LastPublishedDate}" />
-                                                    </apex:outputText>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            </apex:repeat>
-                        </ul>
-                    </apex:outputPanel>
+                                            </apex:repeat>
+                                        </ul>
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="col-xs-2"></div>
                 </div>
-            </div>
-        </div>
-        <div class="col-xs-2"></div>
-      </div>
-      </apex:outputpanel>
-      </apex:outputpanel>
+            </apex:outputpanel>
+        </apex:outputpanel>
 
-      <div class="row">
-          <div class="col-xs-12" height="10px">&nbsp;</div>
-      </div>
-
-	<apex:outputPanel id="introVideo2" rendered="{! IF(livAgentIntroVidIsAllowed==true ,true ,false)}">
         <div class="row">
-            <div class="col-xs-4"></div>
-            <div class="col-xs-4 pageSectionHeader pageSectionHeaderPadding lvaButton">
+            <div class="col-xs-12" height="10px">&nbsp;</div>
+        </div>
+
+        <apex:outputPanel id="introVideo2" rendered="{! IF(livAgentIntroVidIsAllowed==true ,true ,false)}">
+            <div class="row">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4 pageSectionHeader pageSectionHeaderPadding lvaButton">
                 <span class="imgMovieBut thumbButt" onclick="openIntroVideo();" title="{!$Label.LVA_IntroductionVideo}">&nbsp;
                     <apex:image url="{!$Resource.LVA_IconsMovie}"/><br/>
                     {!$Label.LVA_IntroductionVideo}
                 </span>
+                </div>
+                <div class="col-xs-4"></div>
             </div>
-            <div class="col-xs-4"></div>
-        </div>
-    </apex:outputpanel>
-    <!------------------------------------------------------------------------------------>
-<!--------------------------- Lock Screen while Processing  ---------------------------->
-<!------------------------------------------------------------------------------------>
-      <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
-   <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
-    <style>
+        </apex:outputpanel>
+        <!------------------------------------------------------------------------------------>
+        <!--------------------------- Lock Screen while Processing  ---------------------------->
+        <!------------------------------------------------------------------------------------>
+        <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+        <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
+        <style>
         .overlay {
             display: none;
             height: 100%;
@@ -1264,12 +1264,12 @@
             left: 50%;
         }
     </style>
- 
-    <div id="load_scrl" class="loadingBox loader" style="display:none"> </div>
-    <div class="loadingBox overlay"> </div>
+
+        <div id="load_scrl" class="loadingBox loader" style="display:none"> </div>
+        <div class="loadingBox overlay"> </div>
 
 
-    <script type="text/javascript">
+        <script type="text/javascript">
         function startLoading(){
             $('#load_scrl').css('top', $(document).scrollTop() + 200);
             $('.loadingBox').show();
@@ -1278,14 +1278,14 @@
              $('.loadingBox').hide();
         }
     </script>
-    <!----------------------------------------------------------------------------------->
- 
- 
-<!---------------------------------------------------------------------------->
-<!---------------------------------------------------------------------------->
-<!---------------------------------------------------------------------------->
-  <c:ISSP_CustomFooter communityName="{!communityName}"/>
-                  </div>
-</body>
-</html>
+        <!----------------------------------------------------------------------------------->
+
+
+        <!---------------------------------------------------------------------------->
+        <!---------------------------------------------------------------------------->
+        <!---------------------------------------------------------------------------->
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
+    </div>
+    </body>
+    </html>
 </apex:page>
