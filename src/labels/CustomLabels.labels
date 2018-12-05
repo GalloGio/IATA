@@ -23398,7 +23398,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_CountryFilter</shortDescription>
-        <value>Country</value>
+        <value>Country/ Teritory</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
@@ -23406,7 +23406,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Country_Filter_Required</shortDescription>
-        <value>Please, select a value in Country filter</value>
+        <value>Please, select a value in Country/Territory filter</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_CurrencyFilter</fullName>
@@ -23438,7 +23438,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</shortDescription>
-        <value>Disclaimer for Export Calendar file</value>
+        <value>Please make sure to synchronize the calendar again in case there will be any future calendar changes to avoid having an outdated information.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Export_Disclaimer</fullName>
@@ -23446,7 +23446,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Export_Disclaimer</shortDescription>
-        <value>Disclaimer for Export file to csv or pdf</value>
+        <value>Please make sure to download the calendar again in case there will be any future calendar changes to avoid having an outdated information.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_FilterTitle</fullName>
