@@ -200,6 +200,12 @@ public without sharing class AMS_Utils {
         NGCHINACONVERSION => new List<String>{'Step4__c', 'Step3__c'}
     };
 
+    public static final Set<String> pilotAccStatusNotRequireLocClassD = new Set<String>{
+        AMS_Utils.ACC_S0_TERMINATED, 
+        AMS_Utils.ACC_S3_NOTINOPERATION, 
+        AMS_Utils.ACC_S1_NOTACCREDITED
+    };
+
     //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 

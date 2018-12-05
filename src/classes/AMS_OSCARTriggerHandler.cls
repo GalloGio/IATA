@@ -477,7 +477,7 @@ public class AMS_OSCARTriggerHandler {
             if(updatedOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
                 //If Perform Sanity Check passed
                 if(oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed') {
-                    ChinaConversionsHelper.convertAccountsHierarchy(updatedOSCAR);
+                    ANG_ChinaConversionsHelper.convertAccountsHierarchy(updatedOSCAR);
                 }
             }
             //ACAMBAS - NEWGEN-4445 - End
@@ -607,7 +607,7 @@ public class AMS_OSCARTriggerHandler {
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
-            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
+            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
                 oscar.Sanity_check_deadline__c = Date.today() + 15;
                 oscar.OSCAR_Deadline__c = Date.today() + 30;
 
@@ -2763,7 +2763,7 @@ public class AMS_OSCARTriggerHandler {
 
         for(AMS_OSCAR__c oscar: oscars){
 
-            Boolean isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c);
+            Boolean isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION;
             Boolean isAMSProcess = AMS_Utils.oscarAMSProcesses_ValidateOwnership.contains(oscar.Process__c);//AMSU-180
             Boolean run_validation = (oscar.Location_Class__c != 'R') && ((isAMSProcess && oscar.Process__c <> AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.new_TIDS && oscar.Location_Type__c == 'HO'));
 
@@ -2839,7 +2839,7 @@ public class AMS_OSCARTriggerHandler {
 
             if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
 
-                if (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)) {
+                if (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
                     if(oscar.Process__c == AMS_Utils.NGCORRECTION) {
                         if (oscar.Is_PCI_compliant__c == 'Yes' && oscar.ANG_PCI_compliance_expiry_date__c == null) {
                             oscar.addError('Please specify the PCI compliance expiry date.');
@@ -2852,8 +2852,8 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
                 }
-				//AMSU-34 - AMS gets to have the same validations as NG
-                if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c) || AMS_Utils.processesAMSrequiredAttachValidation.contains(oscar.Process__c)){
+                //AMSU-34 - AMS gets to have the same validations as NG
+                if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c) || AMS_Utils.processesAMSrequiredAttachValidation.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
                     
                     boolean isToValidate = true;
                     
@@ -2946,6 +2946,20 @@ public class AMS_OSCARTriggerHandler {
                     }
                 }
                 /*** AMSU-161 End ***/ 
+
+                //ACAMBAS - NEWGEN-4784 - Start
+                if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
+                    Map<Id, Account> accountsMap = ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
+                    // Requires that every account have location class "D" if the account status
+                    // is not one of the following: "Terminated", "Not in Operation", "Not Accredited"
+                    for(Account a : accountsMap.values()) {
+                        if(a.Location_Class__c != 'D' && !AMS_Utils.pilotAccStatusNotRequireLocClassD.contains(a.Status__c)) {
+                            oscar.addError('The conversion must be applied to a hierarchy of Domestic agents. Please proceed with a change of location type before processing the conversion.');
+                            break;
+                        }    
+                    }
+                }
+                //ACAMBAS - NEWGEN-4784 - End
             }
         }
     }
@@ -3267,7 +3281,7 @@ public class AMS_OSCARTriggerHandler {
                     copyAgencyAuthorizationsFromParent(updatedOscar);
                 //ACAMBAS - NEWGEN-4445 - Start
                 else if(updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION && updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTOLEGACY)
-                    ChinaConversionsHelper.deleteAccountsFoPs(updatedOscar.account__c);
+                    ANG_ChinaConversionsHelper.deleteAccountsFoPs(updatedOscar.account__c);
                 //ACAMBAS - NEWGEN-4445 - End
             }
 

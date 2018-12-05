@@ -1,4 +1,4 @@
-global with sharing class ChinaConversionsHelper {
+global class ANG_ChinaConversionsHelper {
 
 	public static void convertAccountsHierarchy(AMS_Oscar__c oscar) {
 
@@ -38,6 +38,7 @@ global with sharing class ChinaConversionsHelper {
 					acc.Location_Type__c = 'BR';
 				}
 				acc.ANG_Accreditation_Model__c = '';
+				deleteRiskEvents(accountId);
 			}
 			else if(caseReason == AMS_Utils.CONVERTTOINTERNATIONAL) {
 				if(acc.Location_Type__c == 'HE') {
@@ -49,6 +50,7 @@ global with sharing class ChinaConversionsHelper {
 				acc.ANG_Accreditation_Model__c = '';
 
 				deleteAccountsFoPs(allAccounts.keyset());
+				deleteRiskEvents(accountId);
 			}
 			else {
 				oscar.addError('Type of change unknown: ' + caseReason);
@@ -61,7 +63,8 @@ global with sharing class ChinaConversionsHelper {
     }
 
     public static void deleteAccountsFoPs(Set<Id> accntIds) {
-    	Id formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+    	Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+
 		List<Agency_Authorization__c> accountsWithFoPs = [SELECT Id 
 														  FROM Agency_Authorization__c 
 														  WHERE Account__c IN :accntIds AND RecordTypeId = :formOfPaymentRT];
@@ -69,16 +72,23 @@ global with sharing class ChinaConversionsHelper {
     }
 
     public static void deleteAccountsFoPs(String accountId) {
-
     	Map<Id, Account> allAccounts = getAllHierarchyAccounts(accountId);
-
-    	Id formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+    	Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		List<Agency_Authorization__c> accountsWithFoPs = [SELECT Id 
 														  FROM Agency_Authorization__c 
 														  WHERE Account__c IN :allAccounts.keyset() AND RecordTypeId = :formOfPaymentRT];
 
         delete accountsWithFoPs;
+    }
+
+    public static void deleteRiskEvents(String accountId) {
+    	Map<Id, Account> allAccounts = getAllHierarchyAccounts(accountId);
+		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id 
+													 FROM ANG_Agency_Risk_Event__c 
+													 WHERE ANG_AccountId__c IN :allAccounts.keyset()];
+
+        delete riskEvents;
     }
 
     public static void updateAccountRelations(List<AMS_Agencies_relationhip__c> accntRelations, String caseReason) {
@@ -110,7 +120,7 @@ global with sharing class ChinaConversionsHelper {
     }
 
     public static Map<Id, Account> getAllHierarchyAccounts(Id accountId) {
-		return new Map<Id, Account>([SELECT Id, Name, Location_Type__c, ANG_Accreditation_Model__c, Status__c, ParentId, Top_Parent__c
+		return new Map<Id, Account>([SELECT Id, Name, Location_Class__c, Location_Type__c, ANG_Accreditation_Model__c, Status__c, ParentId, Top_Parent__c
 									 FROM Account
 									 WHERE Id = :accountId OR ParentId = :accountId OR Top_Parent__c = :accountId]);
     }
