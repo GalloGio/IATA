@@ -45,7 +45,8 @@
         &lt;span class=&quot;glyphicon glyphicon-ok&quot;&gt;&lt;/span&gt;
     &lt;/td&gt;
     &lt;td &gt;
-        &lt;strong&gt;SIS Participation Agreement in two originals, completed and signed by your Company authorized representative. - Mandatory&lt;/strong&gt;
+        &lt;strong&gt;SIS Participation Agreement in two originals, completed and signed by your Company authorized representative - Mandatory&lt;/strong&gt;
+        &lt;p&gt;To review a sample please refer to our Resource Center in the IATA Customer Portal. The format to be signed by your company, will be provided at the end of the application and will include the selections done.&lt;/p&gt;
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -55,9 +56,11 @@
     &lt;td &gt;
         &lt;strong&gt;EU Contractual Clauses (If applicable)&lt;/strong&gt;
         &lt;ul&gt;
-            &lt;li&gt;Option A: 2 originals are required, completed and signed by your Company authorized representative.&lt;/li&gt;
-            &lt;li&gt;Option B: 3 originals are required, completed and signed by your Company authorized representative.&lt;/li&gt;
+            &lt;li&gt;Option A: EU Standard Contractual Clauses for processing between IATA and Participant (including the EU Standard Contractual Clauses for processing between IATA and Sub-processor. A signed copy is available upon request). Two originals are required&lt;/li&gt;
+&lt;strong&gt;OR&lt;/strong&gt;
+            &lt;li&gt;Option B: (for use only in jurisdictions where a tripartite agreement is required): EU Standard Contractual Clauses for processing between IATA, Participant and Sub-processor. Three originals are required.&lt;/li&gt;
         &lt;/ul&gt;
+        &lt;span&gt;Option A or Option B: originals are required, completed and signed by your Company authorized representative.&lt;/span&gt;
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -77,7 +80,7 @@
     &lt;ul&gt;
         &lt;li&gt;Corporate Registration (COI) - Certificate of registration&lt;/li&gt;
         &lt;li&gt;Shareholders List - Shareholding structure&lt;/li&gt;
-        &lt;li&gt;If the corporate documents are issued in any other language than French, English, Arabic, Italian or Spanish, please provide, in addition to the scanned copies of original documents, an official or notarized translation of the same.&lt;/li&gt;
+        &lt;li&gt;If the corporate documents are issued in any other language than French, English, Arabic, Italian, Spanish or Portuguese, please provide, in addition to the scanned copies of original documents, an official or notarized translation of the same.&lt;/li&gt;
     &lt;/ul&gt;
     &lt;/td&gt;
 &lt;/tr&gt;
@@ -96,6 +99,6 @@
     </values>
     <values>
         <field>Transaction_Fees__c</field>
-        <value xsi:type="xsd:string">Yes + Annual Fee</value>
+        <value xsi:type="xsd:string">Enabled</value>
     </values>
 </CustomMetadata>

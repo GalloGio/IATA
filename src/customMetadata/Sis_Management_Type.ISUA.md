@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>ERP_Integration__c</field>
-        <value xsi:type="xsd:string">For Inward Billing</value>
+        <value xsi:type="xsd:string">Enabled</value>
     </values>
     <values>
         <field>Enables_Automated_Posting_Reconciliati__c</field>
@@ -45,7 +45,7 @@
         &lt;span class=&quot;glyphicon glyphicon-ok&quot;&gt;&lt;/span&gt;
     &lt;/td&gt;
     &lt;td &gt;
-        &lt;strong&gt;Online Application &amp; Supper User Form. - Mandatory&lt;/strong&gt;
+        &lt;strong&gt;Online Application &amp; Super User Form - Mandatory&lt;/strong&gt;
     &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -53,11 +53,11 @@
         &lt;span class=&quot;glyphicon glyphicon-ok&quot;&gt;&lt;/span&gt;
     &lt;/td&gt;
     &lt;td &gt;
-        &lt;strong&gt;Scanned copy of the following Corporate Documents&lt;/strong&gt;
+        &lt;strong&gt;Scanned copy of the following Corporate Documents - Mandatory&lt;/strong&gt;
         &lt;ul&gt;
             &lt;li&gt;Corporate Registration (COI) - Certificate of registration &lt;/li&gt;
             &lt;li&gt;Shareholders List - Shareholding structure &lt;/li&gt;
-            &lt;li&gt;If the corporate documents are issued in any other language than French, English, Arabic, Italian or Spanish, please provide, in addition to the scanned copies of original documents, an official or notarized translation of the same.&lt;/li&gt;
+            &lt;li&gt;If the corporate documents are issued in any other language than French, English, Arabic, Italian, Spanish or Portuguese, please provide, in addition to the scanned copies of original documents, an official or notarized translation of the same.&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/td&gt;
 &lt;/tr&gt;
@@ -76,6 +76,6 @@
     </values>
     <values>
         <field>Transaction_Fees__c</field>
-        <value xsi:type="xsd:string">Yes</value>
+        <value xsi:type="xsd:string">Enabled</value>
     </values>
 </CustomMetadata>

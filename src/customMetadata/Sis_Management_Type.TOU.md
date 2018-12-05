@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data_Validation__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">-</value>
     </values>
     <values>
         <field>Description_label__c</field>
@@ -32,11 +32,11 @@
     </values>
     <values>
         <field>Payment_Status__c</field>
-        <value xsi:type="xsd:string">View Only</value>
+        <value xsi:type="xsd:string">Enabled</value>
     </values>
     <values>
         <field>Receiving_e_invoices__c</field>
-        <value xsi:type="xsd:string">-</value>
+        <value xsi:type="xsd:string">Enabled</value>
     </values>
     <values>
         <field>Requirements_Text__c</field>
@@ -44,10 +44,10 @@
     </values>
     <values>
         <field>Sending_e_invoices__c</field>
-        <value xsi:type="xsd:string">Enabled</value>
+        <value xsi:type="xsd:string">-</value>
     </values>
     <values>
         <field>Transaction_Fees__c</field>
-        <value xsi:type="xsd:string">None</value>
+        <value xsi:type="xsd:string">-</value>
     </values>
 </CustomMetadata>
