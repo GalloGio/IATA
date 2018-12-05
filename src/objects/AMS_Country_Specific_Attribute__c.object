@@ -61,20 +61,20 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_Create_Sidra_Lite__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Controls the sidra lite/ SMAP case and Change code creation action on RTS</description>
-        <externalId>false</externalId>
-        <label>Create Sidra Lite and Parent Case</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>ANG_Create_Process_Case__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If an alert match this config, should it create a process case? (Creation is done by the ANG_RHCAlertTriggerHandler)</description>
         <externalId>false</externalId>
         <label>Create Process Case</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Create_Sidra_Lite__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Controls the sidra lite/ SMAP case and Change code creation action on RTS</description>
+        <externalId>false</externalId>
+        <label>Create Sidra Lite and Parent Case</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -864,6 +864,21 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -952,6 +967,21 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1047,6 +1077,21 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -1134,6 +1179,21 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
