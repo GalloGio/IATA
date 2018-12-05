@@ -27,18 +27,6 @@
 					vertical-align: middle !important;
 				}
 
-				.expiredRow {
-					background-color: #f7c7c7 !important;
-				}
-
-				.closeExpireRow {
-					background-color: #fbfb84 !important;
-				}
-
-				.activeRow {
-					background-color: #6bcb6b !important;
-				}
-
 				div.customTable {
 					width: 100%;
 				}
@@ -89,19 +77,18 @@
 										<tr>
 											<th>{!$ObjectType.Financial_Security__c.fields.Financial_Institution__c.Label}</th>
 											<th>{!$ObjectType.Financial_Security__c.fields.Security_Type__c.Label}</th>
-											<th>{!$ObjectType.Financial_Security__c.fields.Security_Status__c.Label}</th>
 											<th>{!$ObjectType.Financial_Security__c.fields.Amount__c.Label}</th>
 											<th>{!$ObjectType.Financial_Security__c.fields.Validity_Start_Date__c.Label}</th>
 											<th>{!$ObjectType.Financial_Security__c.fields.Expiry_Date__c.Label}</th>
-											<th>{!$Label.Warning_Expired}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Security_Status__c.Label}</th>
+											<th></th>
 										</tr>										
 									</thead>
 									<tbody>
 										<apex:repeat value="{!listFinSec}" var="item">
-											<tr class="{!item.cssRow}">
+											<tr>
 												<td>{!item.financialInstitution}</td>
 												<td>{!item.securityType}</td>
-												<td>{!item.securityStatus}</td>
 												<td>{!item.amount} {!item.currencyIsoCode}</td>
 												<td>
 													<apex:outputText value="{0,date,dd/MM/yyyy}"> 
@@ -113,9 +100,11 @@
 														<apex:param value="{!item.expiryDate}" /> 
 													</apex:outputText>
 												</td>
+												<td>{!item.securityStatus}</td>
 												<td>
-													<apex:image value="/img/checkbox_checked.gif" rendered="{!item.cssRow == 'expiredRow'}"/>
-													<apex:image value="/img/checkbox_unchecked.gif" rendered="{!NOT(item.cssRow == 'expiredRow')}"/>
+													<apex:image value="/img/msg_icons/error16.png" rendered="{!item.cssRow == 'expiredRow'}"/>
+													<apex:image value="/img/msg_icons/warning16.png" rendered="{!item.cssRow == 'closeExpireRow'}"/>
+													<apex:image value="/img/msg_icons/confirm16.png" rendered="{!item.cssRow == 'activeRow'}"/>
 												</td>
 											</tr>
 										</apex:repeat>
