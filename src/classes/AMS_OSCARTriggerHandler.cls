@@ -258,8 +258,8 @@ public class AMS_OSCARTriggerHandler {
 
         for(AMS_Oscar__c oscar : oscars) {
             AMS_Oscar__c oldRecord = oldMap.get(oscar.Id);
-            if(processToCheck.contains(oscar.Process__c) && oldRecord.RPM_Approval__c <> oscar.RPM_Approval__c && 
-                oscar.RPM_Approval__c == 'Authorize Approval' && 
+            //AMSU-206 changed to validation step
+            if(processToCheck.contains(oscar.Process__c) && oscar.STEP15__c == AMS_Utils.PASSED && oscar.STEP15__c <> oldRecord.STEP15__c &&
                 oscar.AMS_Online_Accreditation__c != null && !String.isBlank(oscar.Country_ISO_Code__c)) {
                 oscarsToValidate.add(oscar);
                 mapClassAttributes.put(oscar.Country_ISO_Code__c, null);
