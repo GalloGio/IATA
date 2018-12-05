@@ -2949,13 +2949,13 @@ public class AMS_OSCARTriggerHandler {
 
                 //ACAMBAS - NEWGEN-4784 - Start
                 if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
-                    Set<String> statusNotRequireLocationClsDom = new Set<String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S3_NOTINOPERATION, AMS_Utils.ACC_S1_NOTACCREDITED};
                     Map<Id, Account> accountsMap = ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
                     // Requires that every account have location class "D" if the account status
-                    // is not one of the following: "Terminated", "Operation", "Accredited" (statusNotRequireLocationClsDom)
+                    // is not one of the following: "Terminated", "Not in Operation", "Not Accredited"
                     for(Account a : accountsMap.values()) {
-                        if(a.Location_Class__c != 'D' && !statusNotRequireLocationClsDom.contains(a.Status__c)) {
+                        if(a.Location_Class__c != 'D' && !AMS_Utils.pilotAccStatusNotRequireLocClassD.contains(a.Status__c)) {
                             oscar.addError('The conversion must be applied to a hierarchy of Domestic agents. Please proceed with a change of location type before processing the conversion.');
+                            break;
                         }    
                     }
                 }
