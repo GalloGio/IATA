@@ -217,10 +217,7 @@ private class ISSP_APProcess_Test
             System.assertEquals(bool, true);
             bool = ctrl.getIsNotEmpty();
             System.assertEquals(bool, false);
-            prSteps = ctrl.UploadFile();
             System.assert(prSteps == null);
-            List<Attachment> lstAttachcs = ctrl.getAttachList();
-            System.assertEquals(lstAttachcs.size(), 0);
             options = ctrl.countryNameList;
             System.assertEquals('test', options[1].getValue());
         }
@@ -321,10 +318,6 @@ private class ISSP_APProcess_Test
 
             ctrl.fileBody = Blob.toPDF('test');
             ctrl.fileName = 'testName';
-            PageReference prAttach = ctrl.UploadFile();
-            System.assert(prAttach == null);
-            List<Attachment> lstAttachcs = ctrl.getAttachList();
-            System.assertEquals(lstAttachcs.size(), 1);
         }
         Test.stopTest();
 
@@ -421,12 +414,6 @@ private class ISSP_APProcess_Test
 
             ctrl.fileBody = Blob.toPDF('test');
             ctrl.fileName = 'testName';
-            PageReference prAttach = ctrl.UploadFile();
-            System.assert(prAttach == null);
-            List<Attachment> lstAttachcs = ctrl.getAttachList();
-            System.assertEquals(lstAttachcs.size(), 1);
-
-
         }
 
 
@@ -641,13 +628,6 @@ private class ISSP_APProcess_Test
 
             ctrl.fileBody = Blob.toPDF('test');
             ctrl.fileName = 'testName';
-			/*
-            PageReference prAttach = ctrl.UploadFile();
-            System.assert(prAttach == null);
-            List<Attachment> lstAttachcs = ctrl.getAttachList();
-            System.assertEquals(lstAttachcs.size(), 1);
-			*/
-
         }
 
 
@@ -1012,13 +992,24 @@ private class ISSP_APProcess_Test
             Test.setCurrentPage(pr);
 
             ISSP_APProcess ctrl = new ISSP_APProcess();
+
             ctrl.submitOptInOutServer();
 
             List<Case> resultingCases = [SELECT Id FROM Case WHERE Reason1__c = 'IATA Easy Pay' AND Subject LIKE '%Airline Participation - IATA EasyPay%'];
 
             System.assertEquals(countriesOut.size(), resultingCases.size());
+            
+            ctrl.getIsNewCountryProcess();
+            ctrl.getAuthorizedSignatories();
+            ctrl.getDocumentGuide();
+            ctrl.getDocumentCASSSpecification();
+            ctrl.getDocumentAppendixA();
+            ctrl.securityCheck();
+            ctrl.getICCSProductCountry();
+            ISSP_APProcess.updateGuideCounter(ctrl.newCase.Id);
         }
         
         Test.stopTest();
     }
+
 }
