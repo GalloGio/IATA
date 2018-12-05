@@ -1,5 +1,5 @@
 @isTest
-public class ChinaConversionsHelperTest {
+public class ANG_ChinaConversionsHelperTest {
 
 	private static AMS_OSCAR__c oscar;
 	private static Account accountHO;
@@ -316,7 +316,7 @@ public class ChinaConversionsHelperTest {
 		System.assertEquals('CONVERSION TO DOMESTIC WITH CASH FACILITY FINALIZED', changeCodes[0].Bulletin_Information__c);
 
 
-		Map<Id, Account> accountsMap = ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
+		Map<Id, Account> accountsMap = ANG_ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
 
 		List<Agency_Authorization__c> FoPs_list = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c 
 											  	   FROM Agency_Authorization__c 

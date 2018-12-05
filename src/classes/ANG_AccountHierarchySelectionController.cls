@@ -320,8 +320,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 	
 	private Boolean existsLocClassDomesticError = false;
-
-	private Set<String> statusNotRequireLocationClsDom = new Set<String>{'Terminated', 'Not in operation' ,'Not accreditated'};
 	
 	public Map<Id, HierarchyItem> hierarchy{
 		get{
@@ -353,8 +351,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					
 					if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
 						// Requires that every account have location class "D" if the account status 
-						// is not one of the following: "Terminated", "Operation", "Accredited" (statusNotRequireLocationClsDom)
-						if(a.Location_Class__c != 'D' && !statusNotRequireLocationClsDom.contains(a.Status__c)){
+						// is not one of the following: "Terminated", "Not in Operation", "Not Accredited" (pilotAccStatusNotRequireLocClassD)
+						if(a.Location_Class__c != 'D' && !AMS_Utils.pilotAccStatusNotRequireLocClassD.contains(a.Status__c)){
 							existsLocClassDomesticError = true;
 						}
 

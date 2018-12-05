@@ -1,4 +1,4 @@
-global with sharing class ChinaConversionsHelper {
+global class ANG_ChinaConversionsHelper {
 
 	public static void convertAccountsHierarchy(AMS_Oscar__c oscar) {
 
