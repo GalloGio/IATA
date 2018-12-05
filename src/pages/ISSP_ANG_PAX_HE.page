@@ -898,12 +898,12 @@
                                 </DSE:DS_DataQuality>
                             </apex:pageBlockSectionItem>
 
-                            <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
-                                <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
-                                <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress();" />
-                            </apex:outputPanel>
-                            
-                            <apex:pageBlockSectionItem>    
+                            <apex:pageBlockSectionItem>  
+                                <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
+                                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
+                                    <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBillingAddress();" />
+                                </apex:outputPanel>
+                              
                                 <DSE:DS_DataQuality id="ShippingAddress"
                                     RecordRef="{!hqAccount}"
                                     FieldGroupName="Shipping Address"
@@ -987,28 +987,27 @@
                                 }
                             }
 
-                            $(".branch_office_street_name_number__c").change(function () {
-                                copyBranchAddress();
+                            $(".billingstreet").change(function () {
+                                copyBillingAddress();
                             });
-                            $(".branch_office_city__c").change(function () {
-                                copyBranchAddress();
+                            $(".billingcity").change(function () {
+                                copyBillingAddress();
                             });
-                            $(".branch_office_postal_code__c").change(function () {
-                                copyBranchAddress();
+                            $(".billingpostalcode").change(function () {
+                                copyBillingAddress();
                             });
-                            $(".state_province__c").change(function () {
-                                copyBranchAddress();
+                            $(".billingstate").change(function () {
+                                copyBillingAddress();
                             });
 
-                            function copyBranchAddress() {
+                            function copyBillingAddress() {
                                 var checkBox = document.getElementById('copyCheckBoxBranch');
                                 if (checkBox.checked){
-                                    $(".shipping_street__c").val($(".branch_office_street_name_number__c").val());
-                                    $(".shipping_city__c").val($(".branch_office_city__c").val());
-                                    $(".shipping_postal_code__c").val($(".branch_office_postal_code__c").val());
-                                    $(".shipping_state__c").val($(".state_province__c").val());
-                                    $('[id$="ShippingCountryList"]').val($(".country__c").val().toUpperCase());
-                                    $('#shipping_country__c > input').val($(".country__c").val().toUpperCase());
+                                    $(".shippingstreet").val($(".billingstreet").val());
+                                    $(".shippingcity").val($(".billingcity").val());
+                                    $(".shippingpostalcode").val($(".billingpostalcode").val());
+                                    $(".shippingstate").val($(".billingstate").val());
+                                    $('.shippingcountry').val($(".billingcountry").val());
                                 }
                             }
                         </script>
@@ -1133,12 +1132,12 @@
                             </DSE:DS_DataQuality>
                         </apex:pageBlockSectionItem>
 
-                        <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
-                            <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
-                            <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress();" />
-                        </apex:outputPanel>
-
-                        <apex:pageBlockSectionItem>    
+                        <apex:pageBlockSectionItem>
+                            <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
+                                <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
+                                <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress();" />
+                            </apex:outputPanel>
+                            
                             <DSE:DS_DataQuality id="ShippingAddress"
                                 RecordRef="{!newForm}"
                                 FieldGroupName="Shipping Address"
@@ -1241,8 +1240,7 @@
                             $(".shipping_city__c").val($(".branch_office_city__c").val());
                             $(".shipping_postal_code__c").val($(".branch_office_postal_code__c").val());
                             $(".shipping_state__c").val($(".state_province__c").val());
-                            $('[id$="ShippingCountryList"]').val($(".country__c").val().toUpperCase());
-                            $('#shipping_country__c > input').val($(".country__c").val().toUpperCase());
+                            //$('.shipping_country__c').val($(".country__c").val().toUpperCase());
                         }
                     }
                 </script>           

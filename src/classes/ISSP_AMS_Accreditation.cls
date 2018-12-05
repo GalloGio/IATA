@@ -487,7 +487,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 system.debug('newCase.Reason1__c ' + newCase.Reason1__c);
-                if ( newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE) {
+                if ( newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
                     amsOfficeType = AMS_Utils.HO; //Branches Abroad have same country requirements as HO in that country
                 } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
                     amsOfficeType = 'Branch';
@@ -747,7 +747,7 @@ public without sharing class ISSP_AMS_Accreditation {
             List_CountryReqments = new List<AMS_Accreditation_Requirement__c>();
         }
 
-        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE) {
+        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
             amsOfficeType = AMS_Utils.HO;
         } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
             amsOfficeType = 'Branch';
@@ -1256,12 +1256,12 @@ public without sharing class ISSP_AMS_Accreditation {
             includedPageName = 'ISSP_AMS_Notice_Of_Change';
             includedSummaryPage = 'ISSP_AMS_NoC_ReadOnly';
 
-        } else if (  sectorValue.StartsWith('Travel_Agent') && newForm.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH && newForm.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH) {
+        } else if (  sectorValue.StartsWith('Travel_Agent') && newForm.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH && newForm.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newForm.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_MULTICOUNTRY) {
 
             includedPageName = 'ISSP_AMS_Pax_Form';
             includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
 
-        } else if( (sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH || newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH) && ( newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE))){
+        } else if( (sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH || newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_MULTICOUNTRY) && ( newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_MULTICOUNTRY))){
             includedPageName = 'ISSP_ANG_PAX_HE';
             includedSummaryPage = 'ISSP_ANG_PAX_HE_ReadOnly';//NEWGEN-604
 
@@ -1343,6 +1343,8 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             if(ISSP_Utilities.isCNS()){ newCase.CNSCase__c=true;}
+
+            if (amsLocationType.contains('GoGlobal')) lblStepE = Label.ISSP_AMS_Step5_ProgressBar_Validate_Data;
 
             agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
 
@@ -3803,7 +3805,9 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 accredModel = AMS_Utils.ACCREDITATIONMODEL_CASH;
             } else if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_NOCASH){
                 accredModel = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
-            } else{
+            } else if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_MULTICOUNTRY) {
+                accredModel = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+            } else {
                 accredModel = newForm.Agent_Type__c;
             }
 
@@ -6116,6 +6120,16 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
 
+                    if (hqAccount.ShippingStreet == null && hqAccount.Status__c != 'Terminated'){
+                        hqAccount.ShippingStreet.addError(Label.ISSP_YouMustEnter);
+                        accountUpdated = false;
+                    }
+
+                    if (hqAccount.ShippingCity == null && hqAccount.Status__c != 'Terminated'){
+                        hqAccount.ShippingCity.addError(Label.ISSP_YouMustEnter);
+                        accountUpdated = false;
+                    }
+
                     if (hqAccount.Email__c == null) {
                         hqAccount.Email__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
@@ -6913,6 +6927,16 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
         if (newForm.Branch_Office_Phone__c == null) {
             newForm.Branch_Office_Phone_National__c.addError(Label.ISSP_YouMustEnter);
+            errorFound = true;
+        }
+
+        if (newform.Shipping_Street__c == null) {
+            newform.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
+            errorFound = true;
+        } 
+
+        if (newform.Shipping_City__c == null) {
+            newform.Shipping_City__c.addError(Label.ISSP_YouMustEnter);
             errorFound = true;
         }
 

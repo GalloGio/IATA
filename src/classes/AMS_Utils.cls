@@ -284,6 +284,7 @@ public without sharing class AMS_Utils {
 
     public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
     public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
+    public static final String NEWFORM_AGENTTYPE_MULTICOUNTRY = 'Multicountry';
     public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
     public static final String CASE_REASON_HE_LITE = 'New HE lite';
     public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE multicountry';

@@ -16423,6 +16423,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>E. Submit to CNS</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step5_ProgressBar_Validate_Data</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step5_ProgressBar_Validate_Data</shortDescription>
+        <value>E. Validate details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step5_ReviewBeforeSubmit</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
