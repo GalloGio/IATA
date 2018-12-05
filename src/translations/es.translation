@@ -12278,7 +12278,7 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
         <name>ISSP_Ongoing_TIP_Requests</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar --></label>
+        <label>Calendario de operaciones</label>
         <name>ISSP_OperationalCalendar</name>
     </customLabels>
     <customLabels>
@@ -12286,23 +12286,23 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
         <name>ISSP_OperationalCalendar_BSPCASSFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_BSPCASS_Filter_Required --></label>
+        <label>Por favor, seleccione una opción en el filtro BSP/CASS</label>
         <name>ISSP_OperationalCalendar_BSPCASS_Filter_Required</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Billing_Period --></label>
+        <label>Periodo de facturación</label>
         <name>ISSP_OperationalCalendar_Billing_Period</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_CountryFilter --></label>
+        <label>País</label>
         <name>ISSP_OperationalCalendar_CountryFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Country_Filter_Required --></label>
+        <label>Por favor, seleccione una opción en el filtro &quot;PAÍS&quot;</label>
         <name>ISSP_OperationalCalendar_Country_Filter_Required</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_CurrencyFilter --></label>
+        <label>Moneda</label>
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>

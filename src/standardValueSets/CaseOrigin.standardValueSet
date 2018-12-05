@@ -1246,4 +1246,9 @@
         <default>false</default>
         <label>Web SAF</label>
     </standardValue>
+    <standardValue>
+        <fullName>Risk Monitoring Engine</fullName>
+        <default>false</default>
+        <label>Risk Monitoring Engine</label>
+    </standardValue>
 </StandardValueSet>
