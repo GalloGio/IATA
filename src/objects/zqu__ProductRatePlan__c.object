@@ -55,19 +55,149 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fieldSets>
-        <fullName>zqu__Lookup_Popup_Window</fullName>
-        <description>For Lookup Popup Window on Rate Plan Selector page</description>
+        <fullName>zqu__EditProductRatePlan</fullName>
+        <description>Edit Product Rate Plan</description>
         <displayedFields>
             <field>Name</field>
             <isFieldManaged>true</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__ProductRatePlanFullName__c</field>
+            <isFieldManaged>true</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__EffectiveStartDate__c</field>
+            <isFieldManaged>true</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__EffectiveEndDate__c</field>
+            <isFieldManaged>true</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__Product__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__Default__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__ActiveCurrencies__c</field>
+            <isFieldManaged>true</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__Description__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Edit Product Rate Plan</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__GuidedSellingRatePlanColumn</fullName>
+        <description>Fields displayed in Rate Plans column on guided selling.</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__Price_Summary__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Guided Selling Rate Plan Column</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__GuidedSellingRatePlanFields</fullName>
+        <description>Fields used on product rate plans in guided selling.</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>zqu__Description__c</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__Price_Summary__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Guided Selling Rate Plan Fields</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__Lookup_Popup_Window</fullName>
+        <description>For Lookup Popup Window on Rate Plan Selector page</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__Description__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <label>Lookup Popup Window</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__NewProductRatePlan</fullName>
+        <description>New Product Rate Plan</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>true</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__ProductRatePlanFullName__c</field>
+            <isFieldManaged>true</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__EffectiveStartDate__c</field>
+            <isFieldManaged>true</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__EffectiveEndDate__c</field>
+            <isFieldManaged>true</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__Product__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__Default__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__ActiveCurrencies__c</field>
+            <isFieldManaged>true</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__Description__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>New Product Rate Plan</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__RatePlan_Custom_Fields</fullName>
+        <description>Fields in this field set will be marked as custom fields for synchronizing to Zuora</description>
+        <label>Custom Fields</label>
     </fieldSets>
     <fields>
         <fullName>Country__c</fullName>
@@ -400,7 +530,7 @@
     <fields>
         <fullName>Product_Number__c</fullName>
         <externalId>false</externalId>
-        <formula>zqu__ZProduct__r.SAPProductMaterialNo__c</formula>
+        <formula>zqu__Product__r.SAP_Material_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Product Number</label>
         <required>false</required>
@@ -473,7 +603,7 @@
     <fields>
         <fullName>ZProduct_Deleted__c</fullName>
         <externalId>false</externalId>
-        <formula>zqu__ZProduct__r.zqu__Deleted__c</formula>
+        <formula>zqu__Product__r.zqu__Deleted__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>ZProduct_Deleted</label>
         <trackTrending>false</trackTrending>
@@ -482,7 +612,7 @@
     <fields>
         <fullName>ZProduct_EffectiveEndDate__c</fullName>
         <externalId>false</externalId>
-        <formula>zqu__ZProduct__r.zqu__EffectiveEndDate__c</formula>
+        <formula>zqu__Product__r.zqu__EffectiveEndDate__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>ZProduct_EffectiveEndDate</label>
         <required>false</required>
@@ -492,7 +622,7 @@
     <fields>
         <fullName>ZProduct_EffectiveStartDate__c</fullName>
         <externalId>false</externalId>
-        <formula>zqu__ZProduct__r.zqu__EffectiveStartDate__c</formula>
+        <formula>zqu__Product__r.zqu__EffectiveStartDate__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>ZProduct_EffectiveStartDate</label>
         <required>false</required>
@@ -502,13 +632,52 @@
     <fields>
         <fullName>ZProduct_ZuoraId__c</fullName>
         <externalId>false</externalId>
-        <formula>zqu__ZProduct__r.zqu__ZuoraId__c</formula>
+        <formula>zqu__Product__r.zqu__ZuoraId__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>ZProduct_ZuoraId</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zqu__ActiveCurrencies__c</fullName>
+        <deprecated>false</deprecated>
+        <description>A comma-separated list of 3-letter currency codes representing active currencies for this rate plan, e.g., &quot;USD, EUR, CAD, GBP&quot;.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A comma-separated list of 3-letter currency codes representing active currencies for this rate plan, e.g., &quot;USD, EUR, CAD, GBP&quot;.</inlineHelpText>
+        <label>Active Currencies</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zqu__Catalog_Sync_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Product link to catalog sync history</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Product link to catalog sync history</inlineHelpText>
+        <label>Catalog Sync History</label>
+        <referenceTo>zqu__Catalog_Sync_History__c</referenceTo>
+        <relationshipLabel>Product Rate Plans</relationshipLabel>
+        <relationshipName>Product_Rate_Plans</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>zqu__Default__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Default rate plan for the related product</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Default rate plan for the related product</inlineHelpText>
+        <label>Default</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>zqu__Deleted__c</fullName>
@@ -580,12 +749,113 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>zqu__EntityID__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>zqu__Product__r.zqu__BillingEntity__r.zqu__EntityID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Entity ID</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zqu__Price_Summary__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Field used in the QuickList component and populated at runtime to match the Quote&apos;s currency field.</description>
+        <externalId>false</externalId>
+        <label>Price Summary</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>zqu__ProductRatePlanFullName__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Full Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zqu__Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>Product Rate Plans</relationshipLabel>
+        <relationshipName>Product_Rate_Plans</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>zqu__SyncMessage__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Message for the Catalog Sync</description>
+        <externalId>false</externalId>
+        <label>Sync Message</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>zqu__SyncStatus__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sync Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Synced</fullName>
+                    <default>false</default>
+                    <label>Synced</label>
+                </value>
+                <value>
+                    <fullName>Updated</fullName>
+                    <default>false</default>
+                    <label>Updated</label>
+                </value>
+                <value>
+                    <fullName>Syncing</fullName>
+                    <default>false</default>
+                    <label>Syncing</label>
+                </value>
+                <value>
+                    <fullName>Failed</fullName>
+                    <default>false</default>
+                    <label>Failed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>zqu__ZProduct__c</fullName>
         <deprecated>false</deprecated>
         <description>The ZProduct associated with this Rate Plan.</description>
         <externalId>false</externalId>
         <inlineHelpText>The ZProduct associated with this Rate Plan.</inlineHelpText>
         <label>ZProduct</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>zqu__ZProduct__c.zqu__Product__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.zqu__Product__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>zqu__ZProduct__c</referenceTo>
         <relationshipLabel>Product Rate Plan</relationshipLabel>
         <relationshipName>ProductRatePlan</relationshipName>
@@ -604,7 +874,7 @@
         <inlineHelpText>The Zuora Id (external primary key) of this Rate Plan.</inlineHelpText>
         <label>ZuoraId</label>
         <length>32</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -618,12 +888,12 @@
     <listViews>
         <fullName>CAC</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>UIDisplay__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>CheckACode Webservice</value>
         </filters>
@@ -633,14 +903,14 @@
     <listViews>
         <fullName>EBC</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>UIDisplay__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <columns>EBC_Cost_Per_Email__c</columns>
         <columns>EBC_Email_Credit_Current_Offering__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>eBroadcast for</value>
         </filters>
@@ -650,11 +920,11 @@
     <listViews>
         <fullName>GSS</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Zroduct__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>MDP</value>
         </filters>
@@ -669,11 +939,11 @@
     <listViews>
         <fullName>GSS_Single_License_for_Non_Members</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>GSS Single License for Non-Members</value>
         </filters>
@@ -692,11 +962,11 @@
     <listViews>
         <fullName>GSS_for_Franchise_and_Managed_Property_G</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>GSS for Franchise and Managed Property Groups</value>
         </filters>
@@ -711,11 +981,11 @@
     <listViews>
         <fullName>GSS_for_GDS</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>GSS for GDS</value>
         </filters>
@@ -734,11 +1004,11 @@
     <listViews>
         <fullName>GSS_for_IATA_Member_Airlines</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>MDP</value>
         </filters>
@@ -753,11 +1023,11 @@
     <listViews>
         <fullName>GSS_for_Processors</fullName>
         <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
+        <columns>zqu__Product__c</columns>
         <columns>ZProduct_EffectiveEndDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>zqu__ZProduct__c</field>
+            <field>zqu__Product__c</field>
             <operation>contains</operation>
             <value>GSS for Processors</value>
         </filters>
@@ -775,9 +1045,16 @@
     </nameField>
     <pluralLabel>Product Rate Plans</pluralLabel>
     <searchLayouts>
-        <lookupDialogsAdditionalFields>zqu__ZProduct__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>zqu__Product__c</lookupDialogsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>zqu__StartDateMustBeforeEndDate</fullName>
+        <active>true</active>
+        <description>The Effective Start Date should be earlier than the Effective End Date.</description>
+        <errorConditionFormula>zqu__EffectiveStartDate__c  &gt;=  zqu__EffectiveEndDate__c</errorConditionFormula>
+        <errorMessage>The Effective Start Date should be earlier than the Effective End Date.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
     <webLinks>
         <fullName>Manage_File_Description</fullName>
@@ -802,5 +1079,51 @@
         <openType>sidebar</openType>
         <page>GDP_FileDefRatePlanCACWizard</page>
         <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>zqu__Mark_for_Delete</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Mark for Delete</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/33.0/connection.js&quot;)}
+            {!REQUIRESCRIPT(&quot;/soap/ajax/33.0/apex.js&quot;)}
+
+            var namespaceRecords=sforce.connection.query(&quot;SELECT Name, NamespacePrefix FROM ApexClass where Name = &apos;ProductListViewSyncController&apos;&quot;);
+            var thisNamespace = namespaceRecords.records.NamespacePrefix;
+            var newRecords = [];
+            var objectId = window.sfdcPage.getEntityId();
+            var objectName = &apos;ProductRatePlan__c&apos;;
+            if (thisNamespace != undefined &amp;&amp; thisNamespace != &apos;&apos;)
+            objectName = thisNamespace + &apos;__&apos; + objectName;
+
+            var p = new sforce.SObject(objectName);
+            p.Id =objectId;
+            if (thisNamespace != undefined &amp;&amp; thisNamespace != &apos;&apos;)
+            p[thisNamespace + &apos;__Deleted__c&apos;]= true;
+            else
+            p[&apos;Deleted__c&apos;] = true;
+
+            newRecords.push(p);
+            var result = sforce.connection.update(newRecords);
+            if (result[0].success == &apos;true&apos;)
+                alert(&apos;Object successfully marked for deletion.&apos;);
+            else
+                alert(result);
+            window.location.reload();</url>
+    </webLinks>
+    <webLinks>
+        <fullName>zqu__sync_to_zuora</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Sync to Zuora</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/zqu__ProductListViewSync?syncObjectId={!zqu__ProductRatePlan__c.Id}&amp;stype=ProductRatePlan__c</url>
     </webLinks>
 </CustomObject>
