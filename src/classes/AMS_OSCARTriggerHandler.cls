@@ -477,7 +477,7 @@ public class AMS_OSCARTriggerHandler {
             if(updatedOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
                 //If Perform Sanity Check passed
                 if(oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed') {
-                    ChinaConversionsHelper.convertAccountsHierarchy(updatedOSCAR);
+                    ANG_ChinaConversionsHelper.convertAccountsHierarchy(updatedOSCAR);
                 }
             }
             //ACAMBAS - NEWGEN-4445 - End
@@ -3267,7 +3267,7 @@ public class AMS_OSCARTriggerHandler {
                     copyAgencyAuthorizationsFromParent(updatedOscar);
                 //ACAMBAS - NEWGEN-4445 - Start
                 else if(updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION && updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTOLEGACY)
-                    ChinaConversionsHelper.deleteAccountsFoPs(updatedOscar.account__c);
+                    ANG_ChinaConversionsHelper.deleteAccountsFoPs(updatedOscar.account__c);
                 //ACAMBAS - NEWGEN-4445 - End
             }
 
