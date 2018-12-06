@@ -145,7 +145,7 @@ public class AMS_OSCARTriggerHandler {
 
         handleAnnualRevalidation((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
-        handleGDIRequestEndorsementCertificate((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+        handleGDIRequestEndorsementCertificate((Map<Id,AMS_OSCAR__c>)Trigger.newMap, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 		
 		//Newgen 13/09/2018: Temporary removed
 		//if(test.IsRunningTest())
@@ -4348,7 +4348,7 @@ public class AMS_OSCARTriggerHandler {
     }
 
     // NEWGEN-4426
-    public static void handleGDIRequestEndorsementCertificate(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
+    public static void handleGDIRequestEndorsementCertificate(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap) {
 
         //START validation 1: Check if Endorsement_Requested__c was set to true
         Map<Id,AMS_OSCAR__c> oscarsToProcessMap = new Map<Id,AMS_OSCAR__c>();
@@ -4365,16 +4365,24 @@ public class AMS_OSCARTriggerHandler {
         for(Opportunity opp : [SELECT Id, Related_Oscar__c FROM Opportunity WHERE Related_Oscar__c IN :oscarsToProcessMap.keySet()])
             oppOscarIDSet.add(opp.Related_Oscar__c);
 
-        for(AMS_OSCAR__c oscar :oscarsToProcessMap.values()){
-            if(!oppOscarIDSet.contains(oscar.Id)){
+        Set<String> iataCodes = new Set<String>();
+
+        for(AMS_OSCAR__c oscar :oscarsToProcessMap.values()) {
+            if(!oppOscarIDSet.contains(oscar.Id)) {
                 oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
-                oscarsToProcessMap.remove(oscar.Id);
+            } else {
+                iataCodes.add(oscar.IATACode__c);
             }
         }
 
-        if(oscarsToProcessMap.isEmpty())
+        if(iataCodes.isEmpty())
             return;
         //END Validation 2
+
+        //TODO: do callout (confirm endpoint)
+
+        //create overload for following method? 
+        //ANG_RME_Alert_Service.requestProvisionalRHC(String accountId, Boolean flagUpdateProvisioning){
 
         
     }          
