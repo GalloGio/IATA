@@ -2949,7 +2949,7 @@ public class AMS_OSCARTriggerHandler {
 
                 //ACAMBAS - NEWGEN-4784 - Start
                 if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
-                    Map<Id, Account> accountsMap = ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
+                    Map<Id, Account> accountsMap = ANG_ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
                     // Requires that every account have location class "D" if the account status
                     // is not one of the following: "Terminated", "Not in Operation", "Not Accredited"
                     for(Account a : accountsMap.values()) {
