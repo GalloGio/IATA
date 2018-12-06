@@ -29,7 +29,7 @@ public with sharing class ANG_DGIStagingAreaCtrl {
         return currentFS;
     }set;}
 
-    public boolean hasAdendum {get;set;} 
+    public boolean hasAdendum {get;set;}  
 
 	private final AMS_OSCAR__c oscarObj;
 
@@ -249,7 +249,7 @@ public with sharing class ANG_DGIStagingAreaCtrl {
         fs.Reasonforrequest__c = stagingFs.Reason__c;
         fs.Reception_Case__c = oscarCase.ParentId;
         fs.Region__c = stagingFs.Region__c;
-        fs.Security_Status__c = stagingFs.Security_Status__c;
+        fs.Security_Status__c = 'Not Active yet';
         fs.Security_Type__c = stagingFs.Security_Type__c;
         fs.Validity_Start_Date__c = stagingFs.Validity_Start_Date__c;
         fs.Account__c = oscarObj.Account__c;

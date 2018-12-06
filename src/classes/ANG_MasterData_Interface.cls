@@ -295,7 +295,7 @@ global class ANG_MasterData_Interface{
 
                 //GDI - note: we do publish HE/HO only
                 if(string.isNotBlank(acc.GDI_Status__c) && setGDIStatusToPublish.contains(acc.GDI_Status__c))
-                   this.externalSystems.add('Global Default Insurance (GDI)'); //check if we do have it somewhere in any static variable
+                   this.externalSystems.add(ISSP_Financial_Institutions.GDI_PORTAL_SERVICE); //check if we do have it somewhere in any static variable
             }
             catch(exception e){
                 throw e;
