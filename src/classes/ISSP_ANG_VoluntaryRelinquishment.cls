@@ -428,7 +428,7 @@ public with sharing class ISSP_ANG_VoluntaryRelinquishment {
             newCase.ownerid = amsAccreditation.getRegionalQueue();
         
         newCase.Status = 'Open';
-        newCase.Dossier_reception_date__c = datetime.now();
+        newCase.Dossier_reception_date__c = datetime.now().date();
         update newCase;
 
         String typeOfProcess = AMS_Utils.NGVR;

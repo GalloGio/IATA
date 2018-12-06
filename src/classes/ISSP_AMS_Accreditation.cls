@@ -3108,7 +3108,7 @@ public without sharing class ISSP_AMS_Accreditation {
             //    newCase.ownerid = getRegionalQueue();
 
             newCase.Status = 'Open';
-            newCase.Dossier_reception_date__c = datetime.now();
+            newCase.Dossier_reception_date__c = datetime.now().date();
 
 
             system.DEBUG('Invalid TAX Number: ' + newForm.INVALID_Tax_number__c);

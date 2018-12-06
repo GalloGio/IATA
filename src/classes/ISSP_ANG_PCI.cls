@@ -404,7 +404,7 @@ SYSTEM.DEBUG('getRelatedAccount starting... ');
         }
 
         newCase.Status = 'Open';
-        newCase.Dossier_reception_date__c = datetime.now();
+        newCase.Dossier_reception_date__c = datetime.now().date();
 
         update newCase;
 
