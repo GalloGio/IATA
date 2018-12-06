@@ -888,7 +888,6 @@ global without sharing class ISSP_APProcess {
             newCase.Status = 'For Review and Acceptance';
             if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id)
             newCase.ownerid = APQueue('Airline Participation - Head Office').Id;
-            newCase.Dossier_reception_date__c = DateTime.now();
             upsert newCase;
 
             sendConfirmationEmail(newCase);
