@@ -143,7 +143,7 @@ public class AMS_OSCARTriggerHandler {
         validateRemittanceFrequency((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap, (Map<Id,AMS_OSCAR__c>)Trigger.newMap);
         /*** AMSU-125 End ***/
 
-        handleAnnualRevalidation((Map<Id,AMS_OSCAR__c>)Trigger.oldMap, (List<AMS_OSCAR__c>)Trigger.New);
+        handleAnnualRevalidation((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
         handleGDIRequestEndorsementCertificate((Map<Id,AMS_OSCAR__c>)Trigger.newMap, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 		
