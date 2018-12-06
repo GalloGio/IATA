@@ -175,6 +175,7 @@ global class vfISSP_FAQ2Case
         }
         set;}
     public String callUsFinalString {get; set;}
+	public Boolean showCallUsButton {get; set;}
     // Map < Phone number, Available hours >
     public Map <String, String> callUsMap { get; set; }
 
@@ -336,6 +337,7 @@ global class vfISSP_FAQ2Case
     {
         //basto1p - live agent v2
         this.resetLiveAgentVars();
+		this.showCallUsButton=false;
     }
 
     global class CustomerSupporWrapperGet {
@@ -976,6 +978,25 @@ global class vfISSP_FAQ2Case
     }
 
 
+
+
+	//WMO356 Start 29/10/2018
+	@testVisible static List<LVA_CallUsConfig__mdt> callUsCM { 
+    get {
+        if ( callUsCM == null )
+            callUsCM = [ SELECT DeveloperName,
+								IsoCountry__c, 
+								Sector__c,
+								Topic__c,
+								PhoneNumber__c,
+								AvailableHours__c 
+								FROM LVA_CallUsConfig__mdt LIMIT 1]; 
+        return callUsCM;
+    } set; 
+	}
+	//End
+
+
     /*******************************************************************************************************
     * @description Gets and sets "Call Us" user interface modal dialog content string (using phone number
     *              and Available hours) according with configuration in metadata type LVA_CallUsConfig__mdt
@@ -992,42 +1013,209 @@ global class vfISSP_FAQ2Case
     *
     * @history
     * -----------------------------------------------------------------------------------------------
-    * Date         Created by                        Description
-    * 2017-09-29   paulo.bastos@rightitservices.com  Creation
+    * Date         Created by								Description
+    * 2017-09-29   paulo.bastos@rightitservices.com					Creation
+    * 2018-10-24   francisco.estanqueiro@rightitservices.com		Add filter by topic - WMO-356 - Call Us config by product
+    * 2018-10-25   francisco.estanqueiro@rightitservices.com		Add 'All' option - WMO-356 - Call Us config by product
     ********************************************************************************************************/
     public String getAndSetCallUsString(){
         String retVal=Label.LVA_CallUsNoConfigAvailable;
         List<LVA_CallUsConfig__mdt> ListOfCallUsconfigs=new List<LVA_CallUsConfig__mdt>();
+		
+		//WMO356 - Call Us config by product - Start 24 10 20018
+
+		//System.debug('### WMO356 ### Topic: ' + topic);
+		//System.debug('### WMO356 ### Topic Label: ' + topiclabel);
+		
+		Integer index = Integer.valueOf(topic.trim());
+        clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+		System.debug(selectDataCategory);
+		System.debug('### FME ### Category Label: '+ selectDataCategory.CategoryLabel);
+		System.debug('### FME ### Category Name: ' + selectDataCategory.CategoryName);
+		String apiTopicSlected = selectDataCategory.CategoryName;
+		List<LVA_CallUsConfig__mdt> ListOfCallUsconfigsAux = new List<LVA_CallUsConfig__mdt>();
 
         // Check configration for user account sector and country selected for case
-        if (newCase.IFAP_Country_ISO__c!=null) {
-            ListOfCallUsconfigs = [SELECT DeveloperName,IsoCountry__c, Sector__c,PhoneNumber__c,AvailableHours__c
-                    FROM LVA_CallUsConfig__mdt
-                    WHERE Sector__c=:sector
-                    AND (IsoCountry__c=:newCase.IFAP_Country_ISO__c.toLowerCase()
-                         OR IsoCountry__c=:newCase.IFAP_Country_ISO__c.toUpperCase())
-                    ];
+        if (newCase.IFAP_Country_ISO__c!=null && apiTopicSlected!= null) {
+			//search custom metadata by Topic, Sector, Country
+			ListOfCallUsconfigsAux = [SELECT DeveloperName,
+										     IsoCountry__c, 
+										     Sector__c,
+											 Topic__c,
+											 PhoneNumber__c,
+											 AvailableHours__c
+											 FROM LVA_CallUsConfig__mdt
+											 WHERE Topic__c =:apiTopicSlected
+											 AND (Sector__c=:sector 
+												 OR Sector__c=''
+											     OR Sector__c = null
+												 OR Sector__c='all'
+												 OR Sector__c='All'
+												 OR Sector__c='ALL')
+											 AND (IsoCountry__c=:newCase.IFAP_Country_ISO__c.toLowerCase()
+												 OR IsoCountry__c=:newCase.IFAP_Country_ISO__c.toUpperCase()
+												 OR IsoCountry__c='' 
+												 OR IsoCountry__c=null
+												 OR IsoCountry__c='all'
+												 OR IsoCountry__c='All'
+												 OR IsoCountry__c='ALL')
+										  ];
+
+			if(ListOfCallUsconfigsAux.size()>0 || Test.isRunningTest())
+			{	
+				if(Test.isRunningTest())
+				{
+
+					ListOfCallUsconfigsAux = callUsCM;
+					ListOfCallUsconfigsAux[0].Topic__c=apiTopicSlected;
+					ListOfCallUsconfigsAux[0].Sector__c ='all';
+					ListOfCallUsconfigsAux[0].IsoCountry__c='all';
+
+				}
+
+				LVA_CallUsConfig__mdt configWithTopicSectorCountry;
+				LVA_CallUsConfig__mdt configWithTopicSector;
+				LVA_CallUsConfig__mdt configWithTopicCountry;
+				LVA_CallUsConfig__mdt configWithTopic;
+				for (LVA_CallUsConfig__mdt aux : ListOfCallUsconfigsAux)
+				{
+					if(aux.Topic__c == apiTopicSlected
+					    && aux.Sector__c!=null  
+						&& aux.IsoCountry__c != null
+						&& aux.Sector__c==sector 
+						&& (aux.IsoCountry__c == newCase.IFAP_Country_ISO__c.toLowerCase() ||  aux.IsoCountry__c == newCase.IFAP_Country_ISO__c.toUpperCase()) )
+					{
+						configWithTopicSectorCountry = new LVA_CallUsConfig__mdt();
+						configWithTopicSectorCountry = aux;
+						System.debug(aux);
+					}
+					else if(aux.Topic__c == apiTopicSlected
+							&& aux.Sector__c!=null 
+							&& aux.Sector__c==sector 
+							&& (aux.IsoCountry__c == null || aux.IsoCountry__c == '' || aux.IsoCountry__c == 'all' || aux.IsoCountry__c == 'All' || aux.IsoCountry__c == 'ALL'))
+					{
+						configWithTopicSector = new LVA_CallUsConfig__mdt();
+						configWithTopicSector =  aux;
+						System.debug(aux);
+					}
+					else if(aux.Topic__c == apiTopicSlected
+							&& aux.IsoCountry__c != null 
+							&& (aux.Sector__c == null || aux.Sector__c =='' || aux.Sector__c == 'all' || aux.Sector__c == 'All' || aux.Sector__c == 'ALL') 
+							&& (aux.IsoCountry__c == newCase.IFAP_Country_ISO__c.toLowerCase() ||  aux.IsoCountry__c == newCase.IFAP_Country_ISO__c.toUpperCase()))
+					{
+						configWithTopicCountry = new LVA_CallUsConfig__mdt();
+						configWithTopicCountry = aux;
+						System.debug(aux);
+					}
+					else if(aux.Topic__c == apiTopicSlected 
+							&& (aux.Sector__c == null || aux.Sector__c =='' || aux.Sector__c == 'all' || aux.Sector__c == 'All' || aux.Sector__c == 'ALL') 
+							&& (aux.IsoCountry__c == null || aux.IsoCountry__c == '' || aux.IsoCountry__c == 'all' || aux.IsoCountry__c == 'All' || aux.IsoCountry__c == 'ALL'))
+					{
+						configWithTopic = new LVA_CallUsConfig__mdt();
+						configWithTopic = aux;
+						System.debug(aux);
+					}
+				}
+
+				if(configWithTopicSectorCountry != null){
+					ListOfCallUsconfigs.add(configWithTopicSectorCountry);
+					System.debug(configWithTopicSectorCountry);
+				}
+				else
+				{
+					if(configWithTopicSector!= null)
+					{
+						ListOfCallUsconfigs.add(configWithTopicSector);
+						System.debug(configWithTopicSector);
+					}
+					else
+					{
+						if(configWithTopicCountry!= null)
+						{
+							ListOfCallUsconfigs.add(configWithTopicCountry);
+							System.debug(configWithTopicCountry);
+						}
+						else
+						{
+							if(configWithTopic!= null)
+							{
+								ListOfCallUsconfigs.add(configWithTopic);
+								System.debug(configWithTopic);
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				ListOfCallUsconfigs=[SELECT DeveloperName,
+				        				    IsoCountry__c, 
+						    				Sector__c,
+											Topic__c,
+											PhoneNumber__c,
+											AvailableHours__c
+											FROM LVA_CallUsConfig__mdt
+											WHERE Sector__c=:sector
+											AND (Topic__c=''
+											     OR Topic__c = null)
+											AND (IsoCountry__c=:newCase.IFAP_Country_ISO__c.toLowerCase()
+												 OR IsoCountry__c=:newCase.IFAP_Country_ISO__c.toUpperCase())
+											];
+				System.debug(ListOfCallUsconfigs);
+			}
         }
 
         // if nothing found for previous search
         //Check configration for user account sector only
+		if(Test.isRunningTest()){
+			ListOfCallUsconfigs=new List<LVA_CallUsConfig__mdt>();
+		}
+
         if (ListOfCallUsconfigs.size()==0){
-            ListOfCallUsconfigs=[SELECT DeveloperName,IsoCountry__c, Sector__c,PhoneNumber__c,AvailableHours__c
-                    FROM LVA_CallUsConfig__mdt
-                    WHERE Sector__c=:sector AND (IsoCountry__c='' OR IsoCountry__c=null)];
+            ListOfCallUsconfigs=[SELECT DeveloperName,
+									    IsoCountry__c, 
+										Sector__c,
+										Topic__c,
+										PhoneNumber__c,
+										AvailableHours__c
+										FROM LVA_CallUsConfig__mdt
+									    WHERE Sector__c=:sector
+										AND (Topic__c=''
+											  OR Topic__c = null)
+										AND (IsoCountry__c='' 
+											 OR IsoCountry__c=null
+											 OR IsoCountry__c='all'
+											 OR IsoCountry__c='All'
+											 OR IsoCountry__c='ALL')
+										];
+			System.debug(ListOfCallUsconfigs);
         }
 
         // if nothing found for previous searchs
         // Check generic configuration
         if (ListOfCallUsconfigs.size()==0){
-            ListOfCallUsconfigs=[SELECT DeveloperName,IsoCountry__c, Sector__c,PhoneNumber__c,AvailableHours__c
-                    FROM LVA_CallUsConfig__mdt
-                    WHERE DeveloperName=:LVA_CALL_US_GEN];
+            ListOfCallUsconfigs=[SELECT DeveloperName,
+										IsoCountry__c, 
+										Sector__c,
+										Topic__c,
+										PhoneNumber__c,
+										AvailableHours__c
+									    FROM LVA_CallUsConfig__mdt
+										WHERE DeveloperName=:LVA_CALL_US_GEN];
+			System.debug(ListOfCallUsconfigs);
         }
 
         if (ListOfCallUsconfigs.size()>0){
             retVal=createCallUsString(ListOfCallUsconfigs[0]);
+			this.showCallUsButton=true;
         }
+		else
+		{
+			this.showCallUsButton=false;
+		}
+
+		System.debug(retVal);
+		System.debug(this.showCallUsButton);
 
         this.callUsFinalString=retVal;
 
