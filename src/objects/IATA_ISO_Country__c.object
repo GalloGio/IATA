@@ -105,6 +105,10 @@
         <description>Created by AMS Enhancements to be used instead of checkboxes for new country specific AMS configurations.</description>
         <externalId>false</externalId>
         <label>AMS Country Configuration</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
         <valueSet>
             <valueSetDefinition>
                 <sorted>false</sorted>
@@ -118,13 +122,8 @@
                     <default>false</default>
                     <label>TIDS BR</label>
                 </value>
-
             </valueSetDefinition>
         </valueSet>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>

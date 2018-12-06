@@ -1204,7 +1204,7 @@ IATA Customer Service</value>
         <shortDescription>ANG_ISSP_CountryRequirementsTitle</shortDescription>
         <value>IATA Online Agency Accreditation</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ANG_ISSP_EasyPayLegalConfirmation</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>

@@ -89,10 +89,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>charlierc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>danielovd@iata.org</recipient>
             <type>user</type>
         </recipients>
