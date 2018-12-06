@@ -143,7 +143,7 @@ public class AMS_OSCARTriggerHandler {
         validateRemittanceFrequency((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap, (Map<Id,AMS_OSCAR__c>)Trigger.newMap);
         /*** AMSU-125 End ***/
 
-        handleAnnualRevalidation((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+        handleAnnualRevalidation((Map<Id,AMS_OSCAR__c>)Trigger.oldMap, (List<AMS_OSCAR__c>)Trigger.New);
 
         handleGDIRequestEndorsementCertificate((Map<Id,AMS_OSCAR__c>)Trigger.newMap, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 		
@@ -4353,8 +4353,9 @@ public class AMS_OSCARTriggerHandler {
         //START validation 1: Check if Endorsement_Requested__c was set to true
         Map<Id,AMS_OSCAR__c> oscarsToProcessMap = new Map<Id,AMS_OSCAR__c>();
         for(AMS_OSCAR__c oscar :  newMap.values())
-            if(oscar.Endorsement_Requested__c == true && oscar.Endorsement_Requested__c <> oldMap.get(oscar.Id).Endorsement_Requested__c)
+            if(oscar.Endorsement_Requested__c && oscar.Endorsement_Requested__c <> oldMap.get(oscar.Id).Endorsement_Requested__c){
                 oscarsToProcessMap.put(oscar.Id,oscar);
+            }
 
         if(oscarsToProcessMap.isEmpty())
             return;
@@ -4369,7 +4370,7 @@ public class AMS_OSCARTriggerHandler {
 
         for(AMS_OSCAR__c oscar :oscarsToProcessMap.values()) {
             if(!oppOscarIDSet.contains(oscar.Id)) {
-                oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
+               oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
             } else {
                 iataCodes.add(oscar.IATACode__c);
             }
