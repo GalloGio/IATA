@@ -8,23 +8,44 @@
 // are not treated by this class. The intention is not to conflict with previously 
 // implemented functionalities
 global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
-
+        
         global Iterable<sObject> start(Database.BatchableContext bc) {
             System.debug('+++ the batch just ran');
             Iterable<sObject> cases = getPendingCasesWithOfflineOwner();
             System.debug('+++ pending cases: '+ cases);
             return cases;
         }
-
+    
     global void execute(Database.BatchableContext BC, list<sObject> scope) {
         for (sObject c : scope)
             assignCaseBackToQueue(c.Id);
     }
-
+    
     global void finish(Database.BatchableContext BC) {
-        System.debug('+++ The job just finished!');
-    }
+        try {
+            AutoAssignmentAgentToQueue assignBatch = new AutoAssignmentAgentToQueue();
 
+            //schedule the next batch
+            System.scheduleBatch(assignBatch, 'AutoAssignmentAgentToQueueBatch', 10, 10);
+
+            AsyncApexJob a = [SELECT Id, Status, CompletedDate, JobItemsProcessed FROM AsyncApexJob WHERE Id = :BC.getJobId()];
+
+            if (a != null && a.Status == 'Failed') {
+                String mailSubject = 'AutoAssignmentAgentToQueueBatch: Job failed!';
+                String errorMessage = 'CompletedDate: ' + a.CompletedDate + 'Number of Cases processed: ' + a.JobItemsProcessed;
+
+                //Todo: test coverage not met for this method so avoid using it for now
+                //emailAlert(mailSubject, errorMessage, getUserIds(getSupportEmails()));
+				System.debug('AutoAssignmentAgentToQueueBatch: Job failed!');
+            }
+
+        } catch (Exception ex) {
+            //emailAlert('AutoAssignmentAgentToQueueBatch', ex.getMessage() + ' ' + ex.getStackTraceString(), null, getUserIds(getSupportEmails()));
+        	System.debug('AutoAssignmentAgentToQueueBatch: Job failed! '+ ex.getMessage());
+        }
+
+    }
+    
     /**
 * Returns a list of cases that have a record type: Cases_Global and have their owner agent offline
 */
@@ -60,29 +81,29 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
     
     public static void assignCaseBackToQueue(string idCase) {
         try {
-
+            
             System.debug('+++ starting assigning back...');
             Case currentCase = [SELECT Id, CaseArea__c, Topic__c FROM Case WHERE Id=:idCase];
-            GCS_Product_to_Queue_Assignment__mdt[] areaToQueue;
+            GCS_Product_to_Queue_Assignment__mdt[] areaToQueue; 
             System.debug('+++ case Id: '+currentCase.Id);
             if(currentCase.CaseArea__c != null) {
                 System.debug('Case Area on case found: '+ currentCase.CaseArea__c);
                 areaToQueue= [SELECT Queue_API_Name__c FROM GCS_Product_to_Queue_Assignment__mdt
                               WHERE GCS_Product_Topic__c=:currentCase.CaseArea__c LIMIT 1];
-
+                
                 System.debug('Metadata assignemnts found (first try): '+areaToQueue);
             } else if(currentCase.Topic__c != null) {
                 System.debug('Queue not found based on case area, not falling back to topic: '+currentCase.Topic__c);
                 areaToQueue = [SELECT Queue_API_Name__c FROM GCS_Product_to_Queue_Assignment__mdt
                                WHERE Product_Topic__c =:currentCase.Topic__c LIMIT 1];
-
+                
             } else
                 System.debug('Failed to match by case area or topic...');
-
+            
             if(areaToQueue.size() > 0) {
                 System.debug('found a coresponding product queue '+ areaToQueue);
                 Group[] queue = [SELECT Id FROM
-                                 Group WHERE Type='Queue'
+                                 Group WHERE Type='Queue' 
                                  AND DeveloperName=:areaToQueue[0].Queue_API_Name__c];
                 System.debug('+++ Queue found by API Name: '+queue);
                 if(queue.size() > 0) {

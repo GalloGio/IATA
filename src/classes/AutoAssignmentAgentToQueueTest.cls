@@ -6,8 +6,8 @@
 // This is like this because:
 // 1) Id field can't be instantiated (predefined) when creating queue
 // 2) custom metadata records creation from apex test is cumbersome (possible, but not easy)
-//
-// Solution: when storing information about a queue in custom metadata, refer to a queue by
+// 
+// Solution: when storing information about a queue in custom metadata, refer to a queue by 
 // unique API name not the id. Then in test a queue with identical name is created.
 // *************************************
 @isTest
@@ -19,10 +19,10 @@ public class AutoAssignmentAgentToQueueTest {
         c.recordTypeId = recordTypeId;
         c.CaseArea__c = 'ICH';
         insert c;
-
+        
         Agents__c agent = new Agents__c(User__c=UserInfo.getUserId(), Logged_On__c=False,
                                         Log_Off_Time_After_Timeout__c=DateTime.now().addDays(-1));
-
+        
          Group testQueue;
          Group[] alreadyExists = [SELECT Id FROM Group WHERE DeveloperName='GCS_ICH'];
         if(alreadyExists.size() == 0) {
@@ -36,13 +36,13 @@ public class AutoAssignmentAgentToQueueTest {
         Test.startTest();
         Id batchJobId = Database.executeBatch(new AutoAssignmentAgentToQueue(), 5);
         Test.stopTest();
-
+        
         Case cc = [SELECT Owner.Type FROM Case WHERE Id=:c.Id];
         System.debug('+++type: '+cc.Owner.Type);
         System.debug('+++owner: '+cc.OwnerId);
         System.assertEquals(True, ((String) cc.OwnerId).startsWith('00G'));
     }
-
+    
     @isTest static void agentToQueueNoCaseAreaTest() {
         System.debug('+++ testing without case area');
         Case c= new Case(Subject='test 1', OwnerId=UserInfo.getUserId(),Status='Open');
@@ -51,7 +51,7 @@ public class AutoAssignmentAgentToQueueTest {
         c.recordTypeId = recordTypeId;
         c.Topic__c = 'E&F - Enhancement & Financing';
         insert c;
-
+        
         Agents__c agent = new Agents__c(User__c=UserInfo.getUserId(), Logged_On__c=False,
                                         Log_Off_Time_After_Timeout__c=DateTime.now().addDays(-1));
         Group testQueue;
@@ -68,7 +68,7 @@ public class AutoAssignmentAgentToQueueTest {
         Test.startTest();
         Id batchJobId = Database.executeBatch(new AutoAssignmentAgentToQueue(), 5);
         Test.stopTest();
-
+        
         Case cc = [SELECT Owner.Type FROM Case WHERE Id=:c.Id];
         System.debug('+++type: '+cc.Owner.Type);
         System.debug('+++owner: '+cc.OwnerId);
