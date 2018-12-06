@@ -563,37 +563,18 @@ global class ANG_OscarProcessHelper {
 
         try {
 			Account accnt = [SELECT Name, Status__c, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
-					BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
-					ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
-					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
-					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c,
-					Link_agent_name__c, ANG_Accreditation_Model__c, Reason__c, CNS_Agency__c
-					FROM Account
-					WHERE Id = :theOSCAR.account__c FOR UPDATE];
+									BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
+									ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
+									Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
+									Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c,
+									Link_agent_name__c, ANG_Accreditation_Model__c, Reason__c, CNS_Agency__c
+							 FROM Account
+							 WHERE Id = :theOSCAR.account__c FOR UPDATE];
 
-			AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-	        AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
 
-	        if(n == null) {
-	        	theOSCAR.addError('Change code not found: ' + changeCodeId);
-	        	return;
-	        }
-
-	        changeCode.name = n.Change_Code__c;
-	        changeCode.reasonCode = n.Reason_Code__c;
-
-	        if(theOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
-	        	changeCode.memoText = n.Bulletin_Memo_Text__c;
-	        }
-        	else {
-        		changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
-        	}
-	        
-	        changeCode.reasonDesc  = n.Reason_Code_Description__c;
-	        changeCode.status  = n.Account_status_change__c;
-	        changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
-			
-			List<Account> acctList = AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {accnt}, false);
+	        AMS_OSCAR_JSON.ChangeCode changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeId, theOSCAR.ANG_Type_Of_Change__c, accnt.Status__c, null, null);
+	
+			AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {accnt}, true);
 
 			theOSCAR.First_Step_Completed__c = true;
 
