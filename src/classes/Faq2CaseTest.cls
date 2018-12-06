@@ -387,6 +387,14 @@ private class Faq2CaseTest {
         {
             vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
             controller.getGsaCountryList_2();
+			
+	    //WMO356 Start 29/10/2018
+	    controller.pageLoad();
+            Integer topCatGroupIndex = getIndexWithChildes(controller.DataCategoryContainer);
+            controller.topic = String.valueOf(topCatGroupIndex);
+            // System.debug('controller.topic: ' + controller.topic);
+	    // End
+
             controller.refreshAirlineList();
         }
 
