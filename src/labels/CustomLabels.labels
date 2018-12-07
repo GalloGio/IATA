@@ -2740,7 +2740,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseTypeRecordTypeList</shortDescription>
-        <value>CasesMENA,CasesAmericas,Cases_China_North_Asia,ExternalCasesIDFSglobal,CasesEurope,External_Cases_ACCA,ComplaintIDFS</value>
+        <value>CasesMENA,CasesAmericas,Cases_China_North_Asia,ExternalCasesIDFSglobal,CasesEurope,External_Cases_ACCA,ComplaintIDFS,Cases_Global</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area</fullName>
@@ -25887,6 +25887,13 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_TopicsAndArticlesTitle</shortDescription>
         <value>What can we help you with?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Topics_To_Exclude_Country_PL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,Direct_Data_Solutions_DDS__c,E_F__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,SIS_Helpdesk__c,GAP__c,MarketIS__c,PaxIS__c</value>
     </labels>
     <labels>
         <fullName>ISSP_Tracking_ID</fullName>
