@@ -240,6 +240,27 @@ public without sharing class ISSP_AMS_Accreditation {
     public String optInOutBtn {get; set;}
     public String optInOutErrorNoDate {get; set;}
 
+    public List<SelectOption> countryList {
+        get {
+            if (countryList == null) {
+                countryList = new List<SelectOption>();
+                countryList.add(new SelectOption('', ''));
+                
+                Set<String> isoCodesToExclude = new Set<String>{'IO','TF','GS','UM','UP','VI'};
+
+                for (IATA_ISO_Country__c cnt: IATAIsoCountryDAO.getIsoCountries()) {
+                    if (cnt.Region__c == null || isoCodesToExclude.contains(cnt.Iso_Code__c)) continue;
+                        
+                    countryList.add(new SelectOption(cnt.Informatica_Value__c.toUpperCase(), cnt.Name));
+                }
+
+                countryList.sort();
+            }
+            return countryList;
+        }
+        private set;
+    }
+
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
         isNewCase = true;
@@ -491,6 +512,10 @@ public without sharing class ISSP_AMS_Accreditation {
                     amsOfficeType = AMS_Utils.HO; //Branches Abroad have same country requirements as HO in that country
                 } else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
                     amsOfficeType = 'Branch';
+                }
+
+                if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
+                    lblStepE = Label.ISSP_AMS_Step5_ProgressBar_Validate_Data;
                 }
 
                 if(amsOfficeType == AMS_Utils.HO && isHOAccredited && newCase.Reason1__c != AMS_Utils.CASE_REASON_BR_ABROAD)
@@ -2965,7 +2990,7 @@ public without sharing class ISSP_AMS_Accreditation {
             return goToStep4();
         }
         
-        if (!newform.Accept_terms_and_conditions__c) {
+        if (!newform.Accept_terms_and_conditions__c && !isocountry.Multicountry_Enabled__c) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS));
             return null;
         }
