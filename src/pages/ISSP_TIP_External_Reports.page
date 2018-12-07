@@ -1,0 +1,311 @@
+<apex:page controller="ISSP_TIP_External_Reports_Controller" 
+	cache="false" 
+	sidebar="false" 
+	showHeader="false" 
+	standardStylesheets="false" 
+	applyBodyTag="false" 
+	applyHtmlTag="false"
+	action="{!init}">
+
+	<html>
+
+	  	<head>
+	    	<meta charset="utf-8"/>
+	    	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+	    	<c:ISSP_Header ></c:ISSP_Header>
+	    	<c:iss_ap_css />
+	  	</head>
+
+	  	<script src="../../soap/ajax/41.0/connection.js" type="text/javascript" ></script>
+	    <script src="../../soap/ajax/41.0/apex.js" type="text/javascript" ></script>
+
+	    <script src="{!URLFOR($Resource.gaugeJS)}"></script>
+	    <script src="{!URLFOR($Resource.DataTablesBootstrap)}"></script>
+	    <script src="{!URLFOR($Resource.JqueryDataTables)}"></script>  
+	    <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.DataTablesBootstrapCSS,'dataTables.bootstrap.min.css')}"/>
+
+	  	<style>
+	      .section-header {
+	        background-color: rgb(43, 120, 228);
+	        color: white;
+	        line-height: 1.42857143;
+	        padding: 8px;
+	        vertical-align: top;
+	        border-top: 1px solid #ddd;
+	      }
+
+	      .section-header>i {
+	        color: black;
+	        margin-right: 5px;
+	      }
+
+	      .section-body {
+	        margin: 8px;
+	      }
+
+	      .table {
+	        width: 95%;
+	        max-width: 100%;
+	        margin-bottom: 20px;
+	      }
+
+	      main {
+	        background-color: white;
+	      }
+
+	      td>img {
+	        padding-bottom: 7px;
+	        padding-left: 5px;
+	      }
+
+	      i.check {
+	        color: green;
+	      }
+
+	      i.wrong {
+	        color: red;
+	      }
+
+	      #gaugeSection {
+	        padding-left: 0;
+	        text-align: center;
+	        font-size: 14px;
+	      }
+
+	      #gaugeSection > strong {
+	        margin-left: 15px;
+	      }
+
+	      .tableFormat {
+	        padding-left : 5px !important;
+	        padding-right : 15px !important;
+	        padding-bottom: 2px !important;
+	        padding-top :  2px !important;
+	        vertical-align: middle !important;
+	      }
+
+	      .last-updated {
+	        display: block;
+	        width: 100%;
+	        text-align: center;
+	        color: rgb(121, 118, 111);
+	        font-size: 12px;
+	      }
+
+	      .borderless > thead > tr > th,
+	      .borderless > tbody > tr > th,
+	      .borderless > tfoot > tr > th,
+	      .borderless > thead > tr > td,
+	      .borderless > tbody > tr > td,
+	      .borderless > tfoot > tr > td {
+	        border-top: none;
+	      }      
+
+	      div.customTable {
+	        width: 100%;
+	      }
+
+	      div.customTable>div:nth-child(2n-1) {
+	        padding-top: 5px;
+	        width: 50%;
+	        float: left;
+	      }
+
+	      div.customTable>div:nth-child(2n) {
+	        padding-top: 5px;
+	        width: 50%;
+	        float: left;
+	      }      
+
+	      div.customTable2 {
+	        width: 100%;
+	      }
+
+	      div.customTable2>div:nth-child(2n-1) {
+	        padding-top: 5px;
+	        width: 30%;
+	        float: left;
+	      }
+
+	      div.customTable2>div:nth-child(2n) {
+	        padding-top: 5px;
+	        width: 70%;
+	        float: left;
+	      }      
+
+	      div.customTable3 {
+	        width: 100%;
+	      }
+
+	      input + label {
+	        font-weight:normal;
+	      } 
+
+	      @media (max-width: 992px) {
+	        .fa-money {
+	          font-size: 200px;
+	        }
+	        .fa-credit-card-alt {
+	          font-size: 167px;
+	        }
+	        .fa-credit-card {
+	          font-size: 198px;
+	        }
+	        #gaugeSection > strong {
+	          margin-left: 25px;
+	          font-size: 20px;
+	        }
+	        .last-updated {
+	          font-size: 13px;
+	        }
+	      }
+
+	      /* The Modal (background) */
+	      .modal {
+	          display: none; /* Hidden by default */
+	          position: fixed; /* Stay in place */
+	          z-index: 1; /* Sit on top */
+	          padding-top: 100px; /* Location of the box */
+	          left: 0;
+	          top: 0;
+	          width: 100%; /* Full width */
+	          height: 100%; /* Full height */
+	          overflow: auto; /* Enable scroll if needed */
+	          background-color: rgb(0,0,0); /* Fallback color */
+	          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	      }
+
+	      /* Modal Content */
+	      .modal-content {
+	          background-color: #fefefe;
+	          margin: auto;
+	          padding: 20px;
+	          border: 1px solid #888;
+	          width: 40%;
+	      }
+
+	      /* The Close Button */
+	      .closeModal {
+	          color: #aaaaaa;
+	          float: right;
+	          font-size: 28px;
+	          font-weight: bold;
+	      }
+
+	      .closeModal:hover,
+	      .closeModal:focus {
+	          color: #000;
+	          text-decoration: none;
+	          cursor: pointer;
+	      }
+
+	    </style>
+
+
+	    <script>
+	    	function getFileLink(fileName) {
+	            $("#loading").show();
+
+	            setTimeout(function() {
+		            try {
+		                ISSP_TIP_External_Reports_Controller.getExpiringLinkIfap(fileName, function(result, event) {
+		                    var result2= result.replace("&amp;","&");
+		                    var newWin = window.open(result2);
+
+		                    if(!newWin || newWin.closed || typeof newWin.closed=='undefined') {
+		                        alert('{!$Label.ISSP_AMS_ACCR_Alert1}');
+		                    }
+
+		                    $("#loading").hide();
+		                }, {escape:false});
+		            }
+		            catch(err) {
+		            	alert(err.message);
+		            }
+	            }, 500);
+	        }
+
+	        function createDocumentTrackerRecord(fileId, reportId) {
+	        	setTimeout(function() {
+	        		ISSP_TIP_External_Reports_Controller.createDocumentTrackerRecord(fileId, 
+	        																		 reportId,
+	        																		 function(result, event) {}, 
+	        																		 {escape:false});
+	        	}, 500);
+	        }
+
+		</script>
+
+  		<body>
+
+  			<main class="container">
+		      	<c:ISSP_CustomNavigation />
+		      		<!--apex:form id="mainFrm"-->
+		      			<div class="row">
+
+				  		  	<section name="remittance-holding" style="display: block;">
+
+					            <header class="col-xs-12">
+					              <div class="section-header">
+					                <!--apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskEventsHistory.png')}"/-->
+					                <strong>Transparency in Payments (TIP) - Reports</strong>
+					              </div>
+					            </header>
+
+					            <body class="col-xs-12">
+					              <table class="table" style="margin-left: 15px;">
+					                <tr>
+					                  <td>            
+					                    <div class="customTable3">
+					                      <apex:outputPanel id="externalReportsTablePanel">
+					                        <apex:pageBlock >
+					                        
+					                          <table id="externalReportsTable" class="table table-striped " cellspacing="0" width="100%">
+					                            <thead>
+					                                <tr>
+					                                    <th class="tableFormat">Posted Date</th>
+					                                    <th class="tableFormat">File Name</th>
+					                                    <th class="tableFormat">Action</th>
+					                                </tr>
+					                            </thead>
+					                            <tbody>
+					                              <apex:repeat value="{!externalReportsList}" var="externalReport">
+					                              	<apex:repeat value="{!externalReportsMap[externalReport.Id]}" var="amazonFile">
+						                                <tr>                            
+						                                  <td class="tableFormat">
+						                                    <apex:outputText value="{0, date, yyyy-MMM-dd}">
+						                                      <apex:param value="{!amazonFile.CreatedDate}" />
+						                                    </apex:outputText>
+						                                  </td>
+						                                  <td class="tableFormat">{!amazonFile.Name}</td>
+						                                  <td class="tableFormat">
+						                                  	<a class="actionLink" title="view" escape="false" target="_blank" onclick="getFileLink('{!amazonFile.Full_Name_Unique__c}');createDocumentTrackerRecord('{!amazonFile.Id}', '{!externalReport.Id}')" style="color:#015ba7; cursor: pointer; text-decoration: underline;">{!$Label.ISSP_View}</a>
+						                                  </td>
+						                                </tr>
+					                                </apex:repeat>                            
+					                              </apex:repeat>
+					                            </tbody>
+					                          </table>
+					                          <script type="text/javascript">
+					                            $('#externalReportsTable').dataTable( {
+					                              "pageLength": 10,
+					                              "lengthMenu": [ 5, 10, 25, 50 ],
+					                              "searching": false,
+					                              "order": [[ 0, 'desc' ]]
+					                            } );                      
+					                          </script>
+					                        </apex:pageBlock>
+					                      </apex:outputPanel>                
+					                    </div>                  
+					                  </td>
+					                </tr>
+					              </table>
+					            </body>
+				            </section>
+				        </div>
+				  <!--/apex:form-->
+			</main>
+  		</body>
+    </html>
+</apex:page>

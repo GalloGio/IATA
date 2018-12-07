@@ -1453,4 +1453,95 @@
         System.assertNotEquals(true, notifications.isEmpty());
 
     }
+	
+    /*** AMSU-193 ***/
+    @isTest static void prepopulateRF() {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c();
+        country.Name = 'Portugal';
+        country.ISO_Code__c = 'PT';
+        country.ISO_Code_Numeric__c = 11;
+        insert country;
+
+        Account agency = new Account();
+        agency.Name = 'Agency';
+        agency.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        agency.IATACode__c = '24125';
+        agency.Location_Type__c = 'HO';
+        agency.Location_Class__c = 'P';
+        agency.IATA_ISO_Country__c = country.Id;
+        insert agency;
+
+        Contact agencyContact = new Contact();
+        agencyContact.FirstName = 'FirstName';
+        agencyContact.LastName = 'LastName';
+        agencyContact.Email = 'mail@test.com';
+        agencyContact.AccountId = agency.Id;
+        insert agencyContact;
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c();  
+        oscar.Account__c = agency.Id;
+        oscar.OwnerId = UserInfo.getUserId();
+        oscar.Process__c = AMS_Utils.new_HO;    
+        oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();  
+        insert oscar;
+
+        Case cse = new Case();
+        cse.OSCAR__c = oscar.Id;
+        cse.Status = 'New';
+        cse.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        insert cse;
+
+        Attachment attch = new Attachment();
+        attch.OwnerId = UserInfo.getUserId();
+        attch.IsPrivate = true;
+        attch.ParentId = cse.Id;
+        attch.Body = Blob.valueOf('Test');
+        attch.Name = 'test';
+        insert attch;
+
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c();
+        stagingArea.SAAM_Case__c = cse.Id;
+        stagingArea.Account_Name__c = agency.Name;
+        stagingArea.Short_Name__c= agency.Short_Name__c;
+        stagingArea.Location_Class__c = 'P';
+        insert stagingArea;
+
+        oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscar;
+
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c();
+        owner.Name = 'test owner';
+        owner.First_name__c = 'test';
+        owner.Last_name__c = 'owner';
+        owner.Email__c = 'owner.test@test.com';
+        owner.Phone__c = '123456789';
+        owner.Financial_interest__c = 100;
+        owner.AMS_Pax_Accreditation_Form__c = stagingArea.Id;
+        owner.RecordTypeId = Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
+        insert owner;
+
+        Test.startTest();
+        AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c();
+        issOperation.Name = 'TEST';
+        issOperation.RecordTypeId = Schema.AMS_Settlement_System__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BSP').getRecordTypeId();
+        insert issOperation;
+
+        AMS_Operation__c operation = new AMS_Operation__c();
+        operation.Country__c = country.Id;
+        operation.Settlement__c = issOperation.Id;
+        operation.Name = 'TEST';
+        insert operation;
+
+        ANG_BSP_Attributes__c attribute = new ANG_BSP_Attributes__c();
+        attribute.Operation__c = operation.Id;
+        attribute.Remittance_Frequency__c = 'M';
+        attribute.Class_Type__c = 'P';
+        insert attribute;
+
+        AMS_OSCARTriggerHandler.allOnlineAccr = null;
+        oscar.STEP6__c = AMS_Utils.PASSED;
+        update oscar;            
+
+        Test.stopTest();    
+    }
 }
