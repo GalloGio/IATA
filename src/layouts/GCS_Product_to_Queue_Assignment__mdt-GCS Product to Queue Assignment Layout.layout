@@ -18,10 +18,6 @@
                 <behavior>Edit</behavior>
                 <field>GCS_Product_Topic__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Queue_Id__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

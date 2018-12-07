@@ -210,9 +210,9 @@
                     <label>China</label>
                 </value>
                 <value>
-                    <fullName>Chinese Taipei (Taiwan)</fullName>
+                    <fullName>Chinese Taipei</fullName>
                     <default>false</default>
-                    <label>Chinese Taipei (Taiwan)</label>
+                    <label>Chinese Taipei</label>
                 </value>
                 <value>
                     <fullName>Colombia</fullName>
@@ -2114,7 +2114,7 @@
         <type>Picklist</type>
         <valueSet>
             <valueSetDefinition>
-                <sorted>false</sorted>
+                <sorted>true</sorted>
                 <value>
                     <fullName>Accreditation</fullName>
                     <default>false</default>
@@ -2124,6 +2124,11 @@
                     <fullName>Bulletins and News</fullName>
                     <default>false</default>
                     <label>Bulletins and News</label>
+                </value>
+                <value>
+                    <fullName>Calendars</fullName>
+                    <default>false</default>
+                    <label>Calendars</label>
                 </value>
                 <value>
                     <fullName>Forms and Procedures</fullName>
@@ -2141,9 +2146,9 @@
                     <label>Resolutions</label>
                 </value>
                 <value>
-                    <fullName>Calendars</fullName>
+                    <fullName>Taxation</fullName>
                     <default>false</default>
-                    <label>Calendars</label>
+                    <label>Taxation</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -4056,6 +4061,10 @@
                 <fullName>Resolutions</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Taxation</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Language__c</picklist>
@@ -5839,6 +5848,10 @@
                 <fullName>Resolutions</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Taxation</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Language__c</picklist>
@@ -7613,6 +7626,10 @@
                 <fullName>Resolutions</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Taxation</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Language__c</picklist>
@@ -8625,6 +8642,10 @@
             </values>
             <values>
                 <fullName>Calendars</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Taxation</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
