@@ -38,7 +38,7 @@ public class ISSP_AP_FieldLists {
             'Participate_in_any_Remit_scheme__c' 		=> '',
             'Accept_payment_Cards_for_BSP_ticket__c' 	=> '',
             'Join_BSP_ECCB__c' 							=> '',
-            'Flights_operated_in_the_BSP_country__c'	=> ''
+            'Flights_operated_in_the_BSP_country__c'	=> '',
             'BSP_Local_address__c' 						=> '',
             'BSP_Local_Zip_Code__c'						=> '',
             'BSP_Local_City__c' 						=> ''
