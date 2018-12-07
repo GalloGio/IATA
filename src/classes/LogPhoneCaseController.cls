@@ -18,6 +18,7 @@ public with sharing class LogPhoneCaseController {
 				'IATAN' => 'Cases - Americas',
                 'Cases - Global' => 'Cases - Global'};
 	
+    private Map<String, String> caseRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('Case');
 	
 	public LogPhoneCaseController() {
 		if (ApexPages.currentPage().getParameters().get('ContactId') != null) {
@@ -47,7 +48,8 @@ public with sharing class LogPhoneCaseController {
 		String usrRoleId = UserInfo.getUserRoleId();
 		UserRole usrRole = [SELECT Id, Name FROM UserRole WHERE Id = :usrRoleId];
 		
-		strSelectedRType = 'Cases - Europe';
+		strSelectedRType = 'Cases - Europe'; 
+		
 		for (String rolePrefix : mapCaseRTNamePerUserRole.keyset()) {
 			if (usrRole.Name.startsWith(rolePrefix)) {
 				strSelectedRType = mapCaseRTNamePerUserRole.get(rolePrefix);
@@ -57,8 +59,9 @@ public with sharing class LogPhoneCaseController {
         // prepare the new case, prefill the fields
         newcase = new Case();
         if (strSelectedRType != '') {
-        	newcase.RecordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get(strSelectedRType).RecordTypeId ;
+        	newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
         }
+        
     	newcase.ContactId = con.Id;
     	newcase.AccountId = con.AccountId;
     	newcase.ParentId = CaseId;
@@ -87,7 +90,7 @@ public with sharing class LogPhoneCaseController {
     
     public PageReference Save() {
         try {
-        	newcase.RecordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get(strSelectedRType).RecordTypeId ;
+        	newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
         	
         	insert newcase;
         	
@@ -109,7 +112,7 @@ public with sharing class LogPhoneCaseController {
     
     public PageReference SaveAndClose() {
         try {
-        	newcase.RecordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get(strSelectedRType).RecordTypeId ;
+        	newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
         	newcase.Status = 'Closed';
         	
         	insert newcase;

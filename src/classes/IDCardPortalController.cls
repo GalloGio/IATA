@@ -134,8 +134,8 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
             // pass ID Card Application Id
             ID_Card_Application__c idCardApp = new ID_Card_Application__c();
             
-            String singleKAIDCAppId =  IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
-            String defaultIDCApp =  IDCardWebService.getIdCardAppRT('Standard');
+            String singleKAIDCAppId =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
+            String defaultIDCApp =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');
 
             Account[] accounts = [Select a.Short_Name__c, a.ID_Card_KeyAccount_features__c,  a.Name, a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity, a.ShippingStreet, a.ShippingState, a.ShippingPostalCode, a.ShippingCountry, a.ShippingCity, a.IDCard_Key_Account__c
                                   FROM Account a WHERE (a.RecordType.Name = 'Agency' OR a.RecordType.Name = 'Domestic Agency') AND IATACode__c = : IATACodeLocation AND (a.Status__c = : IDCardUtil.ALLOWED_ACCOUNT_STATUS OR a.Status__c = 'Terminated')];

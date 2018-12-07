@@ -1,6 +1,6 @@
 <aura:component extends="c:Base" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="OneId_Fred_AccountSelection_CTRL">
 
-	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
   <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
   <aura:registerEvent name="sendParams" type="c:oneIdURLParams"/>
   <aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
@@ -9,9 +9,9 @@
   <aura:attribute name="label" type="String" access="public"/>
 
 <!-- INTERNAL ATTRIBUTES -->
-	<aura:attribute name="response" type="Object[]" access="private"/>
-	<aura:attribute name="customerTypesByServiceName" type="Object[]" access="private"/>
-	
+  <aura:attribute name="response" type="Object[]" access="private"/>
+  <aura:attribute name="customerTypesByServiceName" type="Object[]" access="private"/>
+  
   <aura:attribute name="customerType" type="String" access="private"/>
   <aura:attribute name="userInput" type="String" access="private"/>
   <aura:attribute name="isValid" type="Boolean" default="false" access="private"/>
@@ -42,16 +42,16 @@
 <!-- BODY -->
 <div style="margin-bottom: 10px;">
 
-	<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">    
-		<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Type Of User</label>
-	    <ui:inputSelect aura:id="typeOfCustomer" class="slds-input required-input" required="true" value="{!v.customerType}" change="{!c.typeOfCustomerChanged}">
+  <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">    
+    <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Type Of User</label>
+      <ui:inputSelect aura:id="typeOfCustomer" class="slds-input required-input" required="true" value="{!v.customerType}" change="{!c.typeOfCustomerChanged}">
             <ui:inputSelectOption text="" label="{!$Label.c.OneId_Fred_Select_Type_of_Company}"/>
-	    		<!-- Get customer type depeding on service name in URL  -->          
-	            <aura:iteration items="{!v.customerTypesByServiceName}" var="customerType">
-             		<ui:inputSelectOption text="{!customerType.label}" label="{!customerType.value}"/>
-        		</aura:iteration>
-	    </ui:inputSelect>
-	</div>
+          <!-- Get customer type depeding on service name in URL  -->          
+              <aura:iteration items="{!v.customerTypesByServiceName}" var="customerType">
+                <ui:inputSelectOption text="{!customerType.label}" label="{!customerType.value}"/>
+            </aura:iteration>
+      </ui:inputSelect>
+  </div>
 
 <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
 
@@ -95,26 +95,26 @@
   <li role="presentation" class="slds-listbox__item">
                     <article class="slds-card">
                       <div class="slds-card__body slds-card__body_inner">
-                      	<div class="slds-grid slds-wrap slds-grid_pull-padded">
-	                      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
-	                        <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">COMMERCIAL NAME: </span><span class="columnValue">{!account.Name} </span>
-	                        </span>
-	                    </div>
-	                      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
-	                         <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">IATA CODE: </span><span class="columnValue">{!account.Airline_designator__c} </span>
-	                                            </span>
-	                      </div>
-	                      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
-	                        <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">ICAO CODE: </span><span class="columnValue">{!account.X8585_Code__c}</span>
-	                                            </span>
-	                      </div>                        
-	                      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
-	                       <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}">
-	                          <span class="slds-form-element__label columnTitle">ICAO MEMBER STATE: </span><span class="columnValue">{!account.IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c}
-	                          </span>
-	                        </span>
-	                      </div>
-	                  </div>
+                        <div class="slds-grid slds-wrap slds-grid_pull-padded">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
+                          <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">COMMERCIAL NAME: </span><span class="columnValue">{!account.Name} </span>
+                          </span>
+                      </div>
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
+                           <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">IATA CODE: </span><span class="columnValue">{!account.Airline_designator__c} </span>
+                                              </span>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
+                          <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">ICAO CODE: </span><span class="columnValue">{!account.X8585_Code__c}</span>
+                                              </span>
+                        </div>                        
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
+                         <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}">
+                            <span class="slds-form-element__label columnTitle">ICAO MEMBER STATE: </span><span class="columnValue">{!account.IATA_ISO_Country__r.fred_icaomemberstate__r.IATA_ISO_Country__r.ISO_Code__c}
+                            </span>
+                          </span>
+                        </div>
+                    </div>
     
                     </div>
                 </article>
@@ -150,7 +150,7 @@
 <aura:if isTrue="{!v.response.length &lt; v.totalResult}">
               <li role="presentation" class="slds-listbox__item lastRowInfo">
                   <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta contactUsSuggestion" role="option" >
-                  		<span class="find">First 20 results shown over {!v.totalResult}. Please refine your search</span>
+                      <span class="find">First 20 results shown over {!v.totalResult}. Please refine your search</span>
                   </div>
                 </li>
               </aura:if>

@@ -34,7 +34,7 @@ public class IDCard_ReplacementNewAgencyInfoCntrTest{
        	String applicationId = '';
         
         insert testData.IDCards_IDCardApplications[3];
-        List<RecordType> rtid = [select id from RecordType where developername= 'IATA_Agency' limit 1];
+        Id rtid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'); 
         Account account1 = new Account();
         account1.Name = 'Test account 1';
         account1.IATACode__c = '3791852';
@@ -45,7 +45,7 @@ public class IDCard_ReplacementNewAgencyInfoCntrTest{
         account1.Location_Type__c = 'HO';
         account1.Location_Class__c = 'C';
         account1.Purge_Flag__c = false;
-        account1.RecordType = rtid[0];
+        account1.RecordTypeId = rtId;
         insert account1;
 
         Contact cont = new Contact();

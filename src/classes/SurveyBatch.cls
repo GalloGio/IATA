@@ -1053,7 +1053,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
   public void processCustomerRecovery(List<Case> scope) {
 
-    Id RT_ComplaintIDFS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ComplaintIDFS');
+    Id RT_ComplaintIDFS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ComplaintIDFS');
 
     for (Group g : [SELECT Id, DeveloperName FROM Group WHERE Type = 'Queue' AND DeveloperName LIKE '%Complaints%']) {
       mapComplaintQueuesPerName.put(g.DeveloperName, g.Id);

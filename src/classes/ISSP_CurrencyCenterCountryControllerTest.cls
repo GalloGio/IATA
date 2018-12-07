@@ -55,32 +55,20 @@ private class ISSP_CurrencyCenterCountryControllerTest {
 		List<Task> tList = new List<Task>();
 		List<Event> eList = new List<Event>();
 
-		List<RecordType> trtList = [Select DeveloperName, Id From RecordType where sObjectType='Task' and isActive=true];
-		Map<String,String> trtMap = new Map<String,String>();
-		for(RecordType trt : trtList){
-			trtMap.put(trt.DeveloperName,trt.Id);
-		}
-
-		List<RecordType> ertList = [Select DeveloperName, Id From RecordType where sObjectType='Event' and isActive=true];
-		Map<String,String> ertMap = new Map<String,String>();
-		for(RecordType ert : ertList){
-			ertMap.put(ert.DeveloperName,ert.Id);
-		}
-
 		// add past tasks
-		tList.add(new Task(WhatId=cp.Id,RecordTypeId=trtMap.get('Airlines_Industry_Communication'),ActivityDate=Date.today().addDays(-1)));
-		tList.add(new Task(WhatId=cp.Id,RecordTypeId=trtMap.get('IATA_Airlines_Survey'),ActivityDate=Date.today().addDays(-2)));
+		tList.add(new Task(WhatId=cp.Id,RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Task', 'Airlines_Industry_Communication'),ActivityDate=Date.today().addDays(-1)));
+		tList.add(new Task(WhatId=cp.Id,RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Task', 'IATA_Airlines_Survey'),ActivityDate=Date.today().addDays(-2)));
 
 		// add future tasks
-		tList.add(new Task(WhatId=cp.Id,RecordTypeId=trtMap.get('Official_Letter'),ActivityDate=Date.today().addDays(2)));
-		tList.add(new Task(WhatId=cp.Id,RecordTypeId=trtMap.get('Press_Release'),ActivityDate=Date.today().addDays(1)));
+		tList.add(new Task(WhatId=cp.Id,RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Task', 'Official_Letter'),ActivityDate=Date.today().addDays(2)));
+		tList.add(new Task(WhatId=cp.Id,RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Task', 'Press_Release'),ActivityDate=Date.today().addDays(1)));
 
 		// add past events
-		eList.add(new Event(WhatId=cp.Id,RecordTypeId=ertMap.get('Conference_Call'),StartDateTime=Datetime.now().addDays(-1),EndDateTime=Datetime.now().addDays(-1).addHours(1)));
-		eList.add(new Event(WhatId=cp.Id,RecordTypeId=ertMap.get('Meeting'),StartDateTime=Datetime.now().addDays(-1),EndDateTime=Datetime.now().addDays(-1).addHours(1)));
+		eList.add(new Event(WhatId=cp.Id,RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Event', 'Conference_Call'),StartDateTime=Datetime.now().addDays(-1),EndDateTime=Datetime.now().addDays(-1).addHours(1)));
+		eList.add(new Event(WhatId=cp.Id,RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Event', 'Meeting'),StartDateTime=Datetime.now().addDays(-1),EndDateTime=Datetime.now().addDays(-1).addHours(1)));
 
 		// add future events
-		eList.add(new Event(WhatId=cp.Id,RecordTypeId=ertMap.get('Task_Force'),StartDateTime=Datetime.now().addDays(1),EndDateTime=Datetime.now().addDays(1).addHours(1)));
+		eList.add(new Event(WhatId=cp.Id,RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Event', 'Task_Force'),StartDateTime=Datetime.now().addDays(1),EndDateTime=Datetime.now().addDays(1).addHours(1)));
 
 		insert tList;
 		insert eList;

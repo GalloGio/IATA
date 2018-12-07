@@ -2,7 +2,7 @@
 public with sharing class Faq2Case2Test {
         
     static testMethod void testFaq2Case010() {
-		Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
+		Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account testAccount = new Account(
 			name= 'testAccount',
 			CNS_Account__c = true,
@@ -15,7 +15,7 @@ public with sharing class Faq2Case2Test {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'United States', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'Europe');
 		insert country;
 
-		String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
 		
 		//Case c=new Case(Subject='test 1',Status='Open', AccountId=parent.id, ContactId=con.id, Region__c = 'Europe', IFAP_Country_ISO__c ='t1' , RecordTypeId = recordTypeId);
 		//insert c;

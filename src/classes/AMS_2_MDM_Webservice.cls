@@ -247,7 +247,9 @@ global class AMS_2_MDM_Webservice {
 
         /*** AMSU-158 ***/
         try {
-            sendCSVReport(listOfErrors);
+            if(listOfErrors != null && !listOfErrors.isEmpty()) {
+            	sendCSVReport(listOfErrors);
+            }
         } catch(Exception ex) {
             System.debug('Error sending report: ' + ex.getMessage());
         }
@@ -262,7 +264,7 @@ global class AMS_2_MDM_Webservice {
         }
 
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-        message.subject = 'XML Generator report - ' + (listOfErrors.isEmpty() ? 'successful generation' : listOfErrors.size() + ' errors');
+        message.subject = 'XML Generator report - ' + listOfErrors.size() + ' errors';
         message.setPlainTextBody('XML Generator errors - Check attachment with execution results - ' + DateTime.now());
 
         if(!listOfErrors.isEmpty()) {

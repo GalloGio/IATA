@@ -6,7 +6,7 @@ public class MITA_PortalAgreementsCtrl_Test {
 	m.selectAccount();
 	m.getAccountTable();
 	m.agreements = new map <Id,MITA_Agreement__c>();
-	Account acc = new Account (Name = 'TestAccount', Type = 'Airport', recordtypeid = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId);
+	Account acc = new Account (Name = 'TestAccount', Type = 'Airport', recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'));
 	database.insert(acc);
 	m.accountid = acc.id;
 	m.selectAccount();

@@ -1,4 +1,4 @@
-public without sharing class Account_Dom {
+public without sharing class Account_Dom { 
 	/****************************************************************************************************
 	        Call trigger method corresponding to trigger event
 	****************************************************************************************************/

@@ -2,7 +2,7 @@
 private class AMS_InspectionHelperTest {
 
     @isTest static void test_setStatusCodeOnAccountForDOM(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -105,7 +105,7 @@ private class AMS_InspectionHelperTest {
     }
 
     @isTest static void test_setStatusCodeOnAccount() {
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -268,7 +268,7 @@ private class AMS_InspectionHelperTest {
 
 
     @isTest static void test_SetStatusCodeToZeroUpdatesRecertExpiryDate(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -300,12 +300,12 @@ private class AMS_InspectionHelperTest {
     }
 
     @isTest static void test_1To1RelationshipAppointmentMSO(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        Id airlineRT = AMS_Utils.getId('Account', 'IATA_Airline');
+        Id airlineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account airline = new Account();
         airline.Name = 'TestAirline';
         airline.Sector__c = 'Airline';
@@ -338,7 +338,7 @@ private class AMS_InspectionHelperTest {
 
 
     @isTest static void test_checkActiveAppointments(){
-        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        Id StandardAccountRt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -419,5 +419,65 @@ private class AMS_InspectionHelperTest {
         
         system.assertEquals(false, ctrl.hasNoActiveInspections);
         //AMSU-161 end
+    }
+
+    @isTest static void updateOSCARTestOKFirstStep() {
+
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+        //loadCredentials();
+
+        Test.startTest();
+        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+                
+        AMS_Oscar__c oscar = [SELECT id, Account__c, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Oscar_Communication_Case_Id__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Case oscarCase = [Select id from case where Oscar__c = :oscar.id];
+        
+        Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = oscarCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
+
+        oscar.Process__c = AMS_Utils.new_GSA;
+        oscar.STEP6__c = 'Passed';
+        oscar.STEP10__c = 'Passed';
+        oscar.STEP9__c = 'Passed';
+        oscar.STEP11__c = 'Passed';
+        oscar.STEP12__c = 'Passed';
+        oscar.STEP13__c = 'Passed';
+        oscar.STEP14__c = 'Passed';
+        oscar.STEP15__c = 'Passed';
+        oscar.STEP17__c = 'Passed';
+        
+        try{
+            update oscar;
+        } catch(Exception e){
+            //if exception "- FIELD_CUSTOM_VALIDATION_EXCEPTION, No Appointments associated" it's ok, just for code coverage
+            System.debug('Exception: ' + e);
+        }
+
+        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
+        insert ao;
+
+        List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
+        AMS_Inspection__c ins1 = new AMS_Inspection__c(oscar__c=oscar.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2', Date_Organisation_Status_attained__c=System.today());
+        agencyInspectionList.add(ins1);
+       
+        insert agencyInspectionList;
+
+        try{
+            update oscar;
+        } catch(Exception e){
+           //if exception "- FIELD_CUSTOM_VALIDATION_EXCEPTION, Appointment has no Territories." it's ok, just for code coverage
+           System.debug('Exception: ' + e);
+        }
+                
+        Test.stopTest();
+
     }
 }

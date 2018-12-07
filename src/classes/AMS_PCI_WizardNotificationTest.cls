@@ -29,10 +29,10 @@ private class AMS_PCI_WizardNotificationTest {
 	        contact.OwnerId = testUser.Id;
 	        update contact;
 	                
-	        RecordType RT = [SELECT Id FROM RecordType WHERE sObjectType = 'Case' AND DeveloperName = :EmailMessageHandler.LIST_VALID_RT.get(0)];
+	        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', EmailMessageHandler.LIST_VALID_RT.get(0));
 	        
 	        Case caseOpened = new Case();
-	        caseOpened.RecordtypeId = RT.Id;
+	        caseOpened.RecordtypeId = rtId;
 	        caseOpened.ContactId = contact.Id;
 	        caseOpened.AccountId = contact.AccountId;
 	        insert caseOpened;

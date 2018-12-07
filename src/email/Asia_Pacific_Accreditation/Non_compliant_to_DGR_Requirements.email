@@ -1,0 +1,40 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2">810/DGR/<font color="#ff0000">xx</font></font></span></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><br></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font size="2"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><span style="mso-no-proof: yes">{!Account.Site}</span></span></font></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font size="2"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><span style="mso-no-proof: yes"></span></span><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p></o:p></span></font>&nbsp;</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><strong><font size="2">{!Account.Name}</font></strong></o:p></span></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes"><o:p><font size="2"></font></o:p></span></b></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><!--?xml:namespace prefix = st1 ns = "urn:schemas-microsoft-com:office:smarttags" /--><st1:address w:st="on"><st1:street w:st="on"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes"><font size="2">{!Account.BillingAddress}</font></span></st1:street></st1:address></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font size="2"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial; mso-no-proof: yes"></span><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p></o:p></span></font></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><u><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><span style="TEXT-DECORATION: none"><font size="2"></font></span></o:p></span></u></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><u><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2"></font></span></u>&nbsp;</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><u><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2">Attn: The Managing Director<o:p></o:p></font></span></u></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><u><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><span style="TEXT-DECORATION: none"><font size="2"></font></span></o:p></span></u></b></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt; TEXT-ALIGN: justify"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2"></font></span>&nbsp;</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt; TEXT-ALIGN: justify"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2">Dear Sir/Madam,<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt; TEXT-ALIGN: justify"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><font size="2">&nbsp;</font></o:p></span></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt; TEXT-ALIGN: justify"><font size="2"><b style="mso-bidi-font-weight: normal"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"></span></b></font></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt; TEXT-ALIGN: justify"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p><font size="2"><strong><u>NON-COMPLIANT OF DGR REQUIREMENTS</u></strong></font></o:p></span></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt; TEXT-ALIGN: justify"><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><o:p>&nbsp;</o:p></span></p><span lang="EN-GB" style="FONT-FAMILY: Arial; mso-bidi-font-family: Arial"><font size="2">
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt">Following the DGR Renewal letter that was sent to you on <span style="COLOR: red">&lt;XX XXX 2010&gt;</span>, we have up until this date not received your renewed Certificate/s. </p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt">This is to inform you that your Cargo Agency is no longer meeting the Cargo Agency Rules for Registration and Retention as stated in the Cargo Agency Handbook. </p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt">According to Resolution 801, Section 1.1.3.2(d) in the Cargo Agency Handbook, this gives us the rights to terminate your Agency with immediate effect and remove it from the Cargo Agency list.</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt">Please see this as a Notice of Termination, should we not hear from you before <span style="COLOR: red">&lt;XX XXX 2010&gt;</span> this termination will take place.</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt">We trust you give this matter your immediate attention.</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt">Thank you.</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt">Best Regards,</p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><span style="COLOR: red">&lt;XXXX XXXX&gt;<o:p></o:p></span></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p>&nbsp;</o:p></p>
+<p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font size="3"><font size="2"><em>In order for us to not loose any important information, kindly answer to this email should you wish to contact us regarding this matter.</em></font> </font></p>
+</font><p class="MsoNormal" style="MARGIN: 0in 0in 0pt; TEXT-ALIGN: justify"><font size="2"></font></p></span>]]></td>
+</tr>
+</table>

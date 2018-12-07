@@ -13,7 +13,7 @@ private class OneIdTermsAndConditionsTest {
 		Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 
-		Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+		Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
 		One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle', License_Upgrade_Required__c= true,Profile_Id__c='a1', Description__c='qualquer',Is_Active__c = true, Portal_Visible__c = true, RecordTypeid = recTypeId, App_Picture_Url__c='oi',Customer_Type_Activation__c = 'Airline');
 		insert oi;

@@ -20,7 +20,7 @@ private class ANG_OSCARNewGenTest {
 
 		System.assertEquals(approvalEmail.size(), 1);
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 		List<Agency_Authorization__c> formsofpayment = [SELECT Id, ANG_FormOfPayment_ID__c FROM Agency_Authorization__c WHERE RecordTypeId =: FormOfPaymentRT];
 
 		String check = '';
@@ -45,7 +45,7 @@ private class ANG_OSCARNewGenTest {
 		Account he = new Account(IATA_ISO_Country__c = ae.IATA_ISO_Country__c, RecordTypeId = ae.RecordTypeId, IATACode__c='1234560',Name='NewGenAgencyHE',Short_Name__c='NewGenAgencyHE');
 		insert he;
 
-		ID formOfPayment = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID formOfPayment = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 		Agency_Authorization__c aa = new Agency_Authorization__c(Account__c = he.Id, RecordTypeId = formOfPayment, Status__c = 'Active', ANG_FormOfPayment_ID__c = 'CC');
 		insert aa;
 
@@ -83,7 +83,7 @@ private class ANG_OSCARNewGenTest {
 		Account he = new Account(IATA_ISO_Country__c = ae.IATA_ISO_Country__c, RecordTypeId = ae.RecordTypeId, IATACode__c='1234560',Name='NewGenAgencyHE',Short_Name__c='NewGenAgencyHE');
 		insert he;
 
-		ID formOfPayment = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID formOfPayment = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		ae.ParentId = he.Id;
 		update ae;

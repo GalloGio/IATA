@@ -959,7 +959,6 @@
         <relatedList>RelatedOrderList</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>Load_Member_Contacts</customButtons>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
         <fields>Airline_Contact_Type__c</fields>
@@ -1129,6 +1128,11 @@
         <relatedList>RelatedContractList</relatedList>
         <sortField>CONTRACT.END_DATE</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Report_ID__c</fields>
+        <relatedList>ISSP_External_Report__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
