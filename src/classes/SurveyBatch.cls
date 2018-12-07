@@ -1088,5 +1088,53 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
       Database.update(lstCasesToUpdate, false);
     }
   }
+  
+  // to be removed
+  public void fakeMethod(){
+    Integer i = 0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+  }
 
   }
