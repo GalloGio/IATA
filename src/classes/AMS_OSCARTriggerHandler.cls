@@ -197,6 +197,91 @@ public class AMS_OSCARTriggerHandler {
 		//if(test.IsRunningTest())
 			performRollbackANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
 
+        /*** AMSU-193 ***/
+        prepopulateRFrequencyStgArea((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+    }
+	
+    /*** AMSU-193 ***/
+    public static void prepopulateRFrequencyStgArea(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
+        Set<String> countryCodes = new Set<String>();
+        List<AMS_Oscar__c> oscarsToValidate = new List<AMS_Oscar__c>();
+        Map<String, Map<String, Set<String>>> mapCountryClassAttributes = new Map<String, Map<String, Set<String>>>();
+
+        Set<String> locationsToCheck = new Set<String> {'P','D','C','R'};
+
+        //Set the NEW processes and Change Process
+        Set<String> processToCheck = AMS_Utils.oscarNewProcesses.clone();
+        processToCheck.add(AMS_Utils.AGENCYCHANGES);
+
+        Map<Id,AMS_Pax_Accreditation_Form__c> stgAreas = allOnlineAccr;
+        if(stgAreas == null || stgAreas.isEmpty()) {
+            stgAreas = getAllAccreditations(oscars);
+        }
+
+        for(AMS_OSCAR__c oscar : oscars) {
+            AMS_Pax_Accreditation_Form__c stgArea = stgAreas.get(oscar.AMS_Online_Accreditation__c);
+            Boolean stgAreaToCheck = stgArea <> null && locationsToCheck.contains(stgArea.Location_Class__c) && String.isBlank(stgArea.Remittance_frequency__c); 
+            Boolean passedSanityCheck = oscar.STEP6__c == AMS_Utils.PASSED && oscar.STEP6__c <> oldMap.get(oscar.Id).STEP6__c;
+
+            System.debug('passedSanityCheck: ' + passedSanityCheck);
+            System.debug('stgAreaToCheck: ' + stgAreaToCheck);
+            System.debug('processToCheck.contains(oscar.Process__c): ' + processToCheck.contains(oscar.Process__c));
+
+            System.debug('stgArea: ' + stgArea);
+
+            if(passedSanityCheck && processToCheck.contains(oscar.Process__c) && stgAreaToCheck) {
+                countryCodes.add(oscar.Country_ISO_Code__c);
+                oscarsToValidate.add(oscar);
+                mapCountryClassAttributes.put(oscar.Country_ISO_Code__c, null);
+            }
+        }
+
+        Schema.RecordTypeInfo assessmentRT = Schema.SObjectType.AMS_Settlement_System__c.getRecordTypeInfosByName().get('BSP');
+        if(!oscarsToValidate.isEmpty() && assessmentRT != null) {
+            List<AMS_Operation__c> operations = [SELECT Id, Name, Country__c, Country__r.ISO_Code__c,
+                                                    (SELECT Class_Type__c , Remittance_Frequency__c FROM BSP_Attributes__r WHERE Class_Type__c IN :locationsToCheck) 
+                                                 FROM AMS_Operation__c
+                                                 WHERE Country__r.ISO_Code__c IN :mapCountryClassAttributes.keySet() AND 
+                                                    Settlement__r.RecordtypeId = :assessmentRT.getRecordTypeId()]; 
+
+            for(AMS_Operation__c operation : operations) {
+                for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
+                    Map<String, Set<String>> mapClassAttributes = mapCountryClassAttributes.get(operation.Country__r.ISO_Code__c);
+                    if(mapClassAttributes == null) {
+                        mapClassAttributes = new Map<String, Set<String>>();
+                        mapCountryClassAttributes.put(operation.Country__r.ISO_Code__c, mapClassAttributes);
+                    }
+
+                    Set<String> classAttributes = mapClassAttributes.get(attribute.Class_Type__c);
+                    if(classAttributes == null) {
+                        classAttributes = new Set<String>();
+                        mapClassAttributes.put(attribute.Class_Type__c, classAttributes);
+                    }
+
+                    classAttributes.add(attribute.Remittance_Frequency__c);
+                }
+            }
+
+            System.debug(mapCountryClassAttributes);
+
+            List<AMS_Pax_Accreditation_Form__c> paxToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
+            for(AMS_Oscar__c oscar : oscarsToValidate) {
+                Map<String, Set<String>> mapClassAttributes = mapCountryClassAttributes.get(oscar.Country_ISO_Code__c);
+                if(mapClassAttributes == null) {
+                    continue;
+                }
+                Set<String> classAttributes = mapClassAttributes.get(oscar.Location_Class__c);
+                if(classAttributes != null && classAttributes.size() == 1 ) {
+                    AMS_Pax_Accreditation_Form__c auxPAX = new AMS_Pax_Accreditation_Form__c (Id = oscar.AMS_Online_Accreditation__c, Remittance_Frequency__c = (new list<string>(classAttributes) )[0] );
+                    paxToUpdate.add(auxPAX); 
+                }
+            }   
+
+            if(paxToUpdate != null && paxToUpdate.size() > 0 ){
+                update paxToUpdate;
+            }
+
+        }        
     }
 
     /*** AMSU-134 Start ***/
@@ -3139,7 +3224,7 @@ public class AMS_OSCARTriggerHandler {
                 updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
         }
 
-        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && (oldOSCAR.ANG_Type_Of_Change__c != 'VMFR' || updatedOscar.ANG_Type_Of_Change__c != 'VMFR') && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
 
             System.debug('Sending the email for the user to anounce approval of the oscar');
 
