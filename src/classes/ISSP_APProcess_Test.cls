@@ -93,17 +93,8 @@ private class ISSP_APProcess_Test
 
     @isTest static void test_method_b()
     {
-
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 'CN', Case_BSP_Country__c = 'test');
         insert country;
-
-        AP_Country_Cities__c csCity = new AP_Country_Cities__c(Country_ISO_Code__c = 'CN',
-                                                                Operation__c = 'BSP',
-                                                                City__c = 'test',
-                                                                Name = 'test1');
-        insert csCity;
-
-
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -136,6 +127,13 @@ private class ISSP_APProcess_Test
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
+
+        AP_Country_Cities__c csCity = new AP_Country_Cities__c(Country_ISO_Code__c = 'CN',
+                                                                Operation__c = 'BSP',
+                                                                City__c = 'test',
+                                                                Name = 'test1');
+        insert csCity;
+
 
         System.runAs(newUser)
         {
@@ -425,7 +423,6 @@ private class ISSP_APProcess_Test
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
         insert country;
-        
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -570,11 +567,14 @@ private class ISSP_APProcess_Test
                                                                 Name = 'test1');
         insert csCity;
 
+        insert new Case_Reason_Service__c(Name='CASS HOT', Service__c='CASS HOT');
+
         Test.startTest();
         System.runAs(newUser)
         {
             //Case testCase = (Case)ISSP_ObjectFactory.createSObject('Case',false,1);
             Case testCase = ISSP_ObjectFactory.createNewCase();
+            testCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
             testCase.BSPCountry__c = 'China';
             testCase.Reason1__c = 'CASS HOT';
             testCase.Customer_recovery__c = false;
@@ -639,7 +639,6 @@ private class ISSP_APProcess_Test
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
         insert country;
-
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -765,10 +764,8 @@ private class ISSP_APProcess_Test
     }
 
     @isTest static void test_method_2() {
-
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
         insert country;
-
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -992,13 +989,11 @@ private class ISSP_APProcess_Test
             Test.setCurrentPage(pr);
 
             ISSP_APProcess ctrl = new ISSP_APProcess();
-
             ctrl.submitOptInOutServer();
 
             List<Case> resultingCases = [SELECT Id FROM Case WHERE Reason1__c = 'IATA Easy Pay' AND Subject LIKE '%Airline Participation - IATA EasyPay%'];
 
             System.assertEquals(countriesOut.size(), resultingCases.size());
-            
             ctrl.getIsNewCountryProcess();
             ctrl.getAuthorizedSignatories();
             ctrl.getDocumentGuide();
@@ -1011,5 +1006,4 @@ private class ISSP_APProcess_Test
         
         Test.stopTest();
     }
-
 }
