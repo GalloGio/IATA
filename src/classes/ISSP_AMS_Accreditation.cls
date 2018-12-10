@@ -260,6 +260,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         private set;
     }
+    public Boolean isMultiCountry {get; private set;}
 
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -287,6 +288,7 @@ public without sharing class ISSP_AMS_Accreditation {
         namEnabled = false;
         cntIFAPContacts = 0;
         isAuthorizedSignature = false;
+        isMultiCountry = false;
 
         newCase = new Case();
         newForm = new AMS_Pax_Accreditation_Form__c();
@@ -516,6 +518,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
                     lblStepE = Label.ISSP_AMS_Step5_ProgressBar_Validate_Data;
+                    isMultiCountry = true;
                 }
 
                 if(amsOfficeType == AMS_Utils.HO && isHOAccredited && newCase.Reason1__c != AMS_Utils.CASE_REASON_BR_ABROAD)
@@ -1369,7 +1372,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if(ISSP_Utilities.isCNS()){ newCase.CNSCase__c=true;}
 
-            if (amsLocationType.contains('GoGlobal')) lblStepE = Label.ISSP_AMS_Step5_ProgressBar_Validate_Data;
+            if (amsLocationType.contains('GoGlobal')) {
+                lblStepE = Label.ISSP_AMS_Step5_ProgressBar_Validate_Data;
+                isMultiCountry = true;
+            } 
 
             agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
 

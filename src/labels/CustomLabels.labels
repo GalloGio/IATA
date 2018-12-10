@@ -18401,6 +18401,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Thank you for submitting your Accreditation application for your Associate Entity.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Validate_Agency_Details</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Validate Agency Details</shortDescription>
+        <value>Validate Agency Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_VR_Disclaimer</fullName>
         <categories>ANG</categories>
         <language>en_US</language>
