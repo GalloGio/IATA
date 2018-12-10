@@ -30,7 +30,7 @@ public class AMS_OSCARTriggerHandler {
     public static Map<String, String> oscarExternalLabels {
         get {
             return new Map<String, String> {
-                'STEP1__c' => System.Label.AMS_OSCAR_STEP1,
+                'STEP1__c'  => System.Label.AMS_OSCAR_STEP1,
                 'STEP10__c' => System.Label.AMS_OSCAR_STEP10,
                 'STEP11__c' => System.Label.AMS_OSCAR_STEP11,
                 'STEP12__c' => System.Label.AMS_OSCAR_STEP12,
@@ -41,20 +41,20 @@ public class AMS_OSCARTriggerHandler {
                 'STEP17__c' => System.Label.AMS_OSCAR_STEP17,
                 'STEP18__c' => System.Label.AMS_OSCAR_STEP18,
                 'STEP19__c' => System.Label.AMS_OSCAR_STEP19,
-                'STEP2__c' => System.Label.AMS_OSCAR_STEP2,
+                'STEP2__c'  => System.Label.AMS_OSCAR_STEP2,
                 'STEP20__c' => System.Label.AMS_OSCAR_STEP20,
                 'STEP21__c' => System.Label.AMS_OSCAR_STEP21,
                 'STEP22__c' => System.Label.AMS_OSCAR_STEP22,
                 'STEP23__c' => System.Label.AMS_OSCAR_STEP23,
                 'STEP24__c' => System.Label.AMS_OSCAR_STEP24,
                 'STEP25__c' => System.Label.AMS_OSCAR_STEP25,
-                'STEP3__c' => System.Label.AMS_OSCAR_STEP3,
-                'STEP4__c' => System.Label.AMS_OSCAR_STEP4,
-                'STEP5__c' => System.Label.AMS_OSCAR_STEP5,
-                'STEP6__c' => System.Label.AMS_OSCAR_STEP6,
-                'STEP7__c' => System.Label.AMS_OSCAR_STEP7,
-                'STEP8__c' => System.Label.AMS_OSCAR_STEP8,
-                'STEP9__c' => System.Label.AMS_OSCAR_STEP9,
+                'STEP3__c'  => System.Label.AMS_OSCAR_STEP3,
+                'STEP4__c'  => System.Label.AMS_OSCAR_STEP4,
+                'STEP5__c'  => System.Label.AMS_OSCAR_STEP5,
+                'STEP6__c'  => System.Label.AMS_OSCAR_STEP6,
+                'STEP7__c'  => System.Label.AMS_OSCAR_STEP7,
+                'STEP8__c'  => System.Label.AMS_OSCAR_STEP8,
+                'STEP9__c'  => System.Label.AMS_OSCAR_STEP9,
                 'STEP41__c' => System.Label.AMS_OSCAR_STEP41,
                 'STEP42__c' => System.Label.AMS_OSCAR_STEP42
             };
@@ -2731,7 +2731,7 @@ public class AMS_OSCARTriggerHandler {
 
             Boolean isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c);
             Boolean isAMSProcess = AMS_Utils.oscarAMSProcesses_ValidateOwnership.contains(oscar.Process__c);//AMSU-180
-            Boolean run_validation = (isAMSProcess && oscar.Process__c <> AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.new_TIDS && oscar.Location_Type__c == 'HO');
+            Boolean run_validation = (oscar.Location_Class__c != 'R') && ((isAMSProcess && oscar.Process__c <> AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.new_TIDS && oscar.Location_Type__c == 'HO'));
 
             if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && (isNewGenProcess || run_validation) && oscar.ANG_Type_Of_Change__c <> AMS_Utils.ANG_VMFR && oscar.Type_of_change__c <> AMS_Utils.VFMR){
 
@@ -3431,11 +3431,11 @@ public class AMS_OSCARTriggerHandler {
     
         ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         ID newNGRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
-
+		ID newNGERT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NG New GE');
         ID corrRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
         ID certRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION'); //FM AMSU-113
         
-        if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT  || updatedOscar.recordTypeID == newNGERT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
+        if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT  || updatedOscar.recordTypeID == newNGERT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_MCAE){
         	//TD2080607: partially refactored below code
         	boolean bGenerateCC =  false;
         	String changeCodeId = '';
