@@ -2120,6 +2120,14 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Acceptance date</value>
     </labels>
     <labels>
+        <fullName>Account</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account</shortDescription>
+        <value>Account:</value>
+    </labels>
+    <labels>
         <fullName>Account_Invoicing_Collection_Cases_Report_ID</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2162,6 +2170,22 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>AddToCart</shortDescription>
         <value>Add To Cart</value>
+    </labels>
+    <labels>
+        <fullName>Add_an_attachment</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Add an attachment</shortDescription>
+        <value>Add an attachment as Proof of Payment</value>
+    </labels>
+    <labels>
+        <fullName>Add_attachment_Action</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Add_attachment_Action</shortDescription>
+        <value>Add an attachment</value>
     </labels>
     <labels>
         <fullName>Add_campaign_member_error</fullName>
@@ -3868,6 +3892,22 @@ Case description: {!Case.Description}
         <protected>false</protected>
         <shortDescription>Discounted Amount</shortDescription>
         <value>Discounted Amount</value>
+    </labels>
+    <labels>
+        <fullName>Documents_POP</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Documents POP</shortDescription>
+        <value>Documents added as proof of payment</value>
+    </labels>
+    <labels>
+        <fullName>Done</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Done</shortDescription>
+        <value>Done</value>
     </labels>
     <labels>
         <fullName>Download_Invoice</fullName>
@@ -6450,6 +6490,14 @@ The sum of percentage cannot exceed 100%</value>
         <protected>false</protected>
         <shortDescription>ICCS will replace Label</shortDescription>
         <value>will replace</value>
+    </labels>
+    <labels>
+        <fullName>ICE_POP_Sidra_Msg</fullName>
+        <categories>SIDRA Proof of payment case message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICE_POP_Sidra_Msg</shortDescription>
+        <value>There are proof of payment add to the account:</value>
     </labels>
     <labels>
         <fullName>ICE_Portal_Service</fullName>
@@ -30666,6 +30714,14 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>Payment number</shortDescription>
         <value>Payment number</value>
+    </labels>
+    <labels>
+        <fullName>Period</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Period</shortDescription>
+        <value>Period:</value>
     </labels>
     <labels>
         <fullName>Personal_information</fullName>
