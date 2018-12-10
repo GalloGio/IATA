@@ -42,6 +42,8 @@ global with sharing class GenericAttachmentListController {
             hasOscar = String.isNotEmpty(relatedCase.parent.OSCAR__c);
         }
     }
+    
+    public string sObjectType	{get; set;}	//stores the API name of the object we are looking the attachments for
 	
 	// assgnTo variable
 	private static Boolean isForPortalStatic = false; // used only for Remote actions
@@ -61,6 +63,10 @@ global with sharing class GenericAttachmentListController {
 		set {
 			if (this.Id == null ) {
 				this.Id = value;
+				//Assign the name of the object
+				sObjectType = getObjectAPIName(this.id);
+				//if is null, is assumed we are working with case
+				if(sObjectType=='') sObjectType = 'Case';
 				init();
 			}
 		}
@@ -76,16 +82,20 @@ global with sharing class GenericAttachmentListController {
 		// check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
-        relatedCase = [Select CaseNumber, Id, parent.OSCAR__c, parent.RecordType__c, parent.RecordTypeId from Case where id = :this.id];
+        if(sObjectType=='Case')
+	        relatedCase = [Select CaseNumber, Id, parent.OSCAR__c, parent.RecordType__c, parent.RecordTypeId from Case where id = :this.id];
 
         if (this.isForPortal) {
             this.showFileIdentifier = false;
-            cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
+            if(sObjectType=='Case')
+           		cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
         } else {
-            // check if case is in recordtypes SAAM (ProcessEuropeSCE) or Oscar Communication
-            cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
-            set<String> setRecordTypes = new set<String>{'ProcessEuropeSCE','OSCAR_Communication'};
-            this.showFileIdentifier = setRecordTypes.contains(cse.Recordtype.DeveloperName);
+        	if(sObjectType=='Case'){
+	            // check if case is in recordtypes SAAM (ProcessEuropeSCE) or Oscar Communication
+	            cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
+	            set<String> setRecordTypes = new set<String>{'ProcessEuropeSCE','OSCAR_Communication'};
+	            this.showFileIdentifier = setRecordTypes.contains(cse.Recordtype.DeveloperName);
+        	}
         }
 
 		refreshList();
@@ -246,6 +256,8 @@ global with sharing class GenericAttachmentListController {
 
 
 	public Boolean getCanAttachFilesToCase() {
+		if(sObjectType!='Case') return false;
+		
         if((cse.Status != 'Draft' && cse.Status != 'Open - EDMC') || ((cse.Reason1__c == 'New SA / CHV – New Code' || cse.Reason1__c == 'CLO - Closure') && cse.Status == 'Draft')) {
             return true;
         } else {
@@ -254,6 +266,8 @@ global with sharing class GenericAttachmentListController {
     }
 
     public Boolean getParentIsOscar() {
+    	if(sObjectType!='Case') return false;
+    	
         if(relatedCase.parent.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')) {
             return true;
         } else {
@@ -293,4 +307,18 @@ global with sharing class GenericAttachmentListController {
         String url;
         String data;
     }
+    
+    //Return the API Name of the object of the ID received in input
+    public static string getObjectAPIName(id theObjId){
+    	if(theObjId == null){
+    		return '';
+    	}else{
+    		try{
+	    		return theObjId.getSObjectType().getDescribe().getName();
+    		}catch(exception e){
+    			return '';
+    		}
+    	}
+    }
+    
 }
