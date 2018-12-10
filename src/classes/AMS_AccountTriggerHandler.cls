@@ -212,7 +212,7 @@ public class AMS_AccountTriggerHandler {
 
     private static List<Account> filterValidAgencies(List<Account> accts){
 
-        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 
         List<Account> toReturn = new List<Account>();
 
@@ -487,8 +487,8 @@ public class AMS_AccountTriggerHandler {
     public static void handleDDUpdates(List<Account> accs, Map<Id,Account> oldMap){
 
         Set<Id> accountsToCheck = new Set<Id>();
-        accountsToCheck.add(AMS_Utils.getId('Account', 'Standard_Account'));
-        accountsToCheck.add(AMS_Utils.getId('Account', 'IATA_Agency'));
+        accountsToCheck.add(RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'));
+        accountsToCheck.add(RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'));
 
 
         Set<String> closedStatus = new Set<String>{

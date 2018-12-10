@@ -17,7 +17,7 @@ private class AMS_HierarchyAnalyserBatchTest
 		Integer howMany3rdLevelAgencies = 4;
 		List<AMS_Agencies_Hierarchy__c> hierarchiesList = new List <AMS_Agencies_Hierarchy__c>();
 
-		ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
 		insert italy;
 		

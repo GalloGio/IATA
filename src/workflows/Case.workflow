@@ -55,6 +55,28 @@
         <template>All/ACCA_Notification_on_New_Case_open_for_more_than_1hr</template>
     </alerts>
     <alerts>
+        <fullName>AMS_Application_Disapproved</fullName>
+        <description>AMS_Application_Disapproved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>AMS/AMS_Application_Disapproved</template>
+    </alerts>
+    <alerts>
+        <fullName>AMS_Application_Validation</fullName>
+        <description>AMS_Application_Validation</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>AMS/AMS_Application_Validation</template>
+    </alerts>
+    <alerts>
         <fullName>AlertsRSMADHub</fullName>
         <description>FDS Case assigned to SCE R&amp;S queue</description>
         <protected>false</protected>
@@ -64,10 +86,6 @@
         </recipients>
         <recipients>
             <recipient>castrom@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>charlierc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -4133,16 +4151,6 @@
         <lookupValue>hyokcholk@iata.org</lookupValue>
         <lookupValueType>User</lookupValueType>
         <name>Assign NFE ACR to system manager</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Assign_to_Agency_Management_Europe_queue</fullName>
-        <field>OwnerId</field>
-        <lookupValue>CasesACCEuropeOffOnshore</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Assign to Agency Management Europe queue</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -12010,7 +12018,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,SAAM,Internal Cases (IDFS ISS),Process</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Internal Cases (IDFS ISS),Process</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -13784,7 +13792,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and  6 and 7 and 8</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and  6 and 7 and 8 and 9</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -13821,6 +13829,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Total_Irregularities__c</field>
             <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.ANG_IsNewGenAgency__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
         </criteriaItems>
         <description>key account management in Europe</description>
         <triggerType>onAllChanges</triggerType>
@@ -15038,10 +15051,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     <rules>
         <fullName>ISS Key controls Dashboard AM</fullName>
         <actions>
-            <name>Assign_to_Agency_Management_Europe_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>Case_Area_Agency_Management</name>
             <type>FieldUpdate</type>
         </actions>
@@ -15068,7 +15077,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org</value>
+            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Subject</field>
@@ -15234,7 +15243,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>,CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
+            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
@@ -15306,7 +15315,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR 19 OR 20 OR (23 AND 24)))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>(((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR (23 AND 24)))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15) OR (10 AND 19 AND 20)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15365,7 +15374,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,New TIDS,New MSO,New HE lite,New HE standard,New AE,GSA / MSO / Handling Agent</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,New TIDS,New MSO,New HE lite,New HE standard,New AE,GSA / MSO / Handling Agent</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
@@ -15385,7 +15394,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>FoP Management,Accreditation Type</value>
+            <value>FoP Management,Accreditation Type,Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy,Annual revalidation</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
@@ -15400,12 +15409,12 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy</value>
+            <value>Financial Security Request,Financial Security Reduction,Financial Security Update,Financial Security Renewal</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Reason1__c</field>
+            <field>Case.Status</field>
             <operation>equals</operation>
-            <value>Annual revalidation</value>
+            <value>Accepted_Pending BG</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15679,17 +15688,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ISSP - Assign to Customer queue</fullName>
-        <actions>
-            <name>ISSP_Assign_to_ISSP_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>If automatic assignment rule fail, the case is assigned to a specific queue.</description>
-        <formula>AND(  LEFT($Profile.Name, 3) = &apos;ISS&apos;,  $User.Id = OwnerId )</formula>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>ISSP - Switch from ISS portal RT to Europe RT</fullName>
         <actions>
             <name>ISSP_Switch_from_ISS_portal_RT_to_Euro</name>
@@ -15703,37 +15701,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         </criteriaItems>
         <description>Switch ISS portal created cases to the &quot;classic web process&quot; by setting the Europe RT</description>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP Deactivate AP process draft</fullName>
-        <active>false</active>
-        <description>Deactivate draft AP joining processs or SAAM / OSCAR Communication cases after 2 weeks</description>
-        <formula>ISPICKVAL(Status,&apos;Draft&apos;)  &amp;&amp;  ISPICKVAL(Origin,&apos;Portal&apos;) &amp;&amp;  OR(RecordType__c = &apos;IDFS Airline Participation Process&apos;, RecordType__c = &apos;SAAM&apos;,RecordType__c = &apos;OSCAR Communication&apos;)</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>ISS_Portal_Make_case_invisible</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Move_to_Recycle_Bin_Europe</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Set_Case_status_to_abandoned</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <timeLength>15</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>ISSP IFAP Assesment done</fullName>
@@ -15785,26 +15752,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ISSP IFAP Notify contact docs succesfully submitted</fullName>
-        <actions>
-            <name>Financial_docs_successfully_submitted</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Submitted</value>
-        </criteriaItems>
-        <description>this should happen when IFAP case status has been changed to &apos;submitted&apos;; the question is if it will be displayed to Admin-financial contact only or to all Admin contacts</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ISSP Notify contact of IFAP Sanity Failure</fullName>
         <actions>
             <name>ISSP_IFAP_Notify_on_Sanity_Failure</name>
@@ -15823,25 +15770,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         </criteriaItems>
         <description>this should happen when IFAP case status has been changed to &apos;sanity check failure&apos;</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP PWC Case from Portal</fullName>
-        <actions>
-            <name>ISSP_PWC_RecordType</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Portal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>GFA communication</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>IW%3A Case assignement to Deskom</fullName>

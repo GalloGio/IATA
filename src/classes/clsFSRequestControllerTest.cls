@@ -114,7 +114,6 @@ private class clsFSRequestControllerTest{
     } 
 
       static testMethod void testTrackedEmails() {  
-        RecordType IFAPcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Financial Review' limit 1];
         
         Account account1 = new Account();
         account1.Name = 'Test account';

@@ -108,7 +108,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,IATA Standard Account,Airline Headquarters</value>
+            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
         </criteriaItems>
         <criteriaItems>
             <field>Category__c</field>
@@ -263,7 +263,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>GDP Account,Agency</value>
+            <value>Agency</value>
         </criteriaItems>
         <criteriaItems>
             <field>Merged_Account__c</field>
@@ -286,7 +286,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>IATA Country Office</value>
+            <value>Standard Account</value>
         </criteriaItems>
         <criteriaItems>
             <field>Category__c</field>
@@ -542,24 +542,6 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Payment_Providers</fullName>
-        <accessLevel>Edit</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>Edit</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>None</opportunityAccessLevel>
-        </accountSettings>
-        <label>Payment Providers</label>
-        <sharedTo>
-            <group>IDFS_excl_GDP</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Payment Provider</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>RW_access_for_IDFS_excl_GDP</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
@@ -575,7 +557,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Standard Account,Others,IATA Standard Account</value>
+            <value>Standard Account,Others</value>
         </criteriaItems>
         <criteriaItems>
             <field>Merged_Account__c</field>

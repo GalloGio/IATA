@@ -1,5 +1,8 @@
 public class AMS_InspectionHelper {
 
+    /*** AMSU-161 ***/
+    public static boolean runnigFromOSCAR = false;
+
     // this method updates the agencies (account) depending on the inspection attached to them
     // if the Accreditation_Endorsement_Status_code__c
     public static void setStatusCodeOnAgency(list<AMS_Inspection__c> inspections){
@@ -148,7 +151,7 @@ public class AMS_InspectionHelper {
     public static void setRecertExpiryDateOnAccount(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
     {
         Map<Id, AMS_Inspection__c> statusCodeChanged = AMS_InspectionHelper.findAMSInspectionsWhereStatusCodeChangedToZero(oldValues, newValues);
-		Id agencyRT = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         List<Account> accountsToProcess = [select id, Expiry_Date__c, Location_Class__c, Status__c, Reason__c, RecordTypeId from Account where id in :statusCodeChanged.keySet()];
 
         if(accountsToProcess.isEmpty())
@@ -244,12 +247,23 @@ public class AMS_InspectionHelper {
 
         try {
             map<Id, Boolean> mapActiveAppointmentPerAccountId = new map<Id, Boolean>();
-            map<Id, Account> mapAccountsPerId = new map<Id, Account>([SELECT Id, Name, IATACode__c FROM Account WHERE Id IN :lstAccountIdsToCheck]);
+            //AMSU-161 adding new fields to the query
+            map<Id, Account> mapAccountsPerId = new map<Id, Account>([SELECT Id, Name, IATACode__c, Location_Class__c,CNS_Agency__c, Date_Organisation_Status_attained__c, Status__c, Reason__c FROM Account WHERE Id IN :lstAccountIdsToCheck]);
+            Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = new Map<Id, List<AMS_Agencies_relationhip__c>>(); //AMSU-161
             list<AMS_Inspection__c> lstActiveInspections = [SELECT Id, Account__c FROM AMS_Inspection__c WHERE Accreditation_Endorsement_Status_code__c <> '0' AND Account__c IN :lstAccountIdsToCheck];
      
-            for (AMS_Inspection__c app : lstActiveInspections) 
-                if (mapActiveAppointmentPerAccountId.get(app.Account__c) == null)
+            for (AMS_Inspection__c app : lstActiveInspections){ 
+                if (mapActiveAppointmentPerAccountId.get(app.Account__c) == null){
                     mapActiveAppointmentPerAccountId.put(app.Account__c, true);
+                }
+            }
+
+            
+            //AMSU-161
+            accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(lstAccountIdsToCheck);
+
+            System.debug('*************** accountHierarchyRelationships: '+accountHierarchyRelationships);
+
 
             list<Task> lstTasksToCreate = new list<Task>();
             OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
@@ -257,6 +271,34 @@ public class AMS_InspectionHelper {
             for (Id acctId : lstAccountIdsToCheck)
                 if (mapActiveAppointmentPerAccountId.get(acctId) == null) {
                     
+                    /* AMSU-161 - begin - Check if we terminate or send the message */
+                    System.debug('*************** Starting appointment check! ');
+
+                    Boolean haveActiveChildren = false;
+                    
+                    for (List<AMS_Agencies_relationhip__c> hierarchyRelations : accountHierarchyRelationships.values()) {
+
+                        System.debug('*************** hierarchyRelations: '+hierarchyRelations);
+
+                        if(hierarchyRelations != null || hierarchyRelations.size() > 0){
+                        
+                            for (AMS_Agencies_relationhip__c relationship : hierarchyRelations) {
+
+                                System.debug('*************** relationship: '+relationship);
+
+                                if(relationship.Parent_Account__c == acctId && relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Child_Account__r.Status__c != '' ){
+                                    haveActiveChildren = true;
+                                }
+                            }
+                        }    
+                    }
+
+                    System.debug('*************** haveActiveChildren: '+haveActiveChildren);
+
+                    if(haveActiveChildren){
+
+                        System.debug('*************** with Active Children - Sending mail to analyst! ');
+
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.Subject = 'Terminate agent with no appointments';
                     mail.targetObjectId = userInfo.getUserId();
@@ -272,14 +314,180 @@ public class AMS_InspectionHelper {
                     }
 
                     emails.add(mail);
+                    }else if(!runnigFromOSCAR){
+                        //Create CLO CC code and terminate the account
+                        List<AMS_Utils.Container> changesContainer = new List<AMS_Utils.Container>();
+                        List<Account> auxAccts = new List<Account>();
+
+                        AMS_OSCAR__c fakeOscar = new AMS_OSCAR__c();
+                        fakeOscar.Account__c = acctId;
+                        fakeOscar.Process__c = AMS_UTils.VOLRELINQUISH;
+                        fakeOscar.Change_effective_as_of__c = System.today();
+                        fakeOscar.Current_Step__c = 'STEP31__c';
+                        fakeOscar.Documentation_remarks__c = 'OSCAR FOR VR by Appointment Termination';
+
+                        for(Account acct: mapAccountsPerId.values()) {
+                           auxAccts.add(acct);
+                        }
+
+                        System.debug('*************** fakeOscar: '+fakeOscar);
+                        System.debug('*************** auxAccts: '+auxAccts);
+
+                        changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.TERMINATION, fakeOscar, auxAccts));
+                        
+                        System.debug('*************** changesContainer: '+changesContainer);
+
+                        //insert the change codes
+                        if (changesContainer.size() > 0) {
+
+                            List<Account> accsToUpdateFromCC = new List<Account>();
+                            List<AMS_OSCAR_JSON.ChangeCode> changeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
+                            List<Account> accts = new List<Account>();
+                            List<AMS_OSCAR__c> theoscars = new List<AMS_OSCAR__c>();
+
+                            //merge everything
+                            for (AMS_Utils.Container c : changesContainer) {
+                                if(c == null) continue;
+
+                                c.accts[0].Reason__c = c.changeCodes[0].reasonCode + '-' + c.changeCodes[0].reasonDesc;
+
+                                changeCodes.addAll(c.changeCodes);
+                                accts.addAll(c.accts);
+
+                                theoscars.addAll(c.oscars);
                 }
+
+                            System.debug('*************** changeCodes: '+changeCodes);
+                            System.debug('*************** theoscars: '+theoscars);
+                            System.debug('*************** accts: '+accts);
+
+                            AMS_ChangeCodesHelper.createAAChangeCodes( changeCodes, theoscars, accts, true);
+
+                            //AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
+                        }
+                        
+                    }
+
+                    /* AMSU-161 - end */
+                    
+                }
+
+            System.debug('*************** emails: '+emails);
 
             if (!emails.isEmpty() && !Test.IsRunningTest())
                 Messaging.SendEmailResult [] r = Messaging.sendEmail(emails);
             
         } catch (Exception e) {
             system.debug('ERROR checkActiveAppointments: ' + e.getMessage());
+            system.debug('ERROR checkActiveAppointments: ' + e.getStackTraceString());
         }
     }
 
+    /*AMSU-161 - begin*/
+    public static String validateGSAforAppointments(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations) {
+
+        String sError = '';
+        Boolean bInvalidAppointmentStatus = false;
+        Boolean bInvalidTerritory = false;
+
+        List<AMS_Inspection__c> oscarAppointments = [SELECT id, Account__c, Nr_of_AMS_Territories__c, Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c = :oscar.id];
+
+        if(oscarAppointments == null || oscarAppointments.size() == 0) {
+            sError = 'No Appointments associated.';
+        }else{
+            for(AMS_Inspection__c appointment : oscarAppointments){
+
+                if(appointment.Nr_of_AMS_Territories__c == null || appointment.Nr_of_AMS_Territories__c < 1) {
+                    bInvalidTerritory = true;
+                }
+                
+                if(appointment.Accreditation_Endorsement_Status_code__c == null || appointment.Accreditation_Endorsement_Status_code__c != '2' && (oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)) {
+                    bInvalidAppointmentStatus = true;
+                }
+                if(appointment.Accreditation_Endorsement_Status_code__c == null || appointment.Accreditation_Endorsement_Status_code__c != '9' && (oscar.Process__c == AMS_Utils.new_GSA || oscar.Process__c == AMS_Utils.new_AHA)) {
+                    bInvalidAppointmentStatus = true;
+                }
+                
+            }
+        }
+
+        if(bInvalidAppointmentStatus) {
+            sError = 'Appointment in incorrect Status.';
+		}
+        if(bInvalidTerritory) {
+            sError = 'Appointment has no Territories.';
+        }
+
+        return sError;        
+    }
+    
+    public static void processGSA_GSSA_HASLagency(List<AMS_Inspection__c> appointments) {
+        if(appointments != null && appointments.size() > 0){
+
+            Set<Id> oscarIds = new Set<Id>();
+            Set<Id> accIds = new Set<Id>();
+
+            for(AMS_Inspection__c appt : appointments){
+                oscarIds.add(appt.OSCAR__c);
+                accIds.add(appt.Account__c);
+            }
+
+            Map<Id, AMS_OSCAR__c> mOscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, Process__c FROM AMS_OSCAR__c WHERE id in :oscarIds]);
+            Map<Id, Account> mAccounts = new Map<Id, Account>([SELECT Id, Status__c FROM Account WHERE id in :accIds]);
+
+            for(AMS_Inspection__c appt : appointments){
+                //If OSCAR__c is not null means that the appointment is being created in an OSCAR
+                if(appt.OSCAR__c != null){
+                    String oscProc = mOscars.get(appt.OSCAR__c).Process__c;
+                    if(oscProc == AMS_Utils.new_GSA_BSP || oscProc == AMS_Utils.new_AHA_BSP || oscProc == AMS_Utils.new_GSSA){
+                        appt.Accreditation_Endorsement_Status_code__c = '2';
+                    }
+                    if(oscProc == AMS_Utils.new_GSA || oscProc == AMS_Utils.new_AHA){
+                        appt.Accreditation_Endorsement_Status_code__c = '9';
+                    }
+                    appt.Date_Organisation_Status_attained__c = System.today();
+                }
+                //If Account__c is not null means that the appointment is being created in an Account
+                if(appt.Account__c != null){
+                    String accStatus = mAccounts.get(appt.Account__c).Status__c;
+                    if(accStatus == 'Approved'){
+                        appt.Accreditation_Endorsement_Status_code__c = '9';
+                    }else{
+                        appt.Accreditation_Endorsement_Status_code__c = '2';
+                    }
+                    appt.Date_Organisation_Status_attained__c = System.today();
+                }
+                
+            }
+        }
+    }
+    /*AMSU-161 - end*/
+
+    /*AMSU-188 - AMSU-161 - begin*/
+    /**
+    When creating a "New Appointment" (under class G or X only), create also a territory record under that appointment 
+    with ISO Country populated with account.IATA_ISO_Country__c or AMS_Pax_Accreditation_Form.ISO_Country__c
+    **/
+    public static void createTerritoryForAppointments(List<AMS_Inspection__c> appointments) {
+        System.debug('createTerritoryForAppointments - Init');
+
+        Set<String> LocationClassForTerritory = new Set<String>{'X','G'};
+
+        List<AMS_Territory__c> territoryToInsert = new List<AMS_Territory__c>();
+        List<AMS_Inspection__c> appointmentsWithAccData = [SELECT Id, Account__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, OSCAR__c, OSCAR__r.Account__r.IATA_ISO_Country__c, OSCAR__r.Account__r.Location_Class__c FROM AMS_Inspection__c WHERE Id in :appointments];
+
+        System.debug('createTerritoryForAppointments - Init - appointmentsWithAccData: ' + appointmentsWithAccData);
+
+        for(AMS_Inspection__c apptm : appointmentsWithAccData){
+            //Check if Account field is set, comming directly from the account, if not then we'll Check if OSCAR field is set, comming directly from the OSCAR
+            if(apptm.Account__c != null && LocationClassForTerritory.contains(apptm.Account__r.Location_Class__c)){
+                territoryToInsert.add( new AMS_Territory__c(Appointment__c=apptm.Id, ISO_Country__c=apptm.Account__r.IATA_ISO_Country__c) );
+            }else if(apptm.OSCAR__c != null && LocationClassForTerritory.contains(apptm.OSCAR__r.Account__r.Location_Class__c)){
+                territoryToInsert.add( new AMS_Territory__c(Appointment__c=apptm.Id, ISO_Country__c=apptm.OSCAR__r.Account__r.IATA_ISO_Country__c) );
+            }
+        }
+        System.debug('createTerritoryForAppointments - Init - territoryToInsert: ' + territoryToInsert);
+        insert territoryToInsert;
+	}
+    /*AMSU-188 - AMSU-161 - end*/
 }

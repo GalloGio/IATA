@@ -282,20 +282,26 @@
     /////////////////////////////////////
     function selectGeneralBut()
     {
-        $('#butComplaint,#butCompliment').removeClass( "lvaActive" );
+        $('#butComplaint,#butCompliment,#butEmergency').removeClass( "lvaActive" );
         $('#butGeneral').addClass( "lvaActive" );
     }
 
     function selectComplaintBut()
     {
-        $('#butGeneral,#butCompliment').removeClass( "lvaActive" );
+        $('#butGeneral,#butCompliment,#butEmergency').removeClass( "lvaActive" );
         $('#butComplaint').addClass( "lvaActive" );
     }
 
     function selectComplimentBut()
     {
-        $('#butComplaint,#butGeneral').removeClass( "lvaActive" );
+        $('#butGeneral,#butComplaint,#butEmergency').removeClass( "lvaActive" );
         $('#butCompliment').addClass( "lvaActive" );
+    }
+
+    function selectEmergencyBut()
+    {
+        $('#butGeneral,#butComplaint,#butCompliment').removeClass( "lvaActive" );
+        $('#butEmergency').addClass( "lvaActive" );
     }
 
     //////////////////////////////////////
@@ -448,7 +454,7 @@
           <div class="row">
               <div class="col-sm-2"></div>
               <div class="col-sm-8 ">
-                  <div id="butGeneral" class="col-sm-12 col-md-4 removeMargin buttons1LiveAgentRow lvaButton lvaActive"
+                  <div id="butGeneral" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton lvaActive"
                        title="{!$Label.ISSP_General_enquiries}"
                        onclick="GeneralQueueMethod();selectGeneralBut();return false;">
                       <div class = "thumbButt1">
@@ -456,7 +462,7 @@
                       </div>
                       <div class="pageSectionHeader">{!$Label.LVA_AskQuestion}</div>
                   </div>
-                  <div id="butCompliment" class="col-sm-12 col-md-4 removeMargin buttons1LiveAgentRow lvaButton"
+                  <div id="butCompliment" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton"
                        title="{!$Label.ISSP_Compliments}"
                        onclick="ComplimentGeneralQueueMethod();selectComplimentBut();return false;">
                       <div class = "thumbButt1">
@@ -464,13 +470,21 @@
                       </div>
                       <div class="pageSectionHeader">{!$Label.LVA_ShareACompliment}</div>
                   </div>
-                  <div id="butComplaint" class="col-sm-12 col-md-4 removeMargin buttons1LiveAgentRow lvaButton"
+                  <div id="butComplaint" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton"
                        title="{!$Label.ISSP_Complaints}"
                        onclick="ComplaintMethod();selectComplaintBut();return false;">
                           <div class = "thumbButt1">
                               <apex:image url="{!$Resource.LVA_IconsExclamation}"/>
                           </div>
                           <div class="pageSectionHeader">{!$Label.LVA_VoiceAConcern}</div>
+                  </div>
+                  <div id="butEmergency" class="col-sm-12 col-md-3 removeMargin buttons1LiveAgentRow lvaButton"
+                       title="{!$Label.ISSP_Emergency_Support}"
+                       onclick="EmergencyMethod();selectEmergencyBut();return false;">
+                          <div class = "thumbButt1">
+                              <apex:image url="{!$Resource.LVA_IconsEmergency}"/>
+                          </div>
+                          <div class="pageSectionHeader">{!$Label.ISSP_Emergency_Support}</div>
                   </div>
               </div>
               <div class="col-sm-2"></div>
@@ -553,6 +567,11 @@
                             <ul class="nav1" >
                                 <li style=" display:{!IF(isCompliment,'none','block')}">
                                     <!-- Topic PICKLIST -->
+                                    <apex:outputPanel rendered="{!Clicked_EmergencyRequest}">
+                                        <p style="color: #3174AF;padding: 10px 0px 20px 0px;font-weight: bold;text-align: justify;">
+                                            {!$Label.ISSP_Emergency_Support_Subtitle}
+                                        </p>
+                                    </apex:outputPanel>
                                     <apex:outputpanel id="topPnl">
                                         <div class="row form-group">
                                             <label class=" lbl col-lg-5 control-label" for="exampleInputEmail1"><span class="required"></span>{!$Label.ISSP_F2CTopic}</label>
@@ -560,7 +579,8 @@
                                                 <apex:selectlist styleclass="form-control rec mandatory"
                                                                  value="{!topic}" required="true" multiselect="false" size="1"
                                                                  onchange="refreshTopicPickList();">
-                                                    <apex:selectoptions value="{!lst_selectTopics}" />
+                                                    <apex:selectoptions value="{!lst_selectTopics}" rendered="{!NOT(Clicked_EmergencyRequest)}"/>
+                                                    <apex:selectoptions value="{!lst_selectTopics_Emergencies}" rendered="{!Clicked_EmergencyRequest}"/>
                                                 </apex:selectlist>
                                                 <div class="hiddenerror" style="display: none;">
                                                     <p class="errormsg" style="line-height: 26px;">ERROR</p>
@@ -742,7 +762,7 @@
                                                             </div>
                                                         </div>
                                                         <apex:outputpanel rendered="{!AND(field.required,field.fieldValue == 'Description')}"> <!--Description text area-->
-                                                            <apex:inputfield styleclass="form-control descriptiontextarea rec mandatory" value="{!newCase[field.fieldValue]}" />
+                                                            <apex:inputfield styleclass="form-control descriptiontextarea rec mandatory" value="{!newCase[field.fieldValue]}" html-maxlength="31900"/>
                                                         </apex:outputpanel>
                                                     </li>
                                                 </apex:outputpanel>
@@ -846,7 +866,10 @@
                                                 <h4 class="modal-title modalTitle">{!$Label.LVA_CallUs}</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <p><apex:outputText value="{!CallUsFinalString}" escape="false" /> </p>
+                                                <p>
+                                                    <apex:outputText value="{!CallUsFinalString}" escape="false" rendered="{!NOT(Clicked_EmergencyRequest)}"/>
+                                                    <apex:outputText value="{!CallUsEmergencyFinalString}" escape="false" rendered="{!Clicked_EmergencyRequest}"/>
+                                                </p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -893,14 +916,18 @@
 
                                     <row>
                                         <div class="col-md-1"></div>
-
+                                        
+                                        <!-- If not show call Us  fill the columns space with empty sapce -->
+                                        <apex:outputPanel layout="none" rendered="{!IF(showCallUsButton==true, false, true)}">
+                                                    <div class="col-md-1"></div>
+                                        </apex:outputPanel>
 
                                         <!-- If not show chat buttons fill the columns space with empty sapce -->
                                         <apex:outputPanel layout="none" rendered="{! AND(IF(showChatButtons==false, true, false), currentButtonsToShow == 'CancelAndCreateACase')}">
                                             <div class="col-md-2"></div>
                                         </apex:outputPanel>
 
-                                        <div class="col-sm-12 col-md-3">
+                                        <div class="{!IF(showCallUsButton==true, 'col-sm-12 col-md-3', 'col-sm-12 col-md-4')}">
                                             <!-- CancelAndCreateACase - CREATE CASE BUTT -->
                                             <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
                                                                                             newCase.IFAP_Country_ISO__c != null)}">
@@ -993,8 +1020,11 @@
                                         <!-- ************************** -->
                                         <div class = "col-sm-12 col-md-3 ">
                                             <!-- CancelAndCreateACase - CALL US BUTTON -->
-                                            <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
-                                                                                        newCase.IFAP_Country_ISO__c != null)}">
+                                            <apex:outputPanel id="callButtonPnl" layout="none" rendered="{!AND(
+                                                                                            IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                                                            newCase.IFAP_Country_ISO__c != null,
+                                                                                            IF(showCallUsButton==true, true, false)
+                                                                                            )}">
                                                 <div class = "col-md-12 removeMargin text-center lvaButton" id="butCallUs"
                                                      onclick="popupCallUs(); return false;"
                                                      title="{!$Label.LVA_CallUs}" >
@@ -1057,6 +1087,8 @@
                                                   rerender="MainPnl,MainTitle,err,FAQsPanel" />
                              <apex:actionfunction name="GeneralQueueMethod" action="{!GeneralQueueMethod}"
                                                   rerender="MainPnl,MainTitle,FieldsRep,FAQsPanel,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" />
+                            <apex:actionfunction name="EmergencyMethod" action="{!createAnEmergency}"
+                                                 rerender="MainPnl,MainTitle,err,FAQsPanel" />
                         <!-- compliment ed-->
                              <apex:actionfunction name="ComplimentGeneralQueueMethod" action="{!ComplimentGeneralQueueMethod}"
                                                   rerender="MainPnl,MainTitle,FieldsRep,FAQsPanel,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" />
@@ -1077,7 +1109,7 @@
                                     <apex:actionFunction name="refreshSubTopicPickList"
                                                          action="{!refreshSubTopicPickList}"
                                                          oncomplete="GenerateSubTopicHelpText();"
-                                                         reRender="chatButtonsPnl,countryPnl,actStatusId,subtopPnl_Val, areaOfConcernPnl_Val,areaOfConcernPnl, RightPanel,OPpbButton, modalWindowId"
+                                                         reRender="chatButtonsPnl,callButtonPnl,countryPnl,actStatusId,subtopPnl_Val, areaOfConcernPnl_Val,areaOfConcernPnl, RightPanel,OPpbButton, modalWindowId"
                                                          immediate="{!CASE(currentButtonsToShow, 'OnlyCancel', 'false',
                                                                               'CancelAndCreateACase', 'false',
                                                                               'CancelAndSubmit','true', 'false')}"
@@ -1095,8 +1127,8 @@
                                     <apex:actionFunction name="createStatRecord" action="{!createSatisfiedRecord}" reRender="mainHolder,OPpbButton" immediate="true"/>
 
                                      <apex:actionFunction name="GenerateFieldsBySettings" action="{!GenerateFieldsBySettings}" reRender="mainHolder,OPpbButton" immediate="true"/>
-                             <apex:actionfunction name="refreshAirlineList" action="{!refreshAirlineList}" rerender="chatButtonsPnl,FieldsRep,countryPnl,AirlinesPnl,OPpbButton" status="actStatusId2" />
-                             <apex:actionfunction name="refreshAirlineList1" action="{!copyCountryISO}" rerender="chatButtonsPnl,SLonchange,OPpbButton" />
+                             <apex:actionfunction name="refreshAirlineList" action="{!refreshAirlineList}" rerender="chatButtonsPnl,FieldsRep,countryPnl,AirlinesPnl,OPpbButton,callButtonPnl" status="actStatusId2" />
+                             <apex:actionfunction name="refreshAirlineList1" action="{!copyCountryISO}" rerender="chatButtonsPnl,SLonchange,OPpbButton,callButtonPnl" />
 
 
                                     <!-- ACtion Functions About HelpText  -->

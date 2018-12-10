@@ -45,18 +45,10 @@ public without sharing class ISSP_TD {
 		ISSP_Record_Type_Mgmt__c rtMgmt =  ISSP_Record_Type_Mgmt__c.getValues('Treasury Dashboard');
 		if (rtMgmt != null){
 			if (rtMgmt.Record_Type_Name__c != null){
-				recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = :rtMgmt.Record_Type_Name__c LIMIT 1].Id;
+				recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', rtMgmt.Record_Type_Name__c);
 			}
 		}
-		/*
-		defaultTopic = '';
-		ISSP_FAQ2Case_Default_Topic__c topicRecord =  ISSP_FAQ2Case_Default_Topic__c.getValues('Treasury Dashboard');
-		if (topicRecord != null){
-			if (topicRecord.Topic_Value__c != null){
-				defaultTopic = topicRecord.Topic_Value__c;
-			}
-		}
-		*/
+
 		User myUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
 		List <Portal_Application_Right__c> accessList = [SELECT Id, Portal_Application__r.TD_Access_Level__c,
 														Portal_Application__r.TD_Included_Dashboards__c,
@@ -133,17 +125,8 @@ public without sharing class ISSP_TD {
 			}
 		}
 		
-		/*
-		List <User> userList = [SELECT Id, ISSP_2FA_Key__c, ISSP_2FA_Valid_Session__c
-								FROM User WHERE Id = :UserInfo.getUserId()];
-		if (!userList.isEmpty()){
-			if (!userList[0].ISSP_2FA_Valid_Session__c){
-				PageReference pr = new PageReference('/ISSP_2FA');
-				return pr;
-			}
-		}
-		*/
 		return null;
+		
 	}
 	
 	public static PageReference toLogout_TD(){

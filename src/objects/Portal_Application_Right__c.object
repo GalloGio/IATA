@@ -112,7 +112,7 @@
         <label>Reason</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -373,7 +373,7 @@
         <externalId>false</externalId>
         <label>ICCS Currency Center Current Visit</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -383,7 +383,7 @@
         <externalId>false</externalId>
         <label>ICCS Currency Center Previous Visit</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -465,7 +465,7 @@
         <label>New Role Requested</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -696,7 +696,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <fullName>Top_Account__c</fullName>
         <description>Id of the Top Account in the account hierarchy.</description>
         <externalId>false</externalId>
-        <formula>IF(Contact__r.Account.Top_Parent__r.Id  &lt;&gt;  null, Contact__r.Account.Top_Parent__r.Id, Account__c)</formula>
+        <formula>IF(Contact__r.Account.Top_Parent__r.Id  &lt;&gt;  null, CASESAFEID(Contact__r.Account.Top_Parent__r.Id), CASESAFEID(Account__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Top Account</label>
         <required>false</required>
@@ -1082,6 +1082,23 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
         <errorMessage>Please click on &apos;Cancel&apos; and use the &apos;Assign Financial Assessment Contact&apos; button on the Contact in order to Grant or Deny IFAP access.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Restrict_Access_For_Payment_Providers</fullName>
+        <active>true</active>
+        <description>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</description>
+        <errorConditionFormula>AND( 
+Portal_Application__r.Name = &apos;Transparency in Payments (TIP)&apos;, 
+OR(Text(Right__c) = &apos;Access Granted&apos;, Text(Right__c) = &apos;Access Requested&apos;), 
+NOT(INCLUDES(Contact__r.Account.Account_Role__c,&apos;Payment Provider&apos;)), 
+AND( 
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;ISS&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;IATA Portal&apos;)), 
+NOT(BEGINS($Profile.Name, &apos;identity&apos;)) 
+) 
+)</errorConditionFormula>
+        <errorMessage>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Restrict_IEP_request</fullName>
         <active>true</active>
         <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
@@ -1142,9 +1159,10 @@ NOT(CONTAINS($Profile.Name,&quot;System administrator&quot;))
         <fullName>TD_cannot_be_approved_by_admin</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
- OR (ISCHANGED(Right__c) , ISNEW() ),
+ OR (ISCHANGED(Right__c) , ISNEW()
+ ),
  Application_Name__c = &apos;Treasury Dashboard&apos;,
- OR(AND(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)),NOT(ISPICKVAL(PRIORVALUE(Right__c),&apos;Access Requested&apos;))), 
+ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)), 
   $User.TD_Team__c = false
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by IATA ‘Treasury Dashboard’ team.</errorMessage>

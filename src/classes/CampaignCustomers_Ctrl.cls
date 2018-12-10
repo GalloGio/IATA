@@ -79,8 +79,11 @@ public class CampaignCustomers_Ctrl
 
         //Countries
         availableCountries = new List<SelectOption>();
-        for(IATA_ISO_Country__c c : [Select Id, Name FROM IATA_ISO_Country__c WHERE Name != 'All Countries' ORDER BY Name])
-            availableCountries.add(new SelectOption(c.Id, c.Name));
+        for(IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+            if(c.Name != 'All Countries'){
+                availableCountries.add(new SelectOption(c.Id, c.Name));
+            }
+        }
     }
 
     //Method called when click on  Generate Campaign Members button 
@@ -91,7 +94,9 @@ public class CampaignCustomers_Ctrl
         //prodWithoutStdPrice = new List<String>();
 
         //-- Build SOQL to retrieve OrderItems 
-        String query = 'SELECT OrderId, Order.BillToContactId, Product__c, Quantity, Invoice_Date__c FROM OrderItem WHERE IsDeleted = false and Order.Type in (\'Order\', \'History\') AND Order.Status != \'New\' AND Order.Status != \'Cancelled\'';
+        String query = 'SELECT OrderId, Order.BillToContactId, Product__c, Quantity, Invoice_Date__c, Product_Number__c FROM OrderItem WHERE IsDeleted = false AND ' + 
+                        'Order.Type in (\'Order\', \'History\') AND Order.Status != \'New\' AND Order.Status != \'Cancelled\' AND ' + 
+                        'Order.BillToContact.Status__c NOT IN (\'Inactive\', \'Retired\', \'Left Company / Relocated\') ';
 
         //-- Products criteria
         if(selectedProducts != null && selectedProducts.size() > 0)

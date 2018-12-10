@@ -12,32 +12,25 @@ private class trgICCS_ASP_Case_Validation_Test {
         insert country;
         
         // Create an Airline HQ account & a contact for it
-        //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        //Id AirlineHQ_RT_Id = mapRTIdsPerRTName.get('Airline Headquarters');
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
-        //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        //Id ContactStd_RT_Id = mapRTIdsPerRTName.get('Standard');
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
         // create an Airline Coding Application case on the account
-        ID AirlineCodingRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
-        Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1');
+        ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
+        Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1', Reason1__c='Designator Form');
         insert cs_coding1;
         
-        //////////////////////////
         test.startTest();
         
         // Create a Case for the Account
-        //Id RT_ICCS_ASP_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ASP Management').RecordTypeId ;
-        //Id RT_ICCS_ASP_Id = mapRTIdsPerRTName.get('FDS ASP Management');
-        Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ASP_Management');
+        Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management');
         Case cs = new Case(RecordTypeId = RT_ICCS_ASP_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'FDS - Create Authorized Signatories Package', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, Confirmation_Remarks__c = 'remarks', Eligibility_Documents_Checklist_approved__c = true);  
+                        ContactId = c.Id, AccountId = a.Id, Confirmation_Remarks__c = 'remarks', Eligibility_Documents_Checklist_approved__c = true,Reason1__c='Designator Form');
         insert cs;
         
         List<Case> lstCases = [SELECT Id, Account.Ongoing_Request_for_Documents__c FROM Case WHERE RecordTypeId = :RT_ICCS_ASP_Id];
@@ -47,7 +40,7 @@ private class trgICCS_ASP_Case_Validation_Test {
         // try to open a new ASP case on the same account, check that it is not inserted
         try {
             Case cs2 = new Case(RecordTypeId = RT_ICCS_ASP_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'FDS - Create Authorized Signatories Package', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, Confirmation_Remarks__c = 'remarks', Eligibility_Documents_Checklist_approved__c = true);
+                        ContactId = c.Id, AccountId = a.Id, Confirmation_Remarks__c = 'remarks', Eligibility_Documents_Checklist_approved__c = true,Reason1__c='Designator Form');
             insert cs2;
         } catch(Exception e) {}
         
@@ -66,7 +59,7 @@ private class trgICCS_ASP_Case_Validation_Test {
         // try to open a new Airline Coding case on the same account, check that it is not inserted 
         Boolean isExceptionRaised = false;
         try {
-	        Case cs_coding2 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs2');
+	        Case cs_coding2 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs2',Reason1__c='Designator Form');
 	        insert cs_coding2;
         } catch(Exception e) {
         	isExceptionRaised = true;

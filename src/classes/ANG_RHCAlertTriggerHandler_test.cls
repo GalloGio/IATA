@@ -22,10 +22,13 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Expire_in_days__c = 0,
 			Identifier__c = 'notification'
 			);
+
+		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-FR');
+	    insert iss;
 		
 		// Create a new ISO Country
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true);
-		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE);
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, AMS_Settlement_System__c = iss.id);
+		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE, ANG_Enable_NewGen__c = true);
 		insert new List<IATA_ISO_Country__c>{country, defCountry};
 
 		// Create an Airline HQ account
@@ -36,8 +39,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Remittance_frequency__c = 'M',
 			ANG_Accreditation_Model__c = 'Cash',
 			IATA_ISO_Country__c = country.Id,
-			RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
-			);
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Agency')
+		);
 		insert a;
 
 		Agency_Applied_Change_code__c agencyAppliedCC = new Agency_Applied_Change_code__c(
@@ -54,8 +57,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Subject = 'rception case', 
 			AccountId = a.Id, 
 			Status = 'Open', 
-			RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE') 
-			);
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'InternalCasesEuropeSCE') 
+		);
 		insert c;
 
 
@@ -127,9 +130,14 @@ private class ANG_RHCAlertTriggerHandler_test {
 		};
 
 		insert changeCodeList;
+
+		List<ISSP_CS__c> isspcs = new List<ISSP_CS__c>();
+		isspcs.add(new ISSP_CS__c(Name= 'ISS OperationalCalendar Airline Profil', Value__c = '00ew0000001QRzE'));
+		isspcs.add(new ISSP_CS__c(Name= 'ISS OperationalCalendar Agency Profile', Value__c = '00ew0000001QRzC,00ew0000001QoBp'));
+		insert isspcs;
 	}
 
-	private static testmethod voId test_sucess_legacy(){
+	private static testmethod void test_sucess_legacy(){
 
 		Test.startTest();
 
@@ -152,8 +160,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			ANG_Threshold_Level__c = '50%'
 			);
 
-
-		String processRecorType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CS_Process_IDFS_ISS');
+		String processRecorType = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'CS_Process_IDFS_ISS');
 
 		System.assertEquals(0, [SELECT Id FROM Case WHERE RecordTypeId = :processRecorType].size(), 'No process should be created at this time');
 		
@@ -169,7 +176,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 	private static testmethod voId test_sucess_newgen(){
 
 		Test.startTest();
-
+		
 		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'FR'];
 		country.ANG_Enable_NewGen__c = true;
 		update country;
@@ -193,6 +200,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
+		
+
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
 			ANG_Account__c = rhcInfo.ANG_AccountId__c,
@@ -256,7 +265,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
@@ -312,7 +321,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
@@ -368,7 +377,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
@@ -427,7 +436,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
@@ -473,7 +482,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -527,7 +536,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 			List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-			ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 			authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -584,7 +593,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -641,7 +650,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -697,7 +706,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -770,7 +779,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeID('Agency_Authorization__c', 'FormOfPayment');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
@@ -846,7 +855,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		insert oscar;
 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		ID caseRT = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
 		oscarCase.AccountId = a1.Id;
@@ -856,10 +865,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 		insert oscarCase;
-
-
-
-		ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
+	
+		ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_no_Cash');
 
 		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
 
@@ -881,7 +888,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		insert theAccreditation;
 
-		ID personRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+		ID personRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
 		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id, 
 			First_name__c='Bugs', Last_name__c='Bunny', Agency_owner__c = true, Email__c='bugsandbunny@imagsd.com' , PhoneNational__c = '123123123',
@@ -895,6 +902,115 @@ private class ANG_RHCAlertTriggerHandler_test {
 		
 
 		return oscar;
+	}
+
+	private static testmethod void testTicketingAuthorityRemoval(){
+
+    	Account a = [Select Id, Remittance_frequency__c from Account limit 1];
+    	System.debug('##Account: '+ a.Remittance_frequency__c);
+
+    	AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
+	    	IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where Name = 'France'].id,
+	        ANG_RTS_Severity__c='Red',
+	        ANG_Send_Email_Agent__c=true ,
+	        ANG_Create_Sidra_Lite__c= true, 
+	        ANG_Remove_Ticketing_Authority__c= true,
+	        recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
+     	);
+
+      	insert csa;
+
+	    Operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = [SELECT Id FROM AMS_Settlement_System__c WHERE Name = 'BSP-FR'][0].Id, 
+	    	First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
+
+	    insert op;
+	    
+	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id);
+	    insert con;
+
+	    //NEWGEN-2005
+	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
+
+	    test.StartTest();
+
+	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+		    Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+		    ang_Severity__c='Red',
+		    ANG_Account__c = a.Id
+	    );
+	    insert ra;
+
+	    test.StopTest();
+
+	    List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
+	    System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
+
+	    List<ISSP_Web_Service_Log__c> logs = [Select Id From ISSP_Web_Service_Log__c where Case__c = :c.get(0).Id];
+	    System.assertEquals(logs.size(), 1, 'Response was not saved');
+
+  	}
+
+  	private static testmethod void testRedAlertCreationNoConfigurationMatched(){
+	    // no configuration for the account country found, so it will use the default one
+	    AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
+	    insert iss;
+
+	    IATA_ISO_Country__c  country2= new IATA_ISO_Country__c(
+		    Name = 'Portugal', 
+		    ISO_Code__c = 'PT',
+		    AMS_Settlement_System__c = iss.id,
+		    ANG_Enable_NewGen__c = true
+	    );
+
+	    insert country2 ;
+
+	    AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
+	        IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where iso_code__C='WW'].id,
+	        ANG_Create_Sidra_Lite__c= true, 
+	        ANG_Remove_Ticketing_Authority__c= false,
+	        ANG_Send_Email_Agent__c=false ,
+	        ANG_RTS_Severity__c='Red',
+	        recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
+	    );
+
+	    insert csa;
+
+	    Account a = new Account(
+	    	name='acc1',
+		    Location_Type__c='HE',
+		    Location_Class__c='P',
+		    IATAcode__c = '0000',
+		    Remittance_frequency__c='M',
+		    ANG_Accreditation_Model__c ='Cash',
+		    IATA_ISO_Country__c = country2.id,
+		    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
+	    );
+	   	insert a;     	   
+
+	    operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id, 
+	    	First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
+
+	    insert op;
+	    
+	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id);
+	    insert con;
+
+	    //NEWGEN-2005
+	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
+	    
+	    test.StartTest();
+	    
+	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+		    Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+		    ang_Severity__c='Red',
+		    ANG_Account__c = a.Id
+	    );
+	    insert ra;
+	    
+	    test.StopTest();
+	    
+	    List<Case> c = [Select Id From Case Where AccountId = :a.Id and RecordType.Name='SIDRA Lite' limit 1];
+	    System.assertEquals(c.size(), 1, 'Sidra lite case was not created');
 	}
 
 }

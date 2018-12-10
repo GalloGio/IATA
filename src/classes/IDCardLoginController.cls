@@ -118,7 +118,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                 return prApplicationForm;
             }
 
-            ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
+            ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
 
             // Kofi: 12/09/2013. Card_Status__c is removed from the criteria.
             // INC183592
@@ -413,7 +413,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
             +' and i.FirstName__c = \'' +FNAME.trim() + '\' and i.LastName__c = \'' + LNAME.trim() +'\' and i.Date_of_Birth__c = '+ parsedDtDOB.format('yyyy-MM-dd');
             */
 
-            ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
+            ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
 
             String IDCardQuery = 'Select i.Related_Contact__c, i.Blacklisted__c, Card_Status__c '
                                  + ' From ID_Card__c i '
@@ -557,15 +557,8 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
                 // INC183592
                 if (agencyStatus == 'Terminated') {
-                    Pagereference prSkipDetails = Page.IDCard_Portal;
-                    prSkipDetails.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('1'));
-                    prSkipDetails.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(IATACodeLocation2.trim()));
-                    prSkipDetails.getParameters().put(IDCardUtil.PARAM_DOB, IDCardUtil.EncryptEncodeParameter(parsedDtDOB.format('yyyy-MM-dd')));
-                    prSkipDetails.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(IATACodeLocation2.trim()));
-                    prSkipDetails.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter('New'));
-                    prSkipDetails.getParameters().put(IDCardUtil.ACCOUNT_STATUS_TERMINATED, IDCardUtil.EncryptEncodeParameter('Terminated'));
-                    prSkipDetails.setRedirect(true);
-                    return prSkipDetails;
+                    AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + IATACodeLocation2.trim() + '</i>'}));
+            		return null; 
                 }
 
                 Pagereference prAgencyDetails = Page.IDCard_Agency_Details;
