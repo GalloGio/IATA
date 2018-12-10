@@ -7165,39 +7165,39 @@ and
         <name>ISSP_AMS_Means_Agency_Identified</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_April --></label>
+        <label>เมษายน</label>
         <name>ISSP_AMS_Month_April</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_August --></label>
+        <label>สิงหาคม</label>
         <name>ISSP_AMS_Month_August</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_December --></label>
+        <label>ธันวาคม</label>
         <name>ISSP_AMS_Month_December</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_February --></label>
+        <label>กุมภาพันธ์</label>
         <name>ISSP_AMS_Month_February</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_January --></label>
+        <label>มกราคม</label>
         <name>ISSP_AMS_Month_January</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_July --></label>
+        <label>กรกฎาคม</label>
         <name>ISSP_AMS_Month_July</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_June --></label>
+        <label>มิถุนายน</label>
         <name>ISSP_AMS_Month_June</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_March --></label>
+        <label>มีนาคม</label>
         <name>ISSP_AMS_Month_March</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_May --></label>
+        <label>พฤษภาคม</label>
         <name>ISSP_AMS_Month_May</name>
     </customLabels>
     <customLabels>
@@ -7205,15 +7205,15 @@ and
         <name>ISSP_AMS_Month_None</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_November --></label>
+        <label>พฤศจิกายน</label>
         <name>ISSP_AMS_Month_November</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_October --></label>
+        <label>ตุลาคม</label>
         <name>ISSP_AMS_Month_October</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_September --></label>
+        <label>กันยายน</label>
         <name>ISSP_AMS_Month_September</name>
     </customLabels>
     <customLabels>
@@ -10210,6 +10210,10 @@ and
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <name>ISSP_CalendarDisclaimer</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CampaigeNotification_Confirm --></label>
         <name>ISSP_CampaignNotification_Confirm</name>
     </customLabels>
@@ -12273,15 +12277,15 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_OperationalCalendar_Country_Filter_Required</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_CurrencyFilter --></label>
+        <label>สกุลเงิน</label>
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_DownloadDate --></label>
+        <label>วันที่ดาวน์โหลด</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_EnableFilters --></label>
+        <label>เปิดใช้งานตัวกรอง</label>
         <name>ISSP_OperationalCalendar_EnableFilters</name>
     </customLabels>
     <customLabels>
@@ -12293,27 +12297,27 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_OperationalCalendar_Export_Disclaimer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_FilterTitle --></label>
+        <label>ตัวกรอง</label>
         <name>ISSP_OperationalCalendar_FilterTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_FrequencyFilter --></label>
+        <label>ความถี่ของรอบชำระเงิน</label>
         <name>ISSP_OperationalCalendar_FrequencyFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Full_Details --></label>
+        <label>แสดงรายละเอียดและดาวน์โหลด</label>
         <name>ISSP_OperationalCalendar_Full_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Header --></label>
+        <label>{0} ปฏิทิน</label>
         <name>ISSP_OperationalCalendar_Header</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_LastModifiedDate --></label>
+        <label>วันที่แก้ไขล่าสุด</label>
         <name>ISSP_OperationalCalendar_LastModifiedDate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_No_Events --></label>
+        <label>ไม่มีเหตุการณ์บันทึก</label>
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
@@ -12321,11 +12325,11 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Show_Calendar --></label>
+        <label>แสดงปฏิทิน</label>
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Sync_Calendar --></label>
+        <label>การเชื่อมปฏิทิน</label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
     </customLabels>
     <customLabels>
@@ -16276,6 +16280,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>RE</name>
     </customLabels>
     <customLabels>
+        <label><!-- RTS TAR Notification Message --></label>
+        <name>RTS_TAR_Notification_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RTS TAR Notification MessageB --></label>
+        <name>RTS_TAR_Notification_MessageB</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RTS TAR Notification Title --></label>
+        <name>RTS_TAR_Notification_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Reader Main Content --></label>
         <name>Reader_Main_Content</name>
     </customLabels>
@@ -17162,6 +17178,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label><!-- Purge IATA Code Process --></label>
         <name>Purge_IATA_Code_Process</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Report Red Alerts --></label>
+        <name>Report_Red_Alerts</name>
     </customTabs>
     <customTabs>
         <label>ข้อมูล</label>

@@ -19186,6 +19186,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Relevant. Committed. Connected.</value>
     </labels>
     <labels>
+        <fullName>ISSP_CalendarDisclaimer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
+        <value>Note: There are Local Specific Dates in the Calendar for this operation. Please download the full version of the Calendar in the Resource Center, Document Tab.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CampaignNotification_Confirm</fullName>
         <categories>ISSP, ISSP_CampaignNotification</categories>
         <language>en_US</language>
@@ -30947,6 +30954,37 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>RE</shortDescription>
         <value>RE</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_Message</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification Message</shortDescription>
+        <value>Dear {{name}}, &lt;br&gt;&lt;br&gt;
+
+We have been informed that there is reason to believe that BSP’s ability to collect funds in respect of airline sales may be prejudiced. Therefore in accordance with the provisions of Resolution 818g, Attachment ‘A’, Section 1.8, BSP Management shall withdraw all Standard Traffic Documents and Carrier Identification Plates from your Agency, and shall arrange for an immediate accounting and settlement of all amounts due.&lt;br&gt;
+If you disagree with this decision, you may invoke the procedures set out in Resolution 820e for review of the Agency Administrator’s action by the Travel Agency Commissioner. The Travel Agency Commissioner is an independent arbiter who conducts reviews and acts with
+respect to decisions and/or actions affecting Agents and applicants under the IATA Agency Programme within his or her jurisdiction under the Agency Programme. The Travel Agency Commissioner can be reached at &lt;a href=&quot;http://tacommissioner.com/&quot;&gt;http://tacommissioner.com/&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_MessageB</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification MessageB</shortDescription>
+        <value>&lt;br&gt;Please do not hesitate to contact us if you have any queries on this matter via our Customer Service Portal at &lt;a href=&quot;http://www.iata.org/cs&quot;&gt;http://www.iata.org/cs&lt;/a&gt;.
+&lt;br&gt;Yours faithfully,&lt;br&gt;&lt;br&gt;
+
+&lt;span style=&quot;color: #385d8b&quot;&gt;IATA – Global Delivery Center&lt;/span&gt;</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_Title</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification Title</shortDescription>
+        <value>Prejudiced Collection of Funds</value>
     </labels>
     <labels>
         <fullName>Reader_Main_Content</fullName>

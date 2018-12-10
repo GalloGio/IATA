@@ -10212,6 +10212,10 @@ and
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <name>ISSP_CalendarDisclaimer</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CampaigeNotification_Confirm --></label>
         <name>ISSP_CampaignNotification_Confirm</name>
     </customLabels>
@@ -12278,11 +12282,11 @@ Se você continuar tendo problemas ao se no Portal do Cliente IATA, por favor co
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_DownloadDate --></label>
+        <label>Data de download</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_EnableFilters --></label>
+        <label>Ativar filtros</label>
         <name>ISSP_OperationalCalendar_EnableFilters</name>
     </customLabels>
     <customLabels>
@@ -12294,27 +12298,27 @@ Se você continuar tendo problemas ao se no Portal do Cliente IATA, por favor co
         <name>ISSP_OperationalCalendar_Export_Disclaimer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_FilterTitle --></label>
+        <label>Filtros</label>
         <name>ISSP_OperationalCalendar_FilterTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_FrequencyFilter --></label>
+        <label>Frequência de pagamento</label>
         <name>ISSP_OperationalCalendar_FrequencyFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Full_Details --></label>
+        <label>Informação completa e download</label>
         <name>ISSP_OperationalCalendar_Full_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Header --></label>
+        <label>{0} Calendário</label>
         <name>ISSP_OperationalCalendar_Header</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_LastModifiedDate --></label>
+        <label>Data de última modificação</label>
         <name>ISSP_OperationalCalendar_LastModifiedDate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_No_Events --></label>
+        <label>Sem itens para mostrar</label>
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
@@ -12322,11 +12326,11 @@ Se você continuar tendo problemas ao se no Portal do Cliente IATA, por favor co
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Show_Calendar --></label>
+        <label>Mostrar calendário</label>
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Sync_Calendar --></label>
+        <label>Sincronizar calendário </label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
     </customLabels>
     <customLabels>
@@ -16276,6 +16280,18 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>RE</name>
     </customLabels>
     <customLabels>
+        <label><!-- RTS TAR Notification Message --></label>
+        <name>RTS_TAR_Notification_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RTS TAR Notification MessageB --></label>
+        <name>RTS_TAR_Notification_MessageB</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RTS TAR Notification Title --></label>
+        <name>RTS_TAR_Notification_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Reader Main Content --></label>
         <name>Reader_Main_Content</name>
     </customLabels>
@@ -17162,6 +17178,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
     <customTabs>
         <label><!-- Purge IATA Code Process --></label>
         <name>Purge_IATA_Code_Process</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Report Red Alerts --></label>
+        <name>Report_Red_Alerts</name>
     </customTabs>
     <customTabs>
         <label>Recursos</label>
