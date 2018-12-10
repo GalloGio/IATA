@@ -1,0 +1,116 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">Dear&nbsp;{!Contact.Name},</span></font><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style=""><font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">We would like to raise your attention that in addition to the e-bulletin default notification, IATA would like to inform you of a major default for&nbsp;</span></font><font face="arial">{!Case.Account}</font><font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">&nbsp;related to the short/non-payment of amount of USD </span>{!Case.Short_Payment_Amount_USD__c}&nbsp;<span style="font-size: 12pt;">in&nbsp;</span></font><font face="arial">{!Case.BSPCountry__c}</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial">You may find further details about this default incident below:</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="color:#002060;mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<div align="center" style="font-family: arial; font-size: 12pt;">
+
+<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="0" style="width:382.25pt;border-collapse:collapse;mso-yfti-tbllook:1184;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:15.0pt">
+  <td width="281" nowrap="" valign="bottom" style="width:211.0pt;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal"><b style="mso-bidi-font-weight:normal"><span style="font-family: Arial, sans-serif;">Country (ies)<o:p></o:p></span></b></p>
+  </td>
+  <td width="228" nowrap="" valign="bottom" style="width:171.25pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal">{!Case.BSPCountry__c}</p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;height:15.0pt">
+  <td width="281" nowrap="" valign="bottom" style="width:211.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal"><b style="mso-bidi-font-weight:normal"><span style="font-family: Arial, sans-serif;">Agent Legal Name<o:p></o:p></span></b></p>
+  </td>
+  <td width="228" nowrap="" valign="bottom" style="width:171.25pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal">{!Case.Account}</p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:2;height:15.0pt">
+  <td width="281" nowrap="" valign="bottom" style="width:211.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal"><b style="mso-bidi-font-weight:normal"><span style="font-family: Arial, sans-serif;">IATA Agency Code(s)<o:p></o:p></span></b></p>
+  </td>
+  <td width="228" nowrap="" valign="bottom" style="width:171.25pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal"><font face="Arial, sans-serif">{!Case.IATA_Code__c}</font></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:3;height:15.0pt">
+  <td width="281" nowrap="" valign="bottom" style="width:211.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal"><b style="mso-bidi-font-weight:normal"><span style="font-family: Arial, sans-serif;">Short Amount/Non Payment Amount (USD)<o:p></o:p></span></b></p>
+  </td>
+  <td width="228" nowrap="" valign="bottom" style="width:171.25pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal"><font face="Arial, sans-serif">{!Case.Short_Payment_Amount_USD__c}</font></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:4;height:15.0pt">
+  <td width="281" nowrap="" valign="bottom" style="width:211.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal"><b style="mso-bidi-font-weight:normal"><span style="font-family: Arial, sans-serif;">Remittance Date<o:p></o:p></span></b></p>
+  </td>
+  <td width="228" nowrap="" valign="bottom" style="width:171.25pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal">{!Case.Remittance_Date__c}</p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:5;height:15.0pt">
+  <td width="281" nowrap="" valign="bottom" style="width:211.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal"><b style="mso-bidi-font-weight:normal"><span style="font-family: Arial, sans-serif;">Billing Period<o:p></o:p></span></b></p>
+  </td>
+  <td width="228" nowrap="" valign="bottom" style="width:171.25pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal"><font face="Arial, sans-serif">{!Case.Remittance_Period__c}</font></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:7;mso-yfti-lastrow:yes;height:15.0pt">
+  <td width="281" nowrap="" valign="bottom" style="width:211.0pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal"><b style="mso-bidi-font-weight:normal"><span style="font-family: Arial, sans-serif;">Financial Security<o:p></o:p></span></b></p>
+  </td>
+  <td width="228" nowrap="" valign="bottom" style="width:171.25pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:15.0pt">
+  <p class="MsoNormal">{!Account.Guaranteed_amount__c}</p>
+  </td>
+ </tr>
+</tbody></table><br></div><div align="center" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: left;"><font face="arial"><br></font></div><div align="center" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: left;"><font face="arial">We would like to take this opportunity to remind you that the outstanding amount due by the aforementioned agency to your Airline for impacted billing period can be acquired through IATA BSPlink. Please find attached guidelines detailing steps on how to find the outstanding amounts on BSPlink.</font></div><div align="center" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: left;"><font face="arial"><br></font></div><div align="center" style="color: rgb(0, 0, 0); text-align: left;"><font face="arial" style=""><div align="center" style="text-align: left;">Please do not hesitate to contact us if you have any queries on this matter via our Customer Service Portal at http://www.iata.org/cs.</div><div align="center" style="text-align: left;"><br></div><div align="center" style="text-align: left;">Yours Sincerely,</div><div align="center" style="text-align: left;"><br></div><div align="center" style="text-align: left;">Global Delivery Center</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div></font></div><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"></font></span></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>
