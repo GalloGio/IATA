@@ -269,7 +269,6 @@ public class ANG_ChinaConversionsHelperTest {
 			-update the flag "Is NewGen agent" for all the accounts in the hierarchy
 			-update the location type: HE -> HO. AE -> BR
 			-set Risk status & Risk history assessment fields blank
-			-delete any Risk Event
 			-update hierarchy & relationships*/
 
 		oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
@@ -278,15 +277,15 @@ public class ANG_ChinaConversionsHelperTest {
 		accountsMap = ANG_ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
 
 		checkChangeCode('LGC');
-		checkAccountsChanges(accountsMap.values(), null, false, new List<String>{'HO','BR'}, null);
-		checkRiskEvents(accountsMap.keyset());													   	
+		checkAccountsChanges(accountsMap.values(), null, false, new List<String>{'HO','BR'}, null);												   	
 		checkAccountRelations();
 	}
 
 	private static void convertChinaToLegacyStep2Test() {
 		/*On approval:
 			-generate change code LGF
-			-delete the FoP records for the accounts */
+			-delete the FoP records for the accounts
+			-delete any Risk Event */
 
 		oscar.STEP15__c = AMS_Utils.PASSED;
 		oscar.STEP12__c = AMS_Utils.PASSED;
@@ -296,6 +295,7 @@ public class ANG_ChinaConversionsHelperTest {
 
 		checkChangeCode('LGF');
 		checkFormOfPayments(accountsMap.keyset());
+		checkRiskEvents(accountsMap.keyset());
 	}
 
 	private static void convertChinaToLegacyStep3Test() {
