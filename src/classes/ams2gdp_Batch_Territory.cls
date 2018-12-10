@@ -28,14 +28,10 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 		                + ', Appointment__r.Airline__r.IATACode__c, Appointment__r.Airline__r.Name, Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c '
 		                + ', Appointment__r.Account__r.state_numeric_code__c';
 
-		//-- Query conditions
+        //-- Query conditions 
 		List<String> conditions = new List<String> {'Appointment__r.Account__r.RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''
-		        , 'Appointment__r.Account__r.IATACode__c != null'
-		        , 'Appointment__r.Valid_Code_For_GDP_Replication__c = true '
-		        , 'Appointment__r.Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-		        , 'Appointment__r.Account__r.CNS_Agency__c = false '
-		        , 'Appointment__r.Account__r.CNS_Account__c = false '
-		                                           };
+			, 'Appointment__r.Valid_Code_For_GDP_Replication__c = true '}; 
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
 
 		if (!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
 			statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
