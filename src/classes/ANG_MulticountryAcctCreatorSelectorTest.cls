@@ -61,9 +61,6 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		theAccreditation.Account_Name__c = a1.Id;
 
 		insert theAccreditation;
-
-
-
 	}
 
 	@isTest static void ANG_MulticountryAccountCreatorTest() {
@@ -71,7 +68,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
         PageReference pageRef = Page.ANG_MulticountryAccountCreator;
         Test.setCurrentPageReference(pageRef);
 
-		AMS_OSCAR__c oscar = [Select Id from AMS_OSCAR__c];
+		AMS_OSCAR__c oscar = [Select Id, ANG_Type_Of_Change__c from AMS_OSCAR__c];
 
 		ApexPages.CurrentPage().getparameters().put('pid', oscar.id);
         ApexPages.StandardController sc = new ApexPages.standardController(oscar);
@@ -81,10 +78,13 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		ANG_MulticountryAccountCreatorController multicreator = new ANG_MulticountryAccountCreatorController(sc);
 
 		oscar = multicreator.oscar;
-
+        multicreator.accIndex = 0;
+		Integer accIndex = multicreator.accIndex;
 		multicreator.addAccount();
 		multicreator.addAccount();
-
+		multicreator.removeAccount();
+        multicreator.addAccount();
+        
 		Integer i = 0;
 		
 		IATA_ISO_Country__c ctry = [ Select Id from IATA_ISO_Country__c];
@@ -96,10 +96,11 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 				acct.IATA_ISO_Country__c = ctry.Id;
 			}
 		}
-
+		multicreator.removeAccount();
 		multicreator.saveAccount();
-
-		Boolean canBeEdited = multicreator.canbeedited;
+ 		
+		
+        Boolean canBeEdited = multicreator.canbeedited;
 
 		List<SelectOption> options = multicreator.getItems();
 
@@ -122,7 +123,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
-		AMS_OSCAR__c oscar = [Select Id, Account__c from AMS_OSCAR__c];
+		AMS_OSCAR__c oscar = [Select Id, ANG_Type_Of_Change__c, Account__c from AMS_OSCAR__c];
 
 		List<Account> accountList = new List<Account>();
 
@@ -148,7 +149,14 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		List<String> oscarFields = selectionCrtl.oscarFieldList;
 		Set<String> accountFields = selectionCrtl.accountFields;
 		List<String> noteList = selectionCrtl.noteList;
-
+        Boolean showTargetAgency = selectionCrtl.showTargetAgency;
+        Boolean getDisablePrevious = selectionCrtl.getDisablePrevious();
+        Boolean getDisableNext = selectionCrtl.getDisableNext();
+        Integer totalPages = selectionCrtl.totalPages;
+        Boolean showTopPanel = selectionCrtl.showTopPanel;
+        Boolean selectAll = selectionCrtl.selectAll;
+        Boolean editable = selectionCrtl.editable;
+        
 		Map<String, List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem>> hierarchy = selectionCrtl.hierarchy;
 		List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem> hierarchyValues = selectionCrtl.hierarchyValues;
 		selectionCrtl.save();
@@ -205,8 +213,6 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		selectionCrtl.save();
 
 		Test.stopTest();
-
-	
 	}	
 
 	@isTest static void ANG_MulticountryHierarchySelectionCrtlTest3OK(){
@@ -271,6 +277,6 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		selectionCrtl.Next();
 
 		selectionCrtl.End();
-	
-	}	
+
+    }
 }

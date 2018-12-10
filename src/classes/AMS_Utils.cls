@@ -169,22 +169,23 @@ public without sharing class AMS_Utils {
     public static final String new_SA           = 'NEW.SA.1.0'      ;
 
     //Processes of type CHANGES
-    public static final String COR              = 'CORRECTION.1.0'  ;
-    public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
-    public static final String VOLRELINQUISH    = 'VR.1.0'          ;
-    public static final String VOLRELINQUISH_CA = 'VR.1.0.CA'       ;
-    public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
-    public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
-    public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static final String COR                   = 'CORRECTION.1.0'  ;
+    public static final String AGENCYCHANGES         = 'MAJOR.CHANGES'   ;
+    public static final String VOLRELINQUISH         = 'VR.1.0'          ;
+    public static final String VOLRELINQUISH_CA      = 'VR.1.0.CA'       ;
+    public static final String BANKACCCHANGES        = 'BANK.ACCOUNT.CHANGES';
+    public static final String CERTIFICATION         = 'CERTIFICATION.1.0';
+    public static final String IEPBANKACCOUNTSETUP   = 'IEP.BANK.ACCOUNT.SETUP';
     public static final String IEPMODELAACCOUNTSETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
     public static final String IEPMODELBACCOUNTSETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
-    public static final String PCI_COMPLIANT    = 'PCI.COMPLIANT.1.0';
+    public static final String PCI_COMPLIANT         = 'PCI.COMPLIANT.1.0';
 
     //Process of type NewGen
     public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
     public static final String NEWHESTANDARD    = 'ANG.NEW.HE.STANDARD.1.0';
     public static final String NEWGESTANDARD    = 'ANG.NEW.GE.STANDARD.1.0';
     public static final String NEWAE            = 'ANG.NEW.AE.1.0';
+    public static final String MCAE             = 'ANG.MULTICOUNTRY.AE.1.0';
     public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
     public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
     public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
@@ -202,13 +203,13 @@ public without sharing class AMS_Utils {
     //AMSU-180
     public static final Set<String> oscarAMSProcesses_ValidateOwnership = new Set <String>{new_HO, AGENCYCHANGES, new_TIDS, COR};
 
-    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
-    public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD,  NEWGESTANDARD,NEWAE};
+    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD, NEWAE, MCAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
+    public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD,NEWAE, MCAE};
 
     public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
                                                                                     ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
 
-    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWGESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
+    public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD, NEWGESTANDARD, NEWHELITE, NEWAE, MCAE, NGCORRECTION};
     public static final Set<String> oscarPCICompliantValidationAttachement = new Set <String>{'Yes','Nil CC','Corporate Card'};
     public static final Set<String> oscarPCICompliantValidationExpiryDate = new Set <String>{'Yes','Nil CC'};
 
@@ -222,20 +223,22 @@ public without sharing class AMS_Utils {
     public static final String CERT_TSA         = 'TSA';
 
     //Record Types
-    public static final String RECTYPE_NEW          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
-    public static final String RECTYPE_CHANGE       = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
-    public static final String RECTYPE_CERT         = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
-    public static final String RECTYPE_NEWHE        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
-    public static final String RECTYPE_NEWAE        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
-    public static final String RECTYPE_NGCHANGES    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
-    public static final String RECTYPE_NGCORRECTION = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
-    public static final String RECTYPE_CORRECTION   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
-    public static final String RECTYPE_NEWGENFOP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
-    public static final String RECTYPE_NEWGENOPTINOUT  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
-    public static final String RECTYPE_NEWGENANNUALREVAL = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
-    public static final String RECTYPE_BANK_ACCOUNT_SETUP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
-    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL A ONBOARDING');
-    public static final String RECTYPE_IEPMODELB    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL B SCREENING');
+    public static final String RECTYPE_NEW                = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
+    public static final String RECTYPE_CHANGE             = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
+    public static final String RECTYPE_CERT               = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
+    public static final String RECTYPE_NEWGE              = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_GE');
+    public static final String RECTYPE_NEWHE              = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
+    public static final String RECTYPE_NEWAE              = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
+    public static final String RECTYPE_MCAE               = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Multicountry_AE');
+    public static final String RECTYPE_NGCHANGES          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+    public static final String RECTYPE_NGCORRECTION       = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
+    public static final String RECTYPE_CORRECTION         = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
+    public static final String RECTYPE_NEWGENFOP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
+    public static final String RECTYPE_NEWGENOPTINOUT     = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
+    public static final String RECTYPE_NEWGENANNUALREVAL  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
+    public static final String RECTYPE_BANK_ACCOUNT_SETUP = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
+    public static final String RECTYPE_IEPMODELA          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL A ONBOARDING');
+    public static final String RECTYPE_IEPMODELB          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL B SCREENING');
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
@@ -380,7 +383,7 @@ public without sharing class AMS_Utils {
     public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
     public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
     public static final String TYPE_HE_MULTICOUNTRY = buildOfficeType(CASE_REASON_HE_MULTICOUNTRY, AGENTTYPE_MULTICOUNTRY);
-    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWGESTANDARD,NEWAE,NGCHANGES}; 
+    public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWGESTANDARD,NEWAE,MCAE,NGCHANGES}; 
 	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
 
 
@@ -1481,7 +1484,7 @@ public without sharing class AMS_Utils {
 
             return ACCREDITATIONMODEL_CASH;
             
-        }else if(oscarProcess == NEWGESTANDARD){
+        }else if(oscarProcess == NEWGESTANDARD || oscarProcess == MCAE){
 
             return ACCREDITATIONMODEL_MULTICOUNTRY;
 
@@ -2321,7 +2324,7 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
             memoText += ' - Branch';
         }else if (process == NEWHELITE || process == NEWHESTANDARD){
             if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
-        }else if (process == NEWAE){
+        }else if (process == NEWAE || process == MCAE){
             if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
         }else if (process == new_TIDS){
             memoText += ' - TIDS';
@@ -3138,6 +3141,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
     /*** AMSU-173 ***/
     public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
+
     
 	/*** AMSU-195 Start ***/
     /**
