@@ -21,7 +21,7 @@ public  class CaseChildHelper {
     }
     
     public static boolean CreateChildCase(list<Case> olds, list<Case> news) {
-        Id IFAPrt =Schema.SObjectType.Case.RecordTypeInfosByName.get('IATA Financial Review').RecordTypeId ;
+        Id IFAPrt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
     
         system.debug('---------- DEBUG: CreateChildCase()');
         // If I have not values in news somthing's wrong
@@ -191,34 +191,4 @@ public  class CaseChildHelper {
 
     }
     
-    
-    // Validation trigger checking that Customer Service Request cases are not linked to accounts with the “Agency”, “airline headquarters”, “Airline Branch” or “Standard”
-    // record types. 
-    // Called from the trgICCS_ASP_Case_Validation trigger
-    public static void ValidateCSRCases (list<Case> lstCases) {
-    	/* // TEMPORARILY DEACTIVATED 22.04.2015
-    	Id RT_ACCA_CSR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('External_Cases_ACCA');
-		Id RT_BSPLink_CSR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('BSPlink_Customer_Service_Requests_CSR');
-		Id RT_DPC_CSR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DPC_Service_Request');
-		
-		// get a map with the cases with the RTs of interest
-		map<Id, Case> mapCasesOfInterestPerId = new map<Id, Case>();
-		for (Case c : lstCases) {
-			if (c.RecordTypeId == RT_ACCA_CSR_Id || c.RecordTypeId == RT_BSPLink_CSR_Id || c.RecordTypeId == RT_DPC_CSR_Id) {
-				mapCasesOfInterestPerId.put(c.Id, c);
-			}
-		}
-		
-		// if there are cases of interest, check their accounts and the accounts of their contacts
-		list<String> lstInvalidAccountRTs = new list<String>{'IATA_Airline','IATA_Airline_BR','IATA_Agency','Standard_Account'};
-		if (!mapCasesOfInterestPerId.values().isEmpty()) {
-			for (Case c : [SELECT Id FROM Case WHERE (Account.RecordType.DeveloperName IN :lstInvalidAccountRTs
-													  OR Contact.Account.RecordType.DeveloperName IN :lstInvalidAccountRTs)
-													 AND Id IN :mapCasesOfInterestPerId.keyset()]) {
-				
-				mapCasesOfInterestPerId.get(c.Id).addError('Invalid Account record type for this Case record type.');
-			}
-		}
-		*/
-    }
 }

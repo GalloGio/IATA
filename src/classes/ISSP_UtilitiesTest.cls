@@ -20,8 +20,8 @@ private  class ISSP_UtilitiesTest {
 	    }
 
 	static testMethod void ISSP_UtilitiesTest2() {
-		Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
-		Id standardRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='Standard_Account'].Id;
+		Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id standardRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
 		Account acc = ISSP_ObjectFactory.createNewAccount();
 		acc.Name = 'test Account';

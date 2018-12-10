@@ -232,18 +232,24 @@ public without sharing class Order_Svc
         OrderItemCharge_Sel chargeSelector  = new OrderItemCharge_Sel();
         Location_Sel locationSelector       = new Location_Sel();
 
+        //-- Errors logging
+        List<IEC_Error_Log__c> errorLogs = new List<IEC_Error_Log__c>();
+
         //-- Request & Response Objects 
         Map<Id, SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Request> requestByOrder = new Map<Id, SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Request>();
         Map<Id, SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Response> responseByOrder = new Map<Id, SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Response>();
 
         //-- Order Details 
         Map<Id, Order> orderById = new Map<Id, Order>((List<Order>) orderSelector.selectSObjectById(orderIds));
+        errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(orderById), null, 'Debug Information - get orderIds to be processed'));
 
         //-- Order Item Details 
         Map<Id, List<OrderItem>> orderItemsByOrder = itemSelector.getOrderItems(orderIds);
+        errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(orderItemsByOrder), null, 'Debug Information - get order items to be processed'));
 
         //-- Order Locations 
         Map<Id, Location__c> locationById = locationSelector.getOrdersLocations(orderById.values());
+        errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(orderById), null, 'Debug Information - get orderIds to be processed'));
 
         //-- Charge (Discount) Details
         Set<Id> orderItemIds = new Set<Id>();
@@ -252,6 +258,8 @@ public without sharing class Order_Svc
                 orderItemIds.add(oi.Id);
         
         Map<Id, List<Order_Item_Charge__c>> chargesByItem = chargeSelector.getChargesByOrerItem(orderItemIds);
+        errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(chargesByItem), 'Charges/Discounts: '+chargesByItem, 'Debug Information - charges for order item ids: '+orderItemIds));
+
         //-- susana
         //-- Verify if the status of the order is valid before send the order to SAP
         //-- if the order is not paid and status is Payment Failure, the order cannot be created on SAP
@@ -267,20 +275,22 @@ public without sharing class Order_Svc
 
         //-- SFDC <=> SAP Mapping table 
         Map<String, SFDC_SAP_Mapping__c> sapTable = orderSelector.getOrderMapTable();
+        errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(sapTable), 'Order Id '+orderById.keySet(), 'Debug Information - sapTable'));
 
         //-- Build Request object 
         for(Id orderId : orderById.keySet())
-        {
-            Order ord = orderById.get(orderId);
+        {   Order ord = orderById.get(orderId);
 
             //validate SO not created yet 
             if(String.isBlank(ord.SAP_Order_Number__c))
-            {
+            {   errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(ord), 'Order '+ord, 'Debug Information - SAP_Order_Number__c is blank'));
                 List<OrderItem> items = (orderItemsByOrder.containsKey(ord.Id)) ? orderItemsByOrder.get(ord.Id) : new List<OrderItem>();
+                errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(items), 'Order '+ord, 'Debug Information - SAP_Order_Number__c is blank'));
                 requestByOrder.put(ord.Id, createSalesOrderRequestObject(ord, items, chargesByItem, sapTable, locationById));
+
             }
             else if(!System.isFuture() && !System.isBatch() && !System.isScheduled())
-            {
+            {   errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(sapTable), 'Order '+ord, 'Error - SAP_Order_Number__c NOT blank'));
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING ,Label.Warning_SalesOrder_Already_Created));
             }
         }
@@ -288,14 +298,15 @@ public without sharing class Order_Svc
         //-- Set Authentication header 
         SAP_SalesOrder.HTTPS_Port req = new SAP_SalesOrder.HTTPS_Port(); 
         req = setCalloutHeader(req);
-
-        //-- Errors logging
-        List<IEC_Error_Log__c> errorLogs = new List<IEC_Error_Log__c>();
+        errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(req), null, 'Debug Information - Authentication'));
+        
 
         //-- Do Callouts for each Order
         for(Id orderId : orderById.keySet())
         {
             SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Request request = requestByOrder.get(orderId);
+            errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(request), 'Order Id '+orderId, 'Debug Information - SI_SFDC_SalesOrderCreate_SYNC Request for Order Id '+orderId));
+
             try
             {
                 //-- Do Callouts only if there are OrderItems 
@@ -303,6 +314,7 @@ public without sharing class Order_Svc
                 {
                     SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Response response = req.SI_SFDC_SalesOrderCreate_SYNC(request);
                     System.debug('response for '+orderId+'::'+response);
+                    errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(response), 'Order Id '+orderId, 'Debug Information - SI_SFDC_SalesOrderCreate_SYNC Response for Order Id '+orderId));
                     responseByOrder.put(orderId, response);
                 }
                 else
@@ -317,6 +329,7 @@ public without sharing class Order_Svc
                 if(!System.isFuture() && !System.isBatch() && !System.isScheduled() && !System.isQueueable())
                 {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR ,ex.getMessage()));
+                    errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(request), 'SOAP Call Failed ' + ex.getMessage(), ex.getStackTraceString()));
                 }
                 else
                 {
@@ -328,7 +341,7 @@ public without sharing class Order_Svc
         if(errorLogs.size() > 0) IECErrorLogger.logErrors(errorLogs, true);
         
         //-- Process responses 
-        processSalesOrderResponse(responseByOrder); 
+        processSalesOrderResponse(responseByOrder);
     }
 
     public static void processSalesOrderResponse(Map<Id, SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Response> responseByOrder)
@@ -342,9 +355,11 @@ public without sharing class Order_Svc
         for(Id orderId : responseByOrder.keySet())
         {
             SAP_SalesOrder.DT_SFDC_SalesOrderCreate_Response response = responseByOrder.get(orderId);
+            errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/processSalesOrderResponse', JSON.serialize(response), 'Order Id '+orderId, 'Debug Information - Response for Order Id '+orderId));
             //If success update SAP_Order_Number__c
             if(response.Error == null)
             {
+                errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/processSalesOrderResponse', JSON.serialize(response), 'Order Id '+orderId, 'Debug Information - Updated SAP Order Number for Order Id '+orderId));
                 ///-- Update SAP Order Number
                 orders2update.add(new Order(
                     Id = orderId, 
@@ -360,7 +375,7 @@ public without sharing class Order_Svc
                 });
 
                 if(!System.isFuture() && !System.isBatch() && !System.isScheduled() && !System.isQueueable())
-                {
+                {   errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/processSalesOrderResponse', 'Error Message: ' + error_msg, 'Order Id '+orderId, 'Error - Order Id '+orderId));
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR ,error_msg));
                 }
                 else
@@ -375,11 +390,13 @@ public without sharing class Order_Svc
             try
             {
                 update orders2update;
+                errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/processSalesOrderResponse', JSON.serialize(orders2update), 'Orders Updated', 'Debug Information - Updated Order Ids '+orders2update));
+
             }
             catch(Exception ex)
             {
                 if(!System.isFuture() && !System.isBatch() && !System.isScheduled() && !System.isQueueable())
-                {
+                {   errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/processSalesOrderResponse', JSON.serialize(orders2update), ex.getMessage(), ex.getStackTraceString()));
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR ,ex.getMessage()));
                 }
                 else
@@ -585,7 +602,7 @@ public without sharing class Order_Svc
             return;
 
         if (mapCountry_ProfitCenter.size() > 0)
-            for (IATA_ISO_Country__c c : [select Profit_Center__c, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c in :mapCountry_ProfitCenter.keySet()])
+            for (IATA_ISO_Country__c c : IATAIsoCountryDAO.getIsoCountryByIsoCodes(mapCountry_ProfitCenter.keySet()))
                 mapCountry_ProfitCenter.put(c.ISO_Code__c, c.Profit_Center__c);
 
         //*** get product information and discount for order items sending to interface

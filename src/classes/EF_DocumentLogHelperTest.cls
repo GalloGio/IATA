@@ -43,7 +43,7 @@ private class EF_DocumentLogHelperTest
 				lsDocumentLogs[0].Status__c = 'Amazon - Upload Successful';
 				update lsDocumentLogs;
 
-				Id efFileRtId = AMS_Utils.getId('AmazonFile__c', 'EF_File');
+				Id efFileRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'EF_File');
 				AmazonFile__c af = EF_DocumentLogHelper.createAmazonFileRecord('String fileName', 'String amazonKey', 1000, 'String parentId', efFileRtId, lsDocumentLogs[0]);
 
 				EF_DocumentLogHelper dlh = new EF_DocumentLogHelper();

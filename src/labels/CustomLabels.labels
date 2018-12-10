@@ -848,9 +848,16 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_RollbackCase_Description</shortDescription>
-        <value>Dear colleagues, 
+        <value>Dear colleagues,
 
 Please issue a Credit Note in order to refund the change fee.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_XML_GEN_ERROR_RECEIVER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_XML_GEN_ERROR_RECEIVER</shortDescription>
+        <value>howj@iata.org</value>
     </labels>
     <labels>
         <fullName>ANG_AE_separate_Legal_Entity</fullName>
@@ -1323,6 +1330,47 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</shortDescription>
         <value>&lt;br/&gt;&lt;br/&gt;As a Portal Administrator you can either update your &lt;a href=&quot;/ISSP_PersonalInformation?mid=M5S1&quot;&gt;Personal Information&lt;/a&gt; to designate yourself as a Legal Authorized Signatory, or assign the correct person from the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&amp;subNav=contacts&amp;mid=M4S1&quot;&gt;Company Administration -&gt; Contacts&lt;/a&gt; page and ask them to open your EasyPay account.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_ModelBanking_India_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ModelBanking India</shortDescription>
+        <value>For opening of an IATA Easy Pay Account please contact YES BANK &lt;br/&gt;
+Contact Details: 	Mr. Ravi Chaudhary&lt;br/&gt;
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;Tel: 97697 29769&lt;br/&gt;
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;ravi.chaudhary@yesbank.in&lt;br/&gt;&lt;br/&gt;
+
+Contact Details:	Mr. Allen Lasrado&lt;br/&gt;
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;Tel: 8286661684&lt;br/&gt;
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;allen.lasrado@yesbank.in</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_ModelBanking_SouthKorea_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ModelBanking South Korea</shortDescription>
+        <value>For opening of an IATA Easy Pay Account, please contact Woori Bank &lt;br/&gt;
+
+&amp;emsp;&amp;emsp;Contact Person: &amp;emsp;&amp;emsp; SO-YEON YOU&lt;br/&gt;
+&amp;emsp;&amp;emsp;Tel:&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;02-2002-5107&lt;br/&gt;
+&amp;emsp;&amp;emsp;Email address: &amp;emsp;&amp;emsp;&amp;emsp;soyeon.you@wooribank.com &lt;br/&gt;
+&amp;emsp;&amp;emsp;Bank address: &amp;emsp;&amp;emsp;&amp;emsp; Woori Bank, 51, Sogong-ro, Jung-gu, Seoul (04632)&lt;br/&gt;&lt;br/&gt;
+
+
+IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 담당자님과 연락하시어 필요서류 검토 바랍니다.&lt;br/&gt;
+
+&amp;emsp;&amp;emsp;담당직원: &amp;emsp;&amp;emsp;&amp;emsp; 유소연 대리&lt;br/&gt;
+&amp;emsp;&amp;emsp;전화번호: &amp;emsp;&amp;emsp;&amp;emsp; 02-2002-5107&lt;br/&gt;
+&amp;emsp;&amp;emsp;이메일 주소: &amp;emsp;&amp;emsp;soyeon.you@wooribank.com&lt;br/&gt;
+&amp;emsp;&amp;emsp;주소: &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp; 서울시 중구 소공로 (회현동 1가) 우리은행 본점 영업부 (04632)</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_ModelBanking_link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ModelBanking Link Label</shortDescription>
+        <value>Bank Contact Details</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_OpeningInProgress</fullName>
@@ -2590,6 +2638,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>Button View all</shortDescription>
         <value>View all</value>
+    </labels>
+    <labels>
+        <fullName>BuyNow</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Buy Now</shortDescription>
+        <value>Buy now</value>
     </labels>
     <labels>
         <fullName>CASSLink_Description</fullName>
@@ -5430,7 +5485,7 @@ Has read only access over different features of the service.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS More About Link</shortDescription>
-        <value>More about the New ICCS</value>
+        <value>ICCS Communications</value>
     </labels>
     <labels>
         <fullName>ICCS_Multiple_Signatories_Change_Message</fullName>
@@ -10350,6 +10405,14 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Apply_New_Branch_Office</shortDescription>
         <value>Apply for a New Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Cargo_Head_Office</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Cargo_Head_Office</shortDescription>
+        <value>Apply for New Cargo Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Apply_New_Head_Entity</fullName>
@@ -17444,6 +17507,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Total Ownership (Individuals + Companies) must equal 100% in order to submit to IATA.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</shortDescription>
+        <value>According to our records the Ownership for this IATA Code is not 100%. Please update the Agency details (Agency Ownership / Shareholding section), to ensure that the total ownership equals 100% in order that we can update our records.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -17497,6 +17568,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>Annual Revalidation work area title</shortDescription>
         <value>Please either confirm or update the details for each IATA Code in your hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</shortDescription>
+        <value>The same IATA Code as the one being updated cannot be added as a Company Owner.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ANNUAL_STATUS_CONFIRMED</fullName>
@@ -17830,6 +17909,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_ANG_LeftNav_Section1_AE_Details</shortDescription>
         <value>1. IATA Accredited Head Entity Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Local_Details_Copy_Address2</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Branch to Shipping</shortDescription>
+        <value>Copy Billing Address to Shipping Address</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</fullName>
@@ -19097,6 +19184,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP_CNS_quote2</shortDescription>
         <value>Relevant. Committed. Connected.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CalendarDisclaimer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
+        <value>Note: There are Local Specific Dates in the Calendar for this operation. Please download the full version of the Calendar in the Resource Center, Document Tab.</value>
     </labels>
     <labels>
         <fullName>ISSP_CampaignNotification_Confirm</fullName>
@@ -20953,6 +21047,29 @@ Please add below all your company valid email domains, including different ones 
         <value>dev@balink.net</value>
     </labels>
     <labels>
+        <fullName>ISSP_Emergency_Support</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Emergency Support</shortDescription>
+        <value>Emergency Support</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Emergency_Support_Subtitle</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Emergency Support Subtitle</shortDescription>
+        <value>Our GDC locations now offer 24x7 Emergency Support in English for critical situation. If your request is not related to an emergency, please use the &quot;Ask a Question&quot; tab</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Enable_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Enable_Service</shortDescription>
+        <value>Enable this service</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Encolment_page_Office_address</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22135,6 +22252,14 @@ this is the tiess topic help</value>
         <value>Invalid password.</value>
     </labels>
     <labels>
+        <fullName>ISSP_InvalidPostalCode</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_InvalidPostalCode</shortDescription>
+        <value>Invalid Postal Code format</value>
+    </labels>
+    <labels>
         <fullName>ISSP_IwishToComplain</fullName>
         <categories>FAQ2Case</categories>
         <language>en_US</language>
@@ -23133,7 +23258,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_CountryFilter</shortDescription>
-        <value>Country</value>
+        <value>Country/ Teritory</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
@@ -23141,7 +23266,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Country_Filter_Required</shortDescription>
-        <value>Please, select a value in Country filter</value>
+        <value>Please, select a value in Country/Territory filter</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_CurrencyFilter</fullName>
@@ -23173,7 +23298,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</shortDescription>
-        <value>Disclaimer for Export Calendar file</value>
+        <value>Please make sure to synchronize the calendar again in case there will be any future calendar changes to avoid having an outdated information.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Export_Disclaimer</fullName>
@@ -23181,7 +23306,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Export_Disclaimer</shortDescription>
-        <value>Disclaimer for Export file to csv or pdf</value>
+        <value>Please make sure to download the calendar again in case there will be any future calendar changes to avoid having an outdated information.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_FilterTitle</fullName>
@@ -23516,7 +23641,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
+        <value>Your password has now been changed. Please sign in again.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>
@@ -23810,7 +23935,7 @@ Indicate if this product has chargeback right: Yes or No</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Portal Product VAN Type Label</shortDescription>
-        <value>Enter  if the product is an Agent&apos;s Single-use VAN (Virtual Account Number) or Agent’s Multi-use VAN.  
+        <value>Enter  if the product is an Agent&apos;s Single-use VAN (Virtual Account Number) or Agent’s Multi-use VAN.
 If the product is an Agent&apos;s single-use VAN, then a unique Agent’s VAN number is created for every transaction.
 If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s unique card/account number that can be used multiple times.</value>
     </labels>
@@ -24962,6 +25087,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_ServiceAccessConfirm</fullName>
+        <categories>ISSP, services</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ServiceAccessConfirm</shortDescription>
+        <value>Are you sure you want to enable this service?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ServiceRequestConfirm</fullName>
         <categories>ISSP, services</categories>
         <language>en_US</language>
@@ -25768,6 +25901,14 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_Trade name of Company</shortDescription>
         <value>Trade Name of company</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Trained_Staff_Certification</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Trained Staff Certification</shortDescription>
+        <value>Trained Staff Certification</value>
     </labels>
     <labels>
         <fullName>ISSP_Travel</fullName>
@@ -27063,6 +27204,22 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <protected>false</protected>
         <shortDescription>LVA_CallUsAvailableHours</shortDescription>
         <value>Available Period:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsEmergencyAvailableHours</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsEmergencyAvailableHours</shortDescription>
+        <value>Available soon</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsEmergencyPhoneNumber</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsEmergencyPhoneNumber</shortDescription>
+        <value>24x7 phone channel is not yet available. We currently offer chat and queries via the customer portal.</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>
@@ -28518,6 +28675,13 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <value>Forgot your password?</value>
     </labels>
     <labels>
+        <fullName>OneId_Fred_App_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Fred_App_Description</shortDescription>
+        <value>CORSIA CO2 emissions reporting for Aircraft Operators and States</value>
+    </labels>
+    <labels>
         <fullName>OneId_Fred_Select_Type_of_Company</fullName>
         <categories>OneId, Fred</categories>
         <language>en_US</language>
@@ -28714,7 +28878,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Max_Account_Reached</shortDescription>
-        <value>Maximum number of accounts reached. Please click on troubleshooting link in the page footer</value>
+        <value>This account has one or more active users. Any additional users(s) must be invited by the Primary User of this account. Please contact the IATA FRED+ Team ( https://fred.iata.org/contact ) for more details.</value>
     </labels>
     <labels>
         <fullName>OneId_Max_Account_Reached2</fullName>
@@ -29105,7 +29269,7 @@ If you believe that it is a mistake, please follow the link below to contact us.
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_UneligibleLoggedUserRegisteringError</shortDescription>
-        <value>You already have an active 1ID session opened. 
+        <value>You already have an active 1ID session opened.
 &lt;br/&gt;
 Note that your user is not eligible for FRED+ access.
 &lt;br/&gt;
@@ -30790,6 +30954,37 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>RE</shortDescription>
         <value>RE</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_Message</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification Message</shortDescription>
+        <value>Dear {{name}}, &lt;br&gt;&lt;br&gt;
+
+We have been informed that there is reason to believe that BSP’s ability to collect funds in respect of airline sales may be prejudiced. Therefore in accordance with the provisions of Resolution 818g, Attachment ‘A’, Section 1.8, BSP Management shall withdraw all Standard Traffic Documents and Carrier Identification Plates from your Agency, and shall arrange for an immediate accounting and settlement of all amounts due.&lt;br&gt;
+If you disagree with this decision, you may invoke the procedures set out in Resolution 820e for review of the Agency Administrator’s action by the Travel Agency Commissioner. The Travel Agency Commissioner is an independent arbiter who conducts reviews and acts with
+respect to decisions and/or actions affecting Agents and applicants under the IATA Agency Programme within his or her jurisdiction under the Agency Programme. The Travel Agency Commissioner can be reached at &lt;a href=&quot;http://tacommissioner.com/&quot;&gt;http://tacommissioner.com/&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_MessageB</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification MessageB</shortDescription>
+        <value>&lt;br&gt;Please do not hesitate to contact us if you have any queries on this matter via our Customer Service Portal at &lt;a href=&quot;http://www.iata.org/cs&quot;&gt;http://www.iata.org/cs&lt;/a&gt;.
+&lt;br&gt;Yours faithfully,&lt;br&gt;&lt;br&gt;
+
+&lt;span style=&quot;color: #385d8b&quot;&gt;IATA – Global Delivery Center&lt;/span&gt;</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_Title</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification Title</shortDescription>
+        <value>Prejudiced Collection of Funds</value>
     </labels>
     <labels>
         <fullName>Reader_Main_Content</fullName>

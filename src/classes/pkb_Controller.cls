@@ -744,8 +744,10 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     notifyAdmin(de, e, System.Label.PKB2_Error_Admin_Notification_Email);
 
     // flip the site settings to not create contact/account in future
-    kbSettings.Create_Contact_and_Account__c = false;
-    update kbSettings;
+    PKB__c kbSets = PKB__c.getValues(siteName);
+    kbSets.Create_Contact_and_Account__c = false;
+    update kbSets;
+	
   }
 
   public void notifyAdmin(System.DmlException de, Exception e, String introMessage) {
@@ -845,7 +847,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     set;
     get {
       if (currentSiteUrl == null) {
-        currentSiteUrl = Site.getCurrentSiteUrl();
+        currentSiteUrl = Site.getBaseUrl();
         if (!isSite) {
             if (Site.getTemplate().getUrl().endsWith('pkb_Template_fb'))
                currentSiteUrl = Page.pkb_Home_fb.getUrl();
@@ -853,7 +855,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
                currentSiteUrl = Page.pkb_Home.getUrl();
         }
       }
-      return currentSiteUrl;
+      return currentSiteUrl +'/';
     }
   }
 

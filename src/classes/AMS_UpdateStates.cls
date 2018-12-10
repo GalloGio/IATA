@@ -11,10 +11,12 @@ global class AMS_UpdateStates implements Database.Batchable<sObject> {
 
     global void execute(Database.BatchableContext BC, list<sObject> scope) {
 
-		List<IATA_ISO_State__c> states = [select id, name, ISO_Code__c from IATA_ISO_State__c where NOT(name like '%-BAD')];
+		List<IATA_ISO_State__c> states = IATAIsoStateDAO.getIsoStates();
         Map<String, IATA_ISO_State__c> mapStates = new Map<String, IATA_ISO_State__c>();
         for(IATA_ISO_State__c s:states){
-        	mapStates.put(s.Name,s);
+            if(!s.Name.endsWith('-BAD')){
+        	   mapStates.put(s.Name,s);
+            }
         }
         List<AMS_Address__c> addToUpdate = new List<AMS_Address__c>();
         for(sObject add:scope){

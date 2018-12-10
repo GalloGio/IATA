@@ -5,6 +5,7 @@ global without sharing class Comm_User_Helper {
   public static final string IEC = 'IEC';
   public static final string CNS = 'CNS';
   public static final String ONEIDENTITY = 'IDENTITY';
+  public static final string FRED = 'FRED';
   public static final string SEPARATOR = '@#@#@#';
   public static final string KEYTODECODE = 'Kg0m2vAj4VmBBviGAUehrw==';
   public static final string plusReplacer = '@@##';
@@ -159,7 +160,7 @@ global without sharing class Comm_User_Helper {
         String link ;
         String cleanUsername = u.userName.replace('+', plusReplacer);
 
-        if(community == ISSP || community == CNS || community == ONEIDENTITY){
+        if(community == ISSP || community == CNS || community == ONEIDENTITY || community == FRED){
             
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
@@ -179,16 +180,21 @@ global without sharing class Comm_User_Helper {
                 String template ='';
                 Map<String,String> emailWrap = new Map<String,String>();
 
-                if(community == ISSP || community == ONEIDENTITY){
+                if(community == ISSP || community == ONEIDENTITY || community == FRED ){
                     link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?' + encodedPart;
 
                     if(community == ISSP){
                         link += '&serviceName=ISSP';
                         template = 'Identity_Portal_ISSP_New_User';
-                    }else{
+                    }else if(community == FRED){
+                        template = 'Identity_Portal_FRED_New_User';            
+                        link += '&serviceName=FRED';
+                    }
+                    else {
                       template = 'Identity_Portal_New_User';
                     }
 
+                    system.debug('aqui link :::' + link);  
                     emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link,Comm_User_Helper.ONEIDENTITY, community); 
 
                 }else if(community == 'CNS'){

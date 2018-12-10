@@ -306,6 +306,17 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>CNS_Agency__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the Agent is under a CNS Agency Program</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if the Agent is under a CNS Agency Program</inlineHelpText>
+        <label>CNS Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Cash_Conditions_Override__c</fullName>
         <description>Formula on Related Accreditation (Cash_Conditions_Override__c)</description>
         <externalId>false</externalId>

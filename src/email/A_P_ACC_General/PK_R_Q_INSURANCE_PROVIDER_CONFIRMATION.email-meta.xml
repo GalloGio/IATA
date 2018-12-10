@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Request Insurance Provider confirmation - agent update detail / coverage</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>PK: R/Q INSURANCE PROVIDER CONFIRMATION</name>
+    <style>freeForm</style>
+    <subject>Ref: {!Case.CaseNumber} - Request Insurance Provider Confirmation letter  - {!Account.Name}</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

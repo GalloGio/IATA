@@ -18,9 +18,9 @@ private class AMS_OscarCaseTriggerHelper_Test {
 		List<Account> accountList = new List<Account>();
 		Account account = new Account();
 		Set<Id> idSet;
-		Id CASE_OSCAR_RECORD_TYPE_ID = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-		Id CASE_PROCESS_RECORD_TYPE_ID = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('Process').getRecordTypeId();
-		Id CASE_SIDRA_RECORD_TYPE_ID = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+		Id CASE_OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+		Id CASE_PROCESS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
+		Id CASE_SIDRA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 		Case parentCase;
 		Case childCase;
 		AMS_Oscar__c oscar;
@@ -88,7 +88,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 			new AMS_Country_Specific_Attribute__c(
 				Threshold__c = 10.0,
 				Location_Class__c = 'Xpto',
-				RecordTypeId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.RecordTypeInfosByName.get('Irregularity Threshold').RecordTypeId,
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Irregularity_Threshold'),
 				IATA_ISO_Country__C = countryList[0].Id
 			)
 		);
@@ -105,7 +105,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = country.Id,
-                RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
         );
 
 		accountList.add(account);
@@ -121,7 +121,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = countryList[1].Id,
-                RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
@@ -136,7 +136,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = countryList[2].Id,
-                RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
@@ -151,7 +151,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = countryList[3].Id,
-                RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
@@ -166,7 +166,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = countryList[4].Id,
-                RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
@@ -181,7 +181,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
                 Company_Type__c = 'A',
                 IATACode__c = '100',
                 IATA_ISO_Country__c = countryList[5].Id,
-                RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 

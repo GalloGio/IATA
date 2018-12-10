@@ -100,8 +100,6 @@ global class AmsIataCodeGenerator{
         
         Boolean isImportAgentWithLink = false;
         
-        //Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');#AMSFTS
-        Id  programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c').get('IATA_Code_Programs');
         try
         {
 
@@ -125,8 +123,9 @@ global class AmsIataCodeGenerator{
             System.debug('[generatedAgencyIATACode] theAccreditation is ' + theAccreditation);
             System.debug('[generatedAgencyIATACode] isImportAgentWithLink flag set to ' + isImportAgentWithLink);
 
-            if(longCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) && theAccreditation.CASS_Number__c == null)
-            {
+            /*** AMSU-173 ***/
+            Boolean isGSA = theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP;
+            if(AMS_Utils.CLASS_REQ_CASS_NUMBER.contains(theAccreditation.Location_Class__c) && !isGSA && theAccreditation.CASS_Number__c == null) { /*** AMSU-173 ***/
                 System.debug(LoggingLevel.ERROR,'[generatedAgencyIATACode] C, I, R, Q and G Location Types must have a CASS number defined before generating the IATA code.');
 
                 updaterObj.isFaulty=true;
@@ -163,8 +162,7 @@ global class AmsIataCodeGenerator{
             
             // For Cargo Agency branches, the IATA code should be the same as for the top-level Agency
             // So if the account has a top-level parent with IATA Code, we shall use it and utilize the C, A and N codes based on the IATA Code.
-            if( longCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) && theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c != null)
-            {
+            if(AMS_Utils.CLASS_REQ_CASS_NUMBER.contains(theAccreditation.Location_Class__c) && !isGSA && theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c != null) { /*** AMSU-173 ***/
                 System.debug('*** Entered based on longCodePrograms with value ' + theAccreditation.Location_Class__c + '-' + theAccount.Sector__c);
 
                 theAccreditation.IATACode__c = theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c.subString(0, 7)+theAccreditation.CASS_Number__c;
@@ -183,7 +181,7 @@ global class AmsIataCodeGenerator{
                 theAccount.N_Code__c = theAccreditation.IATACode__c.subString(3, 7);
                 theAccount.IATACode__c = theAccreditation.IATACode__c;
                 
-                theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
+                theAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
                 if(theAccreditation.ANG_IsNewGenAgency__c) theAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
                 if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                 {
@@ -244,11 +242,7 @@ global class AmsIataCodeGenerator{
                 String isoState = theAccreditation.IATA_ISO_State__c;
                 if(isoState == null && theAccreditation.Branch_Office_Country__c != null)
                 {
-
-                    // Get the default state value for the accreditation's country -- unfortunately join subselect can't be used due to the SF limits...
-                    //List<IATA_ISO_Country__c> accreditationCountry = [select AMS_Default_State__c, name from iata_iso_country__c where id = :theAccreditation.Branch_Office_Country__c limit 1];
-                    
-                    //if(accreditationCountry.isEmpty()){
+         
                     if(theAccreditation.Branch_Office_Country__c == null || theAccreditation.Branch_Office_Country__r.AMS_Default_State__c == null){
                         System.debug(LoggingLevel.ERROR,'[generatedAgencyIATACode] The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.');
 
@@ -259,7 +253,11 @@ global class AmsIataCodeGenerator{
                     }
 
                     String countryDefaultState = theAccreditation.Branch_Office_Country__r.AMS_Default_State__c;
-                    List<IATA_ISO_State__c> defaultIsoStateList = [select id, Name, ISO_Code__c from iata_iso_state__c where ISO_Code__c = :countryDefaultState and IATA_ISO_Country__c = :theAccreditation.Branch_Office_Country__c];
+                    List<IATA_ISO_State__c> defaultIsoStateList = new List<IATA_ISO_State__c>();
+                    for(IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByIsoCodes(new Set<String>{countryDefaultState})){
+                        if(state.IATA_ISO_Country__c == theAccreditation.Branch_Office_Country__c)
+                            defaultIsoStateList.add(state);
+                    }
 
                     if(defaultIsoStateList.isEmpty()){
 
@@ -312,10 +310,6 @@ global class AmsIataCodeGenerator{
                 if(isoState == null && theAccreditation.Branch_Office_Country__c != null)
                 {
 
-                    // Get the default state value for the accreditation's country -- unfortunately join subselect can't be used due to the SF limits...
-                    //List<IATA_ISO_Country__c> accreditationCountry = [select AMS_Default_State__c, name from iata_iso_country__c where id = :theAccreditation.Branch_Office_Country__c limit 1];
-                    
-                    //if(accreditationCountry.isEmpty()){
                     if(theAccreditation.Branch_Office_Country__c == null || theAccreditation.Branch_Office_Country__r.AMS_Default_State__c == null){
                         System.debug(LoggingLevel.ERROR,'[generatedAgencyIATACode] The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.');
 
@@ -326,7 +320,11 @@ global class AmsIataCodeGenerator{
                     }
 
                     String countryDefaultState = theAccreditation.Branch_Office_Country__r.AMS_Default_State__c;
-                    List<IATA_ISO_State__c> defaultIsoStateList = [select id, Name, ISO_Code__c from iata_iso_state__c where ISO_Code__c = :countryDefaultState and IATA_ISO_Country__c = :theAccreditation.Branch_Office_Country__c];
+                    List<IATA_ISO_State__c> defaultIsoStateList = new List<IATA_ISO_State__c>();
+                    for(IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByIsoCodes(new Set<String>{countryDefaultState})){
+                        if(state.IATA_ISO_Country__c == theAccreditation.Branch_Office_Country__c)
+                            defaultIsoStateList.add(state);
+                    }
 
                     if(defaultIsoStateList.isEmpty()){
 
@@ -549,7 +547,7 @@ global class AmsIataCodeGenerator{
 
                             //theAccount.IATACode__c = theAccreditation.IATACode__c;
                             if(theAccreditation.ANG_IsNewGenAgency__c) theAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
-                            theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
+                            theAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
                             if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                             {
                                 if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G') {
@@ -570,13 +568,7 @@ global class AmsIataCodeGenerator{
                                     theAccount.Sector__c = programSectorMap.get(theAccount.Location_Class__c); // AMS Enhancements AMSU-24                                    
                                 }
                             }
-                            else
-                            {
-                                // TODO Later... These are already mapped, but there's no task to activate these yet
-                                // When the moment comes, we should remove the above IF and this ELSE
-                                
-                                // theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
-                            }
+                            
                             System.debug('[generatedAgencyIATACode] storing accreditation with iata code: '+theAccreditation.IATACode__c);
                             List<Code_Range__c> codeRangesToLock = [select id, AMS_Deplicate_Prevention_Lock__c from Code_Range__c where id = :range.Id for update];
                             Code_Range__c codeRange = codeRangesToLock.get(0);
@@ -651,7 +643,8 @@ global class AmsIataCodeGenerator{
     {
         checkDigitCreation(agt, act, false);
         
-        if(agt.Location_Class__c.equalsIgnoreCase('P') || agt.Location_Class__c.equalsIgnoreCase('M') || (agt.Location_Class__c.equalsIgnoreCase('G') && act.Sector__c == 'Travel Agent') || agt.Location_Class__c.equalsIgnoreCase('X') || agt.Location_Class__c.equalsIgnoreCase('T') || agt.Location_Class__c.equalsIgnoreCase('D'))
+        Boolean isGSA = agt.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA || agt.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP;   
+        if(agt.Location_Class__c.equalsIgnoreCase('P') || agt.Location_Class__c.equalsIgnoreCase('M') || (agt.Location_Class__c.equalsIgnoreCase('G') && isGSA) || agt.Location_Class__c.equalsIgnoreCase('X') || agt.Location_Class__c.equalsIgnoreCase('T') || agt.Location_Class__c.equalsIgnoreCase('D'))
         {
             agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.Chk_Dgt__c;
             act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c;
@@ -696,11 +689,8 @@ global class AmsIataCodeGenerator{
     Calculate the CheckDigit based on all elelment from IATA Code
     boolean parameter for to save or not the record
     */
-    //public static void checkDigitCreation(Ams_Agency__c agt, boolean saveRecord){#AMSTFS
     public static void checkDigitCreation(AMS_Pax_Accreditation_Form__c agt, Account act, boolean saveRecord){
-        //throw new TransformationException('checkDigit('+agt.Name+','+saverecord+')');
      
-        // #AMSFTS Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
         Map<String,String> letterIndex = new Map<String,String>{'A'=> '10','B'=> '11','C' => '','D'=> '13','E'=> '14','F'=> '15','G'=> '16','H'=> '17','I'=> '18','J'=> '19','K'=> '20','L'=> '21','M'=> '22','N'=> '23','O'=> '24','P'=> '25','Q'=> '26','R'=> '27','S'=> '28','T'=> '29','U'=> '30','V'=> '31','W'=> '32','X'=> '33','Y'=> '34','Z'=> '35'};
         String nACode = agt.A_code__c;
         String nCCode  ='' ; 
@@ -744,9 +734,9 @@ global class AmsIataCodeGenerator{
             nCCode = agt.C_code__c;
         }
         
-        
-        if( (agt.Location_Class__c.equalsIgnoreCase('C') || agt.Location_Class__C.equalsIgnoreCase('R') || agt.Location_Class__C.equalsIgnoreCase('Q') || agt.Location_Class__C.equalsIgnoreCase('I') || (agt.Location_Class__c.equalsIgnoreCase('G') && act.Sector__c == 'Cargo Agent')) && agt.CASS_Number__c != null)
-        {
+        /*** AMSU-173 ***/
+        Boolean isGSA = agt.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA || agt.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP;        
+        if(AMS_Utils.CLASS_REQ_CASS_NUMBER.contains(agt.Location_Class__c) && !isGSA &&  agt.CASS_Number__c != null) {
             cCassNumber = resizeNumericString(agt.CASS_Number__c+'',3);
         }
         
@@ -778,18 +768,6 @@ global class AmsIataCodeGenerator{
     {
         checkDigitCreation(agt, act, true);
     }
-    
-    /*#AMSFTSpublic static void checkDigitCreation(list<Ams_Agency__c> agts){
-        for(Ams_Agency__c agt:agts)
-            checkDigitCreation(agt);
-    }
-    
-     
-    public static void checkDigitCreation(list<Ams_Agency__c> agts,boolean saveRecord){
-        for(Ams_Agency__c agt:agts)
-            checkDigitCreation(agt,saveRecord);
-    }#AMSFTS*/
-    
     
     public static void sendLogsToUser(String body, String title)
     {

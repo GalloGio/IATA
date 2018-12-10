@@ -321,7 +321,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
         User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
 
         Account acc = [Select Sector__c from Account limit 1];
-        acc.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        acc.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         acc.Sector__c = 'Travel Agent';
         acc.IATACode__c = '1234567890';
         acc.Location_type__c = 'HO';

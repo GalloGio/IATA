@@ -244,8 +244,20 @@
     <label>Agency Risk Calculation</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Accreditation_Model__c</columns>
+        <columns>ANG_Adjusted__c</columns>
+        <columns>ANG_Financial_Review_Result__c</columns>
+        <columns>ANG_Limit_Cash_Condition__c</columns>
+        <columns>ANG_Occurrence_Num__c</columns>
+        <columns>ANG_Order__c</columns>
+        <columns>ANG_Remittance_Frequency__c</columns>
+        <columns>ANG_Risk_History__c</columns>
+        <columns>ANG_Risk_History_Assessment__c</columns>
+        <columns>RECORDTYPE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Risk_Assessment</fullName>

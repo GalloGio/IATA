@@ -165,8 +165,15 @@
     </listViews>
     <listViews>
         <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Agency_Risk_Calculation__c</columns>
+        <columns>ANG_Description__c</columns>
+        <columns>ANG_nr_occurence_ff__c</columns>
+        <columns>Limit_Cash_conditions__c</columns>
+        <columns>Grouping_Number__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Short Name</label>

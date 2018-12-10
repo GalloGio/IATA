@@ -521,48 +521,46 @@ background-color:#428bca;
   padding-bottom: 15px;
 
    </style>
-
-<script>
-
-
-    function tarnsferSearchQuery() {
-        //createCookie("searchInput", document.getElementById("searchInput").value, 1);
-        //alert(document.cookie);
-        window.top.location.replace("/ISSP_SearchResult?q=" + document.getElementById("searchInput").value + "{!if(communityName=='CNS','&CommunityName='+communityName,'')}"); 
-    }
-
-    function enterKey(evt) {
-      var evt = (evt) ? evt : ((event) ? event : null);
-      var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
-      if ((evt.keyCode == 13) && (node.type=="text"))  {
-           tarnsferSearchQuery();
+   <script>
+      function transferSearchQuery() {
+          //createCookie("searchInput", document.getElementById("searchInput").value, 1);
+          //alert(document.cookie);
+          window.top.location.replace("/ISSP_SearchResult?q=" + document.getElementById("searchInput").value + "{!if(communityName=='CNS','&CommunityName='+communityName,'')}"); 
       }
-    }
-
-    function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-    }
-    function changeLanguageLocaleKey(lang) {
-
-		    //var l = $("#LanguageLocaleKeySelect option:selected").val();
-        //var lang = document.getElementById('LanguageLocaleKeySelect').value;
-        var lang = lang.options[lang.selectedIndex].value;
-
-        //alert(window.location.pathname+window.location.search);
-        window.location.href = "/ISSP_ChangeLanguage?retUrl="+encodeURIComponent(window.location.pathname)+encodeURIComponent(window.location.search)+"&lang="+lang;
-    }
-
-    var lang = getCookie('apex__lang');
-
-</script>
-
+      
+      function enterKey(evt) {
+        var evt = (evt) ? evt : ((event) ? event : null);
+        var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+        if ((evt.keyCode == 13) && (node.type=="text"))  {
+             transferSearchQuery();
+        }
+      }
+      
+      function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0;i < ca.length;i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+      }
+      function changeLanguageLocaleKey(lang) {
+      
+        //var l = $("#LanguageLocaleKeySelect option:selected").val();
+          //var lang = document.getElementById('LanguageLocaleKeySelect').value;
+          var lang = lang.options[lang.selectedIndex].value;
+      
+          //alert(window.location.pathname+window.location.search);
+          window.location.href = "/ISSP_ChangeLanguage?retUrl="+encodeURIComponent(window.location.pathname)+encodeURIComponent(window.location.search)+"&lang="+lang;
+      }
+      
+      var lang = getCookie('apex__lang');
+      
+   </script>
+   
+   
 
 
 <nav class="navbar navbar-primary"  role="navigation" id="topmenu">
@@ -634,7 +632,7 @@ background-color:#428bca;
       -->
       <apex:form id="LselectLanguage" rendered="{!communityName!='CNS'}">
       	<apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);"> 
-              <apex:selectOption itemValue="-- Language --" itemLabel="Language" itemDisabled="true"/>
+              <apex:selectOption itemValue="-- Language --" itemLabel="Language"/>
               <apex:selectOptions value="{!languages}"/>
         </apex:selectList>
       </apex:form>
