@@ -644,6 +644,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			this.currentAccount.fw.previousCompanies = getFormPreviousCompanies_2(currentAccount.account.Id, lstAccreditationContact);
 			this.currentAccount.fw.currentOwners = getFormCurrentOwners_2(currentAccount.account.Id, lstAccreditationContact);
 			this.currentAccount.fw.currentCompanies = getFormCurrentCompanies_2(currentAccount.account.Id, lstAccreditationContact);
+
+			currentAccount.fw.saveOwners();
 		}
 	}
 
