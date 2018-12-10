@@ -115,6 +115,7 @@ private class AMS_CaseTriggerHandler_Test {
 		supportRequest.IFAP_Country_ISO__c = 'T2';
 		supportRequest.RecordTypeId = sidraRecordTypeId;
 		supportRequest.AccountId = childAccount.Id;
+		supportRequest.Late_Payment_Date__c = Date.today();
 
 		supportRequestList.add(supportRequest);
 
@@ -131,6 +132,7 @@ private class AMS_CaseTriggerHandler_Test {
 		supportRequest1.IFAP_Country_ISO__c = 'T2';
 		supportRequest1.RecordTypeId = sidraRecordTypeId;
 		supportRequest1.AccountId = parentAccount.Id;
+		supportRequest1.Late_Payment_Date__c = Date.today();
 
 		supportRequestList.add(supportRequest1);
 
@@ -147,6 +149,7 @@ private class AMS_CaseTriggerHandler_Test {
 		supportRequest2.IFAP_Country_ISO__c = 'T2';
 		supportRequest2.RecordTypeId = sidraRecordTypeId;
 		supportRequest2.AccountId = parentAccount2.Id;
+		supportRequest2.Late_Payment_Date__c = Date.today();
 
 		supportRequestList.add(supportRequest2);
 
@@ -163,6 +166,7 @@ private class AMS_CaseTriggerHandler_Test {
 		supportRequest3.IFAP_Country_ISO__c = 'T2';
 		supportRequest3.RecordTypeId = sidraRecordTypeId;
 		supportRequest3.AccountId = parentAccount3.Id;
+		supportRequest3.Late_Payment_Date__c = Date.today();
 
 		supportRequestList.add(supportRequest3);
 
