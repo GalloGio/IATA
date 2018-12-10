@@ -57,8 +57,14 @@
 								</tr>
 								<tr>
 									<td style="border-top: none">
-										<apex:outputText value="{!totalConvertedAmount} {!localCurrency}" rendered="{!showConvertedAmount}"/>
-										<apex:outputText value="{!totalSecuredAmount} {!currencyCode}" rendered="{!NOT(showConvertedAmount)}"/>
+										<apex:outputText value="{0, number, ###,###,##0.00} {1}" rendered="{!showConvertedAmount}">
+                                           <apex:param value="{!totalConvertedAmount}" />
+                                           <apex:param value="{!localCurrency}" />
+                                        </apex:outputText>
+                                        <apex:outputText value="{0, number, ###,###,##0.00} {1}" rendered="{!NOT(showConvertedAmount)}">
+                                           <apex:param value="{!totalSecuredAmount}" />
+                                           <apex:param value="{!currencyCode}" />
+                                        </apex:outputText> 
 									</td>
 								</tr>
 							</table>							
@@ -89,7 +95,12 @@
 											<tr>
 												<td>{!item.financialInstitution}</td>
 												<td>{!item.securityType}</td>
-												<td>{!item.amount} {!item.currencyIsoCode}</td>
+												<td>
+													<apex:outputText value="{0, number, ###,###,##0.00} {1}">
+                                                       <apex:param value="{!item.amount}" />
+                                                       <apex:param value="{!item.currencyIsoCode}" />
+                                                    </apex:outputText>
+												</td>
 												<td>
 													<apex:outputText value="{0,date,dd/MM/yyyy}"> 
 														<apex:param value="{!item.validityStartDate}" /> 
