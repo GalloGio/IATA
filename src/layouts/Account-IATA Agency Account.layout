@@ -749,6 +749,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>ANG_Severity__c</fields>
+        <fields>ANG_Agent_Sales__c</fields>
         <fields>ANG_RHC_Information__c</fields>
         <fields>CREATED_DATE</fields>
         <fields>CURRENCY_ISO_CODE</fields>

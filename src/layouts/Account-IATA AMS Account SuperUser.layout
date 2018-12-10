@@ -798,6 +798,8 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
+        <fields>ANG_Severity__c</fields>
+        <fields>ANG_Agent_Sales__c</fields>
         <fields>ANG_Threshold_Level__c</fields>
         <fields>ANG_Direction__c</fields>
         <fields>CREATED_DATE</fields>

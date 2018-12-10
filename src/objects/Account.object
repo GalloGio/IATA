@@ -181,6 +181,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>TradeName__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>AMS_ACCOUNT_FIELDS_TO_VALIDATE</label>
     </fieldSets>
     <fieldSets>
@@ -15090,6 +15095,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 </value>
                 <value>
                     <fullName>B</fullName>
+                    <default>false</default>
+                    <label>Twice a week</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
                     <default>false</default>
                     <label>Every 3 days</label>
                 </value>
@@ -32481,6 +32491,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -82221,6 +82235,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>V</fullName>
                 <default>false</default>
             </values>
@@ -93669,6 +93687,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
 
@@ -93684,6 +93703,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
 
