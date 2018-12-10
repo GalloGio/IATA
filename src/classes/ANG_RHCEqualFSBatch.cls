@@ -50,7 +50,9 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<Account>, Databas
 
 		try{
 			if(!rhcInfosToUpdate.isEmpty()){
-				update rhcInfosToUpdate;
+        		RecordUpdater updater = new RecordUpdater(rhcInfosToUpdate);
+        		updater.schedule(System.now().addSeconds(2));
+				//update rhcInfosToUpdate;
 			}
 		}catch(Exception e){
 			errors.add('Error running batch for Agencies with Iata code(s): '+String.join(iataCodesAndNames,'\n')+' - '+e.getMessage()+' - '+e.getStackTraceString());

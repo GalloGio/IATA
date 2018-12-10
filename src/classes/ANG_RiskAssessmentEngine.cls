@@ -184,7 +184,10 @@ public class ANG_RiskAssessmentEngine{
     //============================ PUBLIC METHODS ====================================================
 
     public void assessment(){      
-        update assessAccounts();
+        //update assessAccounts();
+        List<account> accToUpdate = assessAccounts();
+        RecordUpdater updater = new RecordUpdater(accToUpdate);
+        updater.schedule(System.now().addSeconds(2));
     }
 
     public list<account> forecastAssessment(){    
