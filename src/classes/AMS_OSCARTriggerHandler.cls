@@ -3372,6 +3372,7 @@ public class AMS_OSCARTriggerHandler {
                     }
                     else if(updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTOLEGACY) {
                         ANG_ChinaConversionsHelper.deleteAccountsFoPs(updatedOscar.account__c);
+                        ANG_ChinaConversionsHelper.deleteRiskEvents(updatedOscar.account__c);
                     }
                 }
                 //ACAMBAS - NEWGEN-4445 - End

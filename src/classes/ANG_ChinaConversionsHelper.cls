@@ -38,7 +38,7 @@ global class ANG_ChinaConversionsHelper {
 					acc.Location_Type__c = 'BR';
 				}
 				acc.ANG_Accreditation_Model__c = '';
-				deleteRiskEvents(accountId);
+				//deleteRiskEvents(accountId);
 			}
 			else if(caseReason == AMS_Utils.CONVERTTOINTERNATIONAL) {
 				if(acc.Location_Type__c == 'HE') {
