@@ -351,6 +351,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                                       where a.IATACode__c = : IATACodeLocation2.trim()
                                               and a.RecordType.Name = 'Agency'
                                                       and (a.Status__c in :IDCardUtil.ALLOWED_ACCOUNT_STATUS OR Account.Status__c = 'Terminated') // INC183592
+                                                            and WebStar_ID__c = null
                                                               and (a.Location_Class__c in :IDCardUtil.ALLOWED_ACCOUNT_LOCATION_CLASS)];  
                                                               
 
