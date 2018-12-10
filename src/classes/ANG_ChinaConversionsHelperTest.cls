@@ -6,8 +6,43 @@ public class ANG_ChinaConversionsHelperTest {
 	private static Account accountBR;
 	private static Account accountSA;
 	private static AMS_Agencies_Hierarchy__c h;
-	private static AMS_Agencies_relationhip__c r1;
-	private static AMS_Agencies_relationhip__c r2;
+	private static Map<Id, Account> accountsMap;
+
+
+	private static Map<String, Map<String, String>> changeCodesConfig {
+		get {
+        	return new Map<String, Map<String, String>> {
+                'DIS-CHINA-TO-NEWGEN' => new Map<String, String> {
+	                                    	'Change_Code' => 'DIS',
+	                                    	'Bulletin_Memo_Text' => 'Conversion to NewGen GoLite Disapproved'},
+                'DIS-CHINA-TO-LEGACY' => new Map<String, String> {
+	                                    	'Change_Code' => 'DIS',
+	                                    	'Bulletin_Memo_Text' => 'Conversion to Domestic with Cash facility disapproved'},
+                'CWD-CHINA-TO-NEWGEN' => new Map<String, String> {
+	                                    	'Change_Code' => 'CWD',
+	                                    	'Bulletin_Memo_Text' => 'Conversion to NewGen GoLite withdrawn'},
+                'CWD-CHINA-TO-LEGACY' => new Map<String, String> {
+	                                    	'Change_Code' => 'CWD',
+	                                    	'Bulletin_Memo_Text' => 'Conversion to Domestic with Cash facility withdrawn'},
+                'DOM' => new Map<String, String> {
+	                                    	'Change_Code' => 'DOM',
+	                                    	'Bulletin_Memo_Text' => 'Agent is upgrading from Domestic to International'},
+                'LGC' => new Map<String, String> {
+	                                    	'Change_Code' => 'LGC',
+	                                    	'Bulletin_Memo_Text' => 'Conversion to Domestic with Cash facility in progress'},
+	            'LGF' => new Map<String, String> {
+	                                    	'Change_Code' => 'LGF',
+	                                    	'Bulletin_Memo_Text' => 'Conversion to Domestic with Cash facility finalized'},
+	            'PLF' => new Map<String, String> {
+	                                    	'Change_Code' => 'PLF',
+	                                    	'Bulletin_Memo_Text' => 'Conversion to NewGen GoLite finalized'},
+				'PLT' => new Map<String, String> {
+	                                    	'Change_Code' => 'PLT',
+	                                    	'Bulletin_Memo_Text' => 'Conversion to NewGen GoLite in progress'}
+	        };
+        }
+        set;
+    }
 
 	private static void setupData(String typeOfChange) {
 
@@ -20,37 +55,64 @@ public class ANG_ChinaConversionsHelperTest {
         insert stt;
 
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
+		String locationTypeParent = (typeOfChange == AMS_Utils.CONVERTTONEWGENPILOT) ? 'HO' : 'HE';
+		String locationTypeChild = (typeOfChange == AMS_Utils.CONVERTTONEWGENPILOT) ? 'BR' : 'AE';
 		
-		accountHO = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Name='ChinaAgencyHO', Short_Name__c='ChinaAgencyHO', Location_Class__c = 'D', Location_Type__c = 'HO', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent', Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing', Company_Type__c = 'A');
+		accountHO = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Name='ChinaAgencyHO', Short_Name__c='ChinaAgencyHO', Location_Class__c = 'D', Location_Type__c = locationTypeParent, Remittance_frequency__c = 'M', Sector__C = 'Travel Agent', Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing', Company_Type__c = 'A');
 		insert accountHO;	
 
-		accountBR = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Name='ChinaAgencyBR', Short_Name__c='ChinaAgencyBR', Location_Class__c = 'D', Location_Type__c = 'BR', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent', Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing', Company_Type__c = 'A', ParentId = accountHO.Id, Top_Parent__c = accountHO.Id);
+		accountBR = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Name='ChinaAgencyBR', Short_Name__c='ChinaAgencyBR', Location_Class__c = 'D', Location_Type__c = locationTypeChild, Remittance_frequency__c = 'M', Sector__C = 'Travel Agent', Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing', Company_Type__c = 'A', ParentId = accountHO.Id, Top_Parent__c = accountHO.Id);
 		insert accountBR;
 
-		accountSA = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Name='ChinaAgencySA', Short_Name__c='ChinaAgencySA', Location_Class__c = 'D', Location_Type__c = 'SA', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent', Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing', Company_Type__c = 'A');
-		insert accountSA;		
-
+		if(typeOfChange == AMS_Utils.CONVERTTONEWGENPILOT) {
+			accountSA = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Name='ChinaAgencySA', Short_Name__c='ChinaAgencySA', Location_Class__c = 'D', Location_Type__c = 'SA', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent', Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing', Company_Type__c = 'A', ParentId = accountBR.Id, Top_Parent__c = accountHO.Id);
+			insert accountSA;	
+		}
 
 		//ACCOUNT RELATIONS
+		Boolean isNewGenRelation = (typeOfChange == AMS_Utils.CONVERTTONEWGENPILOT) ? false : true;
+		
 		h = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'hierarchy');
 		insert h;
 
-		r1 = new AMS_Agencies_relationhip__c(Hierarchy__c = h.Id, Child_Account__c = accountBR.Id, Parent_Account__c = accountHO.Id, Is_Newgen_Relation__c = false);
+		AMS_Agencies_relationhip__c r1 = new AMS_Agencies_relationhip__c(Hierarchy__c = h.Id, Child_Account__c = accountBR.Id, Parent_Account__c = accountHO.Id, Is_Newgen_Relation__c = isNewGenRelation);
         insert r1;
 
+        if(typeOfChange == AMS_Utils.CONVERTTONEWGENPILOT) {
+	        AMS_Agencies_relationhip__c r2 = new AMS_Agencies_relationhip__c(Hierarchy__c = h.Id, Child_Account__c = accountSA.Id, Parent_Account__c = accountBR.Id, Is_Newgen_Relation__c = isNewGenRelation);
+	        insert r2;
+	    }
 
+        //CONTACTS
         Contact co1 = new Contact(AccountId = accountHO.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
+		//OSCAR
 		ID chinaRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China');
 		oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.NGCHINACONVERSION, Account__c = accountHO.id, Is_using_credit_card__c = true, RecordTypeId = chinaRT, ANG_Type_Of_Change__c = typeOfChange);
 		insert oscar;
 
+		//OSCAR CASE
 		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
         oscarCase.AccountId = accountHO.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
+
+        //ACCREDITATION FORM
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase.Id, Account_Name__c=accountHO.Name, Short_Name__c=accountHO.Short_Name__c );
+        insert stagingArea;
+
+
+        //RISK EVENTS
+        if(typeOfChange != AMS_Utils.CONVERTTONEWGENPILOT) {
+			ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(Name = 'Risk Event Type 1', ANG_Risk_ID__c = '111', ANG_Expiration__c = 2);
+			insert ret;
+
+			ANG_Agency_Risk_Event__c re = new ANG_Agency_Risk_Event__c(ANG_AccountId__c = oscar.Account__c, ANG_Risk_Type__c = ret.Id);
+			insert re;
+		}
 
 		oscar.STEP6__c = AMS_Utils.FAILED; //Sanity check
 		oscar.STEP2__c = AMS_Utils.FAILED; //Approval
@@ -59,21 +121,38 @@ public class ANG_ChinaConversionsHelperTest {
 		oscar.Is_PCI_compliant__c = 'Yes';
 		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
         oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+        oscar.AMS_Online_Accreditation__c = stagingArea.Id;
 		update oscar;
 
 
-		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>{
-            new AMS_ChangeCodes__c(Name = 'DIS-CHINA-TO-NEWGEN', Change_Code__c = 'DIS', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Conversion to NewGen GoLite Disapproved'),
-            new AMS_ChangeCodes__c(Name = 'DIS-CHINA-TO-LEGACY', Change_Code__c = 'DIS', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Conversion to Domestic with Cash facility disapproved'),
-            new AMS_ChangeCodes__c(Name = 'CWD-CHINA-TO-NEWGEN', Change_Code__c = 'CWD', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Conversion to NewGen GoLite withdrawn'),
-            new AMS_ChangeCodes__c(Name = 'CWD-CHINA-TO-LEGACY', Change_Code__c = 'CWD', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Conversion to Domestic with Cash facility withdrawn'),
-            new AMS_ChangeCodes__c(Name = 'DOM', Change_Code__c = 'DOM', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Agent is upgrading from Domestic to International'),
-            new AMS_ChangeCodes__c(Name = 'LGC', Change_Code__c = 'LGC', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Conversion to Domestic with Cash facility in progress'),
-            new AMS_ChangeCodes__c(Name = 'LGF', Change_Code__c = 'LGF', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Conversion to Domestic with Cash facility finalized'),
-            new AMS_ChangeCodes__c(Name = 'PLF', Change_Code__c = 'PLF', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Conversion to NewGen GoLite finalized'),
-            new AMS_ChangeCodes__c(Name = 'PLT', Change_Code__c = 'PLT', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Conversion to NewGen GoLite in progress')
-        };
+		//ATTACHMENT
+		Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = oscarCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
 
+        //OWNER
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+        
+        //CHANGE CODES
+        List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c>();
+        for(String ccName : changeCodesConfig.keyset()) {
+        	changeCodeList.add(new AMS_ChangeCodes__c(Name = ccName, Change_Code__c = changeCodesConfig.get(ccName).get('Change_Code'), Integration_RecId__c = 'C', Bulletin_Memo_Text__c = changeCodesConfig.get(ccName).get('Bulletin_Memo_Text')));
+        }
         insert changeCodeList;	
 
 	}
@@ -82,32 +161,12 @@ public class ANG_ChinaConversionsHelperTest {
 
 	@isTest static void convertChinaToNewGenTest() {
 
-		setupData(AMS_Utils.CONVERTTONEWGENPILOT);
-
-		accountSA.ParentId = accountBR.Id;
-		accountSA.Top_Parent__c = accountHO.Id;
-		update accountSA;
-
-		AMS_Agencies_relationhip__c r2 = new AMS_Agencies_relationhip__c(Hierarchy__c = h.Id, Child_Account__c = accountSA.Id, Parent_Account__c = accountBR.Id, Is_Newgen_Relation__c = false);
-        insert r2;
-
-		oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
-		update oscar;
-
 		Test.startTest();
+		setupData(AMS_Utils.CONVERTTONEWGENPILOT);
+		Test.stopTest();
 
 		convertChinaToNewGenStep6Test();
-
-		oscar.STEP15__c = AMS_Utils.PASSED;
-		oscar.STEP12__c = AMS_Utils.PASSED;
-		oscar.RPM_Approval__c = 'Authorize Approval';
-		oscar.STEP2__c = AMS_Utils.PASSED; //Approval
-		update oscar;
-
 		convertChinaToNewGenStep2Test();
-		
-		Test.stopTest();
-		
 	}
 
 	private static void convertChinaToNewGenStep6Test() {
@@ -121,47 +180,19 @@ public class ANG_ChinaConversionsHelperTest {
 	      -update hierarchy & relationships
 	      - */
 
-		accountHO = [SELECT id, Location_Type__c, ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c, 
-									ANG_Accreditation_Model__c, ParentId, Top_Parent__c
-					 FROM Account 
-					 WHERE Id = :accountHO.Id];
+	    oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
+		update oscar;
 
-		accountBR = [SELECT id, Location_Type__c, ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c, 
-									 ANG_Accreditation_Model__c, ParentId, Top_Parent__c
-					 FROM Account 
-					 WHERE Id = :accountBR.Id];
+		accountsMap = ANG_ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
 
-		accountSA = [SELECT id, Location_Type__c, ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c, 
-									 ANG_Accreditation_Model__c, ParentId, Top_Parent__c
-					 FROM Account
-					 WHERE Id = :accountSA.Id];
-
-		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Bulletin_Information__c 
-														   FROM Agency_Applied_Change_code__c 
-														   WHERE Change_Code__c = 'PLT' and OSCAR__c = :oscar.id and Account__c = :oscar.Account__c];
-
-		System.assertEquals('CONVERSION TO NEWGEN GOLITE IN PROGRESS', changeCodes[0].Bulletin_Information__c);
-
-		System.assertEquals('Cashless', accountHO.ANG_Accreditation_Model__c);
-		System.assertEquals('Cashless', accountBR.ANG_Accreditation_Model__c);
-		System.assertEquals('Cashless', accountSA.ANG_Accreditation_Model__c);
-
-		System.assertEquals('HE', accountHO.Location_Type__c);
-		System.assertEquals('AE', accountBR.Location_Type__c);
-		System.assertEquals('AE', accountSA.Location_Type__c);
-
-		System.assertEquals(true, accountHO.ANG_IsNewGenAgency__c);
-		System.assertEquals(true, accountBR.ANG_IsNewGenAgency__c);
-		System.assertEquals(true, accountSA.ANG_IsNewGenAgency__c);
-
-		System.assertEquals('Not Applicable', accountHO.ANG_RiskStatus__c);
-		System.assertEquals('Not Applicable', accountHO.ANG_RiskHistoryAssessment__c);
-		System.assertEquals('Not Applicable', accountBR.ANG_RiskStatus__c);
-		System.assertEquals('Not Applicable', accountBR.ANG_RiskHistoryAssessment__c);
-		System.assertEquals('Not Applicable', accountSA.ANG_RiskStatus__c);
-		System.assertEquals('Not Applicable', accountSA.ANG_RiskHistoryAssessment__c);
+		checkChangeCode('PLT');
+		checkAccountsChanges(accountsMap.values(), 'Cashless', true, new List<String>{'HE','AE'}, 'Not Applicable');
 
 		//Confirm that old SA moved from 3rd level to 2nd level of the account hierarchy
+		accountSA = [SELECT ParentId, Top_Parent__c
+					 FROM Account
+					 WHERE Id = :AccountSA.Id];
+
 		System.assertEquals(accountSA.ParentId, accountHO.Id);
 		System.assertEquals(accountSA.Top_Parent__c, accountHO.Id);
 		checkAccountRelations();
@@ -172,84 +203,62 @@ public class ANG_ChinaConversionsHelperTest {
 		      -generate change code PLF
 		      -create inactive FoP records for the accounts (CC and IEP as for cashless agents)*/
 
-		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Bulletin_Information__c 
-														   FROM Agency_Applied_Change_code__c 
-														   WHERE Change_Code__c = 'PLF' and OSCAR__c = :oscar.id and Account__c = :oscar.Account__c];
+		oscar.STEP15__c = AMS_Utils.PASSED;
+		oscar.STEP12__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = 'Authorize Approval';
+		oscar.STEP2__c = AMS_Utils.PASSED; //Approval
+		update oscar;
 
-		System.assertEquals('CONVERSION TO NEWGEN GOLITE FINALIZED', changeCodes[0].Bulletin_Information__c);
-
+		checkChangeCode('PLF');
 
 		List<Agency_Authorization__c> FoPs_list = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c 
 											  	   FROM Agency_Authorization__c
-											  	   WHERE Account__c = :AccountHO.Id and (ANG_FormOfPayment_ID__c = 'CC' or ANG_FormOfPayment_ID__c = 'EP') and Status__c = 'Non-Active'];
+											  	   WHERE Account__c IN :accountsMap.keyset() and (ANG_FormOfPayment_ID__c = 'CC' or ANG_FormOfPayment_ID__c = 'EP') and Status__c = 'Non-Active'];
 
-		System.assertEquals(2, FoPs_list.size());
+		System.assertEquals(6, FoPs_list.size());
 	}
 
 	@isTest static void convertChinaToNewGenStep3Test() {
 		/*On disapproval:
 		      -generate DIS change code*/
 
+		Test.startTest();
 		setupData(AMS_Utils.CONVERTTONEWGENPILOT);
+		Test.stopTest();
 
 		oscar.STEP3__c = AMS_Utils.PASSED; //Disapproval
 		update oscar;
 
-		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Bulletin_Information__c 
-														   FROM Agency_Applied_Change_code__c 
-														   WHERE Change_Code__c = 'DIS' and OSCAR__c = :oscar.id and Account__c = :oscar.Account__c];
-
-		System.assertEquals('CONVERSION TO NEWGEN GOLITE DISAPPROVED', changeCodes[0].Bulletin_Information__c);
-
-		
+		checkChangeCode('DIS-CHINA-TO-NEWGEN');
 	}
 
 	@isTest static void convertChinaToNewGenStep4Test() {
 		/*On withdrawal:
 		      -generate CWD change code*/
-		      
+
+		Test.startTest();      	
 		setupData(AMS_Utils.CONVERTTONEWGENPILOT);
+		Test.stopTest();
 
 		oscar.STEP4__c = AMS_Utils.PASSED; //Withdrawal
 		update oscar;
 
-		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Bulletin_Information__c 
-														   FROM Agency_Applied_Change_code__c 
-														   WHERE Change_Code__c = 'CWD' and OSCAR__c = :oscar.id and Account__c = :oscar.Account__c];
-
-		System.assertEquals('CONVERSION TO NEWGEN GOLITE WITHDRAWN', changeCodes[0].Bulletin_Information__c);
+		checkChangeCode('CWD-CHINA-TO-NEWGEN');
 	}
 
 
 	@isTest static void convertChinaToLegacyTest() {
 
 		Test.startTest();
-
 		setupData(AMS_Utils.CONVERTTOLEGACY);
-
-		convertToNewGen(accountHO);
-		convertToNewGen(accountBR);
-
 		Test.stopTest();
 
-	
-		//Risk event types
-		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(Name = 'Risk Event Type 1', ANG_Risk_ID__c = '111', ANG_Expiration__c = 2);
-		insert ret;
+		createFormOfPayment(oscar.Account__c, 'CC');
 
-		//Risk events
-		ANG_Agency_Risk_Event__c re = new ANG_Agency_Risk_Event__c(ANG_AccountId__c = accountHO.Id, ANG_Risk_Type__c = ret.Id);
-		insert re;
-
-		//Form of payments
-		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-		Agency_Authorization__c aa = new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = formOfPaymentRT);
-		insert aa;
-
-		oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
-		update oscar;
-		
 		convertChinaToLegacyStep6Test();
+		convertChinaToLegacyStep2Test();
+		convertChinaToLegacyStep3Test();
+		convertChinaToLegacyStep4Test();
 	}
 
 
@@ -263,44 +272,14 @@ public class ANG_ChinaConversionsHelperTest {
 			-delete any Risk Event
 			-update hierarchy & relationships*/
 
-		accountHO = [SELECT id, Location_Type__c, ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c, 
-							ANG_Accreditation_Model__c, ParentId, Top_Parent__c
-					 FROM Account 
-					 WHERE Id = :accountHO.Id];
+		oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
+		update oscar;
 
-		accountBR = [SELECT id, Location_Type__c, ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c, 
-							ANG_Accreditation_Model__c, ParentId, Top_Parent__c
-					 FROM Account 
-					 WHERE Id = :accountBR.Id];
+		accountsMap = ANG_ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
 
-		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Bulletin_Information__c 
-														   FROM Agency_Applied_Change_code__c 
-														   WHERE Change_Code__c = 'LGC' and OSCAR__c = :oscar.id and Account__c = :oscar.Account__c];
-
-		System.assertEquals('CONVERSION TO DOMESTIC WITH CASH FACILITY IN PROGRESS', changeCodes[0].Bulletin_Information__c);
-
-		System.assertEquals(null, accountHO.ANG_Accreditation_Model__c);
-		System.assertEquals(null, accountBR.ANG_Accreditation_Model__c);
-
-		System.assertEquals('HO', accountHO.Location_Type__c);
-		System.assertEquals('BR', accountBR.Location_Type__c);
-
-		System.assertEquals(false, accountHO.ANG_IsNewGenAgency__c);
-		System.assertEquals(false, accountBR.ANG_IsNewGenAgency__c);
-
-		System.assertEquals(null, accountHO.ANG_RiskStatus__c);
-		System.assertEquals(null, accountHO.ANG_RiskHistoryAssessment__c);
-		System.assertEquals(null, accountBR.ANG_RiskStatus__c);
-		System.assertEquals(null, accountBR.ANG_RiskHistoryAssessment__c);
-
-		Map<Id, Account> accountsMap = ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
-
-		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_AccountId__c
-													 FROM ANG_Agency_Risk_Event__c 
-													 WHERE ANG_AccountId__c in :accountsMap.keyset()];
-
-		System.assertEquals(0, [SELECT count() FROM ANG_Agency_Risk_Event__c WHERE ANG_AccountId__c in :accountsMap.keyset()]);	
-														   	
+		checkChangeCode('LGC');
+		checkAccountsChanges(accountsMap.values(), null, false, new List<String>{'HO','BR'}, null);
+		checkRiskEvents(accountsMap.keyset());													   	
 		checkAccountRelations();
 	}
 
@@ -309,65 +288,51 @@ public class ANG_ChinaConversionsHelperTest {
 			-generate change code LGF
 			-delete the FoP records for the accounts */
 
-		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Bulletin_Information__c 
-														   FROM Agency_Applied_Change_code__c 
-														   WHERE Change_Code__c = 'LGF' and OSCAR__c = :oscar.id and Account__c = :oscar.Account__c];
+		oscar.STEP15__c = AMS_Utils.PASSED;
+		oscar.STEP12__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = 'Authorize Approval';
+		oscar.STEP2__c = AMS_Utils.PASSED; //Approval
+		update oscar;
 
-		System.assertEquals('CONVERSION TO DOMESTIC WITH CASH FACILITY FINALIZED', changeCodes[0].Bulletin_Information__c);
-
-
-		Map<Id, Account> accountsMap = ANG_ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
-
-		List<Agency_Authorization__c> FoPs_list = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c 
-											  	   FROM Agency_Authorization__c 
-											  	   WHERE Account__c in :accountsMap.keyset()];
-
-		System.assertEquals(0, FoPs_list.size());
+		checkChangeCode('LGF');
+		checkFormOfPayments(accountsMap.keyset());
 	}
 
 	private static void convertChinaToLegacyStep3Test() {
 		/*On disapproval:
 		      -generate DIS change code*/
 
-		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Bulletin_Information__c 
-														   FROM Agency_Applied_Change_code__c 
-														   WHERE Change_Code__c = 'DIS' and OSCAR__c = :oscar.id and Account__c = :oscar.Account__c];
+		oscar.STEP3__c = AMS_Utils.PASSED; //Disapproval
+		update oscar;
 
-		System.assertEquals('CONVERSION TO DOMESTIC WITH CASH FACILITY DISAPPROVED', changeCodes[0].Bulletin_Information__c);
+		checkChangeCode('DIS-CHINA-TO-LEGACY');
 	}
 
 	private static void convertChinaToLegacyStep4Test() {
 		/*On withdrawal:
 		      -generate CWD change code*/
 
-		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Bulletin_Information__c 
-														   FROM Agency_Applied_Change_code__c 
-														   WHERE Change_Code__c = 'CWD' and OSCAR__c = :oscar.id and Account__c = :oscar.Account__c];
+		oscar.STEP4__c = AMS_Utils.PASSED; //Withdrawal
+		update oscar;
 
-		System.assertEquals('CONVERSION TO DOMESTIC WITH CASH FACILITY WITHDRAWN', changeCodes[0].Bulletin_Information__c);
+		checkChangeCode('CWD-CHINA-TO-LEGACY');
 	}
 
 
 	@isTest static void convertChinaToInternationalTest() {
 
 		Test.startTest();
-
 		setupData(AMS_Utils.CONVERTTOINTERNATIONAL);
-		convertToNewGen(accountHO);
-		convertToNewGen(accountBR);
-
 		Test.stopTest();
 
-		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-		Agency_Authorization__c aa = new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = formOfPaymentRT);
-		insert aa;
+		createFormOfPayment(oscar.Account__c, 'CC');
 
-		oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
-		update oscar;
+		
 
 		convertChinaToInternationalStep6Test();
 	}
 
+	
 	private static void convertChinaToInternationalStep6Test() {
 		/*On sanity checks passed:
 			-generate change code DOM
@@ -376,58 +341,28 @@ public class ANG_ChinaConversionsHelperTest {
 			-update the location type: HE -> HO. AE -> BR
 			-set Risk status & Risk history assessment fields blank
 			-update hierarchy & relationships
+			-delete any Risk Event
 			-delete the FoP records for the accounts */
 
-		accountHO = [SELECT id, Location_Type__c, ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c, 
-									ANG_Accreditation_Model__c, ParentId, Top_Parent__c
-					 FROM Account 
-					 WHERE Id = :accountHO.Id];
+		oscar.STEP6__c = AMS_Utils.PASSED; //Sanity check
+		update oscar;
 
-		accountBR = [SELECT id, Location_Type__c, ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c, 
-									 ANG_Accreditation_Model__c, ParentId, Top_Parent__c
-					 FROM Account 
-					 WHERE Id = :accountBR.Id];
+		accountsMap = ANG_ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
 
-		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Bulletin_Information__c 
-														   FROM Agency_Applied_Change_code__c 
-														   WHERE Change_Code__c = 'DOM' and OSCAR__c = :oscar.id and Account__c = :oscar.Account__c];
-
-		System.assertEquals('AGENT IS UPGRADING FROM DOMESTIC TO INTERNATIONAL', changeCodes[0].Bulletin_Information__c);
-
-		System.assertEquals(null, accountHO.ANG_Accreditation_Model__c);
-		System.assertEquals(null, accountBR.ANG_Accreditation_Model__c);
-
-		System.assertEquals('HO', accountHO.Location_Type__c);
-		System.assertEquals('BR', accountBR.Location_Type__c);
-
-		System.assertEquals(false, accountHO.ANG_IsNewGenAgency__c);
-		System.assertEquals(false, accountBR.ANG_IsNewGenAgency__c);
-
-		System.assertEquals(null, accountHO.ANG_RiskStatus__c);
-		System.assertEquals(null, accountHO.ANG_RiskHistoryAssessment__c);
-		System.assertEquals(null, accountBR.ANG_RiskStatus__c);
-		System.assertEquals(null, accountBR.ANG_RiskHistoryAssessment__c);
-
+		checkChangeCode('DOM');
+		checkAccountsChanges(accountsMap.values(), null, false, new List<String>{'HO','BR'}, null);
 		checkAccountRelations();
-
-		Map<Id, Account> accountsMap = ChinaConversionsHelper.getAllHierarchyAccounts(oscar.Account__c);
-
-		List<Agency_Authorization__c> FoPs_list = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c 
-											  	   FROM Agency_Authorization__c 
-											  	   WHERE Account__c in :accountsMap.keyset()];
-
-		System.assertEquals(0, FoPs_list.size());
+		checkRiskEvents(accountsMap.keyset());
+		checkFormOfPayments(accountsMap.keyset()); 
 	}
 
 
-	private static void convertToNewGen(Account a) {
-		a.Location_Type__c = (a.Location_Type__c == 'HO') ? 'HE' : 'AE';
-		a.ANG_Accreditation_Model__c = 'Cashless';
-		update a;
-
-		r1.Is_Newgen_Relation__c = true;
-		update r1;
+	private static void createFormOfPayment(Id accountId, String fopId) {
+		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+		Agency_Authorization__c aa = new Agency_Authorization__c(Account__c = accountId, ANG_FormOfPayment_ID__c = fopId, Status__c = 'Non-Active', RecordTypeId = formOfPaymentRT);
+		insert aa;
 	}
+
 
 	private static void checkAccountRelations() {
 		Boolean newGenFlag = (oscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTONEWGENPILOT) ? true : false;
@@ -441,4 +376,47 @@ public class ANG_ChinaConversionsHelperTest {
 			System.assertEquals(accountHO.Id, r.Parent_Account__c);
 		}
 	}
+
+
+	private static void checkFormOfPayments(Set<Id> accountIds) {
+		List<Agency_Authorization__c> FoPs_list = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c 
+											  	   FROM Agency_Authorization__c 
+											  	   WHERE Account__c in :accountIds];
+
+		System.assertEquals(0, FoPs_list.size());
+	}
+
+
+	private static void checkRiskEvents(Set<Id> accountIds) {
+		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_AccountId__c
+													 FROM ANG_Agency_Risk_Event__c 
+													 WHERE ANG_AccountId__c in :accountIds];
+
+		System.assertEquals(0, [SELECT count() FROM ANG_Agency_Risk_Event__c WHERE ANG_AccountId__c in :accountIds]);
+	}
+
+
+	private static void checkChangeCode(String changeCodeName) {
+		String changeCode = changeCodesConfig.get(changeCodeName).get('Change_Code');
+		String bulletinMemo = changeCodesConfig.get(changeCodeName).get('Bulletin_Memo_Text');
+
+		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Bulletin_Information__c 
+														   FROM Agency_Applied_Change_code__c 
+														   WHERE Change_Code__c = :changeCode and OSCAR__c = :oscar.id and Account__c = :oscar.Account__c];										   
+
+		System.assertEquals(bulletinMemo.toUpperCase(), changeCodes[0].Bulletin_Information__c);
+	}
+
+
+	private static void checkAccountsChanges(List<Account> accList, String expectedAccreditationModel, Boolean expectedNewGenAgency, List<String> expectedLocationTypes, String expectedRiskStatus) {
+		for(Account a : accList) {
+			System.assertEquals(expectedAccreditationModel, a.ANG_Accreditation_Model__c);
+			System.assert(expectedLocationTypes.contains(a.Location_Type__c));
+			System.assertEquals(expectedNewGenAgency, a.ANG_IsNewGenAgency__c);
+			System.assertEquals(expectedRiskStatus, a.ANG_RiskStatus__c);
+			System.assertEquals(expectedRiskStatus, a.ANG_RiskHistoryAssessment__c);
+		}
+	}
+
+
 }

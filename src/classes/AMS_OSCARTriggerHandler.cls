@@ -3360,13 +3360,20 @@ public class AMS_OSCARTriggerHandler {
                     AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
                 }
 
-                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || (updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION && updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTONEWGENPILOT))
+                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
                     createAgencyAuthorizations(updatedOscar);
                 else if(updatedOscar.Process__c == AMS_Utils.NEWAE)
                     copyAgencyAuthorizationsFromParent(updatedOscar);
                 //ACAMBAS - NEWGEN-4445 - Start
-                else if(updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION && updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTOLEGACY)
-                    ANG_ChinaConversionsHelper.deleteAccountsFoPs(updatedOscar.account__c);
+                else if(updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
+                    if(updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTONEWGENPILOT) {
+                        createAgencyAuthorizations(updatedOscar);
+                        copyAgencyAuthorizationsToChildren(updatedOscar.account__c);
+                    }
+                    else if(updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTOLEGACY) {
+                        ANG_ChinaConversionsHelper.deleteAccountsFoPs(updatedOscar.account__c);
+                    }
+                }
                 //ACAMBAS - NEWGEN-4445 - End
             }
 
@@ -4135,6 +4142,25 @@ public class AMS_OSCARTriggerHandler {
 
         insert authorizations;
     }
+
+    //ACAMBAS - NEWGEN-4809 - Start
+    private static void copyAgencyAuthorizationsToChildren(Id accountId) {
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+
+        List<Account> childAccounts = [SELECT Id FROM Account WHERE ParentId =: accountId ];
+
+        List<Agency_Authorization__c> parentFormsOfPayment = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c =: accountId AND RecordTypeId =: FormOfPaymentRT];
+
+        for(Account acc: childAccounts) {
+            for(Agency_Authorization__c fop: parentFormsOfPayment) {
+                authorizations.add(new Agency_Authorization__c(Account__c = acc.Id, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = fop.Status__c, RecordTypeId = fop.RecordTypeId));
+            }
+        }
+
+        insert authorizations;
+    }
+    //ACAMBAS - NEWGEN-4809 - End
 
     public static void handleNewgenFOPActionsBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
 
