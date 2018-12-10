@@ -222,7 +222,7 @@
 
                 <!-- Counter Indemnity Agreement -->
                 <apex:pageBlockSection title="Counter Indemnity Agreement" columns="1"
-                    rendered="{!OR(AND(isBSP,hqAccount.BSP_CI_Valid__c),AND(isCASS,hqAccount.CASS_CI_Valid__c))}">
+                    rendered="{!AND(strAreaType=='Airline Joining',OR(AND(isBSP,hqAccount.BSP_CI_Valid__c),AND(isCASS,hqAccount.CASS_CI_Valid__c)))}">
                     <div class="aplabel">
                         <p>
                             According to our records, your airline needs to provide a counter indemnity agreement in order to join this operation. Please sondlowad in the download it in the following link and attach an escaned copy using the button below
@@ -236,10 +236,10 @@
 
                 <!-- Form of Authorization -->
                 <apex:pageBlockSection title="Form of Authorization" columns="1"
-                    rendered="{!OR(
+                    rendered="{!AND(strAreaType=='Airline Joining',OR(
                         AND(isBSP,NOT(hqAccount.BSP_FOC_Valid__c),hqAccount.Membership_status__c!='IATA Member'),
                         AND(isCASS,NOT(hqAccount.CASS_FOC_Valid__c),hqAccount.Membership_status__c!='IATA Member')
-                    )}">
+                    ))}">
                     <div class="aplabel">
                         <p>
                             According to our records, your airline needs to provide a form of authorization document signed. This document needs to be provided only once. Please download using the following link and attach an escaned copy using the button below. The hard copy must be send to the address below.

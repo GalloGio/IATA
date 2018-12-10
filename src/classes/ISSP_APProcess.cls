@@ -1611,7 +1611,10 @@ global without sharing class ISSP_APProcess {
         Get the document guide record
     **/
     public Document getDocumentGuide() {
-        return findDocument('Airline_Process_User_Guide');
+        if (this.strAreaType=='Airline Joining') {
+            return findDocument('Airline_Process_User_Guide');
+        }
+        return null;
     }
 
     /**
