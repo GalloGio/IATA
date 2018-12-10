@@ -35,7 +35,7 @@ public class IATAIsoCountryDAO {
                                                         Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c,
                                                         IEC_Zip_Postal_Code_required__c,
                                                         Acli_Country__c,
-
+                                                        Multicountry_Enabled__c,
                                                         AMS_Pilot_Country__c,
                                                         Travel_Branch_Country__c, 
                                                         Travel_HO_Country__c, 
@@ -58,7 +58,7 @@ public class IATAIsoCountryDAO {
                                                         Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
                                                         Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c,
                                                         EBulletin_enabled__c, AMS_Vouchers_Benchmark__c, AMS_Max_Vouchers_Per_Year__c,
-                                                        LVA_CountryLanguage__c, CNS_Country__c, ANG_Portal_Service__c, 
+                                                        LVA_CountryLanguage__c, CNS_Country__c, ANG_Portal_Service__c, Airline_EasyPay_Opt_Out_Date__c, 
 
                                                         (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c
                                                         FROM IATA_ISO_States__r

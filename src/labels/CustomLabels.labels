@@ -1204,7 +1204,7 @@ IATA Customer Service</value>
         <shortDescription>ANG_ISSP_CountryRequirementsTitle</shortDescription>
         <value>IATA Online Agency Accreditation</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ANG_ISSP_EasyPayLegalConfirmation</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -16423,6 +16423,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>E. Submit to CNS</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step5_ProgressBar_Validate_Data</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step5_ProgressBar_Validate_Data</shortDescription>
+        <value>E. Validate details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step5_ReviewBeforeSubmit</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -23301,7 +23309,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_CountryFilter</shortDescription>
-        <value>Country</value>
+        <value>Country/ Teritory</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
@@ -23309,7 +23317,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Country_Filter_Required</shortDescription>
-        <value>Please, select a value in Country filter</value>
+        <value>Please, select a value in Country/Territory filter</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_CurrencyFilter</fullName>
@@ -23341,7 +23349,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</shortDescription>
-        <value>Disclaimer for Export Calendar file</value>
+        <value>Please make sure to synchronize the calendar again in case there will be any future calendar changes to avoid having an outdated information.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Export_Disclaimer</fullName>
@@ -23349,7 +23357,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Export_Disclaimer</shortDescription>
-        <value>Disclaimer for Export file to csv or pdf</value>
+        <value>Please make sure to download the calendar again in case there will be any future calendar changes to avoid having an outdated information.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_FilterTitle</fullName>
@@ -23684,7 +23692,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
+        <value>Your password has now been changed. Please sign in again.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>
@@ -27254,7 +27262,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsEmergencyAvailableHours</shortDescription>
-        <value>Phone is not available at this time.</value>
+        <value>Available soon</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsEmergencyPhoneNumber</fullName>
@@ -27262,7 +27270,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsEmergencyPhoneNumber</shortDescription>
-        <value>Phone is not available at this time.</value>
+        <value>24x7 phone channel is not yet available. We currently offer chat and queries via the customer portal.</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>

@@ -762,7 +762,7 @@
                                                             </div>
                                                         </div>
                                                         <apex:outputpanel rendered="{!AND(field.required,field.fieldValue == 'Description')}"> <!--Description text area-->
-                                                            <apex:inputfield styleclass="form-control descriptiontextarea rec mandatory" value="{!newCase[field.fieldValue]}" />
+                                                            <apex:inputfield styleclass="form-control descriptiontextarea rec mandatory" value="{!newCase[field.fieldValue]}" html-maxlength="31900"/>
                                                         </apex:outputpanel>
                                                     </li>
                                                 </apex:outputpanel>
@@ -916,14 +916,18 @@
 
                                     <row>
                                         <div class="col-md-1"></div>
-
+                                        
+                                        <!-- If not show call Us  fill the columns space with empty sapce -->
+                                        <apex:outputPanel layout="none" rendered="{!IF(showCallUsButton==true, false, true)}">
+                                                    <div class="col-md-1"></div>
+                                        </apex:outputPanel>
 
                                         <!-- If not show chat buttons fill the columns space with empty sapce -->
                                         <apex:outputPanel layout="none" rendered="{! AND(IF(showChatButtons==false, true, false), currentButtonsToShow == 'CancelAndCreateACase')}">
                                             <div class="col-md-2"></div>
                                         </apex:outputPanel>
 
-                                        <div class="col-sm-12 col-md-3">
+                                        <div class="{!IF(showCallUsButton==true, 'col-sm-12 col-md-3', 'col-sm-12 col-md-4')}">
                                             <!-- CancelAndCreateACase - CREATE CASE BUTT -->
                                             <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
                                                                                             newCase.IFAP_Country_ISO__c != null)}">
@@ -1016,8 +1020,11 @@
                                         <!-- ************************** -->
                                         <div class = "col-sm-12 col-md-3 ">
                                             <!-- CancelAndCreateACase - CALL US BUTTON -->
-                                            <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
-                                                                                        newCase.IFAP_Country_ISO__c != null)}">
+                                            <apex:outputPanel id="callButtonPnl" layout="none" rendered="{!AND(
+                                                                                            IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),
+                                                                                            newCase.IFAP_Country_ISO__c != null,
+                                                                                            IF(showCallUsButton==true, true, false)
+                                                                                            )}">
                                                 <div class = "col-md-12 removeMargin text-center lvaButton" id="butCallUs"
                                                      onclick="popupCallUs(); return false;"
                                                      title="{!$Label.LVA_CallUs}" >
@@ -1102,7 +1109,7 @@
                                     <apex:actionFunction name="refreshSubTopicPickList"
                                                          action="{!refreshSubTopicPickList}"
                                                          oncomplete="GenerateSubTopicHelpText();"
-                                                         reRender="chatButtonsPnl,countryPnl,actStatusId,subtopPnl_Val, areaOfConcernPnl_Val,areaOfConcernPnl, RightPanel,OPpbButton, modalWindowId"
+                                                         reRender="chatButtonsPnl,callButtonPnl,countryPnl,actStatusId,subtopPnl_Val, areaOfConcernPnl_Val,areaOfConcernPnl, RightPanel,OPpbButton, modalWindowId"
                                                          immediate="{!CASE(currentButtonsToShow, 'OnlyCancel', 'false',
                                                                               'CancelAndCreateACase', 'false',
                                                                               'CancelAndSubmit','true', 'false')}"
@@ -1120,8 +1127,8 @@
                                     <apex:actionFunction name="createStatRecord" action="{!createSatisfiedRecord}" reRender="mainHolder,OPpbButton" immediate="true"/>
 
                                      <apex:actionFunction name="GenerateFieldsBySettings" action="{!GenerateFieldsBySettings}" reRender="mainHolder,OPpbButton" immediate="true"/>
-                             <apex:actionfunction name="refreshAirlineList" action="{!refreshAirlineList}" rerender="chatButtonsPnl,FieldsRep,countryPnl,AirlinesPnl,OPpbButton" status="actStatusId2" />
-                             <apex:actionfunction name="refreshAirlineList1" action="{!copyCountryISO}" rerender="chatButtonsPnl,SLonchange,OPpbButton" />
+                             <apex:actionfunction name="refreshAirlineList" action="{!refreshAirlineList}" rerender="chatButtonsPnl,FieldsRep,countryPnl,AirlinesPnl,OPpbButton,callButtonPnl" status="actStatusId2" />
+                             <apex:actionfunction name="refreshAirlineList1" action="{!copyCountryISO}" rerender="chatButtonsPnl,SLonchange,OPpbButton,callButtonPnl" />
 
 
                                     <!-- ACtion Functions About HelpText  -->

@@ -437,7 +437,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         set<id> accIdSet= new set<id>();
         for(ANG_Risk_Alert__c ra :triggerNew ){
-            if(ra.recordtypeId==RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS'))accIdSet.add(ra.ANG_Account__c);
+            if(ra.recordtypeId==RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'))accIdSet.add(ra.ANG_Account__c);
         }
 
         if(accIdSet.isEmpty())return;
@@ -446,7 +446,7 @@ public class ANG_RHCAlertTriggerHandler{
         for(AMS_Country_Specific_Attribute__c csa: [
             SELECT IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c 
             FROM AMS_Country_Specific_Attribute__c 
-            WHERE recordtypeId=: RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification') ]){
+            WHERE recordtypeId=: RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification') ]){
             rtsConfigMap.put(csa.IATA_ISO_Country__r.ISO_Code__c,csa);
         }
 
@@ -458,13 +458,13 @@ public class ANG_RHCAlertTriggerHandler{
 
         for(Account acc :[
             SELECT id,Name, IATACode__c, Location_Class__c, ANG_IsNewGenAgency__c, Top_Parent__c, CurrencyIsoCode, Guaranteed_amount__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.BSP_Country_free_text__c,Remittance_frequency__c,IATA_ISO_Country__c,IATA_ISO_Country__r.Name,
-                    IATA_ISO_Country__r.ISO_Code__c, Region_formula__c, IATA_ISO_Country__r.AMS_Settlement_System__c,
+                    IATA_ISO_Country__r.ISO_Code__c, Region_formula__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Name,
         
         (SELECT ID,Name,ANG_Account__c,CurrencyIsoCode,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c
         FROM Risk_Alerts__r 
         WHERE ID IN :triggerNew
         AND ANG_Severity__c = 'Red'
-        AND recordTypeId = :RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS') 
+        AND recordTypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS') 
         AND ANG_Account__c IN :accIdSet
         ),
         (SELECT Id, User_Portal_Status__c, AccountId, Account.Top_Parent__c, Financial_Assessment_Contact__c
@@ -514,7 +514,7 @@ public class ANG_RHCAlertTriggerHandler{
                         Origin = 'Risk Monitoring Engine',
                         BSPCountry__c = raAccMap.get(ra.id).IATA_ISO_Country__r.Name,
                         Decision__c = 'Prejudiced Collection of Funds',
-                        RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('sMAP_sales_Monitoring_Alert_Process'),
+                        RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case','sMAP_sales_Monitoring_Alert_Process'),
                         Suspension_Date__c = Date.today()
                     );
                     // smap date fields population
@@ -525,6 +525,13 @@ public class ANG_RHCAlertTriggerHandler{
                         smapParentCase.Start_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).First_Day__c;
                         smapParentCase.End_Date_of_Sales_Period__c = mapAccountOpCalendar.get(ra.ANG_Account__c).Last_Day__c;
                     }else {
+                        ServiceNow_Helper.SNOWBody theBody = new ServiceNow_Helper.SNOWBody();
+                        theBody.description = 'A RTS Red Alert was received for agency with IATA code: '+raAccMap.get(ra.id).IATACode__c +
+                            ' but the SMAP and SIDRA Lite Cases failed to be created. Please check if active Operational_Calendar__c records exist for '+
+                            raAccMap.get(ra.id).IATA_ISO_Country__r.AMS_Settlement_System__r.Name+' and Remittance frequency: '+
+                            raAccMap.get(ra.id).Remittance_frequency__c;
+
+                        ServiceNow_Helper.sendRequestToSNOW(theBody, 'SNOW18');               
                         System.debug('## Creating Red Alert Only - No case is created');
                         // We are not creating any case - just the alert
                         continue;                      
@@ -581,7 +588,7 @@ public class ANG_RHCAlertTriggerHandler{
                 //map to get account's IsoCode- used to control RTS actions
                 map<id,string>  accIsoCode = new map<id,string>();
 
-                for(Case parentCase :[Select Id, IATAcode__c,AccountId, Account.Name,Account.IATACode__c, Account.Site,Account.IATA_ISO_Country__r.ISO_Code__c, Region__c, BSPCountry__c, ParentId FROM Case WHERE Id IN: smapParentCases]){
+                for(Case parentCase :[Select Id, IATAcode__c,AccountId, Account.Name,Account.IATACode__c, Account.Site,Account.IATA_ISO_Country__r.ISO_Code__c, Region__c, BSPCountry__c, ParentId, OwnerId FROM Case WHERE Id IN: smapParentCases]){
                     
                     accIsoCode.put(parentCase.AccountId,parentCase.Account.IATA_ISO_Country__r.ISO_Code__c);
 
@@ -597,10 +604,9 @@ public class ANG_RHCAlertTriggerHandler{
                     sidraLiteCase.Origin = 'Risk Monitoring Engine'; 
                     sidraLiteCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds'; 
                     sidraLiteCase.Priority = 'High'; 
-                    sidraLiteCase.DEF_Approval_Rejection__c = 'Approved';
                     sidraLiteCase.Reason_for_Default__c = 'Under Review';
-                    sidraLiteCase.Update_AIMS_DEF__c = Date.today();
                     sidraLiteCase.CS_Rep_Acc_DEF__c = userInfo.getUserId();
+                    sidraLiteCase.OwnerId = parentCase.OwnerId;
                     //sidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = Datetime.now(); //already done on callout
                     sidraLiteCase.ContactId = smapParentCase.ContactId;
                     
@@ -635,6 +641,7 @@ public class ANG_RHCAlertTriggerHandler{
                                        
                     list<Case> sidrasToGenerateChangeCode = new list<Case>();
                     for(Case sidraToUpdate : sidraLiteCases){
+                        sidraToUpdate.Update_AIMS_DEF__c = Date.today();
                         sidraToUpdate.DEF_Approval_Rejection__c = 'Approved';
                         sidraToUpdate.SIDRA_Lite_Default_Date__c = Date.today();
                         sidraToUpdate.Reason_for_Default__c = 'Under Review';
@@ -696,17 +703,31 @@ public class ANG_RHCAlertTriggerHandler{
     // NEWGEN-2005
     private void sendNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts) {
         List<RTS_Senior_Manager__c> sManagers = RTS_Senior_Manager__c.getAll().values();
-        List<EmailTemplate> eTemplates = [SELECT Id, Subject,Body FROM EmailTemplate WHERE DeveloperName = 'RTS_Notification_Manager'];
-        List<OrgWideEmailAddress> orgWideEmail = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
-        if (sManagers.isEmpty() || eTemplates.isEmpty() || orgWideEmail.isEmpty()) {
-            System.debug('Warning: Senior Management or email template or org wide email not found');
+
+        if(sManagers.isEmpty()){
+            System.debug('Warning: No RTS Senior Managemrs found');
             return;
         }
-        List<String> toAddresses = new List<String>(); 
+
+        List<EmailTemplate> eTemplates = [SELECT Id, Subject,Body FROM EmailTemplate WHERE DeveloperName = 'RTS_Notification_Manager'];
+        List<OrgWideEmailAddress> orgWideEmail = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+
+        if (eTemplates.isEmpty() || orgWideEmail.isEmpty()) {
+            System.debug('Warning: No email template or org wide email found');
+            return;
+        }
+
+        List<String> toAddresses = new List<String>();
         for (RTS_Senior_Manager__c sManager: sManagers) {
-            if (sManager.Active__c)
+            if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
                 toAddresses.add(sManager.Email__c);
         }
+
+        if(toAddresses.isEmpty()){
+             System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
+             return;
+        }
+
         EmailTemplate template = eTemplates.get(0);
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         mail.setToAddresses(toAddresses);
@@ -752,12 +773,12 @@ public class ANG_RHCAlertTriggerHandler{
         for(AMS_Country_Specific_Attribute__c csa:  [
             SELECT IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c 
             FROM AMS_Country_Specific_Attribute__c 
-            WHERE recordtypeId=: RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RTS_Risk_Alert_Notification') ]){
+            WHERE recordtypeId=: RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification') ]){
             rtsConfigMap.put(csa.IATA_ISO_Country__c,csa);
         }
         
         //NEWGEN-2006
-        List<Notification__c> notifications = new List<Notification__c>();
+        Map<Id,Notification__c> notifications = new Map<Id,Notification__c>();
         List<Contact> agents = [
             SELECT Id, Name, AccountId, Account.Top_Parent__c FROM Contact WHERE AccountId in (
                 SELECT id FROM Account WHERE Top_Parent__c in :accountIds OR Id in :accountIds
@@ -786,8 +807,8 @@ public class ANG_RHCAlertTriggerHandler{
                     if (!mapAccContacts.get(accountIds[i]).isEmpty()) {
                         for (Contact c: mapAccContacts.get(accountIds[i])) {
                             string configKey=rtsConfigMap.containsKey(accIsoCode.get(accountIds[i]).IATA_ISO_Country__c)?accIsoCode.get(accountIds[i]).IATA_ISO_Country__c:DEFAULT_CODE ;
-                            if(rtsConfigMap.get(configKey).ANG_Send_Email_Agent__c){
-                                notifications.add(new Notification__c(
+                            if(!notifications.containsKey(c.Id) && rtsConfigMap.get(configKey).ANG_Send_Email_Agent__c){
+                                notifications.put(c.Id, new Notification__c(
                                     Contact__c = c.Id,
                                     Subject__c = Label.RTS_TAR_Notification_Title,
                                     Message__c = '<div style="text-align: justify">' + Label.RTS_TAR_Notification_Message.replace('{{name}}', c.Name) + Label.RTS_TAR_Notification_MessageB + '</div>',
@@ -819,8 +840,8 @@ public class ANG_RHCAlertTriggerHandler{
             }
             logs.add(log);
         }// end for loop
-        if (!notifications.isEmpty()) {
-            insert notifications;
+        if (!notifications.values().isEmpty()) {
+            insert notifications.values();
         }
         insert logs;
     }

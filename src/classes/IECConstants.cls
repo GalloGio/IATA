@@ -6,11 +6,9 @@
   */
 global class IECConstants {
 
-  //use to fetch orders that are not expired
-  public static final Date dateToCompare = Date.today().addDays(-180);
-  public static final List<String> expiredStatus = new List<String>{'New','Cancelled','Payment Failure', 'Ready for SAP', 'Pending Payment'};
-
   //Order Status : add by CGI - David D 2015-10-16
+  public static final String ORDER_STATUS_NEW       =  'New';
+  public static final String ORDER_STATUS_CANCELLED       =  'Cancelled';
   public static final String ORDER_STATUS_PAID       =  'Paid';//Used for credit card only
   public static final String ORDER_STATUS_READY_FOR_SAP   =   'Ready for SAP';
   public static final String ORDER_STATUS_CREDIT_CARD_DEFERRED = 'Credit Card Deferred';
@@ -18,10 +16,16 @@ global class IECConstants {
   public static final String ORDER_STATUS_PENDING_PAYMENT = 'Pending Payment';
   public static final String ORDER_STATUS_PAYMENT_FAILURE = 'Payment Failure';
   public static final String ORDER_STATUS_INVOICED = 'Invoiced';
-
+  //Orders Types
   public static final String ORDER_TYPE_QUOTE = 'Quote';
   public static final String ORDER_TYPE_RENEWAL_NOTIFICATION = 'Renewal Notification';
   public static final String ORDER_TYPE_AUTORENEWAL = 'Subscription'; //Event Auto-Renew
+  public static final String ORDER_TYPE_HISTORY = 'History';
+  public static final String ORDER_TYPE_CART = 'Cart';
+  //Used to fetch orders that are not expired
+  public static final List<String> expiredStatus = new List<String>{ORDER_STATUS_CANCELLED};
+  public static final List<String> expiredStatusForOrderHistory = new List<String>{ORDER_STATUS_CANCELLED, ORDER_STATUS_NEW, ORDER_STATUS_PENDING_PAYMENT,ORDER_STATUS_PAYMENT_FAILURE,ORDER_STATUS_READY_FOR_SAP};
+  public static final List<String> expiredTypes = new List<String>{ORDER_TYPE_RENEWAL_NOTIFICATION, ORDER_TYPE_QUOTE, ORDER_TYPE_CART, ORDER_TYPE_HISTORY};
 
 
   public static final String ORDER_PAYMENT_CONFIRMED = 'Payment Confirmed';//Used for bank transfer

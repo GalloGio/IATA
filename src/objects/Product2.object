@@ -842,14 +842,17 @@
         <fullName>Display_to_Direct_Sales__c</fullName>
         <externalId>false</externalId>
         <formula>AND(OR(AND(OR(SAP_Status_Code__c = &quot;A&quot;, SAP_Status_Code__c = &quot;Z4&quot;)
-         , OR(Is_Electronic_Product__c = true, TEXT(Inventory_Status__c) = &quot;In stock&quot;, AND(TEXT(Inventory_Status__c) = &quot;Out of stock&quot;, NOT(ISBLANK(Expected_Availability_Date__c))))
-         , Post_to_Ecommerce_Date__c &lt;= TODAY()
-         , Direct_Sales__c = true)
-     , AND(OR(SAP_Status_Code__c = &apos;I&apos;, SAP_Status_Code__c = &apos;Z3&apos;, Effective_To__c &lt; TODAY())
-         , Is_Electronic_Product__c = false
-         , TEXT(Inventory_Status__c) = &quot;In stock&quot;
-         , NOT(ISBLANK(Post_to_Ecommerce_Date__c))))
-  , NOT(ISBLANK(SAP_Material_Number__c)))</formula>
+, OR(OR(Is_Electronic_Product__c = true, TEXT(Inventory_Status__c) = &quot;In stock&quot;, Is_Electronic_Product__c = true, TEXT(Inventory_Status__c) = &quot;Available Now&quot;), 
+AND(
+OR(TEXT(Inventory_Status__c) = &quot;Out of stock&quot;, TEXT(Inventory_Status__c) = &quot;Coming Soon&quot;), 
+NOT(ISBLANK(Expected_Availability_Date__c))))
+, Post_to_Ecommerce_Date__c &lt;= TODAY()
+, Direct_Sales__c = true)
+, AND(OR(SAP_Status_Code__c = &apos;I&apos;, SAP_Status_Code__c = &apos;Z3&apos;, Effective_To__c &lt; TODAY())
+, Is_Electronic_Product__c = false
+, TEXT(Inventory_Status__c) = &quot;In stock&quot;
+, NOT(ISBLANK(Post_to_Ecommerce_Date__c))))
+, NOT(ISBLANK(SAP_Material_Number__c)))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Display to Direct Sales</label>
         <trackHistory>false</trackHistory>
@@ -859,18 +862,18 @@
         <fullName>Display_to_ECommerce__c</fullName>
         <externalId>false</externalId>
         <formula>AND(
-  OR(SAP_Status_Code__c = &quot;A&quot;, SAP_Status_Code__c = &quot;Z4&quot;), 
-  OR(
-    Is_Electronic_Product__c = true, 
-    TEXT(Inventory_Status__c) = &quot;In stock&quot;, 
-    AND(
-      TEXT(Inventory_Status__c) = &quot;Out of stock&quot;, 
-      NOT(ISBLANK(Expected_Availability_Date__c))
-    )
-  ),
-  Post_to_Ecommerce_Date__c &lt;= TODAY(),
-  NOT(ISBLANK(SAP_Material_Number__c)),
-  IF( (IEC_Parent_Product__c &lt;&gt; null &amp;&amp; IEC_Parent_Product__r.IEC_Product_Information__c &lt;&gt; null || IEC_Product_Information__c &lt;&gt; null), Sell_through_eCommerce__c, true)
+OR(SAP_Status_Code__c = &quot;A&quot;, SAP_Status_Code__c = &quot;Z4&quot;), 
+OR(
+Is_Electronic_Product__c = true, 
+OR(TEXT(Inventory_Status__c) = &quot;In stock&quot;, TEXT(Inventory_Status__c) = &quot;Available Now&quot;), 
+AND(
+OR(TEXT(Inventory_Status__c) = &quot;Coming Soon&quot;, TEXT(Inventory_Status__c) = &quot;Out of stock&quot;), 
+NOT(ISBLANK(Expected_Availability_Date__c))
+)
+),
+Post_to_Ecommerce_Date__c &lt;= TODAY(),
+NOT(ISBLANK(SAP_Material_Number__c)),
+IF( (IEC_Parent_Product__c &lt;&gt; null &amp;&amp; IEC_Parent_Product__r.IEC_Product_Information__c &lt;&gt; null || IEC_Product_Information__c &lt;&gt; null), Sell_through_eCommerce__c, true)
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Display to eCommerce</label>

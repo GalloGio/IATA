@@ -18,8 +18,8 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 		
 		List<Account> accountList = new List<Account>();
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewgenAgency GE',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = 'GE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
@@ -120,7 +120,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
         
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
 		AMS_OSCAR__c oscar = [Select Id, Account__c from AMS_OSCAR__c];
 
@@ -160,7 +160,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
         
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
 		AMS_OSCAR__c oscar = [Select Id, Account__c from AMS_OSCAR__c];
 
@@ -213,7 +213,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
         
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Id settlementRTId = Schema.AMS_Settlement_System__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BSP').getRecordTypeId();
 

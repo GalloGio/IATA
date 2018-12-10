@@ -287,6 +287,7 @@ public without sharing class AMS_Utils {
 
     public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
     public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
+    public static final String NEWFORM_AGENTTYPE_MULTICOUNTRY = 'Multicountry';
     public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
     public static final String CASE_REASON_HE_LITE = 'New HE lite';
     public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE multicountry';
@@ -2765,7 +2766,15 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     }
 
     //20-06-2017 - Change AMSU-93 - special chars replacement
+    // AMSU-195 - new method signature below 
     public static String cleanSpecialChars(String s){
+        return cleanSpecialChars(s, true);
+    }
+
+
+    //20-06-2017 - Change AMSU-93 - special chars replacement
+    //AMSU-195 - in order to not remove chars that don't exist on the SPECIAL CHAR list
+    public static String cleanSpecialChars(String s, Boolean replaceWithSpace){
 
         String sRes = '';
 
@@ -2781,44 +2790,36 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
                 Map<String, String> mSpecialChars = JsonSpecialChars;
 
-                //String regex = '[^a-zA-Z0-9]';
-                //String regex = '[a-zA-Z\\d\\!@#\\$%&,;\'"\\(\\-º\\){}?:+ª\\*]';
-                //String regex = '[^a-zA-Z\\d\\!@#\\$%&;\'"\\-{}()\\[\\]?:_. ,+\\*\\\\/]';
                 String regex = AMS_SAP_Settings__c.getOrgDefaults().RegEx_Special_Chars__c;
 
                 String specialCharsToEscape = AMS_SAP_Settings__c.getOrgDefaults().Special_Chars_to_Escape_List__c;
-
-                //System.debug('specialCharsToEscape: ' + specialCharsToEscape);
 
                 sRes = s;
 
                 Matcher m = Pattern.compile(regex).matcher(s);
 
-                //System.debug('m: ' + m);
-                //System.debug('m.groupCount(): ' + m.groupCount() );
-
-                //Pattern p = Pattern.compile('regex');
-                //Matcher mo = p.matcher('string');
                 while (m.find()) {
 
-                    //System.debug('m.group: ' + m.group());
                     if(mSpecialChars.containsKey( m.group() )) {
-                        //System.debug('replace by value: ' + m.group() + ' by ' + mSpecialChars.get(m.group()) );
-                        //System.debug('contains by value: ' + m.group() + ' by ' + specialCharsToEscape.contains(m.group()) );
-                        //if(m.group() == '|'){
                         if(specialCharsToEscape.contains(m.group())){
                             sRes = sRes.replaceAll('\\'+m.group(), mSpecialChars.get(m.group()));
                         }else{
                             sRes = sRes.replaceAll(m.group(), mSpecialChars.get(m.group()));
                         }
                     }else{
-                        //System.debug('replace by space: ' + m.group() + ' by ' + mSpecialChars.get('SPACE') );
-                        //sRes = sRes.replaceAll(m.group(), '_');
-                        sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
-                        //System.debug('sRes1: ' + sRes);
+                        if(replaceWithSpace) sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
                     }
 
+				}
+
+                //Check for TAB (\t)
+                if(s.contains('\t')) {
+                    sRes = sRes.replaceAll('\t', mSpecialChars.get('SPACE'));
                 }
+
+                //remove inner double spaces
+                sRes = sRes.replaceAll('\\s+',' '); 
+                
             }
             System.debug('sRes: ' + sRes);
 
@@ -2827,7 +2828,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
             sRes = s;
         }
 
-        return sRes;
+        return sRes.trim();
 
     }
 
@@ -3140,4 +3141,33 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
     /*** AMSU-173 ***/
     public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
+
+    
+	/*** AMSU-195 Start ***/
+    /**
+    *   Method that validates if the record fields contain only latin characters
+    **/
+    public static List<String> cleanAndUpdateSpecialChars(sObject record, List<Schema.FieldSetMember> fieldsToCheck, Boolean toUpdate) {
+        List<String> res = new List<String>();
+        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        Pattern p = Pattern.compile(ISO_8859_1_regEx);
+
+        for(Schema.FieldSetMember field : fieldsToCheck) {
+            String fieldAPIName = field.getFieldPath();
+            String fieldLabel = field.getLabel();
+            Object value = record.get(fieldAPIName);
+            Object newvalue;
+            if( value == null || !(value instanceof String)) {
+                continue; //Skip non String fields
+            }
+            newvalue = AMS_Utils.cleanSpecialChars((String) value, false);
+            record.put(fieldAPIName, newvalue);
+
+            if(value != newvalue){
+                res.add(fieldLabel + ': Old = ' + value + ' : New = ' + newvalue);
+            }
+        }
+        return res;
+    }
+    /*** AMSU-195 End ***/
 }

@@ -1,0 +1,3 @@
+<apex:page standardController="ISSP_External_Report__c" >
+	<c:GenericAttachmentList sobjectId="{!ISSP_External_Report__c.Id}" />
+</apex:page>

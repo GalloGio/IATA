@@ -948,7 +948,7 @@
                 <apex:form id="PAXForm">
                 <apex:pageMessages />
                 <apex:pageBlock >
-                <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false" rendered="{!BEGINS(sectorValue, 'Travel_Agent')}">
+                <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false" rendered="{!AND(BEGINS(sectorValue, 'Travel_Agent'), NOT(isocountry.Multicountry_Enabled__c))}">
                     <div class="aplabel">
                         <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}"/>
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}"/>
