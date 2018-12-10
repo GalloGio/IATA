@@ -674,6 +674,7 @@ public without sharing class ISSP_Case {
                 JSONcontacts = JSON.serialize(lsContacts);
                 System.debug(lsAccounts);
                 newCase.ACCA_Owner__c = Userinfo.getUserId();
+                newCase.Status = 'Action Needed';
 
                 System.debug(profileRole);
 
