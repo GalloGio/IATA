@@ -47,6 +47,8 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 			System.debug('[ANG_MulticountryOscarCreatorBatch]Parent Case recordType = ' +c.recordTypeId);
 			Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
+			sp = Database.setSavePoint();
+
 	        fieldsOfObject.put('Process__c', AMS_Utils.MCAE);
 			fieldsOfObject.put('Status__c','Open');
 			fieldsOfObject.put('Name',c.CaseNumber);
