@@ -22,7 +22,7 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
         }
 
         if(String.isBlank(offerId)){
-             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'empty offerId')), 400);
+            ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'empty offerId')), 400);
             return;
         }
 
@@ -31,9 +31,8 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
 
         try{
             // CREATE OSCAR Comm Case and GDI AMS_OSCAR__c
-           List<AMS_OSCAR__c> oscar = ANG_OscarProcessHelper.createGDIOscars(new List<Account>{accnt}, new Map<Id,List<Contact>> {accnt.Id => accnt.contacts});
+            List<AMS_OSCAR__c> oscar = ANG_OscarProcessHelper.createGDIOscars(new List<Account>{accnt}, new Map<Id,List<Contact>> {accnt.Id => accnt.contacts});
            
-            //TODO: Create Opportunity
             Opportunity opp = new Opportunity(GDI_Offer_Id__c = offerId, CloseDate = Date.today().addYears(1), Name = 'OPP - '+oscar[0].name,
                                 StageName = 'Pending', Related_Oscar__c = oscar[0].Id, AccountId = oscar[0].Account__c,
                                 RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity'));
@@ -44,7 +43,6 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new INT077_SuccessPayload(oscar[0].Id)), 200);
         }
         catch(exception e){
-            system.debug('esception: '+e);
             Database.rollback(sp);
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', e.getMessage()) ), 500);
         }
