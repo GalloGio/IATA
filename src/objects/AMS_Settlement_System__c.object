@@ -293,6 +293,22 @@
     </fields>
     <label>ISS Operation</label>
     <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CURRENCY_ISO_CODE</columns>
+        <columns>BSP_Billing__c</columns>
+        <columns>ISS_Region__c</columns>
+        <columns>ISS_Joining_fee_cluster__c</columns>
+        <columns>CASS_facilities__c</columns>
+        <columns>Domestic_Only__c</columns>
+        <columns>DPC__c</columns>
+        <columns>DPC_System__c</columns>
+        <columns>ANG_RHC_Amount_Equals_FS__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>ISS_Joining_fee_clusters</fullName>
         <columns>NAME</columns>
         <columns>BSP_Billing__c</columns>

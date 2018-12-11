@@ -10215,6 +10215,10 @@ ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두�
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <name>ISSP_CalendarDisclaimer</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CampaigeNotification_Confirm --></label>
         <name>ISSP_CampaignNotification_Confirm</name>
     </customLabels>
