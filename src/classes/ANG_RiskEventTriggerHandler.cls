@@ -6,6 +6,14 @@ public class ANG_RiskEventTriggerHandler {
 	public Map<Id, ANG_Agency_Risk_Event__c> newMap = (Map<Id,ANG_Agency_Risk_Event__c>) Trigger.newMap;
 	public Map<Id, ANG_Agency_Risk_Event__c> oldMap = (Map<Id,ANG_Agency_Risk_Event__c>) Trigger.oldMap;
 
+    public static Boolean skipassessRisk{
+        get{
+            if(skipassessRisk == null) skipassessRisk = false;
+            return skipassessRisk;
+        }
+        set;
+    }
+
 	// ************************************************************
 	// ****************** distribution methods ********************
 	// ************************************************************
@@ -72,6 +80,9 @@ public class ANG_RiskEventTriggerHandler {
     }
 
     private void assessRisk() {
+
+        if(skipassessRisk) return;
+        skipassessRisk = true;
         
         Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
         for(ANG_Agency_Risk_Event__c re : triggerNew){  
