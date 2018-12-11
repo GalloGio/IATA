@@ -17,7 +17,7 @@ global class ANG_ChinaConversionsHelper {
 		for(Account acc : allAccounts.values()) {
 
             if(caseReason == AMS_Utils.CONVERTTONEWGENPILOT) {
-        		if(acc.Location_Type__c == 'HO') {
+        		if(acc.Location_Type__c == 'HO' || acc.Location_Type__c == 'AO') {
 					acc.Location_Type__c = 'HE';
 				}
 				else {//if(acc.Location_Type__c == 'BR' || acc.Location_Type__c == 'SA') {
@@ -38,7 +38,7 @@ global class ANG_ChinaConversionsHelper {
 					acc.Location_Type__c = 'BR';
 				}
 				acc.ANG_Accreditation_Model__c = '';
-				deleteRiskEvents(accountId);
+				//deleteRiskEvents(accountId);
 			}
 			else if(caseReason == AMS_Utils.CONVERTTOINTERNATIONAL) {
 				if(acc.Location_Type__c == 'HE') {
@@ -120,7 +120,8 @@ global class ANG_ChinaConversionsHelper {
     }
 
     public static Map<Id, Account> getAllHierarchyAccounts(Id accountId) {
-		return new Map<Id, Account>([SELECT Id, Name, Location_Class__c, Location_Type__c, ANG_Accreditation_Model__c, Status__c, ParentId, Top_Parent__c
+		return new Map<Id, Account>([SELECT Id, Name, Location_Class__c, Location_Type__c, ANG_Accreditation_Model__c, Status__c, ParentId, Top_Parent__c,
+											ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c
 									 FROM Account
 									 WHERE Id = :accountId OR ParentId = :accountId OR Top_Parent__c = :accountId]);
     }
