@@ -76828,6 +76828,20 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Airline_HQ_Account_Type</fullName>
+        <active>true</active>
+        <description>For Airline HQ only the Account Management Team can update the Account Type field</description>
+        <errorConditionFormula>AND(
+ RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+ ISCHANGED(Account_Type__c),
+ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;)),
+ NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
+ NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
+)</errorConditionFormula>
+        <errorDisplayField>Account_Type__c</errorDisplayField>
+        <errorMessage>For Airline HQ, only the Account Management Team can update the Account Type field</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>BR_and_SA_Standard_Account_Parent_Id</fullName>
         <active>true</active>
         <description>BR and SA Standard Account Parent Id must be filled.</description>
