@@ -562,17 +562,34 @@ global class ANG_OscarProcessHelper {
 		Savepoint sp = Database.setSavepoint();
 
         try {
+
 			Account accnt = [SELECT Name, Status__c, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 									BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
 									ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 									Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
 									Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c,
-									Link_agent_name__c, ANG_Accreditation_Model__c, Reason__c, CNS_Agency__c
+									Link_agent_name__c, ANG_Accreditation_Model__c, Reason__c, CNS_Agency__c,
+									(SELECT 
+										Id, 
+										Reason_Code__c, 
+										Reason_Description__c
+									 FROM 
+									 	Agencies_Applied_Change_codes__r 
+									 WHERE 
+									 	Active__c = true
+									)
 							 FROM Account
 							 WHERE Id = :theOSCAR.account__c FOR UPDATE];
 
+			List<Agency_Applied_Change_code__c> appliedChangeCodesLst = accnt.getSObjects('Agencies_Applied_Change_codes__r');
 
-	        AMS_OSCAR_JSON.ChangeCode changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeId, theOSCAR.ANG_Type_Of_Change__c, accnt.Status__c, null, null);
+			Agency_Applied_Change_code__c activeChangeCode = null;
+
+			if(appliedChangeCodesLst != null && appliedChangeCodesLst.size() > 0){
+				activeChangeCode = appliedChangeCodesLst.get(0);
+			}
+
+	        AMS_OSCAR_JSON.ChangeCode changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeId, theOSCAR.ANG_Type_Of_Change__c, accnt.Status__c, activeChangeCode, null);
 	
 			AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {accnt}, true);
 
