@@ -98,7 +98,7 @@
                     <span class="label bBody truncate" dir="ltr">{!$Label.c.OneId_Request_this_App}</span>
                 </button>
                         <aura:set attribute="else">
-                            <button class="sfdc_button uiButton" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.checkSelectedRoleAvailability}" disabled="{!v.requestAppDisabled}">
+                            <button class="sfdc_button uiButton" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.checkMandatoryFields}" disabled="{!v.requestAppDisabled}">
                                 <span class="label bBody truncate" dir="ltr" alternativeText="{!$Label.c.ISSP_Submit}">{!$Label.c.ISSP_Submit}</span>
                             </button>
                         </aura:set>
@@ -141,7 +141,7 @@
                             <div>
                                 <!-- <ui:button label="{!$Label.c.ISSP_Back}" press="{!c.hideRoles}"/> -->
                                 <button class="sfdc_button uiButton" disabled="{!v.submitDisabled}" aria-live="off" type="button" data-aura-class="uiButton--default uiButton"
-                                            onclick="{!c.checkSelectedRoleAvailability}"><span class="label bBody truncate" dir="ltr"
+                                            onclick="{!c.checkMandatoryFields}"><span class="label bBody truncate" dir="ltr"
                                                                            alternativeText="{!$Label.c.ISSP_Submit}">{!$Label.c.ISSP_Submit}</span></button>
 
                                 <!--i:button label="{!$Label.c.ISSP_Submit}" press="{!c.submitRequest}" disabled="{!v.submitDisabled}"/-->
