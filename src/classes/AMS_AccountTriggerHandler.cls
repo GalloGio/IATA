@@ -103,7 +103,7 @@ public class AMS_AccountTriggerHandler {
     }
 
     public static void validateCharacters(Account acc) {
-        Id agencyRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         if(acc.RecordTypeId == agencyRT) {
             List<String> errors = AMS_Utils.validateCharacters(acc, AMS_Utils.ACCOUNT_FIELDS_TO_VALIDATE);
             if(!errors.isEmpty()) {
