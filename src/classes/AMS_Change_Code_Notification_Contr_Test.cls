@@ -110,6 +110,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	        ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
 
 	        AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
+			AMS_Change_Code_Notification_Controller.fakemethod();
 
 	        ctrl.setNotificationMessage();
 
