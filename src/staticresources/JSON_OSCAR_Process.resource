@@ -5346,6 +5346,94 @@
                 "IsDependent": false
               }
             ]
+            },
+          {
+            "Name": "AMS_OSCAR_REJECTION_FINALIZATION",
+            "Steps": [
+              {
+                "Name": "STEP18",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step18_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step18_failed"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step18_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "Issue_rejection_notification_pack__c",
+                  "Country_Specifics_Rejection__c",
+                  "STEP18__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_APP_REJECTION_WITHDRAWAL",
+            "Steps": [
+              {
+                "Name": "STEP4",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_failed"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "Issue_Withdrawal_notification__c",
+                  "Issue_credit_note_withdrawal__c",
+                  "STEP4__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_APP_RECONSIDERATION",
+            "Steps": [
+              {
+                "Name": "STEP5",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_failed"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step5_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP5__c"
+                ],
+                "IsDependent": false
+              }
+            ]
           }
         ]
       },
