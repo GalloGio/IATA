@@ -5,6 +5,7 @@ public class SIDRAOIActionPlansCtrlTest {
 	private static Operational_Improvements__c createSidraCase(){
 		Case cse = new Case(
 			RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')
+			Late_Payment_Date__c = Date.today()
 		);
 		insert cse;
 
