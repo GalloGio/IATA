@@ -24,31 +24,11 @@
         $A.enqueueAction(action);
   },
 
-    checkIfAccountSet: function(cmp){
-        if(cmp.get("v.account").Id != undefined){
-            var accountType = cmp.get("v.account").RecordType.Name;
-            if(accountType == 'Airline Headquarters' || accountType == 'Operator'){
-				var accType = "Aircraft Operator";
-                cmp.set("v.customerType", accType);
-                var opts = [{ class: "uiInputSelectOption", label:accType, value: accType, selected: "true" }];
-                cmp.find("typeOfCustomer").set("v.options", opts);
-            }
-            else if(accountType == 'ICAO Member State'){
-				var accType = "ICAO Member State";
-                cmp.set("v.customerType", accType);
-                var opts = [{ class: "uiInputSelectOption", label:accType, value: accType, selected: "true" }];
-                cmp.find("typeOfCustomer").set("v.options", opts);
-            }
-            cmp.set("v.accountSelected", true);
-        }
-    },
-    
-  initParams: function(cmp, isInvitation, invitationId, contact) {
+  initParams: function(cmp, isInvitation, invitationId) {
       var action = cmp.get("c.initParams");
         action.setParams({            
             "isInvitation": isInvitation,
-            "invitationId": invitationId,
-            "con": contact
+            "invitationId": invitationId
         });
         action.setCallback(this, function(resp) {
       

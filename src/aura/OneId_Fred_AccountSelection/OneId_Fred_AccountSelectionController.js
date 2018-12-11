@@ -30,7 +30,7 @@
                     console.log('wwww');
                     console.log(isInvitation);
                     component.set("v.isInvitation", isInvitation)
-                    helper.initParams(component, isInvitation, invitationId, component.get("v.contact"));
+                    helper.initParams(component, isInvitation, invitationId);
                 }
             }
             // If registration comes from FRED (not a guest) by a primary user, I can create another primary or secondary user
@@ -110,7 +110,6 @@
     onRender: function(component, event, helper) {
         // Expand div according to suggestion size
         component.set("v.suggestionBoxHeight", component.find("suggestionBoxID").getElement().clientHeight);
-        helper.checkIfAccountSet(component);
     },
 
     typeOfCustomerChanged: function(component, event, helper) {
@@ -152,7 +151,7 @@
             }
             component.set("v.suggestionBoxHeight", 0 );
             component.set("v.accountSelected", true);
-            component.set("v.account", component.get("v.response")[accountIndex]);
+            component.set("v.acc", component.get("v.response")[accountIndex]);
         }
     },
 
@@ -170,7 +169,7 @@
         } 
        var action = component.get("c.registration");
         action.setParams({
-            "acc":component.get("v.account"),
+            "acc":component.get("v.acc"),
             "con":component.get("v.contact"),
             "selectedCustomerType":component.get("v.customerType"),
             "con":component.get("v.contact"),

@@ -62,21 +62,6 @@ public without sharing class LightningConnectedAppHelper {
 
     	return values;
     }
- 
-    @AuraEnabled
-    public static Boolean areMandatoryFieldsFilled (String connectedapp) {
-    	if(connectedApp == 'FRED'){
-	        User userIn = [SELECT Id, contact.Salutation, Contact.Title, Contact.MobilePhone from user where Id =: UserInfo.getUserId()];
-	        
-	        if(userIn.contact.Salutation == null || userIn.contact.Title == null || userIn.contact.MobilePhone == null){
-	        	return false;
-	        }
-	        return true;
-    	}
-    	else{
-    		return true;
-    	}
-    }
 
     @AuraEnabled
     public static String getAutomaticRole (String connectedapp) {

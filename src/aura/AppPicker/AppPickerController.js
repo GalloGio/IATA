@@ -113,37 +113,6 @@
 		component.set("v.submitDisabled", false);
 	},
 
-    checkMandatoryFields : function(component, event, helper){
-        // For Fred, we need to check that contact's mandatory fields are filled 
-        // - if not, prompt the user to complete his profile
-        if(component.get("v.activeApp") == 'FRED'){
-			var action = component.get("c.areMandatoryFieldsFilled");
-			action.setParams({connectedapp : component.get("v.activeApp")});
-			action.setCallback(this, function(a) {
-				var state = a.getState();
-				// console.log(state);
-                if (state === "SUCCESS"){
-					var results = a.getReturnValue();
-                    
-                    if(results == true){
-						var action2 = component.get('c.checkSelectedRoleAvailability');
-                        $A.enqueueAction(action2);
-                    }
-                    else{
-						alert($A.get("$Label.c.OneId_FRED_Missing_Mandatory_Fields"));
-                    }
-				} else {
-					console.log(state);
-				}
-			});
-	    	$A.enqueueAction(action);            
-        }
-        else{
-            var action2 = component.get('c.checkSelectedRoleAvailability');
-            $A.enqueueAction(action2);
-        }
-    },
-
     checkSelectedRoleAvailability : function(component, event, helper){
         // For Fred, we need to check the roles availability accordingly to the following logic
         // - if there is no Fred user in the company, the Primary User role is given

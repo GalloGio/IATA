@@ -28339,13 +28339,6 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <value>https://fred.iata.org/contact</value>
     </labels>
     <labels>
-        <fullName>OneId_FRED_Missing_Mandatory_Fields</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_FRED_Missing_Mandatory_Fields</shortDescription>
-        <value>To request access to FRED+ the mandatory fields &quot;Salutation&quot;, &quot;Job Title&quot; and &quot;Mobile Phone&quot; need to be filled. To update these field proceed to the &quot;My Profile&quot; section of this page.</value>
-    </labels>
-    <labels>
         <fullName>OneId_FRED_Terms_0</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
