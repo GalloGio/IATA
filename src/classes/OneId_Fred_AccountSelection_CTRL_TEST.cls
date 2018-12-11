@@ -69,10 +69,10 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
 
 	//Boolean isVerifierInvitation, String invitationId
     communityUser = [SELECT Id FROM User WHERE lastname = 'contact1' LIMIT 1][0];
-	       OneId_Fred_AccountSelection_CTRL.initParams(false, null, null);
-	       OneId_Fred_AccountSelection_CTRL.initParams(true, invitation.Id, null);
+	       OneId_Fred_AccountSelection_CTRL.initParams(false, null);	       
+	       OneId_Fred_AccountSelection_CTRL.initParams(true, invitation.Id);
 	       system.runAs(communityUser) {
-	            OneId_Fred_AccountSelection_CTRL.initParams(false, null, null);
+	            OneId_Fred_AccountSelection_CTRL.initParams(false, null);
 	       }
 	
       

@@ -31,22 +31,20 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
        // Existing account selected => Create contact
         if(acc != null) {
             // Define account base on account information
-            if(con.Id == null){
-	            con.AccountId = acc.Id;
-	            con.ISO_Country__c = acc.IATA_ISO_Country__c;
-	            con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Country__c;
-	            con.Country__c = acc.IATA_ISO_Country__c;
-	            con.Preferred_Language__c = languageString;
-	            con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
-	            con.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Shipping_State__c;
+            con.AccountId = acc.Id;
+            con.ISO_Country__c = acc.IATA_ISO_Country__c;
+            con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Country__c;
+            con.Country__c = acc.IATA_ISO_Country__c;
+            con.Preferred_Language__c = languageString;
+            con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
+            con.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Shipping_State__c;
+
+            // Define account fields
+            acc.Legal_name__c = acc.Name;
 
             // no need for FRED
             //con.User_Portal_Status__c ='Pending Approval';
             con.Community__c = 'FRED Customer Portal';
-            }
-            
-            // Define account fields
-            acc.Legal_name__c = acc.Name;
 
             // Determine if is primary or a guest
             system.debug('@@@ isGuest '+isGuest);
@@ -300,10 +298,9 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
     }
 
     @AuraEnabled
-    public static InitParam initParams(Boolean isInvitation, String invitationId, Contact con) {
+    public static InitParam initParams(Boolean isInvitation, String invitationId) {
         InitParam param = new InitParam();
         param.isInvitation = isInvitation;
-		param.isAlreadyPartner = false;
 
         // is guest OR a connected partner user (like primare user)
         Integer nb = [SELECT count() FROM User WHERE Name = 'identity Site Guest User' AND Id =: UserInfo.getUserId()];
@@ -324,7 +321,6 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
                 // To change when implemnting another primary
                 Integer nbOfPrimaryInAccount = [SELECT count() FROM PermissionSetAssignment WHERE PermissionSet.Name = 'FRED_Primary_User' AND Assignee.AccountId =: u.AccountId];
                 param.createPrimary = nbOfPrimaryInAccount == 0;
-                param.isAlreadyPartner = true;
             }
         } else {
             param.primaryUserId = null;
@@ -341,21 +337,9 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
                     if(! acct.isEmpty()) {
                         param.partnerAccount = acct[0];
 						param.createPrimary = invitation[0].Role__c == 'Primary';
-		                param.isAlreadyPartner = true;
                     }
                 }
             }
-            else{
-            	// Check if a user has been created earlier in the process, because email address was referring to an existing contact without a user
-	            List<User> users = [SELECT AccountId FROM User WHERE Email =: con.Email LIMIT 1];
-            	if(!users.isEmpty()){
-                    list<Account> acct = [SELECT Id, Name, RecordType.Name FROM Account WHERE Id =: users.get(0).AccountId]; 
-                    if(! acct.isEmpty()) {
-                        param.partnerAccount = acct[0];
-		                param.isAlreadyPartner = true;
-                    }
-                }
-        	}
         }
         
         return param;
@@ -370,8 +354,6 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
         String primaryUserId {get; set;}
         @AuraEnabled
         Account partnerAccount {get; set;}
-        @AuraEnabled
-        Boolean isAlreadyPartner {get; set;}
         @AuraEnabled
         Boolean createPrimary {get; set;}
         @AuraEnabled

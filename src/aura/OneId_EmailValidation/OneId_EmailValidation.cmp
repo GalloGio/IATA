@@ -4,7 +4,6 @@
     <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
     
     <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
-    <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
     <aura:attribute name="Terms" type="Boolean" />
     <aura:attribute name="serviceName" type="String" />
    

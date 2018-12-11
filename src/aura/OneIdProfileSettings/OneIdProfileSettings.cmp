@@ -45,10 +45,6 @@
 								<span class="  read_span"> {!$Label.c.ISSP_Registration_BusinessPhone} </span>
 								<ui:outputPhone class="  read_output" value="{!v.contactinfo.Phone}"/>
 							</div>
-							<div class="   profile_readItem">
-								<span class="  read_span"> {!$Label.c.ISSP_Registration_MobilePhone} </span>
-								<ui:outputPhone class="  read_output" value="{!v.contactinfo.MobilePhone}"/>
-							</div>
 						</div>
 
 						<div class="  profile_col1">
@@ -71,9 +67,6 @@
 							<div class="   profile_readItem">
 								<span class="  read_span"> {!$Label.c.ISSP_Services} </span>
 								<ui:outputText class="  read_output" value="{!v.contactinfo.Services__c}"/>
-							</div>
-							<div class="   profile_readItem">
-								<br/>
 							</div>
 						</div>
 					</div>
@@ -205,12 +198,6 @@
 									<span class="  read_span"> {!$Label.c.ISSP_Registration_BusinessPhone} </span>
 									<ui:inputPhone aura:id="editphone" class="  read_output" value="{!v.contactinfo.Phone}"/>
 								</div>
-
-								<div class="   profile_readItem">
-									<span class="  read_span"> {!$Label.c.ISSP_Registration_MobilePhone} </span>
-									<ui:inputPhone aura:id="editmobilephone" class="  read_output" value="{!v.contactinfo.MobilePhone}"/>
-								</div>
-
 								<div class="   profile_readItem">
 									<span class="  read_span"> {!$Label.c.OneId_Profile_BusinessFax} </span>
 									<ui:inputPhone aura:id="editfax" class="  read_output" value="{!v.contactinfo.Fax}"/>

@@ -89,7 +89,7 @@
                                 
                             </div>
                             <div aria-hidden="false" class="slds-accordion__content" id="step1">
-                                <c:OneId_EmailValidation contact="{!v.contact}" account="{!v.account}" serviceName="{!v.serviceName}"/>
+                                <c:OneId_EmailValidation contact="{!v.contact}" serviceName="{!v.serviceName}"/>
                             </div>
                         </section>
                     </div>
@@ -133,7 +133,7 @@
                                 <div aria-hidden="true" class="slds-accordion__content" id="step3">
                                 <aura:if isTrue="{!v.serviceName=='FRED'}">
                                     <!-- New version for FRED account creation -->
-                                    <c:OneId_Fred_AccountSelection contact="{!v.contact}" account="{!v.account}" serviceName="{!v.serviceName}" userInput="{!v.account.Name}"/>
+                                    <c:OneId_Fred_AccountSelection contact="{!v.contact}" serviceName="{!v.serviceName}"/>
                                     <!-- Default account creation -->
                                     <aura:set attribute="else">
                                 <c:OneId_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}"/>

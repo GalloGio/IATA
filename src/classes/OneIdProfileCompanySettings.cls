@@ -47,7 +47,7 @@ public without sharing class OneIdProfileCompanySettings {
 	}
 
 	@AuraEnabled
-	public static void saveProfileEdit(String firstname, String lastname, String phone, String mobilephone, String fax, String jobtitle, String functionpick, String preferredlanguage){
+	public static void saveProfileEdit(String firstname, String lastname, String phone, String fax, String jobtitle, String functionpick, String preferredlanguage){
 
 		User user = DAL_ISSP.getUser(Userinfo.getUserId());
 		Contact con = DAL_ISSP.getContact(user.ContactId);
@@ -59,7 +59,6 @@ public without sharing class OneIdProfileCompanySettings {
 				newcon.FirstName = firstname;
 				newcon.LastName = lastname;
 				newcon.Phone = phone;
-				newcon.MobilePhone = mobilephone;
 				newcon.Fax = fax;
 				newcon.Title = jobtitle;
 				newcon.Membership_Function__c = functionpick;

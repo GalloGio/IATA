@@ -116,7 +116,7 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 
     private void fillUpSCIMMessage(String email){
         //basto1p added new required field for IFG
-        User userIn = [SELECT Id, name, contact.account.RecordType.DeveloperName,AccountId, contact.account.X8585_Code__c, contact.account.Country_ISO_Code__c, contact.account.name, contact.account.IATACode__c, contact.account.sector__c, contact.account.category__c,FederationIdentifier, SmallPhotoUrl ,createdDate,lastModifiedDate,contact.Phone,CommunityNickname, TimeZoneSidKey, LanguageLocaleKey, Contact.Title, Contact.MobilePhone, Contact.Fax, contact.Salutation from user where email = :email and IsActive = true limit 1];
+        User userIn = [SELECT Id, name, contact.account.RecordType.DeveloperName,AccountId, contact.account.X8585_Code__c, contact.account.Country_ISO_Code__c, contact.account.name, contact.account.IATACode__c, contact.account.sector__c, contact.account.category__c,FederationIdentifier, SmallPhotoUrl ,createdDate,lastModifiedDate,contact.Phone,CommunityNickname, TimeZoneSidKey, LanguageLocaleKey, Title, Contact.MobilePhone, Contact.Fax, contact.Salutation from user where email = :email and IsActive = true limit 1];
 
 
         Boolean isPrimaryUser;
@@ -156,7 +156,7 @@ global with sharing class FREDSCIMUser extends SCIMUser {
             
             phoneNumbers = new List<PhoneNumbers>{mobile, work, fax};
 
-            this.title = userIn.Contact.title;
+            this.title = userIn.title;
 
             this.preferredLanguage = userIn.LanguageLocaleKey;
             //this.active = true;
