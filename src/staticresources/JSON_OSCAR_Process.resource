@@ -5348,7 +5348,7 @@
             ]
           }
         ]
-      },,
+      },
        {
         "Name": "ANG.MAJOR.CHANGES.1.0",
         "Flows": [
