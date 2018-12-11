@@ -563,21 +563,10 @@ global class ANG_OscarProcessHelper {
 
         try {
 
-			Account accnt = [SELECT Name, Status__c, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
-									BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
-									ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
-									Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
-									Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c,
-									Link_agent_name__c, ANG_Accreditation_Model__c, Reason__c, CNS_Agency__c,
-									(SELECT 
-										Id, 
-										Reason_Code__c, 
-										Reason_Description__c
-									 FROM 
-									 	Agencies_Applied_Change_codes__r 
-									 WHERE 
-									 	Active__c = true
-									)
+			Account accnt = [SELECT Id, Status__c, CNS_Agency__c,
+									(SELECT Id, Reason_Code__c, Reason_Description__c
+									 FROM Agencies_Applied_Change_codes__r 
+									 WHERE Active__c = true)
 							 FROM Account
 							 WHERE Id = :theOSCAR.account__c FOR UPDATE];
 
@@ -595,12 +584,51 @@ global class ANG_OscarProcessHelper {
 
 			theOSCAR.First_Step_Completed__c = true;
 
+			if(theOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
+				createChangeCodeOnChildrenAccounts(theOSCAR, changeCodeId);
+			}
+
         } catch (Exception ex) {
             Database.rollback(sp); 
             throw ex;
         }
 	}
 	//ACAMBAS - NEWGEN-4445 - End
+	
+	//ACAMBAS - NEWGEN-4822 - Start
+	private static void createChangeCodeOnChildrenAccounts(AMS_Oscar__c theOSCAR, String changeCodeId) {
+
+		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c,
+												(SELECT Id, Reason_Code__c, Reason_Description__c
+									 			 FROM Agencies_Applied_Change_codes__r 
+									 			 WHERE Active__c = true) 
+									 	  FROM Account 
+									 	  WHERE ParentId =: theOSCAR.Account__c];
+
+		Set<Account> childrenAccountsSet = new Set<Account>();
+		childrenAccountsSet.addAll(childrenAccounts);
+		Set<Account> targetAccounts = ANG_ConversionHelper.filterByStatus(childrenAccountsSet);
+		
+		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
+		List<AMS_OSCAR_JSON.ChangeCode> changeCodesList = new List<AMS_OSCAR_JSON.ChangeCode>();
+		AMS_OSCAR_JSON.ChangeCode changeCode;
+
+		for(Account accnt : targetAccounts) {
+			Agency_Applied_Change_code__c activeChangeCode = null;
+			List<Agency_Applied_Change_code__c> appliedChangeCodesLst = accnt.getSObjects('Agencies_Applied_Change_codes__r');
+
+			if(appliedChangeCodesLst != null && appliedChangeCodesLst.size() > 0){
+				activeChangeCode = appliedChangeCodesLst.get(0);
+			}
+
+			changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeId, theOSCAR.ANG_Type_Of_Change__c, accnt.Status__c, activeChangeCode, null);
+			changeCodesList.add(changeCode);
+			oscars.add(null);
+		}
+
+		AMS_ChangeCodesHelper.createAAChangeCodes(changeCodesList, oscars, new List<Account>(targetAccounts), true);
+	}
+	//ACAMBAS - NEWGEN-4822 - End
 
 	public static EntityUpdater execCreateAMLCase(AMS_OSCAR__c oscar, EntityUpdater updater) {
 
