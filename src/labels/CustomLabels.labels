@@ -23261,6 +23261,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Ongoing TIP Requests</value>
     </labels>
     <labels>
+        <fullName>ISSP_OpenCase</fullName>
+        <categories>ISSP Home;Action</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OpenCase</shortDescription>
+        <value>Take me to the case</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
@@ -25211,6 +25219,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP Showing total records</shortDescription>
         <value>Showing _MAX_ records</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SidraPopMessage</fullName>
+        <categories>ISSP Home</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SidraPopMessage</shortDescription>
+        <value>Please note that there is a pending outstanding amount requires your attention and we would like you to provide us with the proof of payment to avoid subsequence actions against your Agency</value>
     </labels>
     <labels>
         <fullName>ISSP_Simplified_Interline_Settlement</fullName>
