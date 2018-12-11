@@ -99,7 +99,8 @@ global with sharing class ISSP_WS_SIS_UpdateUser {
         Boolean updateContact = false;
         // Check SIS_ID__c = SISmemberId
         if (SISMemberID != contact.Account.SIS_ID__c) { // or contact SIS ID
-            if (!checkFullHierarchy(SISMemberID, contact.Account.Top_Parent__c)) {
+            Id topParentId = contact.Account.Top_Parent__c == null? contact.AccountId: contact.Account.Top_Parent__c;
+            if (!checkFullHierarchy(SISMemberID, topParentId)) {
                 throw new ISSP_WS_SIS_Common.WSException('024',''); // SIS ID is not in any of the accounts of the entire hierarchy
             }
         }
