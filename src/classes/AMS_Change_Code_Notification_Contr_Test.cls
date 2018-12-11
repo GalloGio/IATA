@@ -96,7 +96,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
         ccase.ContactId = con.Id; 
         ccase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         ccase.Status = 'Open';
-        ccase.Late_Payment_Date__c = Date.today();
+		ccase.Late_Payment_Date__c = Date.today();
         insert ccase;
 
         Agency_Applied_Change_code__c ccode= new Agency_Applied_Change_code__c();
@@ -155,7 +155,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 				ccase.RecordTypeId = caseRecrdType;
 				ccase.Status = 'Open';
 				ccase.Remittance_Period__c='20180615W';
-        			
+        		ccase.Late_Payment_Date__c = Date.today();	
 		insert ccase;
 
 		RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('File');
