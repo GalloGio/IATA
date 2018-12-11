@@ -19309,6 +19309,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Relevant. Committed. Connected.</value>
     </labels>
     <labels>
+        <fullName>ISSP_CalendarDisclaimer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
+        <value>Note: There are Local Specific Dates in the Calendar for this operation. Please download the full version of the Calendar in the Resource Center, Document Tab.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CampaignNotification_Confirm</fullName>
         <categories>ISSP, ISSP_CampaignNotification</categories>
         <language>en_US</language>

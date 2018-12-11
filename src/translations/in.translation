@@ -10221,6 +10221,10 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <name>ISSP_CalendarDisclaimer</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CampaigeNotification_Confirm --></label>
         <name>ISSP_CampaignNotification_Confirm</name>
     </customLabels>
