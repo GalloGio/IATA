@@ -12,14 +12,14 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		System.debug(loggingLevel.Fine, '____ [cls ANG_RiskEventMigrationHelper - Constructor (Account)] Starting migration of change codes');
 		risksToWithdraw = new Map<string,Agency_Applied_Change_code__c>();
 		risksToInsert = new Map<string, ANG_Agency_Risk_Event__c>();
-		listChangeCodes = [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c,SIDRA_Case__r.Parent.Financial_Review_Result__c from Agency_Applied_Change_code__c where Account__c in :accs AND Created_Date_To_Show__c = LAST_N_DAYS:730];
+		listChangeCodes = [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c,SIDRA_Case__r.Parent.Financial_Review_Result__c, SIDRA_Case__r.SIDRA_Lite_Reason__c from Agency_Applied_Change_code__c where Account__c in :accs AND Created_Date_To_Show__c = LAST_N_DAYS:730];
 	}
 
 	public ANG_RiskEventMigrationHelper(Set<Id> accs) {
 		System.debug(loggingLevel.Fine, '____ [cls ANG_RiskEventMigrationHelper - Constructor (Id)] Starting migration of change codes');
 		risksToWithdraw = new Map<string,Agency_Applied_Change_code__c>();
 		risksToInsert = new Map<string, ANG_Agency_Risk_Event__c>();
-		listChangeCodes = [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c,SIDRA_Case__r.Parent.Financial_Review_Result__c from Agency_Applied_Change_code__c where Account__c in :accs AND Created_Date_To_Show__c = LAST_N_DAYS:730];
+		listChangeCodes = [Select Change_Code__c, Created_Date_To_Show__c, Reason_Code__c,Reason_Description__c,Irregularity_Type__c,PreviousReason__c,SIDRA_Case__c,OSCAR__c, Bulletin_Information__c,Account__c,Account__r.Location_Type__c,SIDRA_Case__r.Parent.Financial_Review_Result__c, SIDRA_Case__r.SIDRA_Lite_Reason__c from Agency_Applied_Change_code__c where Account__c in :accs AND Created_Date_To_Show__c = LAST_N_DAYS:730];
 	}
 
 // =============== SIDE KICK METHODS ==============================
@@ -251,6 +251,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NOT  
 			&& aacc.Reason_Code__c == '60' 
 			&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCAC
+			&& (aacc.SIDRA_Case__c==null || aacc.SIDRA_Case__r.SIDRA_Lite_Reason__c == ANG_Risk_Helper.SIDRA_LITE_REASON_LATE_ABSENCE_NOTIFICATION)
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& !risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_NTW  + getKey(aacc))
 			){
