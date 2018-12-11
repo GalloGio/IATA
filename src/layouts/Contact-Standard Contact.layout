@@ -117,6 +117,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ICH_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BIS_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>iiNet_User__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
         </layoutColumns>
