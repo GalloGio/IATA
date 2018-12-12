@@ -19042,6 +19042,16 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>iiNet_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Field is used to set Account as part of iiNet</description>
+        <externalId>false</externalId>
+        <label>iiNet Account</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>number_of_Opportunities__c</fullName>
         <description>This field calculates the number of opportunities associated with this account.</description>
         <externalId>false</externalId>

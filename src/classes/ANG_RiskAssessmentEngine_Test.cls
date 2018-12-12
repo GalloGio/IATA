@@ -136,15 +136,15 @@ public class ANG_RiskAssessmentEngine_Test{
         list<Case> caseList = new list<Case>();
 
         Case c1 = new Case(RecordTypeId = OSCARCommunication_RT_Id, Subject = 'Case1', Status = 'Open',
-                        AccountId = acc.Id, Description='desc');
+                        AccountId = acc.Id, Description='desc', Late_Payment_Date__c=Date.today());
         caseList.add(c1);
 
         Case c2 = new Case(RecordTypeId = OSCARCommunication_RT_Id, Subject = 'Case2', Status = 'Open',
-                        AccountId = acc.Id, Description='desc');
+                        AccountId = acc.Id, Description='desc', Late_Payment_Date__c=Date.today());
         caseList.add(c2);
 
         Case c3 = new Case(RecordTypeId = OSCARCommunication_RT_Id, Subject = 'Case3', Status = 'Open',
-                        AccountId = acc.Id, Description='desc');
+                        AccountId = acc.Id, Description='desc', Late_Payment_Date__c=Date.today());
         caseList.add(c3);
 
         insert caseList;
@@ -276,10 +276,10 @@ public class ANG_RiskAssessmentEngine_Test{
         list<Case> caseList = new list<Case>(); 
         Id OSCARCommunication_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         Case c1 = new Case(RecordTypeId = OSCARCommunication_RT_Id, Subject = 'Case1', Status = 'Open',
-                        AccountId = acc2.Id, Description='desc');
+                        AccountId = acc2.Id, Description='desc', Late_Payment_Date__c=Date.today());
         caseList.add(c1);
         Case c2 = new Case(RecordTypeId = OSCARCommunication_RT_Id, Subject = 'Case2', Status = 'Open',
-                        AccountId = acc3.Id, Description='desc');
+                        AccountId = acc3.Id, Description='desc', Late_Payment_Date__c=Date.today());
     	caseList.add(c2);
         insert caseList;
 
@@ -333,7 +333,7 @@ public class ANG_RiskAssessmentEngine_Test{
     	Id OSCARCommunication_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 
         Case c1 = new Case(RecordTypeId = OSCARCommunication_RT_Id, Subject = 'Case1', Status = 'Open',
-                        AccountId = acc.Id, Description='desc');
+                        AccountId = acc.Id, Description='desc', Late_Payment_Date__c=Date.today());
         insert c1;
 
         ANG_Agency_Risk_Event__c are2 = new ANG_Agency_Risk_Event__c(
@@ -373,7 +373,7 @@ public class ANG_RiskAssessmentEngine_Test{
 
         Id OSCARCommunication_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         Case cs = new Case(RecordTypeId = OSCARCommunication_RT_Id, Subject = 'Case4', Status = 'Open',
-                        AccountId = acc.Id, Description='desc');
+                        AccountId = acc.Id, Description='desc', Late_Payment_Date__c=Date.today());
         List<Case> c4 = new List<Case>();
         c4.add(cs);
     	insert c4;
@@ -406,7 +406,7 @@ public class ANG_RiskAssessmentEngine_Test{
 
         Id OSCARCommunication_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         Case cs = new Case(RecordTypeId = OSCARCommunication_RT_Id, Subject = 'Case4', Status = 'Open',
-                        AccountId = acc.Id, Description='desc');
+                        AccountId = acc.Id, Description='desc', Late_Payment_Date__c=Date.today());
         List<Case> c4 = new List<Case>();
         c4.add(cs);
     	insert c4;
