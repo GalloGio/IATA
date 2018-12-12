@@ -2120,6 +2120,14 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Acceptance date</value>
     </labels>
     <labels>
+        <fullName>Account</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account</shortDescription>
+        <value>Account:</value>
+    </labels>
+    <labels>
         <fullName>Account_Invoicing_Collection_Cases_Report_ID</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2162,6 +2170,22 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>AddToCart</shortDescription>
         <value>Add To Cart</value>
+    </labels>
+    <labels>
+        <fullName>Add_an_attachment</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Add an attachment</shortDescription>
+        <value>Add an attachment as Proof of Payment</value>
+    </labels>
+    <labels>
+        <fullName>Add_attachment_Action</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Add_attachment_Action</shortDescription>
+        <value>Add an attachment</value>
     </labels>
     <labels>
         <fullName>Add_campaign_member_error</fullName>
@@ -2740,14 +2764,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseTypeRecordTypeList</shortDescription>
-        <value>CasesMENA,CasesAmericas,Cases_China_North_Asia,ExternalCasesIDFSglobal,CasesEurope,External_Cases_ACCA,ComplaintIDFS</value>
+        <value>CasesMENA,CasesAmericas,Cases_China_North_Asia,ExternalCasesIDFSglobal,CasesEurope,External_Cases_ACCA,ComplaintIDFS,Cases_Global</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -2761,7 +2785,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Reason</shortDescription>
-        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query</value>
+        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query,Task request</value>
     </labels>
     <labels>
         <fullName>CaseValidation_RecordType</fullName>
@@ -3868,6 +3892,22 @@ Case description: {!Case.Description}
         <protected>false</protected>
         <shortDescription>Discounted Amount</shortDescription>
         <value>Discounted Amount</value>
+    </labels>
+    <labels>
+        <fullName>Documents_POP</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Documents POP</shortDescription>
+        <value>Documents added as proof of payment</value>
+    </labels>
+    <labels>
+        <fullName>Done</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Done</shortDescription>
+        <value>Done</value>
     </labels>
     <labels>
         <fullName>Download_Invoice</fullName>
@@ -6450,6 +6490,14 @@ The sum of percentage cannot exceed 100%</value>
         <protected>false</protected>
         <shortDescription>ICCS will replace Label</shortDescription>
         <value>will replace</value>
+    </labels>
+    <labels>
+        <fullName>ICE_POP_Sidra_Msg</fullName>
+        <categories>SIDRA Proof of payment case message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICE_POP_Sidra_Msg</shortDescription>
+        <value>There are proof of payment add to the account:</value>
     </labels>
     <labels>
         <fullName>ICE_Portal_Service</fullName>
@@ -19186,6 +19234,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Relevant. Committed. Connected.</value>
     </labels>
     <labels>
+        <fullName>ISSP_CalendarDisclaimer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
+        <value>Note: There are Local Specific Dates in the Calendar for this operation. Please download the full version of the Calendar in the Resource Center, Document Tab.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CampaignNotification_Confirm</fullName>
         <categories>ISSP, ISSP_CampaignNotification</categories>
         <language>en_US</language>
@@ -21285,6 +21340,14 @@ Please add below all your company valid email domains, including different ones 
         <value>Please help us keep our records up-to-date by completing your user profile.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Filter_By_Product_Type</fullName>
+        <categories>ISSP, Documents</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Filter By Product Type</shortDescription>
+        <value>Filter By Product Type</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Filter_by_Country</fullName>
         <categories>ISSP, s6</categories>
         <language>en_US</language>
@@ -21315,6 +21378,46 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Filter_by_Type</shortDescription>
         <value>Filter by type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Securities_Converted_Total_Amount</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Securities_Converted_Total_Amount</shortDescription>
+        <value>Total secured amount (converted)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Securities_Details</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Securities_Details</shortDescription>
+        <value>Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Securities_Information</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Securities_Information</shortDescription>
+        <value>Financial securities</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Securities_Summary</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Securities_Summary</shortDescription>
+        <value>Summary</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Securities_Total_Amount</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Securities_Total_Amount</shortDescription>
+        <value>Total secured amount</value>
     </labels>
     <labels>
         <fullName>ISSP_Filter_by_Type_Of_Participation</fullName>
@@ -23251,7 +23354,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_CountryFilter</shortDescription>
-        <value>Country</value>
+        <value>Country/ Teritory</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
@@ -23259,7 +23362,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Country_Filter_Required</shortDescription>
-        <value>Please, select a value in Country filter</value>
+        <value>Please, select a value in Country/Territory filter</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_CurrencyFilter</fullName>
@@ -23291,7 +23394,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Export_Calendar_Disclaimer</shortDescription>
-        <value>Disclaimer for Export Calendar file</value>
+        <value>Please make sure to synchronize the calendar again in case there will be any future calendar changes to avoid having an outdated information.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Export_Disclaimer</fullName>
@@ -23299,7 +23402,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Export_Disclaimer</shortDescription>
-        <value>Disclaimer for Export file to csv or pdf</value>
+        <value>Please make sure to download the calendar again in case there will be any future calendar changes to avoid having an outdated information.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_FilterTitle</fullName>
@@ -23634,7 +23737,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
+        <value>Your password has now been changed. Please sign in again.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>
@@ -25881,6 +25984,13 @@ CNS Customer Services</value>
         <value>What can we help you with?</value>
     </labels>
     <labels>
+        <fullName>ISSP_Topics_To_Exclude_Country_PL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,SIS_Helpdesk__c,GAP__c,MarketIS__c,PaxIS__c</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Tracking_ID</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -27204,7 +27314,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsEmergencyAvailableHours</shortDescription>
-        <value>Phone is not available at this time.</value>
+        <value>Available soon</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsEmergencyPhoneNumber</fullName>
@@ -27212,7 +27322,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsEmergencyPhoneNumber</shortDescription>
-        <value>Phone is not available at this time.</value>
+        <value>24x7 phone channel is not yet available. We currently offer chat and queries via the customer portal.</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsNoConfigAvailable</fullName>
@@ -28330,6 +28440,13 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_FRED_ContactUs_Link</shortDescription>
         <value>https://fred.iata.org/contact</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Missing_Mandatory_Fields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Missing_Mandatory_Fields</shortDescription>
+        <value>To request access to FRED+ the mandatory fields &quot;Salutation&quot;, &quot;Job Title&quot; and &quot;Mobile Phone&quot; need to be filled. To update these field proceed to the &quot;My Profile&quot; section of this page.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_0</fullName>
@@ -30661,6 +30778,14 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Payment number</value>
     </labels>
     <labels>
+        <fullName>Period</fullName>
+        <categories>ICE Service</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Period</shortDescription>
+        <value>Period:</value>
+    </labels>
+    <labels>
         <fullName>Personal_information</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -30947,6 +31072,37 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>RE</shortDescription>
         <value>RE</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_Message</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification Message</shortDescription>
+        <value>Dear {{name}}, &lt;br&gt;&lt;br&gt;
+
+We have been informed that there is reason to believe that BSP’s ability to collect funds in respect of airline sales may be prejudiced. Therefore in accordance with the provisions of Resolution 818g, Attachment ‘A’, Section 1.8, BSP Management shall withdraw all Standard Traffic Documents and Carrier Identification Plates from your Agency, and shall arrange for an immediate accounting and settlement of all amounts due.&lt;br&gt;
+If you disagree with this decision, you may invoke the procedures set out in Resolution 820e for review of the Agency Administrator’s action by the Travel Agency Commissioner. The Travel Agency Commissioner is an independent arbiter who conducts reviews and acts with
+respect to decisions and/or actions affecting Agents and applicants under the IATA Agency Programme within his or her jurisdiction under the Agency Programme. The Travel Agency Commissioner can be reached at &lt;a href=&quot;http://tacommissioner.com/&quot;&gt;http://tacommissioner.com/&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_MessageB</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification MessageB</shortDescription>
+        <value>&lt;br&gt;Please do not hesitate to contact us if you have any queries on this matter via our Customer Service Portal at &lt;a href=&quot;http://www.iata.org/cs&quot;&gt;http://www.iata.org/cs&lt;/a&gt;.
+&lt;br&gt;Yours faithfully,&lt;br&gt;&lt;br&gt;
+
+&lt;span style=&quot;color: #385d8b&quot;&gt;IATA – Global Delivery Center&lt;/span&gt;</value>
+    </labels>
+    <labels>
+        <fullName>RTS_TAR_Notification_Title</fullName>
+        <categories>RTS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RTS TAR Notification Title</shortDescription>
+        <value>Prejudiced Collection of Funds</value>
     </labels>
     <labels>
         <fullName>Reader_Main_Content</fullName>

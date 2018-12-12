@@ -28,6 +28,7 @@ public class UpdateAccountandUserInfoTriggersTest {
        	obCase.Update_AIMS_IRRWITH__c = date.today();
        	obCase.Update_AIMS_REI_DEFWITH__c =date.today();
        	obCase.Update_AIMS_TER__c = date.today();
+       obCase.Late_Payment_Date__c = date.today();
 
         insert obCase;
 

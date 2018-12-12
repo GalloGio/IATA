@@ -17,7 +17,7 @@ public class IATAIsoStateDAO {
 	private static Map<ID, IATA_ISO_State__c> fetchMapIataIsoState(){
 
 		return new Map<ID, IATA_ISO_State__c>([SELECT Id, Name, ISO_Code__c, IATA_ISO_Country__c,ISO_CODE_STANDARD__c,IEC_Valid_SAP__c,
-											    	  IATA_ISO_Country__r.Id, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c
+											    	  IATA_ISO_Country__r.Id, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c, Informatica_Value__c 
 											   FROM IATA_ISO_State__c
 											   ORDER BY Name]);
 	}
