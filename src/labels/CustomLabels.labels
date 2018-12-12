@@ -2764,14 +2764,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseTypeRecordTypeList</shortDescription>
-        <value>CasesMENA,CasesAmericas,Cases_China_North_Asia,ExternalCasesIDFSglobal,CasesEurope,External_Cases_ACCA,ComplaintIDFS</value>
+        <value>CasesMENA,CasesAmericas,Cases_China_North_Asia,ExternalCasesIDFSglobal,CasesEurope,External_Cases_ACCA,ComplaintIDFS,Cases_Global</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -2785,7 +2785,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Reason</shortDescription>
-        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query</value>
+        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query,Task request</value>
     </labels>
     <labels>
         <fullName>CaseValidation_RecordType</fullName>
@@ -21340,6 +21340,14 @@ Please add below all your company valid email domains, including different ones 
         <value>Please help us keep our records up-to-date by completing your user profile.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Filter_By_Product_Type</fullName>
+        <categories>ISSP, Documents</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Filter By Product Type</shortDescription>
+        <value>Filter By Product Type</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Filter_by_Country</fullName>
         <categories>ISSP, s6</categories>
         <language>en_US</language>
@@ -23309,14 +23317,6 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Ongoing TIP Requests</value>
     </labels>
     <labels>
-        <fullName>ISSP_OpenCase</fullName>
-        <categories>ISSP Home;Action</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_OpenCase</shortDescription>
-        <value>Take me to the case</value>
-    </labels>
-    <labels>
         <fullName>ISSP_OperationalCalendar</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
@@ -25269,14 +25269,6 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Showing _MAX_ records</value>
     </labels>
     <labels>
-        <fullName>ISSP_SidraPopMessage</fullName>
-        <categories>ISSP Home</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_SidraPopMessage</shortDescription>
-        <value>Please note that there is a pending outstanding amount requires your attention and we would like you to provide us with the proof of payment to avoid subsequence actions against your Agency</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Simplified_Interline_Settlement</fullName>
         <categories>Portal, S10</categories>
         <language>en_US</language>
@@ -25990,6 +25982,13 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_TopicsAndArticlesTitle</shortDescription>
         <value>What can we help you with?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Topics_To_Exclude_Country_PL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,SIS_Helpdesk__c,GAP__c,MarketIS__c,PaxIS__c</value>
     </labels>
     <labels>
         <fullName>ISSP_Tracking_ID</fullName>

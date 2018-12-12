@@ -3539,6 +3539,52 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>BIS_Contact_Type__c</fullName>
+        <description>Type of the BIS contact</description>
+        <externalId>false</externalId>
+        <label>BIS Contact Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AirportIS</fullName>
+                    <default>false</default>
+                    <label>AirportIS</label>
+                </value>
+                <value>
+                    <fullName>CargoIS</fullName>
+                    <default>false</default>
+                    <label>CargoIS</label>
+                </value>
+                <value>
+                    <fullName>Direct Data Solutions (DDS)</fullName>
+                    <default>false</default>
+                    <label>Direct Data Solutions (DDS)</label>
+                </value>
+                <value>
+                    <fullName>GAP</fullName>
+                    <default>false</default>
+                    <label>GAP</label>
+                </value>
+                <value>
+                    <fullName>MarketIS</fullName>
+                    <default>false</default>
+                    <label>MarketIS</label>
+                </value>
+                <value>
+                    <fullName>PaxIS</fullName>
+                    <default>false</default>
+                    <label>PaxIS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>BSP_CASS_Payment_contact__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -7657,6 +7703,31 @@ IFAP Application.</description>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ICH_Contact_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>ICH Contact Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ICH Financial Contact</fullName>
+                    <default>false</default>
+                    <label>ICH Financial Contact</label>
+                </value>
+                <value>
+                    <fullName>ICH Primary Contact</fullName>
+                    <default>false</default>
+                    <label>ICH Primary Contact</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>IDCard_Batch_Status__c</fullName>
         <description>Field used to track the status of the running batch for import of new applicants.
 Format: 
@@ -11590,6 +11661,14 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>iiNet_User__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>iiNet User</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>list_Dangerous_Goods_Awareness__c</fullName>
         <externalId>false</externalId>
         <label>list Dangerous Goods Awareness</label>
@@ -13660,6 +13739,33 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>AirportIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CargoIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Data Solutions %28DDS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MarketIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PaxIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Call_Status__c</picklist>
             <values>
                 <fullName>Call Opt-in</fullName>
@@ -13901,6 +14007,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICH_Contact_Type__c</picklist>
+            <values>
+                <fullName>ICH Financial Contact</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH Primary Contact</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15064,6 +15181,33 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Treasury Dashboard - Premium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>AirportIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CargoIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Data Solutions %28DDS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MarketIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PaxIS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16678,6 +16822,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Prospect Airline Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICH_Contact_Type__c</picklist>
+            <values>
+                <fullName>ICH Financial Contact</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH Primary Contact</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
