@@ -87,6 +87,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 	}
 
 	public void onBeforeUpdate(){
+		runValidations();
 		convertFSAmount();
 	}
 	public void onAfterUpdate(){
@@ -161,7 +162,8 @@ public class ANG_FinancialSecurityTriggerHandler{
 		List<SObject> fsToValidate = new List<SObject>();
 
 		for(Financial_Security__c fs :triggerNew)
-			accsIds.add(fs.Account__c);
+			if(Trigger.isInsert || (Trigger.isUpdate && fs.CurrencyIsoCode != oldMap.get(fs.Id).CurrencyIsoCode) )
+				accsIds.add(fs.Account__c);
 		
 		Map<Id,Account> accsMap = new Map<Id,Account>([SELECT Id FROM Account WHERE Id IN :accsIds AND ANG_Accreditation_Model__c = 'Multicountry']);
 
