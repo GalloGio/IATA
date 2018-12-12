@@ -312,6 +312,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             system.debug('trgCase_SIS_ICH_AreaVsType');
         for (case newCase: Trigger.new) {
                     if (newCase.Type != null && newCase.CaseArea__c != null) {
+                    if(newCase.recordtypeid == sisHelpDeskCaseRecordTypeID &&
+                       newCase.Origin != 'Internal Case') {
                         system.debug('##ROW##');
                         if (newCase.CaseArea__c == 'ICH' && (newCase.Type == 'SIS Feature Request' || newCase.Type == 'SIS Technical Problem' || newCase.Type == 'SIS Internal Case'
                                                              || newCase.Type == 'SIS Question/Problem' || newCase.Type == 'SIS Member Profile Update' || newCase.Type == 'SIS Membership'
@@ -330,6 +332,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                 }
         }
+        }   
         /*trgCase_SIS_ICH_AreaVsType Trigger*/
 
         /*trgICCSCaseValidation Trigger*/
@@ -2096,6 +2099,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                 }
 
+                if(oscarIdcases.keySet().isEmpty()) return;
+                
                 for (AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
                                            Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
                                            Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c

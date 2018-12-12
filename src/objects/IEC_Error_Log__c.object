@@ -381,7 +381,6 @@
     </listViews>
     <listViews>
         <fullName>e_commerce</fullName>
-        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
         <columns>NAME</columns>
         <columns>Contact__c</columns>
         <columns>Displayed_Message__c</columns>
@@ -393,18 +392,18 @@
         <filterScope>Everything</filterScope>
         <filters>
             <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>11/9/2018 12:00 AM</value>
+            <operation>greaterThan</operation>
+            <value>12/6/2018 12:01 AM</value>
         </filters>
         <filters>
-            <field>CREATEDBY_USER</field>
-            <operation>equals</operation>
-            <value>Helga Lopez</value>
+            <field>CREATED_DATE</field>
+            <operation>lessOrEqual</operation>
+            <value>12/6/2018 11:59 PM</value>
         </filters>
         <filters>
-            <field>CREATEDBY_USER</field>
-            <operation>equals</operation>
-            <value>Tanya McKay</value>
+            <field>Source__c</field>
+            <operation>contains</operation>
+            <value>sap</value>
         </filters>
         <label>e-commerce</label>
         <language>en_US</language>

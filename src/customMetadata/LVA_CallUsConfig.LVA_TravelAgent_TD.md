@@ -22,4 +22,8 @@
         <field>Sector__c</field>
         <value xsi:type="xsd:string">Travel Agent</value>
     </values>
+    <values>
+        <field>Topic__c</field>
+        <value xsi:nil="true"/>
+    </values>
 </CustomMetadata>

@@ -29,12 +29,9 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 		String fields = ' Id, GR_Item__c,GR_Code__c, AMS_Agency_Profile__c.Account__c';
 
 		List<String> conditions = new List<String> {'Account__r.RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''
-		        , 'Account__r.IATACode__c != null'
-		        , 'GR_Item__c !=null'
-		        , 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-		        , 'Account__r.CNS_Agency__c = false'
-		        , 'Account__r.CNS_Account__c = false'
-		                                           };
+			, 'GR_Item__c !=null'};
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName)); 
+
 
 		if (extraIds != null && extraIds.size() > 0) {
 			if (extraIds[0] == 'none') {

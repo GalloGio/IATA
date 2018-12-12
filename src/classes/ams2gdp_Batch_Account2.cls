@@ -30,25 +30,24 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		if(extraIds!=null && extraIds.size() > 0) {
 			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
 		} else {
-			idsCondition = 'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') ';
 			if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
 				statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
-				idsCondition += ' AND Status__c IN  :statusSet ';
+				if (idsCondition!=null) idsCondition += ' AND '; else idsCondition='';
+				idsCondition = 'Status__c IN :statusSet ';
 
 			}
 			if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
 				locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
-				idsCondition += ' AND Location_Class__c IN:  locationsSet';
+                if (idsCondition!=null) idsCondition += ' AND '; else idsCondition='';
+				idsCondition += 'Location_Class__c IN :locationsSet';
 			}
 		}
 
 		//-- Query conditions 
-		List<String> conditions = new List<String>{'RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''
-			,	'IATACode__c != null'
-			, 	'CNS_Agency__c = false'
-			, 	'CNS_Account__c = false'
-			,	idsCondition
-		}; 
+		List<String> conditions = new List<String>{'RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''}; 
+		if (idsCondition!=null) conditions.add(idsCondition);
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
+
 
 		AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
 		if(batchInfo != null && (extraIds==null || extraIds.size() == 0))
@@ -118,12 +117,17 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
    		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();	
 
 		// Format Account to Account_Category__c 
-		List<Account_Category__c> account_categories_to_save = new List<Account_Category__c>();		
+		List<Account_Category__c> categories2save = new List<Account_Category__c>();
+		List<Account_Category__c> categories2delete = new List<Account_Category__c>();
+		Map<String,List<Account_Category__c>> CRUD_map_cat = new Map<String,List<Account_Category__c>>();
 
 		try
 		{
-			account_categories_to_save = ams2gdp_BusinessLogic.formatAccount2AccountCategory(accounts);
+            CRUD_map_cat = ams2gdp_BusinessLogic.formatAccount2AccountCategory(accounts);
+            if (CRUD_map_cat.ContainsKey('D')) categories2delete = CRUD_map_cat.get('D');
+            if (categories2delete.size()>0) delete categories2delete;
 
+			if (CRUD_map_cat.ContainsKey('S')) categories2save = CRUD_map_cat.get('S');
 			//-- Raise exception for Unit Tests
 			if(Test.isRunningTest() &&   throwException) insert new Account();	
 		}
@@ -133,10 +137,17 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		}
 
 		// Format Account to GDS
-		List<GDS__c> gds_to_save = new List<GDS__c>();  
+		List<GDS__c> gds2delete = new List<GDS__c>();  
+		List<GDS__c> gds2save = new List<GDS__c>();
+		Map<String,List<GDS__c>> CRUD_map_gds = new Map<String,List<GDS__c>>();
+  
 		try
 		{
-			gds_to_save = ams2gdp_BusinessLogic.formatAccount2GDS(accounts);
+			CRUD_map_gds = ams2gdp_BusinessLogic.formatAccount2GDS(accounts);
+		    if (CRUD_map_gds.ContainsKey('D')) gds2delete = CRUD_map_gds.get('D');
+            if (gds2delete.size()>0) delete gds2delete;
+
+			if (CRUD_map_gds.ContainsKey('S')) gds2save = CRUD_map_gds.get('S');
 			//-- Remove unselected GDS in Account  
 			Set<String> accountIds = new Set<String>();
 			for(Account acc : accounts)
@@ -144,7 +155,7 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 
 			Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
 
-			delete [SELECT Id FROM GDS__c WHERE Related_GDP_Products_Account_View__c IN :gdpProductIdByAccountId.values()];
+			//delete [SELECT Id FROM GDS__c WHERE Related_GDP_Products_Account_View__c IN :gdpProductIdByAccountId.values()];
 
 			//-- Raise exception for Unit Tests
 			if(Test.isRunningTest() &&   throwException) insert new Account();	
@@ -155,11 +166,14 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		}
 
 		// Save Records 
-		List<Database.UpsertResult> categories_save_results = Database.upsert(account_categories_to_save,Account_Category__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
-		List<Database.UpsertResult> gds_save_results 		= Database.upsert(gds_to_save,GDS__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
+		List<Database.UpsertResult> categories2results = new List<Database.UpsertResult>();
+		List<Database.UpsertResult> gds2results = new List<Database.UpsertResult>();
+
+		if (categories2save.size()>0) categories2results = Database.upsert(categories2save,Account_Category__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
+		if (gds2save.size()>0) gds2results = Database.upsert(gds2save,GDS__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
 
 		//--Check if there is orphan Account_Category__c records 
-		for(Account_Category__c ac: account_categories_to_save)
+		for(Account_Category__c ac: categories2save)
 		{
 			if(ac.Related_GDP_Products_Account_View__c == null)
 			{
@@ -168,7 +182,7 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		}
 
 		//--Check if there is orphan GDS__c records 
-		for(GDS__c gds: gds_to_save)
+		for(GDS__c gds: gds2save)
 		{
 			if(gds.Related_GDP_Products_Account_View__c == null)
 			{
@@ -178,8 +192,8 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 
 
 		// Process Errors 
-		errors.addAll(ams2gdp_Error.formatUpsertResult(account_categories_to_save, categories_save_results, 'Account => Account Category', 'AMS_GDP_Key__c'));
-		errors.addAll(ams2gdp_Error.formatUpsertResult(gds_to_save, gds_save_results, 'Account => GDS', 'AMS_GDP_Key__c'));
+		errors.addAll(ams2gdp_Error.formatUpsertResult(categories2save, categories2results, 'Account => Account Category', 'AMS_GDP_Key__c'));
+		errors.addAll(ams2gdp_Error.formatUpsertResult(gds2save, gds2results, 'Account => GDS', 'AMS_GDP_Key__c'));
 		
 		//Log the current Errors
 		if(!errors.isEmpty())
