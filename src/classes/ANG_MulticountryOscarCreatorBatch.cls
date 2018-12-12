@@ -6,11 +6,6 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 	global List<ANG_ConversionHelper.ConversionBatchItem> resultItems;
 
-	global Map<String,String> oscarProcess = new Map<String, String> {
-        AMS_Utils.HE => AMS_Utils.MCAE,
-		AMS_Utils.AE => AMS_Utils.MCAE	
-	};
-
 	global ANG_MulticountryOscarCreatorBatch(Set<Id> accountIds) {
 
 		resultItems = new List<ANG_ConversionHelper.ConversionBatchItem>();
