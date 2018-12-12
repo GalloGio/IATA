@@ -481,7 +481,7 @@
             <field>Application_Name__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>&apos;Global Default Insurance&apos;</stringValue>
+                <stringValue>&apos;Global Default Insurance (GDI)&apos;</stringValue>
             </value>
         </filters>
         <filters>
